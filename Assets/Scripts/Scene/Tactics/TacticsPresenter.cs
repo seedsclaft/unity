@@ -98,9 +98,11 @@ namespace Ryneus
 
         private void UpdateCommand(TacticsViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
+            _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
             Debug.Log(viewEvent.commandType);
             if (_model.CheckTutorial(viewEvent))
             {
@@ -117,12 +119,6 @@ namespace Ryneus
             {
                 case Tactics.CommandType.TacticsCommand:
                     CommandTacticsCommand((TacticsCommandType)viewEvent.template);
-                    break;
-                case Tactics.CommandType.TacticsCommandClose:
-                    if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
-                    {
-                        CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
-                    }
                     break;
                 case Tactics.CommandType.SelectSymbol:
                     CommandSelectRecord((SymbolResultInfo)viewEvent.template);
@@ -326,7 +322,6 @@ namespace Ryneus
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
                     _view.SetSymbols(_model.StageRecords(_model.CurrentStage.CurrentTurn));
-                    _backCommand = Tactics.CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
                     break;

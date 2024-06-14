@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Boot;
+
 namespace Ryneus
 {
-    public class BootView : BaseView
+    public class BootView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private Button logoButton = null;
         private new System.Action<BootViewEvent> _commandData = null;
@@ -29,6 +30,14 @@ namespace Ryneus
         {
             var eventData = new BootViewEvent(CommandType.LogoClick);
             _commandData(eventData);
+        }
+
+        public void InputHandler(InputKeyType keyType, bool pressed)
+        {
+            if (keyType != InputKeyType.None)
+            {
+                CallLogoClick();
+            }
         }
     }
 }

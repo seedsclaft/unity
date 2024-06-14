@@ -92,8 +92,12 @@ namespace Ryneus
                 _commandData(eventData);
             });
             symbolRecordList.Initialize();
+            SetInputHandler(symbolRecordList.gameObject);
+            symbolRecordList.SetInputHandler(InputKeyType.Decide,() => OnClickSymbol());
+
             parallelList.Initialize();
             trainView.Initialize(base._commandData);
+            trainView.SetParentInputKeyActive((a,b) => UpdateChildInputKeyActive(a,b));
             trainView.SetHelpWindow(HelpWindow);
             alcanaSelectList.Initialize();
             var presenter = new TacticsPresenter(this);
@@ -143,8 +147,10 @@ namespace Ryneus
             {
                 var commandData = (SystemData.CommandData)listData.Data;
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new TacticsViewEvent(CommandType.TacticsCommand);
-                eventData.template = commandData.Id;
+                var eventData = new TacticsViewEvent(CommandType.TacticsCommand)
+                {
+                    template = commandData.Id
+                };
                 _commandData(eventData);
             }
         }
@@ -291,7 +297,7 @@ namespace Ryneus
             var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
             foreach (var SymbolRecordData in SymbolRecordDates)
             {
-                SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol(a));
+                SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
             }
             symbolRecordList.SetSelectedHandler(() => 
             {
@@ -311,21 +317,31 @@ namespace Ryneus
             }
         }
 
-        private void OnClickSymbol(int seek)
+        private void OnClickSymbol()
         {
             if (symbolRecordList.ScrollRect.enabled == false) return;
-            var eventData = new TacticsViewEvent(CommandType.SelectRecord);
-            eventData.template = seek;
-            _commandData(eventData);
+            var listData = symbolRecordList.ListData;
+            if (listData != null)
+            {
+                symbolRecordList.Deactivate();
+                var data = (List<SymbolResultInfo>)listData.Data;
+                var eventData = new TacticsViewEvent(CommandType.SelectRecord)
+                {
+                    template = data[0].Seek
+                };
+                _commandData(eventData);
+            }
         }
 
         public void ShowSymbolRecord()
         {
+            symbolRecordList.Activate();
             symbolRecordList.gameObject.SetActive(true);
         }
 
         public void HideSymbolRecord()
         {
+            symbolRecordList.Deactivate();
             symbolRecordList.gameObject.SetActive(false);
         }
 
@@ -478,6 +494,54 @@ namespace Ryneus
                 return (SkillInfo)listData.Data;
             }
             return null;
+        }
+
+        public void UpdateInputKeyActive(TacticsViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
+        {
+            switch (viewEvent.commandType)
+            {
+                case CommandType.TacticsCommand:
+                    tacticsCommandList.Deactivate();
+                    var tacticsCommandType = (TacticsCommandType)viewEvent.template;
+                    switch (tacticsCommandType)
+                    {
+                        case TacticsCommandType.Paradigm:
+                            symbolRecordList.Activate();
+                            break;
+                        case TacticsCommandType.Train:
+                        case TacticsCommandType.Alchemy:
+                            break;
+                        case TacticsCommandType.Status:
+                            break;
+                    }
+                    break;
+                case CommandType.SelectRecord:
+                    symbolRecordList.Deactivate();
+                    tacticsSymbolList.Activate();
+                    break;
+                case CommandType.CancelRecordList:
+                    symbolRecordList.Activate();
+                    tacticsSymbolList.Deactivate();
+                    break;
+                case CommandType.CancelSymbolRecord:
+                    tacticsCommandList.Activate();
+                    symbolRecordList.Deactivate();
+                    tacticsSymbolList.Deactivate();
+                    break;
+            }
+        }
+        
+        public void UpdateChildInputKeyActive(TrainViewEvent viewEvent,TacticsCommandType tacticsCommandType)
+        {
+            switch (viewEvent.commandType)
+            {
+                case Train.CommandType.TacticsCommandClose:
+                if (tacticsCommandType != TacticsCommandType.Paradigm)
+                {
+                    tacticsCommandList.Activate();
+                }
+                break;
+            }
         }
     }
 }

@@ -41,7 +41,6 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-
         public void SetEvent(System.Action<SideMenuViewEvent> commandData)
         {
             _commandData = commandData;
@@ -50,9 +49,18 @@ namespace Ryneus
         public void SetSideMenuViewInfo(SideMenuViewInfo sideMenuViewInfo)
         {
             sideMenuInfoList.SetData(sideMenuViewInfo.CommandLists);
-            sideMenuInfoList.SetInputHandler(InputKeyType.Decide,() => OnClickSideMenu());
+            sideMenuInfoList.SetInputHandler(InputKeyType.Decide,() =>
+            {
+                sideMenuInfoList.Deactivate();
+                OnClickSideMenu();
+            });
             sideMenuInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-            SetInputHandler(sideMenuInfoList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(sideMenuInfoList.gameObject);
+        }
+
+        public void ActivateSideMenu()
+        {
+            sideMenuInfoList.Activate();
         }
     }
 
@@ -69,7 +77,6 @@ namespace SideMenu
     {
         None = 0,
         SelectSideMenu = 1,
-        Detail = 2,
     }
 }
 

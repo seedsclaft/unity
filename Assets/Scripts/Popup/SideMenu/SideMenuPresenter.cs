@@ -24,14 +24,15 @@ namespace Ryneus
         private void Initialize()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _busy = false;
+            ClosePopup();
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("SideMenu");
         }
 
         private void UpdateCommand(SideMenuViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             switch (viewEvent.commandType)
@@ -79,17 +80,20 @@ namespace Ryneus
 
         private void CommandOption()
         {
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.CommandCallOption(() => 
             {
+                ClosePopup();
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
             });
         }
 
         private void CommandDropout()
         {  
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout(a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -104,6 +108,7 @@ namespace Ryneus
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             }
+            ClosePopup();
             //_view.ActivateCommandList();
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
@@ -118,7 +123,7 @@ namespace Ryneus
                 PopupType = PopupType.Ruling,
                 EndEvent = () =>
                 {
-                    _busy = false;
+                    ClosePopup();
                     //_view.SetHelpInputInfo("OPTION");
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
@@ -134,7 +139,7 @@ namespace Ryneus
                 PopupType = PopupType.Credit,
                 EndEvent = () =>
                 {
-                    _busy = false;
+                    ClosePopup();
                 }
             };
             _view.CommandCallPopup(popupInfo);
@@ -142,6 +147,7 @@ namespace Ryneus
 
         private void CommandInitializeData()
         {
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var popupInfo = new ConfirmInfo(DataSystem.GetText(581),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
@@ -149,6 +155,7 @@ namespace Ryneus
 
         private void CommandTitle()
         {
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var popupInfo = new ConfirmInfo(DataSystem.GetText(583),(a) => UpdatePopupTitle((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
@@ -171,6 +178,9 @@ namespace Ryneus
                 });
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
+            } else
+            {            
+                ClosePopup();
             }
         }
 
@@ -182,11 +192,21 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.CommandGotoSceneChange(Scene.Title);
             }
+            ClosePopup();
         }
 
         private void CommandEndGame()
         {
+            _busy = true;
+#if !UNITY_EDITOR
             Application.Quit();
+#endif
+        }
+
+        private void ClosePopup()
+        {
+            _busy = false;
+            _view.ActivateSideMenu();
         }
     }
 }

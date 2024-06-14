@@ -49,9 +49,11 @@ namespace Ryneus
 
         private void UpdateCommand(TrainViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
+            _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
             Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
@@ -64,7 +66,7 @@ namespace Ryneus
                         CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
                     } else
                     {
-                        CommandTacticsCommandClose((ConfirmCommandType)viewEvent.template);
+                        CommandTacticsCommandClose();
                     }
                     break;
                 case Train.CommandType.SelectTacticsActor:
@@ -252,7 +254,7 @@ namespace Ryneus
             }
         }
 
-        private void CommandTacticsCommandClose(ConfirmCommandType confirmCommandType)
+        private void CommandTacticsCommandClose()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.ChangeBackCommandActive(false);

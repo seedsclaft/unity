@@ -32,4 +32,5 @@ public enum SEType {
     DeBuff,
     BattleStart,
     LearnSkill,
+    CursorMove,
 }

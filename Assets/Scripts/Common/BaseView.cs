@@ -11,8 +11,8 @@ namespace Ryneus
         public bool TestMode => _testMode;
         private bool _testBattleMode = false;
         public bool TestBattleMode => _testBattleMode;
-        private InputSystem _input;
-        private List<IInputHandlerEvent> _inputHandler = new List<IInputHandlerEvent>();
+        private InputSystem _inputSystem;
+        private InputSystemModel _inputSystemModel = null;
         private bool _busy = false;
         public bool Busy => _busy;
         public System.Action<ViewEvent> _commandData = null;
@@ -41,24 +41,21 @@ namespace Ryneus
             _backGround.sprite = ResourceSystem.LoadBackGround(fileName);
         }
 
-        private int _inputBusyFrame = 0;
-        private InputKeyType _lastInputKey = InputKeyType.None;
-        private int _pressedFrame = 0;
-        readonly int _pressFrame = 30;
         public void SetInputFrame(int frame)
         {
-            _inputBusyFrame = frame;
+            _inputSystemModel.SetInputFrame(frame);
         }
 
         public virtual void Initialize()
         {
+            _inputSystemModel = new InputSystemModel();
             InitializeInput();
-            SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(gameObject);
         }
 
         public void InitializeInput()
         {    
-            _input = new InputSystem();
+            _inputSystem = new InputSystem();
         }
 
         public void SetHelpWindow(HelpWindow helpWindow)
@@ -68,65 +65,29 @@ namespace Ryneus
 
         public void SetInputHandler(IInputHandlerEvent handler)
         {
-            _inputHandler.Add(handler);
+            _inputSystemModel.AddInputHandler(handler);
         }
 
-        private void InputHandler(InputKeyType keyType,bool pressed)
+        public void SetInputHandler(GameObject gameObject)
         {
-            if (_busy) return;
-            for (int i = _inputHandler.Count-1;i >= 0;i--)
+            var handler = gameObject.GetComponent<IInputHandlerEvent>();
+            if (handler != null)
             {
-                if (_inputHandler[i] != null && _inputBusyFrame < 0)
-                {
-                    _inputHandler[i].InputHandler(keyType,pressed);
-                }
-            }
-        }
-
-        private void CallMouseCancel()
-        {
-            if (_busy) return;
-            foreach (var handler in _inputHandler)
-            {
-                handler?.MouseCancelHandler();
+                SetInputHandler(handler);
             }
         }
 
         public void SetBusy(bool isBusy)
         {
             _busy = isBusy;
+            _inputSystemModel.SetBusy(isBusy);
         }
 
         public void Update()
         {
-            if (_input != null)
+            if (_inputSystem != null)
             {
-                var keyType = _input.Update();
-                if (_lastInputKey != keyType)
-                {
-                    _lastInputKey = keyType;
-                    _pressedFrame = 0;
-                } else
-                {
-                    if (_lastInputKey == keyType)
-                    {
-                        _pressedFrame += 1;
-                    }
-                }
-                InputHandler(keyType,_pressedFrame > _pressFrame);
-                if (InputSystem.IsMouseRightButtonDown())
-                {
-                    CallMouseCancel();
-                }
-            }
-            UpdateInputFrame();
-        }
-
-        private void UpdateInputFrame()
-        {
-            if (_inputBusyFrame >= 0)
-            {
-                _inputBusyFrame--;
+                _inputSystemModel.UpdateInputKeyType(_inputSystem.Update());
             }
         }
 
@@ -444,17 +405,6 @@ namespace Ryneus
             CloseTutorialFocus,
             SceneShowUI,
             SceneHideUI
-        }
-    }
-
-    public class BaseViewEvent
-    {
-        public Base.CommandType commandType;
-        public Scene template;
-
-        public BaseViewEvent(Base.CommandType type)
-        {
-            commandType = type;
         }
     }
 }

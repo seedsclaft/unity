@@ -376,8 +376,6 @@ namespace Ryneus
                 */
                 case TutorialType.TacticsSelectTacticsActor:
                     return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
-                case TutorialType.TacticsSelectTacticsDecide:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommandClose);
                 case TutorialType.TacticsSelectEnemy:
                     return (viewEvent.commandType == Tactics.CommandType.SelectSymbol);
                 case TutorialType.TacticsSelectAlchemyMagic:

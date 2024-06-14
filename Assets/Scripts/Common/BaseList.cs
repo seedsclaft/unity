@@ -157,7 +157,7 @@ namespace Ryneus
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public class ListData
     {    
         private int _index;

@@ -342,6 +342,24 @@ namespace Ryneus
             }
         }
 
+        public InputKeyType GetPlusKey()
+        {   
+            if (reverse)
+            {
+                return (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+            }
+            return (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
+        }
+        
+        public InputKeyType GetMinusKey()
+        {   
+            if (reverse)
+            {
+                return (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
+            }
+            return (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+        }
+
         private float GetViewPortWidth()
         {
             return scrollRect.viewport.rect.width;
@@ -486,7 +504,8 @@ namespace Ryneus
         }
         
 
-        public void SetHelpWindow(HelpWindow helpWindow){
+        public void SetHelpWindow(HelpWindow helpWindow)
+        {
             _helpWindow = helpWindow;
         }
 
@@ -521,27 +540,31 @@ namespace Ryneus
         public void InputSelectIndex(InputKeyType keyType){
             var currentIndex = Index;
             var selectIndex = Index;
-            var plusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
-            var minusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
-            if (reverse)
-            {
-                plusKey = (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
-                minusKey = (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
-            }
+            var plusKey = GetPlusKey();
+            var minusKey = GetMinusKey();
             var nextIndex = Index;
-            if (keyType == plusKey){
+            if (keyType == plusKey || keyType == minusKey)
+            {
                 for (int i = 0;i < _listDates.Count;i++)
                 {
-                    nextIndex = Index + i + 1;
-                    if (nextIndex >= _listDates.Count){
-                        nextIndex -= _listDates.Count;
-                    }
-                    var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
-                    if (listItem == null)
+                    if (keyType == plusKey)
                     {
-                        break;
+                        nextIndex = Index + i + 1;
+                        if (nextIndex >= _listDates.Count)
+                        {
+                            nextIndex -= _listDates.Count;
+                        }
+                    } else
+                    if (keyType == minusKey)
+                    {
+                        nextIndex = Index - i - 1;
+                        if (nextIndex < 0)
+                        {
+                            nextIndex += _listDates.Count;
+                        }
                     }
-                    if (listItem.Disable == null)
+                    var listItem = _objectList[nextIndex].GetComponent<ListItem>();
+                    if (listItem == null || listItem.Disable == null)
                     {
                         break;
                     }
@@ -551,44 +574,22 @@ namespace Ryneus
                     }
                 }
                 selectIndex = nextIndex;
-                if (selectIndex >= _listDates.Count){
-                    if (warpMode)
+                if (warpMode)
+                {   
+                    if (selectIndex >= _listDates.Count)
                     {
                         selectIndex = 0;
-                    }
-                }
-            } else
-            if (keyType == minusKey){
-                for (int i = 0;i < _listDates.Count;i++)
-                {
-                    nextIndex = Index - i - 1;
-                    if (nextIndex < 0){
-                        nextIndex += _listDates.Count;
-                    }
-                    if (nextIndex < 0)
-                    {
-                        break;
-                    }
-                    var listItem = ObjectList[nextIndex].GetComponent<ListItem>();
-                    if (listItem.Disable == null)
-                    {
-                        break;
-                    }
-                    if (listItem.Disable != null && listItem.Disable.activeSelf == false)
-                    {
-                        break;
-                    }
-                }
-                selectIndex = nextIndex;
-                if (selectIndex < 0){
-                    if (warpMode)
+                    } else
+                    if (selectIndex < 0)
                     {
                         selectIndex = _listDates.Count-1;
                     }
                 }
             }
-            if (currentIndex != selectIndex){
-                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            
+            if (currentIndex != selectIndex)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.CursorMove);
                 SelectIndex(selectIndex);
             }
         }
@@ -602,18 +603,12 @@ namespace Ryneus
                 if (_objectList[i] == null) continue;
                 var listItem = _objectList[i].GetComponentInChildren<ListItem>();
                 if (listItem == null) continue;
-                if (index == listItem.Index)
+                if (index == listItem.Index || _selectIndexes.Contains(listItem.Index))
                 {
                     listItem.SetSelect();
                 } else
                 {
-                    if (_selectIndexes.Contains(listItem.Index))
-                    {
-                        listItem.SetSelect();
-                    } else
-                    {
-                        listItem.SetUnSelect();
-                    }
+                    listItem.SetUnSelect();
                 }
             }
         }
@@ -623,12 +618,12 @@ namespace Ryneus
             _inputCallHandler = callHandler;
         }
         
-        public void SetInputHandler(InputKeyType keyType,System.Action handler)
+        public void SetInputHandler(InputKeyType keyType,Action handler)
         {
             _inputHandler[keyType] = handler;
         }
 
-        public void SetSelectedHandler(System.Action selectedHandler)
+        public void SetSelectedHandler(Action selectedHandler)
         {
             _selectedHandler = selectedHandler;
         }
@@ -645,7 +640,8 @@ namespace Ryneus
             }
         }
         
-        private void InputCallEvent(InputKeyType keyType){
+        private void InputCallEvent(InputKeyType keyType)
+        {
             if (!IsInputEnable())
             {
                 return;
@@ -692,7 +688,10 @@ namespace Ryneus
             var listCount = ListItemCount();
             var dataCount = _listDates.Count;
             var _displayDownCount = Index - GetStartIndex();
-            if (keyType == InputKeyType.Down){
+            var plusKey = GetPlusKey();
+            var minusKey = GetMinusKey();
+            if (keyType == plusKey)
+            {
                 _displayDownCount--;
                 if (Index == 0)
                 {
@@ -700,11 +699,12 @@ namespace Ryneus
                 } else
                 if (Index > (listCount-1) && _displayDownCount == (listCount-1))
                 {
-                    var num = 1.0f / (float)(dataCount - listCount);
+                    var num = 1.0f / (dataCount - listCount);
                     ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
                 }
             } else
-            if (keyType == InputKeyType.Up){
+            if (keyType == minusKey)
+            {
                 _displayDownCount++;
                 if (Index == (_listDates.Count-1))
                 {
@@ -712,7 +712,7 @@ namespace Ryneus
                 } else
                 if (Index < (dataCount-listCount) && _displayDownCount == 0)
                 {
-                    var num = 1.0f / (float)(dataCount - listCount);
+                    var num = 1.0f / (dataCount - listCount);
                     ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * Index));
                 }
             }
@@ -731,7 +731,7 @@ namespace Ryneus
             }
             if (listIndex > 0)
             {
-                var num = 1.0f / (float)(dataCount - listCount);
+                var num = 1.0f / (dataCount - listCount);
                 var normalizedPosition = 1.0f - (num * (listIndex - (listCount-1)));
                 if (horizontal)
                 {

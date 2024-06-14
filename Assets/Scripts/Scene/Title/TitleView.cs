@@ -7,7 +7,7 @@ using Title;
 
 namespace Ryneus
 {
-    public class TitleView : BaseView 
+    public class TitleView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private TextMeshProUGUI versionText = null;
         private new System.Action<TitleViewEvent> _commandData = null;
@@ -44,15 +44,27 @@ namespace Ryneus
             var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
             _commandData(eventData);
         }
+
+        public void InputHandler(InputKeyType keyType, bool pressed)
+        {
+            if (keyType == InputKeyType.Decide || keyType == InputKeyType.Start)
+            {
+                OnClickTitle();
+            } else
+            if (keyType == InputKeyType.Option1)
+            {
+                CallSideMenu();
+            }
+        }
     }
 
 
     public class TitleViewEvent
     {
-        public Title.CommandType commandType;
+        public CommandType commandType;
         public object template;
 
-        public TitleViewEvent(Title.CommandType type)
+        public TitleViewEvent(CommandType type)
         {
             commandType = type;
         }
@@ -66,7 +78,6 @@ namespace Title
     {
         None = 0,
         TitleCommand,
-        Option,
         SelectTitle,
         SelectSideMenu,
     }

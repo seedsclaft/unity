@@ -15,91 +15,91 @@ namespace Ryneus
             var gamePadKey = UpdateGamePad();
             if (gamePadKey != InputKeyType.None)
             {
-                InputSystem.IsGamePad = true;
+                IsGamePad = true;
                 return gamePadKey;
             }
             if(Keyboard.current.upArrowKey.isPressed || Keyboard.current[Key.W].isPressed) 
             {
-                Debug.Log("up");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("up");
+                IsGamePad = false;
                 return InputKeyType.Up;
             } else
             if(Keyboard.current.downArrowKey.isPressed || Keyboard.current[Key.S].isPressed) 
             {
-                Debug.Log("down");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("down");
+                IsGamePad = false;
                 return InputKeyType.Down;
             } else
             if(Keyboard.current.leftArrowKey.isPressed || Keyboard.current[Key.A].isPressed) 
             {
-                Debug.Log("left");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("left");
+                IsGamePad = false;
                 return InputKeyType.Left;
             } else
             if(Keyboard.current.rightArrowKey.isPressed || Keyboard.current[Key.D].isPressed) 
             {
-                Debug.Log("right");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("right");
+                IsGamePad = false;
                 return InputKeyType.Right;
             } else
             if(Keyboard.current[Key.Space].wasPressedThisFrame) 
             {
-                Debug.Log("decide");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("decide");
+                IsGamePad = false;
                 return InputKeyType.Decide;
             } else
             if(Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.Escape].wasPressedThisFrame) 
             {
-                Debug.Log("cancel");
-                InputSystem.IsGamePad = false;
+                //Debug.Log("cancel");
+                IsGamePad = false;
                 return InputKeyType.Cancel;
             } else
             if(Keyboard.current[Key.R].wasPressedThisFrame) 
             {
                 Debug.Log("option1");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.Option1;
             } else
             if(Keyboard.current[Key.T].wasPressedThisFrame) 
             {
                 Debug.Log("option2");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.Option2;
             } else
             if(Keyboard.current[Key.Q].wasPressedThisFrame) 
             {
                 Debug.Log("sideLeft1");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.SideLeft1;
             } else
             if(Keyboard.current[Key.E].wasPressedThisFrame) 
             {
                 Debug.Log("sideRight1");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.SideRight1;
             }  else
             if(Keyboard.current[Key.PageDown].wasPressedThisFrame) 
             {
                 Debug.Log("sideLeft2");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.SideLeft2;
             } else
             if(Keyboard.current[Key.PageUp].wasPressedThisFrame) 
             {
                 Debug.Log("sideRight2");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.SideRight2;
             } else
             if(Keyboard.current[Key.Enter].wasPressedThisFrame) 
             {
                 Debug.Log("start");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.Start;
             } else
             if(Keyboard.current[Key.RightShift].wasPressedThisFrame) 
             {
                 Debug.Log("select");
-                InputSystem.IsGamePad = false;
+                IsGamePad = false;
                 return InputKeyType.Select;
             }
             return InputKeyType.None;
@@ -229,7 +229,7 @@ namespace Ryneus
         
         public static bool EnableWebGLInput()
         {
-            return (Application.platform == RuntimePlatform.WebGLPlayer);
+            return Application.platform == RuntimePlatform.WebGLPlayer;
         }
 
         public static bool IsPlatformStandAloneOrEditor()
@@ -239,19 +239,16 @@ namespace Ryneus
 
         public static bool IsPlatformStandAlone()
         {
-            switch (Application.platform)
+            return Application.platform switch
             {
-                case RuntimePlatform.WindowsPlayer:
-                case RuntimePlatform.OSXPlayer:
-                case RuntimePlatform.LinuxPlayer:
-                    return true;
-                default:
-                    return false;
-            }
+                RuntimePlatform.WindowsPlayer or RuntimePlatform.OSXPlayer or RuntimePlatform.LinuxPlayer => true,
+                _ => false,
+            };
         }
     }
 
-    public enum InputKeyType{
+    public enum InputKeyType
+    {
         None,
         Up,
         Down,

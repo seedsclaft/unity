@@ -23,7 +23,6 @@ namespace Tactics
         None = 0,
         TacticsCommand,
         SelectTacticsActor, // アクターを決定
-        TacticsCommandClose,
         SkillAlchemy,
         SelectFrontBattleIndex,
         SelectBackBattleIndex,

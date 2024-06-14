@@ -35,27 +35,28 @@ namespace Ryneus
 
         private void UpdateCommand(TitleViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
-            if (viewEvent.commandType == CommandType.TitleCommand)
+            switch (viewEvent.commandType)
             {
-                CommandTitle((int) viewEvent.template);
-            }
-            if (viewEvent.commandType == CommandType.SelectSideMenu)
-            {
-                CommandSelectSideMenu();
-            }
-            if (viewEvent.commandType == CommandType.SelectTitle)
-            {
-                var loadFile = SaveSystem.ExistsLoadPlayerFile();
-                if (loadFile)
-                {
-                    CommandContinue();
-                } else
-                {
-                    CommandNewGame();
-                }
+                case CommandType.TitleCommand:
+                    CommandTitle((int) viewEvent.template);
+                    break;
+                case CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
+                    break;
+                case CommandType.SelectTitle:
+                    var loadFile = SaveSystem.ExistsLoadPlayerFile();
+                    if (loadFile)
+                    {
+                        CommandContinue();
+                    } else
+                    {
+                        CommandNewGame();
+                    }
+                    break;
             }
         }
 
@@ -65,7 +66,7 @@ namespace Ryneus
             {
                 case TitleCommandType.NewGame:
                     CommandNewGame();
-                break;
+                    break;
                 case TitleCommandType.Continue:
                     CommandContinue();
                     break;
@@ -120,11 +121,12 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
+            _busy = true;
             var sideMenuViewInfo = new SideMenuViewInfo
             {
                 EndEvent = () =>
                 {
-
+                    _busy = false;
                 },
                 CommandLists = _model.SideMenu()
             };

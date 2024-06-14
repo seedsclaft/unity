@@ -21,6 +21,8 @@ namespace Ryneus
 
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
 
+        private System.Action<TrainViewEvent,TacticsCommandType> _inputKeyEvent;
+
         public void Initialize(System.Action<ViewEvent> parentEvent)
         {
             base.Initialize();
@@ -37,11 +39,13 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBackCommand(() => OnClickBack());
-            //attributeList.Initialize();
-            //SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
-            //attributeList.gameObject.SetActive(false);
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
+        }
+
+        public void SetParentInputKeyActive(System.Action<TrainViewEvent,TacticsCommandType> inputKeyEvent)
+        {
+            _inputKeyEvent = inputKeyEvent;
         }
 
         public void CallTrainCommand(TacticsCommandType tacticsCommandType)
@@ -162,16 +166,20 @@ namespace Ryneus
                 {
                     commandType = ConfirmCommandType.Yes;
                 }
-                var eventData = new TrainViewEvent(CommandType.TacticsCommandClose);
-                eventData.template = commandType;
+                var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
+                {
+                    template = commandType
+                };
                 _commandData(eventData);
             }
         }
 
         private void CallTrainCommandCancel()
         {
-            var eventData = new TrainViewEvent(CommandType.TacticsCommandClose);
-            eventData.template = ConfirmCommandType.No;
+            var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
+            {
+                template = ConfirmCommandType.No
+            };
             _commandData(eventData);
         }
 
@@ -317,12 +325,36 @@ namespace Ryneus
 
         public void ActivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Activate();
+            if (selectCharacter.CharacterList.gameObject.activeSelf)
+                selectCharacter.CharacterList.Activate();
         }
 
         public void DeactivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf) selectCharacter.CharacterList.Deactivate();
+            if (selectCharacter.CharacterList.gameObject.activeSelf)
+                selectCharacter.CharacterList.Deactivate();
+        }
+
+        public void UpdateInputKeyActive(TrainViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
+        {
+            _inputKeyEvent?.Invoke(viewEvent,currentTacticsCommandType);
+            switch (viewEvent.commandType)
+            {
+                case CommandType.TacticsCommand:
+                    var tacticsCommandType = (TacticsCommandType)viewEvent.template;
+                    switch (tacticsCommandType)
+                    {
+                        case TacticsCommandType.Paradigm:
+                            break;
+                        case TacticsCommandType.Train:
+                        case TacticsCommandType.Alchemy:
+                            ActivateTacticsCommand();
+                            break;
+                        case TacticsCommandType.Status:
+                            break;
+                    }
+                    break;
+            }
         }
     }
 }
