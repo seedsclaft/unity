@@ -109,6 +109,7 @@ namespace Ryneus
             if (EnableValueChanged())
             {
                 UpdateListItem();
+                UpdateSelectIndex(Index);
             }
         }
 
@@ -531,10 +532,8 @@ namespace Ryneus
                 {
                     plusValue = pressed ? _listMoveInputFrame : _listMoveInputFrameFirst;
                 }
-                UpdateSelectIndex(Index);
             }
             ResetInputFrame(plusValue);
-            //Debug.Log(this.gameObject.name);
         }
 
         public void InputSelectIndex(InputKeyType keyType){
@@ -590,7 +589,7 @@ namespace Ryneus
             if (currentIndex != selectIndex)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.CursorMove);
-                SelectIndex(selectIndex);
+                UpdateSelectIndex(selectIndex);
             }
         }
 
@@ -676,7 +675,7 @@ namespace Ryneus
         
         public void CallSelectHandler(InputKeyType keyType)
         {
-            if (keyType == InputKeyType.Down || keyType == InputKeyType.Up)
+            if (keyType == InputKeyType.Down || keyType == InputKeyType.Up || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
             {
                 UpdateScrollRect(keyType);
             }
@@ -697,7 +696,7 @@ namespace Ryneus
                 {
                     ScrollRect.normalizedPosition = new Vector2(0,1);
                 } else
-                if (Index > (listCount-1) && _displayDownCount == (listCount-1))
+                if (Index > (listCount-1) && _displayDownCount >= (listCount-1))
                 {
                     var num = 1.0f / (dataCount - listCount);
                     ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * (Index - (listCount-1))));
@@ -710,7 +709,7 @@ namespace Ryneus
                 {
                     ScrollRect.normalizedPosition = new Vector2(0,0);
                 } else
-                if (Index < (dataCount-listCount) && _displayDownCount == 0)
+                if (Index < (dataCount-listCount) && _displayDownCount <= (listCount-1))
                 {
                     var num = 1.0f / (dataCount - listCount);
                     ScrollRect.normalizedPosition = new Vector2(0,1.0f - (num * Index));

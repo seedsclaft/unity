@@ -30,7 +30,7 @@ namespace Ryneus
             SetEvent(parentEvent);
 
             battleSelectCharacter.Initialize();
-            SetInputHandler(battleSelectCharacter.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(battleSelectCharacter.gameObject);
             InitializeSelectCharacter();
 
             battleSelectCharacter.gameObject.SetActive(false);
@@ -369,6 +369,7 @@ namespace Ryneus
                             }
                             break;
                         case TacticsCommandType.Status:
+                            SetBusy(true);
                             break;
                     }
                     break;

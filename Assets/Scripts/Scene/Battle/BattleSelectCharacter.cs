@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Ryneus
 {
 
-    public class BattleSelectCharacter : BaseView
+    public class BattleSelectCharacter : BaseView, IInputHandlerEvent
     {   
         [SerializeField] private MagicList magicList;
         public MagicList MagicList => magicList;
@@ -57,6 +57,9 @@ namespace Ryneus
                 DataSystem.GetText(420),
                 DataSystem.GetText(402),
                 DataSystem.GetText(422),
+            });
+            toggleSelect.SetSelectTabHandler(() => 
+            {
             });
             gameObject.SetActive(false);
             lvResetButton?.gameObject.SetActive(false);
@@ -165,17 +168,23 @@ namespace Ryneus
         public void ShowActionList()
         {
             gameObject.SetActive(true);
-            //magicList.Activate();
-            //conditionList.Deactivate();
-            //skillTriggerList?.Deactivate();
         }
 
         public void HideActionList()
         {
             gameObject.SetActive(false);
-            //magicList.Deactivate();
-            //conditionList.Deactivate();
-            //skillTriggerList?.Deactivate();
+        }
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            if (keyType == InputKeyType.SideLeft2)
+            {
+                toggleSelect.SelectPrev();
+            } else
+            if (keyType == InputKeyType.SideRight2)
+            {
+                toggleSelect.SelectNext();
+            }
         }
     }
 

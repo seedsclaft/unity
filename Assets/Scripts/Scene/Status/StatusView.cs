@@ -28,29 +28,19 @@ namespace Ryneus
         {
             base.Initialize();
             selectCharacter.Initialize();
-            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
             InitializeSelectCharacter();
             
             SetDecideAnimation();
             new StatusPresenter(this);
+            selectCharacter.SetBusy(false);
         }
 
         private void InitializeSelectCharacter()
         {
             selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
             selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => OnClickCharacterList());
-            selectCharacter.SetInputHandlerAction(InputKeyType.Start,() => OnClickDecide());
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft1,() => OnClickLeft());
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight1,() => OnClickRight());
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideLeft2,() => {
-                selectCharacter.SelectCharacterTabSmooth(-1);
-            });
-            selectCharacter.SetInputHandlerAction(InputKeyType.SideRight2,() => {
-                selectCharacter.SelectCharacterTabSmooth(1);
-            });
-            SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
-            selectCharacter.HideActionList();
+            selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
+            selectCharacter.ShowActionList();
         }
         
         public void SetUIButton()
@@ -98,18 +88,6 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void SetBackEvent(System.Action backEvent)
-        {
-            _backEvent = backEvent;
-            SetBackCommand(() => 
-            {
-                var eventData = new StatusViewEvent(CommandType.Back);
-                _commandData(eventData);
-            });
-            ChangeBackCommandActive(_isDisplayBack);
-            SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
-        }
-
         public void SetViewInfo(StatusViewInfo statusViewInfo)
         {
             _statusViewInfo = statusViewInfo;
@@ -122,10 +100,13 @@ namespace Ryneus
 
         public void CommandBack()
         {
-            if (_backEvent != null)
-            {
-                _backEvent();
-            }
+            _backEvent?.Invoke();
+        }
+
+        public new void SetBusy(bool busy)
+        {
+            base.SetBusy(busy);
+            selectCharacter.SetBusy(busy);
         }
 
         private void DisplayDecideButton()
@@ -145,14 +126,10 @@ namespace Ryneus
         private void DisplayLvResetButton(bool isDisplay)
         {
             if (isDisplay == false) return;
-            selectCharacter.InitializeLvReset(() => {
-                var eventData = new StatusViewEvent(CommandType.LvReset);
-                _commandData(eventData);
+            selectCharacter.InitializeLvReset(() => 
+            {
+                OnClickLvReset();
             });
-        }
-
-        private void DisplayBackButton()
-        {
         }
 
         private void DisplayCharacterList(bool isDisplay)
@@ -192,6 +169,13 @@ namespace Ryneus
             var eventData = new StatusViewEvent(CommandType.DecideActor);
             _commandData(eventData);
         }
+
+        private void OnClickLvReset()
+        {
+            if (!_statusViewInfo.DisplayLvResetButton) return;
+            var eventData = new StatusViewEvent(CommandType.LvReset);
+            _commandData(eventData);
+        }
         
         private void CallSkillAction()
         {
@@ -200,7 +184,7 @@ namespace Ryneus
             {
                 var eventData = new StatusViewEvent(CommandType.SelectSkillAction)
                 {
-                    template = (SkillInfo)listData
+                    template = listData
                 };
                 _commandData(eventData);
             }
@@ -209,7 +193,6 @@ namespace Ryneus
 
         public void ShowSkillActionList()
         {
-            selectCharacter.ShowActionList();
             ActivateSkillActionList();
         }
 
@@ -233,7 +216,7 @@ namespace Ryneus
             selectCharacter.MagicList.Deactivate();
         }
         
-        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,int lastSelectIndex,List<ListData> skillTriggerInfos)
+        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillTriggerInfos)
         {
             selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             selectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
@@ -241,7 +224,6 @@ namespace Ryneus
             selectCharacter.UpdateStatus(actorInfo);
             selectCharacter.SetActorInfo(actorInfo,party);
             selectCharacter.SetSkillInfos(skillInfos);
-            selectCharacter.RefreshAction(lastSelectIndex);
             selectCharacter.SetSkillTriggerList(skillTriggerInfos);
             actorInfoComponent.UpdateInfo(actorInfo,party);
         }
@@ -262,9 +244,26 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            if (keyType == InputKeyType.Cancel)
+            switch (keyType)
             {
-                OnClickBack();
+                case InputKeyType.Cancel:
+                    OnClickBack();
+                    break;
+                case InputKeyType.Option1:
+                    OnClickCharacterList();
+                    break;
+                case InputKeyType.Option2:
+                    OnClickLvReset();
+                    break;
+                case InputKeyType.Start:
+                    OnClickDecide();
+                    break;
+                case InputKeyType.SideLeft1:
+                    OnClickLeft();
+                    break;
+                case InputKeyType.SideRight1:
+                    OnClickRight();
+                    break;
             }
         }
 

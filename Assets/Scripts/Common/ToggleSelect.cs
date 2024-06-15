@@ -47,7 +47,7 @@ namespace Ryneus
             }
         }
 
-        public void SetClickHandler(System.Action clickEvent)
+        public void SetSelectTabHandler(System.Action clickEvent)
         {
             var idx = 0;
             foreach (var selectTab in _selectTabs)
@@ -88,7 +88,7 @@ namespace Ryneus
                     }
                 }
             } else
-            if (nextIndex > displayTabs.Count)
+            if (nextIndex >= displayTabs.Count)
             {
                 nextIndex = _selectTabs.FindIndex(a => a.gameObject.activeSelf);
             } else
@@ -114,6 +114,16 @@ namespace Ryneus
                 }
             }
             SetSelectTabIndex(nextIndex);
+        }
+
+        public void SelectPrev()
+        {
+            SelectCharacterTabSmooth(-1);
+        }
+
+        public void SelectNext()
+        {
+            SelectCharacterTabSmooth(1);
         }
 
         public void UpdateTabs()

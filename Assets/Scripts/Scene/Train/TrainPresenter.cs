@@ -200,6 +200,7 @@ namespace Ryneus
                 _view.ChangeUIActive(true);
                 _view.SetHelpInputInfo("TACTICS");
                 _view.SetNuminous(_model.Currency);
+                _view.SetBusy(false);
             });
             _view.ChangeUIActive(false);
             statusViewInfo.SetDisplayDecideButton(false);

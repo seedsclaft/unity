@@ -28,7 +28,7 @@ namespace Ryneus
                 DataSystem.GetText(901),
                 DataSystem.GetText(902)
             });
-            toggleSelect.SetClickHandler(() => 
+            toggleSelect.SetSelectTabHandler(() => 
             {
                 var eventData = new RulingViewEvent(CommandType.SelectCategory);
                 var data = toggleSelect.SelectTabIndex;
