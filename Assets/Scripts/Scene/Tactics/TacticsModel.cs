@@ -204,21 +204,6 @@ namespace Ryneus
             return MakeListData(list);
         }
 
-        public List<ListData> TacticsCharacterData()
-        {
-            var list = new List<TacticsActorInfo>();
-            foreach (var member in StageMembers())
-            {
-                var tacticsActorInfo = new TacticsActorInfo
-                {
-                    TacticsCommandType = _TacticsCommandType,
-                    ActorInfo = member,
-                    ActorInfos = StageMembers()
-                };
-                list.Add(tacticsActorInfo);
-            }
-            return MakeListData(list);
-        }
 
         public string TacticsCommandInputInfo()
         {
@@ -374,12 +359,12 @@ namespace Ryneus
                 case TutorialType.TacticsCommandRecover:
                     return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Recovery);
                 */
-                case TutorialType.TacticsSelectTacticsActor:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
+                //case TutorialType.TacticsSelectTacticsActor:
+                //    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
                 case TutorialType.TacticsSelectEnemy:
                     return (viewEvent.commandType == Tactics.CommandType.SelectSymbol);
-                case TutorialType.TacticsSelectAlchemyMagic:
-                    return (viewEvent.commandType == Tactics.CommandType.SkillAlchemy && (SkillInfo)viewEvent.template != null);
+                //case TutorialType.TacticsSelectAlchemyMagic:
+                //    return (viewEvent.commandType == Tactics.CommandType.SkillAlchemy && (SkillInfo)viewEvent.template != null);
                 
             }
             return false;

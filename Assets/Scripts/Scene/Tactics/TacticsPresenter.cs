@@ -369,7 +369,6 @@ namespace Ryneus
                 case SymbolType.Boss:
                     _view.ChangeBackCommandActive(true);
                     _view.ChangeSymbolBackCommandActive(true);
-                    _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     _view.ActivateTacticsCommand();
                     _view.ShowConfirmCommand();
@@ -471,7 +470,7 @@ namespace Ryneus
 
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,""),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
             popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
             _view.CommandCallConfirm(popupInfo);
         }

@@ -12,6 +12,7 @@ namespace Ryneus
 
         [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
         [SerializeField] private TacticsSelectCharacter selectCharacter = null;
+        public int CharacterSelectIndex => selectCharacter.CharacterList.Index;
         //private BaseList attributeList = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
@@ -51,19 +52,6 @@ namespace Ryneus
         public new void SetBusy(bool isBusy)
         {
             base.SetBusy(isBusy);
-            if (isBusy)
-            {
-                selectCharacter.CharacterList.Deactivate();
-                selectCharacter.CommandList.Deactivate();
-                battleSelectCharacter.MagicList.Deactivate();
-                battleSelectCharacter.AttributeList.Deactivate();
-            } else
-            {
-                selectCharacter.CharacterList.Activate();
-                selectCharacter.CommandList.Activate();
-                battleSelectCharacter.MagicList.Activate();
-                battleSelectCharacter.AttributeList.Activate();
-            }
         }
 
         public void CallTrainCommand(TacticsCommandType tacticsCommandType)
@@ -104,7 +92,6 @@ namespace Ryneus
         {
             battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
             battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            SetInputHandler(battleSelectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
             battleSelectCharacter.HideActionList();
         }
 
@@ -128,9 +115,8 @@ namespace Ryneus
             selectCharacter.Initialize(() => CallBattleReplay());
             //selectCharacter.SetCharacterData(actorInfos);
             SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
-            selectCharacter.SetTacticsCommand(confirmCommands);
             
-            selectCharacter.SetTacticsCharacter(tacticsActorInfo);
+            //selectCharacter.SetTacticsCharacter(tacticsActorInfo);
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallFrontBattleIndex());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallBattleBackIndex());
@@ -139,7 +125,6 @@ namespace Ryneus
             selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
             selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
             SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
-            SetInputHandler(selectCharacter.CommandList.GetComponent<IInputHandlerEvent>());
             selectCharacter.CharacterList.SetSelectedHandler(() => 
             {
                 var listData = selectCharacter.CharacterData;
@@ -175,7 +160,7 @@ namespace Ryneus
                 var data = (TacticsActorInfo)listData.Data;
                 var eventData = new TrainViewEvent(CommandType.SelectTacticsActor)
                 {
-                    template = data
+                    template = data.ActorInfo.ActorId
                 };
                 _commandData(eventData);
             }
@@ -183,21 +168,12 @@ namespace Ryneus
 
         private void CallTrainCommand()
         {
-            var commandData = selectCharacter.CommandData;
-            if (commandData != null)
+            var commandType = ConfirmCommandType.No;
+            var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
             {
-                var data = (SystemData.CommandData)commandData.Data;
-                var commandType = ConfirmCommandType.No;
-                if (data.Key == "Yes")
-                {
-                    commandType = ConfirmCommandType.Yes;
-                }
-                var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
-                {
-                    template = commandType
-                };
-                _commandData(eventData);
-            }
+                template = commandType
+            };
+            _commandData(eventData);
         }
 
         private void CallTrainCommandCancel()
@@ -284,9 +260,15 @@ namespace Ryneus
             battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Magic);
             battleSelectCharacter.SetSkillInfos(learnMagicList);
             battleSelectCharacter.ShowActionList();
-            //battleSelectCharacter.HideStatus();
-            battleSelectCharacter.MagicList.Activate();
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
+        }
+
+        public void CommandSelectActorAlchemy()
+        {
+            if (battleSelectCharacter.MagicList.Index == -1)
+            {
+                battleSelectCharacter.MagicList.Refresh(0);
+            }
         }
 
         private void CallFrontBattleIndex()
@@ -357,14 +339,10 @@ namespace Ryneus
 
         public void ActivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf)
-                selectCharacter.CharacterList.Activate();
         }
 
         public void DeactivateTacticsCommand()
         {
-            if (selectCharacter.CharacterList.gameObject.activeSelf)
-                selectCharacter.CharacterList.Deactivate();
         }
 
         public void UpdateInputKeyActive(TrainViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
@@ -379,12 +357,30 @@ namespace Ryneus
                         case TacticsCommandType.Paradigm:
                             break;
                         case TacticsCommandType.Train:
-                        case TacticsCommandType.Alchemy:
                             ActivateTacticsCommand();
+                            break;
+                        case TacticsCommandType.Alchemy:
+                            selectCharacter.CharacterList.Activate(); 
+                            battleSelectCharacter.SetBusy(true);
+                            ActivateTacticsCommand();
+                            if (battleSelectCharacter.MagicList.Index != -1)
+                            {
+                                battleSelectCharacter.MagicList.Refresh(-1);
+                            }
                             break;
                         case TacticsCommandType.Status:
                             break;
                     }
+                    break;
+                case CommandType.SelectTacticsActor:
+                    if (currentTacticsCommandType == TacticsCommandType.Alchemy)
+                    {
+                        battleSelectCharacter.SetBusy(false);
+                        selectCharacter.CharacterList.Deactivate();             
+                    }
+                    break;
+                case CommandType.SkillAlchemy:
+                    battleSelectCharacter.SetBusy(true);
                     break;
             }
         }

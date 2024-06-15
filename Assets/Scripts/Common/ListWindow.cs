@@ -613,7 +613,7 @@ namespace Ryneus
             }
         }
 
-        public void SetInputCallHandler(System.Action<InputKeyType> callHandler)
+        public void SetInputCallHandler(Action<InputKeyType> callHandler)
         {
             _inputCallHandler = callHandler;
         }

@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Ryneus
 {
 
-    public class BattleSelectCharacter : MonoBehaviour
+    public class BattleSelectCharacter : BaseView
     {   
         [SerializeField] private MagicList magicList;
         public MagicList MagicList => magicList;
@@ -36,12 +35,16 @@ namespace Ryneus
             }
         }
 
-        public void Initialize()
+        public new void Initialize()
         {
             if (_isInit == true)
             {
                 return;
             }
+            base.Initialize();
+            magicList.Initialize();
+            SetInputHandler(magicList.gameObject);
+            SetBusy(true);
             conditionList.Initialize();
             skillTriggerList?.Initialize();
             attributeList?.Initialize();
@@ -55,13 +58,6 @@ namespace Ryneus
                 DataSystem.GetText(402),
                 DataSystem.GetText(422),
             });
-            toggleSelect.SetClickHandler(() => 
-            {
-                if (toggleSelect.SelectTabIndex == (int)SelectCharacterTabType.Magic)
-                {
-                    //magicList.Refresh();
-                }
-            });
             gameObject.SetActive(false);
             lvResetButton?.gameObject.SetActive(false);
             UpdateTabs();
@@ -72,7 +68,7 @@ namespace Ryneus
             lvResetButton?.gameObject.SetActive(true);
             lvResetButton?.SetCallHandler(() => 
             {
-                if (lvResetEvent != null) lvResetEvent(); 
+                lvResetEvent?.Invoke();
             });
         }
 
@@ -121,16 +117,8 @@ namespace Ryneus
 
         public void SetSkillInfos(List<ListData> skillInfoData)
         {
-            if (magicList.IsInit == false)
-            {
-                magicList.Initialize();
-            }
             magicList.SetData(skillInfoData);
             SelectCharacterTab(toggleSelect.SelectTabIndex);
-            if (skillInfoData.Count == 0)
-            {
-                magicList.UpdateSelectIndex(-1);
-            }
         }
 
         public void SetAttributeList(List<ListData> list)
@@ -177,17 +165,17 @@ namespace Ryneus
         public void ShowActionList()
         {
             gameObject.SetActive(true);
-            magicList.Activate();
-            conditionList.Deactivate();
-            skillTriggerList?.Deactivate();
+            //magicList.Activate();
+            //conditionList.Deactivate();
+            //skillTriggerList?.Deactivate();
         }
 
         public void HideActionList()
         {
             gameObject.SetActive(false);
-            magicList.Deactivate();
-            conditionList.Deactivate();
-            skillTriggerList?.Deactivate();
+            //magicList.Deactivate();
+            //conditionList.Deactivate();
+            //skillTriggerList?.Deactivate();
         }
     }
 

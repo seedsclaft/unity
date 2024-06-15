@@ -70,7 +70,7 @@ namespace Ryneus
                     }
                     break;
                 case Train.CommandType.SelectTacticsActor:
-                    CommandSelectTacticsActor((TacticsActorInfo)viewEvent.template);
+                    CommandSelectTacticsActor((int)viewEvent.template);
                     break;
                 case Train.CommandType.SelectFrontBattleIndex:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
@@ -172,7 +172,7 @@ namespace Ryneus
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
                     _view.HideConfirmCommand();
-                    _view.ShowSelectCharacter(_model.TacticsCharacterData(),_model.TacticsCommandData());
+                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
                     _view.ActivateTacticsCommand();
                     _view.ChangeBackCommandActive(true);
                     if (tacticsCommandType == TacticsCommandType.Alchemy)
@@ -263,20 +263,21 @@ namespace Ryneus
             _view.HideSelectCharacter();
         }
 
-        private void CommandSelectTacticsActor(TacticsActorInfo tacticsActorInfo)
+        private void CommandSelectTacticsActor(int actorId)
         {
-            var actorId = tacticsActorInfo.ActorInfo.ActorId;
             _model.SetSelectActorId(actorId);
-            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Train)
+            switch (_model.TacticsCommandType)
             {
+                case TacticsCommandType.Train:
                 CommandSelectActorTrain();
-            } else
-            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Alchemy)
-            {
-            } else
-            if (tacticsActorInfo.TacticsCommandType == TacticsCommandType.Paradigm)
-            {
+                break;
+                case TacticsCommandType.Alchemy:
+                _view.CommandSelectActorAlchemy();
+                _backCommand = Train.CommandType.TacticsCommand;
+                break;
+                case TacticsCommandType.Paradigm:
                 CommandSelectActorParadigm();
+                break;
             }
         }
 
@@ -350,7 +351,7 @@ namespace Ryneus
 
         private void CommandLearnSkill(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -365,19 +366,28 @@ namespace Ryneus
                 var to = _model.SelectActorEvaluate();
 
                 var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
-                CommandTacticsCommand(_model.TacticsCommandType);
                 SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-                
-                var popupInfo = new PopupInfo();
-                popupInfo.PopupType = PopupType.LearnSkill;
-                popupInfo.EndEvent = () => 
+
+                var popupInfo = new PopupInfo
                 {
-                    UpdatePopupSkillInfo();
-                    CommandRefresh();
-                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    PopupType = PopupType.LearnSkill,
+                    EndEvent = () =>
+                    {
+                        var backEvent = new TrainViewEvent(Train.CommandType.TacticsCommand);
+                        backEvent.template = _model.TacticsCommandType;
+                        UpdateCommand(backEvent);
+                        UpdatePopupSkillInfo();
+                        CommandRefresh();
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    },
+                    template = learnSkillInfo
                 };
-                popupInfo.template = learnSkillInfo;
                 _view.CommandCallPopup(popupInfo);
+            } else
+            {
+                var backEvent = new TrainViewEvent(Train.CommandType.SelectTacticsActor);
+                backEvent.template = _model.TacticsActor().ActorId;
+                UpdateCommand(backEvent);
             }
         }
 

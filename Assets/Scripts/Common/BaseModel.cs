@@ -161,7 +161,7 @@ namespace Ryneus
             return menuCommandDates;
         }
 
-        public List<ListData> MakeListData<T>(List<T> dataList,int selectIndex = -1)
+        public List<ListData> MakeListData<T>(List<T> dataList,int selectIndex = 0)
         {
             var listData = ListData.MakeListData(dataList);
             if (selectIndex != -1 && listData.Count > selectIndex)
@@ -171,7 +171,7 @@ namespace Ryneus
             return listData;
         }
 
-        public List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = -1)
+        public List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = 0)
         {
             var listData = ListData.MakeListData(dataList,enable);
             if (selectIndex != -1 && listData.Count > selectIndex)

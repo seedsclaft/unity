@@ -22,10 +22,6 @@ namespace Tactics
     {
         None = 0,
         TacticsCommand,
-        SelectTacticsActor, // アクターを決定
-        SkillAlchemy,
-        SelectFrontBattleIndex,
-        SelectBackBattleIndex,
         SelectSymbol,
         PopupSkillInfo,
         SymbolClose,
@@ -45,6 +41,5 @@ namespace Tactics
         AlcanaCheck,
         SelectAlcanaList,
         HideAlcanaList,
-        ChangeSelectTacticsActor,
     }
 }

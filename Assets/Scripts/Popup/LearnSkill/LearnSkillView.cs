@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 namespace Ryneus
 {
-    public class LearnSkillView : BaseView
+    public class LearnSkillView : BaseView, IInputHandlerEvent
     {
         [SerializeField] private TextMeshProUGUI evaluateText = null;
         [SerializeField] private TextMeshProUGUI afterEvaluateText = null;
@@ -25,6 +24,14 @@ namespace Ryneus
             skillInfoComponent.UpdateInfo(learnSkillInfo.SkillInfo);
         }
 
+        
+        public void InputHandler(InputKeyType keyType, bool pressed)
+        {
+            if (keyType != InputKeyType.None)
+            {
+                BackEvent?.Invoke();
+            }
+        }
 
     }
 

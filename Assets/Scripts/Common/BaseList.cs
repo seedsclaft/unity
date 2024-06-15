@@ -64,7 +64,7 @@ namespace Ryneus
                 selectIndex = ListDates.FindIndex(a => a.Selected);
                 if (selectIndex == -1)
                 {
-                    selectIndex = ListDates.FindIndex(a => a.Enable);
+                    //selectIndex = ListDates.FindIndex(a => a.Enable);
                 }
             }
             if (ScrollRect.content.GetComponent<RectTransform>().GetHeight() == 0)
@@ -210,6 +210,16 @@ namespace Ryneus
                 idx++;
             }
             return list;
+        }        
+        
+        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = -1)
+        {
+            var listData = MakeListData(dataList,enable);
+            if (selectIndex != -1 && listData.Count > selectIndex)
+            {
+                listData[selectIndex].SetSelected(true);
+            }
+            return listData;
         }
     }
 }

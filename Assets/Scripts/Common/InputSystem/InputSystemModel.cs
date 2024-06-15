@@ -11,9 +11,6 @@ namespace Ryneus
         private int _pressedFrame = 0;
         readonly int _pressFrame = 30;
         private bool _busy = false;
-        public void SetBusy(bool busy)
-        {
-        }
 
         public void AddInputHandler(IInputHandlerEvent handler)
         {

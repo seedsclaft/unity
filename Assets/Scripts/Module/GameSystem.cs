@@ -334,7 +334,7 @@ namespace Ryneus
                 if (sideMenuViewInfo.EndEvent != null) sideMenuViewInfo.EndEvent();
             });
             sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
-            SetIsBusyMainAndStatus();
+            _currentScene.SetBusy(true);
         }
         
         private void CommandRankingView(RankingViewInfo rankingViewInfo)

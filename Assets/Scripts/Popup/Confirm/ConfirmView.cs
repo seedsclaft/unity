@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using Confirm;
 
@@ -46,8 +45,10 @@ namespace Ryneus
         {
             if (disableIds.Count > 0)
             {
-                var eventData = new ConfirmViewEvent(CommandType.DisableIds);
-                eventData.template = disableIds;
+                var eventData = new ConfirmViewEvent(CommandType.DisableIds)
+                {
+                    template = disableIds
+                };
                 _commandData(eventData);
             }
         }
@@ -98,10 +99,10 @@ namespace Ryneus
                 var commandType = data.Key == "Yes" ? ConfirmCommandType.Yes : ConfirmCommandType.No;
                 if (data.Key == "Yes")
                 {
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 } else
                 {
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
                 _confirmEvent(commandType);
             }

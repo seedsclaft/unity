@@ -142,7 +142,7 @@ namespace Ryneus
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 
-        public List<ListData> TacticsCharacterData()
+        public List<ListData> TacticsCharacterData(int selectIndex = 0)
         {
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
@@ -155,7 +155,7 @@ namespace Ryneus
                 };
                 list.Add(tacticsActorInfo);
             }
-            return MakeListData(list);
+            return MakeListData(list,selectIndex);
         }
 
         public string TacticsCommandInputInfo()

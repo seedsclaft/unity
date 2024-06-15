@@ -80,12 +80,11 @@ namespace Ryneus
         public void SetBusy(bool isBusy)
         {
             _busy = isBusy;
-            _inputSystemModel.SetBusy(isBusy);
         }
 
         public void Update()
         {
-            if (_inputSystem != null)
+            if (_inputSystem != null && _busy == false)
             {
                 _inputSystemModel.UpdateInputKeyType(_inputSystem.Update());
             }
@@ -139,8 +138,10 @@ namespace Ryneus
 
         public void CommandCallConfirm(ConfirmInfo popupInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallConfirmView);
-            eventData.template = popupInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallConfirmView)
+            {
+                template = popupInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
