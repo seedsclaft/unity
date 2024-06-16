@@ -345,11 +345,14 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (List<SymbolResultInfo>)listData.Data;
-                var eventData = new TacticsViewEvent(CommandType.SelectRecord)
+                if (data[0].SymbolType != SymbolType.None)
                 {
-                    template = data[0].Seek
-                };
-                _commandData(eventData);
+                    var eventData = new TacticsViewEvent(CommandType.SelectRecord)
+                    {
+                        template = data[0].Seek
+                    };
+                    _commandData(eventData);
+                }
             }
         }
 
@@ -460,17 +463,6 @@ namespace Ryneus
         {
             saveScoreText?.SetText(DataSystem.GetReplaceDecimalText(saveScore));
         }
-
-        public void ActivateTacticsCommand()
-        {
-            trainView.ActivateTacticsCommand();
-        }
-
-        public void DeactivateTacticsCommand()
-        {
-            trainView.DeactivateTacticsCommand();
-        }
-        
         
         public void StartAlcanaAnimation(System.Action endEvent)
         {

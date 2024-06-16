@@ -42,6 +42,14 @@ namespace Ryneus
                 return;
             }
             base.Initialize();
+            SetInputHandlerAction(InputKeyType.SideLeft2,() => 
+            {
+                CommandTabSelect(InputKeyType.SideLeft2);
+            });
+            SetInputHandlerAction(InputKeyType.SideRight2,() => 
+            {
+                CommandTabSelect(InputKeyType.SideRight2);
+            });
             magicList.Initialize();
             SetInputHandler(magicList.gameObject);
             SetBusy(true);
@@ -177,13 +185,45 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            if (keyType == InputKeyType.SideLeft2)
+            if (!attributeList.gameObject.activeSelf)
             {
-                toggleSelect.SelectPrev();
+                // タブ選択操作
+                if (keyType == InputKeyType.SideLeft2)
+                {
+                    toggleSelect.SelectPrev();
+                } else
+                if (keyType == InputKeyType.SideRight2)
+                {
+                    toggleSelect.SelectNext();
+                }
+            }
+        }
+
+        private void CommandTabSelect(InputKeyType keyType)
+        {
+            if (attributeList.gameObject.activeSelf)
+            {
+                // 属性切替操作
+                var selectAttribute = attributeList.Index;
+                if (keyType == InputKeyType.SideLeft2)
+                {
+                    selectAttribute--;
+                } else
+                if (keyType == InputKeyType.SideRight2)
+                {
+                    selectAttribute++;
+                }
+                if (selectAttribute < 0)
+                {
+                    selectAttribute = attributeList.DataCount-1;
+                } else
+                if (selectAttribute >= attributeList.DataCount)
+                {
+                    selectAttribute = 0;
+                }
+                attributeList.UpdateSelectIndex(selectAttribute);
             } else
-            if (keyType == InputKeyType.SideRight2)
             {
-                toggleSelect.SelectNext();
             }
         }
     }

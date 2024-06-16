@@ -20,6 +20,9 @@ namespace Ryneus
             {
                 var skillData = (SkillInfo)listData.Data;
                 skillInfoComponent?.UpdateInfo(skillData);
+            } else
+            {
+                skillInfoComponent.Clear();
             }
         }
 

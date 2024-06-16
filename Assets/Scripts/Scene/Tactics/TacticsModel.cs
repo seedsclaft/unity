@@ -64,7 +64,12 @@ namespace Ryneus
             {
                 return a.StageSymbolData.Seek == CurrentStage.CurrentTurn;
             };
-            return MakeListData(selectRecords,enable,CurrentSelectRecord().SeekIndex);
+            var seekIndex = 0;
+            if (CurrentSelectRecord() != null)
+            {
+                seekIndex = CurrentSelectRecord().SeekIndex;
+            }
+            return MakeListData(selectRecords,enable,seekIndex);
         }
 
         public void SetStageSeekIndex(int seekIndex)

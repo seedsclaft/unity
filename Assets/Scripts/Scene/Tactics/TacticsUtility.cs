@@ -72,6 +72,7 @@ namespace Ryneus
         {
             return 0;
         }
+
         public static int ResourceGain(ActorInfo actorInfo)
         {
             return actorInfo.Level;

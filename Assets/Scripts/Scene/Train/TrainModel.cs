@@ -144,6 +144,10 @@ namespace Ryneus
 
         public List<ListData> TacticsCharacterData(int selectIndex = 0)
         {
+            if (selectIndex < 0)
+            {
+                selectIndex = 0;
+            }
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
             {

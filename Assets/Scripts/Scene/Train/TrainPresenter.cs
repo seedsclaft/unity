@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Train;
 
 namespace Ryneus
 {
-    public class TrainPresenter :BasePresenter
+    public class TrainPresenter : BasePresenter
     {
         TrainModel _model = null;
         TrainView _view = null;
 
         private bool _busy = true;
 
-        private Train.CommandType _backCommand = Train.CommandType.None;
+        private CommandType _backCommand = CommandType.None;
         public TrainPresenter(TrainView view)
         {
             _view = view;
@@ -57,10 +58,10 @@ namespace Ryneus
             Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
-                case Train.CommandType.TacticsCommand:
+                case CommandType.TacticsCommand:
                     CommandTacticsCommand((TacticsCommandType)viewEvent.template);
                     break;
-                case Train.CommandType.TacticsCommandClose:
+                case CommandType.TacticsCommandClose:
                     if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
                     {
                         CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
@@ -69,50 +70,50 @@ namespace Ryneus
                         CommandTacticsCommandClose();
                     }
                     break;
-                case Train.CommandType.SelectTacticsActor:
+                case CommandType.SelectTacticsActor:
                     CommandSelectTacticsActor((int)viewEvent.template);
                     break;
-                case Train.CommandType.SelectFrontBattleIndex:
+                case CommandType.SelectFrontBattleIndex:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandSelectFrontBattleIndex((int)viewEvent.template);
                     break;
-                case Train.CommandType.SelectBackBattleIndex:
+                case CommandType.SelectBackBattleIndex:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandSelectBackBattleIndex((int)viewEvent.template);
                     break;
-                case Train.CommandType.SkillTrigger:
+                case CommandType.SkillTrigger:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandSkillTrigger((int)viewEvent.template);
                     break;
-                case Train.CommandType.SymbolClose:
+                case CommandType.SymbolClose:
                     CommandSymbolClose();
                     break;
-                case Train.CommandType.CallEnemyInfo:
+                case CommandType.CallEnemyInfo:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandCallEnemyInfo((SymbolInfo)viewEvent.template);
                     break;
-                case Train.CommandType.PopupSkillInfo:
+                case CommandType.PopupSkillInfo:
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                     break;
-                case Train.CommandType.SelectRecord:
+                case CommandType.SelectRecord:
                     break;
-                case Train.CommandType.CancelSymbolRecord:
+                case CommandType.CancelSymbolRecord:
                     CommandCancelSymbolRecord();
                     break;
-                case Train.CommandType.Back:
+                case CommandType.Back:
                     CommandBack();
                     break;
-                case Train.CommandType.ChangeSelectTacticsActor:
+                case CommandType.ChangeSelectTacticsActor:
                     CommandChangeSelectTacticsActor((int)viewEvent.template);
                     break;
-                case Train.CommandType.SelectAttribute:
+                case CommandType.SelectAttribute:
                     CommandSelectAttribute((int)viewEvent.template);
                     break;
-                case Train.CommandType.BattleReplay:
+                case CommandType.BattleReplay:
                     CommandBattleReplay();
                     break;
             }
-            if (viewEvent.commandType == Train.CommandType.SkillAlchemy)
+            if (viewEvent.commandType == CommandType.SkillAlchemy)
             {
                 if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
                 {
@@ -121,21 +122,21 @@ namespace Ryneus
                     CommandLearnSkill((SkillInfo)viewEvent.template);  
                 }
             }
-            if (viewEvent.commandType == Train.CommandType.SelectSideMenu)
+            if (viewEvent.commandType == CommandType.SelectSideMenu)
             {
             }
-            if (viewEvent.commandType == Train.CommandType.StageHelp)
+            if (viewEvent.commandType == CommandType.StageHelp)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandStageHelp();
             }
-            if (viewEvent.commandType == Train.CommandType.CommandHelp)
+            if (viewEvent.commandType == CommandType.CommandHelp)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandCommandHelp();
             }
             
-            if (viewEvent.commandType == Train.CommandType.AlcanaCheck)
+            if (viewEvent.commandType == CommandType.AlcanaCheck)
             {
                 CommandAlcanaCheck();
             }
@@ -150,7 +151,7 @@ namespace Ryneus
         private void CommandCancelSymbolRecord()
         {
             _view.ChangeBackCommandActive(false);
-            _backCommand = Train.CommandType.None;
+            _backCommand = CommandType.None;
         }
 
         private void CommandBack()
@@ -168,22 +169,22 @@ namespace Ryneus
             switch (tacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
+                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
                     return;
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
                     _view.HideConfirmCommand();
-                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
-                    _view.ActivateTacticsCommand();
                     _view.ChangeBackCommandActive(true);
+                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
                     if (tacticsCommandType == TacticsCommandType.Alchemy)
                     {                    
                         ShowLearningSkillInfos();
                     } else
                     {
-                        _view.ShowCharacterDetail(_model.StageMembers()[0],_model.StageMembers(),true);
+                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     }
                     _view.ShowBattleReplay(false);
-                    _backCommand = Train.CommandType.TacticsCommandClose;
+                    _backCommand = CommandType.TacticsCommandClose;
                     break;
                 case TacticsCommandType.Status:
                     CommandStatus();
@@ -208,7 +209,6 @@ namespace Ryneus
             _view.CommandCallStatus(statusViewInfo);
         }
 
-
         private void CommandSelectActorTrain()
         {
             if (_model.CheckActorTrain())
@@ -223,20 +223,26 @@ namespace Ryneus
                 
                 if (skills.Count > 0)
                 {
+                    _busy = true;
+                    _view.SetBusy(true);
                     var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
                     CommandTacticsCommand(_model.TacticsCommandType);
                     SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-                    
-                    var popupInfo = new PopupInfo();
-                    popupInfo.PopupType = PopupType.LearnSkill;
-                    popupInfo.EndEvent = () => 
+
+                    var popupInfo = new PopupInfo
                     {
-                        UpdatePopupSkillInfo();
-                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
-                        CommandRefresh();
-                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                        PopupType = PopupType.LearnSkill,
+                        EndEvent = () =>
+                        {
+                            _busy = false;
+                            _view.SetBusy(false);
+                            UpdatePopupSkillInfo();
+                            _view.ShowCharacterDetail(_model.TacticsActor(), _model.StageMembers());
+                            CommandRefresh();
+                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                        },
+                        template = learnSkillInfo
                     };
-                    popupInfo.template = learnSkillInfo;
                     _view.CommandCallPopup(popupInfo);
                 } else
                 {
@@ -274,7 +280,7 @@ namespace Ryneus
                 break;
                 case TacticsCommandType.Alchemy:
                 _view.CommandSelectActorAlchemy();
-                _backCommand = Train.CommandType.TacticsCommand;
+                _backCommand = CommandType.TacticsCommand;
                 break;
                 case TacticsCommandType.Paradigm:
                 CommandSelectActorParadigm();
@@ -374,7 +380,7 @@ namespace Ryneus
                     PopupType = PopupType.LearnSkill,
                     EndEvent = () =>
                     {
-                        var backEvent = new TrainViewEvent(Train.CommandType.TacticsCommand);
+                        var backEvent = new TrainViewEvent(CommandType.TacticsCommand);
                         backEvent.template = _model.TacticsCommandType;
                         UpdateCommand(backEvent);
                         UpdatePopupSkillInfo();
@@ -386,7 +392,7 @@ namespace Ryneus
                 _view.CommandCallPopup(popupInfo);
             } else
             {
-                var backEvent = new TrainViewEvent(Train.CommandType.SelectTacticsActor);
+                var backEvent = new TrainViewEvent(CommandType.SelectTacticsActor);
                 backEvent.template = _model.TacticsActor().ActorId;
                 UpdateCommand(backEvent);
             }

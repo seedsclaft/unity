@@ -87,7 +87,6 @@ namespace Ryneus
                 {
                     displaySelectCharacter.gameObject.SetActive(true);
                     displaySelectCharacter.UpdateInfo(tacticsActorInfo.ActorInfo,tacticsActorInfo.ActorInfos);
-                    
                 }
             }
         }
@@ -144,7 +143,7 @@ namespace Ryneus
             }
         }
 
-        public void SetInputHandlerCommand(InputKeyType keyType,System.Action callEvent)
+        public void SetInputHandlerCommand(System.Action callEvent)
         {
             decideButton?.SetCallHandler(() =>
             { 

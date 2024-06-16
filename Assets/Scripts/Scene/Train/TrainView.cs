@@ -118,13 +118,13 @@ namespace Ryneus
             
             //selectCharacter.SetTacticsCharacter(tacticsActorInfo);
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallFrontBattleIndex());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallBattleBackIndex());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallFrontBattleIndex());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallBattleBackIndex());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
             selectCharacter.SetInputHandlerCharacter(InputKeyType.Option1,() => CallSkillTriggerCommand());
-            selectCharacter.SetInputHandlerCommand(InputKeyType.Decide,() => CallTrainCommand());
-            selectCharacter.SetInputHandlerCommand(InputKeyType.Cancel,() => CallTrainCommandCancel());
-            SetInputHandler(selectCharacter.CharacterList.GetComponent<IInputHandlerEvent>());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Start,() => CallTrainCommand());
+            selectCharacter.SetInputHandlerCommand(() => CallTrainCommand());
+            SetInputHandler(selectCharacter.CharacterList.gameObject);
             selectCharacter.CharacterList.SetSelectedHandler(() => 
             {
                 var listData = selectCharacter.CharacterData;
@@ -168,7 +168,7 @@ namespace Ryneus
 
         private void CallTrainCommand()
         {
-            var commandType = ConfirmCommandType.No;
+            var commandType = ConfirmCommandType.Yes;
             var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
             {
                 template = commandType
@@ -337,14 +337,6 @@ namespace Ryneus
             }
         }
 
-        public void ActivateTacticsCommand()
-        {
-        }
-
-        public void DeactivateTacticsCommand()
-        {
-        }
-
         public void UpdateInputKeyActive(TrainViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
         {
             _inputKeyEvent?.Invoke(viewEvent,currentTacticsCommandType);
@@ -357,12 +349,10 @@ namespace Ryneus
                         case TacticsCommandType.Paradigm:
                             break;
                         case TacticsCommandType.Train:
-                            ActivateTacticsCommand();
                             break;
                         case TacticsCommandType.Alchemy:
                             selectCharacter.CharacterList.Activate(); 
                             battleSelectCharacter.SetBusy(true);
-                            ActivateTacticsCommand();
                             if (battleSelectCharacter.MagicList.Index != -1)
                             {
                                 battleSelectCharacter.MagicList.Refresh(-1);

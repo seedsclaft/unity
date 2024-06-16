@@ -20,6 +20,7 @@ namespace Ryneus
         {
             if (_selectTabIndex != selectIndex)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _selectTabIndex = selectIndex;
                 UpdateTabs();
             }

@@ -97,13 +97,16 @@ namespace Ryneus
         {
             for (int i = 0; i < ItemPrefabList.Count;i++)
             {
-                var listItem = ItemPrefabList[i].GetComponent<ListItem>();
-                listItem.SetCallHandler(() => CallListInputHandlerDecide());
-                listItem.SetSelectHandler((index) => 
+                if (ItemPrefabList.Count > i)
                 {
-                    UpdateSelectIndex(index);
-                });
-                listItem.SetAddListenHandler(true);
+                    var listItem = ItemPrefabList[i].GetComponent<ListItem>();
+                    listItem.SetCallHandler(() => CallListInputHandlerDecide());
+                    listItem.SetSelectHandler((index) => 
+                    {
+                        UpdateSelectIndex(index);
+                    });
+                    listItem.SetAddListenHandler(true);
+                }
             }
         }    
         

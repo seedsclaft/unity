@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tactics;
 
 namespace Ryneus
 {
@@ -13,7 +14,7 @@ namespace Ryneus
         private bool _eventBusy = false;
         private bool _alcanaSelectBusy = false;
 
-        private Tactics.CommandType _backCommand = Tactics.CommandType.None;
+        private CommandType _backCommand = CommandType.None;
         public TacticsPresenter(TacticsView view)
         {
             _view = view;
@@ -117,79 +118,79 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
-                case Tactics.CommandType.TacticsCommand:
+                case CommandType.TacticsCommand:
                     CommandTacticsCommand((TacticsCommandType)viewEvent.template);
                     break;
-                case Tactics.CommandType.SelectSymbol:
+                case CommandType.SelectSymbol:
                     CommandSelectRecord((SymbolResultInfo)viewEvent.template);
                     break;
-                case Tactics.CommandType.SymbolClose:
+                case CommandType.SymbolClose:
                     CommandSymbolClose();
                     break;
-                case Tactics.CommandType.CallEnemyInfo:
+                case CommandType.CallEnemyInfo:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandCallEnemyInfo((SymbolResultInfo)viewEvent.template);
                     break;
-                case Tactics.CommandType.PopupSkillInfo:
+                case CommandType.PopupSkillInfo:
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                     break;
-                case Tactics.CommandType.SelectRecord:
+                case CommandType.SelectRecord:
                     CommandSelectRecordSeek((int)viewEvent.template);
                     break;
-                case Tactics.CommandType.CancelSymbolRecord:
+                case CommandType.CancelSymbolRecord:
                     if (_alcanaSelectBusy == true)
                     {
                         return;
                     }
                     CommandCancelSymbolRecord();
                     break;
-                case Tactics.CommandType.CancelSelectSymbol:
+                case CommandType.CancelSelectSymbol:
                     CommandCancelSelectSymbol();
                     break;
-                case Tactics.CommandType.Back:
+                case CommandType.Back:
                     CommandBack();
                     break;
-                case Tactics.CommandType.DecideRecord:
+                case CommandType.DecideRecord:
                     CommandDecideRecord();
                     break;
-                case Tactics.CommandType.Parallel:
+                case CommandType.Parallel:
                     CommandParallel();
                     break;
-                case Tactics.CommandType.SelectAlcanaList:
+                case CommandType.SelectAlcanaList:
                     if (_alcanaSelectBusy == false)
                     {
                         return;
                     }
                     CommandSelectAlcanaList((SkillInfo)viewEvent.template);
                     break;
-                case Tactics.CommandType.HideAlcanaList:
+                case CommandType.HideAlcanaList:
                     CommandHideAlcanaList();
                     break;
-                case Tactics.CommandType.ScorePrize:
+                case CommandType.ScorePrize:
                     CommandScorePrize();
                     break;
             }
-            if (viewEvent.commandType == Tactics.CommandType.SelectSideMenu)
+            if (viewEvent.commandType == CommandType.SelectSideMenu)
             {
                 CommandSelectSideMenu();
             }
-            if (viewEvent.commandType == Tactics.CommandType.StageHelp)
+            if (viewEvent.commandType == CommandType.StageHelp)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandStageHelp();
             }
-            if (viewEvent.commandType == Tactics.CommandType.CancelRecordList)
+            if (viewEvent.commandType == CommandType.CancelRecordList)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandCancelRecordList();
             }
-            if (viewEvent.commandType == Tactics.CommandType.CommandHelp)
+            if (viewEvent.commandType == CommandType.CommandHelp)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 CommandCommandHelp();
             }
             
-            if (viewEvent.commandType == Tactics.CommandType.AlcanaCheck)
+            if (viewEvent.commandType == CommandType.AlcanaCheck)
             {
                 CommandAlcanaCheck();
             }
@@ -289,7 +290,7 @@ namespace Ryneus
                     _view.ShowParallelList();
                 }
             }
-            //_backCommand = Tactics.CommandType.TacticsCommand;
+            //_backCommand = CommandType.TacticsCommand;
         }
 
         private void CommandCancelSymbolRecord()
@@ -298,7 +299,7 @@ namespace Ryneus
             _view.HideSymbolRecord();
             _view.ChangeBackCommandActive(false);
             _view.ChangeSymbolBackCommandActive(false);
-            _backCommand = Tactics.CommandType.None;
+            _backCommand = CommandType.None;
         }
 
         private void CommandBack()
@@ -337,7 +338,7 @@ namespace Ryneus
             _view.SetPositionSymbolRecords(_model.SymbolRecords());
             _view.ChangeBackCommandActive(true);
             _view.ChangeSymbolBackCommandActive(true);
-            _backCommand = Tactics.CommandType.CancelSymbolRecord;
+            _backCommand = CommandType.CancelSymbolRecord;
         }
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
@@ -370,11 +371,11 @@ namespace Ryneus
                     _view.ChangeBackCommandActive(true);
                     _view.ChangeSymbolBackCommandActive(true);
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
-                    _view.ActivateTacticsCommand();
+
                     _view.ShowConfirmCommand();
                     _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());
                     CommandRefresh();
-                    _backCommand = Tactics.CommandType.CancelSelectSymbol;
+                    _backCommand = CommandType.CancelSelectSymbol;
                     break;
                 case SymbolType.Recover:
                     CheckRecoverSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
@@ -402,7 +403,7 @@ namespace Ryneus
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
-            _backCommand = Tactics.CommandType.TacticsCommand;
+            _backCommand = CommandType.TacticsCommand;
         }
 
         private void CommandDecideRecord()
@@ -641,54 +642,6 @@ namespace Ryneus
             }
         }
 
-        private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
-        {
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                if (_model.BattleMembers().Count > 0)
-                {
-                    _model.SaveTempBattleMembers();
-                    _model.SetStatusActorInfos();
-                    _view.CommandChangeViewToTransition(null);
-                    // ボス戦なら
-                    if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
-                    {
-                        //SoundManager.Instance.FadeOutBgm();
-                        PlayBossBgm();
-                    } else
-                    {
-                        var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
-                        if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
-                        {
-                            SoundManager.Instance.ChangeCrossFade();
-                        } else
-                        {
-                            PlayTacticsBgm();
-                        }
-                    }
-                    _view.SetActiveBackGround(false);
-                    _model.SetPartyBattlerIdList();
-                    SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
-                    _view.CommandSceneChange(Scene.Battle);
-                } else
-                {
-                    CheckBattleMember();
-                }
-            } else{
-                _view.ShowSymbolList();
-                _view.HideSelectCharacter();
-                CommandRefresh();
-            }
-        }
-
-        private void CheckBattleMember()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            var cautionInfo = new CautionInfo();
-            cautionInfo.SetTitle(DataSystem.GetText(11160));
-            _view.CommandCallCaution(cautionInfo);
-        }
-
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
         {
             var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
@@ -799,7 +752,7 @@ namespace Ryneus
             _view.HideRecordList();
             _view.HideParallelList();
             _view.ChangeSymbolBackCommandActive(false);
-            _backCommand = Tactics.CommandType.CancelSymbolRecord;
+            _backCommand = CommandType.CancelSymbolRecord;
         }
 
         private void CommandCommandHelp()
@@ -838,7 +791,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaSkillInfos()));
-            _backCommand = Tactics.CommandType.HideAlcanaList;
+            _backCommand = CommandType.HideAlcanaList;
         }
 
         private void CommandHideAlcanaList()
@@ -846,7 +799,7 @@ namespace Ryneus
             _view.HideAlcanaList();
             _view.ChangeBackCommandActive(false);
             _view.ChangeSymbolBackCommandActive(false);
-            _backCommand = Tactics.CommandType.None;
+            _backCommand = CommandType.None;
         }
     }
 }
