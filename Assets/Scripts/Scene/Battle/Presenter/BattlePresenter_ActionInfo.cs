@@ -58,7 +58,7 @@ namespace Ryneus
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimationBeforeSkill(actionInfo.SubjectIndex,selfAnimation);
             
-            if (actionInfo.TriggeredSkill)
+            if (actionInfo.TriggeredSkill && actionInfo.Master.SkillType != SkillType.Messiah && actionInfo.Master.SkillType != SkillType.Awaken)
             {
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
@@ -80,14 +80,13 @@ namespace Ryneus
                 }
                 PlayAnimation(animationData,actionInfo.Master.AnimationType,targetIndexList,false);
                 StartAliveAnimation(actionInfo.ActionResults);
-
                 await UniTask.DelayFrame((int)(animationData.DamageTiming / GameSystem.ConfigData.BattleSpeed));
                 foreach (var actionResultInfo in actionInfo.ActionResults)
                 {
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
                 var waitFrame = (int)(48 / GameSystem.ConfigData.BattleSpeed);
-                if (actionInfo.RepeatTime != 0 && waitFrame > 1)
+                if (!actionInfo.LastAttack() && waitFrame > 1)
                 {
                     waitFrame = 8;
                 }
@@ -100,7 +99,7 @@ namespace Ryneus
                     PopupActionResult(actionResultInfo,actionResultInfo.TargetIndex,true,true);
                 }
                 var waitFrame = _model.WaitFrameTime(30);
-                if (actionInfo.RepeatTime != 0 && waitFrame > 1)
+                if (!actionInfo.LastAttack() && waitFrame > 1)
                 {
                     waitFrame = 8;
                 }
@@ -158,6 +157,12 @@ namespace Ryneus
             if (actionInfo.ActionResults.Count == 0)
             {
                 CommandEndAnimation();
+                return;
+            }
+            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor;
+            if (actionInfo.FirstAttack() && (actionInfo.Master.SkillType == SkillType.Messiah && isActor || actionInfo.Master.SkillType == SkillType.Awaken) && isActor)
+            {
+                StartAnimationDemigod();
                 return;
             }
             

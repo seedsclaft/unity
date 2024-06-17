@@ -579,13 +579,19 @@ namespace Ryneus
             {    
                 _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(433,actionResultInfo.ApDamage.ToString()));
             }
-            if (actionResultInfo.ReDamage > 0)
+            if (actionResultInfo.ReDamage > 0 || actionResultInfo.CurseDamage > 0)
             {
+                var reDamage = 0;
                 if (!actionResultInfo.DeadIndexList.Contains(targetIndex) && _model.GetBattlerInfo(targetIndex).IsAlive())
+                {
+                    reDamage += actionResultInfo.ReDamage;
+                }
+                reDamage += actionResultInfo.CurseDamage;
+                if (reDamage > 0)
                 {
                     var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
                     PlayDamageSound(damageType);
-                    _view.StartDamage(actionResultInfo.SubjectIndex,damageType,actionResultInfo.ReDamage);
+                    _view.StartDamage(actionResultInfo.SubjectIndex,damageType,reDamage);
                     _view.StartBlink(actionResultInfo.SubjectIndex);
                 }
             }

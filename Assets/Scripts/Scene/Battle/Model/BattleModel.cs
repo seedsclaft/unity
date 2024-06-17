@@ -802,6 +802,7 @@ namespace Ryneus
             var repeatTime = CalcRepeatTime(subject,actionInfo);
             //repeatTime += PrismRepeatTime(subject,actionInfo);
             actionInfo.SetRepeatTime(repeatTime);
+            actionInfo.SetBaseRepeatTime(repeatTime);
         }
 
         // indexListにActionを使ったときのリザルトを生成
@@ -1182,11 +1183,17 @@ namespace Ryneus
             {
                 subject.GainHp(actionResultInfo.ReHeal);
             }
-            if (actionResultInfo.ReDamage != 0)
+            if (actionResultInfo.ReDamage != 0 || actionResultInfo.CurseDamage != 0)
             {
+                var reDamage = 0;
                 if (target.IsAlive())
                 {
-                    subject.GainHp(-1 * actionResultInfo.ReDamage);
+                    reDamage += actionResultInfo.ReDamage;
+                }
+                reDamage += actionResultInfo.CurseDamage;
+                if (reDamage > 0)
+                {
+                    subject.GainHp(-1 * reDamage);
                 }
             }
             if (actionResultInfo.Missed == true)

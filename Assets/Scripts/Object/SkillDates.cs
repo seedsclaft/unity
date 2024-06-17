@@ -59,13 +59,13 @@ namespace Ryneus
 
         public bool IsDisplayBattleSkill()
         {
-            if (SkillType != SkillType.Messiah && SkillType != SkillType.Awaken)
-            {
+            //if (SkillType != SkillType.Messiah && SkillType != SkillType.Awaken)
+            //{
                 if (Id >= 100 || Id == 31 || Id == 33)
                 {
                     return true;
                 }
-            }
+            //}
             return false;
         }
 

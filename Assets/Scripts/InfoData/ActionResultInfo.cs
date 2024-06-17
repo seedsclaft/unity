@@ -99,6 +99,23 @@ namespace Ryneus
                         _aliveIndexList.Add(removeState.TargetIndex);
                     }
                 }
+                // 呪詛判定
+                for (int i = _deadIndexList.Count-1;i >= 0;i--)
+                {
+                    var deadIndex = _deadIndexList[i];
+                    if (!_aliveIndexList.Contains(deadIndex))
+                    {
+                        if (target.Index == deadIndex && target.IsState(StateType.Curse))
+                        {
+                            _hpDamage = target.Hp - 1;
+                            float curseDamage = target.DamagedValue + _hpDamage;
+                            curseDamage *= target.GetStateEffectAll(StateType.Curse) * 0.01f;
+                            _curseDamage += (int)curseDamage;
+                            target.SetDamagedValue(0);
+                            _deadIndexList.RemoveAt(i);
+                        }
+                    }
+                }
             }
         }
 
@@ -138,6 +155,12 @@ namespace Ryneus
         public void SetReDamage(int reDamage)
         {
             _reDamage = reDamage;
+        }
+        private int _curseDamage = 0;
+        public int CurseDamage => _curseDamage;
+        public void SetCurseDamage(int curseDamage)
+        {
+            _curseDamage = curseDamage;
         }
         private int _reHeal = 0;
         public int ReHeal => _reHeal;

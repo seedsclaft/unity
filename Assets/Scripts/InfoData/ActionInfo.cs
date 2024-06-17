@@ -31,11 +31,24 @@ namespace Ryneus
         public int MpCost => _mpCost;
         private int _hpCost;
         public int HpCost => _hpCost;
+        private int _baseRepeatTime;
+        public void SetBaseRepeatTime(int repeatTime)
+        {
+            _baseRepeatTime = repeatTime;
+        }
         private int _repeatTime;
         public int RepeatTime => _repeatTime;
         public void SetRepeatTime(int repeatTime)
         {
             _repeatTime = repeatTime;
+        }
+        public bool FirstAttack()
+        {
+            return (_baseRepeatTime-1) == _repeatTime;
+        }
+        public bool LastAttack()
+        {
+            return _repeatTime == 0;
         }
         // 選択可能な対象情報
         private List<int> _candidateTargetIndexList;

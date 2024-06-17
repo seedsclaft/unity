@@ -462,7 +462,7 @@ MonoBehaviour:
       _atk: 30
       _def: 50
       _spd: 45
-    Attribute: 0400000002000000040000000700000001000000
+    Attribute: 0500000004000000050000000400000001000000
     X: 0
     Y: -40
     Scale: 0.78
@@ -617,19 +617,19 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 1010
-      Trigger1: 0
-      Trigger2: 0
     - SkillId: 1030
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100620
       Trigger1: 0
       Trigger2: 0
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
     - SkillId: 100610
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 11130
+    - SkillId: 0
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0
