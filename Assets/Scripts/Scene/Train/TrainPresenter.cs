@@ -58,16 +58,16 @@ namespace Ryneus
             Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
-                case CommandType.TacticsCommand:
-                    CommandTacticsCommand((TacticsCommandType)viewEvent.template);
+                case CommandType.SelectTacticsCommand:
+                    CommandSelectTacticsCommand((TacticsCommandType)viewEvent.template);
                     break;
-                case CommandType.TacticsCommandClose:
+                case CommandType.DecideTacticsCommand:
                     if (_model.TacticsCommandType == TacticsCommandType.Paradigm)
                     {
-                        CommandSelectEnemyClose((ConfirmCommandType)viewEvent.template);
+                        CommandDecideTacticsCommandEnemy((ConfirmCommandType)viewEvent.template);
                     } else
                     {
-                        CommandTacticsCommandClose();
+                        CommandCancelTacticsCommand();
                     }
                     break;
                 case CommandType.SelectTacticsActor:
@@ -81,24 +81,9 @@ namespace Ryneus
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandSelectBackBattleIndex((int)viewEvent.template);
                     break;
-                case CommandType.SkillTrigger:
+                case CommandType.SelectSkillTrigger:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
-                    CommandSkillTrigger((int)viewEvent.template);
-                    break;
-                case CommandType.SymbolClose:
-                    CommandSymbolClose();
-                    break;
-                case CommandType.CallEnemyInfo:
-                    if (_model.CurrentStageTutorialDates.Count > 0) return;
-                    CommandCallEnemyInfo((SymbolInfo)viewEvent.template);
-                    break;
-                case CommandType.PopupSkillInfo:
-                    CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
-                    break;
-                case CommandType.SelectRecord:
-                    break;
-                case CommandType.CancelSymbolRecord:
-                    CommandCancelSymbolRecord();
+                    CommandSelectSkillTrigger((int)viewEvent.template);
                     break;
                 case CommandType.Back:
                     CommandBack();
@@ -112,23 +97,17 @@ namespace Ryneus
                 case CommandType.BattleReplay:
                     CommandBattleReplay();
                     break;
-            }
-            if (viewEvent.commandType == CommandType.SkillAlchemy)
-            {
-                if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
-                {
-                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                    // 魔法習得
-                    CommandLearnSkill((SkillInfo)viewEvent.template);  
-                }
-            }
-            if (viewEvent.commandType == CommandType.SelectSideMenu)
-            {
-            }
-            if (viewEvent.commandType == CommandType.StageHelp)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandStageHelp();
+                case CommandType.ShowTacticsCharacter:
+                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
+                    break;
+                case CommandType.ActorLearnMagic:
+                    if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
+                    {
+                        SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                        // 魔法習得
+                        CommandActorLearnMagic((SkillInfo)viewEvent.template);  
+                    }
+                    break;
             }
             if (viewEvent.commandType == CommandType.CommandHelp)
             {
@@ -147,13 +126,6 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
-
-        private void CommandCancelSymbolRecord()
-        {
-            _view.ChangeBackCommandActive(false);
-            _backCommand = CommandType.None;
-        }
-
         private void CommandBack()
         {
             var eventData = new TrainViewEvent(_backCommand);
@@ -162,14 +134,14 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
 
-        private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
+        private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
         {
             _model.SetTacticsCommandType(tacticsCommandType);
             _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
             switch (tacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
-                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
+                    
                     return;
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
@@ -184,7 +156,7 @@ namespace Ryneus
                         _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
                     }
                     _view.ShowBattleReplay(false);
-                    _backCommand = CommandType.TacticsCommandClose;
+                    _backCommand = CommandType.DecideTacticsCommand;
                     break;
                 case TacticsCommandType.Status:
                     CommandStatus();
@@ -226,7 +198,7 @@ namespace Ryneus
                     _busy = true;
                     _view.SetBusy(true);
                     var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
-                    CommandTacticsCommand(_model.TacticsCommandType);
+                    CommandSelectTacticsCommand(_model.TacticsCommandType);
                     SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
 
                     var popupInfo = new PopupInfo
@@ -263,7 +235,7 @@ namespace Ryneus
             }
         }
 
-        private void CommandTacticsCommandClose()
+        private void CommandCancelTacticsCommand()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.ChangeBackCommandActive(false);
@@ -280,7 +252,7 @@ namespace Ryneus
                 break;
                 case TacticsCommandType.Alchemy:
                 _view.CommandSelectActorAlchemy();
-                _backCommand = CommandType.TacticsCommand;
+                _backCommand = CommandType.SelectTacticsCommand;
                 break;
                 case TacticsCommandType.Paradigm:
                 CommandSelectActorParadigm();
@@ -347,16 +319,19 @@ namespace Ryneus
             CommandRefresh();
         }
 
-        private void CommandSkillTrigger(int actorId)
+        private void CommandSelectSkillTrigger(int actorId)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => {
+            _busy = true;
+            var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => 
+            {
+                _busy = false;
                 CommandRefresh();
             });
             _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
-        private void CommandLearnSkill(SkillInfo skillInfo)
+        private void CommandActorLearnMagic(SkillInfo skillInfo)
         {
             var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
             _view.CommandCallConfirm(popupInfo);
@@ -380,8 +355,10 @@ namespace Ryneus
                     PopupType = PopupType.LearnSkill,
                     EndEvent = () =>
                     {
-                        var backEvent = new TrainViewEvent(CommandType.TacticsCommand);
-                        backEvent.template = _model.TacticsCommandType;
+                        var backEvent = new TrainViewEvent(CommandType.SelectTacticsCommand)
+                        {
+                            template = _model.TacticsCommandType
+                        };
                         UpdateCommand(backEvent);
                         UpdatePopupSkillInfo();
                         CommandRefresh();
@@ -392,13 +369,15 @@ namespace Ryneus
                 _view.CommandCallPopup(popupInfo);
             } else
             {
-                var backEvent = new TrainViewEvent(CommandType.SelectTacticsActor);
-                backEvent.template = _model.TacticsActor().ActorId;
+                var backEvent = new TrainViewEvent(CommandType.SelectTacticsActor)
+                {
+                    template = _model.TacticsActor().ActorId
+                };
                 UpdateCommand(backEvent);
             }
         }
 
-        private void CommandSelectEnemyClose(ConfirmCommandType confirmCommandType)
+        private void CommandDecideTacticsCommandEnemy(ConfirmCommandType confirmCommandType)
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
@@ -455,65 +434,11 @@ namespace Ryneus
             _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));            
         }
 
-        private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
-        {
-            var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
-            confirmInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
-            confirmInfo.SetIsNoChoice(true);
-            _view.CommandCallSkillDetail(confirmInfo);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        }
-
-        private void CommandSymbolClose()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-        }
-
         private void CommandRefresh()
         {
             _view.SetNuminous(_model.Currency);
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
-        }
-
-        private void CommandCallEnemyInfo(SymbolInfo symbolInfo)
-        {
-            switch (symbolInfo.SymbolType)
-            {
-                case SymbolType.Battle:
-                case SymbolType.Boss:
-                    var enemyInfos = symbolInfo.BattlerInfos();
-                    
-                    var enemyViewInfo = new StatusViewInfo(() => {
-                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                        _view.ChangeUIActive(true);
-                    });
-                    enemyViewInfo.SetEnemyInfos(enemyInfos,false);
-                    _view.CommandCallEnemyInfo(enemyViewInfo);
-                    _view.ChangeUIActive(false);
-                    break;
-                case SymbolType.Alcana:
-                    CommandPopupSkillInfo(symbolInfo.GetItemInfos[0]);
-                    break;
-                case SymbolType.Actor:
-                    _model.SetTempAddActorStatusInfos(symbolInfo.GetItemInfos[0].Param1);
-                    var statusViewInfo = new StatusViewInfo(() => {
-                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                        _view.ChangeUIActive(true);
-                    });
-                    statusViewInfo.SetDisplayCharacterList(false);
-                    _view.CommandCallStatus(statusViewInfo);
-                    _view.ChangeUIActive(false);
-                    break;
-            }
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        }
-
-
-
-        private void CommandStageHelp()
-        {
-            _view.CommandHelpList(DataSystem.HelpText("Tactics"));
         }
 
         private void CommandCommandHelp()

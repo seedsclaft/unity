@@ -1269,17 +1269,30 @@ namespace Ryneus
             return result;
         }
 
-        public void TurnEnd(ActionInfo actionInfo)
+        public bool CheckReaction(ActionInfo actionInfo)
         {
             var reAction = false;
             if (actionInfo.TriggeredSkill == false)
             {
                 var subject = GetBattlerInfo(actionInfo.SubjectIndex);
                 var noResetAp = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.NoResetAp);
-                if (noResetAp == null)
+                if (subject.IsAlive() && noResetAp != null)
+                {
+                    reAction = true;
+                } else
                 {
                     subject.ResetAp(false);
                 }
+            }
+            return reAction;
+        }
+
+        public void TurnEnd(ActionInfo actionInfo)
+        {
+            if (actionInfo.TriggeredSkill == false)
+            {
+                var subject = GetBattlerInfo(actionInfo.SubjectIndex);
+
                 var afterApHalf = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.SetAfterApHalf);
                 if (afterApHalf != null)
                 {
@@ -1290,10 +1303,6 @@ namespace Ryneus
                 if (afterAp != null)
                 {
                     subject.SetAp(afterAp.Param1);
-                    if (afterAp.Param1 == 0)
-                    {
-                        reAction = true;
-                    }
                 }
                 if (subject.IsState(StateType.Combo))
                 {
@@ -1314,10 +1323,7 @@ namespace Ryneus
             };
             _skillLogs.Add(skillLog);
             PopActionInfo();
-            if (reAction == false)
-            {
-                _currentBattler = null;
-            }
+            _currentBattler = null;
         }
 
         public void CheckPlusSkill(ActionInfo actionInfo)

@@ -34,9 +34,8 @@ namespace Ryneus
             characterList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             replayButton?.SetText("クリア編成");
-            replayButton?.SetCallHandler(() => 
-                replayEvent?.Invoke()
-            );
+            replayButton?.SetCallHandler(() => replayEvent?.Invoke());
+            decideButton?.SetText("バトル開始");
 
         }
 
@@ -67,10 +66,6 @@ namespace Ryneus
         private void CallCharacterInputHandler(InputKeyType keyType)
         {
             return;
-        }
-
-        private void CallCommandInputHandler(InputKeyType keyType)
-        {
         }
 
         private void DisplaySelectCharacter()
@@ -114,7 +109,7 @@ namespace Ryneus
             }
             characterList.SetInputHandler(keyType,() => DisplaySelectCharacter());
     #endif
-            if (keyType == InputKeyType.Right)
+            if (keyType == InputKeyType.Left)
             {
                 for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
                 {
@@ -123,7 +118,7 @@ namespace Ryneus
                     tacticsTrain.SetBattleFrontToggleHandler(() => callEvent());
                 }
             }
-            if (keyType == InputKeyType.Left)
+            if (keyType == InputKeyType.Right)
             {
                 for (int i = 0; i < characterList.ItemPrefabList.Count;i++)
                 {
@@ -165,12 +160,12 @@ namespace Ryneus
 
         public void ShowCharacterList()
         {
-            characterList.gameObject.SetActive(true);
+            //characterList.gameObject.SetActive(true);
         }
 
         public void HideCharacterList()
         {
-            characterList.gameObject.SetActive(false);
+            //characterList.gameObject.SetActive(false);
         }
 
         public void ShowCommandList()

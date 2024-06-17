@@ -742,7 +742,13 @@ namespace Ryneus
                 }
 
             }
+            var reaction = _model.CheckReaction(actionInfo);
             _model.TurnEnd(actionInfo);
+            if (reaction)
+            {
+                _view.SetBattleBusy(false);
+                return;
+            }
             if (isTriggeredSkill == false)
             {
                 _triggerAfterChecked = true;

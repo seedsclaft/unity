@@ -25,20 +25,15 @@ namespace Ryneus
         private int _rectWidth = 80;
         public void UpdateInfo(StatusInfo statusInfo,StatusInfo baseStatus = null)
         {
-            if (statusInfo == null){
+            if (statusInfo == null)
+            {
                 return;
             }
-            if (maxHp != null)
-            {
-                maxHp.text = statusInfo.Hp.ToString();
-            }
-            if (maxMp != null)
-            {
-                maxMp.text = statusInfo.Mp.ToString();
-            }
+            maxHp?.SetText(statusInfo.Hp.ToString());
+            maxMp?.SetText(statusInfo.Mp.ToString());
             if (atk != null)
             {
-                atk.text = statusInfo.Atk.ToString();
+                atk?.SetText(statusInfo.Atk.ToString());
                 if (baseStatus != null)
                 {
                     ChangeTextColor(atk,statusInfo.Atk,baseStatus.Atk);
@@ -46,7 +41,7 @@ namespace Ryneus
             }
             if (def != null)
             {
-                def.text = statusInfo.Def.ToString();
+                def?.SetText(statusInfo.Def.ToString());
                 if (baseStatus != null)
                 {
                     ChangeTextColor(def,statusInfo.Def,baseStatus.Def);
@@ -54,7 +49,7 @@ namespace Ryneus
             }
             if (spd != null)
             {
-                spd.text = statusInfo.Spd.ToString();
+                spd?.SetText(statusInfo.Spd.ToString());
                 if (baseStatus != null)
                 {
                     ChangeTextColor(spd,statusInfo.Spd,baseStatus.Spd);
@@ -87,22 +82,19 @@ namespace Ryneus
             {
                 currentHp = maxStatusHp;
             }
-            if (hp != null){
-                hp.text = currentHp.ToString();
-            }
-            if (maxHp != null){
-                maxHp.text = maxStatusHp.ToString();
-            }
+            hp?.SetText(currentHp.ToString());
+            maxHp?.SetText(maxStatusHp.ToString());
             if (hpGaugeAnimation != null)
             {
                 var rate = 0f;
-                if (currentHp > 0)
+                if (currentHp > 0 && maxStatusHp > 0)
                 {
                     rate = currentHp / (float)maxStatusHp;
                 }
                 hpGaugeAnimation.UpdateGauge(_rectWidth,3,rate);
             }
         }
+
         public void UpdateMp(int currentMp,int maxStatusMp)
         {
             if (currentMp < 0)
@@ -113,18 +105,12 @@ namespace Ryneus
             {
                 currentMp = maxStatusMp;
             }
-            if (mp != null)
-            {
-                mp.text = currentMp.ToString();
-            }
-            if (maxMp != null)
-            {
-                maxMp.text = maxStatusMp.ToString();
-            }
+            mp?.SetText(currentMp.ToString());
+            maxMp?.SetText(maxStatusMp.ToString());
             if (mpGaugeAnimation != null)
             {
                 var rate = 0f;
-                if (currentMp > 0)
+                if (currentMp > 0 && maxStatusMp > 0)
                 {
                     rate = currentMp / (float)maxStatusMp;
                 }
@@ -138,7 +124,7 @@ namespace Ryneus
             if (hpGaugeAnimation != null)
             {
                 var fromRate = 0f;
-                if (fromHp > 0)
+                if (fromHp > 0 && maxStatusHp > 0)
                 {
                     fromRate = fromHp / (float)maxStatusHp;
                 }
@@ -157,7 +143,7 @@ namespace Ryneus
             if (mpGaugeAnimation != null)
             {
                 var fromRate = 0f;
-                if (fromMp > 0)
+                if (fromMp > 0 && maxStatusMp > 0)
                 {
                     fromRate = fromMp / (float)maxStatusMp;
                 }
@@ -165,7 +151,7 @@ namespace Ryneus
                 var rate = 0f;
                 if (currentMp > 0)
                 {
-                    rate = (float)currentMp / (float)maxStatusMp;
+                    rate = currentMp / (float)maxStatusMp;
                 }
                 mpGaugeAnimation.UpdateGaugeAnimation(rate);
             }
@@ -173,26 +159,17 @@ namespace Ryneus
 
         public void UpdateAtk(int value)
         {
-            if (atk != null)
-            {
-                atk.text = value.ToString();
-            }
+            atk?.SetText(value.ToString());
         }
 
         public void UpdateDef(int value)
         {
-            if (def != null)
-            {
-                def.text = value.ToString();
-            }
+            def?.SetText(value.ToString());
         }
 
         public void UpdateSpd(int value)
         {
-            if (spd != null)
-            {
-                spd.text = value.ToString();
-            }
+            spd?.SetText(value.ToString());
         }
 
         public void ShowStatus()

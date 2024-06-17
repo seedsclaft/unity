@@ -35,11 +35,15 @@ namespace Ryneus
             _currentIndex = selectIndex;
         }
 
-        public BattlerInfo CurrentEnemy => _enemyBattlerInfos[_currentIndex];
+        public BattlerInfo CurrentEnemy => _currentIndex > -1 ? _enemyBattlerInfos[_currentIndex] : null;
         
         public List<ListData> SkillActionList()
         {
-            var skillInfos = CurrentEnemy.Skills;//.FindAll(a => a.Master.Attribute != AttributeType.None);
+            var skillInfos = new List<SkillInfo>();
+            if (CurrentEnemy != null)
+            {
+                skillInfos = CurrentEnemy.Skills;
+            }
             skillInfos.ForEach(a => a.SetEnable(true));
             skillInfos.Sort((a,b) => {return a.Id - b.Id;});
             return MakeListData(skillInfos);
@@ -47,12 +51,21 @@ namespace Ryneus
 
         public List<ListData> SelectCharacterConditions()
         {
-            return MakeListData(CurrentEnemy.StateInfos);
+            var stateInfos = new List<StateInfo>();
+            if (CurrentEnemy != null)
+            {
+                stateInfos = CurrentEnemy.StateInfos;
+            }
+            return MakeListData(stateInfos);
         }
 
         public List<ListData> EnemySkillTriggerInfo()
         {
-            var skillInfos = CurrentEnemy.Skills;
+            var skillInfos = new List<SkillInfo>();
+            if (CurrentEnemy != null)
+            {
+                skillInfos = CurrentEnemy.Skills;
+            }
             skillInfos.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             var skillTriggerInfos = new List<SkillTriggerInfo>();
             foreach (var skillInfo in skillInfos)

@@ -88,7 +88,7 @@ namespace Ryneus
                 var currentRecord = _model.CurrentSelectRecord();
                 if (currentRecord != null)
                 {
-                    CommandTacticsCommand(TacticsCommandType.Paradigm);
+                    CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
                     CommandStageSymbol();
                     CommandSelectRecordSeek(currentRecord.StageSymbolData.Seek);
                     CommandSelectRecord(currentRecord);
@@ -118,14 +118,11 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
-                case CommandType.TacticsCommand:
-                    CommandTacticsCommand((TacticsCommandType)viewEvent.template);
+                case CommandType.SelectTacticsCommand:
+                    CommandSelectTacticsCommand((TacticsCommandType)viewEvent.template);
                     break;
                 case CommandType.SelectSymbol:
                     CommandSelectRecord((SymbolResultInfo)viewEvent.template);
-                    break;
-                case CommandType.SymbolClose:
-                    CommandSymbolClose();
                     break;
                 case CommandType.CallEnemyInfo:
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
@@ -304,13 +301,15 @@ namespace Ryneus
 
         private void CommandBack()
         {
-            var eventData = new TacticsViewEvent(_backCommand);
-            eventData.template = _model.TacticsCommandType;
+            var eventData = new TacticsViewEvent(_backCommand)
+            {
+                template = _model.TacticsCommandType
+            };
             UpdateCommand(eventData);
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
 
-        private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
+        private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
         {
             _model.SetTacticsCommandType(tacticsCommandType);
             _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -374,6 +373,7 @@ namespace Ryneus
 
                     _view.ShowConfirmCommand();
                     _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());
+                    _view.ShowSelectCharacter();
                     CommandRefresh();
                     _backCommand = CommandType.CancelSelectSymbol;
                     break;
@@ -403,7 +403,7 @@ namespace Ryneus
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
-            _backCommand = CommandType.TacticsCommand;
+            _backCommand = CommandType.SelectTacticsCommand;
         }
 
         private void CommandDecideRecord()
@@ -486,7 +486,6 @@ namespace Ryneus
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
                 getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
-            } else{
             }
         }
 
@@ -560,7 +559,7 @@ namespace Ryneus
                 GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectTacticsCommand(_model.TacticsCommandType);
             }
         }
 
@@ -638,7 +637,7 @@ namespace Ryneus
                 GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
-                CommandTacticsCommand(_model.TacticsCommandType);
+                CommandSelectTacticsCommand(_model.TacticsCommandType);
             }
         }
 
@@ -658,12 +657,6 @@ namespace Ryneus
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallSkillDetail(confirmInfo);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-        }
-
-        private void CommandSymbolClose()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            _view.HideRecordList();
         }
 
         private void CommandRefresh()

@@ -150,21 +150,21 @@ namespace Ryneus
         public void SetTacticsCommand(List<ListData> menuCommands)
         {
             tacticsCommandList.SetData(menuCommands);
-            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSelectTacticsCommand());
             tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
             tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
             SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
             UpdateHelpWindow();
         }
         
-        private void CallTacticsCommand()
+        private void CallSelectTacticsCommand()
         {
             var listData = tacticsCommandList.ListData;
             if (listData != null && listData.Enable)
             {
                 var commandData = (SystemData.CommandData)listData.Data;
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new TacticsViewEvent(CommandType.TacticsCommand)
+                var eventData = new TacticsViewEvent(CommandType.SelectTacticsCommand)
                 {
                     template = commandData.Id
                 };
@@ -268,24 +268,14 @@ namespace Ryneus
         }
 
 
-        public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
+        public void ShowSelectCharacter()
         {
-            trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
+            trainView.ShowTacticsCharacter();
         }
 
         public void HideSelectCharacter()
         {
             trainView.HideSelectCharacter();
-        }
-
-        public void ShowSelectCharacterCommand()
-        {
-            trainView.ShowSelectCharacterCommand();
-        }
-
-        public void HideSelectCharacterCommand()
-        {
-            trainView.HideSelectCharacterCommand();
         }
 
         public void ShowConfirmCommand()
@@ -296,11 +286,6 @@ namespace Ryneus
         public void ShowBattleReplay(bool isActive)
         {
             trainView.ShowBattleReplay(isActive);
-        }
-
-        public void HideConfirmCommand()
-        {
-            trainView.HideConfirmCommand();
         }
 
         public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party)
@@ -510,7 +495,7 @@ namespace Ryneus
         {
             switch (viewEvent.commandType)
             {
-                case CommandType.TacticsCommand:
+                case CommandType.SelectTacticsCommand:
                     var tacticsCommandType = (TacticsCommandType)viewEvent.template;
                     switch (tacticsCommandType)
                     {
@@ -546,7 +531,7 @@ namespace Ryneus
         {
             switch (viewEvent.commandType)
             {
-                case Train.CommandType.TacticsCommandClose:
+                case Train.CommandType.DecideTacticsCommand:
                 if (tacticsCommandType != TacticsCommandType.Paradigm)
                 {
                     tacticsCommandList.Activate();

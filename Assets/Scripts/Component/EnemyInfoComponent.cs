@@ -14,20 +14,22 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI lv;
         [SerializeField] private StatusInfoComponent statusInfoComponent;
         [SerializeField] private TextMeshProUGUI gridKey;
+        [SerializeField] private List<GameObject> actorOnlyGameObjects;
         
 
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
-            if (battlerInfo == null){
+            if (battlerInfo == null)
+            {
                 Clear();
                 return;
             }
             var enemyData = battlerInfo.EnemyData;
             UpdateData(enemyData);
-            if (lv != null){
-                lv.text = battlerInfo.Level.ToString();
-            }
-            if (statusInfoComponent != null){
+            lv?.SetText(battlerInfo.Level.ToString());
+            if (statusInfoComponent != null)
+            {
+                HideActorOnly();
                 statusInfoComponent.UpdateInfo(battlerInfo.Status);
                 statusInfoComponent.UpdateHp(battlerInfo.Hp,battlerInfo.MaxHp);
                 statusInfoComponent.UpdateMp(battlerInfo.Mp,battlerInfo.MaxMp);
@@ -56,12 +58,11 @@ namespace Ryneus
                 Clear();
                 return;
             }
-            if (mainThumb != null){
+            if (mainThumb != null)
+            {
                 UpdateMainThumb(enemyData.ImagePath,0,0,1.0f);
             }
-            if (nameText != null){
-                nameText.text = enemyData.Name;
-            }
+            nameText?.SetText(enemyData.Name);
         }
 
         public void SetGridKey(int index)
@@ -72,11 +73,18 @@ namespace Ryneus
 
         public void Clear()
         {
-            if (mainThumb != null){
+            if (mainThumb != null)
+            {
                 mainThumb.gameObject.SetActive(false);
             }
-            if (nameText != null){
-                nameText.text = "";
+            nameText?.SetText("");
+        }
+
+        private void HideActorOnly()
+        {
+            foreach (var actorOnlyGameObject in actorOnlyGameObjects)
+            {
+                actorOnlyGameObject.SetActive(false);
             }
         }
     }

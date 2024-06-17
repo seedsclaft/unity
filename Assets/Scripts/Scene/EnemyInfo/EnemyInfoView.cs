@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using EnemyInfo;
-using Effekseer;
 
 namespace Ryneus
 {
@@ -34,10 +32,10 @@ namespace Ryneus
             });
             
             selectCharacter.Initialize();
-            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(selectCharacter.gameObject);
             InitializeSelectCharacter();
             new EnemyInfoPresenter(this,battlerInfos);
-            SetInputHandler(gameObject.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(gameObject);
         }
 
         public void SetEnemies(List<ListData> battlerInfos)

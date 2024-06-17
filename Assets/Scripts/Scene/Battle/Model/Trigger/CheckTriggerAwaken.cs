@@ -8,6 +8,10 @@ namespace Ryneus
         public bool CheckTrigger(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
         {
             var isTrigger = false;
+            if (!battlerInfo.IsAlive())
+            {
+                return isTrigger;
+            }
             switch (triggerData.TriggerType)
             {
                 case TriggerType.IsNotAwaken:

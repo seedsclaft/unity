@@ -21,10 +21,9 @@ namespace Tactics
     public enum CommandType
     {
         None = 0,
-        TacticsCommand,
+        SelectTacticsCommand, // // 戦略コマンドを選択した
         SelectSymbol,
         PopupSkillInfo,
-        SymbolClose,
         SelectRecord,
         CancelSymbolRecord,
         CancelSelectSymbol,

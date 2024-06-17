@@ -56,7 +56,7 @@ namespace Ryneus
 
         public void CallTrainCommand(TacticsCommandType tacticsCommandType)
         {
-            var eventData = new TrainViewEvent(CommandType.TacticsCommand)
+            var eventData = new TrainViewEvent(CommandType.SelectTacticsCommand)
             {
                 template = tacticsCommandType
             };
@@ -114,30 +114,10 @@ namespace Ryneus
         {
             selectCharacter.Initialize(() => CallBattleReplay());
             //selectCharacter.SetCharacterData(actorInfos);
-            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(selectCharacter.gameObject);
+            SetInputHandler(selectCharacter.CharacterList.gameObject);
             
             //selectCharacter.SetTacticsCharacter(tacticsActorInfo);
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallFrontBattleIndex());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallBattleBackIndex());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Option1,() => CallSkillTriggerCommand());
-            selectCharacter.SetInputHandlerCharacter(InputKeyType.Start,() => CallTrainCommand());
-            selectCharacter.SetInputHandlerCommand(() => CallTrainCommand());
-            SetInputHandler(selectCharacter.CharacterList.gameObject);
-            selectCharacter.CharacterList.SetSelectedHandler(() => 
-            {
-                var listData = selectCharacter.CharacterData;
-                if (listData != null)
-                {
-                    var data = (TacticsActorInfo)listData.Data;
-                    var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)
-                    {
-                        template = data.ActorInfo.ActorId
-                    };
-                    _commandData(eventData);
-                }
-            });
             HideSelectCharacter();
         }
 
@@ -169,7 +149,7 @@ namespace Ryneus
         private void CallTrainCommand()
         {
             var commandType = ConfirmCommandType.Yes;
-            var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
+            var eventData = new TrainViewEvent(CommandType.DecideTacticsCommand)
             {
                 template = commandType
             };
@@ -178,7 +158,7 @@ namespace Ryneus
 
         private void CallTrainCommandCancel()
         {
-            var eventData = new TrainViewEvent(CommandType.TacticsCommandClose)
+            var eventData = new TrainViewEvent(CommandType.DecideTacticsCommand)
             {
                 template = ConfirmCommandType.No
             };
@@ -191,9 +171,35 @@ namespace Ryneus
             _commandData(eventData);
         }
 
+        public void ShowTacticsCharacter()
+        {
+            var eventData = new TrainViewEvent(CommandType.ShowTacticsCharacter);
+            _commandData(eventData);
+        }
+
         public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
         {
             selectCharacter.SetTacticsCharacter(tacticsActorInfo);
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Decide,() => CallActorTrain());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Left,() => CallFrontBattleIndex());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Right,() => CallBattleBackIndex());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Cancel,() => CallTrainCommandCancel());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Option1,() => CallSkillTriggerCommand());
+            selectCharacter.SetInputHandlerCharacter(InputKeyType.Start,() => CallTrainCommand());
+            selectCharacter.SetInputHandlerCommand(() => CallTrainCommand());
+            selectCharacter.CharacterList.SetSelectedHandler(() => 
+            {
+                var listData = selectCharacter.CharacterData;
+                if (listData != null)
+                {
+                    var data = (TacticsActorInfo)listData.Data;
+                    var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)
+                    {
+                        template = data.ActorInfo.ActorId
+                    };
+                    _commandData(eventData);
+                }
+            });
             selectCharacter.SetTacticsCommandData(tacticsCommandData);
             //selectCharacter.UpdateSmoothSelect();
             selectCharacter.gameObject.SetActive(true);
@@ -317,7 +323,7 @@ namespace Ryneus
                 {
                     return;
                 }
-                var eventData = new TrainViewEvent(CommandType.SkillTrigger)
+                var eventData = new TrainViewEvent(CommandType.SelectSkillTrigger)
                 {
                     template = data.ActorInfo.ActorId
                 };
@@ -330,7 +336,7 @@ namespace Ryneus
             var listData = battleSelectCharacter.ActionData;
             if (listData != null && listData.Enable)
             {
-                var eventData = new TrainViewEvent(CommandType.SkillAlchemy);
+                var eventData = new TrainViewEvent(CommandType.ActorLearnMagic);
                 var data = listData;
                 eventData.template = listData;
                 _commandData(eventData);
@@ -342,7 +348,7 @@ namespace Ryneus
             _inputKeyEvent?.Invoke(viewEvent,currentTacticsCommandType);
             switch (viewEvent.commandType)
             {
-                case CommandType.TacticsCommand:
+                case CommandType.SelectTacticsCommand:
                     var tacticsCommandType = (TacticsCommandType)viewEvent.template;
                     switch (tacticsCommandType)
                     {
@@ -370,7 +376,7 @@ namespace Ryneus
                         selectCharacter.CharacterList.Deactivate();             
                     }
                     break;
-                case CommandType.SkillAlchemy:
+                case CommandType.ActorLearnMagic:
                     battleSelectCharacter.SetBusy(true);
                     break;
             }

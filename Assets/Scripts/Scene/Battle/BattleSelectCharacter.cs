@@ -185,7 +185,7 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            if (!attributeList.gameObject.activeSelf)
+            if (attributeList != null && !attributeList.gameObject.activeSelf)
             {
                 // タブ選択操作
                 if (keyType == InputKeyType.SideLeft2)
