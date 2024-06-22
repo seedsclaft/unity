@@ -275,7 +275,7 @@ namespace Ryneus
             {
                 if (stageSeekList.Count >= stockCount)
                 {
-                    continue;
+                    //continue;
                 }
                 var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
                 if (!stageSeekList.Contains(stageKey))

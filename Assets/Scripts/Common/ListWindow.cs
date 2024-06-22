@@ -97,6 +97,10 @@ namespace Ryneus
         public void SetListData(List<ListData> listData)
         {
             _listDates = listData;
+            if (reverse)
+            {
+                _listDates.Reverse();
+            }
         }
 
         private void SetValueChangedEvent()
@@ -162,6 +166,10 @@ namespace Ryneus
                 var prefab = Instantiate(_blankObject);
                 prefab.transform.SetParent(scrollRect.content, false);
                 _objectList.Add(prefab);
+            }
+            if (reverse)
+            {
+                _objectList.Reverse();
             }
         }
 
@@ -536,7 +544,8 @@ namespace Ryneus
             ResetInputFrame(plusValue);
         }
 
-        public void InputSelectIndex(InputKeyType keyType){
+        public void InputSelectIndex(InputKeyType keyType)
+        {
             var currentIndex = Index;
             var selectIndex = Index;
             var plusKey = GetPlusKey();
@@ -665,12 +674,6 @@ namespace Ryneus
         }
 
         public virtual void UpdateHelpWindow(){
-        }
-
-        public virtual void RefreshListItem(GameObject gameObject,int itemIndex)
-        {
-            ListItem listItem = gameObject.GetComponent<ListItem>();
-            listItem.SetUnSelect();
         }
         
         public void CallSelectHandler(InputKeyType keyType)

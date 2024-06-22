@@ -60,6 +60,7 @@ namespace Ryneus
                 //if (_symbolInfo.SymbolType > SymbolType.None && !_symbolInfo.StageSymbolData.IsRandomSymbol())
                 if (_symbolInfo.SymbolType > SymbolType.None)
                 {
+                    commandTitle.transform.parent.gameObject.SetActive(true);
                     var textId = 40 + (int)_symbolInfo.SymbolType;
                     commandTitle.text = DataSystem.GetTextData(textId).Text;
                     //commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
@@ -81,11 +82,13 @@ namespace Ryneus
             if (_symbolInfo.SymbolType == SymbolType.Random) return;
             if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss)
             {
+                symbolImage.gameObject.SetActive(true);
                 symbolImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
             } else
             {
                 if (symbolImage != null && symbolSprites != null)
                 {
+                    symbolImage.gameObject.SetActive(true);
                     if (_symbolInfo.SymbolType == SymbolType.SelectActor)
                     {
                         symbolImage.sprite = symbolSprites[(int)SymbolType.Actor];

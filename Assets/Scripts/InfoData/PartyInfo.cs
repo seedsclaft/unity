@@ -8,7 +8,7 @@ namespace Ryneus
         private int _currency = 0;
         public int Currency => _currency;
         private int _parallelCount = 1;
-        private int _stageStockCount = 10;
+        private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
         private List<ScorePrizeInfo> _scorePrizeInfos = new ();

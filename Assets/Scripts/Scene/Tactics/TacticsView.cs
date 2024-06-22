@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Tactics;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
@@ -299,26 +300,35 @@ namespace Ryneus
             {
                 return;
             }
-            symbolRecordList.SetData(recordInfos);
-            var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
-            foreach (var SymbolRecordData in SymbolRecordDates)
+            symbolRecordList.SetData(recordInfos,false,() => 
             {
-                SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
-            }
-            symbolRecordList.SetSelectedHandler(() => 
-            {
-                foreach (var SymbolRecordData in symbolRecordList.GetComponentsInChildren<SymbolRecordData>())
+                var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
+                foreach (var SymbolRecordData in SymbolRecordDates)
                 {
-                    SymbolRecordData.UpdateSelect(symbolRecordList.Index);
+                    SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
                 }
+                symbolRecordList.SetSelectedHandler(() => 
+                {
+                    foreach (var SymbolRecordData in symbolRecordList.GetComponentsInChildren<SymbolRecordData>())
+                    {
+                    }
+                });
             });
+
         }
         
         public void SetPositionSymbolRecords(List<ListData> symbolInfos)
         {
             if (_initRecordDisplay == false)
             {
-                symbolRecordList.UpdateScrollRect(symbolInfos.FindIndex(a => a.Selected));
+                var selectIndex = symbolInfos.FindIndex(a => a.Selected);
+                var resultIndex = symbolInfos.Count - selectIndex + 1;
+                if (resultIndex < 0)
+                {
+                    resultIndex = 0;
+                }
+                symbolRecordList.UpdateSelectIndex(resultIndex);
+                symbolRecordList.UpdateScrollRect(resultIndex);
                 _initRecordDisplay = true;
             }
         }

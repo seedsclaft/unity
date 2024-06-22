@@ -39,7 +39,7 @@ namespace Ryneus
             _isInit = true;
         }
 
-        public async void SetData(List<ListData> listData,bool resetScrollRect = true)
+        public async void SetData(List<ListData> listData,bool resetScrollRect = true,Action initializeAfterEvent = null)
         {
             if (resetScrollRect && listData != ListDates)
             {
@@ -70,6 +70,7 @@ namespace Ryneus
             if (ScrollRect.content.GetComponent<RectTransform>().GetHeight() == 0)
             {
                 InitializeRefresh(selectIndex);
+                initializeAfterEvent?.Invoke();
             } else
             {
                 Refresh(selectIndex);

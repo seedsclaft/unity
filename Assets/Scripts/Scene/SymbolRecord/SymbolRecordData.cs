@@ -43,11 +43,11 @@ namespace Ryneus
                 currentObj?.SetActive(symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
                 var textId = 81;
-                if (symbolSeek == currentTurn)
+                if (currentObj.activeSelf)
                 {
                     textId = 82;
                 } else
-                if (symbolSeek > currentTurn)
+                if (futureObj.activeSelf)
                 {
                     textId = 83;
                 }
@@ -80,9 +80,21 @@ namespace Ryneus
             }
         }
 
-        public void UpdateSelect(int index)
+        void Update() 
         {
-            seekerText?.gameObject?.SetActive(index == Index);
+            if (seekerText != null && Cursor != null)
+            {
+                seekerText.gameObject.SetActive(Cursor.activeSelf);
+            }
         }
+
+        void LateUpdate() 
+        {
+            if (seekerText != null && Cursor != null)
+            {
+                seekerText.gameObject.SetActive(Cursor.activeSelf);
+            }
+        }
+        
     }
 }
