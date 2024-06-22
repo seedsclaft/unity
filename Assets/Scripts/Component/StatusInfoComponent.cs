@@ -17,6 +17,11 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI spd;
         [SerializeField] private StatusGaugeAnimation hpGaugeAnimation;
         [SerializeField] private StatusGaugeAnimation mpGaugeAnimation;
+        [SerializeField] private TextMeshProUGUI hpCaption;
+        [SerializeField] private TextMeshProUGUI mpCaption;
+        [SerializeField] private TextMeshProUGUI atkCaption;
+        [SerializeField] private TextMeshProUGUI defCaption;
+        [SerializeField] private TextMeshProUGUI spdCaption;
         [SerializeField] private Color normalColor;
         [SerializeField] private Color upperColor;
         [SerializeField] private Color downColor;
@@ -54,6 +59,26 @@ namespace Ryneus
                 {
                     ChangeTextColor(spd,statusInfo.Spd,baseStatus.Spd);
                 }
+            }
+            if (hpCaption != null)
+            {
+                UpdateCaption(StatusParamType.Hp,hpCaption);
+            }
+            if (mpCaption != null)
+            {
+                UpdateCaption(StatusParamType.Mp,mpCaption);
+            }
+            if (atkCaption != null)
+            {
+                UpdateCaption(StatusParamType.Atk,atkCaption);
+            }
+            if (defCaption != null)
+            {
+                UpdateCaption(StatusParamType.Def,defCaption);
+            }
+            if (spdCaption != null)
+            {
+                UpdateCaption(StatusParamType.Spd,spdCaption);
             }
         }
 
@@ -186,6 +211,12 @@ namespace Ryneus
             {
                 canvasGroup.alpha = 0f;
             }
+        }
+
+        private void UpdateCaption(StatusParamType statusParamType,TextMeshProUGUI caption)
+        {
+            var textId = 300 + (int)statusParamType;
+            caption?.SetText(DataSystem.GetText(textId));
         }
     }
 }

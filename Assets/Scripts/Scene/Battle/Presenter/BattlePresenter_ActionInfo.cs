@@ -22,9 +22,13 @@ namespace Ryneus
                 return;
             }
             var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor;
-            if (actionInfo.Master.SkillType == SkillType.Messiah && isActor || actionInfo.Master.SkillType == SkillType.Awaken && isActor)
+            if (actionInfo.Master.SkillType == SkillType.Messiah && isActor)
             {
                 StartAnimationDemigod();
+            } else
+            if (actionInfo.Master.SkillType == SkillType.Awaken && isActor)
+            {
+                StartAnimationAwaken();
             } else
             {
                 StartAnimationSkill();
@@ -37,6 +41,19 @@ namespace Ryneus
         private async void StartAnimationDemigod()
         {
             var actionInfo = _model.CurrentActionInfo;
+            var sprite = _model.AwakenSprite(_model.GetBattlerInfo(actionInfo.SubjectIndex).ActorInfo.ActorId);
+            await _view.StartAnimationAwaken(sprite);
+            StartAnimationSkill();
+        }
+
+        
+        /// <summary>
+        /// カットインアニメーション再生してからアニメーション再生
+        /// </summary>
+        private async void StartAnimationAwaken()
+        {
+            var actionInfo = _model.CurrentActionInfo;
+            //var effect = _model.AwakenEffect(_model.GetBattlerInfo(actionInfo.SubjectIndex).ActorInfo.ActorId);
             await _view.StartAnimationDemigod(_model.GetBattlerInfo(actionInfo.SubjectIndex),actionInfo.Master);
             StartAnimationSkill();
         }
@@ -63,6 +80,8 @@ namespace Ryneus
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
                     _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
+                    var speed = GameSystem.ConfigData.BattleSpeed;
+                    await UniTask.DelayFrame((int)(16/speed));
                 }
             }
             if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)

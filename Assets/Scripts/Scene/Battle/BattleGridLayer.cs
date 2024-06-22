@@ -60,7 +60,7 @@ namespace Ryneus
                 if (battler.IsAlive())
                 {
                     turnWait[battler] = new List<float>();
-                    for (int i = 0;i < 10;i++)
+                    for (int i = 0;i < 7;i++)
                     {
                         var waitFrame = battler.WaitFrame(i);
                         if (!waitFrameList.Contains(waitFrame))
@@ -75,7 +75,7 @@ namespace Ryneus
             var sortedBattlerList = new List<BattlerInfo>();
             var sortedBattlerApList = new List<float>();
             var targetIndex = 0;
-            while (sortedBattlerList.Count < 10)
+            while (sortedBattlerList.Count < 7)
             {
                 var ap = waitFrameList[targetIndex];
                 targetIndex++;
@@ -92,7 +92,7 @@ namespace Ryneus
 
             for (int i = 0;i < sortedBattlerList.Count;i++)
             {
-                if (i > 9) continue;
+                if (i > 6) continue;
                 var battler = sortedBattlerList[i];
                 _actorBattlers[i].UpdateAlpha(battler.IsActor);
                 _enemyBattlers[i].UpdateAlpha(!battler.IsActor);

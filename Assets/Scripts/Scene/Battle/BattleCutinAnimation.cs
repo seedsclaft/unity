@@ -20,8 +20,12 @@ namespace Ryneus
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         
-        private void OnEnable() {
-            //StartAnimation(null,null,1);
+        public void Initialize() 
+        {
+            skillUnMask.transform.DOLocalMove(new Vector3(0,0,0),0);
+            skillCanvasGroup.gameObject.transform.DOLocalMove(new Vector3(0,-144,0),0);
+            skillCanvasGroup.alpha = 0;
+            skillNameCanvasGroup.alpha = 0;
         }
 
         public void StartAnimation(BattlerInfo battlerInfo,SkillData skillData,float speedRate)

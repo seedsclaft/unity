@@ -16,7 +16,7 @@ namespace Ryneus
         {
             var prefab = Instantiate(GetStatusObject(popupType));
             prefab.transform.SetParent(statusRoot.transform, false);
-            statusRoot.gameObject.SetActive(true);
+            statusRoot.SetActive(true);
             _statusView = prefab.GetComponent<BaseView>();
             _statusView?.SetHelpWindow(helpWindow);
             return prefab;
@@ -38,10 +38,11 @@ namespace Ryneus
         
         public void CloseStatus()
         {
-            foreach(Transform child in statusRoot.transform){
+            foreach(Transform child in statusRoot.transform)
+            {
                 Destroy(child.gameObject);
             }
-            statusRoot.gameObject.SetActive(false);
+            statusRoot.SetActive(false);
         }
 
         public void SetBusy(bool isBusy)
@@ -50,7 +51,8 @@ namespace Ryneus
         }
     }
 
-    public enum StatusType{
+    public enum StatusType
+    {
         Status,
         EnemyDetail,
         SideMenu,

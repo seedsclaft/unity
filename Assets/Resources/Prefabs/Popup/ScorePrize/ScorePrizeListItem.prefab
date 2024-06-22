@@ -254,7 +254,7 @@ MonoBehaviour:
   prizeName: {fileID: 6599144574228515562}
   score: {fileID: 4400084676247078113}
   getFlag: {fileID: 3880119965276733324}
-  getItemButton: {fileID: 1424872399777479251}
+  getItemButton: {fileID: 8850622099551633599}
 --- !u!1 &1780696741430415348
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,18 +805,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6e040513339a5240a65ac300c2d19b6, type: 3}
---- !u!114 &1424872399777479251 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4855135070705154274, guid: c6e040513339a5240a65ac300c2d19b6,
-    type: 3}
-  m_PrefabInstance: {fileID: 5811559394681635505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3880119965276733324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3880119965276733324 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7313347675400518973, guid: c6e040513339a5240a65ac300c2d19b6,
@@ -829,3 +817,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5811559394681635505}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8850622099551633599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3059482992224895502, guid: c6e040513339a5240a65ac300c2d19b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5811559394681635505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880119965276733324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

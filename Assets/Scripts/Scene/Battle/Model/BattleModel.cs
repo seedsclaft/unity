@@ -1006,6 +1006,26 @@ namespace Ryneus
             return null;
         }
 
+        public Effekseer.EffekseerEffectAsset AwakenEffect(int actorId)
+        {
+            var result = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_cut-in_000" + 1);
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+        }
+
+        public Sprite AwakenSprite(int actorId)
+        {
+            var result = ResourceSystem.LoadActorCutinSprite("0001");
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+        }
+
         public void ExecCurrentAction(ActionInfo actionInfo,bool addSaveData)
         {
             if (actionInfo != null)

@@ -8,7 +8,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI prizeName;
         [SerializeField] private TextMeshProUGUI score;
         [SerializeField] private GameObject getFlag;
-        [SerializeField] private SideMenuButton getItemButton;
+        [SerializeField] private OnOffButton getItemButton;
         
         public void UpdateViewItem()
         {
@@ -16,13 +16,13 @@ namespace Ryneus
             var data = (ScorePrizeInfo)ListData.Data;
             if (data != null)
             {
-                score?.SetText(data.Score.ToString());
+                score?.SetText(data.Score.ToString() + "人");
                 prizeName?.SetText(data.ConditionName);
                 getFlag.SetActive(data._getFlag);
                 
                 //getItemButton.SetData("",0);
                 getItemButton.UpdateViewItem();
-                getItemButton.SetCallHandler((a) => 
+                getItemButton.SetCallHandler(() => 
                 {
                     if (getItemButton.gameObject.activeSelf == false) return;
                 });

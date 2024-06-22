@@ -7,6 +7,7 @@ using Effekseer;
 using System.Linq;
 using TMPro;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 
 namespace Ryneus
 {
@@ -33,6 +34,9 @@ namespace Ryneus
         [SerializeField] private OnOffButton skillLogButton = null;
         [SerializeField] private BattleCutinAnimation battleCutinAnimation = null;
         [SerializeField] private GameObject battleBackGroundRoot = null;
+        [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
+        [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
+        
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
         private BattleStartAnim _battleStartAnim = null;
@@ -91,6 +95,7 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBattleSkipActive(false);
+            battleCutinAnimation.Initialize();
             if (GameSystem.CurrentStageData.Party.InReplay)
             {
                 new BattleReplayPresenter(this);
@@ -582,6 +587,19 @@ namespace Ryneus
             DeactivateEnemyList();
             battleCutinAnimation.StartAnimation(battlerInfo,skillData,speedRate);
             //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+        }
+
+        public async UniTask StartAnimationAwaken(Sprite actorSprite)
+        {
+            var speed = GameSystem.ConfigData.BattleSpeed;
+            if (GameSystem.ConfigData.BattleAnimationSkip == false)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Demigod);
+                battleAwakenAnimation.StartAnimation(actorSprite,speed);
+                HideStateOverlay();
+                SetAnimationBusy(true);
+                await UniTask.DelayFrame((int)(60 / speed));
+            }
         }
 
         public void ClearDamagePopup()
