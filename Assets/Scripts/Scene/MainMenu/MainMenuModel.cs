@@ -58,7 +58,7 @@ namespace Ryneus
             {
                 var score = 0;
                 var stageInfo = new StageInfo(stage);
-                stageInfo.SetClearCount(CurrentData.PlayerInfo.ClearCount(stage.Id));
+                //stageInfo.SetClearCount(CurrentData.PlayerInfo.ClearCount(stage.Id));
                 var scoreMax = 0;
                 var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageInfo.Id);
                 foreach (var record in records)

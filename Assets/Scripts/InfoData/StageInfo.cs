@@ -27,12 +27,14 @@ namespace Ryneus
         {
             _currentTurn = currentTurn;
         }
+        /*
         private int _clearCount;
         public int ClearCount => _clearCount;
         public void SetClearCount(int count)
         {
             _clearCount = count;
         }
+        */
         
         private int _score;
         public int Score => _score;
@@ -50,7 +52,7 @@ namespace Ryneus
         private int _troopClearCount;
         public int TroopClearCount => _troopClearCount;
 
-        private List<TroopData> _troopDates = new();
+        //private List<TroopData> _troopDates = new();
         
         private int _currentSeekIndex = -1;
         public int CurrentSeekIndex => _currentSeekIndex;
@@ -62,18 +64,18 @@ namespace Ryneus
         private List<string> _readEventKeys = new ();
         public List<string> ReadEventKeys => _readEventKeys;
 
-        private int _routeSelect = 0;
-        public int RouteSelect => _routeSelect;
+        //private int _routeSelect = 0;
+        //public int RouteSelect => _routeSelect;
 
 
         private EndingType _endingType = EndingType.C;
         public EndingType EndingType => _endingType;
         public void SetEndingType(EndingType endingType) {_endingType = endingType;}
-
+/*
         private bool _stageClear = false;
         public bool StageClear => _stageClear;
         public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
-
+*/
         private int _returnSeek = -1;
         public int ReturnSeek => _returnSeek;
         public void SetReturnSeek(int returnSeek) 
@@ -140,25 +142,27 @@ namespace Ryneus
 
         public void SetRouteSelect(int routeSelect)
         {
+            /*
             _routeSelect = 0;
             if (routeSelect > 0)
             {
                 _routeSelect = routeSelect;
             }
+            */
         }
 
         public void SetMoveStageData(StageInfo stageInfo)
         {
-            _clearCount = stageInfo.ClearCount;
+            //_clearCount = stageInfo.ClearCount;
             _troopClearCount = stageInfo._troopClearCount;
-            _routeSelect = stageInfo.RouteSelect;
-            _troopDates = stageInfo._troopDates;
+            //_routeSelect = stageInfo.RouteSelect;
+            //_troopDates = stageInfo._troopDates;
             _savedCount = stageInfo._savedCount;
             _continueCount = stageInfo._continueCount;
             _clearTroopIds = stageInfo._clearTroopIds;
             //_readEventKeys = stageInfo._readEventKeys;
             _endingType = stageInfo._endingType;
-            _stageClear = stageInfo._stageClear;
+            //_stageClear = stageInfo._stageClear;
             _survivalMode = stageInfo._survivalMode;
         }
 

@@ -334,7 +334,7 @@ namespace Ryneus
                 {
                     var eventData = new TacticsViewEvent(CommandType.SelectRecord)
                     {
-                        template = data[0].Seek
+                        template = data[0]
                     };
                     _commandData(eventData);
                 }

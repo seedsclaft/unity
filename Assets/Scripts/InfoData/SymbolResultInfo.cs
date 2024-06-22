@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -36,6 +35,13 @@ namespace Ryneus
             _battleScore = battleScore;
         }
 
+        // 確定しているか
+        public bool _endFlag = false;
+        public bool EndFlag => _endFlag;
+        public void SetEndFlag(bool endFlag)
+        {
+            _endFlag = endFlag;
+        }
 
         private SymbolInfo _symbolInfo;
         public SymbolInfo SymbolInfo => _symbolInfo;
@@ -47,7 +53,6 @@ namespace Ryneus
             _currency = currency;
             _selected = false;
         }
-
 
         public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
         {

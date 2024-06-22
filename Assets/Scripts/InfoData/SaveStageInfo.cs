@@ -91,13 +91,5 @@ namespace Ryneus
 			*/
 		}
 		
-		public void ChangeRouteSelectStage(int stageId)
-		{
-			var stageData = DataSystem.FindStage(stageId);
-			var current = _currentStage;
-			var currentStage = new StageInfo(stageData);
-			currentStage.SetMoveStageData(current);
-			_currentStage = currentStage;
-		}
 	}
 }

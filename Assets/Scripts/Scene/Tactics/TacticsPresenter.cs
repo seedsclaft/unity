@@ -90,7 +90,7 @@ namespace Ryneus
                 {
                     CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
                     CommandStageSymbol();
-                    CommandSelectRecordSeek(currentRecord.StageSymbolData.Seek);
+                    CommandSelectRecordSeek(currentRecord);
                     CommandSelectRecord(currentRecord);
                 }
             }
@@ -132,7 +132,7 @@ namespace Ryneus
                     CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                     break;
                 case CommandType.SelectRecord:
-                    CommandSelectRecordSeek((int)viewEvent.template);
+                    CommandSelectRecordSeek((SymbolResultInfo)viewEvent.template);
                     break;
                 case CommandType.CancelSymbolRecord:
                     if (_alcanaSelectBusy == true)
@@ -271,15 +271,15 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
-        private void CommandSelectRecordSeek(int seek)
+        private void CommandSelectRecordSeek(SymbolResultInfo symbolResultInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            //Seekに対応したシンボルを表示
-            _view.SetSymbols(_model.StageRecords(seek));
+            //Symbolに対応したシンボルを表示
+            _view.SetSymbols(_model.StageRecords(symbolResultInfo));
             _view.ShowSymbolList();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去
-            if (seek < _model.CurrentStage.CurrentTurn)
+            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentTurn)
             {
                 // 過去の中ではさらに過去に戻らない
                 if (_model.CurrentStage.ReturnSeek < 0)
@@ -321,7 +321,7 @@ namespace Ryneus
                     return;
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
-                    _view.SetSymbols(_model.StageRecords(_model.CurrentStage.CurrentTurn));
+                    _view.SetSymbols(_model.StageRecords(_model.CurrentSelectRecord()));
                     break;
                 case TacticsCommandType.Status:
                     break;
@@ -506,7 +506,7 @@ namespace Ryneus
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
-                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
 
@@ -540,7 +540,7 @@ namespace Ryneus
                 _view.ChangeUIActive(false);
             } else
             {
-                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
 
@@ -588,7 +588,7 @@ namespace Ryneus
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else
             {
-                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
 
@@ -607,7 +607,7 @@ namespace Ryneus
                 GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
-                CommandSelectRecordSeek(_model.CurrentSelectRecord().Seek);
+                CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
 

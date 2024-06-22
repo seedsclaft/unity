@@ -4,7 +4,76 @@ namespace Ryneus
 {
     [System.Serializable]
     public class PartyInfo 
-    {
+    {        
+        private int _currency = 0;
+        public int Currency => _currency;
+        private int _parallelCount = 1;
+        private int _stageStockCount = 10;
+        public int StageStockCount => _stageStockCount;
+        // スコア報酬リスト
+        private List<ScorePrizeInfo> _scorePrizeInfos = new ();
+        public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
+
+        private bool _inReplay = false;
+        public bool InReplay => _inReplay;
+        public void SetInReplay(bool inReplay)
+        {
+            _inReplay = inReplay;
+        }
+
+        private bool _battleResultVictory = false;
+        public bool BattleResultVictory => _battleResultVictory;
+        public void SetBattleResultVictory(bool isVictory)
+        {
+            _battleResultVictory = isVictory;
+        }
+
+        private int _battleResultScore = 0;
+        public int BattleResultScore => _battleResultScore;
+        public void SetBattleScore(int score)
+        {
+            _battleResultScore = score;
+        }
+
+
+        private List<int> _lastBattlerIdList = new();
+        public List<int> LastBattlerIdList => _lastBattlerIdList;
+        public void SetLastBattlerIdList(List<int> lastBattlerIdList)
+        {
+            _lastBattlerIdList = lastBattlerIdList;
+        }
+
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek);
+        
+        // ステージシンボルの結果
+        private List<SymbolResultInfo> _symbolRecordList = new ();
+        public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
+        public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo,bool checkFindIndex = true)
+        {
+            if (checkFindIndex)
+            {
+                var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
+                if (findIndex > -1)
+                {
+                    _symbolRecordList.RemoveAt(findIndex);
+                }
+            }
+            _symbolRecordList.Add(symbolResultInfo);
+            _symbolRecordList.Sort((a,b) => a.StageId*1000 + a.Seek*100 + a.SeekIndex - (b.StageId*1000 + b.Seek*100 + b.SeekIndex) > 0 ? 1 : -1);
+        }
+
+        private List<LevelUpInfo> _levelUpInfos = new();
+        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
+        public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
+        {
+            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
+            if (findIndex > -1)
+            {
+                _levelUpInfos.RemoveAt(findIndex);
+            }
+            _levelUpInfos.Add(levelUpInfo);
+        }
+
         public PartyInfo()
         {
             ClearData();
@@ -28,6 +97,10 @@ namespace Ryneus
         // 所持アクターリスト
         private List<ActorInfo> _actorInfos = new();
         public List<ActorInfo> ActorInfos => _actorInfos;
+        public void SetActorInfos(List<ActorInfo> actorInfos)
+        {
+            _actorInfos = actorInfos;
+        }
         
         public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
         {
@@ -86,20 +159,6 @@ namespace Ryneus
             return actorIdList;
         }
 
-        private int _currency = 0;
-        public int Currency => _currency;
-        private int _parallelCount = 1;
-        // スコア報酬リスト
-        private List<ScorePrizeInfo> _scorePrizeInfos = new ();
-        public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
-
-        private bool _inReplay = false;
-        public bool InReplay => _inReplay;
-        public void SetInReplay(bool inReplay)
-        {
-            _inReplay = inReplay;
-        }
-
         public List<int> CurrentAlchemyIdList(int stageId,int seek)
         {
             var alchemyIdList = new List<int>();
@@ -144,31 +203,6 @@ namespace Ryneus
             return alcanaIdList;
         }
 
-        private bool _battleResultVictory = false;
-        public bool BattleResultVictory => _battleResultVictory;
-        private int _battleResultScore = 0;
-        public int BattleResultScore => _battleResultScore;
-
-        private List<int> _lastBattlerIdList = new();
-        public List<int> LastBattlerIdList => _lastBattlerIdList;
-        public void SetLastBattlerIdList(List<int> lastBattlerIdList)
-        {
-            _lastBattlerIdList = lastBattlerIdList;
-        }
-
-        private List<LevelUpInfo> _levelUpInfos = new();
-        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
-        public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
-        {
-            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
-            if (findIndex < 0)
-            {
-            } else{
-                _levelUpInfos.RemoveAt(findIndex);
-            }
-            _levelUpInfos.Add(levelUpInfo);
-        }
-
         public int ActorLevelReset(ActorInfo actorInfo)
         {
             var currencyIndexes = new List<int>();
@@ -197,25 +231,6 @@ namespace Ryneus
             return resetCurrency;
         }
 
-        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek);
-        
-        // ステージシンボルの結果
-        private List<SymbolResultInfo> _symbolRecordList = new ();
-        public List<SymbolResultInfo> SymbolRecordList => _symbolRecordList;
-        public void SetSymbolResultInfo(SymbolResultInfo symbolResultInfo,bool checkFindIndex = true)
-        {
-            if (checkFindIndex)
-            {
-                var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo));
-                if (findIndex < 0)
-                {
-                } else{
-                    _symbolRecordList.RemoveAt(findIndex);
-                }
-            }
-            _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.StageId*1000 + a.Seek*100 + a.SeekIndex - b.StageId*1000 + b.Seek*100 + b.SeekIndex > 0 ? 1 : -1);
-        }
         public (int,int) LastStageIdTurns()
         {
             var stageId = 0;
@@ -246,11 +261,6 @@ namespace Ryneus
             return (stageId,currentTurn);
         }
 
-        public void SetActorInfos(List<ActorInfo> actorInfos)
-        {
-            _actorInfos = actorInfos;
-        }
-
         public void UpdateActorInfo(ActorInfo actorInfo)
         {
             var findIndex = _actorInfos.FindIndex(a => a.ActorId == actorInfo.ActorId);
@@ -276,16 +286,6 @@ namespace Ryneus
         public void ChangeCurrency(int currency)
         {
             _currency = currency;
-        }
-
-        public void SetBattleResultVictory(bool isVictory)
-        {
-            _battleResultVictory = isVictory;
-        }
-
-        public void SetBattleScore(int score)
-        {
-            _battleResultScore = score;
         }
 
         public int TotalScore()

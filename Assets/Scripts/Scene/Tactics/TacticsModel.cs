@@ -56,9 +56,9 @@ namespace Ryneus
             return new ListData(DataSystem.TacticsCommand[index],index,enable);
         }
 
-        public List<ListData> StageRecords(int seek)
+        public List<ListData> StageRecords(SymbolResultInfo symbolResultInfo)
         {
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == seek);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == symbolResultInfo.StageId && a.StageSymbolData.Seek == symbolResultInfo.Seek);
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
@@ -125,6 +125,7 @@ namespace Ryneus
 
         public AdvData StartTacticsAdvData()
         {
+            /*
             if (CurrentStage.SurvivalMode)
             {
                 var isSurvivalGameOver = StageMembers().Count > 0 && !Actors().Exists(a => a.Lost == false);
@@ -142,12 +143,14 @@ namespace Ryneus
                 }
                 return null;
             }
+            */
             var isGameOver = false;//PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
             if (isGameOver)
             {
                 CurrentStage.SetEndingType(EndingType.C);
                 return DataSystem.Adventures.Find(a => a.Id == 21);
             }
+            /*
             var isAEndGameClear = CurrentStage.StageClear;
             if (isAEndGameClear)
             {
@@ -155,6 +158,7 @@ namespace Ryneus
                 StageClear();
                 return DataSystem.Adventures.Find(a => a.Id == 151);
             }
+            */
             var isBEndGameClear = CurrentStage.ClearTroopIds.Contains(4010);
             if (isBEndGameClear)
             {
@@ -258,54 +262,76 @@ namespace Ryneus
         public List<ListData> SymbolRecords()
         {
             var symbolInfos = new List<SymbolInfo>();
-            var recordList = new List<List<SymbolResultInfo>>();
+            var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0);
             
+            // 現在を挿入
+            var currentSeekIndex = CurrentStage.CurrentTurn;
+            // ストック数
+            var stockCount = PartyInfo.StageStockCount;
             foreach (var selectRecord in selectRecords)
             {
-                if (!stageSeekList.Contains(selectRecord.StageSymbolData.Seek))
+                if (stageSeekList.Count >= stockCount)
                 {
-                    stageSeekList.Add(selectRecord.StageSymbolData.Seek);
+                    continue;
                 }
-            }
+                var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
+                if (!stageSeekList.Contains(stageKey))
+                {
+                    stageSeekList.Add(stageKey);
+                }
+            }    
+            stageSeekList.Sort((a,b) => a - b > 0 ? 1 : -1);
             
             foreach (var stageSeek in stageSeekList)
             {
                 var list = new List<SymbolResultInfo>();
-                recordList.Add(list);
+                recordList[stageSeek] = new List<SymbolResultInfo>();
             }
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
             foreach (var selectRecord in selectRecords)
             {
-                if (selectRecord.StageSymbolData.Seek == 0)
+                var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
+                if (recordList.ContainsKey(stageKey))
                 {
-                    continue;
+                    recordList[stageKey].Add(selectRecord);
                 }
-                recordList[selectRecord.StageSymbolData.Seek-1].Add(selectRecord);
             }
-            // 現在を挿入
-            var seekIndex = CurrentStage.CurrentTurn;
             var currentSymbol = new StageSymbolData
             {
-                Seek = seekIndex,
+                StageId = CurrentStage.Id,
+                Seek = currentSeekIndex,
                 SeekIndex = 0,
                 SymbolType = SymbolType.None
             };
-            var currentInfo = new SymbolInfo(currentSymbol.SymbolType);
+            var currentInfo = new SymbolInfo(SymbolType.None);
             var currentResult = new SymbolResultInfo(currentInfo,currentSymbol,0);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};
-            recordList.Insert(seekIndex-1,currentList);
-
+    
+            var resultList = new List<List<SymbolResultInfo>>();
+            var result = recordList.OrderBy(a => a.Key).ToList();
+            foreach (var resultData in result)
+            {
+                resultList.Add(resultData.Value);
+            }
+            var currentIndex = resultList.FindIndex(a => a[0].StageId == CurrentStage.Id && a[0].Seek == currentSeekIndex);
+            if (currentIndex > -1)
+            {
+                resultList.Insert(currentIndex, currentList);
+            } else
+            {
+                resultList.Add(currentList);
+            }
             var listData = new List<ListData>();
-            foreach (var record in recordList)
+            foreach (var record in resultList)
             {
                 var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (record.Find(a => a.StageSymbolData.Seek == seekIndex) != null)
+                if (record.Find(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == currentSeekIndex) != null)
                 {
                     list.SetSelected(true);
                 }
