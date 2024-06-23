@@ -46,7 +46,7 @@ namespace Ryneus
 
         private void Awake() 
         {
-    #if (UNITY_WEBGL || UNITY_ANDROID || UNITY_STANDALONE_WIN)// && !UNITY_EDITOR
+    #if UNITY_WEBGL || UNITY_ANDROID || UNITY_STANDALONE_WIN// && !UNITY_EDITOR
             FirebaseController.Instance.Initialize();
     #endif
             Application.targetFrameRate = 60;
@@ -87,7 +87,8 @@ namespace Ryneus
 
         private void UpdateCommand(ViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             switch (viewEvent.commandType)
@@ -104,7 +105,8 @@ namespace Ryneus
                             debugBattleData.MakeBattleActor();
                             CommandSceneChange(sceneInfo);
                         }
-                    } else{
+                    } else
+                    {
                         CommandSceneChange(sceneInfo);
                     }
                     break;
@@ -172,9 +174,9 @@ namespace Ryneus
                 case Base.CommandType.CallAdvScene:
                     SetIsBusyMainAndStatus();
                     var advCallInfo = viewEvent.template as AdvCallInfo;
-                    if (!this.gameObject.activeSelf)
+                    if (!gameObject.activeSelf)
                     {
-                        this.gameObject.SetActive(true);
+                        gameObject.SetActive(true);
                     }
                     //_currentScene.SetActiveUi(false);
                     StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
@@ -419,7 +421,7 @@ namespace Ryneus
             if(onComplete != null) onComplete();
         }
 
-        private void CommandSceneChange(SceneInfo sceneInfo)
+        public void CommandSceneChange(SceneInfo sceneInfo)
         {
             if (_currentScene != null)
             { 

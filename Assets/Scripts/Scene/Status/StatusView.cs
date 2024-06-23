@@ -12,7 +12,7 @@ namespace Ryneus
         [SerializeField] private BattleSelectCharacter selectCharacter = null;
         [SerializeField] private ActorInfoComponent actorInfoComponent = null;
         [SerializeField] private Button decideButton = null;
-        [SerializeField] private Button characterListButton = null;
+        [SerializeField] private OnOffButton characterListButton = null;
         private new System.Action<StatusViewEvent> _commandData = null;
         [SerializeField] private Button leftButton = null;
         [SerializeField] private Button rightButton = null;
@@ -48,7 +48,7 @@ namespace Ryneus
             leftButton.onClick.AddListener(() => OnClickLeft());
             rightButton.onClick.AddListener(() => OnClickRight());
             decideButton.onClick.AddListener(() => OnClickDecide());
-            characterListButton.onClick.AddListener(() => OnClickCharacterList());
+            characterListButton.SetCallHandler(() => OnClickCharacterList());
         }
 
         public void ShowArrows()

@@ -205,6 +205,11 @@ namespace Ryneus
             selectCharacter.gameObject.SetActive(true);
         }
 
+        public void RefreshTacticsActor(List<ListData> tacticsActorInfo)
+        {
+            selectCharacter.SetTacticsCharacter(tacticsActorInfo);
+        }
+
         public void HideSelectCharacter()
         {
             //attributeList.gameObject.SetActive(false);

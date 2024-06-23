@@ -78,6 +78,11 @@ namespace Ryneus
                 {
                     var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
                     _learnSkillInfo.Add(learnSkillInfo);
+                    foreach (var skill in skills)
+                    {
+                        // 作戦項目に追加
+                        lvUpActorInfo.AddSkillTriggerSkill(skill.Id);  
+                    }
                 } else
                 {
                     _learnSkillInfo.Add(null);
@@ -135,7 +140,22 @@ namespace Ryneus
             }
             // クリアフラグを立てる
             record.SymbolInfo.SetCleared(true); 
-            
+            // スコア報酬を更新
+            PartyInfo.UpdateScorePrizeInfos();
+            var nexScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
+            foreach (var nexScorePrizeInfo in nexScorePrizeInfos)
+            {
+                foreach (var prizeMaster in nexScorePrizeInfo.PrizeMaster)
+                {
+                    switch(prizeMaster.GetItem.Type)
+                    {
+                        case GetItemType.RemakeHistory:
+                        case GetItemType.ParallelHistory:
+                        getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
+                        break;
+                    }
+                }
+            }
             _resultItemInfos = ListData.MakeListData(getItemInfos);
         }
 

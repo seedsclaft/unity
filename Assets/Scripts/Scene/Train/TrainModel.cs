@@ -55,9 +55,15 @@ namespace Ryneus
         {
             var actorInfo = TacticsActor();
             var cost = TacticsUtility.TrainCost(actorInfo);
+            // 新規魔法取得があるか
+            var skills = actorInfo.LearningSkills(1);
             var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentTurn);
             PartyInfo.ChangeCurrency(Currency - cost);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
+            foreach (var skill in skills)
+            {
+                actorInfo.AddSkillTriggerSkill(skill.Id);
+            }
         }
 
         public void LearnMagic(int skillId)
@@ -162,6 +168,27 @@ namespace Ryneus
             return MakeListData(list,selectIndex);
         }
 
+        public List<ListData> TacticsBattleCharacterData(int selectIndex = 0)
+        {
+            if (selectIndex < 0)
+            {
+                selectIndex = 0;
+            }
+            var list = new List<TacticsActorInfo>();
+            foreach (var member in StageMembers())
+            {
+                var tacticsActorInfo = new TacticsActorInfo
+                {
+                    TacticsCommandType = _TacticsCommandType,
+                    ActorInfo = member,
+                    ActorInfos = StageMembers()
+                };
+                list.Add(tacticsActorInfo);
+            }
+            list.Sort((a,b) => a.ActorInfo.BattleIndex > b.ActorInfo.BattleIndex ? -1 : 1);
+            return MakeListData(list,selectIndex);
+        }
+
         public string TacticsCommandInputInfo()
         {
             switch (_TacticsCommandType)
@@ -217,15 +244,6 @@ namespace Ryneus
         }
 
 
-        public List<ListData> ParallelCommand()
-        {
-            return MakeListData(BaseConfirmCommand(23050,23040));
-        }
-        
-        public bool CanParallel()
-        {
-            return PartyInfo.Currency >= PartyInfo.ParallelCost();
-        }
 
         public void ResetBattlerIndex()
         {

@@ -264,7 +264,8 @@ namespace Ryneus
             var list = new List<SkillInfo>();
             foreach (var _learningData in Master.LearningSkills)
             {
-                if (list.Find(a =>a.Id == _learningData.SkillId) != null) continue;
+                if (list.Find(a => a.Id == _learningData.SkillId) != null) continue;
+                if (LearnSkillIds().Contains(_learningData.SkillId)) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
                 if (Level >= _learningData.Level)
                 {
@@ -300,12 +301,6 @@ namespace Ryneus
             );
             levelUpInfo.SetLevel(Level);
             _levelUpInfos.Add(levelUpInfo);
-            foreach (var skillInfo in LearningSkills())
-            {
-                skillInfo.SetLearningState(LearningState.Learned);
-                // 作戦項目に追加
-                AddSkillTriggerSkill(skillInfo.Id);
-            }
             ChangeHp(CurrentParameter(StatusParamType.Hp));
             ChangeMp(CurrentParameter(StatusParamType.Mp));
             return levelUpInfo;
@@ -350,7 +345,8 @@ namespace Ryneus
 
         public bool IsLearnedSkill(int skillId)
         {
-            return LearnSkillIds().Contains(skillId) || LearningSkillIds().Contains(skillId);
+            var learnedSkill = LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
+            return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
         public LevelUpInfo LearnSkill(int skillId,int cost,int stageId = -1,int seek = -1,int seekIndex = -1)

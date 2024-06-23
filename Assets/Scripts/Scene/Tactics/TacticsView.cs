@@ -322,13 +322,13 @@ namespace Ryneus
             if (_initRecordDisplay == false)
             {
                 var selectIndex = symbolInfos.FindIndex(a => a.Selected);
-                var resultIndex = symbolInfos.Count - selectIndex + 1;
+                var resultIndex = symbolInfos.Count - selectIndex;
                 if (resultIndex < 0)
                 {
                     resultIndex = 0;
                 }
-                symbolRecordList.UpdateSelectIndex(resultIndex);
-                symbolRecordList.UpdateScrollRect(resultIndex);
+                symbolRecordList.UpdateSelectIndex(resultIndex - 1);
+                symbolRecordList.UpdateScrollRect(resultIndex - 1);
                 _initRecordDisplay = true;
             }
         }

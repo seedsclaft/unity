@@ -268,7 +268,7 @@ namespace Ryneus
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0);
             
             // 現在を挿入
-            var currentSeekIndex = CurrentStage.CurrentTurn;
+            var currentSeek = CurrentStage.CurrentTurn;
             // ストック数
             var stockCount = PartyInfo.StageStockCount;
             foreach (var selectRecord in selectRecords)
@@ -302,7 +302,7 @@ namespace Ryneus
             var currentSymbol = new StageSymbolData
             {
                 StageId = CurrentStage.Id,
-                Seek = currentSeekIndex,
+                Seek = currentSeek,
                 SeekIndex = 0,
                 SymbolType = SymbolType.None
             };
@@ -317,7 +317,7 @@ namespace Ryneus
             {
                 resultList.Add(resultData.Value);
             }
-            var currentIndex = resultList.FindIndex(a => a[0].StageId == CurrentStage.Id && a[0].Seek == currentSeekIndex);
+            var currentIndex = resultList.FindIndex(a => a[0].StageId == CurrentStage.Id && a[0].Seek == currentSeek);
             if (currentIndex > -1)
             {
                 resultList.Insert(currentIndex, currentList);
@@ -331,7 +331,7 @@ namespace Ryneus
                 var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (record.Find(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == currentSeekIndex) != null)
+                if (record.Find(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == currentSeek) != null)
                 {
                     list.SetSelected(true);
                 }
@@ -342,12 +342,39 @@ namespace Ryneus
 
         public List<ListData> ParallelCommand()
         {
-            return MakeListData(BaseConfirmCommand(23050,23040));
+            var menuCommandDates = new List<SystemData.CommandData>();
+            var yesCommand = new SystemData.CommandData
+            {
+                Key = "Yes",
+                Name = DataSystem.GetText(23040),
+                Id = 0
+            };
+            var noCommand = new SystemData.CommandData
+            {
+                Key = "No",
+                Name = DataSystem.GetText(23050),
+                Id = 1
+            };
+            menuCommandDates.Add(noCommand);
+            menuCommandDates.Add(yesCommand);            
+            Func<SystemData.CommandData,bool> enable = (a) => 
+            {
+                if (a.Key == "Yes")
+                {
+                    return PartyInfo.RemakeHistory();
+                } else
+                if (a.Key == "No")
+                {
+                    return PartyInfo.ParallelHistory();
+                }
+                return false;
+            };
+            return MakeListData(menuCommandDates,enable,-1);
         }
         
         public bool CanParallel()
         {
-            return PartyInfo.Currency >= PartyInfo.ParallelCost();
+            return PartyInfo.ParallelCount > 0;
         }
 
         public void ResetBattlerIndex()

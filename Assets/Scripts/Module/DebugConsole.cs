@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Dynamic;
 
 namespace Ryneus
 {
     public class DebugConsole : MonoBehaviour
     {
         [SerializeField] private TMP_InputField consoleInputField = null;
+        [SerializeField] private GameSystem gameSystem = null;
         void Start()
         {
     #if UNITY_EDITOR
@@ -102,17 +101,33 @@ namespace Ryneus
             {
                 SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,3);
             }
+            if (consoleInputField.text == "S4")
+            {
+                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,4);
+            }
             if (consoleInputField.text == "L1")
             {
                 SaveSystem.LoadStageInfo(1);
+                var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
+                gameSystem.CommandSceneChange(sceneInfo);
             }
             if (consoleInputField.text == "L2")
             {
                 SaveSystem.LoadStageInfo(2);
+                var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
+                gameSystem.CommandSceneChange(sceneInfo);
             }
             if (consoleInputField.text == "L3")
             {
                 SaveSystem.LoadStageInfo(3);
+                var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
+                gameSystem.CommandSceneChange(sceneInfo);
+            }
+            if (consoleInputField.text == "L4")
+            {
+                SaveSystem.LoadStageInfo(4);
+                var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
+                gameSystem.CommandSceneChange(sceneInfo);
             }
         }
     }

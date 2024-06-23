@@ -91,6 +91,12 @@ namespace Ryneus
                     SetTitleData(DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                     SetResultData(DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
                     break;
+                case GetItemType.RemakeHistory:
+                    SetResultData(DataSystem.GetText(16010));
+                    break;
+                case GetItemType.ParallelHistory:
+                    SetResultData(DataSystem.GetText(16020));
+                    break;
             }
         }
 

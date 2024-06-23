@@ -438,11 +438,11 @@ namespace Ryneus
             }
             if (_model.CanParallel())
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.ParallelCost().ToString()),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,""),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
                 _view.CommandCallConfirm(popupInfo);
             } else
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23030,_model.ParallelCost().ToString()),(a) => UpdatePopupNoParallelRecord());
+                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23030,""),(a) => UpdatePopupNoParallelRecord());
                 popupInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(popupInfo);
             }
@@ -667,7 +667,6 @@ namespace Ryneus
             _view.SetTacticsCharaLayer(_model.StageMembers());
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
-                    
         }
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolInfo)

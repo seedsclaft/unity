@@ -1008,7 +1008,7 @@ namespace Ryneus
 
         public Effekseer.EffekseerEffectAsset AwakenEffect(int actorId)
         {
-            var result = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_cut-in_000" + 1);
+            var result = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_cut-in_" + DataSystem.FindActor(actorId).ImagePath);
             if (result != null)
             {
                 return result;
@@ -1018,7 +1018,7 @@ namespace Ryneus
 
         public Sprite AwakenSprite(int actorId)
         {
-            var result = ResourceSystem.LoadActorCutinSprite("0001");
+            var result = ResourceSystem.LoadActorCutinSprite(DataSystem.FindActor(actorId).ImagePath);
             if (result != null)
             {
                 return result;

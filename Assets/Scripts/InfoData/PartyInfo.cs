@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace Ryneus
 {
@@ -7,12 +9,29 @@ namespace Ryneus
     {        
         private int _currency = 0;
         public int Currency => _currency;
-        private int _parallelCount = 1;
+        private int _parallelCount = 0;
+        public int ParallelCount => _parallelCount;
         private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
         private List<ScorePrizeInfo> _scorePrizeInfos = new ();
         public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
+        public void UpdateScorePrizeInfos()
+        {
+            _scorePrizeInfos.ForEach(a => a.UpdateGetFlag(TotalScore()));
+        }
+        public List<ScorePrizeInfo> CheckGainScorePrizeInfos()
+        {
+            return _scorePrizeInfos.FindAll(a => a.CheckFlag());
+        }
+        public bool RemakeHistory()
+        {
+            return _scorePrizeInfos.Find(a => a.RemakeHistory()) != null;
+        }
+        public bool ParallelHistory()
+        {
+            return _scorePrizeInfos.Find(a => a.ParallelHistory()) != null;
+        }
 
         private bool _inReplay = false;
         public bool InReplay => _inReplay;
@@ -296,11 +315,6 @@ namespace Ryneus
                 score += record.BattleScore;
             }
             return score;
-        }
-
-        public int ParallelCost()
-        {
-            return _parallelCount * _parallelCount;
         }
 
         public void GainParallelCount()

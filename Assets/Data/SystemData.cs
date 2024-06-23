@@ -129,5 +129,7 @@ namespace Ryneus
 		AddActor = 51,
 		SelectAddActor = 52,
 		SaveHuman = 61,
+		RemakeHistory = 101,
+		ParallelHistory = 102,
 	}
 }

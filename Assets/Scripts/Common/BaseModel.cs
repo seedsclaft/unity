@@ -69,13 +69,13 @@ namespace Ryneus
             return members;
         }
         
-
         public List<ActorInfo> PartyMembers()
         {
             return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
         }
 
-        public List<ActorInfo> StatusActors(){
+        public List<ActorInfo> StatusActors()
+        {
             return TempInfo.TempStatusActorInfos;
         }
 
@@ -134,7 +134,8 @@ namespace Ryneus
             }
         }
 
-        public async UniTask<List<AudioClip>> GetBgmData(string bgmKey){
+        public async UniTask<List<AudioClip>> GetBgmData(string bgmKey)
+        {
             return await ResourceSystem.LoadBGMAsset(bgmKey);
         }
 
@@ -664,10 +665,6 @@ namespace Ryneus
             }
         }
 
-        public int ParallelCost()
-        {
-            return PartyInfo.ParallelCost();
-        }
 
         public void GainParallelCount()
         {

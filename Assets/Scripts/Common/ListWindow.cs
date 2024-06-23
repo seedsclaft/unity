@@ -92,6 +92,7 @@ namespace Ryneus
             SetValueChangedEvent();
             SetItemSize();
             _inputCallHandler = null;
+            scrollRect.scrollSensitivity = 10;
         }
 
         public void SetListData(List<ListData> listData)
