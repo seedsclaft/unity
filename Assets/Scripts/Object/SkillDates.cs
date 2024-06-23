@@ -471,7 +471,8 @@ namespace Ryneus
         RemoveStatePassive = 992022, // 制御用
     }
 
-    public enum LearningState{
+    public enum LearningState
+    {
         None = 0,
         Learned = 1,
         NotLearn = 2,

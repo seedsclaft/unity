@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -244, y: -28}
+  m_AnchoredPosition: {x: -260, y: -28}
   m_SizeDelta: {x: 280, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7205408132835074223
@@ -1216,6 +1216,7 @@ MonoBehaviour:
   textUguiList: []
   imageUguiList: []
   battlerInfoComponent: {fileID: 2487896425995048115}
+  thumbRect: {fileID: 8439540963943191696}
 --- !u!114 &2487896425995048115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   lv: {fileID: 0}
   statusInfoComponent: {fileID: 0}
   gridKey: {fileID: 0}
+  actorOnlyGameObjects: []
 --- !u!1001 &6719696199905103225
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -159,11 +159,11 @@ namespace Ryneus
                 lvRate = 20 + ((lv-20) / 2);
             }
             statusInfo.SetParameter(
-                enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + (int)Math.Floor(lvRate / 4) + lvRate * enemyData.BaseStatus.Hp * 0.05f),
+                enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + (int)Math.Floor(lvRate / 4) + lvRate * enemyData.BaseStatus.Hp * 0.025f),
                 Math.Min(50, (int)Math.Floor(lvRate / 4) + enemyData.BaseStatus.Mp),
-                enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate / 2) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Atk * 0.1f),
-                enemyData.BaseStatus.Def + (int)Math.Floor(lvRate / 2) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.1f),
-                Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate / 3))
+                enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Atk * 0.05f),
+                enemyData.BaseStatus.Def + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.05f),
+                Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate / 6))
             );
             _demigodParam = lv / 2;
             _status = statusInfo;

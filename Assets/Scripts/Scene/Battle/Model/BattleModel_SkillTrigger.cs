@@ -69,7 +69,7 @@ namespace Ryneus
                         var triggeredSkill = DataSystem.FindSkill(selectSkillId);
                         if (actionResultInfos != null && triggeredSkill != null && triggeredSkill.TargetType == TargetType.IsTriggerTarget)
                         {
-                            targetIndexList = TriggerTargetList(battlerInfo,triggeredSkill.TriggerDates[0],actionInfo,actionResultInfos);
+                            targetIndexList = TriggerTargetList(battlerInfo,triggeredSkill.TriggerDates[0],actionInfo,actionResultInfos,triggeredSkill.AliveType);
                         }
                         if (targetIndexList.Count == 0)
                         {

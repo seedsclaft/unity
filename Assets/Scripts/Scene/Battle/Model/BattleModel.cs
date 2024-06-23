@@ -676,6 +676,7 @@ namespace Ryneus
                     case FeatureType.AddStateNextTurn:
                     if ((StateType)featureData.Param1 == StateType.RemoveBuff)
                     {
+                        // 消すバフがあれば有効
                         if (target.GetRemovalBuffStates().Count > 0)
                         {
                             IsEnable = true;
@@ -683,6 +684,25 @@ namespace Ryneus
                     }
                     else
                     {
+                        if (target != null)
+                        {
+                            var targetStateInfos = target.StateInfos;
+                            var sameStateInfos = targetStateInfos.FindAll(a => a.Master.StateType == (StateType)featureData.Param1 && a.SkillId == skillId);
+                            // 既にかかっているか
+                            if (sameStateInfos.Count > 0)
+                            {
+                                // 重複できるか
+                                var overLapCount = sameStateInfos[0].Master.OverLap;
+                                if (overLapCount > sameStateInfos.Count)
+                                {
+                                    IsEnable = true;
+                                }
+                            } else
+                            {
+                                IsEnable = true;
+                            }
+                        }
+                        /*
                         if (!target.IsState((StateType)featureData.Param1) && !target.IsState(StateType.Barrier))
                         {
                             IsEnable = true;
@@ -698,6 +718,7 @@ namespace Ryneus
                                 IsEnable = true;
                             }
                         }
+                        */
                     }
                     break;
                     case FeatureType.RemoveState:
@@ -723,6 +744,8 @@ namespace Ryneus
                             IsEnable = true;
                         }
                     }
+                    break;
+                    case FeatureType.NoResetAp:
                     break;
                     default:
                     IsEnable = true;
@@ -1558,7 +1581,7 @@ namespace Ryneus
                             if (selectIndexList.Count == 0 && triggeredSkill.Master.TargetType == TargetType.IsTriggerTarget)
                             {
                                 var triggerDates = triggeredSkill.Master.TriggerDates.FindAll(a => a.TriggerTiming == triggerTiming);
-                                selectIndexList = TriggerTargetList(checkBattler,triggerDates[0],actionInfo,actionResultInfos);
+                                selectIndexList = TriggerTargetList(checkBattler,triggerDates[0],actionInfo,actionResultInfos,makeActionInfo.Master.AliveType);
                             }
                             if (selectIndexList.Count == 0)
                             {
@@ -1678,7 +1701,7 @@ namespace Ryneus
                 var selectIndexList = MakeAutoSelectIndex(makeActionInfo,-1,counterSubjectIndex,actionInfo,actionResultInfos);
                 if (selectIndexList.Count == 0 && passiveInfo.Master.TargetType == TargetType.IsTriggerTarget)
                 {
-                    selectIndexList = TriggerTargetList(battlerInfo,triggerData,actionInfo,actionResultInfos);
+                    selectIndexList = TriggerTargetList(battlerInfo,triggerData,actionInfo,actionResultInfos,makeActionInfo.Master.AliveType);
                 }
                 if (selectIndexList.Count == 0)
                 {
@@ -1992,7 +2015,7 @@ namespace Ryneus
             return IsTriggered;
         }
 
-        private List<int> TriggerTargetList(BattlerInfo battlerInfo,SkillData.TriggerData triggerData,ActionInfo actionInfo, List<ActionResultInfo> actionResultInfos)
+        private List<int> TriggerTargetList(BattlerInfo battlerInfo,SkillData.TriggerData triggerData,ActionInfo actionInfo, List<ActionResultInfo> actionResultInfos,AliveType aliveType)
         {
             var list = new List<int>();
             var opponents = battlerInfo.IsActor ? _troop : _party;
@@ -2058,7 +2081,7 @@ namespace Ryneus
             }
             if (actionInfo != null)
             {
-                list = CalcAliveTypeIndexList(list,actionInfo.Master.AliveType);
+                list = CalcAliveTypeIndexList(list,aliveType);
             }
             return list;
         }

@@ -328,7 +328,7 @@ namespace Ryneus
                     resultIndex = 0;
                 }
                 symbolRecordList.UpdateSelectIndex(resultIndex - 1);
-                symbolRecordList.UpdateScrollRect(resultIndex - 1);
+                symbolRecordList.UpdateScrollRect(resultIndex - 2);
                 _initRecordDisplay = true;
             }
         }
