@@ -15,11 +15,15 @@ namespace Ryneus
 
         public void UpdateSkillHelp()
         {
+            if (skillInfoComponent == null)
+            {
+                return;
+            }
             var listData = ListData;
             if (listData != null)
             {
                 var skillData = (SkillInfo)listData.Data;
-                skillInfoComponent?.UpdateInfo(skillData);
+                skillInfoComponent.UpdateInfo(skillData);
             } else
             {
                 skillInfoComponent.Clear();

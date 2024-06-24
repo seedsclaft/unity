@@ -334,7 +334,7 @@ namespace Ryneus
             _view.HideSelectCharacter();
             _view.HideRecordList();
             _view.ShowSymbolRecord();
-            _view.SetPositionSymbolRecords(_model.SymbolRecords());
+            _view.SetPositionSymbolRecords(_model.FirstRecordIndex);
             _view.ChangeBackCommandActive(true);
             _view.ChangeSymbolBackCommandActive(true);
             _backCommand = CommandType.CancelSymbolRecord;

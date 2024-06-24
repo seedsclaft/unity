@@ -317,18 +317,18 @@ namespace Ryneus
 
         }
         
-        public void SetPositionSymbolRecords(List<ListData> symbolInfos)
+        public void SetPositionSymbolRecords(int firstRecordIndex)
         {
             if (_initRecordDisplay == false)
             {
-                var selectIndex = symbolInfos.FindIndex(a => a.Selected);
-                var resultIndex = symbolInfos.Count - selectIndex;
+                var selectIndex = firstRecordIndex;
+                var resultIndex = symbolRecordList.DataCount - selectIndex;
                 if (resultIndex < 0)
                 {
                     resultIndex = 0;
                 }
                 symbolRecordList.UpdateSelectIndex(resultIndex - 1);
-                symbolRecordList.UpdateScrollRect(resultIndex - 2);
+                symbolRecordList.UpdateScrollRect(resultIndex + 1);
                 _initRecordDisplay = true;
             }
         }

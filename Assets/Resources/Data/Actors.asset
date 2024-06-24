@@ -21,10 +21,10 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 34
+      _hp: 36
       _mp: 3
       _atk: 30
-      _def: 14
+      _def: 15
       _spd: 15
     PlusStatus:
       _hp: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
       _hp: 65
       _mp: 10
       _atk: 60
-      _def: 40
+      _def: 30
       _spd: 35
     Attribute: 0100000002000000060000000300000006000000
     X: -10
@@ -145,7 +145,7 @@ MonoBehaviour:
       _hp: 55
       _mp: 10
       _atk: 40
-      _def: 20
+      _def: 10
       _spd: 65
     Attribute: 0300000001000000050000000700000004000000
     X: -6
@@ -250,7 +250,7 @@ MonoBehaviour:
       _hp: 75
       _mp: 10
       _atk: 25
-      _def: 50
+      _def: 40
       _spd: 25
     Attribute: 0400000007000000010000000200000007000000
     X: -4
@@ -355,7 +355,7 @@ MonoBehaviour:
       _hp: 85
       _mp: 10
       _atk: 35
-      _def: 25
+      _def: 15
       _spd: 30
     Attribute: 0700000004000000030000000100000007000000
     X: -4
@@ -460,7 +460,7 @@ MonoBehaviour:
       _hp: 70
       _mp: 10
       _atk: 30
-      _def: 50
+      _def: 40
       _spd: 45
     Attribute: 0500000004000000050000000400000001000000
     X: 0
@@ -562,11 +562,11 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 40
+      _hp: 50
       _mp: 10
-      _atk: 90
-      _def: 20
-      _spd: 80
+      _atk: 50
+      _def: 30
+      _spd: 60
     Attribute: 0100000005000000020000000500000005000000
     X: 24
     Y: -64
@@ -670,7 +670,7 @@ MonoBehaviour:
       _hp: 60
       _mp: 10
       _atk: 50
-      _def: 45
+      _def: 35
       _spd: 30
     Attribute: 0400000001000000040000000400000004000000
     X: -16
@@ -775,7 +775,7 @@ MonoBehaviour:
       _hp: 80
       _mp: 10
       _atk: 40
-      _def: 60
+      _def: 50
       _spd: 40
     Attribute: 0600000004000000010000000700000004000000
     X: -40
@@ -880,7 +880,7 @@ MonoBehaviour:
       _hp: 50
       _mp: 10
       _atk: 65
-      _def: 45
+      _def: 35
       _spd: 55
     Attribute: 0100000005000000040000000700000002000000
     X: -16
@@ -985,7 +985,7 @@ MonoBehaviour:
       _hp: 40
       _mp: 10
       _atk: 30
-      _def: 25
+      _def: 15
       _spd: 60
     Attribute: 0400000001000000050000000500000003000000
     X: 12
@@ -1090,7 +1090,7 @@ MonoBehaviour:
       _hp: 70
       _mp: 10
       _atk: 40
-      _def: 50
+      _def: 40
       _spd: 40
     Attribute: 0700000007000000010000000200000004000000
     X: 0

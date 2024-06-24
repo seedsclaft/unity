@@ -17,6 +17,11 @@ namespace Ryneus
         public string ImagePath;
         public StatusInfo BaseStatus;
         public List<KindType> Kinds;
+        public int HpGrowth;
+        public int MpGrowth;
+        public int AtkGrowth;
+        public int DefGrowth;
+        public int SpdGrowth;
         public List<LearningData> LearningSkills = new();
         public List<SkillTriggerActorData> SkillTriggerDates = new();
         

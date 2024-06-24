@@ -88,7 +88,8 @@ namespace Ryneus
         }
         
         private int _lastTargetIndex = 0;
-        public void SetLastTargetIndex(int index){
+        public void SetLastTargetIndex(int index)
+        {
             _lastTargetIndex = index;
         }
 
@@ -159,11 +160,11 @@ namespace Ryneus
                 lvRate = 20 + ((lv-20) / 2);
             }
             statusInfo.SetParameter(
-                enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + (int)Math.Floor(lvRate / 4) + lvRate * enemyData.BaseStatus.Hp * 0.025f),
-                Math.Min(50, (int)Math.Floor(lvRate / 4) + enemyData.BaseStatus.Mp),
-                enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Atk * 0.05f),
-                enemyData.BaseStatus.Def + (int)Math.Floor(lvRate / 4) + (int)Math.Floor(lvRate * enemyData.BaseStatus.Def * 0.05f),
-                Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate / 6))
+                enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lvRate * enemyData.HpGrowth * 0.01f),
+                Math.Min(50, enemyData.BaseStatus.Mp + (int)Math.Floor(lvRate * enemyData.MpGrowth * 0.01f)),
+                enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate * enemyData.AtkGrowth * 0.01f),
+                enemyData.BaseStatus.Def + (int)Math.Floor(lvRate * enemyData.DefGrowth * 0.01f),
+                Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * enemyData.SpdGrowth * 0.01f))
             );
             _demigodParam = lv / 2;
             _status = statusInfo;
@@ -238,6 +239,46 @@ namespace Ryneus
             }
         }
 
+        public void ResetParamInfos()
+        {
+            
+            var statusInfo = new StatusInfo();
+            int plusHpParam = _bossFlag == true ? 50 : 0;
+            float lvRate = _level;
+            if (_level >= 20)
+            {
+                lvRate = 20 + ((_level-20) / 2);
+            }
+            statusInfo.SetParameter(
+                EnemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lvRate * EnemyData.HpGrowth * 0.01f),
+                Math.Min(50, EnemyData.BaseStatus.Mp + (int)Math.Floor(lvRate * EnemyData.MpGrowth * 0.01f)),
+                EnemyData.BaseStatus.Atk + (int)Math.Floor(lvRate * EnemyData.AtkGrowth * 0.01f),
+                EnemyData.BaseStatus.Def + (int)Math.Floor(lvRate * EnemyData.DefGrowth * 0.01f),
+                Math.Min(100, EnemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * EnemyData.SpdGrowth * 0.01f))
+            );
+            _demigodParam = _level / 2;
+            _status = statusInfo;
+            _hp = _status.Hp;
+            _mp = _status.Mp;
+
+            _skillTriggerInfos.Clear();
+            AddKindPassive();
+            foreach (var skillInfo in _skills)
+            {
+                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
+                if (skillTriggerData == null)
+                {
+                    continue;
+                }
+                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
+                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                _skillTriggerInfos.Add(skillTriggerInfo);
+            }
+            _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
+        }
+
         public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index){
             _charaId = index + 1000;
             var statusInfo = new StatusInfo();
@@ -284,6 +325,7 @@ namespace Ryneus
 
         private void AddKindPassive()
         {
+            var kindSkills = new List<SkillInfo>();
             foreach (var kind in _kinds)
             {
                 if (kind > 0)
@@ -292,12 +334,21 @@ namespace Ryneus
                     if (skillData)
                     {
                         var skillInfo = new SkillInfo((int)kind * 10 + 10000);
-                        if (_skills.Find(a => a.Id == skillInfo.Id) == null)
+                        if (kindSkills.Find(a => a.Id == skillInfo.Id) == null)
                         {
+                            kindSkills.Add(skillInfo);
                             _skills.Add(skillInfo);
                         }
                     }
                 }
+            }
+            foreach (var skillInfo in kindSkills)
+            {
+                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
+                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                _skillTriggerInfos.Add(skillTriggerInfo);
             }
         }
 

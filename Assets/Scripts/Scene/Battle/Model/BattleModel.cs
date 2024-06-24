@@ -115,6 +115,7 @@ namespace Ryneus
             {
                 enemy.ResetData();
                 enemy.ResetSkillInfos();
+                enemy.ResetParamInfos();
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
             }
@@ -837,6 +838,12 @@ namespace Ryneus
             }
             actionInfo.SetRepeatTime(actionInfo.RepeatTime - 1);
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
+            // ターゲットの生死判定
+            var aliveType = actionInfo.Master.AliveType;
+            if (actionInfo != null)
+            {
+                indexList = CalcAliveTypeIndexList(indexList,aliveType);
+            }
             SetActorLastTarget(actionInfo,subject,indexList);
             if (subject.IsState(StateType.Silence) && actionInfo.MpCost != 0)
             {
@@ -1429,7 +1436,8 @@ namespace Ryneus
             {
                 var featureData = new SkillData.FeatureData
                 {
-                    FeatureType = FeatureType.HpHeal
+                    FeatureType = FeatureType.HpHeal,
+                    Param1 = RegenerateHpValue
                 };
                 var actionResultInfo = new ActionResultInfo(GetBattlerInfo(_currentTurnBattler.Index),GetBattlerInfo(_currentTurnBattler.Index),new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);

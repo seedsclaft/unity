@@ -13,6 +13,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI lv;
         [SerializeField] private StatusInfoComponent statusInfoComponent;
+        [SerializeField] private StatusInfoComponent needStatusInfoComponent;
         [SerializeField] private TextMeshProUGUI gridKey;
         [SerializeField] private List<GameObject> actorOnlyGameObjects;
         
@@ -33,6 +34,10 @@ namespace Ryneus
                 statusInfoComponent.UpdateInfo(battlerInfo.Status);
                 statusInfoComponent.UpdateHp(battlerInfo.Hp,battlerInfo.MaxHp);
                 statusInfoComponent.UpdateMp(battlerInfo.Mp,battlerInfo.MaxMp);
+            }
+            if (needStatusInfoComponent != null)
+            {
+                UpdateNeedStatus(battlerInfo);
             }
             
         }
@@ -85,6 +90,22 @@ namespace Ryneus
             foreach (var actorOnlyGameObject in actorOnlyGameObjects)
             {
                 actorOnlyGameObject.SetActive(false);
+            }
+        }
+
+        private void UpdateNeedStatus(BattlerInfo battlerInfo)
+        {
+            if (needStatusInfoComponent != null)
+            {
+                var NeedStatus = new StatusInfo();
+                NeedStatus.SetParameter(
+                    battlerInfo.EnemyData.HpGrowth,
+                    battlerInfo.EnemyData.MpGrowth,
+                    battlerInfo.EnemyData.AtkGrowth,
+                    battlerInfo.EnemyData.DefGrowth,
+                    battlerInfo.EnemyData.SpdGrowth
+                    );
+                needStatusInfoComponent.UpdateInfo(NeedStatus);
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI atk;
         [SerializeField] private TextMeshProUGUI def;
         [SerializeField] private TextMeshProUGUI spd;
+
         [SerializeField] private StatusGaugeAnimation hpGaugeAnimation;
         [SerializeField] private StatusGaugeAnimation mpGaugeAnimation;
         [SerializeField] private TextMeshProUGUI hpCaption;

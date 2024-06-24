@@ -30,6 +30,10 @@ namespace Ryneus
         private float _deathAnimation = 0.0f;
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
+            if (battlerInfo == null)
+            {
+                return;
+            }
             _battlerInfo = battlerInfo;
             if (battlerInfo.IsActor)
             {
@@ -363,7 +367,8 @@ namespace Ryneus
         }
 
 
-        private void Update() {
+        private void Update() 
+        {
             UpdateDeathAnimation();
         }
         

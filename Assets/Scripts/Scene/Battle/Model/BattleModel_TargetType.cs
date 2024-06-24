@@ -145,6 +145,11 @@ namespace Ryneus
                     break;
                 case TargetType.Self:
                     targetIndexList.Add(subject.Index);
+                    // 自分のいる列
+                    if (skillData.Scope == ScopeType.Line)
+                    {
+                        targetIndexList = TargetIndexFriend(subject.IsActor).FindAll(a => subject.LineIndex == GetBattlerInfo(a).LineIndex);
+                    }
                     break;
                 case TargetType.Counter:
                     if (counterSubjectIndex > -1)

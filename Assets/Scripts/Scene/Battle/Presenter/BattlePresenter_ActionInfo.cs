@@ -168,6 +168,21 @@ namespace Ryneus
                     }
                 }
             }
+            
+            // regenerate
+            if (_triggerAfterChecked == false && _regenerateChecked == false)
+            {
+                if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
+                {
+                    _regenerateChecked = true;
+                    var regenerateResult = _model.CheckRegenerate(actionInfo);
+                    if (regenerateResult.Count > 0)
+                    {
+                        StartAnimationRegenerate(regenerateResult);
+                        return;
+                    }
+                }
+            }
             EndTurn();
         }
 
@@ -213,12 +228,15 @@ namespace Ryneus
             // regenerate
             if (_triggerAfterChecked == false && _regenerateChecked == false)
             {
-                _regenerateChecked = true;
-                var regenerateResult = _model.CheckRegenerate(actionInfo);
-                if (regenerateResult.Count > 0)
+                if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
                 {
-                    StartAnimationRegenerate(regenerateResult);
-                    return;
+                    _regenerateChecked = true;
+                    var regenerateResult = _model.CheckRegenerate(actionInfo);
+                    if (regenerateResult.Count > 0)
+                    {
+                        StartAnimationRegenerate(regenerateResult);
+                        return;
+                    }
                 }
             }
             EndTurn();

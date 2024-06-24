@@ -25,6 +25,8 @@ namespace Ryneus
         {
             _TacticsCommandType = tacticsCommandType;
         }
+        private int _firstRecordIndex = -1;
+        public int FirstRecordIndex => _firstRecordIndex;
         private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
         public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
         {
@@ -337,6 +339,7 @@ namespace Ryneus
                 }
                 listData.Add(list);
             }
+            _firstRecordIndex = listData.FindIndex(a => a.Selected);
             return listData;
         }
 

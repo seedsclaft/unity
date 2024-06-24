@@ -285,10 +285,10 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 2042
       TroopId: 2042
-      EnemyId: 1
+      EnemyId: 11
       Lv: 30
       BossFlag: 1
-      Line: 1
+      Line: 0
       StageLv: 0
       PrizeSetId: 2021
     - Id: 2042
@@ -700,7 +700,7 @@ MonoBehaviour:
       EnemyId: 3
       Lv: 60
       BossFlag: 1
-      Line: 1
+      Line: 0
       StageLv: 0
       PrizeSetId: 700
     - Id: 4042
@@ -714,6 +714,22 @@ MonoBehaviour:
     - Id: 4042
       TroopId: 4042
       EnemyId: 14
+      Lv: 60
+      BossFlag: 0
+      Line: 1
+      StageLv: 0
+      PrizeSetId: 0
+    - Id: 4042
+      TroopId: 4042
+      EnemyId: 14
+      Lv: 60
+      BossFlag: 0
+      Line: 1
+      StageLv: 0
+      PrizeSetId: 0
+    - Id: 4042
+      TroopId: 4042
+      EnemyId: 3
       Lv: 60
       BossFlag: 0
       Line: 0

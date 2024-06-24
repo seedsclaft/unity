@@ -23,6 +23,11 @@ namespace Ryneus
 			Kind1,
 			Kind2,
 			Kind3,
+			HpGrowth,
+			MpGrowth,
+			AtkGrowth,
+			DefGrowth,
+			SpdGrowth,
 		}
 
 		enum BaseLearningColumn
@@ -46,14 +51,15 @@ namespace Ryneus
 			Param1,
 			Param2,
 			Param3
-
 		}
+
 		enum BaseTextColumn
 		{
 			Id = 0,
 			Text,
 			Help
 		}
+
 		static readonly string ExcelName = "Enemies.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -127,6 +133,11 @@ namespace Ryneus
 						if (Kind3 != 0) EnemyData.Kinds.Add(Kind3);
 						EnemyData.BaseStatus = new StatusInfo();
 						EnemyData.BaseStatus.SetParameter(Hp,Mp,Atk,Def,Spd);
+						EnemyData.HpGrowth = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.HpGrowth);
+						EnemyData.MpGrowth = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MpGrowth);
+						EnemyData.AtkGrowth = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AtkGrowth);
+						EnemyData.DefGrowth = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DefGrowth);
+						EnemyData.SpdGrowth = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SpdGrowth);
 						Data.Data.Add(EnemyData);
 					}
 

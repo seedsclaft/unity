@@ -17,12 +17,17 @@ MonoBehaviour:
     Name: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
     ImagePath: Jelslime
     BaseStatus:
-      _hp: 42
+      _hp: 48
       _mp: 3
-      _atk: 8
-      _def: 7
+      _atk: 9
+      _def: 8
       _spd: 19
     Kinds: 040000000b000000
+    HpGrowth: 90
+    MpGrowth: 10
+    AtkGrowth: 60
+    DefGrowth: 80
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -57,12 +62,17 @@ MonoBehaviour:
     Name: "\u30AB\u30FC\u30B9\u30C9"
     ImagePath: Cursed
     BaseStatus:
-      _hp: 28
+      _hp: 32
       _mp: 3
-      _atk: 15
-      _def: 2
+      _atk: 16
+      _def: 4
       _spd: 13
     Kinds: 010000000b000000
+    HpGrowth: 50
+    MpGrowth: 10
+    AtkGrowth: 90
+    DefGrowth: 30
+    SpdGrowth: 30
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -85,7 +95,7 @@ MonoBehaviour:
       Trigger1: 1161
       Trigger2: 0
     - SkillId: 5080
-      Trigger1: 1023
+      Trigger1: 0
       Trigger2: 0
     - SkillId: 5070
       Trigger1: 6231
@@ -97,12 +107,17 @@ MonoBehaviour:
     Name: "\u30D3\u30FC"
     ImagePath: Bee
     BaseStatus:
-      _hp: 29
+      _hp: 34
       _mp: 3
-      _atk: 9
-      _def: 1
-      _spd: 29
+      _atk: 10
+      _def: 2
+      _spd: 31
     Kinds: 020000000b000000
+    HpGrowth: 60
+    MpGrowth: 10
+    AtkGrowth: 60
+    DefGrowth: 10
+    SpdGrowth: 90
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -118,7 +133,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 12100
       Level: 60
-      Weight: 0
+      Weight: 200
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
@@ -137,12 +152,17 @@ MonoBehaviour:
     Name: "\u30A6\u30EB\u30D5"
     ImagePath: Wolf
     BaseStatus:
-      _hp: 39
+      _hp: 41
       _mp: 3
-      _atk: 11
+      _atk: 13
       _def: 3
-      _spd: 17
+      _spd: 18
     Kinds: 050000000b000000
+    HpGrowth: 80
+    MpGrowth: 10
+    AtkGrowth: 80
+    DefGrowth: 40
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -177,12 +197,17 @@ MonoBehaviour:
     Name: "\u30AF\u30ED\u30A6"
     ImagePath: Crow
     BaseStatus:
-      _hp: 30
+      _hp: 35
       _mp: 3
-      _atk: 8
-      _def: 2
-      _spd: 30
+      _atk: 9
+      _def: 3
+      _spd: 32
     Kinds: 020000000b000000
+    HpGrowth: 60
+    MpGrowth: 10
+    AtkGrowth: 60
+    DefGrowth: 10
+    SpdGrowth: 70
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -217,12 +242,17 @@ MonoBehaviour:
     Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
     ImagePath: Nameless
     BaseStatus:
-      _hp: 41
+      _hp: 46
       _mp: 3
       _atk: 8
-      _def: 6
+      _def: 7
       _spd: 12
     Kinds: 060000000b000000
+    HpGrowth: 90
+    MpGrowth: 10
+    AtkGrowth: 60
+    DefGrowth: 40
+    SpdGrowth: 30
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -257,12 +287,17 @@ MonoBehaviour:
     Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
     ImagePath: Seacher
     BaseStatus:
-      _hp: 33
+      _hp: 38
       _mp: 3
       _atk: 11
-      _def: 4
+      _def: 5
       _spd: 25
     Kinds: 020000000b000000
+    HpGrowth: 60
+    MpGrowth: 10
+    AtkGrowth: 80
+    DefGrowth: 20
+    SpdGrowth: 60
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -297,12 +332,17 @@ MonoBehaviour:
     Name: "\u30B7\u30FC\u30EB\u30C9"
     ImagePath: Shiled
     BaseStatus:
-      _hp: 45
+      _hp: 51
       _mp: 3
-      _atk: 6
-      _def: 14
+      _atk: 7
+      _def: 15
       _spd: 14
     Kinds: 060000000b000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 50
+    DefGrowth: 70
+    SpdGrowth: 40
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -337,12 +377,17 @@ MonoBehaviour:
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
     ImagePath: Dryad
     BaseStatus:
-      _hp: 42
+      _hp: 47
       _mp: 4
-      _atk: 11
-      _def: 2
+      _atk: 12
+      _def: 4
       _spd: 12
     Kinds: 040000000b000000
+    HpGrowth: 90
+    MpGrowth: 10
+    AtkGrowth: 80
+    DefGrowth: 20
+    SpdGrowth: 40
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -383,12 +428,17 @@ MonoBehaviour:
     Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
     ImagePath: Scorpion
     BaseStatus:
-      _hp: 26
+      _hp: 32
       _mp: 3
-      _atk: 10
+      _atk: 11
       _def: 2
       _spd: 31
     Kinds: 050000000b000000
+    HpGrowth: 50
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 20
+    SpdGrowth: 70
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -423,12 +473,17 @@ MonoBehaviour:
     Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
     ImagePath: Squid
     BaseStatus:
-      _hp: 42
+      _hp: 43
       _mp: 3
-      _atk: 7
-      _def: 7
-      _spd: 21
+      _atk: 9
+      _def: 8
+      _spd: 23
     Kinds: 050000000b000000
+    HpGrowth: 80
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 60
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -463,12 +518,17 @@ MonoBehaviour:
     Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
     ImagePath: Creeper
     BaseStatus:
-      _hp: 40
+      _hp: 45
       _mp: 3
-      _atk: 12
+      _atk: 14
       _def: 6
-      _spd: 15
+      _spd: 17
     Kinds: 010000000b000000
+    HpGrowth: 90
+    MpGrowth: 10
+    AtkGrowth: 80
+    DefGrowth: 40
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -503,12 +563,17 @@ MonoBehaviour:
     Name: "\u30A4\u30F3\u30D7"
     ImagePath: Imp
     BaseStatus:
-      _hp: 42
+      _hp: 48
       _mp: 3
-      _atk: 11
-      _def: 5
-      _spd: 16
+      _atk: 12
+      _def: 7
+      _spd: 18
     Kinds: 040000000b000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 80
+    DefGrowth: 40
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -549,12 +614,17 @@ MonoBehaviour:
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
     ImagePath: Armor
     BaseStatus:
-      _hp: 45
+      _hp: 53
       _mp: 3
-      _atk: 10
-      _def: 4
+      _atk: 11
+      _def: 8
       _spd: 11
     Kinds: 010000000b000000
+    HpGrowth: 110
+    MpGrowth: 10
+    AtkGrowth: 60
+    DefGrowth: 30
+    SpdGrowth: 40
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -572,7 +642,7 @@ MonoBehaviour:
         Param3: 0
     - SkillId: 14020
       Level: 40
-      Weight: 0
+      Weight: 120
       TriggerDates: []
     - SkillId: 14090
       Level: 60
@@ -586,8 +656,8 @@ MonoBehaviour:
       Trigger1: 1033
       Trigger2: 0
     - SkillId: 14020
-      Trigger1: 0
-      Trigger2: 0
+      Trigger1: 1022
+      Trigger2: 1033
     - SkillId: 14090
       Trigger1: 0
       Trigger2: 0
@@ -595,12 +665,17 @@ MonoBehaviour:
     Name: "\u30BD\u30FC\u30C9"
     ImagePath: Sword
     BaseStatus:
-      _hp: 35
+      _hp: 41
       _mp: 3
-      _atk: 15
+      _atk: 17
       _def: 3
-      _spd: 24
+      _spd: 25
     Kinds: 060000000b000000
+    HpGrowth: 80
+    MpGrowth: 10
+    AtkGrowth: 85
+    DefGrowth: 30
+    SpdGrowth: 70
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -629,7 +704,7 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 1080
-      Trigger1: 0
+      Trigger1: 9031
       Trigger2: 0
   - Id: 101
     Name: "\u30A2\u30E2\u30F3"
@@ -641,6 +716,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 050000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -695,6 +775,11 @@ MonoBehaviour:
       _def: 5
       _spd: 22
     Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -749,6 +834,11 @@ MonoBehaviour:
       _def: 2
       _spd: 17
     Kinds: 020000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -796,6 +886,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 040000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -850,6 +945,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 050000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -897,6 +997,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 010000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -944,6 +1049,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 020000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -991,6 +1101,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 050000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 202
@@ -1003,6 +1118,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 203
@@ -1015,6 +1135,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 204
@@ -1027,6 +1152,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 050000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 205
@@ -1039,6 +1169,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 010000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 206
@@ -1051,6 +1186,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 020000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 207
@@ -1063,6 +1203,11 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 301
@@ -1075,5 +1220,10 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 030000000c000000
+    HpGrowth: 100
+    MpGrowth: 10
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
     LearningSkills: []
     SkillTriggerDates: []
