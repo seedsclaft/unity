@@ -370,18 +370,6 @@ namespace Ryneus
         {
             return PartyInfo.CurrentActorInfos(CurrentStage.Id,seek);
         }
-
-        public void MakePrizeData(SymbolResultInfo saveRecord,List<GetItemInfo> getItemInfos)
-        {
-            foreach (var getItemInfo in getItemInfos)
-            {
-                if (saveRecord != null && getItemInfo.GetItemType == GetItemType.SaveHuman)
-                {
-                    getItemInfo.SetParam2(saveRecord.BattleScore);
-                    getItemInfo.MakeTextData();
-                }
-            }
-        }
         
         public void SetParallelMode()
         {

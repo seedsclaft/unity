@@ -23,6 +23,7 @@ namespace Ryneus
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TextMeshProUGUI battlePosition;
         [SerializeField] private TextMeshProUGUI evaluate;
+        [SerializeField] private Image additiveFaceThumb;
         
         private BattlerInfo _battlerInfo = null;
 
@@ -45,6 +46,33 @@ namespace Ryneus
             if (evaluate != null)
             {
                 evaluate.text = battlerInfo.Evaluate().ToString();
+            }
+            if (additiveFaceThumb != null)
+            {
+                if (battlerInfo.IsActor)
+                {
+                    var handle = ResourceSystem.LoadActorMainFaceSprite(battlerInfo.ActorInfo.Master.ImagePath);
+                    if (additiveFaceThumb != null) 
+                    {
+                        additiveFaceThumb.sprite = handle;
+                    }
+                } else
+                {
+                    UpdateMainThumb(battlerInfo.EnemyData.ImagePath,0,0,1.0f);
+                }
+            }
+        }
+
+        private void UpdateMainThumb(string imagePath,int x,int y,float scale)
+        {
+            var handle = ResourceSystem.LoadEnemySprite(imagePath);
+            if (additiveFaceThumb != null)
+            {
+                additiveFaceThumb.gameObject.SetActive(true);
+                var rect = additiveFaceThumb.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(x, y, 0);
+                rect.localScale = new Vector3(scale, scale, 1);
+                additiveFaceThumb.sprite = handle;
             }
         }
 
@@ -415,6 +443,24 @@ namespace Ryneus
         {
             effekseerEmitter.Stop();
             effekseerEmitter.enabled = false;
+        }
+
+        public void SetActiveBeforeSkillThumb(bool isActive)
+        {
+            if (additiveFaceThumb != null)
+            {
+                additiveFaceThumb.gameObject.SetActive(isActive);
+                if (isActive)
+                {
+                    additiveFaceThumb.DOFade(1f, 0);
+                    DOTween.Sequence()
+                    .Append(additiveFaceThumb.DOFade(0f, 0.4f))
+                    .OnComplete(() => 
+                    {
+                        additiveFaceThumb.gameObject.SetActive(false);
+                    });
+                }
+            }
         }
     }
 }

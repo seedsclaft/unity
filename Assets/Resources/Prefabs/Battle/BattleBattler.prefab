@@ -916,8 +916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: 0c68066a6335c4d4a82eb6897683c9a4, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1240,6 +1240,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 919741410587461747}
   battlePosition: {fileID: 4247544591993893162}
   evaluate: {fileID: 0}
+  additiveFaceThumb: {fileID: 6693388685392689204}
 --- !u!114 &5925626230249670501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   nameText: {fileID: 0}
   lv: {fileID: 0}
   statusInfoComponent: {fileID: 0}
+  needStatusInfoComponent: {fileID: 0}
   gridKey: {fileID: 0}
   actorOnlyGameObjects: []
 --- !u!1001 &6719696199905103225

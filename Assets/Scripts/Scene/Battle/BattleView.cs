@@ -149,11 +149,11 @@ namespace Ryneus
         public void SetBattleAutoButton(bool isActive)
         {
             battleAutoButton.gameObject.SetActive(isActive);
+            battleSpeedButton.gameObject.SetActive(isActive);
         }
 
         public void SetBattleSkipActive(bool isActive)
         {
-            battleSpeedButton.gameObject.SetActive(isActive);
             battleSkipButton.gameObject.SetActive(isActive);
             skillLogButton.gameObject.SetActive(isActive);
         }
@@ -181,8 +181,10 @@ namespace Ryneus
             var data = selectCharacter.ActionData;
             if (data != null)
             {
-                var eventData = new BattleViewEvent(CommandType.SelectedSkill);
-                eventData.template = data;
+                var eventData = new BattleViewEvent(CommandType.SelectedSkill)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -307,8 +309,10 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.EnemyLayer);
-                eventData.template = data.Index;
+                var eventData = new BattleViewEvent(CommandType.EnemyLayer)
+                {
+                    template = data.Index
+                };
                 _commandData(eventData);
             }
         }
@@ -320,8 +324,10 @@ namespace Ryneus
             var battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
             if (battlerInfo != null)
             {
-                var eventData = new BattleViewEvent(CommandType.EnemyDetail);
-                eventData.template = selectedIndex;
+                var eventData = new BattleViewEvent(CommandType.EnemyDetail)
+                {
+                    template = selectedIndex
+                };
                 _commandData(eventData);
             }
         }
@@ -333,8 +339,10 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.ActorList);
-                eventData.template = data.Index;
+                var eventData = new BattleViewEvent(CommandType.ActorList)
+                {
+                    template = data.Index
+                };
                 _commandData(eventData);
             }
         }
@@ -346,8 +354,10 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.SelectActorList);
-                eventData.template = data.Index;
+                var eventData = new BattleViewEvent(CommandType.SelectActorList)
+                {
+                    template = data.Index
+                };
                 _commandData(eventData);
             }
         }
@@ -359,8 +369,10 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.SelectEnemyList);
-                eventData.template = data.Index;
+                var eventData = new BattleViewEvent(CommandType.SelectEnemyList)
+                {
+                    template = data.Index
+                };
                 _commandData(eventData);
             }
         }
@@ -468,7 +480,6 @@ namespace Ryneus
                     var selectable = battlerInfo.Enable;
                     item.Value.SetThumbAlpha(selectable);
                 }
-            
             }
         }
 
@@ -487,7 +498,6 @@ namespace Ryneus
                     var selectable = battlerInfo.Enable;
                     item.Value.SetThumbAlpha(selectable);
                 }
-            
             }
         }
 
@@ -722,6 +732,10 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Skill);
             StartAnimation(subjectIndex,effekseerEffect,0,1f,1.0f);
+            if (_battlerComps.ContainsKey(subjectIndex))
+            {
+                _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
+            }
         }
 
         public void StartAnimationSlipDamage(List<int> targetIndexes)

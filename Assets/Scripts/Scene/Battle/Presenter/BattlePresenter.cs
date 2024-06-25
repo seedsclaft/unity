@@ -242,6 +242,7 @@ namespace Ryneus
 
         private void CommandStartBattleAction()
         {
+            _view.UpdateGridLayer();
             _model.CheckTriggerPassiveInfos(BattleUtility.StartTriggerTimings(),null,null);
         }
 

@@ -16,7 +16,7 @@ namespace Ryneus
         /// <param name="actionInfo"></param>
         public void StartActionInfoAnimation(ActionInfo actionInfo)
         {
-            if (_skipBattle)
+            if (_skipBattle || actionInfo.Master.IsDisplayStartBattle())
             {
                 CommandEndAnimation();
                 return;

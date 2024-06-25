@@ -59,14 +59,16 @@ namespace Ryneus
 
         public bool IsDisplayBattleSkill()
         {
-            //if (SkillType != SkillType.Messiah && SkillType != SkillType.Awaken)
-            //{
-                if (Id >= 100 || Id == 31 || Id == 33)
-                {
-                    return true;
-                }
-            //}
-            return false;
+            if (IsDisplayStartBattle())
+            {
+                return false;
+            }
+            return Id >= 100 || Id == 31 || Id == 33;
+        }
+
+        public bool IsDisplayStartBattle()
+        {
+            return TriggerDates.Find(a => a.TriggerTiming == TriggerTiming.StartBattle) != null;
         }
 
         [Serializable]

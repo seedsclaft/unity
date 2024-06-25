@@ -129,12 +129,18 @@ namespace Ryneus
                         record.StageSymbolData.Param1 = getItemInfo.Param1;
                         break;
                     case GetItemType.SaveHuman:
-                        
-                        var rate = PartyInfo.BattleResultScore * 0.01f;
-                        rate *= getItemInfo.Param1;
-                        getItemInfo.SetParam2((int)rate);
+                        var recordScore = PartyInfo.BattleResultScore * 0.01f;
+                        recordScore *= getItemInfo.Param1;
+                        getItemInfo.SetParam2((int)recordScore);
                         getItemInfo.MakeTextData();
-                        record.SetBattleScore((int)rate);
+                        if (beforeRecord != null && beforeRecord.BattleScore < (int)recordScore)
+                        {
+                            getItemInfo.MakeSaveHumanTextData(beforeRecord.BattleScore);
+                            record.SetBattleScore((int)recordScore);
+                        } else
+                        {
+                            record.SetBattleScore((int)recordScore);
+                        }
                         break;
                 }
             }

@@ -100,6 +100,15 @@ namespace Ryneus
             }
         }
 
+        public void MakeSaveHumanTextData(int beforeScore)
+        {
+            if (_getItemType == GetItemType.SaveHuman)
+            {
+                SetResultData(DataSystem.GetText(14100) +"\n" + DataSystem.GetReplaceDecimalText(beforeScore) + "→" +
+                DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1));
+            }
+        }
+
         public void SetSkillId(int skillId)
         {
             _skillId = skillId;
