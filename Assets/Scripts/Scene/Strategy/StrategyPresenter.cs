@@ -27,8 +27,8 @@ namespace Ryneus
             _busy = true;
             _view.SetHelpWindow();
 
-            _view.SetActors(_model.SceneParam.ActorInfos);
-            _view.SetResultList(_model.ResultCommand());
+            _view.InitActors();
+            _view.InitResultList(_model.ResultCommand());
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -59,7 +59,7 @@ namespace Ryneus
                 CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
                 break;
                 case CommandType.ResultClose:
-                CommandResultClose((ConfirmCommandType)viewEvent.template);
+                CommandResultClose((SystemData.CommandData)viewEvent.template);
                 break;
                 case CommandType.EndLvUpAnimation:
                 CommandEndLvUpAnimation();
@@ -144,11 +144,11 @@ namespace Ryneus
                 {
                     if (_model.LevelUpData.Count == 0)
                     {
-                        _view.ShowResultList(_model.BattleResultInfos());
+                        _view.ShowResultList(_model.BattleResultInfos(),_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn());
                     }
                 } else
                 {
-                    _view.ShowResultList(_model.BattleResultInfos());
+                    _view.ShowResultList(_model.BattleResultInfos(),_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn());
                 }
             } else
             {
@@ -227,9 +227,9 @@ namespace Ryneus
             }
         }
 
-        private void CommandResultClose(ConfirmCommandType confirmCommandType)
+        private void CommandResultClose(SystemData.CommandData commandData)
         {
-            if (confirmCommandType == ConfirmCommandType.Yes)
+            if (commandData.Key == "Yes")
             {
                 if (_model.BattleResult)
                 {
@@ -366,6 +366,7 @@ namespace Ryneus
 
         private void ShowStatus()
         {
+            _model.SetStatusActorInfos();
             var statusViewInfo = new StatusViewInfo(() => 
             {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);

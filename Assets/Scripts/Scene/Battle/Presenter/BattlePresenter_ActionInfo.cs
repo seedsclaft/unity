@@ -74,13 +74,14 @@ namespace Ryneus
             
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimationBeforeSkill(actionInfo.SubjectIndex,selfAnimation);
-            
+            var speed = GameSystem.ConfigData.BattleSpeed;
+            await UniTask.DelayFrame((int)(16/speed));
             if (actionInfo.TriggeredSkill && actionInfo.Master.SkillType != SkillType.Messiah && actionInfo.Master.SkillType != SkillType.Awaken)
             {
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {
                     _view.ShowCutinBattleThumb(_model.GetBattlerInfo(actionInfo.SubjectIndex));
-                    var speed = GameSystem.ConfigData.BattleSpeed;
+                    speed = GameSystem.ConfigData.BattleSpeed;
                     await UniTask.DelayFrame((int)(16/speed));
                 }
             }

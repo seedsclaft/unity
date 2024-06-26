@@ -8,7 +8,7 @@ namespace Ryneus
     public class AlcanaResultView : BaseView
     {
         [SerializeField] private StrategyActorList strategyActorList = null;
-        [SerializeField] private GetItemList strategyResultList = null; 
+        [SerializeField] private BaseList strategyResultList = null; 
         [SerializeField] private BaseList commandList = null; 
         [SerializeField] private GameObject animRoot = null;
         [SerializeField] private GameObject animPrefab = null;
@@ -54,12 +54,6 @@ namespace Ryneus
         }
         public void SetResultList(List<ListData> confirmCommands)
         {
-            SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
-            strategyResultList.Deactivate();
-            strategyResultList.gameObject.SetActive(false);
-            strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));
-            SetInputHandler(strategyResultList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
-            strategyResultList.TacticsCommandList.Deactivate();
         }
         
         private void CallResultCommand(ConfirmCommandType commandType)
@@ -84,8 +78,6 @@ namespace Ryneus
             strategyResultList.SetData(getItemInfos);
             strategyResultList.gameObject.SetActive(true);
             strategyResultList.Activate();
-            strategyResultList.TacticsCommandList.Activate();
-            strategyResultList.TacticsCommandList.UpdateSelectIndex(1);
             HelpWindow.SetInputInfo("STRATEGY");
         }
 

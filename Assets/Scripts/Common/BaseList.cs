@@ -74,6 +74,7 @@ namespace Ryneus
             } else
             {
                 Refresh(selectIndex);
+                initializeAfterEvent?.Invoke();
             }
             _initializeList = true;
         }

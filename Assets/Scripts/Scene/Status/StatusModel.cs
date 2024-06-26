@@ -29,10 +29,12 @@ namespace Ryneus
 
         public void ChangeActorIndex(int value){
             _currentIndex += value;
-            if (_currentIndex > StatusActors().Count-1){
+            if (_currentIndex > StatusActors().Count-1)
+            {
                 _currentIndex = 0;
             } else
-            if (_currentIndex < 0){
+            if (_currentIndex < 0)
+            {
                 _currentIndex = StatusActors().Count-1;
             }
         }

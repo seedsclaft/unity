@@ -862,12 +862,14 @@ namespace Ryneus
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15020));
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
+                strategySceneInfo.BattleTurn = _model.TurnCount;
                 _model.MakeBattleScore(true);
             } else
             if (_model.CheckDefeat())
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15030)); 
-                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();   
+                strategySceneInfo.GetItemInfos = new List<GetItemInfo>();  
+                strategySceneInfo.BattleTurn = -1; 
                 _model.MakeBattleScore(false);       
             }
             _model.EndBattle();

@@ -11,26 +11,34 @@ namespace Ryneus
     {
         [SerializeField] private Image backgroundImage = null; 
         [SerializeField] private StrategyActorList strategyActorList = null; 
-        [SerializeField] private GetItemList strategyResultList = null; 
+        [SerializeField] private BaseList strategyResultList = null; 
+        [SerializeField] private BaseList commandList = null; 
         [SerializeField] private BaseList statusList = null; 
         [SerializeField] private TextMeshProUGUI title = null; 
         [SerializeField] private ActorInfoComponent actorInfoComponent = null;
         [SerializeField] private Button lvUpStatusButton = null;
         [SerializeField] private GameObject animRoot = null;
         [SerializeField] private GameObject animPrefab = null;
+        [SerializeField] private GameObject saveHumanObj = null;
+        [SerializeField] private TextMeshProUGUI saveHumanText = null; 
+        [SerializeField] private GameObject battleTurnObj = null;
+        [SerializeField] private TextMeshProUGUI battleTurnText = null; 
 
         private BattleStartAnim _battleStartAnim = null;
         private bool _animationBusy = false;
 
         private new System.Action<StrategyViewEvent> _commandData = null;
 
-        private float _lastActorPosition = 0;
         public override void Initialize() 
         {
             base.Initialize();
             statusList.Initialize();
             statusList.SetInputHandler(InputKeyType.Decide,() => CallLvUpNext());
-            SetInputHandler(statusList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(statusList.gameObject);
+
+            commandList.Initialize();
+            SetInputHandler(commandList.gameObject);
+            commandList.gameObject.SetActive(false);
             
             GameObject prefab = Instantiate(animPrefab);
             prefab.transform.SetParent(animRoot.transform, false);
@@ -44,6 +52,8 @@ namespace Ryneus
             actorInfoComponent.MainThumb.DOFade(0,0);
 
             strategyResultList.Initialize();
+            saveHumanObj?.SetActive(false);
+            battleTurnObj?.SetActive(false);
             new StrategyPresenter(this);
         }
 
@@ -66,7 +76,7 @@ namespace Ryneus
 
         public void ShowLvUpActor(ActorInfo actorInfo,List<ListData> status)
         {
-            strategyResultList.TacticsCommandList.Deactivate();
+            strategyResultList.Deactivate();
             statusList.gameObject.SetActive(true);
             statusList.Activate();
             lvUpStatusButton.gameObject.SetActive(true);
@@ -89,36 +99,31 @@ namespace Ryneus
             title.text = text;
         }
 
-        public void SetHelpWindow(){
+        public void SetHelpWindow()
+        {
             HelpWindow.SetInputInfo("");
             HelpWindow.SetHelpText(DataSystem.GetText(14010));
         }
 
-        public void SetActors(List<ActorInfo> actorInfos)
+        public void InitActors()
         {
             strategyActorList.Initialize();
             strategyActorList.gameObject.SetActive(false);
         }
 
-        public void SetResultList(List<ListData> confirmCommands)
+        public void InitResultList(List<ListData> confirmCommands)
         {
-            SetInputHandler(strategyResultList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(strategyResultList.gameObject);
             strategyResultList.Deactivate();
             strategyResultList.gameObject.SetActive(false);
-            strategyResultList.InitializeConfirm(confirmCommands,(a) => CallResultCommand(a));
-            SetInputHandler(strategyResultList.TacticsCommandList.GetComponent<IInputHandlerEvent>());
-            strategyResultList.TacticsCommandList.Deactivate();
+            
+            commandList.SetData(confirmCommands);
+            commandList.SetInputHandler(InputKeyType.Decide,() => CallResultCommand());
         }
 
         public void SetEvent(System.Action<StrategyViewEvent> commandData)
         {
             _commandData = commandData;
-        }
-        
-
-        private void CallStrategyStart(){
-            var eventData = new StrategyViewEvent(CommandType.StartStrategy);
-            _commandData(eventData);
         }
 
         public void StartResultAnimation(List<ListData> actorInfos,List<bool> isBonusList = null)
@@ -126,55 +131,52 @@ namespace Ryneus
             DeactivateAll();
             strategyActorList.gameObject.SetActive(false);
             strategyActorList.SetData(actorInfos);
-            strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => {
+            strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => 
+            {
                 CallEndAnimation();
             });
             strategyActorList.gameObject.SetActive(true);
         }
 
-        private void CallEndAnimation(){
+        private void CallEndAnimation()
+        {
             var eventData = new StrategyViewEvent(CommandType.EndAnimation);
             _commandData(eventData);
         }
 
-        public void ShowResultList(List<ListData> getItemInfos)
+        public void ShowResultList(List<ListData> getItemInfos,string saveHuman = null,string battleTurn = null)
         {
             strategyResultList.Deactivate();
             strategyResultList.SetData(getItemInfos);
             strategyResultList.gameObject.SetActive(true);
             strategyResultList.Activate();
-            strategyResultList.TacticsCommandList.Activate();
-            strategyResultList.TacticsCommandList.UpdateSelectIndex(1);
+            saveHumanObj?.SetActive(saveHuman != null);
+            battleTurnObj?.SetActive(battleTurn != null);
+            saveHumanText?.SetText(saveHuman);
+            battleTurnText?.SetText(battleTurn);
+            commandList.gameObject.SetActive(true);
+            commandList.Activate();
             SetHelpInputInfo("STRATEGY");
         }
 
-        private void CallResultCommand(ConfirmCommandType commandType)
+        private void CallResultCommand()
         {
-            var eventData = new StrategyViewEvent(CommandType.ResultClose);
-            eventData.template = commandType;
-            _commandData(eventData);
+            var listData = commandList.ListData;
+            if (listData != null)
+            {
+                var data = (SystemData.CommandData)listData.Data;
+                var eventData = new StrategyViewEvent(CommandType.ResultClose)
+                {
+                    template = data
+                };
+                _commandData(eventData);
+            }
         }
 
         public void HideResultList()
         {
             strategyResultList.Deactivate();
             strategyResultList.gameObject.SetActive(false);
-        }
-
-        
-
-        private void OnChangeSkipToggle(bool needChangeView)
-        {
-            var eventData = new StrategyViewEvent(CommandType.ChangeSkipToggle);
-            eventData.template = needChangeView;
-            _commandData(eventData);
-        }
-
-        private void CallBattleCommand(ConfirmCommandType commandType)
-        {
-            var eventData = new StrategyViewEvent(CommandType.BattleClose);
-            eventData.template = commandType;
-            _commandData(eventData);
         }
 
         private new void Update() {
@@ -209,17 +211,16 @@ namespace Ryneus
         private void DeactivateAll()
         {
             strategyResultList.Deactivate();
-            strategyResultList.TacticsCommandList.Deactivate();
+            commandList.Deactivate();
         }
-
     }
 
     public class StrategyViewEvent
     {
-        public Strategy.CommandType commandType;
+        public CommandType commandType;
         public object template;
 
-        public StrategyViewEvent(Strategy.CommandType type)
+        public StrategyViewEvent(CommandType type)
         {
             commandType = type;
         }
@@ -237,10 +238,8 @@ namespace Strategy
         PopupSkillInfo = 3,
         CallEnemyInfo = 4,
         ResultClose = 5,
-        BattleClose = 6,
         LvUpNext = 7,
         
         EndLvUpAnimation = 9,
-        ChangeSkipToggle = 10,
     }
 }

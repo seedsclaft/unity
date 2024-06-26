@@ -173,7 +173,27 @@ namespace Ryneus
 
         public List<ListData> BattleResultInfos()
         {
-            return MakeListData(SceneParam.GetItemInfos);
+            return MakeListData(SceneParam.GetItemInfos.FindAll(a => a.GetItemType != GetItemType.SaveHuman));
+        }
+
+        public string BattleSaveHumanResultInfo()
+        {
+            var result = SceneParam.GetItemInfos.Find(a => a.GetItemType == GetItemType.SaveHuman);
+            if (result != null)
+            {
+                return result.Param2.ToString();
+            }
+            return null;
+        }
+
+        public string BattleResultTurn()
+        {
+            var result = SceneParam.BattleTurn;
+            if (result > 0)
+            {
+                return result.ToString();
+            }
+            return null;
         }
 
         public List<ActorInfo> BattleResultActors()
@@ -378,6 +398,7 @@ namespace Ryneus
 
     public class StrategySceneInfo
     {
+        public int BattleTurn;
         public List<GetItemInfo> GetItemInfos;
         public List<ActorInfo> ActorInfos;
     }

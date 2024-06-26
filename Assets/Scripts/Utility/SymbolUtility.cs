@@ -290,7 +290,7 @@ namespace Ryneus
                 {
                     getItemData = new GetItemData
                     {
-                        Param1 = lv + 4,
+                        Param1 = (lv / 2) + 9,
                         Type = GetItemType.Numinous
                     };
                 } else
