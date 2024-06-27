@@ -8,7 +8,6 @@ namespace Ryneus
 {
     public class SkillTriggerListItem : ListItem ,IListViewItem
     {
-        
         [SerializeField] private SideMenuButton skillButton;
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         [SerializeField] private SideMenuButton trigger1Button;
@@ -46,19 +45,19 @@ namespace Ryneus
                 skillButton.SetUnSelect();
                 trigger1Button.SetUnSelect();
                 trigger2Button.SetUnSelect();
-            }
+            } else
             if (index == 0)
             {
                 skillButton.SetSelect();
                 trigger1Button.SetUnSelect();
                 trigger2Button.SetUnSelect();
-            }
+            } else
             if (index == 1)
             {
                 skillButton.SetUnSelect();
                 trigger1Button.SetSelect();
                 trigger2Button.SetUnSelect();
-            }
+            } else
             if (index == 2)
             {
                 skillButton.SetUnSelect();

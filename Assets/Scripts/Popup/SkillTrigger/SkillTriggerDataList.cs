@@ -9,7 +9,8 @@ namespace Ryneus
         public new void Initialize()
         {
             base.Initialize();
-            SetSelectedHandler(() => {
+            SetSelectedHandler(() => 
+            {
                 UpdateHelpText();
             });
         }

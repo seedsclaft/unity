@@ -64,19 +64,24 @@ namespace Ryneus
             if (skillTriggerData.Count > index)
             {
                 var skill = DataSystem.FindSkill(skillTriggerData[index].SkillId);
-                if (skill.TargetType == TargetType.All)
+                switch (skill.TargetType)
                 {
+                    case TargetType.All:
                     list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend || a.TargetType == TargetType.Opponent);
-                } else
-                if (skill.TargetType == TargetType.IsTriggerTarget)
-                {
+                    break;
+                    case TargetType.IsTriggerTarget:
                     if (skill.IsHpHealFeature())
                     {
                         list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend);
                     }
-                } else
-                {
+                    break;
+                    case TargetType.Counter:
+                    case TargetType.AttackTarget:
+                    list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Opponent);
+                    break;
+                    default:
                     list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == skill.TargetType);
+                    break;
                 }
             }
             // ソート

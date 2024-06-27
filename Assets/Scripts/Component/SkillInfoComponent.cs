@@ -19,6 +19,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI description;
         [SerializeField] private TextMeshProUGUI range;
         [SerializeField] private TextMeshProUGUI learningCost;
+        [SerializeField] private TextMeshProUGUI countTurn;
         [SerializeField] private TextMeshProUGUI learningText;
         [SerializeField] private GameObject selectable;
         [SerializeField] private GameObject selectedAlcana;
@@ -87,6 +88,8 @@ namespace Ryneus
                 var mpCostText = skillData.SkillType == SkillType.Active ? "(" + skillData.MpCost.ToString() + ")" : "";
                 mpCost?.SetText(mpCostText);
                 type?.SetText(skillData.SkillType.ToString());
+                countTurn?.gameObject?.SetActive(skillData.TurnCount != 0);
+                countTurn?.SetText(skillData.TurnCount.ToString());
             } else
             {
                 Clear();

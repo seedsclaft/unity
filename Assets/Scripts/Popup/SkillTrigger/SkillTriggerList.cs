@@ -71,7 +71,7 @@ namespace Ryneus
                 }
                 UpdateListItem(Index);
                 return;
-            }
+            } else
             if (keyType == InputKeyType.Left)
             {
                 if (_selectItemIndex <= 0)
