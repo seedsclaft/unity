@@ -20,7 +20,7 @@ namespace Ryneus
         private void Initialize()
         { 
             _view.SetHelpWindow(_model.HelpText());
-            _view.SetUIButton();
+            _view.SetUIButton(_model.StatusCommand());
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandRefresh();

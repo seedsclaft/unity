@@ -31,9 +31,13 @@ MonoBehaviour:
     Help: "\u30AD\u30E3\u30E9\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3084\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
   StatusCommandData:
   - Id: 1
-    Key: SKILLLIST
-    Name: "\u63A2\u7D22"
-    Help: "\u30B9\u30C6\u30FC\u30B8\u3092\u63A2\u7D22\u3057\u307E\u3059"
+    Key: LV_RESET
+    Name: "\u30EA\u30BB\u30C3\u30C8"
+    Help: '""'
+  - Id: 2
+    Key: SKILL_TRIGGER
+    Name: "\u4F5C\u6226\u8A2D\u5B9A"
+    Help: '""'
   OptionCommandData:
   - Id: 1
     Key: BGM_VOLUME
@@ -247,7 +251,7 @@ MonoBehaviour:
     Text: SPD
     Help: '""'
   - Id: 310
-    Text: GrowthRates
+    Text: Growth
     Help: '""'
   - Id: 311
     Text: Parameters
@@ -989,6 +993,9 @@ MonoBehaviour:
     Help: '""'
   - Id: 14140
     Text: "\u30EA\u30BB\u30C3\u30C8"
+    Help: '""'
+  - Id: 14141
+    Text: "\u4F5C\u6226\u8A2D\u5B9A"
     Help: '""'
   - Id: 14150
     Text: "\u3053\u306E\u30AD\u30E3\u30E9\u306F\u30EA\u30BB\u30C3\u30C8\u3067\u304D\u307E\u305B\u3093"

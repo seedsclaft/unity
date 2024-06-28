@@ -727,11 +727,13 @@ namespace Ryneus
             var listCount = ListItemCount();
             var dataCount = _listDates.Count;
             var listIndex = selectIndex - (listCount - 1);
+            Debug.Log(listIndex);
             // 下まで表示できる場合は
             if (dataCount > selectIndex+listCount)
             {
-                listIndex = selectIndex+listCount-1;
+                //listIndex = selectIndex+listCount-1;
             }
+            Debug.Log(listIndex);
             if (listIndex > 0)
             {
                 var num = 1.0f / (dataCount - listCount);

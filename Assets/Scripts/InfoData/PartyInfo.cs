@@ -134,10 +134,26 @@ namespace Ryneus
                     var sameStage = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId == stageId && a.Seek <= seek);
                     levelUpInfos.AddRange(sameStage);
                     actorInfo.SetLevelUpInfo(levelUpInfos);
+                    actorInfo.SetAddTiming(AddTimingText(actorInfo));
                 }
                 actorInfos.Add(actorInfo);
             }
             return actorInfos;
+        }
+
+        private string AddTimingText(ActorInfo actorInfo)
+        {
+            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
+            var find = records.Find(a => a.StageSymbolData.Param1 == actorInfo.ActorId);
+            if (find != null)
+            {
+                if (find.StageId == 0)
+                {
+                    return "初期加入";
+                }
+                return find.StageId + "-" + find.Seek + "～";
+            }
+            return "未加入";
         }
 
         public List<LevelUpInfo> AssignedLevelUpInfos(int actorId)

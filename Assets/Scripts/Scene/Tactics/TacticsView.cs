@@ -309,9 +309,7 @@ namespace Ryneus
                 }
                 symbolRecordList.SetSelectedHandler(() => 
                 {
-                    foreach (var SymbolRecordData in symbolRecordList.GetComponentsInChildren<SymbolRecordData>())
-                    {
-                    }
+                    // 消さないこと
                 });
             });
 
@@ -372,8 +370,10 @@ namespace Ryneus
                     if (data != null && data.SymbolType != SymbolType.None)
                     {
                         SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                        var eventData = new TacticsViewEvent(CommandType.SelectSymbol);
-                        eventData.template = data;
+                        var eventData = new TacticsViewEvent(CommandType.SelectSymbol)
+                        {
+                            template = data
+                        };
                         _commandData(eventData);
                     }
                 }
@@ -382,8 +382,10 @@ namespace Ryneus
                 var getItemInfo = tacticsSymbolList.GetItemInfo();
                 if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
                 {
-                    var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo);
-                    eventData.template = getItemInfo;
+                    var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
+                    {
+                        template = getItemInfo
+                    };
                     _commandData(eventData);
                 }
             }
@@ -398,8 +400,10 @@ namespace Ryneus
                 if (data != null && data.SymbolType != SymbolType.None)
                 {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                    var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo);
-                    eventData.template = data;
+                    var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo)
+                    {
+                        template = data
+                    };
                     _commandData(eventData);
                 }
             }
@@ -483,8 +487,10 @@ namespace Ryneus
             {
                 if (AlcanaSelectSkillInfo() != null)
                 {
-                    var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList);
-                    eventData.template = AlcanaSelectSkillInfo();
+                    var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList)
+                    {
+                        template = AlcanaSelectSkillInfo()
+                    };
                     _commandData(eventData);
                 }
             });

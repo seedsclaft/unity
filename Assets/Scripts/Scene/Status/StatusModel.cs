@@ -98,5 +98,10 @@ namespace Ryneus
             var listData = MakeListData(CurrentActor.SkillTriggerInfos,selectIndex);
             return listData;
         }
+
+        public List<ListData> StatusCommand()
+        {
+            return MakeListData( DataSystem.StatusCommand );
+        }
     }
 }

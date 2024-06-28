@@ -14,11 +14,19 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
         private List<LevelUpInfo> _levelUpInfos = new ();
+
         public void SetLevelUpInfo(List<LevelUpInfo> levelUpInfos)
         {
             _levelUpInfos = levelUpInfos;
         }
         
+        private string _addTiming = "";
+        public string AddTiming => _addTiming;
+        public void SetAddTiming(string addTiming)
+        {
+            _addTiming = addTiming;
+        }
+
         public int Level => _levelUpInfos.FindAll(a => a.Enable && a.SkillId == -1).Count + 1;
 
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
@@ -512,7 +520,7 @@ namespace Ryneus
             int total = statusValue + (int)magicValue + DemigodParam * 10;
             return total;
         }
-
+    
         public List<ListData> SkillActionList()
         {
             var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);

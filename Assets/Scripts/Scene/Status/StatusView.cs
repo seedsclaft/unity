@@ -17,6 +17,8 @@ namespace Ryneus
         [SerializeField] private Button leftButton = null;
         [SerializeField] private Button rightButton = null;
         [SerializeField] private GameObject decideAnimation = null;
+        [SerializeField] private MagicList magicList = null;
+        [SerializeField] private BaseList commandList = null;
 
         private StatusViewInfo _statusViewInfo = null; 
 
@@ -31,6 +33,11 @@ namespace Ryneus
             InitializeSelectCharacter();
             
             SetDecideAnimation();
+            magicList.Initialize();
+            SetInputHandler(magicList.gameObject);
+            commandList.Initialize();
+            SetInputHandler(commandList.gameObject);
+
             new StatusPresenter(this);
             selectCharacter.SetBusy(false);
         }
@@ -43,12 +50,14 @@ namespace Ryneus
             selectCharacter.ShowActionList();
         }
         
-        public void SetUIButton()
+        public void SetUIButton(List<ListData> commandListData)
         {
             leftButton.onClick.AddListener(() => OnClickLeft());
             rightButton.onClick.AddListener(() => OnClickRight());
             decideButton.onClick.AddListener(() => OnClickDecide());
             characterListButton.SetCallHandler(() => OnClickCharacterList());
+            commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
+            commandList.SetData(commandListData);
         }
 
         public void ShowArrows()
@@ -101,6 +110,11 @@ namespace Ryneus
         public void CommandBack()
         {
             _backEvent?.Invoke();
+        }
+
+        private void OnClickCommand()
+        {
+
         }
 
         public new void SetBusy(bool busy)
@@ -223,7 +237,7 @@ namespace Ryneus
             ShowSkillActionList();
             selectCharacter.UpdateStatus(actorInfo);
             selectCharacter.SetActorInfo(actorInfo,party);
-            selectCharacter.SetSkillInfos(skillInfos);
+            magicList.SetData(skillInfos);
             selectCharacter.SetSkillTriggerList(skillTriggerInfos);
             actorInfoComponent.UpdateInfo(actorInfo,party);
         }

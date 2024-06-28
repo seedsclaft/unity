@@ -258,8 +258,8 @@ namespace Ryneus
         {
             var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
             var baseView = prefab.GetComponent<BaseView>();
-            baseView.Initialize();
             baseView.SetEvent((type) => UpdateCommand(type));
+            baseView.Initialize();
             baseView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));

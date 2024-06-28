@@ -677,7 +677,8 @@ namespace Ryneus
                 case SymbolType.Boss:
                     var enemyInfos = symbolInfo.SymbolInfo.BattlerInfos();
                     
-                    var enemyViewInfo = new StatusViewInfo(() => {
+                    var enemyViewInfo = new StatusViewInfo(() => 
+                    {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
                         _view.ChangeUIActive(true);
                     });
@@ -690,7 +691,8 @@ namespace Ryneus
                     break;
                 case SymbolType.Actor:
                     _model.SetTempAddActorStatusInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1);
-                    var statusViewInfo = new StatusViewInfo(() => {
+                    var statusViewInfo = new StatusViewInfo(() => 
+                    {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
                         _view.ChangeUIActive(true);
                     });
@@ -706,7 +708,8 @@ namespace Ryneus
                     {
                         _model.SetTempAddSelectActorGetItemInfoStatusInfos(symbolInfo.SymbolInfo.GetItemInfos);
                     }
-                    var statusViewInfo2 = new StatusViewInfo(() => {
+                    var statusViewInfo2 = new StatusViewInfo(() => 
+                    {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);
                         _view.ChangeUIActive(true);
                     });

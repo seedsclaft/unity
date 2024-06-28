@@ -23,7 +23,7 @@ namespace Ryneus
             //battlerInfoComponent.SetSelectable(ListData.Enable);
             battlerInfoComponent.UpdateInfo(battlerInfo);
             battlerInfoComponent.RefreshStatus();
-            UpdateLocalPosition(battlerInfo);
+            //UpdateLocalPosition(battlerInfo);
             if (Disable != null)
             {
                 Disable.SetActive(!ListData.Enable);
@@ -61,7 +61,7 @@ namespace Ryneus
                     positionX *= -1;
                 }
             }
-            thumbRect.localPosition = new Vector3(positionX + thumbRect.localPosition.x,thumbRect.localPosition.y,0);
+            //thumbRect.localPosition = new Vector3(positionX + thumbRect.localPosition.x,thumbRect.localPosition.y,0);
             _isInitialized = true;
         }
     }

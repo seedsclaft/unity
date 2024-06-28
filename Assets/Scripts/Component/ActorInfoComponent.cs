@@ -41,6 +41,7 @@ namespace Ryneus
 
         [SerializeField] private TextMeshProUGUI recoveryCost;
         [SerializeField] private TextMeshProUGUI resourceGain;
+        [SerializeField] private TextMeshProUGUI addTiming;
 
         public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
         {
@@ -58,14 +59,8 @@ namespace Ryneus
                     UpdateLostMainThumb();
                 }
             }
-            if (demigod != null)
-            {
-                demigod.text = actorInfo.DemigodParam.ToString();
-            }
-            if (lv != null)
-            {
-                lv.text = actorInfo.Level.ToString();
-            }
+            demigod?.SetText(actorInfo.DemigodParam.ToString());
+            lv?.SetText(actorInfo.Level.ToString());
             if (sp != null){
             }
             if (statusInfoComponent != null)
@@ -98,39 +93,15 @@ namespace Ryneus
             {
                 UpdateAttributeRank(element5,actorInfo,AttributeType.Dark,actorInfos);
             }
-            if (element1Cost != null)
-            {
-                element1Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Fire,actorInfos).ToString();
-            }
-            if (element2Cost != null)
-            {
-                element2Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Thunder,actorInfos).ToString();
-            }
-            if (element3Cost != null)
-            {
-                element3Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Ice,actorInfos).ToString();
-            }
-            if (element4Cost != null)
-            {
-                element4Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Shine,actorInfos).ToString();
-            }
-            if (element5Cost != null)
-            {
-                element5Cost.text = TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Dark,actorInfos).ToString();
-            }
-            if (recoveryCost != null)
-            {
-                recoveryCost.text = TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString();
-            }
-            if (resourceGain != null)
-            {
-                resourceGain.text = "+" + TacticsUtility.ResourceGain(actorInfo).ToString();
-            }
-            
-            if (evaluate != null)
-            {
-                evaluate.text = actorInfo.Evaluate().ToString();
-            }
+            element1Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Fire,actorInfos).ToString());
+            element2Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Thunder,actorInfos).ToString());
+            element3Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Ice,actorInfos).ToString());
+            element4Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Shine,actorInfos).ToString());
+            element5Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Dark,actorInfos).ToString());
+            recoveryCost?.SetText(TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString());
+            resourceGain?.SetText(TacticsUtility.ResourceGain(actorInfo).ToString());
+            evaluate?.SetText(actorInfo.Evaluate().ToString());
+            addTiming?.SetText(actorInfo.AddTiming.ToString());
         }
 
         private void UpdateAttributeRank(TextMeshProUGUI text,ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> actorInfos)
