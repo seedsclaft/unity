@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 namespace Ryneus
 {
@@ -35,10 +36,11 @@ namespace Ryneus
 
         public List<ListData> TacticsCommand()
         {
-            if (CurrentStage.SurvivalMode)
+            if (StageMembers().Count == 0)
             {
                 SetTacticsCommandEnables(TacticsCommandType.Train,false);
                 SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
+                SetTacticsCommandEnables(TacticsCommandType.Status,false);
                 //SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
             }
             var commandListDates = MakeListData(DataSystem.TacticsCommand);
@@ -198,13 +200,13 @@ namespace Ryneus
                 };
                 list.Add(saveCommand);
             }
-                var stageCommand = new SystemData.CommandData
-                {
-                    Id = 3,
-                    Name = "ステージ選択へ",
-                    Key = "Retire"
-                };
-                list.Add(stageCommand);
+            var stageCommand = new SystemData.CommandData
+            {
+                Id = 3,
+                Name = "ステージ選択へ",
+                Key = "Retire"
+            };
+            list.Add(stageCommand);
             var titleCommand = new SystemData.CommandData
             {
                 Id = 4,
@@ -212,7 +214,15 @@ namespace Ryneus
                 Key = "Title"
             };
             list.Add(titleCommand);
-            return MakeListData(list);
+            Func<SystemData.CommandData,bool> enable = (a) => 
+            {
+                if (a.Key == "Save" || a.Key == "Retire")
+                {
+                    return PartyInfo.ReturnSymbol == null;
+                }
+                return true;
+            };
+            return MakeListData(list,enable);
         }
 
 
@@ -364,11 +374,11 @@ namespace Ryneus
             {
                 if (a.Key == "Yes")
                 {
-                    return PartyInfo.RemakeHistory();
+                    return PartyInfo.ParallelHistory();
                 } else
                 if (a.Key == "No")
                 {
-                    return PartyInfo.ParallelHistory();
+                    return PartyInfo.RemakeHistory();
                 }
                 return false;
             };

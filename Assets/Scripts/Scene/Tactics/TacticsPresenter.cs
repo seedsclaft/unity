@@ -282,7 +282,7 @@ namespace Ryneus
             if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentSeek)
             {
                 // 過去の中ではさらに過去に戻らない
-                if (_model.CurrentStage.ReturnSeek < 0)
+                if (_model.PartyInfo.ReturnSymbol == null)
                 {
                     _view.ShowParallelList();
                 }
@@ -417,11 +417,11 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var selectSeek = _view.RecordSeekIndex();
-                if (selectSeek > -1)
+                var symbolResultInfo = _view.SymbolResultInfo();
+                if (symbolResultInfo != null)
                 {
                     // 過去のステージを作る
-                    _model.MakeSymbolRecordStage(selectSeek);
+                    _model.MakeSymbolRecordStage(symbolResultInfo);
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }
             }
@@ -461,11 +461,11 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var selectSeek = _view.RecordSeekIndex();
-                if (selectSeek > -1)
+                var symbolResultInfo = _view.SymbolResultInfo();
+                if (symbolResultInfo != null)
                 {
                     // 過去のステージを作る
-                    _model.MakeSymbolRecordStage(selectSeek);
+                    _model.MakeSymbolRecordStage(symbolResultInfo);
                     _model.SetParallelMode();
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }

@@ -9,7 +9,11 @@ namespace Ryneus
     {
         public TrainModel()
         {
-            _selectActorId = StageMembers()[0].ActorId;
+            var stageMembers = StageMembers();
+            if (stageMembers.Count > 0)
+            {
+                SetSelectActorId(stageMembers[0].ActorId);
+            }
         }
 
         private int _selectAttribute = 0;
@@ -207,8 +211,10 @@ namespace Ryneus
 
         public TacticsCommandData TacticsCommandData()
         {
-            var tacticsCommandData = new TacticsCommandData();
-            tacticsCommandData.Title = CommandTitle();
+            var tacticsCommandData = new TacticsCommandData
+            {
+                Title = CommandTitle()
+            };
             return tacticsCommandData;
         }
 
@@ -261,11 +267,6 @@ namespace Ryneus
                 idList.Add(battleMember.ActorId);
             }
             PartyInfo.SetLastBattlerIdList(idList);
-        }
-
-        public void SetSurvivalMode()
-        {
-            CurrentStage.SetSurvivalMode();
         }
 
     }

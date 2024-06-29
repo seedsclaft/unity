@@ -9,17 +9,15 @@ namespace Ryneus
         public StageData Master => DataSystem.FindStage(_id);
         private int _id;
         public int Id => _id;
+        public void SetStageId(int stageId)
+        {
+            _id = stageId;
+        }
         private int _savedCount = 0;
         public int SavedCount => _savedCount;
         public void GainSaveCount()
         {
             _savedCount++;
-        }
-        private int _continueCount = 0;
-        public int ContinueCount => _continueCount;
-        public void GainContinueCount()
-        {
-            _continueCount++;
         }
         private int _currentSeek;
         public int CurrentSeek => _currentSeek;
@@ -56,7 +54,10 @@ namespace Ryneus
         
         private int _currentSeekIndex = -1;
         public int CurrentSeekIndex => _currentSeekIndex;
-
+        public void SetSeekIndex(int battleIndex)
+        {
+            _currentSeekIndex = battleIndex;
+        }
 
         private List<int> _clearTroopIds = new ();
         public List<int> ClearTroopIds => _clearTroopIds;
@@ -76,13 +77,6 @@ namespace Ryneus
         public bool StageClear => _stageClear;
         public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
 */
-        private int _returnSeek = -1;
-        public int ReturnSeek => _returnSeek;
-        public void SetReturnSeek(int returnSeek) 
-        {
-            _returnSeek = returnSeek;
-        }
-
         private bool _parallelStage = false;
         public bool ParallelStage => _parallelStage;
         public void SetParallelMode(bool parallelStage) {_parallelStage = parallelStage;}
@@ -100,11 +94,6 @@ namespace Ryneus
         }
 
 
-
-        public void SetSeekIndex(int battleIndex)
-        {
-            _currentSeekIndex = battleIndex;
-        }
 
         
         public TroopInfo TestTroops(int troopId,int troopLv)
@@ -158,7 +147,6 @@ namespace Ryneus
             //_routeSelect = stageInfo.RouteSelect;
             //_troopDates = stageInfo._troopDates;
             _savedCount = stageInfo._savedCount;
-            _continueCount = stageInfo._continueCount;
             _clearTroopIds = stageInfo._clearTroopIds;
             //_readEventKeys = stageInfo._readEventKeys;
             _endingType = stageInfo._endingType;

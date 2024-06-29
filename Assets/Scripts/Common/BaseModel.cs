@@ -309,6 +309,8 @@ namespace Ryneus
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
                 record.SetSelected(true);
+                // 初期アクター
+                record.StageSymbolData.Param1 = 1;
                 recordInfos.Add(record);
             }
             return recordInfos;
@@ -353,23 +355,24 @@ namespace Ryneus
             return PartyInfo.BattleResultVictory;
         }
 
-        public void MakeSymbolRecordStage(int seek)
+        public void MakeSymbolRecordStage(SymbolResultInfo returnSymbol)
         {
             //CurrentSaveData.MakeStageData(CurrentStage.Id);
             TempInfo.SetRecordActors(PartyInfo.ActorInfos);
             
             //PartyInfo.InitActorInfos();
-            foreach (var symbolActor in SymbolActorInfos(seek))
+            foreach (var symbolActor in SymbolActorInfos(returnSymbol.StageId,returnSymbol.Seek))
             {
                 PartyInfo.UpdateActorInfo(symbolActor);
             }
-            CurrentStage.SetReturnSeek(CurrentStage.CurrentSeek);
-            CurrentStage.SetCurrentTurn(seek);
+            PartyInfo.SetReturnStageIdSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
+            CurrentStage.SetStageId(returnSymbol.StageId);
+            CurrentStage.SetCurrentTurn(returnSymbol.Seek);
         }
 
-        public List<ActorInfo> SymbolActorInfos(int seek)
+        public List<ActorInfo> SymbolActorInfos(int stageId,int seek)
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,seek);
+            return PartyInfo.CurrentActorInfos(stageId,seek);
         }
         
         public void SetParallelMode()
@@ -614,8 +617,7 @@ namespace Ryneus
     #else
             var subText = DataSystem.GetReplaceText(3064,CurrentStage.Master.ContinueLimit.ToString());
     #endif
-            var continueCount = DataSystem.GetReplaceText(3063,(CurrentStage.ContinueCount+1).ToString());
-            return baseText + continueCount + "\n" + subText;
+            return baseText + "\n" + subText;
         }
 
         public bool NeedAdsContinue()
@@ -629,7 +631,6 @@ namespace Ryneus
 
         public void GainContinueCount()
         {
-            CurrentStage.GainContinueCount();
         }
 
         public List<int> SaveAdsCommandTextIds()

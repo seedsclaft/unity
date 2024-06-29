@@ -147,29 +147,37 @@ namespace Ryneus
 
         public void CommandCallSkillDetail(ConfirmInfo popupInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallSkillDetailView);
-            eventData.template = popupInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallSkillDetailView)
+            {
+                template = popupInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallCaution(CautionInfo popupInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallCautionView);
-            eventData.template = popupInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallCautionView)
+            {
+                template = popupInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallPopup(PopupInfo popupInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallPopupView);
-            eventData.template = popupInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallPopupView)
+            {
+                template = popupInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallOption(System.Action endEvent)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallOptionView);
-            eventData.template = endEvent;
+            var eventData = new ViewEvent(Base.CommandType.CallOptionView)
+            {
+                template = endEvent
+            };
             CallSceneChangeCommand(eventData);
         }
 

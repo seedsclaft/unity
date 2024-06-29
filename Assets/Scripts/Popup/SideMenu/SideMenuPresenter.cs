@@ -91,6 +91,14 @@ namespace Ryneus
 
         private void CommandDropout()
         {  
+            if (_model.PartyInfo.ReturnSymbol != null)
+            {
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(23071));
+                _view.CommandCallCaution(cautionInfo);
+                ClosePopup();
+                return;
+            }
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var popupInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout(a));
@@ -143,6 +151,19 @@ namespace Ryneus
                 }
             };
             _view.CommandCallPopup(popupInfo);
+        }
+
+        public void CommandSave(bool returnScene)
+        {
+            if (_model.PartyInfo.ReturnSymbol != null)
+            {
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(23070));
+                _view.CommandCallCaution(cautionInfo);
+                ClosePopup();
+                return;
+            }
+            base.CommandSave(returnScene);
         }
 
         private void CommandInitializeData()

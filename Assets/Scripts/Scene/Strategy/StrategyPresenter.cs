@@ -421,7 +421,7 @@ namespace Ryneus
         private void EndStrategy()
         {
             _view.EndShinyEffect();
-            if (_model.CurrentStage.ReturnSeek > 0)
+            if (_model.PartyInfo.ReturnSymbol != null)
             {
                 _model.SetSelectSymbol();
                 //_model.EndStrategy();

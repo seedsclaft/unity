@@ -40,7 +40,7 @@ namespace Ryneus
 
 
         public int ParallelListIndex => parallelList.Index;
-        public int RecordSeekIndex() 
+        public SymbolResultInfo SymbolResultInfo() 
         {
             var listData = symbolRecordList.ListData;
             if (listData != null)
@@ -48,10 +48,10 @@ namespace Ryneus
                 var data = (List<SymbolResultInfo>)listData.Data;
                 if (data != null && data.Count > 0)
                 {
-                    return data[0].StageSymbolData.Seek;
+                    return data[0];
                 }
             }
-            return -1;
+            return null;
         }
 
         private bool _initRecordDisplay = false;

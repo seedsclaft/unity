@@ -57,6 +57,22 @@ namespace Ryneus
             _battleResultScore = score;
         }
 
+        // 戻り先の1番目のシンボル
+        private StageSymbolData _returnSymbol = null;
+        public StageSymbolData ReturnSymbol => _returnSymbol;
+        public void SetReturnStageIdSeek(int stageId,int seek) 
+        {
+            var symbolData = new StageSymbolData
+            {
+                StageId = stageId,
+                Seek = seek
+            };
+            _returnSymbol = symbolData;
+        }
+        public void ClearReturnStageIdSeek() 
+        {
+            _returnSymbol = null;
+        }
 
         private List<int> _lastBattlerIdList = new();
         public List<int> LastBattlerIdList => _lastBattlerIdList;
@@ -138,8 +154,8 @@ namespace Ryneus
                     levelUpInfos.AddRange(sameStage);
                     actorInfo.SetLevelUpInfo(levelUpInfos);
                     actorInfo.SetAddTiming(AddTimingText(actorInfo));
+                    actorInfos.Add(actorInfo);
                 }
-                actorInfos.Add(actorInfo);
             }
             return actorInfos;
         }

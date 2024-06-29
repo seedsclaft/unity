@@ -311,9 +311,10 @@ namespace Ryneus
             }
 
             TempInfo.ClearRecordActors();
-            CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
-            CurrentStage.SetReturnSeek(-1);
+            CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
+            CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(-1);
+            PartyInfo.ClearReturnStageIdSeek();
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
@@ -356,9 +357,10 @@ namespace Ryneus
             }
 
             TempInfo.ClearRecordActors();
-            CurrentStage.SetCurrentTurn(CurrentStage.ReturnSeek);
-            CurrentStage.SetReturnSeek(-1);
+            CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
+            CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(-1);
+            PartyInfo.ClearReturnStageIdSeek();
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
