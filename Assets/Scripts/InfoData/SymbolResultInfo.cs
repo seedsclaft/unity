@@ -64,6 +64,11 @@ namespace Ryneus
             return StageId == stageId && Seek == seek && SeekIndex == seekIndex;
         }
 
+        public bool IsSameStageSeek(int stageId,int seek)
+        {
+            return StageId == stageId && Seek == seek;
+        }
+
         public bool SaveBattleReplayStage()
         {
             if (_symbolInfo?.TroopInfo != null)
@@ -71,6 +76,16 @@ namespace Ryneus
                 return _symbolInfo?.TroopInfo.RandomTroop == false;
             }
             return false;
+        }
+
+        public int SortKey()
+        {
+            return StageId*1000 + Seek*100 + SeekIndex;
+        }
+
+        public bool EnableStage(int stageId,int seek)
+        {
+            return StageId == stageId && Seek < seek || StageId < stageId;
         }
     }
 }

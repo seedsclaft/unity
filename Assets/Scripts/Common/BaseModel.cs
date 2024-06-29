@@ -21,7 +21,7 @@ namespace Ryneus
         public int Currency => PartyInfo.Currency;
         public int TotalScore => PartyInfo.TotalScore();
 
-        public int RemainTurns => CurrentStage.Master.Turns - CurrentStage.CurrentTurn + 1;
+        public int RemainTurns => CurrentStage.Master.Turns - CurrentStage.CurrentSeek + 1;
 
         public CancellationTokenSource _cancellationTokenSource;
         private List<StageTutorialData> _currentStageTutorialDates = new ();
@@ -57,7 +57,7 @@ namespace Ryneus
 
         public List<ActorInfo> StageMembers()
         {
-            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
             actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 :-1);
             return actorInfos;
         }
@@ -71,7 +71,7 @@ namespace Ryneus
         
         public List<ActorInfo> PartyMembers()
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
         }
 
         public List<ActorInfo> StatusActors()
@@ -100,14 +100,14 @@ namespace Ryneus
 
         public List<StageEventData> StageEvents(EventTiming eventTiming)
         {
-            int CurrentTurn = CurrentStage.CurrentTurn;
+            int CurrentTurn = CurrentStage.CurrentSeek;
             var eventKeys = CurrentStage.ReadEventKeys;
             return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
         }
         
         public bool SetStageTutorials(EventTiming eventTiming)
         {
-            int CurrentTurn = CurrentStage.CurrentTurn;
+            int CurrentTurn = CurrentStage.CurrentSeek;
             _currentStageTutorialDates = StageTutorialDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
             return _currentStageTutorialDates.Count > 0;
         }
@@ -241,13 +241,13 @@ namespace Ryneus
         
         public List<SymbolResultInfo> TacticsSymbols()
         {
-            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
         }
 
         public List<SkillInfo> AlcanaSkillInfos()
         {
             var skillInfos = new List<SkillInfo>();
-            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
+            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek))
             {
                 var skillInfo = new SkillInfo(alchemyId);
                 skillInfo.SetEnable(true);
@@ -290,6 +290,7 @@ namespace Ryneus
         public List<SymbolResultInfo> OpeningStageRecordInfos()
         {
             var recordInfos = new List<SymbolResultInfo>();
+            // 初期加入マス
             var symbols = DataSystem.FindStage(0).StageSymbols;
             symbols = symbols.FindAll(a => a.Seek == 0);
             foreach (var symbol in symbols)
@@ -338,7 +339,7 @@ namespace Ryneus
 
         public SymbolResultInfo CurrentSelectRecord()
         {
-            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
             return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
@@ -362,7 +363,7 @@ namespace Ryneus
             {
                 PartyInfo.UpdateActorInfo(symbolActor);
             }
-            CurrentStage.SetReturnSeek(CurrentStage.CurrentTurn);
+            CurrentStage.SetReturnSeek(CurrentStage.CurrentSeek);
             CurrentStage.SetCurrentTurn(seek);
         }
 
@@ -472,7 +473,7 @@ namespace Ryneus
             } else
             if (CurrentStage.Master.RankingStage == RankingType.Turns)
             {
-                evaluate = CurrentStage.CurrentTurn - 1;
+                evaluate = CurrentStage.CurrentSeek - 1;
             }
             return evaluate;
         }
@@ -617,7 +618,6 @@ namespace Ryneus
             return baseText + continueCount + "\n" + subText;
         }
 
-
         public bool NeedAdsContinue()
         {
             var needAds = false;
@@ -647,12 +647,7 @@ namespace Ryneus
         {
             PartyInfo.InitActorInfos();
             var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
-            var actorInfos = slotData.ActorInfos;
-            foreach (var actorInfo in actorInfos)
-            {
-            }
         }
-
 
         public void GainParallelCount()
         {
@@ -663,6 +658,7 @@ namespace Ryneus
         {
             return CurrentData.PlayerInfo.SlotSaveList[index].ActorInfos.Count > 0;
         }
+
         public int PartyEvaluate()
         {
             var evaluate = 0;
@@ -692,7 +688,7 @@ namespace Ryneus
             if (CurrentStage != null)
             {
                 stageKey.Append(string.Format(CurrentStage.Id.ToString("00")));
-                stageKey.Append(string.Format(CurrentStage.CurrentTurn.ToString("00")));
+                stageKey.Append(string.Format(CurrentStage.CurrentSeek.ToString("00")));
                 stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
             }
             return stageKey.ToString();

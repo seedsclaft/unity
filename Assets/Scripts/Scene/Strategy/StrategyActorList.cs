@@ -8,7 +8,7 @@ namespace Ryneus
         {
             for (int i = 0; i < ItemPrefabList.Count;i++)
             {
-                var isBonus = (isBonusList != null && isBonusList.Count > i) ? isBonusList[i] : false;
+                var isBonus = isBonusList != null && isBonusList.Count > i && isBonusList[i];
                 ItemPrefabList[i].SetActive(false);
                 if (i < actorCount)
                 {

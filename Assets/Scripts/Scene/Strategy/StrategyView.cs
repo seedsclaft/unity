@@ -179,7 +179,8 @@ namespace Ryneus
             strategyResultList.gameObject.SetActive(false);
         }
 
-        private new void Update() {
+        private new void Update() 
+        {
             if (_animationBusy == true)
             {
                 CheckAnimationBusy();

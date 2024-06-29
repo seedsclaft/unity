@@ -152,7 +152,7 @@ MonoBehaviour:
   - StateType: 1011
     Name: "\u5168\u30B9\u30C6\u30FC\u30BF\u30B9\u30A2\u30C3\u30D7"
     Help: "\u5168\u3066\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\\d\u30A2\u30C3\u30D7"
-    IconPath: Butterfly
+    IconPath: Aura
     RemovalTiming: 0
     OverWrite: 0
     EffectPath: '""'
@@ -203,7 +203,7 @@ MonoBehaviour:
   - StateType: 1040
     Name: "\u653B\u6483\u30A2\u30C3\u30D7"
     Help: "ATK\\d\u30A2\u30C3\u30D7"
-    IconPath: Arrow
+    IconPath: PointySword
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -220,7 +220,7 @@ MonoBehaviour:
   - StateType: 1041
     Name: "\u653B\u6483\u30C0\u30A6\u30F3"
     Help: "ATK\\d\u30C0\u30A6\u30F3"
-    IconPath: SwordBreak
+    IconPath: PointySword
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -237,7 +237,7 @@ MonoBehaviour:
   - StateType: 1043
     Name: "\u653B\u6483\u30C0\u30A6\u30F3"
     Help: "ATK\\d\u30C0\u30A6\u30F3"
-    IconPath: SwordBreak
+    IconPath: PointySword
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -254,7 +254,7 @@ MonoBehaviour:
   - StateType: 1044
     Name: "\u653B\u6483\u30A2\u30C3\u30D7"
     Help: "ATK\\d\u30A2\u30C3\u30D7"
-    IconPath: Arrow
+    IconPath: PointySword
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -271,7 +271,7 @@ MonoBehaviour:
   - StateType: 1050
     Name: "\u9632\u5FA1\u30A2\u30C3\u30D7"
     Help: "DEF\\d\u30A2\u30C3\u30D7"
-    IconPath: ArmorUpgrade
+    IconPath: Shield
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -288,7 +288,7 @@ MonoBehaviour:
   - StateType: 1051
     Name: "\u9632\u5FA1\u30C0\u30A6\u30F3"
     Help: "DEF\\d\u30C0\u30A6\u30F3"
-    IconPath: CrackedShield
+    IconPath: Shield
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -339,7 +339,7 @@ MonoBehaviour:
   - StateType: 1070
     Name: "\u4F1A\u5FC3\u7387\u30A2\u30C3\u30D7"
     Help: "\u4F1A\u5FC3\u7387\\d%\u30A2\u30C3\u30D7"
-    IconPath: ArrowScope
+    IconPath: Bullseye
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -356,7 +356,7 @@ MonoBehaviour:
   - StateType: 1074
     Name: "\u4F1A\u5FC3\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7"
     Help: "\u4F1A\u5FC3\u30C0\u30E1\u30FC\u30B8\\d%\u30A2\u30C3\u30D7"
-    IconPath: ArrowScope
+    IconPath: Bullseye
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -458,7 +458,7 @@ MonoBehaviour:
   - StateType: 1100
     Name: "\u30C0\u30E1\u30FC\u30B8\u30AB\u30C3\u30C8"
     Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u3092\\d%\u30AB\u30C3\u30C8\u3059\u308B"
-    IconPath: ArmorUpgrade
+    IconPath: BellShield
     RemovalTiming: 4
     OverWrite: 1
     EffectPath: '""'
@@ -475,7 +475,7 @@ MonoBehaviour:
   - StateType: 1101
     Name: "\u30C0\u30E1\u30FC\u30B8\u30AB\u30C3\u30C8"
     Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u3092\\d\u30AB\u30C3\u30C8\u3059\u308B"
-    IconPath: ArmorUpgrade
+    IconPath: BellShield
     RemovalTiming: 4
     OverWrite: 1
     EffectPath: '""'
@@ -492,7 +492,7 @@ MonoBehaviour:
   - StateType: 2010
     Name: "\u6BD2"
     Help: "\u884C\u52D5\u5F8C\u30C0\u30E1\u30FC\u30B8"
-    IconPath: Burning
+    IconPath: Foam
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: MAGICALxSPIRAL/Salamander7
@@ -509,7 +509,7 @@ MonoBehaviour:
   - StateType: 2011
     Name: "\u6BD2"
     Help: "\u884C\u52D5\u5F8C\u30C0\u30E1\u30FC\u30B8"
-    IconPath: Burning
+    IconPath: Foam
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: MAGICALxSPIRAL/Salamander7
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   - StateType: 2290
     Name: "\u30C0\u30E1\u30FC\u30B8\u5A01\u529B\u30A2\u30C3\u30D7"
     Help: "\u653B\u6483\u9B54\u6CD5\u306E\u5A01\u529B\u304C\\d%\u30A2\u30C3\u30D7"
-    IconPath: Arrow
+    IconPath: SabersChoc
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1104,7 +1104,7 @@ MonoBehaviour:
   - StateType: 2330
     Name: "\u8CAB\u901A"
     Help: "\u653B\u6483\u6642\u76F8\u624B\u306EDEF\u3092\u7121\u8996\u3059\u308B"
-    IconPath: Arrow
+    IconPath: Mining
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1121,7 +1121,7 @@ MonoBehaviour:
   - StateType: 2340
     Name: "\u5BFE\u8C61\u5217\u5316"
     Help: "\u5358\u4F53\u306E\u52B9\u679C\u5BFE\u8C61\u304C\u5217\u306B\u306A\u308B"
-    IconPath: Arrow
+    IconPath: RoundStar
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1138,7 +1138,7 @@ MonoBehaviour:
   - StateType: 2341
     Name: "\u5BFE\u8C61\u5168\u4F53\u5316"
     Help: "\u52B9\u679C\u5BFE\u8C61\u304C\u5168\u4F53\u306B\u306A\u308B"
-    IconPath: Arrow
+    IconPath: SevenPointedStar
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   - StateType: 2350
     Name: "\u8056\u68FA"
     Help: "\u88AB\u30C0\u30E1\u30FC\u30B8\u30A2\u30C3\u30D7"
-    IconPath: Arrow
+    IconPath: Coffin
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1206,7 +1206,7 @@ MonoBehaviour:
   - StateType: 2380
     Name: "\u900F\u660E"
     Help: "\u72D9\u308F\u308C\u306A\u304F\u306A\u308B"
-    IconPath: Arrow
+    IconPath: Invisible
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1223,7 +1223,7 @@ MonoBehaviour:
   - StateType: 2390
     Name: "\u6C88\u9ED9"
     Help: "\u6D88\u8CBBMp0\u4EE5\u5916\u306EMagic\u4F7F\u7528\u4E0D\u53EF"
-    IconPath: Arrow
+    IconPath: NothingToSay
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1240,7 +1240,7 @@ MonoBehaviour:
   - StateType: 2400
     Name: "\u4E0D\u6CBB"
     Help: "Hp\u56DE\u5FA9\u3057\u306A\u304F\u306A\u308B"
-    IconPath: Arrow
+    IconPath: PoisonBottle
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   - StateType: 2410
     Name: "\u30B7\u30FC\u30EB\u30C9"
     Help: "\u4E00\u5B9A\u91CF\u307E\u3067\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u7121\u52B9\u306B\u3059\u308B"
-    IconPath: Arrow
+    IconPath: VibratingShield
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1272,9 +1272,9 @@ MonoBehaviour:
     RemoveByAttack: 0
     RemoveByDeath: 1
   - StateType: 2420
-    Name: "\u9023\u7D50"
+    Name: "\u30D5\u30A9\u30ED\u30FC"
     Help: "\u884C\u52D5\u5F8C\u81EA\u5206\u4EE5\u5916\u306E\u884C\u52D5\u5F85\u6A5F\u6642\u9593\u3092\u77ED\u7E2E"
-    IconPath: Arrow
+    IconPath: FlyingFlagw
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   - StateType: 2430
     Name: "\u304B\u3070\u3046"
     Help: "\u653B\u6483\u3092\u4EE3\u308F\u308A\u306B\u53D7\u3051\u308B"
-    IconPath: Arrow
+    IconPath: ShieldBash
     RemovalTiming: 0
     OverWrite: 1
     EffectPath: '""'
@@ -1308,7 +1308,7 @@ MonoBehaviour:
   - StateType: 2440
     Name: "Ap\u6D88\u8CBB\u534A\u6E1B"
     Help: "Ap\u306E\u6D88\u8CBB\u6570\u304C\u534A\u5206\u306B\u306A\u308B\u3002\u7AEF\u6570\u306F\u5207\u308A\u4E0A\u3052"
-    IconPath: Arrow
+    IconPath: Wingfoot
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   - StateType: 2450
     Name: "\u4E0D\u6B7B"
     Help: "\u4E00\u5EA6\u3060\u3051\u6226\u95D8\u4E0D\u80FD\u3092\u56DE\u907F\u3059\u308B"
-    IconPath: Arrow
+    IconPath: Slime
     RemovalTiming: 4
     OverWrite: 1
     EffectPath: '""'
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   - StateType: 2460
     Name: "Hp\u56DE\u5FA9\u52B9\u679C\u30A2\u30C3\u30D7"
     Help: "\u4E00\u5EA6\u3060\u3051\u6226\u95D8\u4E0D\u80FD\u3092\u56DE\u907F\u3059\u308B"
-    IconPath: Arrow
+    IconPath: HealthPotion
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'
@@ -1359,7 +1359,7 @@ MonoBehaviour:
   - StateType: 2470
     Name: "\u546A\u8A5B"
     Help: "\u6226\u95D8\u4E0D\u80FD\u6642\u306B\u53CD\u6483\u3067\u30C0\u30E1\u30FC\u30B8"
-    IconPath: Arrow
+    IconPath: CursedStar
     RemovalTiming: 1
     OverWrite: 1
     EffectPath: '""'

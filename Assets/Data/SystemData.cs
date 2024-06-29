@@ -131,5 +131,6 @@ namespace Ryneus
 		SaveHuman = 61,
 		RemakeHistory = 101,
 		ParallelHistory = 102,
+		ChangeInitActor = 103,
 	}
 }

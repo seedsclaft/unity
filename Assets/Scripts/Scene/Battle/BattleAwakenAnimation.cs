@@ -23,10 +23,9 @@ namespace Ryneus
 
             var time1 = 0.3f / speedRate;
             var time2 = 0.5f / speedRate;
-            var time3 = 0.2f / speedRate;
             gameObject.SetActive(true);
             DOTween.Sequence()
-                .Append(emitter.transform.DOScaleY(2.8f,time1))
+                .Append(emitter.transform.DOScaleY(4f,time1))
                 .SetEase(Ease.InOutQuad);
             DOTween.Sequence()
                 .Append(canvasGroup.DOFade(1,time2))

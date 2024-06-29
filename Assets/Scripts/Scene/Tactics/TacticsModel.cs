@@ -60,11 +60,11 @@ namespace Ryneus
 
         public List<ListData> StageRecords(SymbolResultInfo symbolResultInfo)
         {
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == symbolResultInfo.StageId && a.StageSymbolData.Seek == symbolResultInfo.Seek);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek));
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
-                return a.StageSymbolData.Seek == CurrentStage.CurrentTurn;
+                return a.StageSymbolData.Seek == CurrentStage.CurrentSeek;
             };
             var seekIndex = 0;
             if (CurrentSelectRecord() != null)
@@ -106,7 +106,7 @@ namespace Ryneus
 
         public void SetTempAddSelectActorStatusInfos()
         {
-            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
             var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
@@ -267,10 +267,10 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && a.StageId == 0 && PartyInfo.ChangeInitActor());
             
             // 現在を挿入
-            var currentSeek = CurrentStage.CurrentTurn;
+            var currentSeek = CurrentStage.CurrentSeek;
             // ストック数
             var stockCount = PartyInfo.StageStockCount;
             foreach (var selectRecord in selectRecords)
@@ -319,7 +319,7 @@ namespace Ryneus
             {
                 resultList.Add(resultData.Value);
             }
-            var currentIndex = resultList.FindIndex(a => a[0].StageId == CurrentStage.Id && a[0].Seek == currentSeek);
+            var currentIndex = resultList.FindIndex(a => a[0].IsSameStageSeek(CurrentStage.Id,currentSeek));
             if (currentIndex > -1)
             {
                 resultList.Insert(currentIndex, currentList);
@@ -333,7 +333,7 @@ namespace Ryneus
                 var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (record.Find(a => a.StageId == CurrentStage.Id && a.StageSymbolData.Seek == currentSeek) != null)
+                if (record.Find(a => a.IsSameStageSeek(CurrentStage.Id,currentSeek)) != null)
                 {
                     list.SetSelected(true);
                 }
@@ -349,13 +349,13 @@ namespace Ryneus
             var yesCommand = new SystemData.CommandData
             {
                 Key = "Yes",
-                Name = DataSystem.GetText(23040),
+                Name = DataSystem.GetText(23050),
                 Id = 0
             };
             var noCommand = new SystemData.CommandData
             {
                 Key = "No",
-                Name = DataSystem.GetText(23050),
+                Name = DataSystem.GetText(23040),
                 Id = 1
             };
             menuCommandDates.Add(noCommand);
@@ -375,9 +375,14 @@ namespace Ryneus
             return MakeListData(menuCommandDates,enable,-1);
         }
         
-        public bool CanParallel()
+        public bool RemakeHistory()
         {
-            return PartyInfo.ParallelCount > 0;
+            return PartyInfo.RemakeHistory();
+        }
+
+        public bool ParallelHistory()
+        {
+            return PartyInfo.ParallelHistory();
         }
 
         public void ResetBattlerIndex()

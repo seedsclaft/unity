@@ -54,5 +54,10 @@ namespace Ryneus
         {
             return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ParallelHistory) != null;
         }
+
+        public bool ChangeInitActor()
+        {
+            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ChangeInitActor) != null;
+        }
     }
 }

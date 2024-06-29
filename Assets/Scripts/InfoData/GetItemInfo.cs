@@ -97,6 +97,9 @@ namespace Ryneus
                 case GetItemType.ParallelHistory:
                     SetResultData(DataSystem.GetText(16020));
                     break;
+                case GetItemType.ChangeInitActor:
+                    SetResultData(DataSystem.GetText(16030));
+                    break;
             }
         }
 

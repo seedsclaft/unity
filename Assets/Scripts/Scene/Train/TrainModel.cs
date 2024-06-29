@@ -57,7 +57,7 @@ namespace Ryneus
             var cost = TacticsUtility.TrainCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentTurn);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek);
             PartyInfo.ChangeCurrency(Currency - cost);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             foreach (var skill in skills)
@@ -72,7 +72,7 @@ namespace Ryneus
             var skillInfo = new SkillInfo(skillId);
             var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
             PartyInfo.ChangeCurrency(Currency - learningCost);
-            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentTurn,-1);
+            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             // 作戦項目に追加
             actorInfo.AddSkillTriggerSkill(skillId);
@@ -110,7 +110,7 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             var actorInfo = TacticsActor();
             
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn))
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek))
             {
                 //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
                 var skillInfo = new SkillInfo(alchemyId);

@@ -4217,7 +4217,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n/f[f,1,2]\u30BF\u30FC\u30F3/f[f,1,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E\nATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
@@ -4231,6 +4231,12 @@ MonoBehaviour:
       Param3: 0
       Rate: 100
     - SkillId: 100520
+      FeatureType: 3010
+      Param1: 2010
+      Param2: 2
+      Param3: 25
+      Rate: 100
+    - SkillId: 100520
       FeatureType: 7010
       Param1: 21
       Param2: 0
@@ -4239,7 +4245,7 @@ MonoBehaviour:
     TriggerDates: []
     ScopeTriggers: []
   - Id: 100530
-    Name: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB+"
+    Name: "\u30DD\u30A4\u30BA\u30F3\u30D6\u30ED\u30A6+"
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
@@ -4249,7 +4255,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30C7\u30A3\u30B9\u30DA\u30A2\u30FC\u30B9\u30AB\u30EB\u306E\u6BD2\u30C0\u30E1\u30FC\u30B8\u304C/f[f,0,3]\u306B\u306A\u308B"
+    Help: "\u30DD\u30A4\u30BA\u30F3\u30D6\u30ED\u30A6\u306E\u6BD2\u30C0\u30E1\u30FC\u30B8\u304C/f[f,0,3]\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4259,7 +4265,7 @@ MonoBehaviour:
       FeatureType: 6030
       Param1: 5080
       Param2: 1
-      Param3: 20
+      Param3: 25
       Rate: 100
     TriggerDates:
     - SkillId: 100530
@@ -4398,7 +4404,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u9023\u7D50\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u5206\u306E\u653B\u6483\u3067\u6575\u3092\u5012\u3059\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u30D5\u30A9\u30ED\u30FC\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1

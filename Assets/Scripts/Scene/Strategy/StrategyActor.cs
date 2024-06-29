@@ -30,7 +30,8 @@ namespace Ryneus
             var sequence = DOTween.Sequence()
                 .Append(innerObj.transform.DOLocalMoveY(0,0.8f))
                 .SetEase(Ease.OutQuart)
-                .OnComplete(() => {
+                .OnComplete(() => 
+                {
                     if (isBonus) 
                     {
                         StartBonusAnimation();
@@ -48,7 +49,8 @@ namespace Ryneus
                 .Join(bonusImage.DOFade(0.75f,0.1f))
                 .Append(bonusImage.DOFade(0.0f,0.3f))
                 .SetEase(Ease.OutQuart)
-                .OnComplete(() => {
+                .OnComplete(() => 
+                {
                     var sequence = DOTween.Sequence()
                     .SetDelay(rand * 0.01f)
                     .OnComplete(() => {

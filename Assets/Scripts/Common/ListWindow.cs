@@ -229,7 +229,7 @@ namespace Ryneus
             {
                 var itemPrefab = _itemPrefabList[i];
                 var itemIndex = i+startIndex;
-                itemPrefab.gameObject.SetActive(false);
+                itemPrefab.SetActive(false);
                 //itemPrefab.transform.SetParent(scrollRect.content,false);
                 var listItem = itemPrefab.GetComponent<ListItem>();
                 if (_listDates.Count <= itemIndex)
@@ -246,7 +246,7 @@ namespace Ryneus
                 }
                 listItem.SetListData(_listDates[itemIndex],itemIndex);
                 itemPrefab.transform.SetParent(_objectList[itemIndex].transform,false);
-                itemPrefab.gameObject.SetActive(true);
+                itemPrefab.SetActive(true);
             }
             if (startIndex > 0)
             {   
@@ -382,7 +382,7 @@ namespace Ryneus
 
         private float GetScrolledWidth()
         {
-            return (scrollRect.content.rect.width - GetViewPortWidth()) * (scrollRect.normalizedPosition.x);
+            return (scrollRect.content.rect.width - GetViewPortWidth()) * scrollRect.normalizedPosition.x;
         }
 
         private float GetScrolledHeight()
@@ -473,10 +473,7 @@ namespace Ryneus
             _index = selectIndex;
             if (callHandler)
             {
-                if (_selectedHandler != null)
-                {
-                    _selectedHandler();
-                }
+                _selectedHandler?.Invoke();
             }
         }
 
@@ -513,7 +510,6 @@ namespace Ryneus
             _inputBusyFrame = 1;
         }
         
-
         public void SetHelpWindow(HelpWindow helpWindow)
         {
             _helpWindow = helpWindow;
@@ -655,10 +651,7 @@ namespace Ryneus
             {
                 return;
             }
-            if (_inputCallHandler != null)
-            {
-                _inputCallHandler(keyType);
-            }
+            _inputCallHandler?.Invoke(keyType);
             CallListInputHandler(keyType);
         }
 
@@ -674,7 +667,8 @@ namespace Ryneus
             }
         }
 
-        public virtual void UpdateHelpWindow(){
+        public virtual void UpdateHelpWindow()
+        {
         }
         
         public void CallSelectHandler(InputKeyType keyType)
@@ -727,13 +721,11 @@ namespace Ryneus
             var listCount = ListItemCount();
             var dataCount = _listDates.Count;
             var listIndex = selectIndex - (listCount - 1);
-            Debug.Log(listIndex);
             // 下まで表示できる場合は
             if (dataCount > selectIndex+listCount)
             {
                 //listIndex = selectIndex+listCount-1;
             }
-            Debug.Log(listIndex);
             if (listIndex > 0)
             {
                 var num = 1.0f / (dataCount - listCount);

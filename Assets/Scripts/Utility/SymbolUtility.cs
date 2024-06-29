@@ -67,7 +67,7 @@ namespace Ryneus
                         if (stageSymbolData.Param1 == -1)
                         {
                             var alcanaRank = stageSymbolData.Param2;
-                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
                             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             var count = 2;
                             if (alcanaSkills.Count < 2)
@@ -129,7 +129,7 @@ namespace Ryneus
                         } else
                         {
                             // 選択できるアクターが3人まで
-                            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+                            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
                             var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
                             var count = 2;
                             if (actorInfos.Count < 2)
@@ -225,7 +225,7 @@ namespace Ryneus
                         var list = new List<int>();
                         foreach (var actorInfo in PartyInfo.ActorInfos)
                         {
-                            if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(actorInfo.ActorId))
+                            if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek).Contains(actorInfo.ActorId))
                             {
                                 list.Add(actorInfo.ActorId);
                             }
@@ -236,7 +236,7 @@ namespace Ryneus
                         stageSymbolData.Param2 = 0;
                         break;
                     case SymbolType.Alcana:
-                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn).Contains(symbol.Param1))
+                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek).Contains(symbol.Param1))
                         {
                             stageSymbolData.CopyParamData(symbol);
                         }
@@ -323,7 +323,7 @@ namespace Ryneus
 
         private static GetItemData AddSkillGetItemData(int rank)
         {
-            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentTurn);
+            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rank && !hasSkills.Contains(a.Id));
             if (skills.Count > 0)

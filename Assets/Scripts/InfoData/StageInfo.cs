@@ -21,11 +21,11 @@ namespace Ryneus
         {
             _continueCount++;
         }
-        private int _currentTurn;
-        public int CurrentTurn => _currentTurn;
-        public void SetCurrentTurn(int currentTurn)
+        private int _currentSeek;
+        public int CurrentSeek => _currentSeek;
+        public void SetCurrentTurn(int currentSeek)
         {
-            _currentTurn = currentTurn;
+            _currentSeek = currentSeek;
         }
         /*
         private int _clearCount;
@@ -93,7 +93,7 @@ namespace Ryneus
         public StageInfo(StageData stageData)
         {
             _id = stageData.Id;
-            _currentTurn = 1;
+            _currentSeek = 1;
             _troopClearCount = 0;
             _savedCount = 0;
             _clearTroopIds.Clear();
@@ -127,12 +127,12 @@ namespace Ryneus
 
         public void SeekStage()
         {
-            _currentTurn++;
+            _currentSeek++;
         }
 
         public void DeSeekStage()
         {
-            _currentTurn--;
+            _currentSeek--;
         }
 
         public void AddEventReadFlag(string key)

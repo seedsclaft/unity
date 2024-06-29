@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace Ryneus
 {
@@ -31,6 +30,10 @@ namespace Ryneus
         public bool ParallelHistory()
         {
             return _scorePrizeInfos.Find(a => a.ParallelHistory()) != null;
+        }
+        public bool ChangeInitActor()
+        {
+            return _scorePrizeInfos.Find(a => a.ChangeInitActor()) != null;
         }
 
         private bool _inReplay = false;
@@ -78,7 +81,7 @@ namespace Ryneus
                 }
             }
             _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.StageId*1000 + a.Seek*100 + a.SeekIndex - (b.StageId*1000 + b.Seek*100 + b.SeekIndex) > 0 ? 1 : -1);
+            _symbolRecordList.Sort((a,b) => a.SortKey() - b.SortKey() > 0 ? 1 : -1);
         }
 
         private List<LevelUpInfo> _levelUpInfos = new();
@@ -149,11 +152,11 @@ namespace Ryneus
             {
                 if (find.StageId == 0)
                 {
-                    return "初期加入";
+                    return DataSystem.GetText(390);
                 }
-                return find.StageId + "-" + find.Seek + "～";
+                return find.StageId + "-" + find.Seek + "~";
             }
-            return "未加入";
+            return DataSystem.GetText(391);
         }
 
         public List<LevelUpInfo> AssignedLevelUpInfos(int actorId)
@@ -166,7 +169,7 @@ namespace Ryneus
         {
             var actorIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
                 var actorId = record.StageSymbolData.Param1;
@@ -182,7 +185,7 @@ namespace Ryneus
         {
             var actorIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol());
-            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
                 var actorId = record.StageSymbolData.Param1;
@@ -198,7 +201,7 @@ namespace Ryneus
         {
             var alchemyIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
@@ -219,7 +222,7 @@ namespace Ryneus
         {
             var alcanaIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.StageId == stageId && a.Seek < seek || a.StageId < stageId);
+            records = records.FindAll(a => a.EnableStage(stageId,seek));
             records = records.FindAll(a => a.SelectedIndex > 0);
             foreach (var record in records)
             {

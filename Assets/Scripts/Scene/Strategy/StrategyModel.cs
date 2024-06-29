@@ -61,7 +61,7 @@ namespace Ryneus
         public void SetLvUp()
         {
             if (_levelUpData.Count > 0) return;
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             if (record != null && record.SymbolInfo.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
@@ -71,7 +71,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentTurn,CurrentStage.CurrentSeekIndex);
+                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.CurrentSeekIndex);
                 PartyInfo.SetLevelUpInfo(levelUpInfo);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
@@ -95,8 +95,8 @@ namespace Ryneus
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-            var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentTurn,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             
             foreach (var getItemInfo in getItemInfos)
             {
@@ -281,7 +281,7 @@ namespace Ryneus
             // 新たに選択したシンボル
             var newSymbolInfo = CurrentSelectRecord();
             
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
             foreach (var record in records)
             {
                 if (record.IsSameSymbol(newSymbolInfo))
@@ -333,7 +333,7 @@ namespace Ryneus
             // 新たに選択したシンボル
             var newSymbolInfo = CurrentSelectRecord();
             
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
             foreach (var record in records)
             {
                 if (record.IsSameSymbol(newSymbolInfo))
@@ -365,7 +365,7 @@ namespace Ryneus
         public bool ChainParallelMode()
         {
             var chain = false;
-            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == CurrentStage.Id && a.Seek == CurrentStage.CurrentTurn);
+            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
             foreach (var record in beforeRecords)
             {
                 if (record.Selected == false)

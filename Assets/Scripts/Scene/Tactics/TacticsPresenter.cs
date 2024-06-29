@@ -279,7 +279,7 @@ namespace Ryneus
             _view.ShowSymbolList();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去
-            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentTurn)
+            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentSeek)
             {
                 // 過去の中ではさらに過去に戻らない
                 if (_model.CurrentStage.ReturnSeek < 0)
@@ -342,7 +342,7 @@ namespace Ryneus
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            var currentTurn = _model.CurrentStage.CurrentTurn;
+            var currentTurn = _model.CurrentStage.CurrentSeek;
             if (recordInfo.StageSymbolData.Seek == currentTurn)
             {
                 // 現在
@@ -433,18 +433,26 @@ namespace Ryneus
             var ParallelIndex = _view.ParallelListIndex;
             if (ParallelIndex == 0)
             {
-                CommandDecideRecord();
+                if (_model.RemakeHistory())
+                {
+                    CommandDecideRecord();
+                } else
+                {
+                    var cautionInfo = new CautionInfo();
+                    cautionInfo.SetTitle(DataSystem.GetText(23030));
+                    _view.CommandCallCaution(cautionInfo);
+                }
                 return;
             }
-            if (_model.CanParallel())
+            if (_model.ParallelHistory())
             {
                 var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,""),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
                 _view.CommandCallConfirm(popupInfo);
             } else
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23030,""),(a) => UpdatePopupNoParallelRecord());
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(23030));
+                _view.CommandCallCaution(cautionInfo);
             }
         }
 
