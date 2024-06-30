@@ -13,7 +13,7 @@ namespace Ryneus
 
         public static int TrainCost(ActorInfo actorInfo)
         {
-            return actorInfo.Level * TacticsCostRate(actorInfo);
+            return actorInfo.TrainCost() * TacticsCostRate(actorInfo);
         }
 
         public static int TrainCost(int level,ActorInfo actorInfo)

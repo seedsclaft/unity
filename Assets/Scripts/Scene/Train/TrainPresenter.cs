@@ -98,7 +98,7 @@ namespace Ryneus
                     CommandBattleReplay();
                     break;
                 case CommandType.ShowTacticsCharacter:
-                    _view.ShowSelectCharacter(_model.TacticsCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
+                    _view.ShowSelectCharacter(_model.TacticsBattleCharacterData(_view.CharacterSelectIndex),_model.TacticsCommandData());
                     break;
                 case CommandType.ActorLearnMagic:
                     if (_model.TacticsCommandType == TacticsCommandType.Alchemy)
@@ -301,8 +301,8 @@ namespace Ryneus
         private void CommandSelectActorParadigm()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.RefreshTacticsActor(_model.TacticsBattleCharacterData(_view.CharacterSelectIndex));
             _model.SetInBattle();
+            _view.RefreshTacticsActor(_model.TacticsBattleCharacterData(_view.CharacterSelectIndex));
             CommandRefresh();
         }
 

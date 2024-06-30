@@ -16,6 +16,7 @@ namespace Ryneus
         public int Id;
         public int PriseSetId;
         public int Score;
-        public string ConditionName;
+        public string Title;
+        public string Help;
     }
 }

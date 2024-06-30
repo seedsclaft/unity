@@ -6,9 +6,9 @@ namespace Ryneus
     public class ScorePrizeListItem : ListItem ,IListViewItem  
     {   
         [SerializeField] private TextMeshProUGUI prizeName;
+        [SerializeField] private TextMeshProUGUI prizeHelp;
         [SerializeField] private TextMeshProUGUI score;
-        [SerializeField] private GameObject getFlag;
-        [SerializeField] private OnOffButton getItemButton;
+        [SerializeField] private TextMeshProUGUI getFlag;
         
         public void UpdateViewItem()
         {
@@ -16,17 +16,16 @@ namespace Ryneus
             var data = (ScorePrizeInfo)ListData.Data;
             if (data != null)
             {
-                score?.SetText(data.Score.ToString() + "人");
-                prizeName?.SetText(data.ConditionName);
-                getFlag.SetActive(data._getFlag);
-                
-                //getItemButton.SetData("",0);
-                getItemButton.UpdateViewItem();
-                getItemButton.SetCallHandler(() => 
+                score?.SetText(DataSystem.GetReplaceDecimalText(data.Score) + "人");
+                prizeName?.SetText(data.Title);
+                prizeHelp?.SetText(data.Help);
+                if (data._getFlag)
                 {
-                    if (getItemButton.gameObject.activeSelf == false) return;
-                });
-                getItemButton.Cursor.SetActive(ListData.Enable);
+                    getFlag?.SetText(DataSystem.GetText(14190));
+                } else
+                {
+                    getFlag?.SetText(DataSystem.GetText(14191));
+                }
             }
         }
     }

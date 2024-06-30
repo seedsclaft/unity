@@ -79,6 +79,7 @@ namespace Ryneus
             _view.RefreshTurn(_model.TurnCount);
             _view.SetBattleAutoButton(_model.BattleAutoButton(),GameSystem.ConfigData.BattleAuto == true);
             _view.ChangeBackCommandActive(false);
+            _view.SetBattleAutoButton(false);
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleSkipButton(DataSystem.GetText(62));
             _view.SetSkillLogButton(DataSystem.GetText(63));

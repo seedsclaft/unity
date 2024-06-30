@@ -259,30 +259,16 @@ namespace Ryneus
 
         public int ActorLevelReset(ActorInfo actorInfo)
         {
-            var currencyIndexes = new List<int>();
+            var currency = 0;
             // リセットされる数
-            var resetLv = 0;
-            for (int i = 0;i < _levelUpInfos.Count;i++)
+            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData());
+            var resetLv = levelUpDates.Count;
+            for (int i = levelUpDates.Count-1;i >= 0;i--)
             {
-                if (_levelUpInfos[i].Enable && _levelUpInfos[i].ActorId == actorInfo.ActorId && _levelUpInfos[i].Currency > 0)
-                {
-                    resetLv++;
-                    currencyIndexes.Add(i);
-                }
+                currency += levelUpDates[i].Currency;
+                _levelUpInfos.Remove(levelUpDates[i]);
             }
-            // 今のLvから還元する
-            var actorLv = actorInfo.Level - 1;
-            var resetCurrency = 0;
-            for (int i = 0;i < resetLv;i++)
-            {
-                var reset = actorLv - i;
-                resetCurrency += reset;
-            }
-            for (int i = currencyIndexes.Count-1;i >= 0;i--)
-            {
-                _levelUpInfos.RemoveAt(currencyIndexes[i]);
-            }
-            return resetCurrency;
+            return currency;
         }
 
         public (int,int) LastStageIdTurns()

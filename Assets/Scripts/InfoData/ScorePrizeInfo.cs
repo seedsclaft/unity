@@ -12,7 +12,8 @@ namespace Ryneus
         public int PrizeSetId => Master.PriseSetId;
         public List<PrizeSetData> PrizeMaster => DataSystem.PrizeSets.FindAll(a => a.Id == Master.PriseSetId);
         public int Score => Master.Score;
-        public string ConditionName => Master.ConditionName;
+        public string Title => Master.Title;
+        public string Help => Master.Help;
         public bool _getFlag = false;
         public bool _isCheck = false;
         public ScorePrizeInfo(int scorePrizeId)

@@ -181,15 +181,31 @@ namespace Ryneus
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
             {
-                var tacticsActorInfo = new TacticsActorInfo
+                if (member.BattleIndex >= 1)
                 {
-                    TacticsCommandType = _TacticsCommandType,
-                    ActorInfo = member,
-                    ActorInfos = StageMembers()
-                };
-                list.Add(tacticsActorInfo);
+                    var tacticsActorInfo = new TacticsActorInfo
+                    {
+                        TacticsCommandType = _TacticsCommandType,
+                        ActorInfo = member,
+                        ActorInfos = StageMembers()
+                    };
+                    list.Add(tacticsActorInfo);
+                }
             }
-            list.Sort((a,b) => a.ActorInfo.BattleIndex > b.ActorInfo.BattleIndex ? -1 : 1);
+            list.Sort((a,b) => a.ActorInfo.BattleIndex > b.ActorInfo.BattleIndex ? 1 : -1);
+            foreach (var member in StageMembers())
+            {
+                if (member.BattleIndex < 1)
+                {
+                    var tacticsActorInfo = new TacticsActorInfo
+                    {
+                        TacticsCommandType = _TacticsCommandType,
+                        ActorInfo = member,
+                        ActorInfos = StageMembers()
+                    };
+                    list.Add(tacticsActorInfo);
+                }
+            }
             return MakeListData(list,selectIndex);
         }
 

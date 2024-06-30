@@ -74,7 +74,8 @@ namespace Ryneus
                             Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
                             PriseSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId),
                             Score = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Score),
-                            ConditionName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ConditionName)).Text
+                            Title = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ConditionName)).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ConditionName)).Help
                         };
                         Data.Data.Add(ScorePrizeData);
 					}

@@ -47,7 +47,27 @@ namespace Ryneus
 
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level&& levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex;
+            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex;
+        }
+
+        public bool IsLevelUpData()
+        {
+            return _enable && _skillId == -1;
+        }
+
+        public bool IsLearnSkillData()
+        {
+            return _enable && _skillId > -1;
+        }
+
+        public bool IsBattleResultData()
+        {
+            return IsLevelUpData() && _stageId > -1 && _currency == 0;
+        }
+
+        public bool IsTrainData()
+        {
+            return IsLevelUpData() && _currency > 0;
         }
     }
 }

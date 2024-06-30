@@ -29,8 +29,6 @@ namespace Ryneus
             scorePrizeList.SetData(ScorePrizes);
             scorePrizeList.Activate();
         }
-
-
     }
 }
 

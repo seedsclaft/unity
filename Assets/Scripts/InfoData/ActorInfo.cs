@@ -14,7 +14,6 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
         private List<LevelUpInfo> _levelUpInfos = new ();
-
         public void SetLevelUpInfo(List<LevelUpInfo> levelUpInfos)
         {
             _levelUpInfos = levelUpInfos;
@@ -27,7 +26,7 @@ namespace Ryneus
             _addTiming = addTiming;
         }
 
-        public int Level => _levelUpInfos.FindAll(a => a.Enable && a.SkillId == -1).Count + 1;
+        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData()).Count + 1;
 
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
@@ -60,6 +59,7 @@ namespace Ryneus
                 }
             }
         }
+    
         public void SetSkillTriggerSkill(int index,SkillInfo skillInfo)
         {
             if (_skillTriggerInfos.Count > index)
@@ -140,7 +140,7 @@ namespace Ryneus
         private List<int> LearnSkillIds()
         {
             var list = new List<int>();
-            var learnSkills = _levelUpInfos.FindAll(a => a.Enable && a.SkillId > -1);
+            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData());
             foreach (var learnSkill in learnSkills)
             {
                 list.Add(learnSkill.SkillId);
@@ -177,7 +177,7 @@ namespace Ryneus
         private int _currentMp;
         public int CurrentMp => _currentMp;
         // バトル勝利数
-        public int DemigodParam => 0 + _levelUpInfos.FindAll(a => a.Enable && a.StageId > -1 && a.Currency == 0 && a.SkillId == -1).Count;
+        public int DemigodParam => 0 + _levelUpInfos.FindAll(a => a.IsBattleResultData()).Count;
 
     // Tactics
         private int _tacticsCost = 0;
@@ -264,7 +264,6 @@ namespace Ryneus
             {
                 _lastSelectSkillId = selectSkill.Id;
             }
-
         }
 
         public List<SkillInfo> LearningSkillInfos()
@@ -299,6 +298,11 @@ namespace Ryneus
             ChangeLost(false);
             ChangeHp(9999);
             ChangeMp(9999);
+        }
+
+        public int TrainCost()
+        {
+            return _levelUpInfos.FindAll(a => a.IsTrainData()).Count + 1;
         }
 
         public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)

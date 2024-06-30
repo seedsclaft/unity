@@ -43,7 +43,7 @@ namespace Ryneus
 			return "";
 		}
 
-		[System.SerializableAttribute]
+		[Serializable]
 		public class CommandData
 		{
 			
@@ -53,7 +53,7 @@ namespace Ryneus
 			public string Help;
 		}
 
-		[System.SerializableAttribute]
+		[Serializable]
 		public class OptionCommand
 		{
 			public int Id;
@@ -68,7 +68,7 @@ namespace Ryneus
 			public bool ExistAndroid;
 		}
 
-		[System.SerializableAttribute]
+		[Serializable]
 		public class InputData
 		{
 			public string Key;
@@ -77,7 +77,8 @@ namespace Ryneus
 		}
 	}
 
-	public enum TacticsCommandType {
+	public enum TacticsCommandType 
+	{
 		None,
 		Paradigm,
 		Train,
@@ -86,18 +87,21 @@ namespace Ryneus
 		Symbol,
 	}
 
-	public enum TitleCommandType {
+	public enum TitleCommandType 
+	{
 		NewGame = 1,
 		Continue,
 	}
 
 
-	public enum StatusCommandType {
+	public enum StatusCommandType 
+	{
 		SkillActionList = 0,
 		Strength = 1,
 	}
 
-	public enum ConfirmCommandType {
+	public enum ConfirmCommandType 
+	{
 		Yes = 0,
 		No = 1,
 	}
