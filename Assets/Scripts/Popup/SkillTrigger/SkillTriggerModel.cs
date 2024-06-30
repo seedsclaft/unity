@@ -7,7 +7,7 @@ namespace Ryneus
     {
         private int _actorId = -1;
         public ActorInfo CurrentActor => StageMembers().Find(a => a.ActorId == _actorId);
-        public List<ListData> SkillTrigger(int actorId,int selectIndex = -1)
+        public List<ListData> SkillTrigger(int actorId,int selectIndex = 0)
         {
             _actorId = actorId;
             var listData = MakeListData(CurrentActor.SkillTriggerInfos,selectIndex);

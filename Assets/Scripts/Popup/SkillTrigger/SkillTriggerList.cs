@@ -7,7 +7,7 @@ namespace Ryneus
     public class SkillTriggerList : BaseList
     {
         [SerializeField] private SkillTriggerHelp skillTriggerHelp = null;
-        private int _selectItemIndex = -1;
+        private int _selectItemIndex = 0;
         public new void Initialize()
         {
             base.Initialize();
@@ -74,7 +74,7 @@ namespace Ryneus
             } else
             if (keyType == InputKeyType.Left)
             {
-                if (_selectItemIndex <= 0)
+                if (_selectItemIndex > 0)
                 {
                     _selectItemIndex--;
                 }
@@ -88,11 +88,13 @@ namespace Ryneus
         {
             if (_selectItemIndex < 0) return;
             var startIndex = GetStartIndex();
-            var skillTriggerListItem = ItemPrefabList[selectIndex - startIndex].GetComponent<SkillTriggerListItem>();
+            var itemIndex = selectIndex - startIndex;
+            if (itemIndex < 0) return;
+            var skillTriggerListItem = ItemPrefabList[itemIndex].GetComponent<SkillTriggerListItem>();
             skillTriggerListItem.UpdateItemIndex(_selectItemIndex);
             foreach (var ItemPrefab in ItemPrefabList)
             {
-                if (ItemPrefab != ItemPrefabList[selectIndex - startIndex])
+                if (ItemPrefab != ItemPrefabList[itemIndex])
                 {
                     var skillTriggerListItem1 = ItemPrefab.GetComponent<SkillTriggerListItem>();
                     skillTriggerListItem1.UpdateItemIndex(-1);

@@ -354,20 +354,17 @@ namespace Ryneus
 
         public InputKeyType GetPlusKey()
         {   
-            if (reverse)
-            {
-                return (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
-            }
             return (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
         }
         
         public InputKeyType GetMinusKey()
         {   
-            if (reverse)
-            {
-                return (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
-            }
             return (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+        }
+
+        public bool InputDir4(InputKeyType keyType)
+        {   
+            return keyType == InputKeyType.Up || keyType == InputKeyType.Down || keyType == InputKeyType.Left || keyType == InputKeyType.Right;
         }
 
         private float GetViewPortWidth()
@@ -528,7 +525,7 @@ namespace Ryneus
             InputSelectIndex(keyType);
             InputCallEvent(keyType);
             int plusValue = 0;
-            if (keyType == InputKeyType.Up || keyType == InputKeyType.Down || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
+            if (InputDir4(keyType))
             {
                 if (InputSystem.IsGamePad)
                 {
@@ -673,7 +670,7 @@ namespace Ryneus
         
         public void CallSelectHandler(InputKeyType keyType)
         {
-            if (keyType == InputKeyType.Down || keyType == InputKeyType.Up || keyType == InputKeyType.Left || keyType == InputKeyType.Right)
+            if (InputDir4(keyType))
             {
                 UpdateScrollRect(keyType);
             }

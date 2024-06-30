@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Utage;
 
 namespace Ryneus
 {
@@ -23,6 +24,8 @@ namespace Ryneus
         [SerializeField] private GameObject uiRoot = null;
         [SerializeField] private Button sideMenuButton = null;
         public Button SideMenuButton => sideMenuButton;
+        private int _wait = 0;
+        public System.Action _waitEndEvent = null;
 
         private HelpWindow _helpWindow = null;
         public HelpWindow HelpWindow => _helpWindow;
@@ -87,6 +90,19 @@ namespace Ryneus
             if (_inputSystem != null && _busy == false)
             {
                 _inputSystemModel.UpdateInputKeyType(_inputSystem.Update());
+            }
+            UpdateWait();
+        }
+
+        private void UpdateWait()
+        {
+            if (_wait <= 0) return;
+            _busy = true;
+            _wait--;
+            if (_wait <= 0)
+            {
+                _busy = false;
+                _waitEndEvent?.Invoke();
             }
         }
 
@@ -370,7 +386,14 @@ namespace Ryneus
 
         }
 
-        private void OnDestroy() {
+        public void WaitFrame(int frame,System.Action waitEndEvent)
+        {
+            _wait = frame;
+            _waitEndEvent = waitEndEvent;
+        }
+
+        private void OnDestroy() 
+        {
             var listViews = GetComponentsInChildren<ListWindow>();
             for (int i = listViews.Length-1;i >= 0;i--)
             {

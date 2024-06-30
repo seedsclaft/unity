@@ -54,6 +54,9 @@ namespace Ryneus
                 case Status.CommandType.LvReset:
                     CommandLvReset();
                     return;
+                case Status.CommandType.SelectCommandList:
+                    CommandSelectCommandList((SystemData.CommandData)viewEvent.template);
+                    return;
             }
         }
 
@@ -121,6 +124,30 @@ namespace Ryneus
             {
                 SetBusy(false);
             }
+        }
+
+        private void CommandSelectCommandList(SystemData.CommandData commandData)
+        {
+            if (commandData.Key == "LV_RESET")
+            {
+                CommandLvReset();
+            } else
+            if (commandData.Key == "SKILL_TRIGGER")
+            {
+                CommandSelectSkillTrigger(_model.CurrentActor.ActorId);
+            }
+        }
+
+        private void CommandSelectSkillTrigger(int actorId)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _busy = true;
+            var skillTriggerViewInfo = new SkillTriggerViewInfo(actorId,() => 
+            {
+                _busy = false;
+                CommandRefresh();
+            });
+            _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
         private void CommandDecideActor()

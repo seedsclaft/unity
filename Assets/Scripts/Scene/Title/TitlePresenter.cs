@@ -41,42 +41,35 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
-                case CommandType.TitleCommand:
-                    CommandTitle((int) viewEvent.template);
-                    break;
                 case CommandType.SelectSideMenu:
                     CommandSelectSideMenu();
                     break;
                 case CommandType.SelectTitle:
-                    var loadFile = SaveSystem.ExistsLoadPlayerFile();
-                    if (loadFile)
-                    {
-                        CommandContinue();
-                    } else
-                    {
-                        CommandNewGame();
-                    }
+                    CommandSelectTitle();
                     break;
             }
         }
 
-        private void CommandTitle(int commandIndex){
-            _busy = true;
-            switch ((TitleCommandType)commandIndex)
+        private void CommandSelectTitle()
+        {
+            var loadFile = SaveSystem.ExistsLoadPlayerFile();
+            if (loadFile)
             {
-                case TitleCommandType.NewGame:
-                    CommandNewGame();
-                    break;
-                case TitleCommandType.Continue:
-                    CommandContinue();
-                    break;
+                CommandContinue();
+            } else
+            {
+                CommandNewGame();
             }
         }
 
         private void CommandNewGame()
         {
-            _model.InitSaveInfo();
-            _view.CommandGotoSceneChange(Scene.NameEntry);
+            SoundManager.Instance.PlayStaticSe(SEType.PlayStart);
+            _view.WaitFrame(60,() => 
+            {
+                _model.InitSaveInfo();
+                _view.CommandGotoSceneChange(Scene.NameEntry);
+            });
         }
 
         private void CommandContinue()
@@ -104,19 +97,11 @@ namespace Ryneus
             if (GameSystem.CurrentStageData.ResumeStage)
             {
                 _view.CommandGotoSceneChange(Scene.Tactics);
-            } else
-            {
-                _view.CommandGotoSceneChange(Scene.MainMenu);
             }
         }
 
-        private void CommandRefresh(){
-            int selectIndex = 0;
-            if (_model.ExistsLoadFile())
-            {
-                selectIndex = 1;
-            }
-            //_view.RefreshView();
+        private void CommandRefresh()
+        {
         }
 
         private void CommandSelectSideMenu()

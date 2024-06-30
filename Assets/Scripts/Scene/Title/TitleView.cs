@@ -77,7 +77,6 @@ namespace Title
     public enum CommandType
     {
         None = 0,
-        TitleCommand,
         SelectTitle,
         SelectSideMenu,
     }

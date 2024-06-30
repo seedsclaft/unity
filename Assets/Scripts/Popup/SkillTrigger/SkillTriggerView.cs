@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using SkillTrigger;
 
 namespace Ryneus
 {
-    public class SkillTriggerView : BaseView
+    public class SkillTriggerView : BaseView, IInputHandlerEvent
     {
         [SerializeField] private SkillTriggerList skillTriggerList = null;
         [SerializeField] private MagicList skillList = null;
@@ -72,7 +72,7 @@ namespace Ryneus
 
         public void SetSkillTrigger(List<ListData> skillTriggerLists)
         {
-            skillTriggerList.SetData(skillTriggerLists,false);
+            skillTriggerList.SetData(skillTriggerLists,true,() => {skillTriggerList.UpdateListItem(skillTriggerList.Index);});
             skillTriggerList.SetInputListHandler(
                 () => CallSkillEvent(),
                 () => CallTrigger1Event(),
@@ -147,8 +147,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideSkillSelect);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.DecideSkillSelect)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -159,8 +161,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerData)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideTrigger1Select);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.DecideTrigger1Select)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -171,33 +175,35 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerData)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideTrigger2Select);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.DecideTrigger2Select)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
 
         private void OnClickTriggerCategory1Select()
         {
-            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideCategory1Select);
+            var eventData = new SkillTriggerViewEvent(CommandType.DecideCategory1Select);
             _commandData(eventData);
         }
 
         private void OnClickTriggerCategory2Select()
         {
-            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.DecideCategory2Select);
+            var eventData = new SkillTriggerViewEvent(CommandType.DecideCategory2Select);
             _commandData(eventData);
         }
 
         private void CancelSelect()
         {
-            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CancelSelect);
+            var eventData = new SkillTriggerViewEvent(CommandType.CancelSelect);
             _commandData(eventData);
         }
 
         private void CancelCategory()
         {
-            var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CancelCategory);
+            var eventData = new SkillTriggerViewEvent(CommandType.CancelCategory);
             _commandData(eventData);
         }
 
@@ -207,8 +213,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallSkillSelect);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.CallSkillSelect)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -219,8 +227,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTrigger1Select);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.CallTrigger1Select)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -231,8 +241,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTrigger2Select);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.CallTrigger2Select)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -243,8 +255,10 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTriggerUp);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.CallTriggerUp)
+                {
+                    template = data
+                };
                 _commandData(eventData);
             }
         }
@@ -255,9 +269,22 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillTriggerInfo)listData.Data;
-                var eventData = new SkillTriggerViewEvent(SkillTrigger.CommandType.CallTriggerDown);
-                eventData.template = data;
+                var eventData = new SkillTriggerViewEvent(CommandType.CallTriggerDown)
+                {
+                    template = data
+                };
                 _commandData(eventData);
+            }
+        }
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            switch (keyType)
+            {
+                case InputKeyType.Right:
+                    break;
+                case InputKeyType.Left:
+                    break;
             }
         }
     }
@@ -286,10 +313,10 @@ namespace SkillTrigger
 
 public class SkillTriggerViewEvent
 {
-    public SkillTrigger.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public SkillTriggerViewEvent(SkillTrigger.CommandType type)
+    public SkillTriggerViewEvent(CommandType type)
     {
         commandType = type;
     }

@@ -27,7 +27,8 @@ namespace Ryneus
 
         public ActorInfo CurrentActor => StatusActors()[_currentIndex];
 
-        public void ChangeActorIndex(int value){
+        public void ChangeActorIndex(int value)
+        {
             _currentIndex += value;
             if (_currentIndex > StatusActors().Count-1)
             {

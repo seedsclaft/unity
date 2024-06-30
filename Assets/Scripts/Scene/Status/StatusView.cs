@@ -114,7 +114,19 @@ namespace Ryneus
 
         private void OnClickCommand()
         {
-
+            var listData = commandList.ListData;
+            if (listData != null)
+            {
+                var data = (SystemData.CommandData)listData.Data;
+                if (data != null)
+                {
+                    var eventData = new StatusViewEvent(CommandType.SelectCommandList)
+                    {
+                        template = data
+                    };
+                    _commandData(eventData);
+                }
+            }
         }
 
         public new void SetBusy(bool busy)
@@ -376,6 +388,7 @@ namespace Status
         SelectSkillAction,
         DecideStage,
         CharacterList,
+        SelectCommandList,
         LvReset,
         Back
     }

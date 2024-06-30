@@ -12,7 +12,8 @@ public class SEData
     public float Pitch;
 }
 
-public enum SEType {
+public enum SEType 
+{
     None,
     Decide,
     Cancel,
@@ -33,4 +34,5 @@ public enum SEType {
     BattleStart,
     LearnSkill,
     CursorMove,
+    PlayStart,
 }
