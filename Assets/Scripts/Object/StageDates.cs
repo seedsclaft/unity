@@ -118,7 +118,8 @@ namespace Ryneus
         public int PrizeSetId;
     }
 
-    public enum SymbolType{
+    public enum SymbolType
+    {
         Random = -1,
         None = 0,
         Battle = 1,
@@ -129,10 +130,12 @@ namespace Ryneus
         Resource = 6,
         Rebirth = 7,
         SelectActor = 8,
+        NextStage = 9,
         Group = 99, // 99以上はグループ指定
     }
 
-    public enum EventTiming{
+    public enum EventTiming
+    {
         None = 0,
         StartTactics = 1,
         StartStrategy = 2,
@@ -142,7 +145,8 @@ namespace Ryneus
         BeforeTactics = 11,
     }
 
-    public enum StageEventType{
+    public enum StageEventType
+    {
         None = 0,
         CommandDisable = 1, // コマンドを制限する
         TutorialBattle = 2, // バトルをチュートリアルで固定する
@@ -169,7 +173,8 @@ namespace Ryneus
         SurvivalMode = 201, // サバイバルモードにする
     }
 
-    public enum TutorialType{
+    public enum TutorialType
+    {
         None = 0,
         TacticsCommandTrain = 1, // TacticsでTrain選択
         TacticsCommandAlchemy = 2, // TacticsでAlchemy選択
@@ -180,10 +185,10 @@ namespace Ryneus
         TacticsSelectTacticsDecide = 12, // TacticsTrainで決定を選択
         TacticsSelectEnemy = 21, // TacticsBattleで敵を選択
         TacticsSelectAlchemyMagic = 22, // TacticsAlchemyで魔法を選択
-
     }
 
-    public enum EndingType{
+    public enum EndingType
+    {
         A,
         B,
         C,

@@ -9,12 +9,13 @@ namespace Ryneus
 {
     public class MainMenuView : BaseView
     {
-        [SerializeField] private TrainView trainView = null;
-        [SerializeField] private BaseList tacticsCommandList = null;
+        //[SerializeField] private TrainView trainView = null;
+        //[SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private BaseList stageList = null;
         [SerializeField] private StageInfoComponent component;
-        [SerializeField] private TextMeshProUGUI numinous = null;
-        [SerializeField] private TextMeshProUGUI totalScore = null;
+        [SerializeField] private OnOffButton nextStageButton;
+        //[SerializeField] private TextMeshProUGUI numinous = null;
+        //[SerializeField] private TextMeshProUGUI totalScore = null;
 
         private new System.Action<MainMenuViewEvent> _commandData = null;
 
@@ -26,39 +27,50 @@ namespace Ryneus
             {
                 CallSideMenu();
             });
-            tacticsCommandList.Initialize();
-            trainView.Initialize(base._commandData);
-            trainView.SetHelpWindow(HelpWindow);
+            //tacticsCommandList.Initialize();
+            //trainView.Initialize(base._commandData);
+            //trainView.SetHelpWindow(HelpWindow);
+            nextStageButton?.SetText(DataSystem.GetText(17010));
+            nextStageButton?.SetCallHandler(() => 
+            {
+                var eventData = new MainMenuViewEvent(CommandType.NextStage);
+                _commandData(eventData);
+            });
             new MainMenuPresenter(this);
         }
 
         public void SetTacticsCommand(List<ListData> menuCommands)
         {
+            /*
             tacticsCommandList.SetData(menuCommands);
             tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
             tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
             tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
             SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
             UpdateHelpWindow();
+            */
         }
         
         public void CallTrainCommand(TacticsCommandType tacticsCommandType)
         {
-            trainView.CallTrainCommand(tacticsCommandType);
+            //trainView.CallTrainCommand(tacticsCommandType);
         }
         
         private void UpdateHelpWindow()
         {
+            /*
             var listData = tacticsCommandList.ListData;
             if (listData != null)
             {
                 var commandData = (SystemData.CommandData)listData.Data;
                 HelpWindow.SetHelpText(commandData.Help);
             }
+            */
         }
 
         private void CallTacticsCommand()
         {
+            /*
             var listData = tacticsCommandList.ListData;
             if (listData != null && listData.Enable)
             {
@@ -68,44 +80,45 @@ namespace Ryneus
                 eventData.template = commandData.Id;
                 _commandData(eventData);
             }
+            */
         }
 
         public void ShowCommandList()
         {
             //sideMenuList.gameObject.SetActive(true);
-            tacticsCommandList.gameObject.SetActive(true);
+            //tacticsCommandList.gameObject.SetActive(true);
         }
 
         public void HideCommandList()
         {
             //sideMenuList.gameObject.SetActive(false);
-            tacticsCommandList.gameObject.SetActive(false);
+            //tacticsCommandList.gameObject.SetActive(false);
         }
         
         public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
         {
-            trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
+            //trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
         }
 
         public void HideSelectCharacter()
         {
-            trainView.HideSelectCharacter();
+            //trainView.HideSelectCharacter();
         }
 
 
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
-            trainView.ShowLeaningList(learnMagicList);
+            //trainView.ShowLeaningList(learnMagicList);
         }
 
         public void SetNuminous(int value)
         {
-            numinous.SetText(DataSystem.GetReplaceDecimalText(value));
+            //numinous.SetText(DataSystem.GetReplaceDecimalText(value));
         }
 
         public void SetTotalScore(int value)
         {
-            totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
+            //totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
         }
 
         public void SetInitHelpText()
@@ -114,7 +127,8 @@ namespace Ryneus
             HelpWindow.SetInputInfo("MAINMENU");
         }
 
-        public void SetHelpWindow(){
+        public void SetHelpWindow()
+        {
             SetInitHelpText();
         }
 
@@ -175,13 +189,16 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (StageInfo)listData.Data;
-                component.UpdateInfo(data);
+                //component.UpdateInfo(data);
             }
         }
 
-        private void OnClickOption(){
-            var eventData = new MainMenuViewEvent(CommandType.Option);
-            _commandData(eventData);
+        public void SetStageData(StageInfo stageInfo)
+        {
+            if (stageInfo != null)
+            {
+                component.UpdateInfo(stageInfo);
+            }
         }
 
         private void CallSideMenu()
@@ -199,6 +216,7 @@ namespace MainMenu
         None = 0,
         TacticsCommand,
         TacticsCommandClose,
+        NextStage = 100,
         StageSelect = 101,
         Option = 103,
         Ranking = 104,

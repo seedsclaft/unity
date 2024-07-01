@@ -25,7 +25,7 @@ namespace Ryneus
         
         public void SetTitle(string title)
         {
-            titleText.text = title;
+            titleText?.SetText(title);
         }
 
         public void SetSkillInfo(List<ListData> skillInfos)

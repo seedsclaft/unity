@@ -17,7 +17,7 @@ namespace Ryneus
 
         public List<ListData> EnemyInfoListDates()
         {
-            return ListData.MakeListData(_enemyBattlerInfos,true);
+            return MakeListData(_enemyBattlerInfos,0);
         }
 
         public List<int> EnemyIndexes()
@@ -82,7 +82,7 @@ namespace Ryneus
                 skillTriggerInfos.Add(skillTriggerInfo);
             }
             skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
-            return MakeListData(skillTriggerInfos);
+            return MakeListData(skillTriggerInfos,0);
         }
     }
 }

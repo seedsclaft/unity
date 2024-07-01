@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -51,7 +52,8 @@ namespace Ryneus
             return "";
         }
 
-        public List<ListData> Stages(){
+        public List<ListData> Stages()
+        {
             var list = new List<StageInfo>();
             var stages = DataSystem.Stages.FindAll(a => a.Selectable);
             foreach (var stage in stages)
@@ -116,6 +118,17 @@ namespace Ryneus
         public bool NeedSlotData(int stageId)
         {
             return DataSystem.FindStage(stageId).UseSlot;
+        }
+
+        public StageInfo NextStage()
+        {
+            var list = new List<StageInfo>();
+            var find = DataSystem.Stages.Find(a => CurrentData.PlayerInfo.ClearCount(a.Id) == 0);
+            if (find != null)
+            {
+                return new StageInfo(find);
+            }
+            return null;
         }
 
         public List<ListData> SideMenu()

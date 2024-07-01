@@ -104,7 +104,7 @@ namespace Ryneus
         private void CommandDecideCategory1Select()
         {
             var index = _view.Trigger1CategoryIndex;
-            var skillListIndex = _view.SkillTriggerListIndex;
+            var skillListIndex = _view.SkillTriggerIndex;
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
@@ -115,7 +115,7 @@ namespace Ryneus
         private void CommandDecideCategory2Select()
         {
             var index = _view.Trigger2CategoryIndex;
-            var skillListIndex = _view.SkillTriggerListIndex;
+            var skillListIndex = _view.SkillTriggerIndex;
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);

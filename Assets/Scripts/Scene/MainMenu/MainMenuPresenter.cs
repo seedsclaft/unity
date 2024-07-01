@@ -28,9 +28,11 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
 
             _view.SetStagesData(_model.Stages());
-            _view.SetNuminous(_model.Currency);
-            _view.SetTotalScore(_model.TotalScore);
-            _view.SetTacticsCommand(_model.TacticsCommand());
+            _view.SetBackGround(_model.NextStage().Master.BackGround);
+            _view.SetStageData(_model.NextStage());
+            //_view.SetNuminous(_model.Currency);
+            //_view.SetTotalScore(_model.TotalScore);
+            //_view.SetTacticsCommand(_model.TacticsCommand());
             //_model.InitStageData();
 
             var bgm = await _model.GetBgmData("MAINMENU");
@@ -50,6 +52,11 @@ namespace Ryneus
             {
                 case CommandType.TacticsCommand:
                     CommandTacticsCommand((TacticsCommandType)viewEvent.template);
+                    break;
+                case CommandType.NextStage:
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    _model.StartSelectStage(_model.NextStage().Id);
+                    _view.CommandGotoSceneChange(Scene.Tactics);
                     break;
             }
             if (viewEvent.commandType == CommandType.StageSelect)
@@ -101,11 +108,14 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
-            var sideMenuViewInfo = new SideMenuViewInfo();
-            sideMenuViewInfo.EndEvent = () => {
+            var sideMenuViewInfo = new SideMenuViewInfo
+            {
+                EndEvent = () =>
+                {
 
+                },
+                CommandLists = _model.SideMenu()
             };
-            sideMenuViewInfo.CommandLists = _model.SideMenu();
             _view.CommandCallSideMenu(sideMenuViewInfo);
         }    
         

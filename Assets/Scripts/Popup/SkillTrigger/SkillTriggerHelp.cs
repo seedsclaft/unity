@@ -11,7 +11,7 @@ namespace Ryneus
         [SerializeField] private SkillInfoComponent skillInfoComponent = null;
         [SerializeField] private TextMeshProUGUI trigger1Help = null;
         [SerializeField] private TextMeshProUGUI trigger2Help = null;
-        
+
         public void UpdateSkillInfo(SkillInfo skillInfo)
         {
             skillInfoComponent?.UpdateInfo(skillInfo);

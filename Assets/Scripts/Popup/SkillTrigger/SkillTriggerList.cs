@@ -60,7 +60,6 @@ namespace Ryneus
             }
         }
 
-        
         private void CallInputHandler(InputKeyType keyType)
         {
             if (keyType == InputKeyType.Right)

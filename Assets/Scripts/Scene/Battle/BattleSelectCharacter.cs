@@ -68,6 +68,7 @@ namespace Ryneus
             });
             toggleSelect.SetSelectTabHandler(() => 
             {
+                skillTriggerList.UpdateHelpWindow();
             });
             gameObject.SetActive(false);
             lvResetButton?.gameObject.SetActive(false);

@@ -400,7 +400,7 @@ namespace Ryneus
 
         public void SetResumeStage(bool resumeStage)
         {
-            CurrentSaveData.SetResumeStage(resumeStage);
+            //CurrentSaveData.SetResumeStage(resumeStage);
         }
         
         public void SavePlayerData()

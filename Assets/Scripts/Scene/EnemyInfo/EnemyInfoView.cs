@@ -104,7 +104,6 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-
         public void SetCondition(List<ListData> skillInfos)
         {
             selectCharacter.SetConditionList(skillInfos);
@@ -170,10 +169,10 @@ namespace EnemyInfo
 }
 public class EnemyInfoViewEvent
 {
-    public EnemyInfo.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public EnemyInfoViewEvent(EnemyInfo.CommandType type)
+    public EnemyInfoViewEvent(CommandType type)
     {
         commandType = type;
     }

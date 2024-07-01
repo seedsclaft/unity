@@ -379,6 +379,7 @@ MonoBehaviour:
   description: {fileID: 0}
   range: {fileID: 0}
   learningCost: {fileID: 0}
+  countTurn: {fileID: 0}
   learningText: {fileID: 0}
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}
@@ -2293,7 +2294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4837832986819804011
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2875,7 +2876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2735631434929248710
 RectTransform:
   m_ObjectHideFlags: 0

@@ -386,6 +386,9 @@ namespace Ryneus
                 case SymbolType.SelectActor:
                     CheckSelectActorSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
+                case SymbolType.NextStage:
+                    CheckNextStageSymbol(recordInfo.SymbolInfo.GetItemInfos);
+                    break;
                 case SymbolType.Alcana:
                     CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
@@ -524,6 +527,11 @@ namespace Ryneus
             _view.CommandCallConfirm(popupInfo);
         }
 
+        private void CheckNextStageSymbol(List<GetItemInfo> getItemInfos)
+        {
+
+        }
+
         private void UpdatePopupSelectActorSymbol(ConfirmCommandType confirmCommandType)
         {
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
@@ -602,7 +610,7 @@ namespace Ryneus
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,getItemInfo.Param1 + DataSystem.GetText(1000)),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11141,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
             _view.CommandCallConfirm(popupInfo);
         }
 

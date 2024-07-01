@@ -272,8 +272,8 @@ namespace Ryneus
         public void CommitResult()
         {
             CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-            SavePlayerData();
-            SavePlayerStageData(false);
+            //SavePlayerData();
+            //SavePlayerStageData(false);
         }
 
         public void CommitCurrentResult()

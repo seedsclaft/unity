@@ -64,6 +64,7 @@ namespace Ryneus
 
         private void CommandNewGame()
         {
+            _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.PlayStart);
             _view.WaitFrame(60,() => 
             {
@@ -94,10 +95,7 @@ namespace Ryneus
             {
                 _model.InitSaveStageInfo();
             }
-            if (GameSystem.CurrentStageData.ResumeStage)
-            {
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            }
+            _view.CommandGotoSceneChange(Scene.Tactics);
         }
 
         private void CommandRefresh()
