@@ -166,30 +166,18 @@ namespace Ryneus
                 case CommandType.ScorePrize:
                     CommandScorePrize();
                     break;
-            }
-            if (viewEvent.commandType == CommandType.SelectSideMenu)
-            {
-                CommandSelectSideMenu();
-            }
-            if (viewEvent.commandType == CommandType.StageHelp)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandStageHelp();
-            }
-            if (viewEvent.commandType == CommandType.CancelRecordList)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandCancelRecordList();
-            }
-            if (viewEvent.commandType == CommandType.CommandHelp)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandCommandHelp();
-            }
-            
-            if (viewEvent.commandType == CommandType.AlcanaCheck)
-            {
-                CommandAlcanaCheck();
+                case CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
+                    break;
+                case CommandType.StageHelp:
+                    CommandStageHelp();
+                    break;
+                case CommandType.CancelRecordList:
+                    CommandCancelRecordList();
+                    break;
+                case CommandType.AlcanaCheck:
+                    CommandAlcanaCheck();
+                    break;
             }
         }
 
@@ -321,8 +309,6 @@ namespace Ryneus
                     return;
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
-                    _view.SetSymbols(_model.StageRecords(_model.CurrentSelectRecord()));
-                    break;
                 case TacticsCommandType.Status:
                     break;
             }
@@ -449,7 +435,7 @@ namespace Ryneus
             }
             if (_model.ParallelHistory())
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,""),(a) => UpdatePopupCheckParallelRecord((ConfirmCommandType)a));
+                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
                 _view.CommandCallConfirm(popupInfo);
             } else
             {
@@ -755,31 +741,17 @@ namespace Ryneus
 
         private void CommandStageHelp()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.CommandHelpList(DataSystem.HelpText("Tactics"));
         }
 
         private void CommandCancelRecordList()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.HideRecordList();
             _view.HideParallelList();
             _view.ChangeSymbolBackCommandActive(false);
             _backCommand = CommandType.CancelSymbolRecord;
-        }
-
-        private void CommandCommandHelp()
-        {
-            switch (_model.TacticsCommandType)
-            {
-                case TacticsCommandType.Paradigm:
-                _view.CommandHelpList(DataSystem.HelpText("Battle"));
-                return;
-                case TacticsCommandType.Train:
-                _view.CommandHelpList(DataSystem.HelpText("LevelUp"));
-                return;
-                case TacticsCommandType.Alchemy:
-                _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
-                return;
-            }
         }
 
         private void CommandScorePrize()

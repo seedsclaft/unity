@@ -1,15 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Ryneus
 {
     [System.Serializable]
     public class PartyInfo 
-    {        
+    {
+        public PartyInfo()
+        {
+            ClearData();
+            InitScorePrizeInfos();
+        }
+
+        public void InitScorePrizeInfos()
+        {
+            foreach (var scorePrizeData in DataSystem.ScorePrizes)
+            {
+                if (_scorePrizeInfos.Find(a => a.Master.Id == scorePrizeData.Id) == null)
+                {
+                    var scorePrizeInfo = new ScorePrizeInfo(scorePrizeData.Id);
+                    _scorePrizeInfos.Add(scorePrizeInfo);
+                }
+            }
+        }
+
         private int _currency = 0;
         public int Currency => _currency;
-        private int _parallelCount = 0;
-        public int ParallelCount => _parallelCount;
+        public int ParallelCount => _scorePrizeInfos.FindAll(a => a.Used == false && a.EnableParallel()).Count;
         private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
@@ -19,18 +35,22 @@ namespace Ryneus
         {
             _scorePrizeInfos.ForEach(a => a.UpdateGetFlag(TotalScore()));
         }
+        
         public List<ScorePrizeInfo> CheckGainScorePrizeInfos()
         {
             return _scorePrizeInfos.FindAll(a => a.CheckFlag());
         }
+
         public bool RemakeHistory()
         {
             return _scorePrizeInfos.Find(a => a.RemakeHistory()) != null;
         }
+
         public bool ParallelHistory()
         {
             return _scorePrizeInfos.Find(a => a.ParallelHistory()) != null;
         }
+
         public bool ChangeInitActor()
         {
             return _scorePrizeInfos.Find(a => a.ChangeInitActor()) != null;
@@ -112,16 +132,6 @@ namespace Ryneus
             _levelUpInfos.Add(levelUpInfo);
         }
 
-        public PartyInfo()
-        {
-            ClearData();
-            foreach (var scorePrizeData in DataSystem.ScorePrizes)
-            {
-                var scorePrizeInfo = new ScorePrizeInfo(scorePrizeData.Id);
-                _scorePrizeInfos.Add(scorePrizeInfo);
-            }
-        }
-
         public void ClearData()
         {
             _actorInfos.Clear();
@@ -163,7 +173,7 @@ namespace Ryneus
         private string AddTimingText(ActorInfo actorInfo)
         {
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            var find = records.Find(a => a.StageSymbolData.Param1 == actorInfo.ActorId);
+            var find = records.Find(a => a.SelectedIndex == actorInfo.ActorId);
             if (find != null)
             {
                 if (find.StageId == 0)
@@ -188,7 +198,7 @@ namespace Ryneus
             records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
-                var actorId = record.StageSymbolData.Param1;
+                var actorId = record.SelectedIndex;
                 if (!actorIdList.Contains(actorId))
                 {
                     actorIdList.Add(actorId);
@@ -204,7 +214,7 @@ namespace Ryneus
             records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
-                var actorId = record.StageSymbolData.Param1;
+                var actorId = record.SelectedIndex;
                 if (!actorIdList.Contains(actorId))
                 {
                     actorIdList.Add(actorId);
@@ -238,8 +248,7 @@ namespace Ryneus
         {
             var alcanaIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.EnableStage(stageId,seek));
-            records = records.FindAll(a => a.SelectedIndex > 0);
+            records = records.FindAll(a => a.EnableStage(stageId,seek) && a.SelectedIndex > 0);
             foreach (var record in records)
             {
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.Param1 == record.SelectedIndex);
@@ -261,7 +270,7 @@ namespace Ryneus
         {
             var currency = 0;
             // リセットされる数
-            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData());
+            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData() && a.ActorId == actorInfo.ActorId);
             var resetLv = levelUpDates.Count;
             for (int i = levelUpDates.Count-1;i >= 0;i--)
             {
@@ -338,9 +347,13 @@ namespace Ryneus
             return score;
         }
 
-        public void GainParallelCount()
+        public void UseParallel()
         {
-            _parallelCount++;
+            var find = _scorePrizeInfos.Find(a => a.EnableParallel());
+            if (find != null)
+            {
+                find.UseParallel();
+            }
         }
     }
 }

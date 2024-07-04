@@ -148,16 +148,6 @@ namespace Ryneus
             return list;
         }
 
-        private List<int> LearningSkillIds()
-        {
-            var list = new List<int>();
-            foreach (var learningData in Master.LearningSkills)
-            {
-                list.Add(learningData.SkillId);
-            }
-            return list;
-        }
-
         private int _lastSelectSkillId = 0;
         public int LastSelectSkillId => _lastSelectSkillId;
         public void SetLastSelectSkillId(int selectSkillId)
@@ -514,7 +504,7 @@ namespace Ryneus
                                 break;
                         }
                     }
-                    magicValue += (rate * 100);
+                    magicValue += rate * 100;
                     if (skillInfo.Master.SkillType == SkillType.Messiah || skillInfo.Master.SkillType == SkillType.Awaken)
                     {
                         magicValue += 200;

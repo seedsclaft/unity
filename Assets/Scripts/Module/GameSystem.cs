@@ -374,10 +374,10 @@ namespace Ryneus
         private void CommandHelpView(List<ListData> helpTextList)
         {
             var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
-            var characterListView = prefab.GetComponent<HelpView>();
-            characterListView.Initialize();
-            characterListView.SetHelp(helpTextList);
-            characterListView.SetBackEvent(() => 
+            var helpView = prefab.GetComponent<HelpView>();
+            helpView.Initialize();
+            helpView.SetHelp(helpTextList);
+            helpView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             });

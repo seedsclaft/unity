@@ -13,14 +13,14 @@ namespace Ryneus
         public override void Initialize() 
         {
             base.Initialize();
-            helpTextList.Initialize();
             new HelpPresenter(this);
-            helpTextList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-            SetInputHandler(helpTextList.GetComponent<IInputHandlerEvent>());
         }
         
         public void SetHelp(List<ListData> helpText)
         {
+            helpTextList.Initialize();
+            helpTextList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
+            SetInputHandler(helpTextList.gameObject);
             helpTextList.SetData(helpText);
             helpTextList.Activate();
         }
@@ -34,7 +34,7 @@ namespace Ryneus
         {
             SetBackCommand(() => 
             {    
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 if (backEvent != null) backEvent();
             });
             ChangeBackCommandActive(true);

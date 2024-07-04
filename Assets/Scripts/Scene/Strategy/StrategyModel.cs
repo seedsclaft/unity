@@ -126,7 +126,7 @@ namespace Ryneus
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.SelectAddActor:
-                        record.StageSymbolData.Param1 = getItemInfo.Param1;
+                        record.SetSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
                         var recordScore = PartyInfo.BattleResultScore * 0.01f;
@@ -348,6 +348,8 @@ namespace Ryneus
             {
                 //removeSymbolInfo.SetSelected(false);
             }
+            // 並行世界化回数を増やす
+            PartyInfo.UseParallel();
 
             // 復帰処理
             PartyInfo.InitActorInfos();

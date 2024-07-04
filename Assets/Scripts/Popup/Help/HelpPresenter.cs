@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -26,7 +25,8 @@ namespace Ryneus
 
         private void UpdateCommand(HelpViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
         }

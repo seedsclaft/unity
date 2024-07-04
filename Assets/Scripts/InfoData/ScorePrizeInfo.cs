@@ -16,11 +16,14 @@ namespace Ryneus
         public string Help => Master.Help;
         public bool _getFlag = false;
         public bool _isCheck = false;
+        public bool _used = false;
+        public bool Used => _used;
         public ScorePrizeInfo(int scorePrizeId)
         {
             _scorePrizeId = scorePrizeId;
             //_prizeSetId = prizeSetId;
             _getFlag = false;
+            _used = false;
         }
 
         public void UpdateGetFlag(int point)
@@ -54,6 +57,16 @@ namespace Ryneus
         public bool ParallelHistory()
         {
             return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ParallelHistory) != null;
+        }
+
+        public bool EnableParallel()
+        {
+            return _used == false && _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ParallelHistory) != null;
+        }
+
+        public void UseParallel()
+        {
+            _used = true;
         }
 
         public bool ChangeInitActor()

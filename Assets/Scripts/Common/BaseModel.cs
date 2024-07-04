@@ -293,6 +293,7 @@ namespace Ryneus
             // 初期加入マス
             var symbols = DataSystem.FindStage(0).StageSymbols;
             symbols = symbols.FindAll(a => a.Seek == 0);
+            bool addActor = false;
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol.SymbolType);
@@ -308,9 +309,13 @@ namespace Ryneus
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
-                record.SetSelected(true);
-                // 初期アクター
-                record.StageSymbolData.Param1 = 1;
+                if (addActor == false)
+                {
+                    record.SetSelected(true);
+                    // 初期アクター
+                    record.SetSelectedIndex(1);
+                    addActor = true;
+                }
                 recordInfos.Add(record);
             }
             return recordInfos;
@@ -648,11 +653,6 @@ namespace Ryneus
         {
             PartyInfo.InitActorInfos();
             var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
-        }
-
-        public void GainParallelCount()
-        {
-            PartyInfo.GainParallelCount();
         }
 
         public bool SelectableSlot(int index)

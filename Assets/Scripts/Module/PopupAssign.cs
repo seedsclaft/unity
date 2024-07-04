@@ -28,7 +28,7 @@ namespace Ryneus
             }
             var prefab = Instantiate(GetPopupObject(popupType));
             prefab.transform.SetParent(confirmRoot.transform, false);
-            confirmRoot.gameObject.SetActive(true);
+            confirmRoot.SetActive(true);
             var view = prefab.GetComponent<BaseView>();
             view?.SetHelpWindow(helpWindow);
             return prefab;

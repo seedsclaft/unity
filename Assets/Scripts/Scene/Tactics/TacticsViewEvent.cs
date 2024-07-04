@@ -35,7 +35,6 @@ namespace Tactics
         SelectSideMenu,
         StageHelp,
         CancelRecordList, // レコードリストを非表示にする
-        CommandHelp,
         ScorePrize,
         AlcanaCheck,
         SelectAlcanaList,
