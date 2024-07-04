@@ -21,17 +21,6 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void SetBackEvent(System.Action backEvent)
-        {
-            SetBackCommand(() => 
-            {    
-                Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                if (backEvent != null) backEvent();
-            });
-            ChangeBackCommandActive(true);
-        }
-
-
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
             if (keyType == InputKeyType.Cancel)

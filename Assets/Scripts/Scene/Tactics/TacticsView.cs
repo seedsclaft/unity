@@ -27,7 +27,6 @@ namespace Ryneus
 
         [SerializeField] private Button alcanaButton = null;
         [SerializeField] private Button stageHelpButton = null;
-        [SerializeField] private Button commandHelpButton = null;
         [SerializeField] private Button scorePrizeButton = null;
         
         [SerializeField] private GameObject backGround = null;
@@ -74,11 +73,6 @@ namespace Ryneus
             stageHelpButton.onClick.AddListener(() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.StageHelp);
-                _commandData(eventData);
-            });
-            commandHelpButton.onClick.AddListener(() => 
-            {
-                var eventData = new TacticsViewEvent(CommandType.CommandHelp);
                 _commandData(eventData);
             });
             scorePrizeButton?.onClick.AddListener(() => 

@@ -109,7 +109,7 @@ namespace Ryneus
             selectCharacter.SetConditionList(skillInfos);
         }
 
-        public void SetBackEvent(System.Action backEvent)
+        public new void SetBackEvent(System.Action backEvent)
         {
             _backEvent = backEvent;
             SetBackCommand(() => 

@@ -29,16 +29,6 @@ namespace Ryneus
         {
             _commandData = commandData;
         }
-
-        public void SetBackEvent(System.Action backEvent)
-        {
-            SetBackCommand(() => 
-            {    
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                if (backEvent != null) backEvent();
-            });
-            ChangeBackCommandActive(true);
-        }
     }
 
     namespace Help

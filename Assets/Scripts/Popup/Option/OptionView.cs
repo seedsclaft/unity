@@ -70,7 +70,7 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void SetBackEvent(System.Action backEvent)
+        public new void SetBackEvent(System.Action backEvent)
         {
             SetBackCommand(() => 
             {    
