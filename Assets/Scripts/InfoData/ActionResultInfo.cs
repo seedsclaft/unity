@@ -1353,7 +1353,7 @@ namespace Ryneus
 
         private int ApplyVariance(int value)
         {
-            int rand = new System.Random().Next(-10, 10);
+            int rand = new System.Random().Next(-5, 5);
             return (int)Mathf.Floor(value * (1 + rand * 0.01f));
         }
 

@@ -40,7 +40,7 @@ namespace Ryneus
                 var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
                 var currentTurn = GameSystem.CurrentStageData.CurrentStage.CurrentSeek;
                 pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
-                currentObj?.SetActive(symbolStageId == currentStageId && symbolSeek == currentTurn);
+                currentObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
                 var textId = 81;
                 if (currentObj.activeSelf)
@@ -51,12 +51,13 @@ namespace Ryneus
                 {
                     textId = 83;
                 }
-                seekerText?.SetText(DataSystem.GetText(textId));
                 if (dates[0].SymbolType == SymbolType.None)
                 {
+                    seekerText?.SetText("");
                     stageDataText?.SetText("");
                 } else
                 {
+                    seekerText?.SetText(DataSystem.GetText(textId));
                     stageDataText?.SetText(dates[0].StageSymbolData.StageId.ToString() + "-" + dates[0].StageSymbolData.Seek.ToString());
                 }
             }

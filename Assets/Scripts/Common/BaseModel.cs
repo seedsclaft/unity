@@ -284,7 +284,7 @@ namespace Ryneus
 
         public void StageClear()
         {
-            CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
+            CurrentSaveData.Party.StageClear(CurrentStage.Id);
         }
 
         public List<SymbolResultInfo> OpeningStageRecordInfos()

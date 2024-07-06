@@ -123,7 +123,7 @@ namespace Ryneus
         public StageInfo NextStage()
         {
             var list = new List<StageInfo>();
-            var find = DataSystem.Stages.Find(a => CurrentData.PlayerInfo.ClearCount(a.Id) == 0);
+            var find = DataSystem.Stages.Find(a => CurrentSaveData.Party.ClearCount(a.Id) == 0 && a.Id > 0);
             if (find != null)
             {
                 return new StageInfo(find);

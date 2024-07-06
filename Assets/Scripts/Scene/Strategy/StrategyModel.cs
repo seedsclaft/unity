@@ -125,6 +125,9 @@ namespace Ryneus
                         break;
                     case GetItemType.StatusUp:
                         break;
+                    case GetItemType.AddActor:
+                        record.SetSelectedIndex(getItemInfo.Param1);
+                        break;
                     case GetItemType.SelectAddActor:
                         record.SetSelectedIndex(getItemInfo.Param1);
                         break;
@@ -271,9 +274,7 @@ namespace Ryneus
 
         public void CommitResult()
         {
-            CurrentData.PlayerInfo.StageClear(CurrentStage.Id);
-            //SavePlayerData();
-            //SavePlayerStageData(false);
+            StageClear();
         }
 
         public void CommitCurrentResult()
