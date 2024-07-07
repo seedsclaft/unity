@@ -28,6 +28,11 @@ namespace Ryneus
         }
         private int _firstRecordIndex = -1;
         public int FirstRecordIndex => _firstRecordIndex;
+
+        
+        private List<int> _shopSelectIndexes = new ();
+
+
         private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
         public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
         {
@@ -96,6 +101,22 @@ namespace Ryneus
                 var cost = getItemInfo.Param2;
                 skillInfo.SetEnable(cost <= PartyInfo.Currency);
                 skillInfos.Add(skillInfo);
+            }
+            return skillInfos;
+        }
+
+        public List<SkillInfo> ShopMagicSkillInfos(List<GetItemInfo> getItemInfos)
+        {
+            var skillInfos = new List<SkillInfo>();
+            var index = 0;
+            foreach (var getItemInfo in getItemInfos)
+            {
+                var skillInfo = new SkillInfo(getItemInfo.Param1);
+                var cost = ShopLearningCost(skillInfo);
+                skillInfo.SetEnable(cost <= PartyInfo.Currency && !_shopSelectIndexes.Contains(index));
+                skillInfo.SetLearningCost(cost);
+                skillInfos.Add(skillInfo);
+                index++;
             }
             return skillInfos;
         }
@@ -401,6 +422,41 @@ namespace Ryneus
             {
                 stageMember.SetBattleIndex(-1);
             }
+        }
+
+        public bool EnableShopMagic(SkillInfo skillInfo)
+        {
+            var cost = ShopLearningCost(skillInfo);
+            return cost <= PartyInfo.Currency;
+        }
+
+        public void PayShopCurrency(SkillInfo skillInfo,int index)
+        {
+            if (EnableShopMagic(skillInfo))
+            {
+                PartyInfo.ChangeCurrency(Currency - ShopLearningCost(skillInfo));
+                _shopSelectIndexes.Add(index);
+            }
+        }
+
+        public int ShopLearningCost(SkillInfo skillInfo)
+        {
+            return skillInfo.Master.Rank * 10;
+        }
+
+        public List<GetItemInfo> LearningShopMagics()
+        {
+            var list = new List<GetItemInfo>();
+            int index = 0;
+            foreach (var getItemInfo in CurrentSelectRecord().SymbolInfo.GetItemInfos)
+            {
+                if (_shopSelectIndexes.Contains(index))
+                {
+                    list.Add(getItemInfo);
+                }
+                index++;
+            }
+            return list;
         }
 
         public void SetPartyBattlerIdList()

@@ -90,7 +90,7 @@ namespace Ryneus
 
         public bool IsGroupSymbol()
         {
-            return SymbolType > SymbolType.SelectActor;
+            return SymbolType == SymbolType.Group;
         }
     }
 
@@ -130,7 +130,7 @@ namespace Ryneus
         Resource = 6,
         Rebirth = 7,
         SelectActor = 8,
-        NextStage = 9,
+        Shop = 9,
         Group = 99, // 99以上はグループ指定
     }
 

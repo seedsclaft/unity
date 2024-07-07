@@ -78,7 +78,7 @@ namespace Ryneus
                 symbolImage.gameObject.SetActive(false);
                 return;
             }
-            if (_symbolInfo.SymbolType > SymbolType.NextStage) return;
+            if (_symbolInfo.SymbolType == SymbolType.Group) return;
             if (_symbolInfo.SymbolType == SymbolType.Random) return;
             if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss)
             {

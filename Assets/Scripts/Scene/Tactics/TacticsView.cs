@@ -39,6 +39,7 @@ namespace Ryneus
 
 
         public int ParallelListIndex => parallelList.Index;
+        public int AlcanaListIndex => alcanaSelectList.Index;
         public SymbolResultInfo SymbolResultInfo() 
         {
             var listData = symbolRecordList.ListData;

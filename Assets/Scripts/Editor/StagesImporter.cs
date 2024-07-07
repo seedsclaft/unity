@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class StagesInfoImporter : AssetPostprocessor {
+	public class StagesInfoImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -81,9 +82,10 @@ namespace Ryneus
 		static readonly string ExcelName = "Stages.xlsx";
 
 		// アセット更新があると呼ばれる
-		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+		{
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateStagesData(asset);
@@ -131,16 +133,18 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var StageData = new StageData();
-						StageData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						StageData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
-						StageData.AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AchieveTextId))?.Text;
-						StageData.Selectable = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Selectable) == 1;
-						StageData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
-						StageData.StageLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageLv);
-						StageData.Turns = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Turns);
-						StageData.InitMembers = new List<int>();
-						string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.InitMembers).Split(',');
+                        var StageData = new StageData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
+                            AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AchieveTextId))?.Text,
+                            Selectable = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Selectable) == 1,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
+                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.StageLv),
+                            Turns = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Turns),
+                            InitMembers = new List<int>()
+                        };
+                        string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.InitMembers).Split(',');
 						foreach (string item in list)
 						{
 							StageData.InitMembers.Add(int.Parse(item));
@@ -233,14 +237,16 @@ namespace Ryneus
 					{
 						IRow BaseRow = SymbolGroupSheet.GetRow(i);
 
-						var SymbolGroupData = new SymbolGroupData();
-						SymbolGroupData.GroupId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.GroupId);
-						SymbolGroupData.SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.SymbolType);
-						SymbolGroupData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Param1);
-						SymbolGroupData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Param2);
-						SymbolGroupData.Rate = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.Rate);
-						SymbolGroupData.PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSymbolGroupColumn.PrizeSetId);
-						Data.SymbolGroupData.Add(SymbolGroupData);
+                        var SymbolGroupData = new SymbolGroupData
+                        {
+                            GroupId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.GroupId),
+                            SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.SymbolType),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Param1),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Param2),
+                            Rate = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Rate),
+                            PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.PrizeSetId)
+                        };
+                        Data.SymbolGroupData.Add(SymbolGroupData);
 					}
 				}
 			}

@@ -13,6 +13,7 @@ namespace Ryneus
         private bool _busy = true;
         private bool _eventBusy = false;
         private bool _alcanaSelectBusy = false;
+        private bool _shopSelectBusy = false;
 
         private CommandType _backCommand = CommandType.None;
         public TacticsPresenter(TacticsView view)
@@ -135,7 +136,7 @@ namespace Ryneus
                     CommandSelectRecordSeek((SymbolResultInfo)viewEvent.template);
                     break;
                 case CommandType.CancelSymbolRecord:
-                    if (_alcanaSelectBusy == true)
+                    if (_alcanaSelectBusy || _shopSelectBusy)
                     {
                         return;
                     }
@@ -160,6 +161,9 @@ namespace Ryneus
                     }
                     CommandSelectAlcanaList((SkillInfo)viewEvent.template);
                     break;
+                case CommandType.EndShopSelect:
+                    CommandEndShopSelect();
+                break;
                 case CommandType.HideAlcanaList:
                     CommandHideAlcanaList();
                     break;
@@ -289,6 +293,10 @@ namespace Ryneus
 
         private void CommandBack()
         {
+            if (_alcanaSelectBusy)
+            {
+                return;
+            }
             var eventData = new TacticsViewEvent(_backCommand)
             {
                 template = _model.TacticsCommandType
@@ -372,8 +380,8 @@ namespace Ryneus
                 case SymbolType.SelectActor:
                     CheckSelectActorSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
-                case SymbolType.NextStage:
-                    CheckNextStageSymbol(recordInfo.SymbolInfo.GetItemInfos);
+                case SymbolType.Shop:
+                    CheckShopStageSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Alcana:
                     CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
@@ -468,9 +476,30 @@ namespace Ryneus
 
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
-            popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
-            _view.CommandCallConfirm(popupInfo);
+            var symbolType = _model.CurrentSelectRecord().SymbolType;
+            if (symbolType == SymbolType.Alcana)
+            {
+                var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+                popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
+                _view.CommandCallConfirm(popupInfo);
+            } else
+            if (symbolType == SymbolType.Shop)
+            {
+                if (_model.EnableShopMagic(skillInfo))
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,_model.ShopLearningCost(skillInfo).ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdateShop(a,skillInfo),ConfirmType.SkillDetail);
+                    popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
+                    _view.CommandCallConfirm(popupInfo);
+                } else
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.GetText(11170),(a) => 
+                    {
+                        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+                    });
+                    popupInfo.SetIsNoChoice(true);
+                    _view.CommandCallConfirm(popupInfo);
+                }
+            }
         }
 
         private void UpdateSelectAlcana(ConfirmCommandType confirmCommandType)
@@ -482,6 +511,36 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
                 getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
+                GotoStrategyScene(getItemInfos,_model.StageMembers());
+            }
+        }
+
+        private void UpdateShop(ConfirmCommandType confirmCommandType,SkillInfo skillInfo)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                // 魔法入手、Nu消費
+                _model.PayShopCurrency(skillInfo,_view.AlcanaListIndex);
+                //var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
+                //getItemInfos = getItemInfos.FindAll(a => a.Param1 == skillInfo.Id);
+                //GotoStrategyScene(getItemInfos,_model.StageMembers());
+                CommandRefresh();
+            }
+        }
+
+        private void CommandEndShopSelect()
+        {
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(11191),(a) => UpdatePopupEndShopSelect((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        }
+
+        private void UpdatePopupEndShopSelect(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                var getItemInfos = _model.LearningShopMagics();
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
             }
         }
@@ -513,11 +572,6 @@ namespace Ryneus
             _view.CommandCallConfirm(popupInfo);
         }
 
-        private void CheckNextStageSymbol(List<GetItemInfo> getItemInfos)
-        {
-
-        }
-
         private void UpdatePopupSelectActorSymbol(ConfirmCommandType confirmCommandType)
         {
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
@@ -540,6 +594,27 @@ namespace Ryneus
                 statusViewInfo.SetDisplayBackButton(false);
                 _view.CommandCallStatus(statusViewInfo);
                 _view.ChangeUIActive(false);
+            } else
+            {
+                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+            }
+        }
+
+        private void CheckShopStageSymbol(List<GetItemInfo> getItemInfos)
+        {
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(11190),(a) => UpdatePopupShopSymbol((ConfirmCommandType)a));
+            _view.CommandCallConfirm(popupInfo);
+        }
+
+        private void UpdatePopupShopSymbol(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                _shopSelectBusy = true;            
+                _backCommand = CommandType.EndShopSelect;
+                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
+                _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
             } else
             {
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());

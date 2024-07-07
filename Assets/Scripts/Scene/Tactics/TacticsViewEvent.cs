@@ -39,5 +39,6 @@ namespace Tactics
         AlcanaCheck,
         SelectAlcanaList,
         HideAlcanaList,
+        EndShopSelect,
     }
 }

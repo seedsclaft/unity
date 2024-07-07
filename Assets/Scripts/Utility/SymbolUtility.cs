@@ -160,6 +160,63 @@ namespace Ryneus
                             }
                         }
                         break;
+                        case SymbolType.Shop:
+                        // Rank1,2,3から1つずつランダム設定
+                        if (stageSymbolData.Param1 == -1)
+                        {
+                            var alcanaRank = 1;
+                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
+                            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+                            var count = 0;
+                            while (getItemInfos.Count <= count)
+                            {
+                                var rand = Random.Range(0,alcanaSkills.Count);
+                                // 報酬設定
+                                var alcanaData = new GetItemData
+                                {
+                                    Type = GetItemType.Skill,
+                                    Param1 = alcanaSkills[rand].Value.Id
+                                };
+                                var getItemInfo = new GetItemInfo(alcanaData);
+                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                getItemInfos.Add(getItemInfo);
+                            }
+                            alcanaRank = 2;
+                            alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
+                            alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+                            count = 1;
+                            while (getItemInfos.Count <= count)
+                            {
+                                var rand = Random.Range(0,alcanaSkills.Count);
+                                // 報酬設定
+                                var alcanaData = new GetItemData
+                                {
+                                    Type = GetItemType.Skill,
+                                    Param1 = alcanaSkills[rand].Value.Id
+                                };
+                                var getItemInfo = new GetItemInfo(alcanaData);
+                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                getItemInfos.Add(getItemInfo);
+                            }
+                            alcanaRank = 3;
+                            alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
+                            alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+                            count = 2;
+                            while (getItemInfos.Count <= count)
+                            {
+                                var rand = Random.Range(0,alcanaSkills.Count);
+                                // 報酬設定
+                                var alcanaData = new GetItemData
+                                {
+                                    Type = GetItemType.Skill,
+                                    Param1 = alcanaSkills[rand].Value.Id
+                                };
+                                var getItemInfo = new GetItemInfo(alcanaData);
+                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                getItemInfos.Add(getItemInfo);
+                            }
+                        }
+                        break;
                 }
                 if (stageSymbolData.PrizeSetId > 0)
                 {
