@@ -155,10 +155,6 @@ namespace Ryneus
                     CommandParallel();
                     break;
                 case CommandType.SelectAlcanaList:
-                    if (_alcanaSelectBusy == false)
-                    {
-                        return;
-                    }
                     CommandSelectAlcanaList((SkillInfo)viewEvent.template);
                     break;
                 case CommandType.EndShopSelect:
@@ -477,13 +473,13 @@ namespace Ryneus
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
             var symbolType = _model.CurrentSelectRecord().SymbolType;
-            if (symbolType == SymbolType.Alcana)
+            if (symbolType == SymbolType.Alcana && _alcanaSelectBusy)
             {
                 var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
                 popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
                 _view.CommandCallConfirm(popupInfo);
             } else
-            if (symbolType == SymbolType.Shop)
+            if (symbolType == SymbolType.Shop && _shopSelectBusy)
             {
                 if (_model.EnableShopMagic(skillInfo))
                 {
@@ -522,10 +518,9 @@ namespace Ryneus
             {
                 // 魔法入手、Nu消費
                 _model.PayShopCurrency(skillInfo,_view.AlcanaListIndex);
-                //var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
-                //getItemInfos = getItemInfos.FindAll(a => a.Param1 == skillInfo.Id);
-                //GotoStrategyScene(getItemInfos,_model.StageMembers());
-                CommandRefresh();
+                _view.SetNuminous(_model.Currency);
+                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
+                _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
             }
         }
 

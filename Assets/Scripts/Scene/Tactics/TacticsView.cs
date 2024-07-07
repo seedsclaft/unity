@@ -497,9 +497,18 @@ namespace Ryneus
             var listData = alcanaSelectList.ListData;
             if (listData != null)
             {
-                return (SkillInfo)listData.Data;
+                var data = (SkillInfo)listData.Data;
+                if (data != null && data.Enable)
+                {
+                    return data;
+                }
             }
             return null;
+        }
+
+        public void SetNuminous(int numinous)
+        {
+            trainView.SetNuminous(numinous);
         }
 
         public void UpdateInputKeyActive(TacticsViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)

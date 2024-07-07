@@ -67,7 +67,7 @@ namespace Ryneus
                     //selectIndex = ListDates.FindIndex(a => a.Enable);
                 }
             }
-            if (ScrollRect.content.GetComponent<RectTransform>().GetHeight() == 0)
+            if (_initializeList == false)
             {
                 InitializeRefresh(selectIndex);
                 initializeAfterEvent?.Invoke();

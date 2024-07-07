@@ -22,11 +22,15 @@ namespace Ryneus
             _selected = isSelected;
         }
         // 選択式のシンボルの行動結果
-        public int _selectedIndex = 0;
-        public int SelectedIndex => _selectedIndex;
-        public void SetSelectedIndex(int selectedIndex)
+        public List<int> _selectedIndex = new ();
+        public List<int> SelectedIndex => _selectedIndex;
+        public void ClearSelectedIndex()
         {
-            _selectedIndex = selectedIndex;
+            _selectedIndex.Clear();
+        }
+        public void AddSelectedIndex(int selectedIndex)
+        {
+            _selectedIndex.Add(selectedIndex);
         }
         private int _battleScore;
         public int BattleScore => _battleScore;

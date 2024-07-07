@@ -98,6 +98,7 @@ namespace Ryneus
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
             
+            record.ClearSelectedIndex();
             foreach (var getItemInfo in getItemInfos)
             {
                 switch (getItemInfo.GetItemType)
@@ -109,7 +110,7 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.Skill:
-                        record.SetSelectedIndex(getItemInfo.Param1);
+                        record.AddSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.Regeneration:
                         foreach (var stageMember in StageMembers())
@@ -126,10 +127,10 @@ namespace Ryneus
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.AddActor:
-                        record.SetSelectedIndex(getItemInfo.Param1);
+                        record.AddSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.SelectAddActor:
-                        record.SetSelectedIndex(getItemInfo.Param1);
+                        record.AddSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
                         var recordScore = PartyInfo.BattleResultScore * 0.01f;

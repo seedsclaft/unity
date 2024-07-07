@@ -175,7 +175,7 @@ namespace Ryneus
         private string AddTimingText(ActorInfo actorInfo)
         {
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            var find = records.Find(a => a.SelectedIndex == actorInfo.ActorId);
+            var find = records.Find(a => a.SelectedIndex.Contains(actorInfo.ActorId));
             if (find != null)
             {
                 if (find.StageId == 0)
@@ -200,10 +200,13 @@ namespace Ryneus
             records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
-                var actorId = record.SelectedIndex;
-                if (!actorIdList.Contains(actorId))
+                var selectedIndexes = record.SelectedIndex;
+                foreach (var selectedIndex in selectedIndexes)
                 {
-                    actorIdList.Add(actorId);
+                    if (!actorIdList.Contains(selectedIndex))
+                    {
+                        actorIdList.Add(selectedIndex);
+                    }
                 }
             }
             return actorIdList;
@@ -216,10 +219,13 @@ namespace Ryneus
             records = records.FindAll(a => a.EnableStage(stageId,seek));
             foreach (var record in records)
             {
-                var actorId = record.SelectedIndex;
-                if (!actorIdList.Contains(actorId))
+                var selectedIndexes = record.SelectedIndex;
+                foreach (var selectedIndex in selectedIndexes)
                 {
-                    actorIdList.Add(actorId);
+                    if (!actorIdList.Contains(selectedIndex))
+                    {
+                        actorIdList.Add(selectedIndex);
+                    }
                 }
             }
             return actorIdList;
@@ -250,10 +256,10 @@ namespace Ryneus
         {
             var alcanaIdList = new List<int>();
             var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.EnableStage(stageId,seek) && a.SelectedIndex > 0);
+            records = records.FindAll(a => a.EnableStage(stageId,seek) && a.SelectedIndex.Count > 0);
             foreach (var record in records)
             {
-                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.Param1 == record.SelectedIndex);
+                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => record.SelectedIndex.Contains(a.Param1));
                 foreach (var getItemInfo in getItemInfos)
                 {
                     if (getItemInfo.GetItemType == GetItemType.Skill)

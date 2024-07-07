@@ -51,7 +51,6 @@ namespace Ryneus
             rect.localPosition = new Vector3(0,0,0);
             actorInfoComponent.MainThumb.DOFade(0,0);
 
-            strategyResultList.Initialize();
             saveHumanObj?.SetActive(false);
             battleTurnObj?.SetActive(false);
             new StrategyPresenter(this);
@@ -113,6 +112,7 @@ namespace Ryneus
 
         public void InitResultList(List<ListData> confirmCommands)
         {
+            strategyResultList.Initialize();
             SetInputHandler(strategyResultList.gameObject);
             strategyResultList.Deactivate();
             strategyResultList.gameObject.SetActive(false);
@@ -146,9 +146,8 @@ namespace Ryneus
 
         public void ShowResultList(List<ListData> getItemInfos,string saveHuman = null,string battleTurn = null)
         {
-            strategyResultList.Deactivate();
-            strategyResultList.SetData(getItemInfos);
             strategyResultList.gameObject.SetActive(true);
+            strategyResultList.SetData(getItemInfos);
             strategyResultList.Activate();
             saveHumanObj?.SetActive(saveHuman != null);
             battleTurnObj?.SetActive(battleTurn != null);

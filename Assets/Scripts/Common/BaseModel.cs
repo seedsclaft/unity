@@ -313,7 +313,7 @@ namespace Ryneus
                 {
                     record.SetSelected(true);
                     // 初期アクター
-                    record.SetSelectedIndex(1);
+                    record.AddSelectedIndex(1);
                     addActor = true;
                 }
                 recordInfos.Add(record);
