@@ -20,7 +20,7 @@ namespace Ryneus
 			AnimationId,
 			AnimationType,
 			_AnimationType,
-			MpCost,
+			CountTurn,
 			Rank,
 			Attribute,
 			_Attribute,
@@ -33,7 +33,7 @@ namespace Ryneus
 			Range,
 			RepeatTime,
 			AliveOnly,
-			TurnCount,
+			//TurnCount,
 		}
 
 		enum BaseFeatureColumn
@@ -115,7 +115,7 @@ namespace Ryneus
                             AnimationId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AnimationId),
                             AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AnimationType),
                             //SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
-                            MpCost = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.MpCost),
+                            CountTurn = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.CountTurn),
                             Rank = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Rank),
                             Attribute = (AttributeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Attribute),
                             SkillType = (SkillType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.SkillType),
@@ -125,7 +125,7 @@ namespace Ryneus
                             RepeatTime = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RepeatTime),
                             AliveType = (AliveType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AliveOnly),
                             Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
-                        	TurnCount = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TurnCount),
+                        	//TurnCount = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TurnCount),
                         };
                         Data.Data.Add(SkillData);
 					}

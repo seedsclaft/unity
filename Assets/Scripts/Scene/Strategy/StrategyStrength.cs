@@ -11,7 +11,12 @@ namespace Ryneus
         {
             if (ListData == null) return;
             var data = (ActorInfo)ListData.Data;
-            strengthComponent.UpdateInfo(data,(StatusParamType)Index);
+            var paramIndex = Index;
+            if (Index > 0)
+            {
+                paramIndex++;
+            }
+            strengthComponent.UpdateInfo(data,(StatusParamType)paramIndex);
         }
     }
 }

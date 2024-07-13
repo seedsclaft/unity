@@ -12,12 +12,14 @@ namespace Ryneus
             var isTrigger = false;
             switch (triggerData.TriggerType)
             {
+                /*
                 case TriggerType.ActionMpCost:
                 if (battlerInfo.IsAlive() && actionInfo != null && actionInfo.MpCost == triggerData.Param1)
                 {
                     isTrigger = true;
                 }
                 break;
+                */
                 case TriggerType.TargetHpRateUnder:
                 if (actionResultInfos != null && actionResultInfos.Count > 0)
                 {

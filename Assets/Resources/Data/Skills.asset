@@ -18,7 +18,7 @@ MonoBehaviour:
     IconIndex: 0
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 0
@@ -28,7 +28,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates: []
     TriggerDates: []
     ScopeTriggers: []
@@ -37,7 +36,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 1
@@ -47,7 +46,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1
       FeatureType: 1010
@@ -62,7 +60,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 1
@@ -72,7 +70,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2
       FeatureType: 1010
@@ -87,7 +84,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 11
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -97,7 +94,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11
       FeatureType: 3010
@@ -112,7 +108,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -122,7 +118,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 21
       FeatureType: 3020
@@ -137,7 +132,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 1
@@ -147,7 +142,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 31
       FeatureType: 1050
@@ -168,7 +162,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 4
@@ -178,7 +172,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 32
       FeatureType: 3020
@@ -193,7 +186,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 1
@@ -203,7 +196,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 33
       FeatureType: 1010
@@ -224,27 +216,20 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 1
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1010
       FeatureType: 1010
       Param1: 150
-      Param2: 0
-      Param3: 0
-      Rate: 100
-    - SkillId: 1010
-      FeatureType: 10010
-      Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
@@ -255,7 +240,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 101
     AnimationType: 2
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 1
     Scope: 2
@@ -265,7 +250,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1020
       FeatureType: 1010
@@ -280,7 +264,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 2
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 1
     Scope: 12
@@ -290,7 +274,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1030
       FeatureType: 4020
@@ -305,7 +288,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 1
     Scope: 4
@@ -316,7 +299,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1040
       FeatureType: 3010
@@ -331,7 +313,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 105
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 1
     Scope: 2
@@ -341,7 +323,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1050
       FeatureType: 3010
@@ -356,7 +337,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 101
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 3
     Attribute: 1
     Scope: 1
@@ -366,7 +347,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1060
       FeatureType: 1010
@@ -381,7 +361,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 101
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 1
     Scope: 1
@@ -391,7 +371,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1070
       FeatureType: 3060
@@ -406,7 +385,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 51
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 1
     Scope: 4
@@ -416,7 +395,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1080
       FeatureType: 3040
@@ -437,7 +415,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 101
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 1
     Scope: 1
@@ -447,7 +425,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 5
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1090
       FeatureType: 1010
@@ -462,7 +439,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 101
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 2
     Attribute: 1
     Scope: 31
@@ -472,7 +449,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 1100
       FeatureType: 1010
@@ -487,27 +463,20 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 201
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 2
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2010
       FeatureType: 1010
       Param1: 150
-      Param2: 0
-      Param3: 0
-      Rate: 100
-    - SkillId: 2010
-      FeatureType: 10010
-      Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
@@ -518,7 +487,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 2
     Attribute: 2
     Scope: 4
@@ -528,7 +497,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2020
       FeatureType: 3010
@@ -543,7 +511,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 201
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 2
     Scope: 1
@@ -553,7 +521,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2030
       FeatureType: 1010
@@ -574,7 +541,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 51
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 2
     Attribute: 2
     Scope: 13
@@ -584,7 +551,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2040
       FeatureType: 5020
@@ -599,7 +565,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 3
     Attribute: 2
     Scope: 4
@@ -609,7 +575,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2050
       FeatureType: 3040
@@ -630,7 +595,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 201
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 3
     Attribute: 2
     Scope: 1
@@ -640,7 +605,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2060
       FeatureType: 1110
@@ -655,7 +619,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 51
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 2
     Scope: 4
@@ -665,7 +629,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2070
       FeatureType: 3040
@@ -692,7 +655,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 201
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 3
     Attribute: 2
     Scope: 1
@@ -702,7 +665,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 2
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2080
       FeatureType: 1010
@@ -723,7 +685,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 201
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -733,7 +695,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2090
       FeatureType: 1010
@@ -754,7 +715,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 201
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -764,7 +725,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2100
       FeatureType: 1010
@@ -797,7 +757,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 2
     Scope: 4
@@ -807,7 +767,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 2101
       FeatureType: 4020
@@ -828,27 +787,20 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 301
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 3
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3010
       FeatureType: 1010
       Param1: 150
-      Param2: 0
-      Param3: 0
-      Rate: 100
-    - SkillId: 3010
-      FeatureType: 10010
-      Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
@@ -859,7 +811,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 301
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 3
     Scope: 4
@@ -869,7 +821,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3020
       FeatureType: 3010
@@ -884,7 +835,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -894,7 +845,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3030
       FeatureType: 3010
@@ -909,7 +859,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 61
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 3
     Scope: 3
@@ -919,7 +869,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3040
       FeatureType: 3010
@@ -934,7 +883,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 301
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 3
     Attribute: 3
     Scope: 2
@@ -944,7 +893,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3050
       FeatureType: 3010
@@ -959,7 +907,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 301
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -969,7 +917,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3060
       FeatureType: 1010
@@ -990,7 +937,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 2
     Attribute: 3
     Scope: 1
@@ -1000,7 +947,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3070
       FeatureType: 3010
@@ -1015,7 +961,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 5
+    CountTurn: 5
     Rank: 3
     Attribute: 3
     Scope: 3
@@ -1025,7 +971,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3080
       FeatureType: 3010
@@ -1040,7 +985,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 3
     Attribute: 3
     Scope: 2
@@ -1050,7 +995,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3090
       FeatureType: 3010
@@ -1065,7 +1009,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 301
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 3
     Attribute: 3
     Scope: 1
@@ -1075,7 +1019,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 3100
       FeatureType: 1010
@@ -1096,17 +1039,16 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 401
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 4
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F\u3055\u3089\u306B2\u500D\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u30A2\u30F3\u30C7\u30C3\u30C9\u306B\u306F\u3055\u3089\u306B2\u500D\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4010
       FeatureType: 1010
@@ -1120,12 +1062,6 @@ MonoBehaviour:
       Param2: 0
       Param3: 200
       Rate: 100
-    - SkillId: 4010
-      FeatureType: 10010
-      Param1: 1
-      Param2: 0
-      Param3: 0
-      Rate: 100
     TriggerDates: []
     ScopeTriggers: []
   - Id: 4020
@@ -1133,7 +1069,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 401
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -1144,7 +1080,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4020
       FeatureType: 1040
@@ -1165,7 +1100,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -1175,7 +1110,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4030
       FeatureType: 2010
@@ -1202,7 +1136,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 404
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 4
     Scope: 2
@@ -1212,7 +1146,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4040
       FeatureType: 3030
@@ -1227,7 +1160,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 4
     Scope: 13
@@ -1237,7 +1170,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4050
       FeatureType: 2010
@@ -1258,7 +1190,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 1
-    MpCost: 7
+    CountTurn: 7
     Rank: 3
     Attribute: 4
     Scope: 1
@@ -1268,7 +1200,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 0
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4060
       FeatureType: 3020
@@ -1289,7 +1220,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 21
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 3
     Attribute: 4
     Scope: 2
@@ -1299,7 +1230,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4070
       FeatureType: 2010
@@ -1320,7 +1250,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 51
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 3
     Attribute: 4
     Scope: 2
@@ -1330,7 +1260,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4080
       FeatureType: 3010
@@ -1345,7 +1274,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 401
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 4
     Scope: 1
@@ -1355,7 +1284,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4090
       FeatureType: 1010
@@ -1376,7 +1304,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 401
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 3
     Attribute: 4
     Scope: 2
@@ -1386,7 +1314,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 4100
       FeatureType: 1010
@@ -1407,27 +1334,20 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 501
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 2
     Attribute: 5
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u884C\u52D5\u5F8CAP+/f[f,1,1]"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5010
       FeatureType: 1010
       Param1: 150
-      Param2: 0
-      Param3: 0
-      Rate: 100
-    - SkillId: 5010
-      FeatureType: 10010
-      Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
@@ -1438,7 +1358,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 501
     AnimationType: 3
-    MpCost: 5
+    CountTurn: 5
     Rank: 3
     Attribute: 5
     Scope: 3
@@ -1448,7 +1368,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5020
       FeatureType: 1010
@@ -1463,7 +1382,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 501
     AnimationType: 1
-    MpCost: 5
+    CountTurn: 5
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1473,7 +1392,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5030
       FeatureType: 1020
@@ -1488,7 +1406,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 504
     AnimationType: 1
-    MpCost: 5
+    CountTurn: 5
     Rank: 3
     Attribute: 5
     Scope: 1
@@ -1498,7 +1416,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5040
       FeatureType: 3010
@@ -1513,7 +1430,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 501
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 3
     Attribute: 5
     Scope: 1
@@ -1523,7 +1440,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5050
       FeatureType: 1010
@@ -1544,7 +1460,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 61
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1554,7 +1470,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5060
       FeatureType: 3010
@@ -1569,7 +1484,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 61
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 2
     Attribute: 5
     Scope: 2
@@ -1579,7 +1494,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5070
       FeatureType: 3010
@@ -1594,7 +1508,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 501
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1604,7 +1518,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5080
       FeatureType: 1010
@@ -1625,7 +1538,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 501
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 2
     Attribute: 5
     Scope: 1
@@ -1635,7 +1548,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5090
       FeatureType: 1010
@@ -1656,7 +1568,7 @@ MonoBehaviour:
     IconIndex: 5
     AnimationId: 61
     AnimationType: 1
-    MpCost: 6
+    CountTurn: 6
     Rank: 3
     Attribute: 5
     Scope: 2
@@ -1666,7 +1578,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 5100
       FeatureType: 3010
@@ -1681,7 +1592,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1691,7 +1602,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10010
       FeatureType: 3010
@@ -1712,7 +1622,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1722,7 +1632,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10020
       FeatureType: 3010
@@ -1743,7 +1652,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1753,7 +1662,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10030
       FeatureType: 3010
@@ -1774,7 +1682,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1784,7 +1692,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10040
       FeatureType: 3010
@@ -1805,7 +1712,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1815,7 +1722,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10050
       FeatureType: 3010
@@ -1836,7 +1742,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -1846,7 +1752,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 10060
       FeatureType: 3010
@@ -1867,7 +1772,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -1877,7 +1782,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11010
       FeatureType: 3010
@@ -1898,7 +1802,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -1908,7 +1812,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11020
       FeatureType: 3010
@@ -1929,7 +1832,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -1939,7 +1842,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11030
       FeatureType: 3010
@@ -1966,7 +1868,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 1
     Attribute: 1
     Scope: 1
@@ -1976,7 +1878,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 11040
       FeatureType: 4020
@@ -1997,7 +1898,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2007,7 +1908,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11050
       FeatureType: 3010
@@ -2034,7 +1934,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2044,7 +1944,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11060
       FeatureType: 4020
@@ -2071,7 +1970,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2081,7 +1980,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11070
       FeatureType: 4020
@@ -2108,17 +2006,16 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306EAP+/f[f,0,1]"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306E\u9B54\u6CD5\u5168\u3066\u306ECT-/f[f,0,1]"
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11080
       FeatureType: 4020
@@ -2139,7 +2036,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2149,7 +2046,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11090
       FeatureType: 3010
@@ -2170,7 +2066,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 1
@@ -2180,7 +2076,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 11100
       FeatureType: 3010
@@ -2201,7 +2096,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2211,7 +2106,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 11110
       FeatureType: 3010
@@ -2232,7 +2126,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 4
+    CountTurn: 4
     Rank: 1
     Attribute: 1
     Scope: 4
@@ -2242,7 +2136,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 11120
       FeatureType: 3010
@@ -2263,7 +2156,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 4
@@ -2273,7 +2166,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12010
       FeatureType: 3010
@@ -2294,7 +2186,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 201
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2304,7 +2196,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12020
       FeatureType: 1100
@@ -2325,7 +2216,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 4
@@ -2335,7 +2226,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12030
       FeatureType: 3010
@@ -2356,7 +2246,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 4
@@ -2366,7 +2256,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12040
       FeatureType: 3010
@@ -2387,7 +2276,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 4
@@ -2397,7 +2286,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12050
       FeatureType: 3010
@@ -2418,7 +2306,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2428,7 +2316,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12060
       FeatureType: 5020
@@ -2449,7 +2336,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 201
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2459,7 +2346,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12070
       FeatureType: 1010
@@ -2480,7 +2366,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 201
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2490,7 +2376,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12080
       FeatureType: 1010
@@ -2511,7 +2396,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 1
     Attribute: 2
     Scope: 2
@@ -2521,7 +2406,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12090
       FeatureType: 5020
@@ -2542,7 +2426,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 201
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2552,7 +2436,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12100
       FeatureType: 1010
@@ -2573,7 +2456,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 2
     Scope: 1
@@ -2583,7 +2466,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12110
       FeatureType: 3010
@@ -2610,7 +2492,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 2
     Scope: 4
@@ -2620,7 +2502,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 12111
       FeatureType: 3010
@@ -2635,7 +2516,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2645,7 +2526,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13010
       FeatureType: 3010
@@ -2666,7 +2546,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2676,7 +2556,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13020
       FeatureType: 3010
@@ -2697,7 +2576,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2707,7 +2586,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13030
       FeatureType: 3010
@@ -2728,7 +2606,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2738,7 +2616,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13040
       FeatureType: 3010
@@ -2759,7 +2636,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2769,7 +2646,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13050
       FeatureType: 3010
@@ -2796,7 +2672,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2806,7 +2682,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13060
       FeatureType: 3010
@@ -2827,7 +2702,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 1
@@ -2837,7 +2712,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13070
       FeatureType: 5050
@@ -2858,7 +2732,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2868,7 +2742,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 13080
       FeatureType: 3010
@@ -2889,7 +2762,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 3
     Scope: 3
@@ -2899,7 +2772,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13090
       FeatureType: 3010
@@ -2920,7 +2792,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 3
     Scope: 4
@@ -2930,7 +2802,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 13100
       FeatureType: 3010
@@ -2957,7 +2828,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 1
     Attribute: 4
     Scope: 1
@@ -2967,7 +2838,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 13110
       FeatureType: 3010
@@ -2988,7 +2858,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -2998,7 +2868,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14010
       FeatureType: 3010
@@ -3019,7 +2888,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 1
@@ -3029,7 +2898,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14020
       FeatureType: 2040
@@ -3050,7 +2918,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 3
@@ -3060,7 +2928,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14030
       FeatureType: 3010
@@ -3081,7 +2948,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3091,7 +2958,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14040
       FeatureType: 3010
@@ -3112,7 +2978,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 3
+    CountTurn: 3
     Rank: 1
     Attribute: 4
     Scope: 3
@@ -3122,7 +2988,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14050
       FeatureType: 3010
@@ -3143,7 +3008,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3153,7 +3018,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14060
       FeatureType: 3010
@@ -3174,7 +3038,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3184,7 +3048,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14070
       FeatureType: 3010
@@ -3205,7 +3068,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3215,7 +3078,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14080
       FeatureType: 3010
@@ -3236,7 +3098,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3246,7 +3108,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14090
       FeatureType: 3010
@@ -3267,7 +3128,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 1
     Attribute: 4
     Scope: 1
@@ -3277,7 +3138,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14100
       FeatureType: 2010
@@ -3298,7 +3158,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    MpCost: 2
+    CountTurn: 2
     Rank: 1
     Attribute: 4
     Scope: 4
@@ -3308,7 +3168,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 14110
       FeatureType: 3010
@@ -3329,7 +3188,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3339,7 +3198,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15010
       FeatureType: 3010
@@ -3360,7 +3218,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3370,7 +3228,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15020
       FeatureType: 3010
@@ -3391,7 +3248,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3401,7 +3258,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15030
       FeatureType: 3010
@@ -3422,7 +3278,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3432,7 +3288,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15040
       FeatureType: 3010
@@ -3453,7 +3308,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3463,7 +3318,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15050
       FeatureType: 3010
@@ -3490,7 +3344,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3500,7 +3354,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15060
       FeatureType: 3010
@@ -3527,7 +3380,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3537,7 +3390,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15070
       FeatureType: 4020
@@ -3558,7 +3410,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 4
@@ -3568,7 +3420,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15080
       FeatureType: 3010
@@ -3589,7 +3440,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    MpCost: 1
+    CountTurn: 1
     Rank: 1
     Attribute: 5
     Scope: 1
@@ -3599,7 +3450,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 15090
       FeatureType: 3010
@@ -3620,7 +3470,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 1
@@ -3630,7 +3480,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 15100
       FeatureType: 3010
@@ -3657,7 +3506,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 1
     Attribute: 5
     Scope: 1
@@ -3667,7 +3516,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 4
     FeatureDates:
     - SkillId: 15110
       FeatureType: 1100
@@ -3688,7 +3536,7 @@ MonoBehaviour:
     IconIndex: 99
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -3698,7 +3546,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates: []
     TriggerDates: []
     ScopeTriggers: []
@@ -3707,7 +3554,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 2
@@ -3717,7 +3564,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100110
       FeatureType: 3010
@@ -3750,7 +3596,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 3
@@ -3761,7 +3607,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100120
       FeatureType: 1010
@@ -3782,7 +3627,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 4
@@ -3792,7 +3637,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100130
       FeatureType: 6010
@@ -3813,7 +3657,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 4
@@ -3823,7 +3667,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100140
       FeatureType: 6010
@@ -3844,7 +3687,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 4
@@ -3854,7 +3697,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100210
       FeatureType: 3010
@@ -3887,7 +3729,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1002
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 1
@@ -3898,7 +3740,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 7
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100220
       FeatureType: 1010
@@ -3919,7 +3760,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 2
@@ -3929,7 +3770,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100230
       FeatureType: 3010
@@ -3950,7 +3790,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 3
@@ -3960,7 +3800,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100310
       FeatureType: 3010
@@ -3993,7 +3832,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1003
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 3
@@ -4004,7 +3843,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100320
       FeatureType: 1090
@@ -4025,7 +3863,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 4
@@ -4035,7 +3873,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100330
       FeatureType: 6010
@@ -4050,7 +3887,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 401
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 4
     Scope: 3
@@ -4060,7 +3897,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 0
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100410
       FeatureType: 3020
@@ -4105,7 +3941,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1004
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 4
     Scope: 3
@@ -4116,7 +3952,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100420
       FeatureType: 2010
@@ -4137,7 +3972,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 4
     Scope: 4
@@ -4147,7 +3982,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100430
       FeatureType: 6210
@@ -4168,7 +4002,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 5
     Scope: 4
@@ -4178,7 +4012,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100510
       FeatureType: 3010
@@ -4211,7 +4044,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 5
     Scope: 3
@@ -4222,7 +4055,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100520
       FeatureType: 1010
@@ -4249,7 +4081,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 5
     Scope: 4
@@ -4259,7 +4091,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100530
       FeatureType: 6030
@@ -4280,7 +4111,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 3
@@ -4290,7 +4121,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100610
       FeatureType: 4020
@@ -4329,7 +4159,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 3
@@ -4340,7 +4170,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100620
       FeatureType: 1010
@@ -4367,7 +4196,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 4
@@ -4377,7 +4206,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100630
       FeatureType: 6210
@@ -4398,7 +4226,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 201
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 3
@@ -4408,7 +4236,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100710
       FeatureType: 3010
@@ -4441,7 +4268,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 3
@@ -4451,7 +4278,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100720
       FeatureType: 3010
@@ -4478,7 +4304,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 4
@@ -4488,7 +4314,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100730
       FeatureType: 6310
@@ -4509,7 +4334,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 2
@@ -4519,7 +4344,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100731
       FeatureType: 3010
@@ -4534,7 +4358,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 301
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 3
@@ -4544,7 +4368,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100810
       FeatureType: 3010
@@ -4583,7 +4406,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 3
@@ -4594,7 +4417,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100820
       FeatureType: 1010
@@ -4615,7 +4437,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 4
@@ -4625,7 +4447,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100830
       FeatureType: 6020
@@ -4646,7 +4467,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 1
@@ -4657,7 +4478,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100910
       FeatureType: 1010
@@ -4690,7 +4510,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 1
     Scope: 4
@@ -4701,7 +4521,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100911
       FeatureType: 7010
@@ -4716,7 +4535,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 3
@@ -4727,7 +4546,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100920
       FeatureType: 1010
@@ -4748,7 +4566,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 1
     Scope: 3
@@ -4759,7 +4577,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100921
       FeatureType: 3010
@@ -4780,7 +4597,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 1
     Scope: 4
@@ -4790,7 +4607,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 100930
       FeatureType: 6010
@@ -4811,7 +4627,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 4
@@ -4821,7 +4637,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101010
       FeatureType: 3010
@@ -4854,7 +4669,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 3
@@ -4865,7 +4680,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101020
       FeatureType: 1010
@@ -4886,7 +4700,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 2
     Scope: 4
@@ -4896,7 +4710,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101030
       FeatureType: 6010
@@ -4917,7 +4730,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 301
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 2
@@ -4927,7 +4740,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101110
       FeatureType: 3070
@@ -4960,7 +4772,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 1005
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 2
@@ -4971,7 +4783,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101120
       FeatureType: 1040
@@ -4992,7 +4803,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 10
     Attribute: 3
     Scope: 4
@@ -5002,7 +4813,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 101130
       FeatureType: 6030
@@ -5023,7 +4833,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 1
     Scope: 4
@@ -5034,7 +4844,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200110
       FeatureType: 3010
@@ -5067,7 +4876,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 1
     Scope: 1
@@ -5078,7 +4887,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200120
       FeatureType: 1010
@@ -5099,7 +4907,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5109,7 +4917,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200130
       FeatureType: 3010
@@ -5130,7 +4937,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 3
     Scope: 3
@@ -5140,7 +4947,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200210
       FeatureType: 3010
@@ -5173,7 +4979,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 3
     Scope: 4
@@ -5183,7 +4989,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200220
       FeatureType: 3010
@@ -5204,7 +5009,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5214,7 +5019,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200230
       FeatureType: 3010
@@ -5241,7 +5045,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 201
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 2
@@ -5252,7 +5056,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200310
       FeatureType: 1010
@@ -5285,7 +5088,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 4
@@ -5296,7 +5099,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200311
       FeatureType: 3010
@@ -5317,7 +5119,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 3
@@ -5327,7 +5129,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200320
       FeatureType: 3050
@@ -5348,7 +5149,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5358,7 +5159,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200330
       FeatureType: 6100
@@ -5379,7 +5179,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 5
     Scope: 3
@@ -5390,7 +5190,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200410
       FeatureType: 1010
@@ -5429,7 +5228,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 5
     Scope: 1
@@ -5439,7 +5238,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200420
       FeatureType: 1010
@@ -5460,7 +5258,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5470,7 +5268,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200430
       FeatureType: 6070
@@ -5491,7 +5288,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 3
     Scope: 4
@@ -5501,7 +5298,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200510
       FeatureType: 3010
@@ -5534,7 +5330,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 3
     Scope: 3
@@ -5544,7 +5340,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200520
       FeatureType: 3010
@@ -5565,7 +5360,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5575,7 +5370,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200530
       FeatureType: 6020
@@ -5596,7 +5390,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 4
     Scope: 3
@@ -5606,7 +5400,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200610
       FeatureType: 3010
@@ -5639,7 +5432,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 4
     Scope: 3
@@ -5649,7 +5442,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200620
       FeatureType: 2010
@@ -5670,7 +5462,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5680,7 +5472,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200630
       FeatureType: 6010
@@ -5701,7 +5492,7 @@ MonoBehaviour:
     IconIndex: 10
     AnimationId: 21
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 3
@@ -5711,7 +5502,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200710
       FeatureType: 3010
@@ -5744,7 +5534,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 3
@@ -5754,7 +5544,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200720
       FeatureType: 3010
@@ -5775,7 +5564,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 0
     Scope: 4
@@ -5785,7 +5574,6 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 200730
       FeatureType: 3010
@@ -5812,7 +5600,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 4
     Scope: 3
@@ -5822,7 +5610,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300010
       FeatureType: 3010
@@ -5843,7 +5630,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 5
     Scope: 3
@@ -5853,7 +5640,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300020
       FeatureType: 3010
@@ -5874,7 +5660,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 1
     Scope: 3
@@ -5884,7 +5670,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300030
       FeatureType: 3010
@@ -5905,7 +5690,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 3
     Scope: 3
@@ -5915,7 +5700,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300040
       FeatureType: 3010
@@ -5936,7 +5720,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 2
     Scope: 3
@@ -5946,7 +5730,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300050
       FeatureType: 3010
@@ -5967,7 +5750,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 5
     Scope: 3
@@ -5977,7 +5760,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300130
       FeatureType: 3010
@@ -5998,7 +5780,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 5
     Scope: 3
@@ -6008,7 +5790,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300140
       FeatureType: 3010
@@ -6029,7 +5810,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 1
     Scope: 3
@@ -6039,7 +5820,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300210
       FeatureType: 4020
@@ -6072,7 +5852,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 4
     Scope: 3
@@ -6082,7 +5862,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300220
       FeatureType: 3010
@@ -6103,7 +5882,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 20
     Attribute: 3
     Scope: 3
@@ -6113,7 +5892,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 300230
       FeatureType: 3010
@@ -6134,7 +5912,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 2
     Scope: 3
@@ -6144,7 +5922,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301010
       FeatureType: 5012
@@ -6177,7 +5954,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 5
     Scope: 3
@@ -6187,7 +5964,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301020
       FeatureType: 3010
@@ -6214,7 +5990,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 3
     Scope: 3
@@ -6224,7 +6000,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301030
       FeatureType: 3010
@@ -6257,7 +6032,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 3
     Scope: 3
@@ -6267,7 +6042,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301040
       FeatureType: 3010
@@ -6300,7 +6074,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 4
     Scope: 3
@@ -6310,7 +6084,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301050
       FeatureType: 3010
@@ -6331,7 +6104,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 4
     Scope: 3
@@ -6341,7 +6114,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 0
-    TurnCount: 999
     FeatureDates:
     - SkillId: 301060
       FeatureType: 3020
@@ -6380,7 +6152,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 4
     Scope: 3
@@ -6390,7 +6162,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301070
       FeatureType: 3010
@@ -6411,7 +6182,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 101
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 1
     Scope: 1
@@ -6421,7 +6192,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 999
     FeatureDates:
     - SkillId: 301080
       FeatureType: 1030
@@ -6448,7 +6218,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 3
     Scope: 3
@@ -6458,7 +6228,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301090
       FeatureType: 3010
@@ -6479,7 +6248,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    MpCost: 0
+    CountTurn: 0
     Rank: 21
     Attribute: 2
     Scope: 3
@@ -6489,7 +6258,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 301100
       FeatureType: 5020
@@ -6510,7 +6278,7 @@ MonoBehaviour:
     IconIndex: 11
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 0
     Scope: 3
@@ -6520,7 +6288,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500010
       FeatureType: 3010
@@ -6553,7 +6320,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 5
     Scope: 3
@@ -6563,7 +6330,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500020
       FeatureType: 3010
@@ -6590,7 +6356,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 1
     Scope: 3
@@ -6600,7 +6366,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500030
       FeatureType: 3010
@@ -6621,7 +6386,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 3
     Scope: 1
@@ -6631,7 +6396,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500040
       FeatureType: 3010
@@ -6658,7 +6422,7 @@ MonoBehaviour:
     IconIndex: 2
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 5
     Scope: 1
@@ -6668,7 +6432,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500050
       FeatureType: 3010
@@ -6689,7 +6452,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 4
     Scope: 3
@@ -6699,7 +6462,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500060
       FeatureType: 3010
@@ -6726,7 +6488,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 2
     Scope: 3
@@ -6736,7 +6498,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500070
       FeatureType: 6060
@@ -6763,7 +6524,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 4
     Scope: 3
@@ -6773,7 +6534,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500080
       FeatureType: 3010
@@ -6794,7 +6554,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 5
     Scope: 3
@@ -6804,7 +6564,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500090
       FeatureType: 3010
@@ -6825,7 +6584,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 2
     Scope: 3
@@ -6835,7 +6594,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500100
       FeatureType: 3010
@@ -6862,7 +6620,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 3
     Scope: 3
@@ -6872,7 +6630,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500110
       FeatureType: 6060
@@ -6911,7 +6668,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 1
     Scope: 3
@@ -6921,7 +6678,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500120
       FeatureType: 2010
@@ -6942,7 +6698,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 1
     Scope: 3
@@ -6952,7 +6708,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500130
       FeatureType: 3010
@@ -6973,7 +6728,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 4
     Scope: 3
@@ -6983,7 +6738,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500140
       FeatureType: 3010
@@ -7004,7 +6758,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 3
     Scope: 3
@@ -7014,7 +6768,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500150
       FeatureType: 3010
@@ -7035,7 +6788,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 3
     Scope: 3
@@ -7045,7 +6798,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500151
       FeatureType: 3010
@@ -7060,7 +6812,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 5
     Scope: 3
@@ -7070,7 +6822,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500160
       FeatureType: 1060
@@ -7103,7 +6854,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 2
     Scope: 21
@@ -7113,7 +6864,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500170
       FeatureType: 1060
@@ -7140,7 +6890,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 0
     Attribute: 2
     Scope: 1
@@ -7150,7 +6900,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500171
       FeatureType: 3010
@@ -7171,7 +6920,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 2
     Scope: 21
@@ -7181,7 +6930,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500180
       FeatureType: 3010
@@ -7202,7 +6950,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 1
     Scope: 3
@@ -7212,7 +6960,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500190
       FeatureType: 5050
@@ -7233,7 +6980,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 4
     Scope: 3
@@ -7243,7 +6990,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500200
       FeatureType: 3010
@@ -7264,7 +7010,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 3
     Scope: 3
@@ -7274,7 +7020,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500210
       FeatureType: 1060
@@ -7295,7 +7040,7 @@ MonoBehaviour:
     IconIndex: 1
     AnimationId: 0
     AnimationType: 0
-    MpCost: 0
+    CountTurn: 0
     Rank: 30
     Attribute: 5
     Scope: 3
@@ -7305,7 +7050,6 @@ MonoBehaviour:
     Range: 2
     RepeatTime: 1
     AliveType: 1
-    TurnCount: 0
     FeatureDates:
     - SkillId: 500220
       FeatureType: 1060

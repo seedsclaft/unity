@@ -377,7 +377,7 @@ namespace Ryneus
 
         private bool CheckCanUse(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (CalcMpCost(battlerInfo,skillInfo.Master.MpCost) > battlerInfo.Mp)
+            if (skillInfo.CountTurn > 0)
             {
                 return false;
             }
@@ -389,7 +389,7 @@ namespace Ryneus
             {
                 return false;
             }
-            if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.MpCost != 0)
+            if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.CountTurn != 0)
             {
                 return false;
             }
@@ -418,7 +418,7 @@ namespace Ryneus
 
         private bool CheckCanUsePassive(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (CalcMpCost(battlerInfo,skillInfo.Master.MpCost) > battlerInfo.Mp)
+            if (skillInfo.CountTurn > 0)
             {
                 return false;
             }
@@ -430,7 +430,7 @@ namespace Ryneus
             {
                 return false;
             }
-            if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.MpCost != 0)
+            if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.CountTurn != 0)
             {
                 return false;
             }
@@ -660,7 +660,7 @@ namespace Ryneus
                             IsEnable = true;
                         } else
                         {
-                            if (target.Mp < target.MaxMp)
+                            if (target.Skills.Find(a => a.CountTurn > 0) != null)
                             {
                                 IsEnable = true;
                             }
@@ -817,8 +817,8 @@ namespace Ryneus
         public void SetActionInfo(ActionInfo actionInfo)
         {
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-            int MpCost = CalcMpCost(subject,actionInfo.Master.MpCost);
-            actionInfo.SetMpCost(MpCost);
+            //int MpCost = CalcMpCost(subject,actionInfo.Master.CountTurn);
+            //actionInfo.SetMpCost(MpCost);
             int HpCost = CalcHpCost(actionInfo);
             actionInfo.SetHpCost(HpCost);
 
@@ -845,7 +845,7 @@ namespace Ryneus
                 indexList = CalcAliveTypeIndexList(indexList,aliveType);
             }
             SetActorLastTarget(actionInfo,subject,indexList);
-            if (subject.IsState(StateType.Silence) && actionInfo.MpCost != 0)
+            if (subject.IsState(StateType.Silence))
             {
                 return;
             }
@@ -1067,8 +1067,9 @@ namespace Ryneus
                     // Hpの支払い
                     subject.GainHp(actionInfo.HpCost * -1);
                     // Mpの支払い
-                    subject.GainMp(actionInfo.MpCost * -1);
-                    subject.GainPayBattleMp(actionInfo.MpCost);
+                    //subject.GainMp(actionInfo.MpCost * -1);
+                    //subject.GainPayBattleMp(actionInfo.MpCost);
+                    subject.InitCountTurn(actionInfo.SkillInfo.Id);
                 }
                 if (actionInfo.Master.IsHpHealFeature())
                 {
@@ -1215,11 +1216,11 @@ namespace Ryneus
             }
             if (actionResultInfo.MpDamage != 0)
             {
-                target.GainMp(-1 * actionResultInfo.MpDamage);
+                target.SeekCountTurn(-1 * actionResultInfo.MpDamage);
             }
             if (actionResultInfo.MpHeal != 0)
             {
-                target.GainMp(actionResultInfo.MpHeal);
+                target.SeekCountTurn(actionResultInfo.MpHeal);
             }
             if (actionResultInfo.ApHeal != 0)
             {
@@ -1317,7 +1318,7 @@ namespace Ryneus
 
         public void ActionAfterGainAp(int gainAp)
         {
-            _currentTurnBattler.GainMp(gainAp);
+            //_currentTurnBattler.GainMp(gainAp);
         }
 
         public List<StateInfo> UpdateNextSelfTurn()
@@ -1636,7 +1637,7 @@ namespace Ryneus
                     if (IsTriggeredSkillInfo(battlerInfo,triggerDates,actionInfo,actionResultInfos))
                     {
                         //bool usable = CanUsePassiveCount(battlerInfo,passiveInfo.Id,triggerDates);
-                        if (passiveInfo.TurnCount == 0)
+                        if (passiveInfo.CountTurn == 0)
                         {
                             // 元の条件が成立
                             // 作戦で可否判定
@@ -1721,7 +1722,7 @@ namespace Ryneus
             MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndex,counterSubjectIndex,actionInfo,actionResultInfos));
             AddActionInfo(makeActionInfo,IsInterrupt);
             passiveInfo.GainUseCount();
-            passiveInfo.SetTurnCount(passiveInfo.Master.TurnCount);
+            passiveInfo.SetCountTurn(passiveInfo.Master.CountTurn);
             return makeActionInfo;
         }
         

@@ -130,7 +130,9 @@ namespace Ryneus
         public void SetTempAddSelectActorStatusInfos()
         {
             var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
+            // 違うworldNoのActorIdも含まない
+            var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;var anotherActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,worldNo);
+            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId) && !anotherActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 

@@ -85,11 +85,11 @@ namespace Ryneus
                         nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
                     }
                 }
-                var mpCostText = skillData.SkillType == SkillType.Active ? "(" + skillData.MpCost.ToString() + ")" : "";
-                mpCost?.SetText(mpCostText);
+                //var mpCostText = skillData.SkillType == SkillType.Active ? "(" + skillData.CountTurn.ToString() + ")" : "";
+                //mpCost?.SetText(mpCostText);
                 type?.SetText(skillData.SkillType.ToString());
-                countTurn?.gameObject?.SetActive(skillData.TurnCount != 0);
-                countTurn?.SetText(skillData.TurnCount.ToString());
+                countTurn?.gameObject?.SetActive(skillData.SkillType == SkillType.Active || (skillData.SkillType == SkillType.Passive && skillData.CountTurn > 0));
+                countTurn?.SetText(skillData.CountTurn.ToString());
             } else
             {
                 Clear();

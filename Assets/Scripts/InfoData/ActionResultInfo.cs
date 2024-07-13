@@ -1294,7 +1294,7 @@ namespace Ryneus
             var addDamage = 0;
             if (subject.IsState(StateType.MpCostZeroAddDamage))
             {
-                if (DataSystem.FindSkill(_skillId).MpCost == 0)
+                if (DataSystem.FindSkill(_skillId).CountTurn == 0)
                 {
                     addDamage = (int)Math.Round(hpDamage * 0.01f * subject.StateEffectAll(StateType.MpCostZeroAddDamage));
                 }
@@ -1316,7 +1316,7 @@ namespace Ryneus
         {
             if (subject.IsState(StateType.MpCostZeroAddState) && _skillId > 0)
             {
-                if (DataSystem.FindSkill(_skillId).MpCost == 0)
+                if (DataSystem.FindSkill(_skillId).CountTurn == 0)
                 {
                     var stateInfos = subject.GetStateInfoAll(StateType.MpCostZeroAddState);
                     foreach (var stateInfo in stateInfos)

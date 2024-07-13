@@ -658,7 +658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1072127659195190990
 RectTransform:
   m_ObjectHideFlags: 0
@@ -673,9 +673,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1252586922113574433}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: 16}
   m_SizeDelta: {x: 64, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &926942237832561663
@@ -1415,6 +1415,7 @@ MonoBehaviour:
   description: {fileID: 0}
   range: {fileID: 0}
   learningCost: {fileID: 5565560486112943117}
+  countTurn: {fileID: 0}
   learningText: {fileID: 5693055248170065137}
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}

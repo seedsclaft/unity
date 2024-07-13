@@ -142,7 +142,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
-                skill.SetTurnCount(0);
+                skill.SetCountTurn(0);
             }
             ResetAp(true);
         }
@@ -194,7 +194,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
-                skill.SetTurnCount(0);
+                skill.SetCountTurn(0);
             }
             _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             foreach (var skillInfo in _skills)
@@ -235,7 +235,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
-                skill.SetTurnCount(0);
+                skill.SetCountTurn(0);
             }
         }
 
@@ -303,7 +303,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
-                skill.SetTurnCount(0);
+                skill.SetCountTurn(0);
             }
             ResetAp(true);
         }
@@ -312,7 +312,7 @@ namespace Ryneus
         {
             _stateInfos.Clear();
             GainHp(_status.Hp);
-            GainMp(_status.Mp);
+            //GainMp(_status.Mp);
             _isAwaken = false;
             _preserveAlive = false;
             _chainSuccessCount = 0;
@@ -594,6 +594,22 @@ namespace Ryneus
             _mp = Math.Min(_mp,MaxMp);
         }
 
+        public void InitCountTurn(int skillId)
+        {
+            var skill = _skills.Find(a => a.Id == skillId);
+            if (skill != null)
+            {
+                skill.SetCountTurn(skill.Master.CountTurn);
+            }
+        }
+        public void SeekCountTurn(int seekCount)
+        {
+            foreach (var skill in _skills)
+            {
+                skill.SetCountTurn(skill.CountTurn - seekCount);
+            }
+        }
+
         public bool IsAlive()
         {
             return _hp > 0;
@@ -719,7 +735,7 @@ namespace Ryneus
                     }
                     if (stateInfo.Master.StateType == StateType.MaxMpUp)
                     {
-                        GainMp(stateInfo.Effect);
+                        //GainMp(stateInfo.Effect);
                     }
                 }
                 IsAdded = true;
@@ -1018,7 +1034,7 @@ namespace Ryneus
             }
             foreach (var skillInfo in _skills)
             {
-                skillInfo.SeekTurnCount();
+                skillInfo.SeekCountTurn();
             }
         }
 

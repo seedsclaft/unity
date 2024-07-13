@@ -17,7 +17,7 @@ namespace Ryneus
         public MagicIconType IconIndex;
         public int AnimationId;
         public AnimationType AnimationType;
-        public int MpCost;
+        public int CountTurn;
         public int Rank;
         public AttributeType Attribute;
         public ScopeType Scope;
@@ -27,7 +27,7 @@ namespace Ryneus
         public RangeType Range;
         public int RepeatTime;
         public AliveType AliveType;
-        public int TurnCount;
+        //public int TurnCount;
 
         public List<FeatureData> FeatureDates;
         public List<TriggerData> TriggerDates;

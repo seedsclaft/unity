@@ -64,17 +64,17 @@ namespace Ryneus
             _useCount++;
         }
 
-        private int _turnCount = 0;
-        public int TurnCount => _turnCount;
-        public void SetTurnCount(int turnCount)
+        private int _countTurn = 0;
+        public int CountTurn => _countTurn;
+        public void SetCountTurn(int countTurn)
         {
-            _turnCount = turnCount;
+            _countTurn = countTurn;
         }
-        public void SeekTurnCount()
+        public void SeekCountTurn()
         {
-            if (_turnCount > 0)
+            if (_countTurn > 0)
             {
-                _turnCount--;
+                _countTurn--;
             }
         }
 
