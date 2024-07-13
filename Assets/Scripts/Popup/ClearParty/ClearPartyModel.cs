@@ -32,7 +32,7 @@ namespace Ryneus
         
         public void SetInReplay(SaveBattleInfo saveBattleInfo)
         {
-            PartyInfo.SetInReplay(true);
+            TempInfo.SetInReplay(true);
             TempInfo.SetSaveBattleInfo(saveBattleInfo);
         }
     }

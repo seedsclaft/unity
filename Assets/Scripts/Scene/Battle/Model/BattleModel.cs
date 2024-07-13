@@ -2345,13 +2345,13 @@ namespace Ryneus
         {
             if (isVictory)
             {
-                PartyInfo.SetBattleResultVictory(true);
+                TempInfo.SetBattleResultVictory(true);
                 var score = 100f;
                 var turns = (5 * _troop.BattlerInfos.Count) - _turnCount;
                 score += turns;
                 score = Math.Max(0,score);
                 score = Math.Min(100,score);
-                PartyInfo.SetBattleScore((int)score);
+                TempInfo.SetBattleScore((int)score);
             }
         }
 
@@ -2367,8 +2367,8 @@ namespace Ryneus
             bool isDefeat = _party.BattlerInfos.Find(a => a.IsAlive()) == null;
             if (isDefeat)
             {
-                PartyInfo.SetBattleResultVictory(false);
-                PartyInfo.SetBattleScore(0);
+                TempInfo.SetBattleResultVictory(false);
+                TempInfo.SetBattleScore(0);
             }
             return isDefeat;
         }
@@ -2380,9 +2380,9 @@ namespace Ryneus
 
         public void EndBattle()
         {
-            if (PartyInfo.InReplay)
+            if (TempInfo.InReplay)
             {
-                PartyInfo.SetInReplay(false);
+                TempInfo.SetInReplay(false);
             } else
             {
                 foreach (var battler in _party.BattlerInfos)

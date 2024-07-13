@@ -98,5 +98,26 @@ namespace Ryneus
         {
             _clearPartyReplayData = clearPartyReplayData;
         }
+
+        private bool _inReplay = false;
+        public bool InReplay => _inReplay;
+        public void SetInReplay(bool inReplay)
+        {
+            _inReplay = inReplay;
+        }
+        
+        private bool _battleResultVictory = false;
+        public bool BattleResultVictory => _battleResultVictory;
+        public void SetBattleResultVictory(bool isVictory)
+        {
+            _battleResultVictory = isVictory;
+        }
+
+        private int _battleResultScore = 0;
+        public int BattleResultScore => _battleResultScore;
+        public void SetBattleScore(int score)
+        {
+            _battleResultScore = score;
+        }
     }
 }

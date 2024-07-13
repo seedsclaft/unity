@@ -114,7 +114,7 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             var actorInfo = TacticsActor();
             
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek))
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
             {
                 //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
                 var skillInfo = new SkillInfo(alchemyId);

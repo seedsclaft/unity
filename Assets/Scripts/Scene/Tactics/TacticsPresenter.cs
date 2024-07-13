@@ -178,6 +178,12 @@ namespace Ryneus
                 case CommandType.AlcanaCheck:
                     CommandAlcanaCheck();
                     break;
+                case CommandType.NormalWorld:
+                    CommandNormalWorld();
+                    break;
+                case CommandType.AnotherWorld:
+                    CommandAnotherWorld();
+                    break;
             }
         }
 
@@ -845,6 +851,18 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaSkillInfos()));
             _backCommand = CommandType.HideAlcanaList;
+        }
+
+        private void CommandNormalWorld()
+        {
+            _model.CurrentStage.SetWorldNo(0);
+            _view.CommandGotoSceneChange(Scene.Tactics);
+        }
+
+        private void CommandAnotherWorld()
+        {
+            _model.CurrentStage.SetWorldNo(1);
+            _view.CommandGotoSceneChange(Scene.Tactics);
         }
 
         private void CommandHideAlcanaList()

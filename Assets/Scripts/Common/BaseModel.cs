@@ -57,7 +57,7 @@ namespace Ryneus
 
         public List<ActorInfo> StageMembers()
         {
-            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
+            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 :-1);
             return actorInfos;
         }
@@ -71,7 +71,7 @@ namespace Ryneus
         
         public List<ActorInfo> PartyMembers()
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
         }
 
         public List<ActorInfo> StatusActors()
@@ -241,13 +241,13 @@ namespace Ryneus
         
         public List<SymbolResultInfo> TacticsSymbols()
         {
-            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
+            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
         }
 
         public List<SkillInfo> AlcanaSkillInfos()
         {
             var skillInfos = new List<SkillInfo>();
-            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek))
+            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
             {
                 var skillInfo = new SkillInfo(alchemyId);
                 skillInfo.SetEnable(true);
@@ -315,6 +315,8 @@ namespace Ryneus
                     // 初期アクター
                     record.AddSelectedIndex(1);
                     addActor = true;
+                    // アナザー世界のレコードを作る
+                    MakeAnotherStageRecord(record);
                 }
                 recordInfos.Add(record);
             }
@@ -346,7 +348,7 @@ namespace Ryneus
 
         public SymbolResultInfo CurrentSelectRecord()
         {
-            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek);
+            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
@@ -357,7 +359,7 @@ namespace Ryneus
 
         public bool BattleResultVictory()
         {
-            return PartyInfo.BattleResultVictory;
+            return TempInfo.BattleResultVictory;
         }
 
         public void MakeSymbolRecordStage(SymbolResultInfo returnSymbol)
@@ -366,7 +368,7 @@ namespace Ryneus
             TempInfo.SetRecordActors(PartyInfo.ActorInfos);
             
             //PartyInfo.InitActorInfos();
-            foreach (var symbolActor in SymbolActorInfos(returnSymbol.StageId,returnSymbol.Seek))
+            foreach (var symbolActor in SymbolActorInfos(returnSymbol.StageId,returnSymbol.Seek,returnSymbol.WorldNo))
             {
                 PartyInfo.UpdateActorInfo(symbolActor);
             }
@@ -375,9 +377,9 @@ namespace Ryneus
             CurrentStage.SetCurrentTurn(returnSymbol.Seek);
         }
 
-        public List<ActorInfo> SymbolActorInfos(int stageId,int seek)
+        public List<ActorInfo> SymbolActorInfos(int stageId,int seek,int worldNo)
         {
-            return PartyInfo.CurrentActorInfos(stageId,seek);
+            return PartyInfo.CurrentActorInfos(stageId,seek,worldNo);
         }
         
         public void SetParallelMode()
@@ -693,6 +695,11 @@ namespace Ryneus
                 stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
             }
             return stageKey.ToString();
+        }
+
+        public void MakeAnotherStageRecord(SymbolResultInfo symbolResultInfo)
+        {
+            PartyInfo.MakeAnotherStageRecord(symbolResultInfo);
         }
     }
 }

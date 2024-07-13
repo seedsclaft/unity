@@ -61,7 +61,7 @@ namespace Ryneus
         public void SetLvUp()
         {
             if (_levelUpData.Count > 0) return;
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             if (record != null && record.SymbolInfo.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
             var lvUpList = new List<ActorInfo>();
@@ -95,8 +95,8 @@ namespace Ryneus
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
-            var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentSaveData.CurrentStage.CurrentSeekIndex));
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
+            var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
             record.ClearSelectedIndex();
             foreach (var getItemInfo in getItemInfos)
@@ -133,7 +133,7 @@ namespace Ryneus
                         record.AddSelectedIndex(getItemInfo.Param1);
                         break;
                     case GetItemType.SaveHuman:
-                        var recordScore = PartyInfo.BattleResultScore * 0.01f;
+                        var recordScore = TempInfo.BattleResultScore * 0.01f;
                         recordScore *= getItemInfo.Param1;
                         getItemInfo.SetParam2((int)recordScore);
                         getItemInfo.MakeTextData();
@@ -256,6 +256,7 @@ namespace Ryneus
 
         public void EndStage()
         {
+            StageClear();
             var (stageId,currentTurn) = PartyInfo.LastStageIdTurns();
             if (currentTurn == DataSystem.FindStage(stageId).Turns)
             {
@@ -267,32 +268,26 @@ namespace Ryneus
 
         public void SetSelectSymbol()
         {
-            // レコード作成
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
-            record.SetSelected(true);
-            PartyInfo.SetSymbolResultInfo(record);
+            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
         }
 
-        public void CommitResult()
-        {
-            StageClear();
-        }
 
         public void CommitCurrentResult()
         {
             // 新たに選択したシンボル
-            var newSymbolInfo = CurrentSelectRecord();
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
             
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
-            foreach (var record in records)
+            /*foreach (var record in records)
             {
                 if (record.IsSameSymbol(newSymbolInfo))
                 {
                     record.SetSelected(true);
                 }
             }
+            */
+            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
             // 選択から外れたシンボル
-            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
+            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(CurrentSelectRecord()));
             foreach (var removeSymbolInfo in removeSymbolInfos)
             {
                 removeSymbolInfo.SetSelected(false);
@@ -334,22 +329,16 @@ namespace Ryneus
         public void CommitCurrentParallelResult()
         {
             // 新たに選択したシンボル
-            var newSymbolInfo = CurrentSelectRecord();
             
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
-            foreach (var record in records)
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
+            /*foreach (var record in records)
             {
                 if (record.IsSameSymbol(newSymbolInfo))
                 {
                     record.SetSelected(true);
                 }
-            }
-            // 選択から外れたシンボル
-            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(newSymbolInfo));
-            foreach (var removeSymbolInfo in removeSymbolInfos)
-            {
-                //removeSymbolInfo.SetSelected(false);
-            }
+            }*/
+            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
             // 並行世界化回数を増やす
             PartyInfo.UseParallel();
 
@@ -371,7 +360,7 @@ namespace Ryneus
         public bool ChainParallelMode()
         {
             var chain = false;
-            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek));
+            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
             foreach (var record in beforeRecords)
             {
                 if (record.Selected == false)

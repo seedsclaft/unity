@@ -57,20 +57,26 @@ namespace Ryneus
             _currency = currency;
             _selected = false;
         }
+        private int _worldNo = 0;
+        public int WorldNo => _worldNo;
+        public void SetWorldNo(int worldNo)
+        {
+            _worldNo = worldNo;
+        }
 
         public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
         {
-            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex;
+            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex && symbolResultInfo.WorldNo == _worldNo;
         }
-
+/*
         public bool IsSameSymbol(int stageId,int seek,int seekIndex)
         {
             return StageId == stageId && Seek == seek && SeekIndex == seekIndex;
         }
-
-        public bool IsSameStageSeek(int stageId,int seek)
+*/
+        public bool IsSameStageSeek(int stageId,int seek,int worldNo)
         {
-            return StageId == stageId && Seek == seek;
+            return StageId == stageId && Seek == seek && WorldNo == worldNo;
         }
 
         public bool SaveBattleReplayStage()
@@ -87,9 +93,9 @@ namespace Ryneus
             return StageId*1000 + Seek*100 + SeekIndex;
         }
 
-        public bool EnableStage(int stageId,int seek)
+        public bool EnableStage(int stageId,int seek,int worldNo)
         {
-            return StageId == stageId && Seek < seek || StageId < stageId;
+            return worldNo == WorldNo && (StageId == stageId && Seek < seek || StageId < stageId);
         }
     }
 }

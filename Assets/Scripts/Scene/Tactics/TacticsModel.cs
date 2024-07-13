@@ -67,7 +67,7 @@ namespace Ryneus
 
         public List<ListData> StageRecords(SymbolResultInfo symbolResultInfo)
         {
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek));
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo));
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
@@ -129,7 +129,7 @@ namespace Ryneus
 
         public void SetTempAddSelectActorStatusInfos()
         {
-            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek);
+            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
@@ -299,7 +299,7 @@ namespace Ryneus
             
             var stageSeekList = new List<int>();
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && a.StageId == 0 && PartyInfo.ChangeInitActor());
-            
+            selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
             // 現在を挿入
             var currentSeek = CurrentStage.CurrentSeek;
             // ストック数
@@ -341,6 +341,7 @@ namespace Ryneus
             };
             var currentInfo = new SymbolInfo(SymbolType.None);
             var currentResult = new SymbolResultInfo(currentInfo,currentSymbol,0);
+            currentResult.SetWorldNo(CurrentStage.WorldNo);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};
     
@@ -350,7 +351,7 @@ namespace Ryneus
             {
                 resultList.Add(resultData.Value);
             }
-            var currentIndex = resultList.FindIndex(a => a[0].IsSameStageSeek(CurrentStage.Id,currentSeek));
+            var currentIndex = resultList.FindIndex(a => a[0].IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldNo));
             if (currentIndex > -1)
             {
                 resultList.Insert(currentIndex, currentList);
@@ -364,7 +365,7 @@ namespace Ryneus
                 var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (record.Find(a => a.IsSameStageSeek(CurrentStage.Id,currentSeek)) != null)
+                if (record.Find(a => a.IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldNo)) != null)
                 {
                     list.SetSelected(true);
                 }
@@ -457,16 +458,6 @@ namespace Ryneus
                 index++;
             }
             return list;
-        }
-
-        public void SetPartyBattlerIdList()
-        {
-            var idList = new List<int>();
-            foreach (var battleMember in BattleMembers())
-            {
-                idList.Add(battleMember.ActorId);
-            }
-            PartyInfo.SetLastBattlerIdList(idList);
         }
 
         public void SetSurvivalMode()

@@ -447,20 +447,19 @@ namespace Ryneus
                 };
                 _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
             } else
-            if (_model.RemainTurns == 1)
-            {
-                _model.SetSelectSymbol();
-                _model.EndStrategy();
-                _model.CommitResult();
-                _model.EndStage();
-                _view.CommandGotoSceneChange(Scene.MainMenu);
-            } else
             {
                 // レコード新規保存
                 _model.SetSelectSymbol();
                 _model.EndStrategy();
-                _model.SeekStage();
-                _view.CommandGotoSceneChange(Scene.Tactics);
+                if (_model.RemainTurns == 1)
+                {
+                    _model.EndStage();
+                    _view.CommandGotoSceneChange(Scene.MainMenu);
+                } else
+                {
+                    _model.SeekStage();
+                    _view.CommandGotoSceneChange(Scene.Tactics);
+                }
             }
             //_model.TempInfo.ClearTempGetItemInfos();
         }

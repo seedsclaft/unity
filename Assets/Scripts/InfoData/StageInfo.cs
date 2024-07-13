@@ -59,6 +59,13 @@ namespace Ryneus
             _currentSeekIndex = battleIndex;
         }
 
+        private int _worldNo;
+        public int WorldNo => _worldNo;
+        public void SetWorldNo(int worldNo)
+        {
+            _worldNo = worldNo;
+        }
+
         private List<int> _clearTroopIds = new ();
         public List<int> ClearTroopIds => _clearTroopIds;
 

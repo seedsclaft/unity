@@ -58,27 +58,6 @@ namespace Ryneus
             return _scorePrizeInfos.Find(a => a.ChangeInitActor()) != null;
         }
 
-        private bool _inReplay = false;
-        public bool InReplay => _inReplay;
-        public void SetInReplay(bool inReplay)
-        {
-            _inReplay = inReplay;
-        }
-
-        private bool _battleResultVictory = false;
-        public bool BattleResultVictory => _battleResultVictory;
-        public void SetBattleResultVictory(bool isVictory)
-        {
-            _battleResultVictory = isVictory;
-        }
-
-        private int _battleResultScore = 0;
-        public int BattleResultScore => _battleResultScore;
-        public void SetBattleScore(int score)
-        {
-            _battleResultScore = score;
-        }
-
         // 戻り先の1番目のシンボル
         private StageSymbolData _returnSymbol = null;
         public StageSymbolData ReturnSymbol => _returnSymbol;
@@ -91,6 +70,7 @@ namespace Ryneus
             };
             _returnSymbol = symbolData;
         }
+
         public void ClearReturnStageIdSeek() 
         {
             _returnSymbol = null;
@@ -103,7 +83,7 @@ namespace Ryneus
             _lastBattlerIdList = lastBattlerIdList;
         }
 
-        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek);
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,int worldNo) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek && a.WorldNo == worldNo);
         
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
@@ -120,6 +100,25 @@ namespace Ryneus
             }
             _symbolRecordList.Add(symbolResultInfo);
             _symbolRecordList.Sort((a,b) => a.SortKey() - b.SortKey() > 0 ? 1 : -1);
+        }
+        public void SetSelectSymbol(SymbolResultInfo symbolResultInfo,bool isSelect)
+        {
+            var record = _symbolRecordList.Find(a => a.IsSameSymbol(symbolResultInfo));
+            record.SetSelected(isSelect);
+            SetSymbolResultInfo(record);
+        }
+
+        public void MakeAnotherStageRecord(SymbolResultInfo symbolResultInfo)
+        {
+            var stageResult = new SymbolResultInfo(symbolResultInfo.SymbolInfo,symbolResultInfo.StageSymbolData,Currency);
+            stageResult.SetWorldNo(1);
+            stageResult.SetSelected(false);
+            SetSymbolResultInfo(stageResult);
+        }
+
+        private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,int worldNo)
+        {
+            return _symbolRecordList.FindAll(a => a.EnableStage(stageId,seek,worldNo));
         }
 
         private List<LevelUpInfo> _levelUpInfos = new();
@@ -138,8 +137,6 @@ namespace Ryneus
         {
             _actorInfos.Clear();
             _currency = 0;
-            _battleResultVictory = false;
-            _battleResultScore = 0;
             _symbolRecordList.Clear();
             _scorePrizeInfos.Clear();
         }
@@ -152,9 +149,9 @@ namespace Ryneus
             _actorInfos = actorInfos;
         }
         
-        public List<ActorInfo> CurrentActorInfos(int stageId,int seek)
+        public List<ActorInfo> CurrentActorInfos(int stageId,int seek,int worldNo)
         {
-            var actorIdList = CurrentActorIdList(stageId,seek);
+            var actorIdList = CurrentActorIdList(stageId,seek,worldNo);
             var actorInfos = new List<ActorInfo>();
             foreach (var actorId in actorIdList)
             {
@@ -193,11 +190,11 @@ namespace Ryneus
             return _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
         }
         
-        public List<int> CurrentActorIdList(int stageId,int seek)
+        public List<int> CurrentActorIdList(int stageId,int seek,int worldNo)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            records = records.FindAll(a => a.EnableStage(stageId,seek));
+            var records = EnableResultInfos(stageId,seek,worldNo);
+            records = records.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
             foreach (var record in records)
             {
                 var selectedIndexes = record.SelectedIndex;
@@ -212,11 +209,11 @@ namespace Ryneus
             return actorIdList;
         }
         
-        public List<int> PastActorIdList(int stageId,int seek)
+        public List<int> PastActorIdList(int stageId,int seek,int worldNo)
         {
             var actorIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol());
-            records = records.FindAll(a => a.EnableStage(stageId,seek));
+            var records = EnableResultInfos(stageId,seek,worldNo);
+            records = records.FindAll(a => a.SymbolInfo.IsActorSymbol());
             foreach (var record in records)
             {
                 var selectedIndexes = record.SelectedIndex;
@@ -231,11 +228,11 @@ namespace Ryneus
             return actorIdList;
         }
 
-        public List<int> CurrentAlchemyIdList(int stageId,int seek)
+        public List<int> CurrentAlchemyIdList(int stageId,int seek,int worldNo)
         {
             var alchemyIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.EnableStage(stageId,seek));
+            var records = EnableResultInfos(stageId,seek,worldNo);
+            records = records.FindAll(a => a.Selected);
             foreach (var record in records)
             {
                 foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
@@ -252,11 +249,11 @@ namespace Ryneus
             return alchemyIdList;
         }
 
-        public List<int> CurrentAlcanaIdList(int stageId,int seek)
+        public List<int> CurrentAlcanaIdList(int stageId,int seek,int worldNo)
         {
             var alcanaIdList = new List<int>();
-            var records = _symbolRecordList.FindAll(a => a.Selected);
-            records = records.FindAll(a => a.EnableStage(stageId,seek) && a.SelectedIndex.Count > 0);
+            var records = EnableResultInfos(stageId,seek,worldNo);
+            records = records.FindAll(a => a.Selected && a.SelectedIndex.Count > 0);
             foreach (var record in records)
             {
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => record.SelectedIndex.Contains(a.Param1));

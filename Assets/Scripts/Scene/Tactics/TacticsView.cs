@@ -28,6 +28,8 @@ namespace Ryneus
         [SerializeField] private Button alcanaButton = null;
         [SerializeField] private Button stageHelpButton = null;
         [SerializeField] private Button scorePrizeButton = null;
+        [SerializeField] private Button leftButton = null;
+        [SerializeField] private Button rightButton = null;
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
@@ -100,6 +102,8 @@ namespace Ryneus
             trainView.SetParentInputKeyActive((a,b) => UpdateChildInputKeyActive(a,b));
             trainView.SetHelpWindow(HelpWindow);
             alcanaSelectList.Initialize();
+            leftButton.onClick.AddListener(() => OnClickLeft());
+            rightButton.onClick.AddListener(() => OnClickRight());
             var presenter = new TacticsPresenter(this);
             trainView.HideSelectCharacter();
             HideSymbolRecord();
@@ -205,6 +209,20 @@ namespace Ryneus
         private void OnClickBack()
         {
             var eventData = new TacticsViewEvent(CommandType.Back);
+            _commandData(eventData);
+        }
+
+        private void OnClickLeft()
+        {
+            if (!leftButton.gameObject.activeSelf) return;
+            var eventData = new TacticsViewEvent(CommandType.NormalWorld);
+            _commandData(eventData);
+        }
+
+        private void OnClickRight()
+        {
+            if (!rightButton.gameObject.activeSelf) return;
+            var eventData = new TacticsViewEvent(CommandType.AnotherWorld);
             _commandData(eventData);
         }
 
