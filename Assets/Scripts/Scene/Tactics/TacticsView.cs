@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Tactics;
 using TMPro;
-using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
@@ -37,7 +36,14 @@ namespace Ryneus
         {
             backGround.SetActive(isActive);
         }
-
+        [SerializeField] private _2dxFX_NoiseAnimated _2DxFX_NoiseAnimated = null;
+        [SerializeField] private TextMeshProUGUI pastText = null;
+        public void SetPastMode()
+        {
+            pastText?.gameObject.SetActive(true);
+            //pastText?.SetText("");
+            _2DxFX_NoiseAnimated.enabled = true;
+        }
 
 
         public int ParallelListIndex => parallelList.Index;

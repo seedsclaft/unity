@@ -58,7 +58,7 @@ namespace Ryneus
             if (commandTitle != null)
             {
                 //if (_symbolInfo.SymbolType > SymbolType.None && !_symbolInfo.StageSymbolData.IsRandomSymbol())
-                if (_symbolInfo.SymbolType > SymbolType.None)
+                if (_symbolInfo.SymbolType > SymbolType.None && _symbolInfo.SymbolType < SymbolType.Group)
                 {
                     commandTitle.transform.parent.gameObject.SetActive(true);
                     var textId = 40 + (int)_symbolInfo.SymbolType;

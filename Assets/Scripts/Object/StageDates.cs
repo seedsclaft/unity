@@ -90,7 +90,7 @@ namespace Ryneus
 
         public bool IsGroupSymbol()
         {
-            return SymbolType == SymbolType.Group;
+            return SymbolType > SymbolType.Group;
         }
     }
 

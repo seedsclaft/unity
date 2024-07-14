@@ -26,14 +26,14 @@ namespace Ryneus
         public int CharaId => _charaId;
         private int _level;
         public int Level => _level;
-        public int MaxHp {get {return _status.GetParameter(StatusParamType.Hp) + StateEffectAll(StateType.MaxHpUp);}}
-        public int MaxMp {get {return _status.GetParameter(StatusParamType.Mp) + StateEffectAll(StateType.MaxMpUp);}}
+        public int MaxHp => _status.GetParameter(StatusParamType.Hp) + StateEffectAll(StateType.MaxHpUp);
+        public int MaxMp => _status.GetParameter(StatusParamType.Mp) + StateEffectAll(StateType.MaxMpUp);
         private int _hp;
         public int Hp => _hp;
-        public float HpRate => _hp > 0 ? (float)_hp / (float)MaxHp : 0;
+        public float HpRate => _hp > 0 ? _hp / (float)MaxHp : 0;
         private int _mp;
         public int Mp => _mp;
-        public float MpRate => _mp > 0 ? (float)_mp / (float)MaxMp : 0;
+        public float MpRate => _mp > 0 ? _mp / (float)MaxMp : 0;
         private float _ap;
         public float Ap => _ap;
         
@@ -47,7 +47,8 @@ namespace Ryneus
         public List<KindType> Kinds => _kinds;
         private int _lastSelectSkillId = 0;
         public int LastSelectSkillId => _lastSelectSkillId;
-        public void SetLastSelectSkillId(int selectSkillId){
+        public void SetLastSelectSkillId(int selectSkillId)
+        {
             _lastSelectSkillId = selectSkillId;
         }
         private List<StateInfo> _stateInfos = new ();
@@ -241,7 +242,6 @@ namespace Ryneus
 
         public void ResetParamInfos()
         {
-            
             var statusInfo = new StatusInfo();
             int plusHpParam = _bossFlag == true ? 50 : 0;
             float lvRate = _level;
@@ -279,7 +279,8 @@ namespace Ryneus
             _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
         }
 
-        public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index){
+        public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index)
+        {
             _charaId = index + 1000;
             var statusInfo = new StatusInfo();
             statusInfo.SetParameter(
@@ -539,7 +540,8 @@ namespace Ryneus
         public void ChangeAp(float value)
         {
             _ap += value;
-            if (_ap < 0){
+            if (_ap < 0)
+            {
                 _ap = 0;
             }
         }
@@ -547,14 +549,16 @@ namespace Ryneus
         public void SetAp(int value)
         {
             _ap = value;
-            if (_ap < 0){
+            if (_ap < 0)
+            {
                 _ap = 0;
             }
         }
 
         public int LastTargetIndex()
         {
-            if (IsActor){
+            if (IsActor)
+            {
                 return _lastTargetIndex;
             }
             return -1;
@@ -637,7 +641,6 @@ namespace Ryneus
             }
             return true;
         }
-
 
         public bool IsState(StateType stateType)
         {

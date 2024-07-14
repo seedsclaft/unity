@@ -7,7 +7,6 @@ using Effekseer;
 using System.Linq;
 using TMPro;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 
 namespace Ryneus
 {

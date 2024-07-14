@@ -183,7 +183,7 @@ namespace Ryneus
         }
         private bool _lost = false;
         public bool Lost => _lost;
-        private StatusInfo _plusStatus;
+        private StatusInfo _plusStatus = new StatusInfo();
 
         public ActorInfo(ActorData actorData)
         {
@@ -195,7 +195,7 @@ namespace Ryneus
             InitSkillTriggerInfos();
         }
 
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
         public ActorInfo(RankingActorData rankingActorData)
         {
             _actorId = rankingActorData.ActorId;
@@ -216,11 +216,10 @@ namespace Ryneus
                 rankingActorData.Spd - Master.InitStatus.Spd
             );
         }
-    #endif
+#endif
 
         public void CopyData(ActorInfo baseActorInfo)
         {
-            _plusStatus = new StatusInfo();
             _plusStatus.SetParameter(
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Hp),
                 baseActorInfo._plusStatus.GetParameter(StatusParamType.Mp),
@@ -242,7 +241,6 @@ namespace Ryneus
 
         private void SetInitialParameter(ActorData actorData)
         {
-            _plusStatus = new StatusInfo();
             _plusStatus.SetParameter(actorData.PlusStatus.Hp,actorData.PlusStatus.Mp,actorData.PlusStatus.Atk,actorData.PlusStatus.Def,actorData.PlusStatus.Spd);
         }
 
