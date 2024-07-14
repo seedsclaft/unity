@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class AdvImporter : AssetPostprocessor {
+	public class AdvImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -19,8 +20,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateAdvInfo(asset);
@@ -66,12 +67,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var AdvData = new AdvData();
-						AdvData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						AdvData.AdvName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AdvName);
-						AdvData.EndJump = (Scene)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EndJump);
-						
-						Data.Data.Add(AdvData);
+                        var AdvData = new AdvData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            AdvName = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.AdvName),
+                            EndJump = (Scene)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.EndJump)
+                        };
+
+                        Data.Data.Add(AdvData);
 					}
 				}
 			}

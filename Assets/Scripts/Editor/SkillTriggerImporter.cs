@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class SkillTriggerImporter : AssetPostprocessor {
+	public class SkillTriggerImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -26,8 +27,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateSkillTriggerInfo(asset);

@@ -61,8 +61,8 @@ namespace Ryneus
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
 		{
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateSkillData(asset);
@@ -150,10 +150,7 @@ namespace Ryneus
                         var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
 						if (SkillData != null)
 						{
-							if (SkillData.FeatureDates == null)
-							{
-								SkillData.FeatureDates = new List<SkillData.FeatureData>();
-							}
+							SkillData.FeatureDates ??= new List<SkillData.FeatureData>();
 							SkillData.FeatureDates.Add(FeatureData);
 						}
 					}
@@ -175,9 +172,7 @@ namespace Ryneus
 
                         var SkillData = Data.Data.Find(a => a.Id == TriggerData.SkillId);
 						if (SkillData != null){
-							if (SkillData.TriggerDates == null){
-								SkillData.TriggerDates = new List<SkillData.TriggerData>();
-							}
+							SkillData.TriggerDates ??= new List<SkillData.TriggerData>();
 							SkillData.TriggerDates.Add(TriggerData);
 						}
 					}
@@ -199,10 +194,7 @@ namespace Ryneus
                         var SkillData = Data.Data.Find(a => a.Id == ScopeTriggerData.SkillId);
 						if (SkillData != null)
 						{
-							if (SkillData.ScopeTriggers == null)
-							{
-								SkillData.ScopeTriggers = new List<SkillData.TriggerData>();
-							}
+							SkillData.ScopeTriggers ??= new List<SkillData.TriggerData>();
 							SkillData.ScopeTriggers.Add(ScopeTriggerData);
 						}
 					}

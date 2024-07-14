@@ -210,7 +210,6 @@ namespace Ryneus
 						SkillTriggerData.Trigger1 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1);
 						SkillTriggerData.Trigger2 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2);
 						Actor.SkillTriggerDates.Add(SkillTriggerData);
-						
 					}
 				}
 			}

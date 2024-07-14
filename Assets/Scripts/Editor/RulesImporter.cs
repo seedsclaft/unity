@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class RulesImporter : AssetPostprocessor {
+	public class RulesImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -20,8 +21,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateRuleInfo(asset);
@@ -67,12 +68,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var RuleData = new RuleData();
-						RuleData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						RuleData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Text;
-						RuleData.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameId)).Help;
-						RuleData.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
-						var open = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Open) == 1;
+                        var RuleData = new RuleData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
+                            Category = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Category)
+                        };
+                        var open = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Open) == 1;
 						if (open)
 						{
 							Data.Data.Add(RuleData);

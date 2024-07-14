@@ -32,8 +32,8 @@ namespace Ryneus
 		
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateMenuCommandInfo(asset);
@@ -86,12 +86,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var TitleCommandInfo = new SystemData.CommandData();
-						TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						TitleCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-						TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
-						Data.TacticsCommandData.Add(TitleCommandInfo);
+                        var TitleCommandInfo = new SystemData.CommandData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Help
+                        };
+                        Data.TacticsCommandData.Add(TitleCommandInfo);
 					}
 					
 					BaseSheet = Book.GetSheetAt(1);
@@ -100,12 +102,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var TitleCommandInfo = new SystemData.CommandData();
-						TitleCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						TitleCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						TitleCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-						TitleCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
-						Data.TitleCommandData.Add(TitleCommandInfo);
+                        var TitleCommandInfo = new SystemData.CommandData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Help
+                        };
+                        Data.TitleCommandData.Add(TitleCommandInfo);
 					}
 
 					BaseSheet = Book.GetSheetAt(2);
@@ -114,12 +118,14 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var StatusCommandInfo = new SystemData.CommandData();
-						StatusCommandInfo.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						StatusCommandInfo.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						StatusCommandInfo.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-						StatusCommandInfo.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
-						Data.StatusCommandData.Add(StatusCommandInfo);
+                        var StatusCommandInfo = new SystemData.CommandData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Help
+                        };
+                        Data.StatusCommandData.Add(StatusCommandInfo);
 					}
 
 					BaseSheet = Book.GetSheetAt(3);
@@ -128,18 +134,20 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var OptionCommand = new SystemData.OptionCommand();
-						OptionCommand.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						OptionCommand.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						OptionCommand.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-						OptionCommand.Category = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Category);
-						OptionCommand.Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Help;
-						OptionCommand.ButtonType = (OptionButtonType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ButtonType);
-						OptionCommand.ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText1);
-						OptionCommand.ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText2);
-						OptionCommand.ToggleText3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ToggleText3);
-						OptionCommand.ExistAndroid = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ExistAndroid) == 1;
-						Data.OptionCommandData.Add(OptionCommand);
+                        var OptionCommand = new SystemData.OptionCommand
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text,
+                            Category = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Category),
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Help,
+                            ButtonType = (OptionButtonType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ButtonType),
+                            ToggleText1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ToggleText1),
+                            ToggleText2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ToggleText2),
+                            ToggleText3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ToggleText3),
+                            ExistAndroid = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ExistAndroid) == 1
+                        };
+                        Data.OptionCommandData.Add(OptionCommand);
 					}
 					
 					BaseSheet = Book.GetSheetAt(4);
@@ -147,12 +155,14 @@ namespace Ryneus
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
-						var inputData = new SystemData.InputData();
-						inputData.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Id);
-						inputData.KeyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Key);
-						inputData.Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.NameTextId)).Text;
-						
-						Data.InputDataList.Add(inputData);
+                        var inputData = new SystemData.InputData
+                        {
+                            Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Id),
+                            KeyId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Key),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text
+                        };
+
+                        Data.InputDataList.Add(inputData);
 					}
 
 					BaseSheet = Book.GetSheetAt(5);
@@ -204,28 +214,6 @@ namespace Ryneus
 			}
 
 			EditorUtility.SetDirty(Data);
-		}
-
-
-
-		// テキストデータを作成
-		static List<TextData> CreateText(ISheet BaseSheet)
-		{
-			var textData = new List<TextData>();
-
-			for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-			{
-				IRow BaseRow = BaseSheet.GetRow(i);
-				var TextData = new TextData();
-
-				TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
-				TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text).ToString();
-				TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help).ToString();
-				
-				textData.Add(TextData);
-			}
-
-			return textData;
 		}
 	}
 }

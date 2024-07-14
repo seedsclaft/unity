@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MainMenu;
-using TMPro;
 
 namespace Ryneus
 {
@@ -225,10 +224,10 @@ namespace MainMenu
 }
 public class MainMenuViewEvent
 {
-    public MainMenu.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public MainMenuViewEvent(MainMenu.CommandType type)
+    public MainMenuViewEvent(CommandType type)
     {
         commandType = type;
     }

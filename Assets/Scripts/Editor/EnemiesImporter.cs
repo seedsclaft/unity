@@ -43,7 +43,6 @@ namespace Ryneus
 		}
 		enum BaseTriggersColumn
 		{
-
 			ActorId = 0,
 			SkillId,
 			TriggerType,
@@ -65,8 +64,8 @@ namespace Ryneus
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
 		{
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateEnemyData(asset);

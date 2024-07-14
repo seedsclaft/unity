@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class TroopsImporter : AssetPostprocessor {
+	public class TroopsImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -33,8 +34,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateTroopData(asset);
@@ -81,17 +82,19 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var TroopEnemyData = new TroopEnemyData();
-						TroopEnemyData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						TroopEnemyData.TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.TroopId);
-						TroopEnemyData.EnemyId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.EnemyId);
-						TroopEnemyData.Lv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Lv);
-						TroopEnemyData.BossFlag = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossFlag) == 1;
-						TroopEnemyData.Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Line);
-						TroopEnemyData.StageLv = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageLv);
-						TroopEnemyData.PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.PrizeSetId);
-						//TroopData.GetItemDates = new List<GetItemData>();
-						TroopEnemyDates.Add(TroopEnemyData);
+                        var TroopEnemyData = new TroopEnemyData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            TroopId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TroopId),
+                            EnemyId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.EnemyId),
+                            Lv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Lv),
+                            BossFlag = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.BossFlag) == 1,
+                            Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Line),
+                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.StageLv),
+                            PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId)
+                        };
+                        //TroopData.GetItemDates = new List<GetItemData>();
+                        TroopEnemyDates.Add(TroopEnemyData);
 					}
 
 					foreach (var TroopEnemyData in TroopEnemyDates)
@@ -99,11 +102,13 @@ namespace Ryneus
 						var FindTroop = Data.Data.Find(a => a.TroopId == TroopEnemyData.TroopId);
 						if (FindTroop == null)
 						{
-							var TroopData = new TroopData();
-							TroopData.TroopId = TroopEnemyData.TroopId;
-							TroopData.PrizeSetId = TroopEnemyData.PrizeSetId;
-							TroopData.TroopEnemies = new List<TroopEnemyData>();
-							Data.Data.Add(TroopData);
+                            var TroopData = new TroopData
+                            {
+                                TroopId = TroopEnemyData.TroopId,
+                                PrizeSetId = TroopEnemyData.PrizeSetId,
+                                TroopEnemies = new List<TroopEnemyData>()
+                            };
+                            Data.Data.Add(TroopData);
 						}
 						FindTroop = Data.Data.Find(a => a.TroopId == TroopEnemyData.TroopId);
 						FindTroop.TroopEnemies.Add(TroopEnemyData);

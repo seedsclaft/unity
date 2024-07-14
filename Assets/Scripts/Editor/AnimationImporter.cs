@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 
 namespace Ryneus
 {
-	public class AnimationImporter : AssetPostprocessor {
+	public class AnimationImporter : AssetPostprocessor 
+	{
 		enum BaseColumn
 		{
 			Id = 0,
@@ -24,8 +25,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreateAnimationInfo(asset);
@@ -71,16 +72,18 @@ namespace Ryneus
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var AnimationData = new AnimationData();
-						AnimationData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						AnimationData.AnimationPath = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.AnimationPath);
-						AnimationData.MakerEffect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.MakerEffect) == 1;
-						AnimationData.Position = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Position);
-						AnimationData.Scale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Scale);
-						AnimationData.Speed = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Speed);
-						AnimationData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
-						
-						Data.Data.Add(AnimationData);
+                        var AnimationData = new AnimationData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
+                            AnimationPath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.AnimationPath),
+                            MakerEffect = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.MakerEffect) == 1,
+                            Position = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Position),
+                            Scale = AssetPostImporter.ImportFloat(BaseRow, (int)BaseColumn.Scale),
+                            Speed = AssetPostImporter.ImportFloat(BaseRow, (int)BaseColumn.Speed),
+                            DamageTiming = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.DamageTiming)
+                        };
+
+                        Data.Data.Add(AnimationData);
 					}
 				}
 			}

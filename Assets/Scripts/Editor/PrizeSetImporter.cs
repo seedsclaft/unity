@@ -21,8 +21,8 @@ namespace Ryneus
 
 		// アセット更新があると呼ばれる
 		static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-			foreach (string asset in importedAssets) {
-
+			foreach (string asset in importedAssets) 
+			{
 				if (AssetPostImporter.CheckOnPostprocessAllAssets(asset,ExcelName))
 				{
 					CreatePrizeSetData(asset);
@@ -69,11 +69,13 @@ namespace Ryneus
 
 						var PrizeSet = new PrizeSetData();
 						PrizeSet.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						var getItemData = new GetItemData();
-						getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Type);
-						getItemData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param1);
-						getItemData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Param2);
-						PrizeSet.GetItem = getItemData;
+                        var getItemData = new GetItemData
+                        {
+                            Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Type),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param1),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param2)
+                        };
+                        PrizeSet.GetItem = getItemData;
 						Data.Data.Add(PrizeSet);
 					}
 				}
