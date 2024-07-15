@@ -133,14 +133,10 @@ namespace Ryneus
         {
             _hpHeal = hpHeal;
         }
-        private int _mpDamage = 0;
-        public int MpDamage => _mpDamage;
-        private int _mpHeal = 0;
-        public int MpHeal => _mpHeal;
-        public void SetMpHeal(int mpHeal)
-        {
-            _mpHeal = mpHeal;
-        }
+        private int _ctDamage = 0;
+        public int CTDamage => _ctDamage;
+        private int _ctHeal = 0;
+        public int CtHeal => _ctHeal;
         private int _apDamage = 0;
         public int ApDamage => _apDamage;
 
@@ -260,19 +256,19 @@ namespace Ryneus
                         MakeHpParamHpDamage(subject,target,featureData,false,isOneTarget,range);
                     }
                     return;
-                case FeatureType.MpDamage:
+                case FeatureType.CtDamage:
                     if (CheckIsHit(subject,target,isOneTarget,range))
                     {
-                        MakeMpDamage(subject,target,featureData);
+                        MakeCtDamage(subject,target,featureData);
                     }
                     return;
-                case FeatureType.MpHeal:
-                    MakeMpHeal(subject,target,featureData);
+                case FeatureType.CtHeal:
+                    MakeCtHeal(subject,target,featureData);
                     return;
-                case FeatureType.MpDrain:
+                case FeatureType.CtDrain:
                     if (CheckIsHit(subject,target,isOneTarget,range))
                     {
-                        MakeMpDrain(subject,target,featureData);
+                        MakeCtDrain(subject,target,featureData);
                     }
                     return;
                 case FeatureType.AddState:
@@ -479,7 +475,7 @@ namespace Ryneus
                     if (substituteStateInfos.Find(a => a.BattlerId == target.Index) != null)
                     {
                         // 挑発でダメージカット50%
-                        damageCutRate += 0.5f;
+                        damageCutRate += subject.GetStateEffectAll(StateType.Substitute) * 0.01f;
                     }
                 }
             }
@@ -835,22 +831,22 @@ namespace Ryneus
             _hpDamage += hpDamage;
         }
 
-        private void MakeMpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        private void MakeCtDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
         {
-            _mpDamage = featureData.Param1;
+            _ctDamage = featureData.Param1;
         }
 
-        private void MakeMpDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        private void MakeCtDrain(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
         {
             var mpDamage = Math.Min(featureData.Param1,target.Mp);
-            _mpDamage = mpDamage;
-            _mpHeal = mpDamage;
+            _ctDamage = mpDamage;
+            _ctHeal = mpDamage;
         }
 
-        private void MakeMpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        private void MakeCtHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
         {
             float HealValue = featureData.Param1;
-            _mpHeal = (int)Mathf.Round(HealValue);
+            _ctHeal = (int)Mathf.Round(HealValue);
         }
 
         private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false,int range = 0)

@@ -601,17 +601,21 @@ namespace Ryneus
         public void InitCountTurn(int skillId)
         {
             var skill = _skills.Find(a => a.Id == skillId);
-            if (skill != null)
-            {
-                skill.SetCountTurn(skill.Master.CountTurn);
-            }
+            skill?.SetCountTurn(skill.Master.CountTurn);
         }
+        
         public void SeekCountTurn(int seekCount)
         {
             foreach (var skill in _skills)
             {
                 skill.SetCountTurn(skill.CountTurn - seekCount);
             }
+        }
+
+        public void GainUseCount(int skillId)
+        {
+            var skill = _skills.Find(a => a.Id == skillId);
+            skill?.GainUseCount();
         }
 
         public bool IsAlive()

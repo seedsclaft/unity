@@ -353,7 +353,7 @@ namespace Ryneus
         FriendAttackActionInfo = 15011, // 味方が攻撃タイプの行動をしようとしている
         OpponentAttackActionInfo = 15012, // 相手が攻撃タイプの行動をしようとしている
         SelfActionInfo = 16010, // 行動したのが自身
-        PayBattleMp = 17010, // Mpを〇消費する
+        SkillUsedCount = 17010, // 魔法を〇回使用する
         AttackedCount = 17020, // 攻撃を〇回受ける
         BeCriticalCount = 17030, // クリティカル攻撃を〇回受ける
         DodgeCountOver = 17040, // 回避を〇回行う
@@ -419,9 +419,9 @@ namespace Ryneus
         RemoveBuffState = 3050,
         RemoveDeBuffState = 3060,
         ChangeStateParam = 3070,
-        MpDamage = 4010,
-        MpHeal = 4020,
-        MpDrain = 4030,
+        CtDamage = 4010,
+        CtHeal = 4020,
+        CtDrain = 4030,
         SetAfterAp = 5010,
         SetAfterApHalf = 5011,
         ActionResultSetAp = 5012,

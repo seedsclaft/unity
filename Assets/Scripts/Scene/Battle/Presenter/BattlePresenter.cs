@@ -565,13 +565,13 @@ namespace Ryneus
                     _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
                 }
             }
-            if (actionResultInfo.MpDamage > 0)
+            if (actionResultInfo.CTDamage > 0)
             {    
-                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.MpDamage);
+                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.CTDamage);
             }
-            if (actionResultInfo.MpHeal > 0)
+            if (actionResultInfo.CtHeal > 0)
             {
-                _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfo.MpHeal);
+                _view.StartHeal(targetIndex,DamageType.MpHeal,actionResultInfo.CtHeal);
             }
             if (actionResultInfo.ApHeal > 0)
             {    

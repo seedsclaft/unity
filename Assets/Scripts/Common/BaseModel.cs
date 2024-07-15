@@ -21,7 +21,7 @@ namespace Ryneus
         public int Currency => PartyInfo.Currency;
         public int TotalScore => PartyInfo.TotalScore();
 
-        public int RemainTurns => CurrentStage.Master.Turns - CurrentStage.CurrentSeek + 1;
+        public int RemainTurns => CurrentStage.Master.StageSymbols.Max(a => a.Seek) - CurrentStage.CurrentSeek + 1;
 
         public CancellationTokenSource _cancellationTokenSource;
         private List<StageTutorialData> _currentStageTutorialDates = new ();

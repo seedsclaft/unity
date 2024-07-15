@@ -82,6 +82,7 @@ namespace Ryneus
         public bool UpdateTurn()
         {
             // 挑発は確率でターンを終える
+            /*
             if (StateType.Substitute == Master.StateType)
             {
                 var per = 100 - (_turns * _effect);
@@ -93,6 +94,7 @@ namespace Ryneus
                 _turns--;
                 return false;
             }
+            */
             _turns--;
             if (_turns <= 0)
             {

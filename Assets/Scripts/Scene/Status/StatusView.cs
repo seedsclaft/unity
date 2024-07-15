@@ -138,6 +138,7 @@ namespace Ryneus
         private void DisplayDecideButton()
         {
             decideButton.gameObject.SetActive(_isDisplayDecide);
+            commandList.gameObject.SetActive(!_isDisplayDecide);
             if (_isDisplayDecide)
             {
                 SetHelpText(_helpText);

@@ -167,7 +167,7 @@ namespace Ryneus
                             var alcanaRank = 1;
                             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-                            var count = 0;
+                            var count = 1;
                             while (getItemInfos.Count <= count)
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);

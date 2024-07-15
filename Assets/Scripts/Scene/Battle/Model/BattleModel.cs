@@ -652,7 +652,7 @@ namespace Ryneus
                         }
                     }
                     break;
-                    case FeatureType.MpHeal:
+                    case FeatureType.CtHeal:
                     if (subject != null)
                     {
                         if (subject.IsActor)
@@ -667,8 +667,8 @@ namespace Ryneus
                         }
                     }
                     break;
-                    case FeatureType.MpDamage:
-                    if (target.Mp > 0)
+                    case FeatureType.CtDamage:
+                    if (target.Skills.Find(a => a.CountTurn < a.Master.CountTurn) != null)
                     {
                         IsEnable = true;
                     }
@@ -866,7 +866,7 @@ namespace Ryneus
                 // Hpダメージ分の回復計算
                 var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
                 actionResultInfos.AddRange(DamageHealPartyResultInfos);
-                var DamageMpHealPartyResultInfos = CalcDamageMpHealParty(subject,featureDates,actionResultInfo.HpDamage);
+                var DamageMpHealPartyResultInfos = CalcDamageCtHealParty(subject,featureDates,actionResultInfo.HpDamage);
                 actionResultInfos.AddRange(DamageMpHealPartyResultInfos);
 
                 if (actionResultInfo.RemoveAttackStateDamage())            
@@ -901,20 +901,20 @@ namespace Ryneus
             return actionResultInfos;
         }
 
-        private List<ActionResultInfo> CalcDamageMpHealParty(BattlerInfo subject,List<SkillData.FeatureData> featureDates,int hpDamage)
+        private List<ActionResultInfo> CalcDamageCtHealParty(BattlerInfo subject,List<SkillData.FeatureData> featureDates,int hpDamage)
         {
             var actionResultInfos = new List<ActionResultInfo>();
             var damageHealParty = featureDates.Find(a => a.FeatureType == FeatureType.DamageMpHealParty);
             if (damageHealParty != null)
             {
                 var friends = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
-                var mpHeal = hpDamage * damageHealParty.Param3 * 0.01f;
+                var ctHeal = hpDamage * damageHealParty.Param3 * 0.01f;
                 foreach (var friend in friends)
                 {
                     var featureData = new SkillData.FeatureData
                     {
-                        FeatureType = FeatureType.MpHeal,
-                        Param1 = (int)mpHeal
+                        FeatureType = FeatureType.CtHeal,
+                        Param1 = (int)ctHeal
                     };
                     var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
                     actionResultInfos.Add(actionResultInfo);
@@ -1070,6 +1070,7 @@ namespace Ryneus
                     //subject.GainMp(actionInfo.MpCost * -1);
                     //subject.GainPayBattleMp(actionInfo.MpCost);
                     subject.InitCountTurn(actionInfo.SkillInfo.Id);
+                    subject.GainUseCount(actionInfo.SkillInfo.Id);
                 }
                 if (actionInfo.Master.IsHpHealFeature())
                 {
@@ -1214,13 +1215,13 @@ namespace Ryneus
             {
                 target.GainHp(actionResultInfo.HpHeal);
             }
-            if (actionResultInfo.MpDamage != 0)
+            if (actionResultInfo.CTDamage != 0)
             {
-                target.SeekCountTurn(-1 * actionResultInfo.MpDamage);
+                target.SeekCountTurn(-1 * actionResultInfo.CTDamage);
             }
-            if (actionResultInfo.MpHeal != 0)
+            if (actionResultInfo.CtHeal != 0)
             {
-                target.SeekCountTurn(actionResultInfo.MpHeal);
+                target.SeekCountTurn(actionResultInfo.CtHeal);
             }
             if (actionResultInfo.ApHeal != 0)
             {
@@ -1906,7 +1907,8 @@ namespace Ryneus
                             {
                                 IsTriggered = true;
                                 var stateInfos = battlerInfo.GetStateInfoAll(StateType.Death);
-                                for (var i = 0;i < stateInfos.Count;i++){
+                                for (var i = 0;i < stateInfos.Count;i++)
+                                {
                                     battlerInfo.RemoveState(stateInfos[i],true);
                                     battlerInfo.SetPreserveAlive(true);
                                 }

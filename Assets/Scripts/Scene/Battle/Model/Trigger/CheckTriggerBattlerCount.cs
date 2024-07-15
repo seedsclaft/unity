@@ -10,10 +10,17 @@ namespace Ryneus
             var isTrigger = false;
             switch (triggerData.TriggerType)
             {
-                case TriggerType.PayBattleMp:
-                if (battlerInfo.IsAlive() && battlerInfo.PayBattleMp >= triggerData.Param1)
+                case TriggerType.SkillUsedCount:
+                if (battlerInfo.IsAlive())
                 {
-                    isTrigger = true;
+                    var skill = battlerInfo.Skills.Find(a => a.Id == triggerData.Param3);
+                    if (skill != null)
+                    {
+                        if (skill.UseCount >= triggerData.Param1)
+                        {
+                            isTrigger = true;
+                        }
+                    }
                 }
                 break;
                 case TriggerType.AttackedCount:
