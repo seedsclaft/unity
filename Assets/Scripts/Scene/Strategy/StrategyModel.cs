@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Ryneus
@@ -18,7 +19,10 @@ namespace Ryneus
         {
             _sceneParam = null;
         }
-        private List<TacticsResultInfo> _resultInfos = new();
+        private List<StrategyResultViewInfo> _resultInfos = new();
+        public List<ListData> ResultViewInfos => MakeListData(_resultInfos);
+
+        private string _saveHumanText = "";
         
 
         private List<ActorInfo> _levelUpData = new();
@@ -37,8 +41,6 @@ namespace Ryneus
             return list;
         }
 
-        private List<ListData> _resultItemInfos = new();
-        public List<ListData> ResultGetItemInfos => _resultItemInfos;
 
         public List<ActorInfo> TacticsActors()
         {
@@ -61,6 +63,7 @@ namespace Ryneus
         public void SetLvUp()
         {
             if (_levelUpData.Count > 0) return;
+            if (PartyInfo.ReturnSymbol != null) return;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             if (record != null && record.SymbolInfo.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
@@ -96,23 +99,56 @@ namespace Ryneus
         {
             var getItemInfos = SceneParam.GetItemInfos;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
-            var beforeRecord = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
+            var recordScore = TempInfo.BattleResultScore * 0.01f;
             record.ClearSelectedIndex();
             foreach (var getItemInfo in getItemInfos)
             {
+                var resultInfo = new StrategyResultViewInfo();
                 switch (getItemInfo.GetItemType)
                 {
                     case GetItemType.Numinous:
-                        if (beforeRecord == null || (beforeRecord != null && beforeRecord.SymbolInfo.Cleared == false))
+                        if (_battleResult)
+                        { 
+                            var beforeGain = getItemInfo.Param2;
+                            var gainCurrency = (int) Math.Round(getItemInfo.Param1 * recordScore);
+                            if (gainCurrency > beforeGain)
+                            {
+                                getItemInfo.SetParam2(gainCurrency);
+                                //getItemInfo.MakeTextData();
+                            }
+                            PartyInfo.ChangeCurrency(Currency + gainCurrency - beforeGain);
+                            
+                            // 獲得+Nu
+                            resultInfo.SetTitle("+" + getItemInfo.Param1.ToString() + DataSystem.GetText(1000));
+                            _resultInfos.Add(resultInfo);
+                            // 損失-Nu
+                            var minusCurrency = getItemInfo.Param1 - gainCurrency;
+                            if (minusCurrency > 0)
+                            {
+                                var minusResultInfo = new StrategyResultViewInfo();
+                                minusResultInfo.SetTitle("評価損失: -" + minusCurrency.ToString() + DataSystem.GetText(1000));
+                                _resultInfos.Add(minusResultInfo);
+                            }
+                        } else
                         {
+                            // 獲得+Nu
+                            resultInfo.SetTitle("+" + getItemInfo.Param1.ToString() + DataSystem.GetText(1000));
+                            _resultInfos.Add(resultInfo);
                             PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
                         }
+
                         break;
                     case GetItemType.Skill:
                         record.AddSelectedIndex(getItemInfo.Param1);
+                        // 魔法取得
+                        var skillData = DataSystem.FindSkill(getItemInfo.Param1);
+                        resultInfo.SetSkillId(skillData.Id);
+                        resultInfo.SetTitle(skillData.Name);
+                        _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.Regeneration:
+                        /*
                         foreach (var stageMember in StageMembers())
                         {
                             if (stageMember.Lost == false)
@@ -121,29 +157,33 @@ namespace Ryneus
                                 stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
                             }
                         }
+                        */
                         break;
                     case GetItemType.Demigod:
                         break;
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.AddActor:
-                        record.AddSelectedIndex(getItemInfo.Param1);
-                        break;
                     case GetItemType.SelectAddActor:
                         record.AddSelectedIndex(getItemInfo.Param1);
+                        // キャラ加入
+                        var actorData = DataSystem.FindActor(getItemInfo.Param1);
+                        resultInfo.SetTitle(DataSystem.GetReplaceText(14120,actorData.Name));
+                        _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.SaveHuman:
-                        var recordScore = TempInfo.BattleResultScore * 0.01f;
-                        recordScore *= getItemInfo.Param1;
-                        getItemInfo.SetParam2((int)recordScore);
-                        getItemInfo.MakeTextData();
-                        if (beforeRecord != null && beforeRecord.BattleScore < (int)recordScore)
+                        var beforeSave = getItemInfo.Param2;
+                        var saveHuman = (int)Math.Round(getItemInfo.Param1 * recordScore);
+                        if (saveHuman > beforeSave)
                         {
-                            getItemInfo.MakeSaveHumanTextData(beforeRecord.BattleScore);
-                            record.SetBattleScore((int)recordScore);
+                            getItemInfo.SetParam2(saveHuman);
+                            record.SetBattleScore(saveHuman);
+                            // 救命人数
+                            _saveHumanText = DataSystem.GetReplaceDecimalText(beforeSave) + "→" + DataSystem.GetReplaceDecimalText(saveHuman) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         } else
                         {
-                            record.SetBattleScore((int)recordScore);
+                            // 救命人数
+                            _saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         }
                         break;
                 }
@@ -157,16 +197,27 @@ namespace Ryneus
             {
                 foreach (var prizeMaster in nexScorePrizeInfo.PrizeMaster)
                 {
+                    var resultInfo = new StrategyResultViewInfo();
                     switch(prizeMaster.GetItem.Type)
                     {
                         case GetItemType.RemakeHistory:
+                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
+                            resultInfo.SetTitle(DataSystem.GetText(16010));
+                            _resultInfos.Add(resultInfo);
+                            break;
                         case GetItemType.ParallelHistory:
-                        getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                        break;
+                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
+                            resultInfo.SetTitle(DataSystem.GetText(16020));
+                            _resultInfos.Add(resultInfo);
+                            break;
+                        case GetItemType.ChangeInitActor:
+                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
+                            resultInfo.SetTitle(DataSystem.GetText(16030));
+                            _resultInfos.Add(resultInfo);
+                            break;
                     }
                 }
             }
-            _resultItemInfos = ListData.MakeListData(getItemInfos);
         }
 
         public void RemoveLevelUpData()
@@ -182,20 +233,41 @@ namespace Ryneus
 
         public string BattleSaveHumanResultInfo()
         {
-            var result = SceneParam.GetItemInfos.Find(a => a.GetItemType == GetItemType.SaveHuman);
-            if (result != null)
+            if (!_battleResult)
             {
-                return result.Param2.ToString();
+                return null;
+            }
+            if (_saveHumanText != "")
+            {
+                return _saveHumanText;
             }
             return null;
         }
 
         public string BattleResultTurn()
         {
-            var result = SceneParam.BattleTurn;
-            if (result > 0)
+            if (!_battleResult)
             {
-                return result.ToString();
+                return null;
+            }
+            var turn = SceneParam.BattleTurn;
+            if (turn > 0)
+            {
+                return turn.ToString() + "ターン";
+            }
+            return null;
+        }
+
+        public string BattleResultScore()
+        {
+            if (!_battleResult)
+            {
+                return null;
+            }
+            var recordScore = TempInfo.BattleResultScore;
+            if (recordScore >= 0)
+            {
+                return recordScore.ToString() + "%";
             }
             return null;
         }
@@ -232,11 +304,13 @@ namespace Ryneus
 
         public bool IsBonusTactics(int actorId)
         {
+            /*
             var result = _resultInfos.Find(a => a.ActorId == actorId);
             if (result != null)
             {
                 return result.IsBonus;
             }
+            */
             return false;
         }
         
@@ -296,6 +370,14 @@ namespace Ryneus
                 foreach (var levelUpInfo in levelUpInfos)
                 {
                     levelUpInfo.SetEnable(false);
+                }
+                // 選択から外れた救命人数を初期化
+                foreach (var getItemInfo in removeSymbolInfo.SymbolInfo.GetItemInfos)
+                {
+                    if (getItemInfo.GetItemType == GetItemType.SaveHuman)
+                    {
+                        getItemInfo.SetParam2(0);
+                    }
                 }
             }
 

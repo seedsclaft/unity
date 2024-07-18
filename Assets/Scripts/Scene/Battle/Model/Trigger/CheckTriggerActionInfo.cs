@@ -48,6 +48,24 @@ namespace Ryneus
                     }
                 }
                 break;
+                case TriggerType.TargetAbnormal:
+                if (battlerInfo.IsAlive() && actionResultInfos != null && actionResultInfos.Count > 0)
+                {
+                    foreach (var actionResultInfo in actionResultInfos)
+                    {
+                        if (actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
+                        {
+                            var targetBattlerInfo = checkTriggerInfo.GetBattlerInfo(actionResultInfo.TargetIndex);
+                            var abnormalStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Abnormal);
+                            var abnormalTarget = abnormalStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
+                            if (abnormalTarget)
+                            {
+                                isTrigger = true;
+                            }               
+                        }
+                    }
+                }
+                break;
                 case TriggerType.TargetDeath:
                 if (battlerInfo.IsAlive() && actionResultInfos != null && actionResultInfos.Count > 0)
                 {

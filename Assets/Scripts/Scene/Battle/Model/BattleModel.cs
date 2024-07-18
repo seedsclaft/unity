@@ -1903,7 +1903,7 @@ namespace Ryneus
                             }
                             break;
                             case TriggerType.SelfDead:
-                            if (actionResultInfos.Find(a => a.DeadIndexList.Contains(battlerInfo.Index) == true) != null)
+                            if (actionResultInfos.Find(a => a.DeadIndexList.Contains(battlerInfo.Index)) != null)
                             {
                                 IsTriggered = true;
                                 var stateInfos = battlerInfo.GetStateInfoAll(StateType.Death);
@@ -2045,6 +2045,21 @@ namespace Ryneus
                             targetHp = targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp;
                         }
                         if (targetHp <= triggerData.Param1 * 0.01f)
+                        {
+                            list.Add(targetBattlerInfo.Index);
+                        }
+                    }
+                }
+                break;
+                case TriggerType.TargetAbnormal:
+                if (battlerInfo.IsAlive())
+                {
+                    foreach (var actionResultInfo in actionResultInfos)
+                    {
+                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
+                        var abnormalStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Abnormal);
+                        var abnormalTarget = abnormalStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
+                        if (abnormalTarget)
                         {
                             list.Add(targetBattlerInfo.Index);
                         }

@@ -245,7 +245,7 @@ MonoBehaviour:
       PrizeSetId: 0
     - Id: 1101
       TroopId: 1101
-      EnemyId: 6
+      EnemyId: 7
       Lv: 8
       BossFlag: 0
       Line: 0
@@ -844,12 +844,20 @@ MonoBehaviour:
       EnemyId: 104
       Lv: 60
       BossFlag: 1
-      Line: 1
+      Line: 0
       StageLv: 0
       PrizeSetId: 650
     - Id: 5101
       TroopId: 5101
-      EnemyId: 2
+      EnemyId: 15
+      Lv: 40
+      BossFlag: 0
+      Line: 0
+      StageLv: 0
+      PrizeSetId: 0
+    - Id: 5101
+      TroopId: 5101
+      EnemyId: 15
       Lv: 40
       BossFlag: 0
       Line: 0
@@ -860,7 +868,7 @@ MonoBehaviour:
       EnemyId: 10
       Lv: 40
       BossFlag: 0
-      Line: 0
+      Line: 1
       StageLv: 0
       PrizeSetId: 0
     - Id: 5101
@@ -868,15 +876,7 @@ MonoBehaviour:
       EnemyId: 10
       Lv: 40
       BossFlag: 0
-      Line: 0
-      StageLv: 0
-      PrizeSetId: 0
-    - Id: 5101
-      TroopId: 5101
-      EnemyId: 10
-      Lv: 40
-      BossFlag: 0
-      Line: 0
+      Line: 1
       StageLv: 0
       PrizeSetId: 0
     StageTurn: 0

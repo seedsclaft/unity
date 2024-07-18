@@ -25,15 +25,17 @@ namespace Ryneus
             }
             if (titleName != null)
             {
-                titleName.gameObject.SetActive(_data.TitleName != "");
-                titleName.text = _data.TitleName;
+                titleName.gameObject.SetActive(_data.GetTitleData() != "");
+                titleName.text = _data.GetTitleData();
             }
+            /*
             if (resultName != null)
             {
                 resultName.gameObject.SetActive(_data.ResultName != "");
                 resultName.text = _data.ResultName;
                 resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
             }
+            */
             if (Disable != null)
             {
                 Disable.gameObject.SetActive(ListData.Enable == false);

@@ -107,7 +107,7 @@ MonoBehaviour:
       SeekIndex: 0
       SymbolType: 6
       Rate: 100
-      Param1: 10
+      Param1: 15
       Param2: 0
       PrizeSetId: 0
     - StageId: 1
@@ -1561,19 +1561,19 @@ MonoBehaviour:
     Rate: 50
     Param1: 2103
     Param2: 0
-    PrizeSetId: 11050
+    PrizeSetId: 11060
   - GroupId: 201
     SymbolType: 1
     Rate: 50
     Param1: 2103
     Param2: 0
-    PrizeSetId: 11060
+    PrizeSetId: 11070
   - GroupId: 202
     SymbolType: 1
     Rate: 50
     Param1: 2104
     Param2: 0
-    PrizeSetId: 12010
+    PrizeSetId: 12020
   - GroupId: 202
     SymbolType: 1
     Rate: 50
@@ -1597,25 +1597,25 @@ MonoBehaviour:
     Rate: 50
     Param1: 2105
     Param2: 0
-    PrizeSetId: 13020
-  - GroupId: 203
-    SymbolType: 1
-    Rate: 50
-    Param1: 2105
-    Param2: 0
     PrizeSetId: 13030
   - GroupId: 203
     SymbolType: 1
     Rate: 50
     Param1: 2105
     Param2: 0
-    PrizeSetId: 13060
+    PrizeSetId: 13040
   - GroupId: 203
     SymbolType: 1
     Rate: 50
     Param1: 2105
     Param2: 0
-    PrizeSetId: 13070
+    PrizeSetId: 13050
+  - GroupId: 203
+    SymbolType: 1
+    Rate: 50
+    Param1: 2105
+    Param2: 0
+    PrizeSetId: 13060
   - GroupId: 204
     SymbolType: 1
     Rate: 50
@@ -1645,12 +1645,6 @@ MonoBehaviour:
     Rate: 50
     Param1: 2107
     Param2: 0
-    PrizeSetId: 15010
-  - GroupId: 205
-    SymbolType: 1
-    Rate: 50
-    Param1: 2107
-    Param2: 0
     PrizeSetId: 15020
   - GroupId: 205
     SymbolType: 1
@@ -1664,6 +1658,12 @@ MonoBehaviour:
     Param1: 2107
     Param2: 0
     PrizeSetId: 15040
+  - GroupId: 205
+    SymbolType: 1
+    Rate: 50
+    Param1: 2107
+    Param2: 0
+    PrizeSetId: 15070
   - GroupId: 0
     SymbolType: 0
     Rate: 0

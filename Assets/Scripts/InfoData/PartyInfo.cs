@@ -347,7 +347,10 @@ namespace Ryneus
             var score = 0;
             foreach (var record in SymbolRecordList)
             {
-                score += record.BattleScore;
+                if (record._selected)
+                {
+                    score += record.BattleScore;
+                }
             }
             return score;
         }

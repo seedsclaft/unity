@@ -124,7 +124,6 @@ namespace Ryneus
                         if (stageSymbolData.Param2 == 0)
                         {
                             var actorData2 = new GetItemInfo(new GetItemData());
-                            actorData2.MakeSelectActorSymbolResult();
                             getItemInfos.Add(actorData2);
                         } else
                         {

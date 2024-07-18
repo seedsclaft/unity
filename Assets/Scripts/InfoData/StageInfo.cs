@@ -99,9 +99,6 @@ namespace Ryneus
             _savedCount = 0;
             _clearTroopIds.Clear();
         }
-
-
-
         
         public TroopInfo TestTroops(int troopId,int troopLv)
         {

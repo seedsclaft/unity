@@ -335,6 +335,7 @@ namespace Ryneus
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         TargetDeath = 12041, // 攻撃を受けた対象が戦闘不能になった
+        TargetAbnormal = 12042, // 攻撃を受けた対象が戦闘不能になった
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける

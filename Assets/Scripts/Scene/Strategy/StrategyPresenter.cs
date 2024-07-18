@@ -118,7 +118,8 @@ namespace Ryneus
                         _view.StartLvUpAnimation();
                         _view.HideResultList();
                     }
-                } else{
+                } else
+                {
                     _view.SetTitle(DataSystem.GetText(14030));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                 }
@@ -144,17 +145,17 @@ namespace Ryneus
                 {
                     if (_model.LevelUpData.Count == 0)
                     {
-                        _view.ShowResultList(_model.BattleResultInfos(),_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn());
+                        ShowResultList();
                     }
                 } else
                 {
-                    _view.ShowResultList(_model.BattleResultInfos(),_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn());
+                    ShowResultList();
                 }
             } else
             {
                 if (_model.LevelUpData.Count == 0)
                 {
-                    _view.ShowResultList(_model.ResultGetItemInfos);
+                    ShowResultList();
                 }
             }
             var stageEvents = _model.StageEvents(EventTiming.StartStrategy);
@@ -208,7 +209,7 @@ namespace Ryneus
                         }
                         else
                         {
-                            _view.ShowResultList(_model.ResultGetItemInfos);
+                            ShowResultList();
                         }
                     },
                     template = learnSkillInfo
@@ -222,9 +223,14 @@ namespace Ryneus
                     CommandEndLvUpAnimation();
                 } else
                 {
-                    _view.ShowResultList(_model.ResultGetItemInfos);
+                    ShowResultList();
                 }
             }
+        }
+
+        private void ShowResultList()
+        {
+            _view.ShowResultList(_model.ResultViewInfos,_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn(),_model.BattleResultScore());
         }
 
         private void CommandResultClose(SystemData.CommandData commandData)

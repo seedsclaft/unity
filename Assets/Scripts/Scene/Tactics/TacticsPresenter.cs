@@ -449,8 +449,16 @@ namespace Ryneus
             }
             if (_model.ParallelHistory())
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
-                _view.CommandCallConfirm(popupInfo);
+                if (_model.PartyInfo.ParallelCount > 0)
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
+                    _view.CommandCallConfirm(popupInfo);
+                } else
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(23021,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
+                    popupInfo.SetIsNoChoice(true);
+                    _view.CommandCallConfirm(popupInfo);
+                }
             } else
             {
                 var cautionInfo = new CautionInfo();
@@ -628,8 +636,8 @@ namespace Ryneus
 
         private void CheckRecoverSymbol(GetItemInfo getItemInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11130,getItemInfo.ResultName),(a) => UpdatePopupRecoverSymbol((ConfirmCommandType)a));
-            _view.CommandCallConfirm(popupInfo);
+            //var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11130,getItemInfo.ResultName),(a) => UpdatePopupRecoverSymbol((ConfirmCommandType)a));
+            //_view.CommandCallConfirm(popupInfo);
         }
 
         private void UpdatePopupRecoverSymbol(ConfirmCommandType confirmCommandType)

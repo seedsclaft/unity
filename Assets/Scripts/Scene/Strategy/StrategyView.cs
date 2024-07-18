@@ -11,6 +11,7 @@ namespace Ryneus
     {
         [SerializeField] private Image backgroundImage = null; 
         [SerializeField] private StrategyActorList strategyActorList = null; 
+        [SerializeField] private CanvasGroup strategyResultCanvasGroup = null;
         [SerializeField] private BaseList strategyResultList = null; 
         [SerializeField] private BaseList commandList = null; 
         [SerializeField] private BaseList statusList = null; 
@@ -23,6 +24,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI saveHumanText = null; 
         [SerializeField] private GameObject battleTurnObj = null;
         [SerializeField] private TextMeshProUGUI battleTurnText = null; 
+        [SerializeField] private GameObject battleScoreObj = null;
+        [SerializeField] private TextMeshProUGUI battleScoreText = null; 
 
         private BattleStartAnim _battleStartAnim = null;
         private bool _animationBusy = false;
@@ -51,8 +54,10 @@ namespace Ryneus
             rect.localPosition = new Vector3(0,0,0);
             actorInfoComponent.MainThumb.DOFade(0,0);
 
+            strategyResultCanvasGroup.alpha = 0;
             saveHumanObj?.SetActive(false);
             battleTurnObj?.SetActive(false);
+            battleScoreObj?.SetActive(false);
             new StrategyPresenter(this);
         }
 
@@ -115,7 +120,7 @@ namespace Ryneus
             strategyResultList.Initialize();
             SetInputHandler(strategyResultList.gameObject);
             strategyResultList.Deactivate();
-            strategyResultList.gameObject.SetActive(false);
+            strategyResultCanvasGroup.alpha = 0;
             
             commandList.SetData(confirmCommands);
             commandList.SetInputHandler(InputKeyType.Decide,() => CallResultCommand());
@@ -144,15 +149,18 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        public void ShowResultList(List<ListData> getItemInfos,string saveHuman = null,string battleTurn = null)
+        public void ShowResultList(List<ListData> getItemInfos,string saveHuman = null,string battleTurn = null,string battleScore = null)
         {
+            strategyResultCanvasGroup.alpha = 1;
             strategyResultList.gameObject.SetActive(true);
             strategyResultList.SetData(getItemInfos);
             strategyResultList.Activate();
             saveHumanObj?.SetActive(saveHuman != null);
             battleTurnObj?.SetActive(battleTurn != null);
+            battleScoreObj?.SetActive(battleScore != null);
             saveHumanText?.SetText(saveHuman);
             battleTurnText?.SetText(battleTurn);
+            battleScoreText?.SetText(battleScore);
             commandList.gameObject.SetActive(true);
             commandList.Activate();
             SetHelpInputInfo("STRATEGY");
