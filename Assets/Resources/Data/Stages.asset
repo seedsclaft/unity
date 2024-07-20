@@ -300,7 +300,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 1
+      Param2: 10
       PrizeSetId: 0
     - StageId: 2
       Seek: 6
@@ -468,7 +468,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 10
       PrizeSetId: 0
     - StageId: 3
       Seek: 6
@@ -484,7 +484,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 3
       Seek: 7
@@ -636,7 +636,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 20
       PrizeSetId: 0
     - StageId: 4
       Seek: 6
@@ -652,7 +652,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 4
       Seek: 7
@@ -820,7 +820,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 20
       PrizeSetId: 0
     - StageId: 5
       Seek: 6
@@ -836,7 +836,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 5
       Seek: 7
@@ -1004,7 +1004,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 20
       PrizeSetId: 0
     - StageId: 6
       Seek: 6
@@ -1060,7 +1060,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 6
       Seek: 9
@@ -1228,7 +1228,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 20
       PrizeSetId: 0
     - StageId: 7
       Seek: 6
@@ -1284,7 +1284,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 7
       Seek: 9
@@ -1452,7 +1452,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 2
+      Param2: 20
       PrizeSetId: 0
     - StageId: 8
       Seek: 6
@@ -1508,7 +1508,7 @@ MonoBehaviour:
       SymbolType: 4
       Rate: 100
       Param1: -1
-      Param2: 20
+      Param2: 200
       PrizeSetId: 0
     - StageId: 8
       Seek: 9
@@ -1561,13 +1561,7 @@ MonoBehaviour:
     Rate: 50
     Param1: 2103
     Param2: 0
-    PrizeSetId: 11060
-  - GroupId: 201
-    SymbolType: 1
-    Rate: 50
-    Param1: 2103
-    Param2: 0
-    PrizeSetId: 11070
+    PrizeSetId: 11040
   - GroupId: 202
     SymbolType: 1
     Rate: 50
@@ -1586,12 +1580,12 @@ MonoBehaviour:
     Param1: 2104
     Param2: 0
     PrizeSetId: 12040
-  - GroupId: 202
+  - GroupId: 203
     SymbolType: 1
     Rate: 50
-    Param1: 2104
+    Param1: 2105
     Param2: 0
-    PrizeSetId: 12050
+    PrizeSetId: 13020
   - GroupId: 203
     SymbolType: 1
     Rate: 50
@@ -1604,18 +1598,6 @@ MonoBehaviour:
     Param1: 2105
     Param2: 0
     PrizeSetId: 13040
-  - GroupId: 203
-    SymbolType: 1
-    Rate: 50
-    Param1: 2105
-    Param2: 0
-    PrizeSetId: 13050
-  - GroupId: 203
-    SymbolType: 1
-    Rate: 50
-    Param1: 2105
-    Param2: 0
-    PrizeSetId: 13060
   - GroupId: 204
     SymbolType: 1
     Rate: 50
@@ -1634,12 +1616,6 @@ MonoBehaviour:
     Param1: 2106
     Param2: 0
     PrizeSetId: 14030
-  - GroupId: 204
-    SymbolType: 1
-    Rate: 50
-    Param1: 2106
-    Param2: 0
-    PrizeSetId: 14040
   - GroupId: 205
     SymbolType: 1
     Rate: 50
@@ -1657,13 +1633,7 @@ MonoBehaviour:
     Rate: 50
     Param1: 2107
     Param2: 0
-    PrizeSetId: 15040
-  - GroupId: 205
-    SymbolType: 1
-    Rate: 50
-    Param1: 2107
-    Param2: 0
-    PrizeSetId: 15070
+    PrizeSetId: 15050
   - GroupId: 0
     SymbolType: 0
     Rate: 0

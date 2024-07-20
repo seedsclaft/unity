@@ -1215,9 +1215,9 @@ namespace Ryneus
             {
                 target.GainHp(actionResultInfo.HpHeal);
             }
-            if (actionResultInfo.CTDamage != 0)
+            if (actionResultInfo.CtDamage != 0)
             {
-                target.SeekCountTurn(-1 * actionResultInfo.CTDamage);
+                target.SeekCountTurn(-1 * actionResultInfo.CtDamage);
             }
             if (actionResultInfo.CtHeal != 0)
             {

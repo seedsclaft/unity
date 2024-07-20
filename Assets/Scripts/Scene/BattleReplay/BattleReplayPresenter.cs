@@ -416,9 +416,9 @@ namespace Ryneus
                     _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
                 }
             }
-            if (actionResultInfo.CTDamage > 0)
+            if (actionResultInfo.CtDamage > 0)
             {    
-                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.CTDamage);
+                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.CtDamage);
             }
             if (actionResultInfo.CtHeal > 0)
             {

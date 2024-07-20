@@ -134,7 +134,7 @@ namespace Ryneus
             _hpHeal = hpHeal;
         }
         private int _ctDamage = 0;
-        public int CTDamage => _ctDamage;
+        public int CtDamage => _ctDamage;
         private int _ctHeal = 0;
         public int CtHeal => _ctHeal;
         private int _apDamage = 0;

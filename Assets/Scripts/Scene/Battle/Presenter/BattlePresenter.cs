@@ -565,9 +565,9 @@ namespace Ryneus
                     _view.StartHeal(targetIndex,DamageType.HpHeal,actionResultInfo.HpHeal,needPopupDelay);
                 }
             }
-            if (actionResultInfo.CTDamage > 0)
+            if (actionResultInfo.CtDamage > 0)
             {    
-                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.CTDamage);
+                _view.StartDamage(targetIndex,DamageType.MpDamage,actionResultInfo.CtDamage);
             }
             if (actionResultInfo.CtHeal > 0)
             {
@@ -680,7 +680,7 @@ namespace Ryneus
                         if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
                         {
                             PlayAnimation(animationData,skillData.AnimationType,new List<int>(){resultInfo.TargetIndex});
-                            await UniTask.DelayFrame((int)(animationData.DamageTiming / GameSystem.ConfigData.BattleSpeed));
+                            await UniTask.DelayFrame(_model.WaitFrameTime(animationData.DamageTiming));
                         }
                     }
                     // ダメージ表現をしない
@@ -857,8 +857,10 @@ namespace Ryneus
         private async void BattleEnd()
         {
             if (_battleEnded == true) return;
-            var strategySceneInfo = new StrategySceneInfo();
-            strategySceneInfo.ActorInfos = _model.BattleMembers();
+            var strategySceneInfo = new StrategySceneInfo
+            {
+                ActorInfos = _model.BattleMembers()
+            };
             if (_model.CheckVictory())
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15020));
@@ -880,7 +882,7 @@ namespace Ryneus
             {
                 _view.CommandGameSystem(Base.CommandType.CallLoading);
             }
-            await UniTask.DelayFrame(180);
+            await UniTask.DelayFrame(150);
             _view.SetBattleBusy(false);
             if (SoundManager.Instance.CrossFadeMode)
             {

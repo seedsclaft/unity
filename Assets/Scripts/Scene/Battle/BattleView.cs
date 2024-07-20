@@ -131,6 +131,7 @@ namespace Ryneus
 
         public void SetBattleAutoButton(SystemData.CommandData data,bool isAuto)
         {
+            /*
             battleAutoButton.gameObject.SetActive(false);
             battleAutoButton.SetText(data.Name);
             battleAutoButton.SetCallHandler(() => 
@@ -143,11 +144,12 @@ namespace Ryneus
                 battleAutoButton.Cursor.SetActive(isAuto);
             });
             battleAutoButton.Cursor.SetActive(isAuto);
+            */
         }
         
         public void SetBattleAutoButton(bool isActive)
         {
-            battleAutoButton.gameObject.SetActive(isActive);
+            //battleAutoButton.gameObject.SetActive(isActive);
             battleSpeedButton.gameObject.SetActive(isActive);
         }
 
@@ -703,6 +705,7 @@ namespace Ryneus
 
         public void ChangeBattleAuto(bool isAuto)
         {
+            /*
             battleAutoButton.Cursor.SetActive(isAuto);
             battleAutoButton.SetCallHandler(() => 
             {
@@ -710,6 +713,7 @@ namespace Ryneus
             {
                 battleAutoButton.Cursor.SetActive(isAuto);
             });
+            */
         }
 
         public async UniTask StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData)
