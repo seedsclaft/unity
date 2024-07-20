@@ -68,111 +68,196 @@ MonoBehaviour:
       Type: 2
       Param1: 100
       Param2: 0
-  - Id: 400
-    GetItem:
-      Type: 4
-      Param1: 1
-      Param2: 1
-  - Id: 601
+  - Id: 1011
     GetItem:
       Type: 61
       Param1: 100
       Param2: 0
-  - Id: 605
+  - Id: 1011
+    GetItem:
+      Type: 1
+      Param1: 11010
+      Param2: 0
+  - Id: 1031
     GetItem:
       Type: 61
       Param1: 500
       Param2: 0
-  - Id: 610
+  - Id: 1031
+    GetItem:
+      Type: 2
+      Param1: 15
+      Param2: 0
+  - Id: 1032
     GetItem:
       Type: 61
       Param1: 1000
       Param2: 0
-  - Id: 620
-    GetItem:
-      Type: 61
-      Param1: 2000
-      Param2: 0
-  - Id: 640
-    GetItem:
-      Type: 61
-      Param1: 4000
-      Param2: 0
-  - Id: 650
-    GetItem:
-      Type: 61
-      Param1: 5000
-      Param2: 0
-  - Id: 700
-    GetItem:
-      Type: 61
-      Param1: 10000
-      Param2: 0
-  - Id: 800
-    GetItem:
-      Type: 61
-      Param1: 20000
-      Param2: 0
-  - Id: 1001
-    GetItem:
-      Type: 1
-      Param1: 11010
-      Param2: 100
-  - Id: 1002
-    GetItem:
-      Type: 1
-      Param1: 12010
-      Param2: 100
-  - Id: 1003
-    GetItem:
-      Type: 1
-      Param1: 13010
-      Param2: 100
-  - Id: 1004
-    GetItem:
-      Type: 1
-      Param1: 14050
-      Param2: 100
-  - Id: 1005
-    GetItem:
-      Type: 1
-      Param1: 15010
-      Param2: 100
-  - Id: 1012
-    GetItem:
-      Type: 61
-      Param1: 1000
-      Param2: 0
-  - Id: 1012
+  - Id: 1032
     GetItem:
       Type: 1
       Param1: 1080
       Param2: 100
-  - Id: 2021
+  - Id: 1041
+    GetItem:
+      Type: 1
+      Param1: 12010
+      Param2: 100
+  - Id: 1042
+    GetItem:
+      Type: 1
+      Param1: 13010
+      Param2: 100
+  - Id: 1051
+    GetItem:
+      Type: 1
+      Param1: 14050
+      Param2: 100
+  - Id: 1052
+    GetItem:
+      Type: 1
+      Param1: 15010
+      Param2: 100
+  - Id: 1101
     GetItem:
       Type: 61
       Param1: 2000
       Param2: 0
-  - Id: 2021
+  - Id: 1101
+    GetItem:
+      Type: 2
+      Param1: 20
+      Param2: 0
+  - Id: 2041
+    GetItem:
+      Type: 61
+      Param1: 1000
+      Param2: 0
+  - Id: 2041
+    GetItem:
+      Type: 2
+      Param1: 20
+      Param2: 0
+  - Id: 2042
+    GetItem:
+      Type: 61
+      Param1: 2000
+      Param2: 0
+  - Id: 2042
+    GetItem:
+      Type: 2
+      Param1: 40
+      Param2: 0
+  - Id: 2042
     GetItem:
       Type: 1
       Param1: 2090
       Param2: 100
-  - Id: 3021
+  - Id: 2101
+    GetItem:
+      Type: 61
+      Param1: 5000
+      Param2: 0
+  - Id: 2101
+    GetItem:
+      Type: 2
+      Param1: 30
+      Param2: 0
+  - Id: 3041
+    GetItem:
+      Type: 61
+      Param1: 2000
+      Param2: 0
+  - Id: 3041
+    GetItem:
+      Type: 2
+      Param1: 30
+      Param2: 0
+  - Id: 3042
     GetItem:
       Type: 61
       Param1: 4000
       Param2: 0
-  - Id: 3021
+  - Id: 3042
+    GetItem:
+      Type: 2
+      Param1: 50
+      Param2: 0
+  - Id: 3042
     GetItem:
       Type: 1
       Param1: 3050
-      Param2: 100
-  - Id: 3000
+      Param2: 0
+  - Id: 3101
     GetItem:
-      Type: 31
+      Type: 61
+      Param1: 10000
+      Param2: 0
+  - Id: 3101
+    GetItem:
+      Type: 2
+      Param1: 40
+      Param2: 0
+  - Id: 4041
+    GetItem:
+      Type: 61
+      Param1: 5000
+      Param2: 0
+  - Id: 4041
+    GetItem:
+      Type: 2
+      Param1: 40
+      Param2: 0
+  - Id: 4042
+    GetItem:
+      Type: 61
+      Param1: 10000
+      Param2: 0
+  - Id: 4042
+    GetItem:
+      Type: 2
+      Param1: 60
+      Param2: 0
+  - Id: 4101
+    GetItem:
+      Type: 61
+      Param1: 5000
+      Param2: 0
+  - Id: 4101
+    GetItem:
+      Type: 2
       Param1: 50
-      Param2: 100
+      Param2: 0
+  - Id: 5041
+    GetItem:
+      Type: 61
+      Param1: 7500
+      Param2: 0
+  - Id: 5041
+    GetItem:
+      Type: 2
+      Param1: 50
+      Param2: 0
+  - Id: 5042
+    GetItem:
+      Type: 61
+      Param1: 10000
+      Param2: 0
+  - Id: 5042
+    GetItem:
+      Type: 2
+      Param1: 75
+      Param2: 0
+  - Id: 5101
+    GetItem:
+      Type: 61
+      Param1: 15000
+      Param2: 0
+  - Id: 5101
+    GetItem:
+      Type: 2
+      Param1: 60
+      Param2: 0
   - Id: 11010
     GetItem:
       Type: 1

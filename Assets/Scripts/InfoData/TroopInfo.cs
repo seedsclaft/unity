@@ -75,14 +75,12 @@ namespace Ryneus
                 Type = GetItemType.SaveHuman
             };
             _getItemInfos.Add(new GetItemInfo(getItemData2));
-            /*
             var getItemData = new GetItemData
             {
                 Param1 = level + 4,
                 Type = GetItemType.Numinous
             };
             _getItemInfos.Add(new GetItemInfo(getItemData));
-            */
         }
 
         public void AddEnemy(BattlerInfo battlerInfo)
@@ -92,6 +90,7 @@ namespace Ryneus
 
         public void MakeGetItemInfos()
         {
+            /*
             var prizeSetId = TroopMaster.PrizeSetId;
             var prizeSetDates = DataSystem.PrizeSets.FindAll(a => a.Id == prizeSetId);
             foreach (var prizeSetData in prizeSetDates)
@@ -100,6 +99,7 @@ namespace Ryneus
                 var getItemInfo = new GetItemInfo(getItemData);
                 AddGetItemInfo(getItemInfo);
             }
+            */
         }
         
         public void AddGetItemInfo(GetItemInfo getItemInfo)

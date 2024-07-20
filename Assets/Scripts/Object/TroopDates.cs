@@ -15,20 +15,19 @@ namespace Ryneus
         public int TroopId;
         public List<TroopEnemyData> TroopEnemies;
         public int StageTurn;
-        public int PrizeSetId;
+        //public int PrizeSetId;
     }
 
     [Serializable]
     public class TroopEnemyData
     {   
         public int Id;
-
         public int TroopId;
         public int EnemyId;
         public int Lv;
         public bool BossFlag;
         public LineType Line;
         public int StageLv;
-        public int PrizeSetId;
+        //public int PrizeSetId;
     }
 }

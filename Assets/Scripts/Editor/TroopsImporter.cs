@@ -91,7 +91,7 @@ namespace Ryneus
                             BossFlag = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.BossFlag) == 1,
                             Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Line),
                             StageLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.StageLv),
-                            PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId)
+                            //PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId)
                         };
                         //TroopData.GetItemDates = new List<GetItemData>();
                         TroopEnemyDates.Add(TroopEnemyData);
@@ -105,7 +105,7 @@ namespace Ryneus
                             var TroopData = new TroopData
                             {
                                 TroopId = TroopEnemyData.TroopId,
-                                PrizeSetId = TroopEnemyData.PrizeSetId,
+                                //PrizeSetId = TroopEnemyData.PrizeSetId,
                                 TroopEnemies = new List<TroopEnemyData>()
                             };
                             Data.Data.Add(TroopData);
