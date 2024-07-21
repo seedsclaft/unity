@@ -9,7 +9,6 @@ namespace Ryneus
     {
         public TroopData TroopMaster => DataSystem.Troops.Find(a => a.TroopId == _troopId);
         private int _troopId = 0;
-        public int TroopId => _troopId;
         private List<BattlerInfo> _battlerInfos = new(); 
         public List<BattlerInfo> BattlerInfos => _battlerInfos;
         public BattlerInfo BossEnemy 
@@ -28,14 +27,15 @@ namespace Ryneus
         private List<GetItemInfo> _getItemInfos = new (); 
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
 
-        private bool _randomTroop = false;
-        public bool RandomTroop => _randomTroop;
-        public TroopInfo(int troopId,bool randomTroop)
+        // リプレイを保存するか
+        private bool _needReplayData = false;
+        public bool NeedReplayData => _needReplayData;
+        public TroopInfo(int troopId,bool needReplayData)
         {
             _troopId = troopId;
             _battlerInfos.Clear();
             _getItemInfos.Clear();
-            _randomTroop = randomTroop;
+            _needReplayData = needReplayData;
         }
 
         public void MakeEnemyTroopDates(int plusLevel)

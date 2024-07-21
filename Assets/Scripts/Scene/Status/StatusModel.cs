@@ -73,7 +73,7 @@ namespace Ryneus
         {
             var getItemData = new GetItemData
             {
-                Param1 = CurrentActor.ActorId,
+                Param2 = CurrentActor.ActorId,
                 Type = GetItemType.SelectAddActor
             };
             var getItemInfo = new GetItemInfo(getItemData);

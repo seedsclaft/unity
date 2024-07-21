@@ -21,17 +21,6 @@ namespace Ryneus
         {
             _selected = isSelected;
         }
-        // 選択式のシンボルの行動結果
-        public List<int> _selectedIndex = new ();
-        public List<int> SelectedIndex => _selectedIndex;
-        public void ClearSelectedIndex()
-        {
-            _selectedIndex.Clear();
-        }
-        public void AddSelectedIndex(int selectedIndex)
-        {
-            _selectedIndex.Add(selectedIndex);
-        }
         private int _battleScore;
         public int BattleScore => _battleScore;
         public void SetBattleScore(int battleScore)
@@ -83,7 +72,7 @@ namespace Ryneus
         {
             if (_symbolInfo?.TroopInfo != null)
             {
-                return _symbolInfo?.TroopInfo.RandomTroop == false;
+                return _symbolInfo?.TroopInfo.NeedReplayData == false;
             }
             return false;
         }

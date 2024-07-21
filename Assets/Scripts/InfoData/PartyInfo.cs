@@ -108,7 +108,7 @@ namespace Ryneus
             SetSymbolResultInfo(record);
         }
 
-        public void MakeAnotherStageRecord(SymbolResultInfo symbolResultInfo)
+        public void MakeAnotherStageResult(SymbolResultInfo symbolResultInfo)
         {
             var stageResult = new SymbolResultInfo(symbolResultInfo.SymbolInfo,symbolResultInfo.StageSymbolData,Currency);
             stageResult.SetWorldNo(1);
@@ -172,7 +172,7 @@ namespace Ryneus
         private string AddTimingText(ActorInfo actorInfo)
         {
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            var find = records.Find(a => a.SelectedIndex.Contains(actorInfo.ActorId));
+            var find = records.Find(a => a.SymbolInfo.GetItemInfos.Find(b => b.GetFlag && b.Param2 == actorInfo.ActorId) != null);
             if (find != null)
             {
                 if (find.StageId == 0)
@@ -197,12 +197,15 @@ namespace Ryneus
             records = records.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
             foreach (var record in records)
             {
-                var selectedIndexes = record.SelectedIndex;
-                foreach (var selectedIndex in selectedIndexes)
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
                 {
-                    if (!actorIdList.Contains(selectedIndex))
+                    if (getItemInfo.GetFlag)
                     {
-                        actorIdList.Add(selectedIndex);
+                        var actorId = getItemInfo.Param2;
+                        if (!actorIdList.Contains(actorId))
+                        {
+                            actorIdList.Add(actorId);
+                        }
                     }
                 }
             }
@@ -216,12 +219,15 @@ namespace Ryneus
             records = records.FindAll(a => a.SymbolInfo.IsActorSymbol());
             foreach (var record in records)
             {
-                var selectedIndexes = record.SelectedIndex;
-                foreach (var selectedIndex in selectedIndexes)
+                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
                 {
-                    if (!actorIdList.Contains(selectedIndex))
+                    if (getItemInfo.GetFlag)
                     {
-                        actorIdList.Add(selectedIndex);
+                        var actorId = getItemInfo.Param1;
+                        if (!actorIdList.Contains(actorId))
+                        {
+                            actorIdList.Add(actorId);
+                        }
                     }
                 }
             }
@@ -235,14 +241,12 @@ namespace Ryneus
             records = records.FindAll(a => a.Selected);
             foreach (var record in records)
             {
-                foreach (var getItemInfo in record.SymbolInfo.GetItemInfos)
+                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
+                foreach (var getItemInfo in getItemInfos)
                 {
-                    if (getItemInfo.GetItemType == GetItemType.Skill)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).SkillType != SkillType.UseAlcana)
                     {
-                        if (DataSystem.FindSkill(getItemInfo.Param1).SkillType != SkillType.UseAlcana)
-                        {
-                            alchemyIdList.Add(getItemInfo.Param1);
-                        }
+                        alchemyIdList.Add(getItemInfo.Param1);
                     }
                 }
             }
@@ -253,18 +257,15 @@ namespace Ryneus
         {
             var alcanaIdList = new List<int>();
             var records = EnableResultInfos(stageId,seek,worldNo);
-            records = records.FindAll(a => a.Selected && a.SelectedIndex.Count > 0);
+            records = records.FindAll(a => a.Selected);
             foreach (var record in records)
             {
-                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => record.SelectedIndex.Contains(a.Param1));
+                var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (getItemInfo.GetItemType == GetItemType.Skill)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).SkillType == SkillType.UseAlcana)
                     {
-                        if (DataSystem.FindSkill(getItemInfo.Param1).SkillType == SkillType.UseAlcana)
-                        {
-                            alcanaIdList.Add(getItemInfo.Param1);
-                        }
+                        alcanaIdList.Add(getItemInfo.Param1);
                     }
                 }
             }

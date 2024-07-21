@@ -24,6 +24,8 @@ namespace Ryneus
 
         private string _saveHumanText = "";
         
+        private List<SkillInfo> _relicData = new();
+        public List<SkillInfo> RelicData => _relicData;
 
         private List<ActorInfo> _levelUpData = new();
         public List<ActorInfo> LevelUpData => _levelUpData;
@@ -60,7 +62,7 @@ namespace Ryneus
             return null;
         }
 
-        public void SetLvUp()
+        public void MakeLvUpData()
         {
             if (_levelUpData.Count > 0) return;
             if (PartyInfo.ReturnSymbol != null) return;
@@ -95,19 +97,39 @@ namespace Ryneus
             _levelUpData = lvUpList;
         }
 
+        public void MakeSelectRelicData()
+        {
+            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
+            if (record != null && record.SymbolInfo.Cleared) return;
+            
+            var getItemInfos = SceneParam.GetItemInfos;
+            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
+            if (selectRelicInfos.Count > 0)
+            {
+                _relicData = new List<SkillInfo>();
+                foreach (var selectRelicInfo in selectRelicInfos)
+                {
+                    var skillInfo = new SkillInfo(selectRelicInfo.Param1);
+                    skillInfo.SetEnable(true);
+                    _relicData.Add(skillInfo);
+                }
+            }
+        }
+
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
             var recordScore = TempInfo.BattleResultScore * 0.01f;
-            record.ClearSelectedIndex();
+            //record.ClearSelectedIndex();
             foreach (var getItemInfo in getItemInfos)
             {
                 var resultInfo = new StrategyResultViewInfo();
                 switch (getItemInfo.GetItemType)
                 {
                     case GetItemType.Numinous:
+                        getItemInfo.SetGetFlag(true);
                         if (_battleResult)
                         { 
                             var beforeGain = getItemInfo.Param2;
@@ -140,7 +162,7 @@ namespace Ryneus
 
                         break;
                     case GetItemType.Skill:
-                        record.AddSelectedIndex(getItemInfo.Param1);
+                        getItemInfo.SetGetFlag(true);
                         // 魔法取得
                         var skillData = DataSystem.FindSkill(getItemInfo.Param1);
                         resultInfo.SetSkillId(skillData.Id);
@@ -165,13 +187,16 @@ namespace Ryneus
                         break;
                     case GetItemType.AddActor:
                     case GetItemType.SelectAddActor:
-                        record.AddSelectedIndex(getItemInfo.Param1);
+                        getItemInfo.SetGetFlag(true);
+                        getItemInfo.SetParam2(getItemInfo.Param1);
+                        //record.AddSelectedIndex(getItemInfo.Param1);
                         // キャラ加入
                         var actorData = DataSystem.FindActor(getItemInfo.Param1);
                         resultInfo.SetTitle(DataSystem.GetReplaceText(14120,actorData.Name));
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.SaveHuman:
+                        getItemInfo.SetGetFlag(true);
                         var beforeSave = getItemInfo.Param2;
                         var saveHuman = (int)Math.Round(getItemInfo.Param1 * recordScore);
                         if (saveHuman > beforeSave)
@@ -218,6 +243,24 @@ namespace Ryneus
                     }
                 }
             }
+        }
+
+        public void MakeSelectRelic(int skillId)
+        {
+            var getItemInfos = SceneParam.GetItemInfos;
+            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
+            // 魔法取得
+            var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
+            foreach (var selectRelicInfo in selectRelicInfos)
+            {
+                selectRelicInfo.SetGetFlag(false);
+            }
+            selectRelic.SetGetFlag(true);
+            var resultInfo = new StrategyResultViewInfo();
+            resultInfo.SetSkillId(skillId);
+            resultInfo.SetTitle(DataSystem.FindSkill(skillId).Name);
+            _resultInfos.Add(resultInfo);
+            _relicData.Clear();
         }
 
         public void RemoveLevelUpData()

@@ -38,8 +38,10 @@ namespace Ryneus
         
         private void OnClickDecide()
         {
-            var eventData = new NameEntryViewEvent(CommandType.EntryEnd);
-            eventData.template = inputField.text;
+            var eventData = new NameEntryViewEvent(CommandType.EntryEnd)
+            {
+                template = inputField.text
+            };
             _commandData(eventData);
             if (inputField != null) inputField.gameObject.SetActive(false);
             if (decideButton != null) decideButton.gameObject.SetActive(false);
@@ -89,7 +91,7 @@ namespace Ryneus
 }
 
 namespace NameEntry
-    {
+{
     public enum CommandType
     {
         None = 0,

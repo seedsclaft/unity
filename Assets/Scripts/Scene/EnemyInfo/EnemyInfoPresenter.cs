@@ -29,7 +29,8 @@ namespace Ryneus
 
         private void UpdateCommand(EnemyInfoViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.SelectEnemy)

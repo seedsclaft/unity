@@ -273,7 +273,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //Symbolに対応したシンボルを表示
-            _view.SetSymbols(_model.StageRecords(symbolResultInfo));
+            _view.SetSymbols(_model.StageResultInfos(symbolResultInfo));
             _view.ShowSymbolList();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去

@@ -15,7 +15,8 @@ namespace Ryneus
         public void SetRankingDetailHandler(System.Action<int> callEvent)
         {
             if (IsInit) return;
-            rankingButton.onClick.AddListener(() => {
+            rankingButton.onClick.AddListener(() => 
+            {
                 if (ListData == null) return;
                 var data = (StageInfo)ListData.Data;
                 callEvent(data.Id);

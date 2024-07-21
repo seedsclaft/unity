@@ -103,8 +103,17 @@ namespace Ryneus
             var list = new List<ListData>();
             foreach (var getItemInfo in symbolInfo.GetItemInfos)
             {
-                var data = new ListData(getItemInfo);
-                data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+                if (getItemInfo.GetItemType != GetItemType.SelectRelic)
+                {
+                    var data = new ListData(getItemInfo);
+                    data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+                    list.Add(data);
+                }
+            }
+            var selectRelic = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectRelic);
+            if (selectRelic != null)
+            {
+                var data = new ListData(selectRelic);
                 list.Add(data);
             }
             return list;

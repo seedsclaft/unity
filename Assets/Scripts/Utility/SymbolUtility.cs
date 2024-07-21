@@ -11,7 +11,7 @@ namespace Ryneus
         public static SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
         public static StageInfo CurrentStage => CurrentSaveData.CurrentStage;
         public static PartyInfo PartyInfo => CurrentSaveData.Party;
-        public static List<SymbolResultInfo> StageRecordInfos(List<StageSymbolData> stageSymbolDates)
+        public static List<SymbolResultInfo> StageResultInfos(List<StageSymbolData> stageSymbolDates)
         {
             var symbolInfos = new List<SymbolResultInfo>();
             var symbols = stageSymbolDates.FindAll(a => a.Seek > 0);
@@ -66,39 +66,8 @@ namespace Ryneus
                         // アルカナランダムで報酬設定
                         if (stageSymbolData.Param1 == -1)
                         {
-                            var alcanaRank = stageSymbolData.Param2;
-                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-                            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-                            var count = 2;
-                            if (alcanaSkills.Count < 2)
-                            {
-                                count = alcanaSkills.Count;
-                            }
-                            if (count == 0)
-                            {
-                                // 報酬設定
-                                var resourceData2 = new GetItemData
-                                {
-                                    Type = GetItemType.Numinous,
-                                    Param1 = 20
-                                };
-                                getItemInfos.Add(new GetItemInfo(resourceData2));
-                            } else
-                            {
-                                while (getItemInfos.Count <= count)
-                                {
-                                    var rand = Random.Range(0,alcanaSkills.Count);
-                                    // 報酬設定
-                                    var alcanaData = new GetItemData
-                                    {
-                                        Type = GetItemType.Skill,
-                                        Param1 = alcanaSkills[rand].Value.Id
-                                    };
-                                    var getItemInfo = new GetItemInfo(alcanaData);
-                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                    getItemInfos.Add(getItemInfo);
-                                }
-                            }
+                            var relicInfos = MakeSelectRelicGetItemInfos(stageSymbolData.Param2);
+                            symbolInfo.SetGetItemInfos(relicInfos);
                         }
                         break;
                     case SymbolType.Resource:
@@ -206,16 +175,60 @@ namespace Ryneus
                     foreach (var prizeSet in prizeSets)
                     {
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                        getItemInfos.Add(getItemInfo);
+                        if (prizeSet.GetItem.Type == GetItemType.SelectRelic)
+                        {
+                            var relicInfos = MakeSelectRelicGetItemInfos(getItemInfo.Param2);
+                            getItemInfos.AddRange(relicInfos);
+                        } else
+                        {
+                            getItemInfos.Add(getItemInfo);
+                        }
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 var record = new SymbolResultInfo(symbolInfo,stageSymbolData,GameSystem.CurrentStageData.Party.Currency);
                 symbolInfos.Add(record);
-                // アナザー世界のレコードを作る
-                PartyInfo.MakeAnotherStageRecord(record);
             }
             return symbolInfos;
+        }
+
+        private static List<GetItemInfo> MakeSelectRelicGetItemInfos(int rank)
+        {
+            var getItemInfos = new List<GetItemInfo>();
+            var alcanaRank = rank;
+            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+            var count = 2;
+            if (alcanaSkills.Count < 2)
+            {
+                count = alcanaSkills.Count;
+            }
+            if (count == 0)
+            {
+                // 報酬設定
+                var resourceData2 = new GetItemData
+                {
+                    Type = GetItemType.Numinous,
+                    Param1 = 20
+                };
+                getItemInfos.Add(new GetItemInfo(resourceData2));
+            } else
+            {
+                while (getItemInfos.Count <= count)
+                {
+                    var rand = Random.Range(0,alcanaSkills.Count);
+                    // 報酬設定
+                    var alcanaData = new GetItemData
+                    {
+                        Type = GetItemType.SelectRelic,
+                        Param1 = alcanaSkills[rand].Value.Id
+                    };
+                    var getItemInfo = new GetItemInfo(alcanaData);
+                    //symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                    getItemInfos.Add(getItemInfo);
+                }
+            }
+            return getItemInfos;
         }
         
         public static StageSymbolData PickUpSymbolData(List<SymbolGroupData> groupDates)

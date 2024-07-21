@@ -65,8 +65,11 @@ namespace Ryneus
                 CommandEndLvUpAnimation();
                 break;
                 case CommandType.LvUpNext:
-                CommandLvUpNext();
-                break;
+                    CommandLvUpNext();
+                    break;
+                case CommandType.SelectAlcanaList:
+                    CommandSelectAlcanaList((SkillInfo)viewEvent.template);
+                    break;
             }
         }
 
@@ -91,7 +94,8 @@ namespace Ryneus
             if (tacticsActors != null && tacticsActors.Count > 0)
             {
                 SeekStrategyState();
-            } else{
+            } else
+            {
                 EndStrategy();
             }
         }
@@ -109,7 +113,8 @@ namespace Ryneus
                 // 勝利時
                 if (_model.BattleResultVictory())
                 {
-                    _model.SetLvUp();
+                    _model.MakeLvUpData();
+                    _model.MakeSelectRelicData();
                     _model.MakeResult();
                     _view.SetTitle(DataSystem.GetText(14030));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
@@ -143,20 +148,14 @@ namespace Ryneus
             {
                 if (_model.BattleResultVictory())
                 {
-                    if (_model.LevelUpData.Count == 0)
-                    {
-                        ShowResultList();
-                    }
+                    //NextSeekResult();
                 } else
                 {
                     ShowResultList();
                 }
             } else
             {
-                if (_model.LevelUpData.Count == 0)
-                {
-                    ShowResultList();
-                }
+                NextSeekResult();
             }
             var stageEvents = _model.StageEvents(EventTiming.StartStrategy);
             foreach (var stageEvent in stageEvents)
@@ -203,14 +202,7 @@ namespace Ryneus
                     EndEvent = () =>
                     {
                         _model.RemoveLevelUpData();
-                        if (_model.LevelUpData.Count > 0)
-                        {
-                            CommandEndLvUpAnimation();
-                        }
-                        else
-                        {
-                            ShowResultList();
-                        }
+                        NextSeekResult();
                     },
                     template = learnSkillInfo
                 };
@@ -218,14 +210,23 @@ namespace Ryneus
             } else
             {
                 _model.RemoveLevelUpData();
-                if (_model.LevelUpData.Count > 0)
-                {
-                    CommandEndLvUpAnimation();
-                } else
-                {
-                    ShowResultList();
-                }
+                NextSeekResult();
             }
+        }
+
+        private void NextSeekResult()
+        {
+            if (_model.LevelUpData.Count > 0)
+            {
+                CommandEndLvUpAnimation();
+                return;
+            }
+            if (_model.RelicData.Count > 0)
+            {
+                _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.RelicData));
+                return;
+            }
+            ShowResultList();
         }
 
         private void ShowResultList()
@@ -287,7 +288,26 @@ namespace Ryneus
         }
 
 
+        private void CommandSelectAlcanaList(SkillInfo skillInfo)
+        {
+            var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
+            _view.CommandCallConfirm(popupInfo);
+        }
 
+        private void UpdateSelectAlcana(ConfirmCommandType confirmCommandType)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                // アルカナ選択
+                var alcanaSelect = _view.AlcanaSelectSkillInfo();
+                _model.MakeSelectRelic(alcanaSelect.Id);
+                _view.HideAlcanaList();
+                NextSeekResult();
+            }
+        }
+        
         private void CommandContinue()
         {
             // ロスト判定

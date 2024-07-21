@@ -21,7 +21,12 @@ namespace Ryneus
             if (_data == null) return;
             if (skillInfoComponent != null)
             {
-                skillInfoComponent.UpdateData(_data.SkillId);
+                var skillId = _data.SkillId;
+                if (_data.GetItemType == GetItemType.SelectRelic)
+                {
+                    skillId = 0;
+                }
+                skillInfoComponent.UpdateData(skillId);
             }
             if (titleName != null)
             {

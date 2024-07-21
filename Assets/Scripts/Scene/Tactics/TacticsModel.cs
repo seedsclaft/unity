@@ -65,7 +65,7 @@ namespace Ryneus
             return new ListData(DataSystem.TacticsCommand[index],index,enable);
         }
 
-        public List<ListData> StageRecords(SymbolResultInfo symbolResultInfo)
+        public List<ListData> StageResultInfos(SymbolResultInfo symbolResultInfo)
         {
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo));
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);

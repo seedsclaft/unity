@@ -9,7 +9,6 @@ namespace Ryneus
 {
     public class TrainView : BaseView
     {
-
         [SerializeField] private BattleSelectCharacter battleSelectCharacter = null;
         [SerializeField] private TacticsSelectCharacter selectCharacter = null;
         public int CharacterSelectIndex => selectCharacter.CharacterList.Index;
@@ -218,16 +217,6 @@ namespace Ryneus
             SetHelpInputInfo("TACTICS");
         }
 
-        public void ShowSelectCharacterCommand()
-        {
-            selectCharacter.ShowCharacterList();
-        }
-
-        public void HideSelectCharacterCommand()
-        {
-            selectCharacter.HideCharacterList();
-        }
-
         public void ShowConfirmCommand()
         {
             selectCharacter.ShowCommandList();
@@ -256,7 +245,7 @@ namespace Ryneus
                 battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             }
             battleSelectCharacter.SetActorInfo(actorInfo,party);
-            battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());
+            battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
         }
 

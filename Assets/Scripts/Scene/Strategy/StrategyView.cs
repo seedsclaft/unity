@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private BaseList strategyResultList = null; 
         [SerializeField] private BaseList commandList = null; 
         [SerializeField] private BaseList statusList = null; 
+        [SerializeField] private MagicList alcanaSelectList = null;
         [SerializeField] private TextMeshProUGUI title = null; 
         [SerializeField] private ActorInfoComponent actorInfoComponent = null;
         [SerializeField] private Button lvUpStatusButton = null;
@@ -29,6 +30,7 @@ namespace Ryneus
 
         private BattleStartAnim _battleStartAnim = null;
         private bool _animationBusy = false;
+        public int AlcanaListIndex => alcanaSelectList.Index;
 
         private new System.Action<StrategyViewEvent> _commandData = null;
 
@@ -58,6 +60,8 @@ namespace Ryneus
             saveHumanObj?.SetActive(false);
             battleTurnObj?.SetActive(false);
             battleScoreObj?.SetActive(false);
+            alcanaSelectList.Initialize();
+            alcanaSelectList.Hide();
             new StrategyPresenter(this);
         }
 
@@ -221,6 +225,43 @@ namespace Ryneus
             strategyResultList.Deactivate();
             commandList.Deactivate();
         }
+
+        public void HideAlcanaList()
+        {
+            alcanaSelectList.Hide();
+        }
+
+        public void SetAlcanaSelectInfos(List<ListData> skillInfos)
+        {
+            SetBackEvent(() => {});
+            alcanaSelectList.SetData(skillInfos);
+            alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => 
+            {
+                if (AlcanaSelectSkillInfo() != null)
+                {
+                    var eventData = new StrategyViewEvent(CommandType.SelectAlcanaList)
+                    {
+                        template = AlcanaSelectSkillInfo()
+                    };
+                    _commandData(eventData);
+                }
+            });
+            alcanaSelectList.Show();
+        }
+
+        public SkillInfo AlcanaSelectSkillInfo() 
+        {
+            var listData = alcanaSelectList.ListData;
+            if (listData != null)
+            {
+                var data = (SkillInfo)listData.Data;
+                if (data != null && data.Enable)
+                {
+                    return data;
+                }
+            }
+            return null;
+        }
     }
 
     public class StrategyViewEvent
@@ -247,7 +288,7 @@ namespace Strategy
         CallEnemyInfo = 4,
         ResultClose = 5,
         LvUpNext = 7,
-        
+        SelectAlcanaList = 8,
         EndLvUpAnimation = 9,
     }
 }

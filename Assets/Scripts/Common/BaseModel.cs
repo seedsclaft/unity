@@ -287,7 +287,7 @@ namespace Ryneus
             CurrentSaveData.Party.StageClear(CurrentStage.Id);
         }
 
-        public List<SymbolResultInfo> OpeningStageRecordInfos()
+        public List<SymbolResultInfo> OpeningStageResultInfos()
         {
             var recordInfos = new List<SymbolResultInfo>();
             // 初期加入マス
@@ -312,34 +312,46 @@ namespace Ryneus
                 if (addActor == false)
                 {
                     record.SetSelected(true);
-                    // 初期アクター
-                    record.AddSelectedIndex(1);
-                    addActor = true;
-                    // アナザー世界のレコードを作る
-                    MakeAnotherStageRecord(record);
+                    var addActorGetItemInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
+                    if (addActorGetItemInfo != null)
+                    {
+                        // 初期アクター
+                        addActorGetItemInfo.SetParam2(1);
+                        addActorGetItemInfo.SetGetFlag(true);
+                        addActor = true;
+                        // アナザー世界のレコードを作る
+                        MakeAnotherStageResult(record);
+                    }
                 }
                 recordInfos.Add(record);
             }
             return recordInfos;
         }
 
-        public List<SymbolResultInfo> StageRecordInfos(int stageId)
+        public List<SymbolResultInfo> StageResultInfos(int stageId)
         {
             var stageData = DataSystem.FindStage(stageId);
-            return SymbolUtility.StageRecordInfos(stageData.StageSymbols);
+            return SymbolUtility.StageResultInfos(stageData.StageSymbols);
         }
 
         public void StartOpeningStage()
         {
             InitSaveStageInfo();
             CurrentSaveData.InitializeStageData(1);
-            foreach (var record in OpeningStageRecordInfos())
+            foreach (var record in OpeningStageResultInfos())
             {
                 PartyInfo.SetSymbolResultInfo(record);
             }
             PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-            foreach (var record in StageRecordInfos(CurrentStage.Id))
+            foreach (var record in StageResultInfos(CurrentStage.Id))
             {
+                PartyInfo.SetSymbolResultInfo(record);
+            }
+            // アナザーデータ作成
+            foreach (var record in StageResultInfos(CurrentStage.Id))
+            {
+                record.SetWorldNo(1);
+                record.SetSelected(false);
                 PartyInfo.SetSymbolResultInfo(record);
             }
             //MakeSymbolResultInfos();
@@ -486,26 +498,6 @@ namespace Ryneus
                 evaluate = CurrentStage.CurrentSeek - 1;
             }
             return evaluate;
-        }
-
-        public List<int> SelectIdxList()
-        {
-            var selectIdx = new List<int>();
-            foreach (var actorInfo in StageMembers())
-            {
-                selectIdx.Add(actorInfo.ActorId);
-            }
-            return selectIdx;
-        }
-
-        public List<int> SelectRankList()
-        {
-            var selectIdRank = new List<int>();
-            foreach (var actorInfo in StageMembers())
-            {
-                selectIdRank.Add(actorInfo.Evaluate());
-            }
-            return selectIdRank;
         }
 
         public async void CurrentRankingData(Action<string> endEvent)
@@ -697,9 +689,9 @@ namespace Ryneus
             return stageKey.ToString();
         }
 
-        public void MakeAnotherStageRecord(SymbolResultInfo symbolResultInfo)
+        public void MakeAnotherStageResult(SymbolResultInfo symbolResultInfo)
         {
-            PartyInfo.MakeAnotherStageRecord(symbolResultInfo);
+            PartyInfo.MakeAnotherStageResult(symbolResultInfo);
         }
     }
 }

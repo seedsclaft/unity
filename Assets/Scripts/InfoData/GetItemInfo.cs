@@ -11,8 +11,12 @@ namespace Ryneus
         public int Param1 => _param1;
         private int _param2 = -1;
         public int Param2 => _param2;
+        public void SetParam2(int param2) => _param2 = param2;
         private int _skillId = -1;
         public int SkillId => _skillId;
+        private bool _getFlag = false;
+        public bool GetFlag => _getFlag;
+        public void SetGetFlag(bool getFlag) => _getFlag = getFlag;
 
         public GetItemInfo(GetItemData getItemData)
         {
@@ -21,7 +25,7 @@ namespace Ryneus
                 _param1 = getItemData.Param1;
                 _param2 = getItemData.Param2;
                 _getItemType = getItemData.Type;
-                if (_getItemType == GetItemType.Skill)
+                if (IsSkill())
                 {
                     var skillData = DataSystem.FindSkill(_param1);
                     _skillId = skillData.Id;
@@ -35,11 +39,6 @@ namespace Ryneus
             _param2 = getItemInfo.Param2;
             _getItemType = getItemInfo.GetItemType;
             _skillId = getItemInfo.SkillId;
-        }
-
-        public void SetParam2(int param2)
-        {
-            _param2 = param2;
         }
 
         public string GetTitleData()
@@ -68,6 +67,8 @@ namespace Ryneus
                     return DataSystem.FindActor(_param1).Name;
                 case GetItemType.SaveHuman:
                     return DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1);
+                case GetItemType.SelectRelic:
+                    return "選択してレア魔法入手";
                 case GetItemType.RemakeHistory:
                     break;
                 case GetItemType.ParallelHistory:
@@ -80,7 +81,7 @@ namespace Ryneus
         
         public bool IsSkill()
         {
-            return _getItemType == GetItemType.Skill;
+            return _getItemType == GetItemType.Skill || _getItemType == GetItemType.SelectRelic;
         }
 
         public bool IsAttributeSkill()
