@@ -133,7 +133,7 @@ namespace Ryneus
             _triggeredSkill = triggeredSkill;
         }
 
-        public bool IsUnison()
+        public bool IsWait()
         {
             return SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.AddState && (StateType)a.Param1 == StateType.Wait) != null;
         }

@@ -1041,7 +1041,10 @@ namespace Ryneus
             }
             foreach (var skillInfo in _skills)
             {
-                skillInfo.SeekCountTurn();
+                if (_lastSelectSkillId != skillInfo.Id)
+                {
+                    skillInfo.SeekCountTurn();
+                }
             }
         }
 

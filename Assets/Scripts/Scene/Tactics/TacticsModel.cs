@@ -98,7 +98,7 @@ namespace Ryneus
             foreach (var getItemInfo in getItemInfos)
             {
                 var skillInfo = new SkillInfo(getItemInfo.Param1);
-                var cost = getItemInfo.Param2;
+                var cost = 0;
                 skillInfo.SetEnable(cost <= PartyInfo.Currency);
                 skillInfos.Add(skillInfo);
             }
@@ -131,8 +131,10 @@ namespace Ryneus
         {
             var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             // 違うworldNoのActorIdも含まない
-            var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;var anotherActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,worldNo);
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId) && !anotherActorIdList.Contains(a.ActorId));
+            var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;
+            var anotherActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,worldNo);
+            pastActorIdList.AddRange(anotherActorIdList);
+            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 

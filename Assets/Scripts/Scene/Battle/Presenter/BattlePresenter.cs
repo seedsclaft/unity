@@ -459,7 +459,7 @@ namespace Ryneus
             actionInfo = _model.CurrentActionInfo;
             if (actionInfo != null)
             {
-                if (actionInfo.IsUnison())
+                if (actionInfo.IsWait())
                 {
                     StartWaitCommand(actionInfo);
                 } else

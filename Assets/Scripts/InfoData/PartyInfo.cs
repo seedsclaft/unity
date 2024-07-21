@@ -223,7 +223,7 @@ namespace Ryneus
                 {
                     if (getItemInfo.GetFlag)
                     {
-                        var actorId = getItemInfo.Param1;
+                        var actorId = getItemInfo.Param2;
                         if (!actorIdList.Contains(actorId))
                         {
                             actorIdList.Add(actorId);

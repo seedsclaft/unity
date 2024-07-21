@@ -215,9 +215,10 @@ namespace Ryneus
 
         public void WaitUnison()
         {
-            _currentBattler.SetAp(1);
-            _currentBattler.AddState(new StateInfo(StateType.Wait,999,0,_currentBattler.Index,_currentBattler.Index,10),true);
-            _currentBattler = null;
+            _currentTurnBattler.SetAp(1);
+            _currentTurnBattler.AddState(new StateInfo(StateType.Wait,999,0,_currentTurnBattler.Index,_currentTurnBattler.Index,10),true);
+            _currentTurnBattler.SetLastSelectSkillId(-1);
+            _currentTurnBattler = null;
             _actionInfos.Clear();
         }
 
@@ -1070,6 +1071,7 @@ namespace Ryneus
                     //subject.GainMp(actionInfo.MpCost * -1);
                     //subject.GainPayBattleMp(actionInfo.MpCost);
                     subject.InitCountTurn(actionInfo.SkillInfo.Id);
+                    subject.SetLastSelectSkillId(actionInfo.SkillInfo.Id);
                     subject.GainUseCount(actionInfo.SkillInfo.Id);
                 }
                 if (actionInfo.Master.IsHpHealFeature())

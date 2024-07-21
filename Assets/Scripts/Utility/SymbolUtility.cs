@@ -67,7 +67,8 @@ namespace Ryneus
                         if (stageSymbolData.Param1 == -1)
                         {
                             var relicInfos = MakeSelectRelicGetItemInfos(stageSymbolData.Param2);
-                            symbolInfo.SetGetItemInfos(relicInfos);
+                            //symbolInfo.SetGetItemInfos(relicInfos);
+                            getItemInfos.AddRange(relicInfos);
                         }
                         break;
                     case SymbolType.Resource:

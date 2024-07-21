@@ -75,12 +75,14 @@ namespace Ryneus
                 Type = GetItemType.SaveHuman
             };
             _getItemInfos.Add(new GetItemInfo(getItemData2));
+            /*
             var getItemData = new GetItemData
             {
                 Param1 = level + 4,
                 Type = GetItemType.Numinous
             };
             _getItemInfos.Add(new GetItemInfo(getItemData));
+            */
         }
 
         public void AddEnemy(BattlerInfo battlerInfo)

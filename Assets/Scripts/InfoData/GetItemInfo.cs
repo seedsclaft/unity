@@ -63,8 +63,9 @@ namespace Ryneus
                 case GetItemType.LearnSkill:
                     return DataSystem.FindSkill(_param2).Name;
                 case GetItemType.AddActor:
-                case GetItemType.SelectAddActor:
                     return DataSystem.FindActor(_param1).Name;
+                case GetItemType.SelectAddActor:
+                    return "選択して仲間召喚";
                 case GetItemType.SaveHuman:
                     return DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1);
                 case GetItemType.SelectRelic:
