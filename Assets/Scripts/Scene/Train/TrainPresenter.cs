@@ -115,10 +115,6 @@ namespace Ryneus
                 CommandCommandHelp();
             }
             
-            if (viewEvent.commandType == CommandType.AlcanaCheck)
-            {
-                CommandAlcanaCheck();
-            }
         }
 
         private void UpdatePopupSkillInfo()
@@ -128,10 +124,14 @@ namespace Ryneus
 
         private void CommandBack()
         {
-            var eventData = new TrainViewEvent(_backCommand);
-            eventData.template = _model.TacticsCommandType;
-            UpdateCommand(eventData);
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            if (_backCommand != CommandType.None)
+            {
+                var eventData = new TrainViewEvent(_backCommand);
+                eventData.template = _model.TacticsCommandType;
+                UpdateCommand(eventData);
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                _backCommand = CommandType.None;
+            }
         }
 
         private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
@@ -464,19 +464,5 @@ namespace Ryneus
             
         }
 
-        private void CommandAlcanaCheck()
-        {
-            _busy = true;
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new PopupInfo();
-            popupInfo.PopupType = PopupType.AlcanaList;
-            popupInfo.EndEvent = () => {
-                _view.ChangeUIActive(true);
-                _busy = false;
-            };
-            _view.CommandCallPopup(popupInfo);
-            _busy = true;
-            _view.ChangeUIActive(false);
-        }
     }
 }

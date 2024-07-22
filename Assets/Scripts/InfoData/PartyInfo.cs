@@ -244,7 +244,7 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).SkillType != SkillType.UseAlcana)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank < 200)
                     {
                         alchemyIdList.Add(getItemInfo.Param1);
                     }
@@ -263,7 +263,7 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).SkillType == SkillType.UseAlcana)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank >= 200)
                     {
                         alcanaIdList.Add(getItemInfo.Param1);
                     }

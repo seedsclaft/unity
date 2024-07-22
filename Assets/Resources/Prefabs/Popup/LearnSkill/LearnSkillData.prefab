@@ -448,6 +448,7 @@ MonoBehaviour:
   learningCost: {fileID: 0}
   countTurn: {fileID: 1262806139287721313}
   learningText: {fileID: 0}
+  rank: {fileID: 6165429469975049559}
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}
   shinyReflect: {fileID: 0}
@@ -1043,6 +1044,18 @@ MonoBehaviour:
 --- !u!114 &5701549323641829400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 101522752879801026, guid: 2533c3a0ba6260543ac6b73de353e4ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 5654082970295667418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6165429469975049559 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2010672442025541517, guid: 2533c3a0ba6260543ac6b73de353e4ad,
     type: 3}
   m_PrefabInstance: {fileID: 5654082970295667418}
   m_PrefabAsset: {fileID: 0}

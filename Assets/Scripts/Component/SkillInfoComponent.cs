@@ -21,6 +21,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI learningCost;
         [SerializeField] private TextMeshProUGUI countTurn;
         [SerializeField] private TextMeshProUGUI learningText;
+        [SerializeField] private TextMeshProUGUI rank;
         [SerializeField] private GameObject selectable;
         [SerializeField] private GameObject selectedAlcana;
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
@@ -90,6 +91,8 @@ namespace Ryneus
                 type?.SetText(skillData.SkillType.ToString());
                 countTurn?.gameObject?.SetActive(skillData.SkillType == SkillType.Active || (skillData.SkillType == SkillType.Passive && skillData.CountTurn > 0));
                 countTurn?.SetText(skillData.CountTurn.ToString());
+                rank?.gameObject?.SetActive(true);
+                UpdateSkillRank(skillData.Rank);
             } else
             {
                 Clear();
@@ -137,6 +140,24 @@ namespace Ryneus
             }
         }
 
+        private void UpdateSkillRank(int skillRank)
+        {
+            var rankText = "N";
+            if (skillRank >= 210)
+            {
+                rankText = "SSR";
+            } else
+            if (skillRank >= 200)
+            {
+                rankText = "SR";
+            } else
+            if (skillRank >= 20)
+            {
+                rankText = "R";
+            }
+            rank?.SetText(rankText.ToString());
+        }
+
         public void Clear()
         {
             if (icon != null)
@@ -163,6 +184,7 @@ namespace Ryneus
             range?.gameObject.SetActive(false);
             range?.SetText("");
             countTurn?.gameObject?.SetActive(false);
+            rank?.gameObject?.SetActive(false);
         }
     }
 }

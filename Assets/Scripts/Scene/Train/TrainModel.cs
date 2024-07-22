@@ -73,7 +73,7 @@ namespace Ryneus
         {
             var actorInfo = TacticsActor();
             var skillInfo = new SkillInfo(skillId);
-            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
             PartyInfo.ChangeCurrency(Currency - learningCost);
             var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
@@ -124,7 +124,7 @@ namespace Ryneus
                         continue;
                     }
                 }
-                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers());
+                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
                 skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);

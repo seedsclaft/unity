@@ -303,12 +303,16 @@ namespace Ryneus
             {
                 return;
             }
-            var eventData = new TacticsViewEvent(_backCommand)
+            if (_backCommand != CommandType.None)
             {
-                template = _model.TacticsCommandType
-            };
-            UpdateCommand(eventData);
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                var eventData = new TacticsViewEvent(_backCommand)
+                {
+                    template = _model.TacticsCommandType
+                };
+                UpdateCommand(eventData);
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                _backCommand = CommandType.None;
+            }
         }
 
         private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
@@ -493,7 +497,7 @@ namespace Ryneus
             var symbolType = _model.CurrentSelectRecord().SymbolType;
             if (symbolType == SymbolType.Alcana && _alcanaSelectBusy)
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+                var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11142,skillInfo.Master.Name),(a) => UpdateSelectAlcana(a),ConfirmType.SkillDetail);
                 popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
                 _view.CommandCallConfirm(popupInfo);
             } else
@@ -862,7 +866,7 @@ namespace Ryneus
         private void CommandAlcanaCheck()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaSkillInfos()));
+            _view.SetAlcanaSelectInfos(_model.MakeListData(_model.AlcanaSkillInfos(),0));
             _backCommand = CommandType.HideAlcanaList;
         }
 

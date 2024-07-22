@@ -30,7 +30,6 @@ namespace Train
         SelectSkillTrigger, // 作戦画面を表示する
         Back,
         CommandHelp,
-        AlcanaCheck,
         ChangeSelectTacticsActor,
         BattleReplay,
         ShowTacticsCharacter,

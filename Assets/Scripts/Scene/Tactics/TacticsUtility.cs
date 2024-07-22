@@ -21,9 +21,10 @@ namespace Ryneus
             return level * TacticsCostRate(actorInfo);
         }
 
-        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers)
+        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers,int rank)
         {
-            int cost = 4;
+            var cost = 1;
+            var rankCost = ConvertRankCost(rank);
             var param = actorInfo.AttributeRanks(stageMembers)[(int)attributeType-1];
             switch (param)
             {
@@ -34,26 +35,39 @@ namespace Ryneus
                     cost = 4;
                     break;
                 case AttributeRank.B:
-                    cost = 9;
+                    cost = 8;
                     break;
                 case AttributeRank.C:
-                    cost = 16;
+                    cost = 12;
                     break;
                 case AttributeRank.D:
-                    cost = 25;
+                    cost = 24;
                     break;
                 case AttributeRank.E:
                     cost = 36;
                     break;
                 case AttributeRank.F:
-                    cost = 42;
+                    cost = 48;
                     break;
                 case AttributeRank.G:
                     cost = 64;
                     break;
             }
             
-            return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo));
+            return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo) * rankCost);
+        }
+
+        private static int ConvertRankCost(int rank)
+        {
+            switch (rank)
+            {
+                case 10:
+                return 1;
+                case 2:
+                case 20:
+                return 2;
+            }
+            return 1;
         }
 
         public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
