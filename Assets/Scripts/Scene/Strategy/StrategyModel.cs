@@ -211,6 +211,16 @@ namespace Ryneus
                             _saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         }
                         break;
+                    case GetItemType.SelectRelic:
+                        // アルカナ選択の時は既にFlagを変えておく
+                        if (getItemInfo.GetFlag == true)
+                        {
+                            var relicData = DataSystem.FindSkill(getItemInfo.Param1);
+                            resultInfo.SetSkillId(relicData.Id);
+                            resultInfo.SetTitle(relicData.Name);
+                            _resultInfos.Add(resultInfo);
+                        }
+                        break;
                 }
             }
             // クリアフラグを立てる

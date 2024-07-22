@@ -105,6 +105,19 @@ namespace Ryneus
             return skillInfos;
         }
 
+        public void MakeSelectRelic(int skillId)
+        {
+            var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos;
+            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
+            // 魔法取得
+            var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
+            foreach (var selectRelicInfo in selectRelicInfos)
+            {
+                selectRelicInfo.SetGetFlag(false);
+            }
+            selectRelic.SetGetFlag(true);
+        }
+
         public List<SkillInfo> ShopMagicSkillInfos(List<GetItemInfo> getItemInfos)
         {
             var skillInfos = new List<SkillInfo>();

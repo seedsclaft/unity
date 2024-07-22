@@ -525,6 +525,7 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
                 getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
+                _model.MakeSelectRelic(alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
             }
         }
