@@ -300,6 +300,10 @@ namespace Ryneus
 
         private void CommandSelectActorParadigm()
         {
+            if (_model.EnableAddInBattle() == false)
+            {
+                return;
+            }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
             _view.RefreshTacticsActor(_model.TacticsBattleCharacterData(_view.CharacterSelectIndex));

@@ -163,7 +163,7 @@ namespace Ryneus
                     break;
                 case CommandType.EndShopSelect:
                     CommandEndShopSelect();
-                break;
+                    break;
                 case CommandType.HideAlcanaList:
                     CommandHideAlcanaList();
                     break;
@@ -560,6 +560,9 @@ namespace Ryneus
             {
                 var getItemInfos = _model.LearningShopMagics();
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
+            } else
+            {
+                _backCommand = CommandType.EndShopSelect;
             }
         }
 
@@ -747,7 +750,16 @@ namespace Ryneus
 
         private void CommandPopupSkillInfo(List<GetItemInfo> getItemInfos)
         {
-            var confirmInfo = new ConfirmInfo("",(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
+            confirmInfo.SetSkillInfo(_model.BasicSkillGetItemInfos(getItemInfos));
+            confirmInfo.SetIsNoChoice(true);
+            _view.CommandCallSkillDetail(confirmInfo);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+
+        private void CommandPopupShopInfo(List<GetItemInfo> getItemInfos)
+        {
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11192),(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(_model.BasicSkillGetItemInfos(getItemInfos));
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallSkillDetail(confirmInfo);
@@ -811,6 +823,9 @@ namespace Ryneus
                     statusViewInfo2.SetDisplayCharacterList(false);
                     _view.CommandCallStatus(statusViewInfo2);
                     _view.ChangeUIActive(false);
+                    break;
+                case SymbolType.Shop:
+                    CommandPopupShopInfo(symbolInfo.SymbolInfo.GetItemInfos);
                     break;
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);

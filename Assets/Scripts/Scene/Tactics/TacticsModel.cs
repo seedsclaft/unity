@@ -459,7 +459,11 @@ namespace Ryneus
 
         public int ShopLearningCost(SkillInfo skillInfo)
         {
-            return skillInfo.Master.Rank * 10;
+            if (skillInfo.Master.Rank >= 20)
+            {
+                return 20;
+            }
+            return 10;
         }
 
         public List<GetItemInfo> LearningShopMagics()

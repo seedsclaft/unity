@@ -71,12 +71,12 @@ namespace Ryneus
 
         public List<GetItemInfo> MakeSelectGetItemInfos()
         {
-            var getItemData = new GetItemData
+            var getItemInfo = CurrentSelectRecord().SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
+            if (getItemInfo != null)
             {
-                Param2 = CurrentActor.ActorId,
-                Type = GetItemType.SelectAddActor
-            };
-            var getItemInfo = new GetItemInfo(getItemData);
+                getItemInfo.SetParam1(CurrentActor.ActorId);
+                getItemInfo.SetParam2(CurrentActor.ActorId);
+            }
             return new List<GetItemInfo>(){getItemInfo};
         }
 

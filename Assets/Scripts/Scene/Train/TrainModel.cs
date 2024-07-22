@@ -87,6 +87,17 @@ namespace Ryneus
             TempInfo.CashBattleActors(BattleMembers());
         }
 
+        public bool EnableAddInBattle()
+        {
+            var actorInfo = TacticsActor();
+            if (actorInfo.BattleIndex <= 0)
+            {
+                var battleIndex = StageMembers().FindAll(a => a.BattleIndex >= 0).Count + 1;
+                return battleIndex <= 5;
+            }
+            return true;
+        }
+
         public void SetInBattle()
         {
             var actorInfo = TacticsActor();

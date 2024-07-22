@@ -9,6 +9,7 @@ namespace Ryneus
         public GetItemType GetItemType => _getItemType;
         private int _param1 = -1;
         public int Param1 => _param1;
+        public void SetParam1(int param1) => _param1 = param1;
         private int _param2 = -1;
         public int Param2 => _param2;
         public void SetParam2(int param2) => _param2 = param2;
