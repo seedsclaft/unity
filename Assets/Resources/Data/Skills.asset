@@ -439,7 +439,7 @@ MonoBehaviour:
     IconIndex: 4
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 4
+    CountTurn: 3
     Rank: 2
     Attribute: 2
     Scope: 4
@@ -463,7 +463,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 201
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 3
     Rank: 2
     Attribute: 2
     Scope: 1
@@ -2426,7 +2426,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 3
     Rank: 20
     Attribute: 3
     Scope: 4
@@ -3295,7 +3295,7 @@ MonoBehaviour:
     CountTurn: 0
     Rank: 100
     Attribute: 3
-    Scope: 3
+    Scope: 2
     SkillType: 3
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D\u653B\u6483\u30925\u56DE\u53D7\u3051\u308B\n\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
@@ -5144,16 +5144,16 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u6700\u5927M\uFF50\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6700\u521D\u306BActive\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u305F\u6642\n\u767A\u52D5\u3057\u305F\u9B54\u6CD5\u306ECT-/f[f,0,1]"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     FeatureDates:
     - SkillId: 300020
-      FeatureType: 3010
-      Param1: 1030
-      Param2: 999
-      Param3: 1
+      FeatureType: 4040
+      Param1: 1
+      Param2: 0
+      Param3: 0
       Rate: 100
     TriggerDates:
     - SkillId: 300020
@@ -5324,7 +5324,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)3\u56DE\u884C\u52D5\u3059\u308B\u6BCE\u306B\n\\s\u306EMp\u3092/f[f,0,1]\u56DE\u5FA9"
+    Help: "(\u6761\u4EF6)3\u56DE\u884C\u52D5\u3059\u308B\u6BCE\u306B\n\\s\u306ECT-/f[f,0,1]"
     Range: 2
     RepeatTime: 1
     AliveType: 1

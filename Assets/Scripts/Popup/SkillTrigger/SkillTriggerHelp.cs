@@ -19,8 +19,20 @@ namespace Ryneus
 
         public void UpdateSkillTriggerHelp(string help1,string help2)
         {
-            trigger1Help?.SetText(help1);
-            trigger2Help?.SetText(help2);
+            if (help1 == "\"\"")
+            {
+                trigger1Help?.SetText("-");
+            } else
+            {
+                trigger1Help?.SetText(help1);
+            }
+            if (help2 == "\"\"")
+            {
+                trigger2Help?.SetText("-");
+            } else
+            {
+                trigger2Help?.SetText(help1);
+            }
         }
     }
 }

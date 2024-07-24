@@ -156,12 +156,13 @@ namespace Ryneus
             }
             _view.ClearCurrentSkillData();
             // スリップダメージ
-            if (_triggerAfterChecked == false && _slipDamageChecked == false)
+            bool isTriggeredSkill = actionInfo.TriggeredSkill;
+            if (_triggerAfterChecked == false && _slipDamageChecked == false && isTriggeredSkill == false)
             {
                 if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
                 {
                     _slipDamageChecked = true;
-                    var slipResult = _model.CheckBurnDamage();
+                    var slipResult = _model.CheckSlipDamage();
                     if (slipResult.Count > 0)
                     {
                         StartAnimationSlipDamage(slipResult);
@@ -171,16 +172,19 @@ namespace Ryneus
             }
             
             // regenerate
-            if (_triggerAfterChecked == false && _regenerateChecked == false)
+            if (_triggerAfterChecked == false && _regenerateChecked == false && isTriggeredSkill == false)
             {
                 if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
                 {
                     _regenerateChecked = true;
-                    var regenerateResult = _model.CheckRegenerate(actionInfo);
-                    if (regenerateResult.Count > 0)
+                    if (_model.CurrentTurnBattler.IsAlive())
                     {
-                        StartAnimationRegenerate(regenerateResult);
-                        return;
+                        var regenerateResult = _model.CheckRegenerate(actionInfo);
+                        if (regenerateResult.Count > 0)
+                        {
+                            StartAnimationRegenerate(regenerateResult);
+                            return;
+                        }
                     }
                 }
             }
@@ -227,16 +231,20 @@ namespace Ryneus
             //_model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),null,slipDamageResults);
 
             // regenerate
-            if (_triggerAfterChecked == false && _regenerateChecked == false)
+            bool isTriggeredSkill = actionInfo.TriggeredSkill;
+            if (_triggerAfterChecked == false && _regenerateChecked == false && isTriggeredSkill == false)
             {
                 if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
                 {
                     _regenerateChecked = true;
-                    var regenerateResult = _model.CheckRegenerate(actionInfo);
-                    if (regenerateResult.Count > 0)
+                    if (_model.CurrentTurnBattler.IsAlive())
                     {
-                        StartAnimationRegenerate(regenerateResult);
-                        return;
+                        var regenerateResult = _model.CheckRegenerate(actionInfo);
+                        if (regenerateResult.Count > 0)
+                        {
+                            StartAnimationRegenerate(regenerateResult);
+                            return;
+                        }
                     }
                 }
             }

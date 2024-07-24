@@ -274,9 +274,11 @@ namespace Ryneus
                 var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                 var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
+                skillTriggerInfo.SetPriority(skillInfo.Weight);
                 _skillTriggerInfos.Add(skillTriggerInfo);
             }
             _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
+            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? -1 : 1);
         }
 
         public BattlerInfo(List<SkillInfo> skillInfos,bool isActor,int index)
@@ -604,8 +606,15 @@ namespace Ryneus
             skill?.SetCountTurn(skill.Master.CountTurn);
         }
         
-        public void SeekCountTurn(int seekCount)
+        public void SeekCountTurn(int seekCount,int skillId = -1)
         {
+            // その魔法のCtのみを回復
+            if (skillId > -1)
+            {
+                var find = _skills.Find(a => a.Id == skillId);
+                find?.SetCountTurn(find.CountTurn - seekCount);
+                return;
+            }
             foreach (var skill in _skills)
             {
                 skill.SetCountTurn(skill.CountTurn - seekCount);
@@ -1099,13 +1108,13 @@ namespace Ryneus
             return total;
         }
 
-        public int BurnDamage()
+        public int SlipDamage()
         {
-            var BurnDamage = 0;
-            BurnDamage += GetStateEffectAll(StateType.BurnDamage);
+            var slipDamage = 0;
+            slipDamage += GetStateEffectAll(StateType.BurnDamage);
             var perDamageValue = GetStateEffectAll(StateType.BurnDamagePer);
-            BurnDamage += (int)Math.Round(MaxHp * 0.01f * perDamageValue);
-            return BurnDamage;
+            slipDamage += (int)Math.Round(MaxHp * 0.01f * perDamageValue);
+            return slipDamage;
         }
 
         public int RegenerateHpValue()

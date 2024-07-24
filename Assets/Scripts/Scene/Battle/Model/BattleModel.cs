@@ -1223,7 +1223,7 @@ namespace Ryneus
             }
             if (actionResultInfo.CtHeal != 0)
             {
-                target.SeekCountTurn(actionResultInfo.CtHeal);
+                target.SeekCountTurn(actionResultInfo.CtHeal,actionResultInfo.CtHealSkillId);
             }
             if (actionResultInfo.ApHeal != 0)
             {
@@ -1531,16 +1531,16 @@ namespace Ryneus
             return assistHealResults;
         }
 
-        public List<ActionResultInfo> CheckBurnDamage()
+        public List<ActionResultInfo> CheckSlipDamage()
         {
             var actionResultInfos = new List<ActionResultInfo>();
-            var BurnDamage = _currentTurnBattler.BurnDamage();
-            if (BurnDamage > 0)
+            var slipDamage = _currentTurnBattler.SlipDamage();
+            if (slipDamage > 0)
             {
                 var featureData = new SkillData.FeatureData
                 {
                     FeatureType = FeatureType.HpSlipDamage,
-                    Param1 = BurnDamage
+                    Param1 = slipDamage
                 };
                 var actionResultInfo = new ActionResultInfo(GetBattlerInfo(_currentTurnBattler.Index),GetBattlerInfo(_currentTurnBattler.Index),new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);
@@ -1646,25 +1646,22 @@ namespace Ryneus
                             // 作戦で可否判定
                             var selectSkill = -1;
                             var selectTarget = -1;
-                            if (true)
+                            var skillTriggerInfos = battlerInfo.SkillTriggerInfos;
+                            var sameSkillTriggerInfo = skillTriggerInfos.Find(a => a.SkillId == passiveInfo.Id);
+                            if (sameSkillTriggerInfo != null)
                             {
-                                var skillTriggerInfos = battlerInfo.SkillTriggerInfos;
-                                var sameSkillTriggerInfo = skillTriggerInfos.Find(a => a.SkillId == passiveInfo.Id);
-                                if (sameSkillTriggerInfo != null)
-                                {
-                                    (selectSkill,selectTarget) = SelectSkillTargetBySkillTriggerDates(battlerInfo,new List<SkillTriggerInfo>(){sameSkillTriggerInfo},actionInfo,actionResultInfos);
-                                    if (selectSkill != passiveInfo.Id)
-                                    {
-                                        continue;
-                                    }
-                                    if (selectTarget == -1)
-                                    {
-                                        continue;
-                                    }
-                                } else
+                                (selectSkill,selectTarget) = SelectSkillTargetBySkillTriggerDates(battlerInfo,new List<SkillTriggerInfo>(){sameSkillTriggerInfo},actionInfo,actionResultInfos);
+                                if (selectSkill != passiveInfo.Id)
                                 {
                                     continue;
                                 }
+                                if (selectTarget == -1)
+                                {
+                                    continue;
+                                }
+                            } else
+                            {
+                                continue;
                             }
                             var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.Interrupt || triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse;
                             var result = MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,selectTarget,actionInfo,actionResultInfos,triggerDates[0]);
@@ -2062,6 +2059,21 @@ namespace Ryneus
                         var abnormalStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Abnormal);
                         var abnormalTarget = abnormalStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
                         if (abnormalTarget)
+                        {
+                            list.Add(targetBattlerInfo.Index);
+                        }
+                    }
+                }
+                break;
+                case TriggerType.TargetBuff:
+                if (battlerInfo.IsAlive())
+                {
+                    foreach (var actionResultInfo in actionResultInfos)
+                    {
+                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
+                        var buffStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Buff);
+                        var buffTarget = buffStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
+                        if (buffTarget)
                         {
                             list.Add(targetBattlerInfo.Index);
                         }

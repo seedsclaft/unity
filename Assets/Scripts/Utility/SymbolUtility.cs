@@ -141,14 +141,17 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                var alcanaData = new GetItemData
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
                                 {
-                                    Type = GetItemType.Skill,
-                                    Param1 = alcanaSkills[rand].Value.Id
-                                };
-                                var getItemInfo = new GetItemInfo(alcanaData);
-                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                getItemInfos.Add(getItemInfo);
+                                    var alcanaData = new GetItemData
+                                    {
+                                        Type = GetItemType.Skill,
+                                        Param1 = alcanaSkills[rand].Value.Id
+                                    };
+                                    var getItemInfo = new GetItemInfo(alcanaData);
+                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                    getItemInfos.Add(getItemInfo);
+                                }
                             }
                             alcanaRank = 10;
                             alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
@@ -158,14 +161,17 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                var alcanaData = new GetItemData
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
                                 {
-                                    Type = GetItemType.Skill,
-                                    Param1 = alcanaSkills[rand].Value.Id
-                                };
-                                var getItemInfo = new GetItemInfo(alcanaData);
-                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                getItemInfos.Add(getItemInfo);
+                                    var alcanaData = new GetItemData
+                                    {
+                                        Type = GetItemType.Skill,
+                                        Param1 = alcanaSkills[rand].Value.Id
+                                    };
+                                    var getItemInfo = new GetItemInfo(alcanaData);
+                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                    getItemInfos.Add(getItemInfo);
+                                }
                             }
                             alcanaRank = 20;
                             alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
@@ -175,14 +181,17 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                var alcanaData = new GetItemData
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
                                 {
-                                    Type = GetItemType.Skill,
-                                    Param1 = alcanaSkills[rand].Value.Id
-                                };
-                                var getItemInfo = new GetItemInfo(alcanaData);
-                                symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                getItemInfos.Add(getItemInfo);
+                                    var alcanaData = new GetItemData
+                                    {
+                                        Type = GetItemType.Skill,
+                                        Param1 = alcanaSkills[rand].Value.Id
+                                    };
+                                    var getItemInfo = new GetItemInfo(alcanaData);
+                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                    getItemInfos.Add(getItemInfo);
+                                }
                             }
                         }
                         break;
@@ -235,15 +244,18 @@ namespace Ryneus
                 while (getItemInfos.Count <= count)
                 {
                     var rand = Random.Range(0,alcanaSkills.Count);
-                    // 報酬設定
-                    var alcanaData = new GetItemData
+                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
                     {
-                        Type = GetItemType.SelectRelic,
-                        Param1 = alcanaSkills[rand].Value.Id
-                    };
-                    var getItemInfo = new GetItemInfo(alcanaData);
-                    //symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                    getItemInfos.Add(getItemInfo);
+                        // 報酬設定
+                        var alcanaData = new GetItemData
+                        {
+                            Type = GetItemType.SelectRelic,
+                            Param1 = alcanaSkills[rand].Value.Id
+                        };
+                        var getItemInfo = new GetItemInfo(alcanaData);
+                        //symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                        getItemInfos.Add(getItemInfo);
+                    }
                 }
             }
             return getItemInfos;

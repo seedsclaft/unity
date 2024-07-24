@@ -336,9 +336,11 @@ namespace Ryneus
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         TargetDeath = 12041, // 攻撃を受けた対象が戦闘不能になった
         TargetAbnormal = 12042, // 攻撃を受けた対象が戦闘不能になった
+        TargetBuff = 12043, // 攻撃を受けた対象がバフ状態になった
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
+        SelfPassiveAction = 12066, // 自身がパッシブを受ける
         FriendAction = 12070, // 味方が行動を成功する
         FriendAttackAction = 12071, // 味方が攻撃を成功する
         OpponentHealAction = 12082, // 相手が回復を成功する
@@ -423,6 +425,7 @@ namespace Ryneus
         CtDamage = 4010,
         CtHeal = 4020,
         CtDrain = 4030,
+        ActiveCtHeal = 4040,
         SetAfterAp = 5010,
         SetAfterApHalf = 5011,
         ActionResultSetAp = 5012,

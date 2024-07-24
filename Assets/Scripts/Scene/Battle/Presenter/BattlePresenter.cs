@@ -327,7 +327,7 @@ namespace Ryneus
                     MakeActionInfo(_model.CurrentBattler,0);
                     return;
                 }
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
                 if (_testBattle && _model.TestSkillId() != 0)
                 {    
                     int testSkillId = _model.TestSkillId();
@@ -335,7 +335,9 @@ namespace Ryneus
                     _model.SeekActionIndex();
                     return;
                 }
-    #endif
+#endif
+                CommandAutoSkillId();
+                /*
                 if (currentBattler.IsActor)
                 {
                     if (GameSystem.ConfigData.BattleAuto == true)
@@ -356,7 +358,9 @@ namespace Ryneus
                     }
                     #endif
 
-                    CommandAutoSkillId();}
+                    CommandAutoSkillId();
+                }
+                */
             }
         }
 
@@ -812,6 +816,7 @@ namespace Ryneus
             var CurrentActionInfo = _model.CurrentActionInfo;
             if (CurrentActionInfo != null)
             {
+                _battleEnded = false;
                 CommandSelectTargetIndexes(_model.MakeAutoSelectIndex(CurrentActionInfo));
                 return;
             }

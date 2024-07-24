@@ -135,6 +135,8 @@ namespace Ryneus
         }
         private int _ctDamage = 0;
         public int CtDamage => _ctDamage;
+        private int _ctHealSkillId = -1;
+        public int CtHealSkillId => _ctHealSkillId;
         private int _ctHeal = 0;
         public int CtHeal => _ctHeal;
         private int _apDamage = 0;
@@ -270,6 +272,9 @@ namespace Ryneus
                     {
                         MakeCtDrain(subject,target,featureData);
                     }
+                    return;
+                case FeatureType.ActiveCtHeal:
+                    MakeActiveCtHeal(subject,target,featureData);
                     return;
                 case FeatureType.AddState:
                     MakeAddState(subject,target,featureData,true);
@@ -849,6 +854,13 @@ namespace Ryneus
             _ctHeal = (int)Mathf.Round(HealValue);
         }
 
+        private void MakeActiveCtHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            _ctHealSkillId = subject.LastSelectSkillId;
+            float HealValue = featureData.Param1;
+            _ctHeal = (int)Mathf.Round(HealValue);
+        }
+
         private void MakeAddState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool checkCounter = false,bool isOneTarget = false,bool removeTimingIsNextTurn = false,int range = 0)
         {
             if (featureData.Rate < UnityEngine.Random.Range(0,100))
@@ -1189,7 +1201,7 @@ namespace Ryneus
 
         private int CalcDrainValue(BattlerInfo subject,int hpDamage)
         {
-            if (subject.IsState(StateType.Drain))
+            if (subject.IsState(StateType.Drain) && !subject.IsState(StateType.NotHeal))
             {
                 return (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
             }

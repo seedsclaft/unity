@@ -719,9 +719,9 @@ namespace Ryneus
             var dataCount = _listDates.Count;
             var listIndex = selectIndex - (listCount - 1);
             // 下まで表示できる場合は
-            if (dataCount > selectIndex+listCount)
+            if (listIndex <= selectIndex)
             {
-                //listIndex = selectIndex+listCount-1;
+                listIndex = listCount - 1;
             }
             if (listIndex > 0)
             {
