@@ -5,6 +5,19 @@ namespace Ryneus
 {
     public class SkillTriggerModel : BaseModel
     {
+        private List<int> _categoryIndexes = new ();
+
+        public SkillTriggerModel()
+        {
+            int startIndex = 1;
+            for (int i = startIndex;i <= 13;i++)
+            {
+                if (i != 4 && i != 11)
+                {
+                    _categoryIndexes.Add(i);
+                }
+            }
+        }
         private int _actorId = -1;
         public ActorInfo CurrentActor => StageMembers().Find(a => a.ActorId == _actorId);
         public List<ListData> SkillTrigger(int actorId,int selectIndex = 0)
@@ -49,16 +62,16 @@ namespace Ryneus
         public List<ListData> SkillTriggerCategoryList()
         {
             var list = new List<string>();
-            for (int i = 24110;i <= 24122;i++)
+            foreach (var categoryIndex in _categoryIndexes)
             {
-                list.Add(DataSystem.GetText(i));
+                list.Add(DataSystem.GetText(categoryIndex + 24109));
             }
             return MakeListData(list);
         }
 
         public List<ListData> SkillTriggerDataList(int index,int category)
         {
-            var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == category);
+            var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == _categoryIndexes[category-1]);
             // 対象のマッチング
             var skillTriggerData = CurrentActor.SkillTriggerInfos;
             if (skillTriggerData.Count > index)

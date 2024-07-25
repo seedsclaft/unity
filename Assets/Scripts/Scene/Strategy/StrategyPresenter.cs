@@ -148,7 +148,7 @@ namespace Ryneus
             {
                 if (_model.BattleResultVictory())
                 {
-                    //NextSeekResult();
+                    NextSeekResult();
                 } else
                 {
                     ShowResultList();

@@ -340,6 +340,7 @@ namespace Ryneus
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
         SelfAttackedAction = 12061, // 自身が攻撃を受ける
+        SelfAbnormalAction = 12063, // 自身が状態異常を受ける
         SelfPassiveAction = 12066, // 自身がパッシブを受ける
         FriendAction = 12070, // 味方が行動を成功する
         FriendAttackAction = 12071, // 味方が攻撃を成功する
@@ -449,6 +450,8 @@ namespace Ryneus
         BreakUndead = 8020,
         ActionAfterGainAp = 10010, // 行動後にAp+
         AbsoluteHit = 11010,
+        ReflectLastAbnormal = 12010, // 最後に受けたAbnormalを相手に移す
+        RobBuffState = 13010, // 対象のバフを奪い取る
         Numinous = 301,
         TacticsCost = 302,
         EnemyLv = 303,

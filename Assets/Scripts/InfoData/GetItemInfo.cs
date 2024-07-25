@@ -75,7 +75,7 @@ namespace Ryneus
                     break;
                 case GetItemType.ParallelHistory:
                     break;
-                case GetItemType.ChangeInitActor:
+                case GetItemType.Multiverse:
                     break;
             }
             return "";

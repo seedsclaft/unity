@@ -245,7 +245,7 @@ namespace Ryneus
                             resultInfo.SetTitle(DataSystem.GetText(16020));
                             _resultInfos.Add(resultInfo);
                             break;
-                        case GetItemType.ChangeInitActor:
+                        case GetItemType.Multiverse:
                             getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
                             resultInfo.SetTitle(DataSystem.GetText(16030));
                             _resultInfos.Add(resultInfo);

@@ -4132,19 +4132,25 @@ MonoBehaviour:
     CountTurn: 0
     Rank: 100
     Attribute: 2
-    Scope: 4
+    Scope: 1
     SkillType: 3
-    TargetType: 4
-    Help: "(\u6761\u4EF6)\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u308B\u524D\n\\s\u306B/f[f,0,2]\u30BF\u30FC\u30F3\u306E\u72B6\u614B\u7570\u5E38\u30AB\u30A6\u30F3\u30BF\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 6
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u72B6\u614B\u7570\u5E38\u3092\u53D7\u3051\u305F\u969B\n\\s\u306B\u72B6\u614B\u7570\u5E38\u3092\u53CD\u5C04\u3057\u30D0\u30D5\u30921\u3064\u596A\u3044\u53D6\u308B\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
     FeatureDates:
     - SkillId: 101010
-      FeatureType: 3010
-      Param1: 2070
-      Param2: 3
-      Param3: 50
+      FeatureType: 12010
+      Param1: 0
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 101010
+      FeatureType: 13010
+      Param1: 0
+      Param2: 0
+      Param3: 0
       Rate: 100
     - SkillId: 101010
       FeatureType: 7010
@@ -4160,8 +4166,8 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 101010
-      TriggerType: 20130
-      TriggerTiming: 3
+      TriggerType: 12063
+      TriggerTiming: 2
       Param1: 0
       Param2: 0
       Param3: 0

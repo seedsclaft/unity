@@ -53,9 +53,9 @@ namespace Ryneus
             return _scorePrizeInfos.Find(a => a.ParallelHistory()) != null;
         }
 
-        public bool ChangeInitActor()
+        public bool EnableMultiverse()
         {
-            return _scorePrizeInfos.Find(a => a.ChangeInitActor()) != null;
+            return _scorePrizeInfos.Find(a => a.EnableMultiverse()) != null;
         }
 
         // 戻り先の1番目のシンボル

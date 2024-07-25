@@ -289,7 +289,7 @@ namespace Ryneus
                     MakeRemoveAbnormalState(subject,target,featureData);
                     return;
                 case FeatureType.RemoveBuffState:
-                    MakeRemoveBuffState(subject,target,featureData);
+                    MakeRemoveBuffState(subject,target);
                     return;
                 case FeatureType.RemoveDeBuffState:
                     MakeRemoveDeBuffState(subject,target,featureData);
@@ -347,6 +347,12 @@ namespace Ryneus
                     return;
                 case FeatureType.AddSkillPlusSkill:
                     MakeAddSkillPlusSkill(subject,featureData);
+                    return;
+                case FeatureType.ReflectLastAbnormal:
+                    MakeReflectLastAbnormal(subject,target,featureData);
+                    return;
+                case FeatureType.RobBuffState:
+                    MakeRobBuffState(subject,target,featureData);
                     return;
             }
         }
@@ -959,7 +965,7 @@ namespace Ryneus
             }
         }
 
-        private void MakeRemoveBuffState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        private void MakeRemoveBuffState(BattlerInfo subject,BattlerInfo target)
         {
             // skillId -1のRemoveは強制で解除する
             var abnormalStates = target.StateInfos.FindAll(a => a.Master.Buff == true && a.BattlerId != target.Index);
@@ -1154,6 +1160,43 @@ namespace Ryneus
                         skillInfo.FeatureDates.Add(feature);
                     }
                 }
+            }
+        }
+
+        private void MakeReflectLastAbnormal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            var lastAbnormalInfos = subject.StateInfos.FindAll(a => a.Master.Abnormal);
+            if (lastAbnormalInfos.Count > 0)
+            {
+                var lastAbnormal = lastAbnormalInfos[lastAbnormalInfos.Count - 1];
+                var abnormalFeature = new SkillData.FeatureData
+                {
+                    FeatureType = FeatureType.AddState,
+                    Param1 = (int)lastAbnormal.Master.StateType,
+                    Param2 = lastAbnormal.Turns,
+                    Param3 = lastAbnormal.Effect
+                };
+                MakeAddState(subject,target,abnormalFeature);
+            }
+        }
+
+        private void MakeRobBuffState(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            var buffStates = target.StateInfos.FindAll(a => a.Master.Buff);
+            if (buffStates.Count > 0)
+            {
+                foreach (var buffState in buffStates)
+                {
+                    var buffFeature = new SkillData.FeatureData
+                    {
+                        FeatureType = FeatureType.AddState,
+                        Param1 = (int)buffState.Master.StateType,
+                        Param2 = buffState.Turns,
+                        Param3 = buffState.Effect
+                    };
+                    MakeAddState(subject,subject,buffFeature);
+                }
+                MakeRemoveBuffState(subject,target);
             }
         }
 

@@ -315,7 +315,7 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && a.StageId == 0 && PartyInfo.ChangeInitActor());
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0);
             selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
             // 現在を挿入
             var currentSeek = CurrentStage.CurrentSeek;

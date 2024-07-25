@@ -113,6 +113,19 @@ namespace Ryneus
                     }
                 }
                 break;
+                case TriggerType.SelfAbnormalAction:
+                if (battlerInfo.IsAlive())
+                {
+                    if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
+                    {
+                        var results = actionInfo.ActionResults.FindAll(a => a.AddedStates.Find(b => b.Master.Abnormal) != null && a.TargetIndex == battlerInfo.Index);
+                        if (results.Count > 0)
+                        {
+                            isTrigger = true;
+                        }
+                    }
+                }
+                break;
                 case TriggerType.SelfPassiveAction:
                 if (battlerInfo.IsAlive())
                 {

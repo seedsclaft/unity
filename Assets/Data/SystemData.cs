@@ -136,6 +136,6 @@ namespace Ryneus
 		SelectRelic = 71,
 		RemakeHistory = 101,
 		ParallelHistory = 102,
-		ChangeInitActor = 103,
+		Multiverse = 103,
 	}
 }

@@ -63,6 +63,7 @@ namespace Ryneus
             
             _view.SetStageInfo(_model.CurrentStage);
             _view.SetParallelCommand(_model.ParallelCommand());
+            _view.SetMultiverse(_model.PartyInfo.EnableMultiverse());
             _view.SetTacticsCommand(_model.TacticsCommand());
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
             _view.SetUIButton();

@@ -452,6 +452,12 @@ namespace Ryneus
             parallelList.SetInputHandler(InputKeyType.Decide,() => OnClickParallel());
         }
 
+        public void SetMultiverse(bool enable)
+        {
+            leftButton?.gameObject?.SetActive(enable);
+            rightButton?.gameObject?.SetActive(enable);
+        }
+
         public void ShowParallelList()
         {
             parallelList.gameObject.SetActive(true);

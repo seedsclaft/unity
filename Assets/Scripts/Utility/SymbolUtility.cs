@@ -141,7 +141,7 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                                 {
                                     var alcanaData = new GetItemData
                                     {
@@ -161,7 +161,7 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                                 {
                                     var alcanaData = new GetItemData
                                     {
@@ -181,7 +181,7 @@ namespace Ryneus
                             {
                                 var rand = Random.Range(0,alcanaSkills.Count);
                                 // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
+                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                                 {
                                     var alcanaData = new GetItemData
                                     {
@@ -244,7 +244,7 @@ namespace Ryneus
                 while (getItemInfos.Count <= count)
                 {
                     var rand = Random.Range(0,alcanaSkills.Count);
-                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) != null)
+                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         // 報酬設定
                         var alcanaData = new GetItemData

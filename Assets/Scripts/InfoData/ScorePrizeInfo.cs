@@ -69,9 +69,9 @@ namespace Ryneus
             _used = true;
         }
 
-        public bool ChangeInitActor()
+        public bool EnableMultiverse()
         {
-            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ChangeInitActor) != null;
+            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.Multiverse) != null;
         }
     }
 }
