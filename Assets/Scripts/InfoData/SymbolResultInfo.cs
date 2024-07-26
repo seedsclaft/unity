@@ -68,6 +68,11 @@ namespace Ryneus
             return StageId == stageId && Seek == seek && WorldNo == worldNo;
         }
 
+        public bool IsBeforeStageSeek(int stageId,int seek,int worldNo)
+        {
+            return StageId <= stageId && Seek <= seek && WorldNo == worldNo;
+        }
+
         public bool SaveBattleReplayStage()
         {
             if (_symbolInfo?.TroopInfo != null)
@@ -79,7 +84,7 @@ namespace Ryneus
 
         public int SortKey()
         {
-            return StageId*1000 + Seek*100 + SeekIndex;
+            return WorldNo*10000 + StageId*1000 + Seek*100 + SeekIndex;
         }
 
         public bool EnableStage(int stageId,int seek,int worldNo)

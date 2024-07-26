@@ -888,13 +888,13 @@ namespace Ryneus
 
         private void CommandNormalWorld()
         {
-            _model.CurrentStage.SetWorldNo(0);
+            _model.CommandNormalWorld();
             _view.CommandGotoSceneChange(Scene.Tactics);
         }
 
         private void CommandAnotherWorld()
         {
-            _model.CurrentStage.SetWorldNo(1);
+            _model.CommandAnotherWorld();
             _view.CommandGotoSceneChange(Scene.Tactics);
         }
 

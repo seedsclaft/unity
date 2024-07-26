@@ -45,7 +45,7 @@ namespace Ryneus
 
         public bool RemakeHistory()
         {
-            return _scorePrizeInfos.Find(a => a.RemakeHistory()) != null;
+            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null;
         }
 
         public bool ParallelHistory()
@@ -55,7 +55,7 @@ namespace Ryneus
 
         public bool EnableMultiverse()
         {
-            return _scorePrizeInfos.Find(a => a.EnableMultiverse()) != null;
+            return true;//_scorePrizeInfos.Find(a => a.EnableMultiverse()) != null;
         }
 
         // 戻り先の1番目のシンボル
@@ -106,14 +106,6 @@ namespace Ryneus
             var record = _symbolRecordList.Find(a => a.IsSameSymbol(symbolResultInfo));
             record.SetSelected(isSelect);
             SetSymbolResultInfo(record);
-        }
-
-        public void MakeAnotherStageResult(SymbolResultInfo symbolResultInfo)
-        {
-            var stageResult = new SymbolResultInfo(symbolResultInfo.SymbolInfo,symbolResultInfo.StageSymbolData,Currency);
-            stageResult.SetWorldNo(1);
-            stageResult.SetSelected(false);
-            SetSymbolResultInfo(stageResult);
         }
 
         private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,int worldNo)

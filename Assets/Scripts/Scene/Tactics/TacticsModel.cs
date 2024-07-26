@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using UnityEngine.InputSystem;
 
 namespace Ryneus
 {
@@ -315,7 +314,7 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && PartyInfo.EnableMultiverse() && a.Seek == 0);
             selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
             // 現在を挿入
             var currentSeek = CurrentStage.CurrentSeek;
@@ -479,6 +478,52 @@ namespace Ryneus
                 index++;
             }
             return list;
+        }
+
+        public void CommandNormalWorld()
+        {
+            SetWorldCurrentStage(0);
+        }
+
+        public void CommandAnotherWorld()
+        {
+            SetWorldCurrentStage(1);
+        }
+
+        private void SetWorldCurrentStage(int worldNo)
+        {
+            CurrentStage.SetWorldNo(worldNo);
+            // 進捗度を調整
+            var selectedRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldNo);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == worldNo);
+            
+            if (selectedRecords.Count > 0)
+            {
+                var lastRecord = selectRecords[selectRecords.Count-1];
+                foreach (var selectRecord in selectRecords)
+                {
+                    if (selectedRecords.Find(a => a.StageId == selectRecord.StageId && a.Seek == selectRecord.Seek) == null)
+                    {
+                        if (selectRecord.StageId < lastRecord.StageId)
+                        {
+                            lastRecord = selectRecord;
+                            continue;
+                        }
+                        
+                        if (selectRecord.Seek < lastRecord.Seek)
+                        {
+                            lastRecord = selectRecord;
+                            continue;
+                        }
+                    }
+                }
+                CurrentStage.SetStageId(lastRecord.StageId);
+                CurrentStage.SetCurrentTurn(lastRecord.Seek);
+            } else
+            {
+                CurrentStage.SetStageId(0);
+                CurrentStage.SetCurrentTurn(0);  
+            }
         }
 
         public void SetSurvivalMode()

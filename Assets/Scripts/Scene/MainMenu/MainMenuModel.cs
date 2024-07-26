@@ -90,6 +90,11 @@ namespace Ryneus
                 {
                     PartyInfo.SetSymbolResultInfo(record);
                 }
+                foreach (var record in StageResultInfos(stageId))
+                {
+                    record.SetWorldNo(1);
+                    PartyInfo.SetSymbolResultInfo(record);
+                }
             }
             SavePlayerStageData(true);
         }

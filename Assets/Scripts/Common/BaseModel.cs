@@ -319,10 +319,27 @@ namespace Ryneus
                         addActorGetItemInfo.SetParam2(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         addActor = true;
-                        // アナザー世界のレコードを作る
-                        MakeAnotherStageResult(record);
                     }
                 }
+                recordInfos.Add(record);
+            }
+            // アナザー世界のレコードを作る
+            foreach (var symbol in symbols)
+            {
+                var symbolInfo = new SymbolInfo(symbol.SymbolType);
+                var getItemInfos = new List<GetItemInfo>();
+                if (symbol.PrizeSetId > 0)
+                {
+                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
+                    foreach (var prizeSet in prizeSets)
+                    {
+                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                        getItemInfos.Add(getItemInfo);
+                    }
+                }
+                symbolInfo.SetGetItemInfos(getItemInfos);
+                var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
+                record.SetWorldNo(1);
                 recordInfos.Add(record);
             }
             return recordInfos;
@@ -689,9 +706,5 @@ namespace Ryneus
             return stageKey.ToString();
         }
 
-        public void MakeAnotherStageResult(SymbolResultInfo symbolResultInfo)
-        {
-            PartyInfo.MakeAnotherStageResult(symbolResultInfo);
-        }
     }
 }
