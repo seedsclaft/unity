@@ -203,7 +203,7 @@ namespace Ryneus
                 var eventData = new TacticsViewEvent(CommandType.CancelRecordList);
                 _commandData(eventData);
             });
-            SetInputHandler(tacticsSymbolList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(tacticsSymbolList.gameObject);
             tacticsSymbolList.SetInputCallHandler();
         }
 
@@ -273,7 +273,7 @@ namespace Ryneus
         public void SetSymbols(List<ListData> symbolInfos)
         {
             tacticsSymbolList.SetData(symbolInfos);
-            tacticsSymbolList.SetInfoHandler((a) => OnClickEnemyInfo(a));
+            tacticsSymbolList.SetInfoHandler((a) => OnClickEnemyInfo());
             HideRecordList();
         }
 
@@ -398,19 +398,30 @@ namespace Ryneus
                 }
             } else
             {
-                var getItemInfo = tacticsSymbolList.GetItemInfo();
-                if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
+                var getItemInfos = tacticsSymbolList.GetItemInfos();
+                if (getItemInfos != null)
                 {
                     var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
                     {
-                        template = getItemInfo
+                        template = getItemInfos
                     };
                     _commandData(eventData);
+                } else
+                {
+                    var getItemInfo = tacticsSymbolList.GetItemInfo();
+                    if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
+                    {
+                        var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
+                        {
+                            template = new List<GetItemInfo>(){getItemInfo}
+                        };
+                        _commandData(eventData);
+                    }
                 }
             }
         }
 
-        private void OnClickEnemyInfo(int selectIndex = -1)
+        private void OnClickEnemyInfo()
         {
             var listData = tacticsSymbolList.ListData;
             if (listData != null)

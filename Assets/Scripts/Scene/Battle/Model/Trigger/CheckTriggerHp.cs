@@ -128,6 +128,18 @@ namespace Ryneus
             
             switch (triggerData.TriggerType)
             {
+                case TriggerType.SelfHpRateUnder:
+                    if (targetBattler.Index == checkTriggerInfo.BattlerInfo.Index && CheckHpRateUnderMore(targetBattler,triggerData.Param1))
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
+                case TriggerType.SelfHpRateUpper:
+                    if (targetBattler.Index == checkTriggerInfo.BattlerInfo.Index && CheckHpRateUpperMore(targetBattler,triggerData.Param1))
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 // ターゲットに含めるか判定
                 case TriggerType.FriendHpRateUnder:
                 // Param2==-1はその対象を起点に平均Hpで比較する

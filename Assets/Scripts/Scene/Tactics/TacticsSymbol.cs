@@ -16,6 +16,8 @@ namespace Ryneus
         private System.Action<int> _getItemInfoSelectHandler = null;
         [SerializeField] private GameObject selected = null;
 
+        private List<GetItemInfo> _selectRelicInfos = new ();
+
         private int _getItemIndex = -1;
         private bool _selectable = false;
         public bool Selectable => _selectable;
@@ -26,6 +28,15 @@ namespace Ryneus
             _selectable = selectable;
         }
         public int GetItemIndex => _getItemIndex;
+        public List<GetItemInfo> GetItemInfos()
+        {
+            if (ListData == null) return null;
+            if (_selectRelicInfos.Count != 0)
+            {
+                return _selectRelicInfos;
+            }
+            return null;
+        }
         public GetItemInfo GetItemInfo()
         {
             if (ListData == null) return null;
@@ -112,6 +123,10 @@ namespace Ryneus
                     var data = new ListData(getItemInfo);
                     data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
                     list.Add(data);
+                }
+                if (getItemInfo.GetItemType == GetItemType.SelectRelic)
+                {
+                    _selectRelicInfos.Add(getItemInfo);
                 }
             }
             var selectRelic = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectRelic);

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using SkillLog;
 
 namespace Ryneus
@@ -30,7 +29,8 @@ namespace Ryneus
 
         private void UpdateCommand(SkillLogViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
         }

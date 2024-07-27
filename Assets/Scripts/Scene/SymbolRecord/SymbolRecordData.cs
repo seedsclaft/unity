@@ -10,6 +10,7 @@ namespace Ryneus
     {
         [SerializeField] private List<SymbolComponent> symbolComponents;
         [SerializeField] private GameObject pastObj;
+        [SerializeField] private GameObject nextObj;
         [SerializeField] private GameObject currentObj;
         [SerializeField] private GameObject futureObj;
         [SerializeField] private TextMeshProUGUI seekerText;
@@ -40,24 +41,28 @@ namespace Ryneus
                 var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
                 var currentTurn = GameSystem.CurrentStageData.CurrentStage.CurrentSeek;
                 pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
-                currentObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
+                nextObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
+                currentObj?.SetActive(dates[0].SymbolType == SymbolType.None);
                 var textId = 81;
-                if (currentObj.activeSelf)
+                if (nextObj.activeSelf)
                 {
                     textId = 82;
                 } else
                 if (futureObj.activeSelf)
                 {
                     textId = 83;
+                } else
+                if (currentObj.activeSelf)
+                {
+                    textId = 84;
                 }
+                seekerText?.SetText(DataSystem.GetText(textId));
                 if (dates[0].SymbolType == SymbolType.None)
                 {
-                    seekerText?.SetText("");
                     stageDataText?.SetText("");
                 } else
                 {
-                    seekerText?.SetText(DataSystem.GetText(textId));
                     stageDataText?.SetText(dates[0].StageSymbolData.StageId.ToString() + "-" + dates[0].StageSymbolData.Seek.ToString());
                 }
             }

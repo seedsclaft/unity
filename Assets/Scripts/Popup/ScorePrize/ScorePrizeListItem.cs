@@ -19,13 +19,8 @@ namespace Ryneus
                 score?.SetText(DataSystem.GetReplaceDecimalText(data.Score) + "人");
                 prizeName?.SetText(data.Title);
                 prizeHelp?.SetText(data.Help);
-                if (data._getFlag)
-                {
-                    getFlag?.SetText(DataSystem.GetText(14190));
-                } else
-                {
-                    getFlag?.SetText(DataSystem.GetText(14191));
-                }
+                var textId = data._getFlag ? 14190 : 14191;
+                getFlag?.SetText(DataSystem.GetText(textId));
             }
         }
     }

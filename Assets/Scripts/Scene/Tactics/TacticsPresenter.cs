@@ -135,7 +135,7 @@ namespace Ryneus
                     CommandCallEnemyInfo((SymbolResultInfo)viewEvent.template);
                     break;
                 case CommandType.PopupSkillInfo:
-                    CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
+                    CommandPopupSkillInfo((List<GetItemInfo>)viewEvent.template);
                     break;
                 case CommandType.SelectRecord:
                     CommandSelectRecordSeek((SymbolResultInfo)viewEvent.template);
@@ -751,6 +751,21 @@ namespace Ryneus
 
         private void CommandPopupSkillInfo(List<GetItemInfo> getItemInfos)
         {
+            if (getItemInfos.Count == 1)
+            {
+                CommandPopupSkillInfo(getItemInfos[0]);
+            } else
+            {
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
+                confirmInfo.SetSkillInfo(_model.BasicSkillGetItemInfos(getItemInfos));
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallSkillDetail(confirmInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            }
+        }
+
+        private void CommandPopupAlcanaInfo(List<GetItemInfo> getItemInfos)
+        {
             var confirmInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdatePopupSkillInfo(),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(_model.BasicSkillGetItemInfos(getItemInfos));
             confirmInfo.SetIsNoChoice(true);
@@ -795,7 +810,7 @@ namespace Ryneus
                     _view.ChangeUIActive(false);
                     break;
                 case SymbolType.Alcana:
-                    CommandPopupSkillInfo(symbolInfo.SymbolInfo.GetItemInfos);
+                    CommandPopupAlcanaInfo(symbolInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Actor:
                     _model.SetTempAddActorStatusInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1);

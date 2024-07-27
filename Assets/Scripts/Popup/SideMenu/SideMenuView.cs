@@ -14,7 +14,8 @@ namespace Ryneus
 
         public SystemData.CommandData SideMenuCommand 
         { 
-            get {
+            get 
+            {
                 var listData = sideMenuInfoList.ListData;
                 if (listData != null)
                 {
