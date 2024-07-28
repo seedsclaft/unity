@@ -30,6 +30,7 @@ namespace Ryneus
 
         private BattleStartAnim _battleStartAnim = null;
         private bool _animationBusy = false;
+        public bool AnimationBusy => _animationBusy;
         public int AlcanaListIndex => alcanaSelectList.Index;
 
         private new System.Action<StrategyViewEvent> _commandData = null;

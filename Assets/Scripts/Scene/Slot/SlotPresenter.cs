@@ -64,7 +64,6 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                _model.ClearActorsData();
                 var selectIndex = _view.SlotListIndex;
                 _model.SetActorsData(selectIndex);
                 _model.SetSelectActorIds();
@@ -90,7 +89,6 @@ namespace Ryneus
             {
                 if (index > -1)
                 {
-                    _model.ClearActorsData();
                     _model.SetActorsData(index);
                     var statusViewInfo = new StatusViewInfo(() => {
                         _view.CommandGameSystem(Base.CommandType.CloseStatus);

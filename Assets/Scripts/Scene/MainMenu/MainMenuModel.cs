@@ -83,6 +83,7 @@ namespace Ryneus
             if (SelectedStage(stageId))
             {
                 CurrentStage.SetCurrentTurn(SelectedStageCurrentTurn(stageId));
+                SetStageSeek();
             } else
             {
                 // 新規レコード作成

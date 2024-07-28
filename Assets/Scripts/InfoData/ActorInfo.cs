@@ -14,9 +14,30 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
         private List<LevelUpInfo> _levelUpInfos = new ();
-        public void SetLevelUpInfo(List<LevelUpInfo> levelUpInfos)
+        private int _stageId = 1;
+        private int _seek = 1;
+        public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            _levelUpInfos = levelUpInfos;
+            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
+            if (findIndex > -1)
+            {
+                _levelUpInfos.RemoveAt(findIndex);
+            }
+            _levelUpInfos.Add(levelUpInfo);
+        }
+
+        public int ActorLevelReset()
+        {
+            var currency = 0;
+            // リセットされる数
+            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData() && a.ActorId == _actorId);
+            var resetLv = levelUpDates.Count;
+            for (int i = levelUpDates.Count-1;i >= 0;i--)
+            {
+                currency += levelUpDates[i].Currency;
+                _levelUpInfos.Remove(levelUpDates[i]);
+            }
+            return currency;
         }
         
         private string _addTiming = "";
@@ -26,8 +47,12 @@ namespace Ryneus
             _addTiming = addTiming;
         }
 
-        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData()).Count + 1;
-
+        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData() && a.IsEnableStage(_stageId,_seek)).Count + 1;
+        public void SetStageSeek(int stageId,int seek)
+        {
+            _stageId = stageId;
+            _seek = seek;
+        }
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
         public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
@@ -140,7 +165,7 @@ namespace Ryneus
         private List<int> LearnSkillIds()
         {
             var list = new List<int>();
-            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData());
+            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.IsEnableStage(_stageId,_seek));
             foreach (var learnSkill in learnSkills)
             {
                 list.Add(learnSkill.SkillId);
@@ -237,6 +262,8 @@ namespace Ryneus
             _levelUpInfos = baseActorInfo._levelUpInfos;
             _lineIndex = baseActorInfo._lineIndex;
             _skillTriggerInfos = baseActorInfo._skillTriggerInfos;
+            _stageId = baseActorInfo._stageId;
+            _seek = baseActorInfo._seek;
         }
 
         private void SetInitialParameter(ActorData actorData)
@@ -349,7 +376,7 @@ namespace Ryneus
             return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
-        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId = -1,int seek = -1,int seekIndex = -1)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1)
         {
             var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex);
             skillLevelUpInfo.SetSkillId(skillId);

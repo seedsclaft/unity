@@ -524,6 +524,7 @@ namespace Ryneus
                 CurrentStage.SetStageId(0);
                 CurrentStage.SetCurrentTurn(0);  
             }
+            SetStageSeek();
         }
 
         public void SetSurvivalMode()

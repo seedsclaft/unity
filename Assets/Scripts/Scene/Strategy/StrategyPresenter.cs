@@ -62,7 +62,7 @@ namespace Ryneus
                 CommandResultClose((SystemData.CommandData)viewEvent.template);
                 break;
                 case CommandType.EndLvUpAnimation:
-                CommandEndLvUpAnimation();
+                    NextSeekResult();
                 break;
                 case CommandType.LvUpNext:
                     CommandLvUpNext();
@@ -78,7 +78,8 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.ClosePopup);
         }
 
-        private void CommandStartStrategy(){
+        private void CommandStartStrategy()
+        {
             if (_model.BattleResult)
             {
                 SeekStrategyState();
@@ -148,7 +149,10 @@ namespace Ryneus
             {
                 if (_model.BattleResultVictory())
                 {
-                    NextSeekResult();
+                    if (_model.LevelUpData.Count == 0)
+                    {
+                        ShowResultList();
+                    }
                 } else
                 {
                     ShowResultList();

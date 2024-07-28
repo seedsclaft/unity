@@ -57,25 +57,6 @@ namespace Ryneus
             _tempInputType = inputType;
         }    
         
-        private List<ActorInfo> _tempRecordActors = new ();
-        public List<ActorInfo> TempRecordActors => _tempRecordActors;
-        public void SetRecordActors(List<ActorInfo> actorInfos)
-        {
-            _tempRecordActors.Clear();
-            var tempRecordActors = new List<ActorInfo>();
-            foreach (var actorInfo in actorInfos)
-            {
-                var recordActorInfo = new ActorInfo(actorInfo.Master);
-                recordActorInfo.CopyData(actorInfo);		
-                tempRecordActors.Add(recordActorInfo);
-            }
-            _tempRecordActors = tempRecordActors;
-        }
-        public void ClearRecordActors()
-        {
-            _tempRecordActors.Clear();
-        }
-
         
         private List<ActorInfo> _tempStatusActorInfos = new ();
         public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;

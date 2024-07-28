@@ -52,32 +52,9 @@ namespace Ryneus
             }
         }
 
-        private List<ActorInfo> _saveActorList = new ();
-        public List<ActorInfo> SaveActorList => _saveActorList;
-
-        public void InitSaveActorList()
-        {
-            if (_saveActorList.Count > 0) return;
-            for (int i = 0;i < 5;i++)
-            {
-                var tempActor = new ActorInfo(DataSystem.Actors[i]);
-                AddActorInfo(tempActor);
-            }
-        }
-
         private List<SlotInfo> _slotSaveList = new ();
         public List<SlotInfo> SlotSaveList => _slotSaveList;
         readonly int _slotSaveCount = 3;
-
-        public void AddActorInfo(ActorInfo actorInfo)
-        {
-            _saveActorList.Add(actorInfo);
-        }
-
-        public void EraseReborn(int index)
-        {
-            _saveActorList.RemoveAt(index);
-        }
         
         private void InitSlotInfo()
         {

@@ -75,21 +75,6 @@ namespace Ryneus
 		public void InitParty()
 		{
 			_party = new PartyInfo();
-		}
-
-		public void InitAllActorMembers()
-		{
-			/*
-			foreach (var actorData in DataSystem.Actors)
-			{
-				if (actorData != null)
-				{
-					var actorInfo = new ActorInfo(actorData);
-					_party.AddActor(actorInfo.ActorId);
-				}
-			}
-			*/
-		}
-		
+		}		
 	}
 }

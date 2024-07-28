@@ -113,16 +113,13 @@ namespace Ryneus
             return _symbolRecordList.FindAll(a => a.EnableStage(stageId,seek,worldNo));
         }
 
-        private List<LevelUpInfo> _levelUpInfos = new();
-        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
-            if (findIndex > -1)
+            var actorInfo = _actorInfos.Find(a => a.ActorId == levelUpInfo.ActorId);
+            if (actorInfo != null)
             {
-                _levelUpInfos.RemoveAt(findIndex);
+                actorInfo.SetLevelUpInfo(levelUpInfo);
             }
-            _levelUpInfos.Add(levelUpInfo);
         }
 
         public void ClearData()
@@ -150,10 +147,6 @@ namespace Ryneus
                 var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
                 if (actorInfo != null)
                 {
-                    var levelUpInfos = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId < stageId);
-                    var sameStage = _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId && a.StageId == stageId && a.Seek <= seek);
-                    levelUpInfos.AddRange(sameStage);
-                    actorInfo.SetLevelUpInfo(levelUpInfos);
                     actorInfo.SetAddTiming(AddTimingText(actorInfo));
                     actorInfos.Add(actorInfo);
                 }
@@ -176,12 +169,6 @@ namespace Ryneus
             return DataSystem.GetText(391);
         }
 
-        public List<LevelUpInfo> AssignedLevelUpInfos(int actorId)
-        {
-            var actorInfo = _actorInfos.Find(a => a.ActorId == actorId);
-            return _levelUpInfos.FindAll(a => a.Enable && a.ActorId == actorInfo.ActorId);
-        }
-        
         public List<int> CurrentActorIdList(int stageId,int seek,int worldNo)
         {
             var actorIdList = new List<int>();
@@ -266,16 +253,7 @@ namespace Ryneus
 
         public int ActorLevelReset(ActorInfo actorInfo)
         {
-            var currency = 0;
-            // リセットされる数
-            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData() && a.ActorId == actorInfo.ActorId);
-            var resetLv = levelUpDates.Count;
-            for (int i = levelUpDates.Count-1;i >= 0;i--)
-            {
-                currency += levelUpDates[i].Currency;
-                _levelUpInfos.Remove(levelUpDates[i]);
-            }
-            return currency;
+            return actorInfo.ActorLevelReset();
         }
 
         public (int,int) LastStageIdTurns()

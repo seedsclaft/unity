@@ -69,5 +69,10 @@ namespace Ryneus
         {
             return IsLevelUpData() && _currency > 0;
         }
+
+        public bool IsEnableStage(int stageId,int seek)
+        {
+            return _stageId == stageId && _seek <= seek || _stageId < stageId;
+        }
     }
 }

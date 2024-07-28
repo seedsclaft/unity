@@ -76,7 +76,6 @@ namespace Ryneus
         {
             if (index > -1)
             {
-                _model.ClearActorsData();
                 _model.SetActorsData(index);
                 var statusViewInfo = new StatusViewInfo(() => {
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);

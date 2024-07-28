@@ -379,6 +379,7 @@ namespace Ryneus
         public void SeekStage()
         {
             CurrentStage.SeekStage();
+            SetStageSeek();
         }
 
         public void EndStage()
@@ -391,6 +392,7 @@ namespace Ryneus
             }
             CurrentSaveData.MakeStageData(stageId);
             CurrentStage.SetCurrentTurn(currentTurn);
+            SetStageSeek();
         }
 
         public void SetSelectSymbol()
@@ -419,11 +421,13 @@ namespace Ryneus
             {
                 removeSymbolInfo.SetSelected(false);
                 // 選択から外れたシンボルがバトルならレベルアップを無効にする
+                /*
                 var levelUpInfos = PartyInfo.LevelUpInfos.FindAll(a => a.StageId == removeSymbolInfo.StageId && a.Seek == removeSymbolInfo.Seek && a.SeekIndex == removeSymbolInfo.SeekIndex);
                 foreach (var levelUpInfo in levelUpInfos)
                 {
                     levelUpInfo.SetEnable(false);
                 }
+                */
                 // 選択から外れた救命人数を初期化
                 foreach (var getItemInfo in removeSymbolInfo.SymbolInfo.GetItemInfos)
                 {
@@ -435,18 +439,11 @@ namespace Ryneus
             }
 
 
-            // 復帰処理
-            PartyInfo.InitActorInfos();
-            foreach (var actorInfo in TempInfo.TempRecordActors)
-            {
-                PartyInfo.UpdateActorInfo(actorInfo);
-            }
-
-            TempInfo.ClearRecordActors();
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(-1);
             PartyInfo.ClearReturnStageIdSeek();
+            SetStageSeek();
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
@@ -478,17 +475,11 @@ namespace Ryneus
             PartyInfo.UseParallel();
 
             // 復帰処理
-            PartyInfo.InitActorInfos();
-            foreach (var actorInfo in TempInfo.TempRecordActors)
-            {
-                PartyInfo.UpdateActorInfo(actorInfo);
-            }
-
-            TempInfo.ClearRecordActors();
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(-1);
             PartyInfo.ClearReturnStageIdSeek();
+            SetStageSeek();
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 

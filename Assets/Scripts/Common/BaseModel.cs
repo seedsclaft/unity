@@ -393,22 +393,10 @@ namespace Ryneus
 
         public void MakeSymbolRecordStage(SymbolResultInfo returnSymbol)
         {
-            //CurrentSaveData.MakeStageData(CurrentStage.Id);
-            TempInfo.SetRecordActors(PartyInfo.ActorInfos);
-            
-            //PartyInfo.InitActorInfos();
-            foreach (var symbolActor in SymbolActorInfos(returnSymbol.StageId,returnSymbol.Seek,returnSymbol.WorldNo))
-            {
-                PartyInfo.UpdateActorInfo(symbolActor);
-            }
             PartyInfo.SetReturnStageIdSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
             CurrentStage.SetStageId(returnSymbol.StageId);
             CurrentStage.SetCurrentTurn(returnSymbol.Seek);
-        }
-
-        public List<ActorInfo> SymbolActorInfos(int stageId,int seek,int worldNo)
-        {
-            return PartyInfo.CurrentActorInfos(stageId,seek,worldNo);
+            SetStageSeek();
         }
         
         public void SetParallelMode()
@@ -654,12 +642,6 @@ namespace Ryneus
             return new List<int>(){3053,3051};
         }
 
-        public void ClearActorsData()
-        {
-            PartyInfo.InitActorInfos();
-            CurrentSaveData.InitAllActorMembers();
-        }
-
         public void SetActorsData(int index)
         {
             PartyInfo.InitActorInfos();
@@ -706,5 +688,13 @@ namespace Ryneus
             return stageKey.ToString();
         }
 
+        public void SetStageSeek()
+        {
+            foreach (var actorInfo in PartyInfo.ActorInfos)
+            {
+                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
+                actorInfo.ChangeHp(actorInfo.MaxHp);
+            }
+        }
     }
 }
