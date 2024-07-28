@@ -31,11 +31,11 @@ namespace Ryneus
             return StageMembers().Find(a => a.ActorId == _selectActorId);
         }
 
-        private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
-        public TacticsCommandType TacticsCommandType => _TacticsCommandType;
+        private TacticsCommandType _tacticsCommandType = TacticsCommandType.Train;
+        public TacticsCommandType TacticsCommandType => _tacticsCommandType;
         public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
         {
-            _TacticsCommandType = tacticsCommandType;
+            _tacticsCommandType = tacticsCommandType;
         }
         private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
         public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
@@ -104,12 +104,7 @@ namespace Ryneus
             var battleIndex = StageMembers().FindAll(a => a.BattleIndex >= 0).Count + 1;
             if (actorInfo.BattleIndex >= 0)
             {
-                actorInfo.SetBattleIndex(-1);
-                var battleMembers = BattleMembers();
-                for (int i = 0;i < battleMembers.Count;i++)
-                {
-                    battleMembers[i].SetBattleIndex(i + 1);
-                }
+                RemoveBattleActor(actorInfo);
                 return;
             }
             if (battleIndex > 5) 
@@ -117,6 +112,16 @@ namespace Ryneus
                 return;
             }
             actorInfo.SetBattleIndex(battleIndex);
+        }
+
+        private void RemoveBattleActor(ActorInfo actorInfo)
+        {
+            actorInfo.SetBattleIndex(-1);
+            var battleMembers = BattleMembers();
+            for (int i = 0;i < battleMembers.Count;i++)
+            {
+                battleMembers[i].SetBattleIndex(i + 1);
+            }
         }
 
         public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
@@ -173,7 +178,7 @@ namespace Ryneus
             {
                 var tacticsActorInfo = new TacticsActorInfo
                 {
-                    TacticsCommandType = _TacticsCommandType,
+                    TacticsCommandType = _tacticsCommandType,
                     ActorInfo = member,
                     ActorInfos = StageMembers()
                 };
@@ -195,7 +200,7 @@ namespace Ryneus
                 {
                     var tacticsActorInfo = new TacticsActorInfo
                     {
-                        TacticsCommandType = _TacticsCommandType,
+                        TacticsCommandType = _tacticsCommandType,
                         ActorInfo = member,
                         ActorInfos = StageMembers()
                     };
@@ -209,19 +214,33 @@ namespace Ryneus
                 {
                     var tacticsActorInfo = new TacticsActorInfo
                     {
-                        TacticsCommandType = _TacticsCommandType,
+                        TacticsCommandType = _tacticsCommandType,
                         ActorInfo = member,
                         ActorInfos = StageMembers()
                     };
                     list.Add(tacticsActorInfo);
                 }
             }
-            return MakeListData(list,selectIndex);
+            Func<TacticsActorInfo,bool> enable = (a) => 
+            {
+                // 同じステージ進捗度でWorldをまたげない
+                var current = CurrentSelectRecord();
+                var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;
+                var levelUpDataInfos = a.ActorInfo.LevelUpInfos;
+                if (levelUpDataInfos.Find(b => b.HasSameStageSeekBattleResultData(current.StageId,current.Seek,worldNo)) != null)
+                {
+                    a.DisableText = "同じ進行度の別世界でバトルを行っています";    
+                    RemoveBattleActor(a.ActorInfo);
+                    return false;
+                }
+                return true;
+            };
+            return MakeListData(list,enable,selectIndex);
         }
 
         public string TacticsCommandInputInfo()
         {
-            switch (_TacticsCommandType)
+            switch (_tacticsCommandType)
             {
                 case TacticsCommandType.Train:
                     return "TRAIN";
@@ -246,7 +265,7 @@ namespace Ryneus
 
         private string CommandTitle()
         {
-            return DataSystem.GetText((int)_TacticsCommandType);
+            return DataSystem.GetText((int)_tacticsCommandType);
         }
 
         public void ChangeBattleLineIndex(int actorId,bool isFront)

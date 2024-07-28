@@ -77,5 +77,10 @@ namespace Ryneus
         {
             return _stageId == stageId && _seek <= seek || _stageId < stageId;
         }
+
+        public bool HasSameStageSeekBattleResultData(int stageId,int seek,int worldNo)
+        {
+            return IsBattleResultData() && _stageId == stageId && _seek == seek && _worldNo == worldNo;
+        }
     }
 }

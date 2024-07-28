@@ -336,7 +336,7 @@ namespace Ryneus
             return _levelUpInfos.FindAll(a => a.IsTrainData()).Count + 1;
         }
 
-        public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1,int worldNo = -1)
+        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,int worldNo)
         {
             var levelUpInfo = new LevelUpInfo
             (

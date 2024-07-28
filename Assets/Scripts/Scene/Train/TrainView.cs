@@ -189,7 +189,7 @@ namespace Ryneus
             selectCharacter.CharacterList.SetSelectedHandler(() => 
             {
                 var listData = selectCharacter.CharacterData;
-                if (listData != null)
+                if (listData != null && listData.Enable)
                 {
                     var data = (TacticsActorInfo)listData.Data;
                     var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)

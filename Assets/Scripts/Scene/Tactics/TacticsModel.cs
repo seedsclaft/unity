@@ -587,6 +587,7 @@ namespace Ryneus
         public ActorInfo ActorInfo;
         public List<ActorInfo> ActorInfos;
         public TacticsCommandType TacticsCommandType;
+        public string DisableText;
     }
 
     public class TacticsCommandData

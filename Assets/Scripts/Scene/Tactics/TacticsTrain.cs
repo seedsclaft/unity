@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Ryneus
 {
@@ -13,6 +14,7 @@ namespace Ryneus
         [SerializeField] private Button plusButton;
         [SerializeField] private Button minusButton;
         [SerializeField] private List<Toggle> battlePositionToggles;
+        [SerializeField] private TextMeshProUGUI disableText;
 
         private bool _setToggleHandler = false;
         private bool _setBattleFrontToggleHandler = false;
@@ -62,7 +64,11 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (TacticsActorInfo)ListData.Data;
             tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsCommandType);
-            Disable.SetActive(false);
+            Disable?.SetActive(!ListData.Enable);
+            if (data.DisableText != null)
+            {
+                disableText?.SetText(data.DisableText);
+            }
         }
     }
 }
