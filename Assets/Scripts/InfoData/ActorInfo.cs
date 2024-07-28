@@ -37,6 +37,14 @@ namespace Ryneus
                 currency += levelUpDates[i].Currency;
                 _levelUpInfos.Remove(levelUpDates[i]);
             }
+            // 習得した魔法をリセット
+            var learnedSkill = LearnSkillIds();
+            var learnedSkillDates = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.ActorId == _actorId);
+            for (int i = learnedSkillDates.Count-1;i >= 0;i--)
+            {
+                currency += learnedSkillDates[i].Currency;
+                _levelUpInfos.Remove(learnedSkillDates[i]);
+            }
             return currency;
         }
         

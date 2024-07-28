@@ -391,11 +391,27 @@ namespace Ryneus
             return TempInfo.BattleResultVictory;
         }
 
-        public void MakeSymbolRecordStage(SymbolResultInfo returnSymbol)
+        /// <summary>
+        /// ステージ進捗度を設定
+        /// </summary>
+        /// <param name="returnSymbol"></param>
+        public void SetReturnRecordStage(SymbolResultInfo returnSymbol)
         {
             PartyInfo.SetReturnStageIdSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
             CurrentStage.SetStageId(returnSymbol.StageId);
             CurrentStage.SetCurrentTurn(returnSymbol.Seek);
+            SetStageSeek();
+        }
+
+        public void ResetRecordStage()
+        {
+            if (PartyInfo.ReturnSymbol != null)
+            {
+                CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
+                CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
+                CurrentStage.SetSeekIndex(-1);
+            }
+            PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
         }
         

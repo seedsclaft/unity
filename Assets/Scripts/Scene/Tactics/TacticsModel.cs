@@ -70,7 +70,19 @@ namespace Ryneus
             selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
-                return a.StageSymbolData.Seek == CurrentStage.CurrentSeek;
+                var enable = false;
+                if (PartyInfo.RemakeHistory())
+                {
+                    if (a.StageSymbolData.StageId == CurrentStage.Id && a.StageSymbolData.Seek <= CurrentStage.CurrentSeek)
+                    {
+                        enable = true;
+                    }
+                    if (a.StageSymbolData.StageId < CurrentStage.Id)
+                    {
+                        enable = true;
+                    }
+                }
+                return a.StageSymbolData.Seek == CurrentStage.CurrentSeek || enable;
             };
             var seekIndex = 0;
             if (CurrentSelectRecord() != null)

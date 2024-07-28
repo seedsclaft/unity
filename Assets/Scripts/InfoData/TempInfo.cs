@@ -62,14 +62,7 @@ namespace Ryneus
         public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
         public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
         {
-            var recordActorInfos = new List<ActorInfo>();
-            foreach (var actorInfo in tempStatusActorInfos)
-            {
-                var recordActorInfo = new ActorInfo(actorInfo.Master);
-                recordActorInfo.CopyData(actorInfo);		
-                recordActorInfos.Add(recordActorInfo);
-            }
-            _tempStatusActorInfos = recordActorInfos;
+            _tempStatusActorInfos = tempStatusActorInfos;
         }
 
         // リプレイデータ

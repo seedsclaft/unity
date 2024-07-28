@@ -276,6 +276,8 @@ namespace Ryneus
             //Symbolに対応したシンボルを表示
             _view.SetSymbols(_model.StageResultInfos(symbolResultInfo));
             _view.ShowSymbolList();
+            _view.HideSelectCharacter();
+            _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去
             if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentSeek)
@@ -359,6 +361,23 @@ namespace Ryneus
                 var cautionInfo = new CautionInfo();
                 cautionInfo.SetTitle(DataSystem.GetText(23060));
                 _view.CommandCallCaution(cautionInfo);
+            } else
+            if (recordInfo.StageSymbolData.Seek < currentTurn)
+            {
+                // 過去
+                if (_model.RemakeHistory())
+                {
+                    var popupInfo = new ConfirmInfo(DataSystem.GetText(23010),(a) =>
+                    {
+                        _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+                        if (a == ConfirmCommandType.Yes)
+                        {
+                            _model.SetReturnRecordStage(recordInfo);
+                            CommandCurrentSelectRecord(recordInfo);
+                        }
+                    });
+                    _view.CommandCallConfirm(popupInfo);
+                }
             }
         }
 
@@ -408,6 +427,7 @@ namespace Ryneus
 
         private void CommandCancelSelectSymbol()
         {
+            _model.ResetRecordStage();
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
@@ -429,7 +449,7 @@ namespace Ryneus
                 if (symbolResultInfo != null)
                 {
                     // 過去のステージを作る
-                    _model.MakeSymbolRecordStage(symbolResultInfo);
+                    _model.SetReturnRecordStage(symbolResultInfo);
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }
             }
@@ -481,7 +501,7 @@ namespace Ryneus
                 if (symbolResultInfo != null)
                 {
                     // 過去のステージを作る
-                    _model.MakeSymbolRecordStage(symbolResultInfo);
+                    _model.SetReturnRecordStage(symbolResultInfo);
                     _model.SetParallelMode();
                     _view.CommandGotoSceneChange(Scene.Tactics);
                 }
@@ -584,6 +604,7 @@ namespace Ryneus
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
+                _model.ResetRecordStage();
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
@@ -618,6 +639,7 @@ namespace Ryneus
                 _view.ChangeUIActive(false);
             } else
             {
+                _model.ResetRecordStage();
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
@@ -639,6 +661,7 @@ namespace Ryneus
                 _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
             } else
             {
+                _model.ResetRecordStage();
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
@@ -687,13 +710,14 @@ namespace Ryneus
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else
             {
+                _model.ResetRecordStage();
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11141,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol((ConfirmCommandType)a));
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11141,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol(a));
             _view.CommandCallConfirm(popupInfo);
         }
 
@@ -706,6 +730,7 @@ namespace Ryneus
                 GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
+                _model.ResetRecordStage();
                 CommandSelectRecordSeek(_model.CurrentSelectRecord());
             }
         }
@@ -714,7 +739,7 @@ namespace Ryneus
         {
             var strategySceneInfo = new StrategySceneInfo
             {
-                GetItemInfos = getItemInfos,
+                GetItemInfos = getItemInfos.FindAll(a => !a.GetFlag),
                 ActorInfos = actorInfos
             };
             _model.ResetBattlerIndex();

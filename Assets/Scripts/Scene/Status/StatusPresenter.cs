@@ -111,7 +111,8 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var currency = _model.ActorLvReset();
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14170,currency.ToString()),(a) => {
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14170,currency.ToString()),(a) => 
+                {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     CommandRefresh();
                     _view.CommandGameSystem(Base.CommandType.CloseConfirm);

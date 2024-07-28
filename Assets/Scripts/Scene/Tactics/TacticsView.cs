@@ -471,7 +471,7 @@ namespace Ryneus
 
         public void ShowParallelList()
         {
-            parallelList.gameObject.SetActive(true);
+            //parallelList.gameObject.SetActive(true);
         }
 
         public void HideParallelList()
