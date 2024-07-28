@@ -486,7 +486,8 @@ namespace Ryneus
         Learned = 1,
         NotLearn = 2,
         Equipment = 3,
-        SelectLearn = 4
+        SelectLearn = 4,
+        NotLearnedByAlchemy = 11, // 習得しているがpartyがそのフラグを持っていない
     }
 
     public enum MagicIconType

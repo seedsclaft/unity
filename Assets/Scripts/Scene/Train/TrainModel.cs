@@ -60,7 +60,7 @@ namespace Ryneus
             var cost = TacticsUtility.TrainCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
             PartyInfo.ChangeCurrency(Currency - cost);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             foreach (var skill in skills)
@@ -75,7 +75,7 @@ namespace Ryneus
             var skillInfo = new SkillInfo(skillId);
             var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
             PartyInfo.ChangeCurrency(Currency - learningCost);
-            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1);
+            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             // 作戦項目に追加
             actorInfo.AddSkillTriggerSkill(skillId);

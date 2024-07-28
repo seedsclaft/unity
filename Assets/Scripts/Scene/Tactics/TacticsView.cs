@@ -308,9 +308,9 @@ namespace Ryneus
             trainView.ShowBattleReplay(isActive);
         }
 
-        public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party)
+        public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillInfos)
         {
-            trainView.ShowCharacterDetail(actorInfo,party);
+            trainView.ShowCharacterDetail(actorInfo,party,skillInfos);
         }
 
         public void SetSymbolRecords(List<ListData> recordInfos)

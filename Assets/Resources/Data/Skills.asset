@@ -2360,13 +2360,13 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 0
+    CountTurn: 2
     Rank: 20
     Attribute: 3
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n\u4EE3\u308F\u308A\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u81EA\u8EAB\u306ECT-/f[f,1,1]"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u653B\u6483\u3092\u53D7\u3051\u308B\u76F4\u524D\n\u4EE3\u308F\u308A\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2377,16 +2377,10 @@ MonoBehaviour:
       Param2: 1
       Param3: 0
       Rate: 100
-    - SkillId: 13060
-      FeatureType: 4020
-      Param1: 1
-      Param2: 0
-      Param3: 0
-      Rate: 100
     TriggerDates:
     - SkillId: 13060
       TriggerType: 12060
-      TriggerTiming: 32
+      TriggerTiming: 3
       Param1: 0
       Param2: 0
       Param3: 0

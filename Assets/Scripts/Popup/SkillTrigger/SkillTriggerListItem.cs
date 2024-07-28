@@ -86,6 +86,7 @@ namespace Ryneus
             {
                 trigger2Text.SetText("-");
             }
+            Disable?.SetActive(!ListData.Enable);
         }
     }
 }

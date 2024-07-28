@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -153,10 +154,11 @@ namespace Ryneus
 
         public void SetTempAddSelectActorStatusInfos()
         {
-            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             // 違うworldNoのActorIdも含まない
             var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;
-            var anotherActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,worldNo);
+            var anotherActorIdList = PartyInfo.CurrentActorIdList(99,99,worldNo);
+
             pastActorIdList.AddRange(anotherActorIdList);
             var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
             TempInfo.SetTempStatusActorInfos(actorInfos);

@@ -100,11 +100,11 @@ namespace Ryneus
         public void SetViewInfo(StatusViewInfo statusViewInfo)
         {
             _statusViewInfo = statusViewInfo;
-            DisplayDecideButton();
             _backEvent = statusViewInfo.BackEvent;
             DisplayCharacterList(statusViewInfo.DisplayCharacterList);
             DisplayLvResetButton(statusViewInfo.DisplayLvResetButton);
             SetBackEvent(statusViewInfo.BackEvent);
+            DisplayDecideButton();
         }
 
         public void CommandBack()
@@ -139,6 +139,7 @@ namespace Ryneus
         {
             decideButton.gameObject.SetActive(_isDisplayDecide);
             commandList.gameObject.SetActive(!_isDisplayDecide);
+            ChangeBackCommandActive(!_isDisplayDecide);
             if (_isDisplayDecide)
             {
                 SetHelpText(_helpText);

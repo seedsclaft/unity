@@ -14,6 +14,7 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
         private List<LevelUpInfo> _levelUpInfos = new ();
+        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
         private int _stageId = 1;
         private int _seek = 1;
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
@@ -289,7 +290,7 @@ namespace Ryneus
             }
         }
 
-        public List<SkillInfo> LearningSkillInfos()
+        public List<SkillInfo> LearningSkillInfos(List<int> alchemyIds = null)
         {
             var list = new List<SkillInfo>();
             foreach (var _learningData in Master.LearningSkills)
@@ -311,6 +312,13 @@ namespace Ryneus
             {
                 var skillInfo = new SkillInfo(learnSkillId);
                 skillInfo.SetLearningState(LearningState.Learned);
+                if (alchemyIds != null)
+                {
+                    if (!alchemyIds.Contains(learnSkillId))
+                    {
+                        skillInfo.SetLearningState(LearningState.NotLearnedByAlchemy);
+                    }
+                }
                 list.Add(skillInfo);
             }
             return list;
@@ -328,11 +336,11 @@ namespace Ryneus
             return _levelUpInfos.FindAll(a => a.IsTrainData()).Count + 1;
         }
 
-        public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1)
+        public LevelUpInfo LevelUp(int useCost = 0,int stageId = -1,int seek = -1,int seekIndex = -1,int worldNo = -1)
         {
             var levelUpInfo = new LevelUpInfo
             (
-                _actorId,useCost,stageId,seek,seekIndex
+                _actorId,useCost,stageId,seek,seekIndex,worldNo
             );
             levelUpInfo.SetLevel(Level);
             _levelUpInfos.Add(levelUpInfo);
@@ -384,9 +392,9 @@ namespace Ryneus
             return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
-        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,int worldNo = -1)
         {
-            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex);
+            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex,worldNo);
             skillLevelUpInfo.SetSkillId(skillId);
             return skillLevelUpInfo;
         }
@@ -548,9 +556,9 @@ namespace Ryneus
             return total;
         }
     
-        public List<ListData> SkillActionList()
+        public List<ListData> SkillActionList(List<int> alchemyIds)
         {
-            var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);
+            var skillInfos = LearningSkillInfos(alchemyIds).FindAll(a => a.Id > 100);
 
             skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
             var sortList1 = new List<SkillInfo>();

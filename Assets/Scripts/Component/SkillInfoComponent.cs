@@ -45,8 +45,19 @@ namespace Ryneus
             }
             if (learningText != null)
             {
-                learningText.transform.parent.gameObject.SetActive(skillInfo.LearningState == LearningState.NotLearn);
-                learningText.SetText(DataSystem.GetReplaceText(380,skillInfo.LearningLv.ToString()));
+                if (skillInfo.LearningState == LearningState.NotLearnedByAlchemy)
+                {
+                    learningText.transform.parent.gameObject.SetActive(skillInfo.LearningState == LearningState.NotLearnedByAlchemy);
+                    learningText.SetText(DataSystem.GetText(381));
+                } else
+                if (skillInfo.LearningState == LearningState.NotLearn)
+                {
+                    learningText.transform.parent.gameObject.SetActive(skillInfo.LearningState == LearningState.NotLearn);
+                    learningText.SetText(DataSystem.GetReplaceText(380,skillInfo.LearningLv.ToString()));
+                } else
+                {
+                    learningText.transform.parent.gameObject.SetActive(false);
+                }
             }
             if (shinyReflect != null)
             {

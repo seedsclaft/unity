@@ -153,7 +153,7 @@ namespace Ryneus
                         ShowLearningSkillInfos();
                     } else
                     {
-                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
                     }
                     _view.ShowBattleReplay(false);
                     _backCommand = CommandType.DecideTacticsCommand;
@@ -166,7 +166,7 @@ namespace Ryneus
 
         private void CommandStatus()
         {
-            _model.SetStatusActorInfos();
+            _model.SetStatusPastActorInfos();
             var statusViewInfo = new StatusViewInfo(() => 
             {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
@@ -209,7 +209,7 @@ namespace Ryneus
                             _busy = false;
                             _view.SetBusy(false);
                             UpdatePopupSkillInfo();
-                            _view.ShowCharacterDetail(_model.TacticsActor(), _model.StageMembers());
+                            _view.ShowCharacterDetail(_model.TacticsActor(), _model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
                             CommandRefresh();
                             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                         },
@@ -222,7 +222,7 @@ namespace Ryneus
                     cautionInfo.SetLevelUp(from,to);
                     _view.CommandCallCaution(cautionInfo);
 
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
                     CommandRefresh();
                     SoundManager.Instance.PlayStaticSe(SEType.CountUp);
                 }
@@ -267,7 +267,7 @@ namespace Ryneus
             {
                 case TacticsCommandType.Paradigm:
                 case TacticsCommandType.Train:
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers());
+                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
                     break;
                 case TacticsCommandType.Alchemy:
                     ShowLearningSkillInfos();

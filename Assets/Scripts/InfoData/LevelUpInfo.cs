@@ -35,14 +35,17 @@ namespace Ryneus
         public int Seek => _seek;
         private int _seekIndex = -1;
         public int SeekIndex => _seekIndex;
+        private int _worldNo = -1;
+        public int WorldNo => _worldNo;
 
-        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex)
+        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,int worldNo)
         {
             _actorId = actorId;
             _currency = currency;
             _stageId = stageId;
             _seek = seek;
             _seekIndex = seekIndex;
+            _worldNo = worldNo;
         }
 
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)

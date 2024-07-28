@@ -47,7 +47,8 @@ namespace Ryneus
 
         public List<ListData> SkillActionList()
         {
-            return CurrentActor.SkillActionList();
+            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            return CurrentActor.SkillActionList(alchemyIds);
         }
 
         public void SelectAddActor()
@@ -57,11 +58,6 @@ namespace Ryneus
                 CurrentSaveData.SetResumeStage(true);
                 PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
             }
-        }
-
-        public bool NeedReborn()
-        {
-            return CurrentStage.Master.Reborn;
         }
 
         public List<ActorInfo> MakeSelectActorInfos()

@@ -232,7 +232,7 @@ namespace Ryneus
             selectCharacter.HideCommandList();
         }
 
-        public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,bool tabSelect = false)
+        public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillInfos,bool tabSelect = false)
         {
             battleSelectCharacter.AttributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(true);
@@ -245,7 +245,8 @@ namespace Ryneus
                 battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             }
             battleSelectCharacter.SetActorInfo(actorInfo,party);
-            battleSelectCharacter.SetSkillInfos(actorInfo.SkillActionList());battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
+            battleSelectCharacter.SetSkillInfos(skillInfos);
+            battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
         }
 

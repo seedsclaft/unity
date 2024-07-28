@@ -584,8 +584,11 @@ namespace Ryneus
                 var coverBattlerInfo = friends.AliveBattlerInfos.Find(a => a.IsState(StateType.Cover));
                 if (coverBattlerInfo != null && coverBattlerId == -1)
                 {
-                    coverBattlerId = coverBattlerInfo.Index;
-                    coveredBattlerId = coverTargetIndex;
+                    if (coverBattlerInfo.Index != coverTargetIndex)
+                    {
+                        coverBattlerId = coverBattlerInfo.Index;
+                        coveredBattlerId = coverTargetIndex;
+                    }
                 }
             }
             if (coverBattlerId > -1 && coveredBattlerId > -1)

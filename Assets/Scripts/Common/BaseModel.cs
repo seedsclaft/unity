@@ -277,6 +277,26 @@ namespace Ryneus
             TempInfo.SetTempStatusActorInfos(StageMembers());
         }
 
+        /// <summary>
+        /// 加入歴あるキャラも含めたステータスメンバー
+        /// </summary>
+        public void SetStatusPastActorInfos()
+        {
+            var stageMembers = StageMembers();
+            foreach (var actorInfo in PartyInfo.ActorInfos)
+            {
+                if (!stageMembers.Contains(actorInfo))
+                {
+                    var levelUpInfos = actorInfo.LevelUpInfos;
+                    if (levelUpInfos.FindAll(a => a.WorldNo != CurrentStage.WorldNo).Count > 0)
+                    {
+                        stageMembers.Add(actorInfo);
+                    }
+                }
+            }
+            TempInfo.SetTempStatusActorInfos(stageMembers);
+        }
+
         public string GetAdvFile(int id)
         {
             return DataSystem.Adventures.Find(a => a.Id == id).AdvName;
@@ -711,6 +731,12 @@ namespace Ryneus
                 actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
                 actorInfo.ChangeHp(actorInfo.MaxHp);
             }
+        }
+
+        public List<ListData> SkillActionList(ActorInfo actorInfo)
+        {
+            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            return actorInfo.SkillActionList(alchemyIds);
         }
     }
 }

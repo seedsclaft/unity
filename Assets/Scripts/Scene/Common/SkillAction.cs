@@ -9,6 +9,7 @@ namespace Ryneus
     public class SkillAction : ListItem ,IListViewItem  
     {
         [SerializeField] private SkillInfoComponent skillInfoComponent;
+        [SerializeField] private GameObject AwakenObj;
         [SerializeField] private GameObject DisableSkill;
         private SkillInfo _skillInfo; 
         public void SetData(SkillInfo data,int index)
@@ -32,7 +33,8 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (SkillInfo)ListData.Data;
             skillInfoComponent.UpdateInfo(data);
-            if (DisableSkill != null) DisableSkill.SetActive(data.Enable == false);
+            AwakenObj?.SetActive(data.Master.SkillType == SkillType.Awaken || data.Master.SkillType == SkillType.Messiah);
+            DisableSkill?.SetActive(data.Enable == false);
         }
     }
 }

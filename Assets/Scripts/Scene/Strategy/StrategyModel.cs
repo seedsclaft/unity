@@ -76,7 +76,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.CurrentSeekIndex);
+                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldNo);
                 PartyInfo.SetLevelUpInfo(levelUpInfo);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
