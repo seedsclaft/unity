@@ -129,13 +129,13 @@ namespace Ryneus
             switch (triggerData.TriggerType)
             {
                 case TriggerType.SelfHpRateUnder:
-                    if (targetBattler.Index == checkTriggerInfo.BattlerInfo.Index && CheckHpRateUnderMore(targetBattler,triggerData.Param1))
+                    if (CheckHpRateUnderMore(checkTriggerInfo.BattlerInfo,triggerData.Param1))
                     {
                         targetIndexList.Add(targetIndex);
                     }
                     break;
                 case TriggerType.SelfHpRateUpper:
-                    if (targetBattler.Index == checkTriggerInfo.BattlerInfo.Index && CheckHpRateUpperMore(targetBattler,triggerData.Param1))
+                    if ( CheckHpRateUpperMore(checkTriggerInfo.BattlerInfo,triggerData.Param1))
                     {
                         targetIndexList.Add(targetIndex);
                     }

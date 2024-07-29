@@ -2446,20 +2446,24 @@ namespace Ryneus
         public List<ListData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 2;
-            menuCommand.Name = DataSystem.GetText(703);
-            menuCommand.Key = "Help";
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 2,
+                Name = DataSystem.GetText(703),
+                Key = "Help"
+            };
             list.Add(menuCommand);
             return MakeListData(list);
         }
 
         public SystemData.CommandData BattleAutoButton()
         {
-            var menuCommand = new SystemData.CommandData();
-            menuCommand.Id = 1;
-            menuCommand.Name = DataSystem.GetText(706);
-            menuCommand.Key = "BATTLE_AUTO";
+            var menuCommand = new SystemData.CommandData
+            {
+                Id = 1,
+                Name = DataSystem.GetText(706),
+                Key = "BATTLE_AUTO"
+            };
             return menuCommand;
         }
 

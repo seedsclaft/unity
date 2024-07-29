@@ -863,9 +863,9 @@ MonoBehaviour:
     BaseStatus:
       _hp: 75
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 23
+      _def: 6
+      _spd: 18
     Kinds: 040000000c000000
     HpGrowth: 100
     MpGrowth: 0
@@ -929,9 +929,9 @@ MonoBehaviour:
     BaseStatus:
       _hp: 75
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 16
+      _def: 12
+      _spd: 13
     Kinds: 050000000c000000
     HpGrowth: 100
     MpGrowth: 0
@@ -990,43 +990,8 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills:
-    - SkillId: 4010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 4080
-      Level: 1
-      Weight: 60
-      TriggerDates: []
-    - SkillId: 200610
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200620
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200630
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 4010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4080
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200610
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200620
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200630
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 107
     Name: "\u30D3\u30E4\u30FC\u30AD\u30FC"
     ImagePath: Byakhee
@@ -1042,43 +1007,8 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills:
-    - SkillId: 5010
-      Level: 1
-      Weight: 20
-      TriggerDates: []
-    - SkillId: 4020
-      Level: 1
-      Weight: 60
-      TriggerDates: []
-    - SkillId: 200710
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200720
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200730
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 5010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 4020
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200710
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200720
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200730
-      Trigger1: 0
-      Trigger2: 0
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 201
     Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
     ImagePath: Astaroth

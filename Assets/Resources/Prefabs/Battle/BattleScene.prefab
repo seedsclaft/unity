@@ -490,6 +490,7 @@ MonoBehaviour:
   learningCost: {fileID: 0}
   countTurn: {fileID: 0}
   learningText: {fileID: 0}
+  rank: {fileID: 0}
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}
   shinyReflect: {fileID: 0}
@@ -1211,6 +1212,7 @@ MonoBehaviour:
   learningCost: {fileID: 0}
   countTurn: {fileID: 0}
   learningText: {fileID: 0}
+  rank: {fileID: 0}
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}
   shinyReflect: {fileID: 0}
@@ -8191,7 +8193,7 @@ PrefabInstance:
     - target: {fileID: 571385609855397447, guid: c6e040513339a5240a65ac300c2d19b6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 304
+      value: 480
       objectReference: {fileID: 0}
     - target: {fileID: 571385609855397447, guid: c6e040513339a5240a65ac300c2d19b6,
         type: 3}

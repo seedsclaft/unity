@@ -350,12 +350,13 @@ namespace Ryneus
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
             var currentTurn = _model.CurrentStage.CurrentSeek;
+            var currentStage = _model.CurrentStage.Id;
             if (recordInfo.StageSymbolData.Seek == currentTurn)
             {
                 // 現在
                 CommandCurrentSelectRecord(recordInfo);
             } else
-            if (recordInfo.StageSymbolData.Seek > currentTurn)
+            if (recordInfo.StageSymbolData.Seek > currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 未来
                 var cautionInfo = new CautionInfo();
@@ -428,10 +429,18 @@ namespace Ryneus
         private void CommandCancelSelectSymbol()
         {
             _model.ResetRecordStage();
+            CommandRefresh();
             _view.ShowSymbolList();
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _backCommand = CommandType.SelectTacticsCommand;
+        }
+
+        private void CancelSelectSymbol()
+        {
+            _model.ResetRecordStage();
+            CommandRefresh();
+            CommandSelectRecordSeek(_model.CurrentSelectRecord());
         }
 
         private void CommandDecideRecord()
@@ -604,8 +613,7 @@ namespace Ryneus
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
-                _model.ResetRecordStage();
-                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+                CancelSelectSymbol();
             }
         }
 
@@ -639,8 +647,7 @@ namespace Ryneus
                 _view.ChangeUIActive(false);
             } else
             {
-                _model.ResetRecordStage();
-                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+                CancelSelectSymbol();
             }
         }
 
@@ -661,8 +668,7 @@ namespace Ryneus
                 _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
             } else
             {
-                _model.ResetRecordStage();
-                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+                CancelSelectSymbol();
             }
         }
 
@@ -710,8 +716,7 @@ namespace Ryneus
                 //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else
             {
-                _model.ResetRecordStage();
-                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+                CancelSelectSymbol();
             }
         }
 
@@ -730,8 +735,7 @@ namespace Ryneus
                 GotoStrategyScene(currentRecord.SymbolInfo.GetItemInfos,_model.StageMembers());
             } else
             {
-                _model.ResetRecordStage();
-                CommandSelectRecordSeek(_model.CurrentSelectRecord());
+                CancelSelectSymbol();
             }
         }
 

@@ -264,7 +264,6 @@ namespace Ryneus
             alcanaInfoComponent.UpdateInfo(skillInfos);
         }
 
-
         public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
         {
             tacticsCharaLayer.SetData(actorInfos);
@@ -465,8 +464,10 @@ namespace Ryneus
 
         public void SetMultiverse(bool enable,int worldNo)
         {
-            leftButton?.gameObject?.SetActive(enable && worldNo == 1);
-            rightButton?.gameObject?.SetActive(enable && worldNo == 0);
+            leftButton?.gameObject?.SetActive(false);
+            rightButton?.gameObject?.SetActive(false);
+            //leftButton?.gameObject?.SetActive(enable && worldNo == 1);
+            //rightButton?.gameObject?.SetActive(enable && worldNo == 0);
         }
 
         public void ShowParallelList()

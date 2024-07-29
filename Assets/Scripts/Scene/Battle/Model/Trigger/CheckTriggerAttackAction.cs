@@ -38,7 +38,17 @@ namespace Ryneus
                     {
                         if (battlerInfo.Index != checkTriggerInfo.ActionInfo.SubjectIndex)
                         {
-                            isTrigger = true;
+                            // Param2が1の時は結果の攻撃対象に自身を指定
+                            if (triggerData.Param2 == 1)
+                            {
+                                if (checkTriggerInfo.ActionResultInfos.Count > 0)
+                                {
+                                    isTrigger = checkTriggerInfo.ActionResultInfos.Find(a => a.TargetIndex == battlerInfo.Index) != null;
+                                }
+                            } else
+                            {
+                                isTrigger = true;
+                            }
                         }
                     }
                 }
