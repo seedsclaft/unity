@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Status;
+using TMPro;
 
 namespace Ryneus
 {
@@ -19,7 +20,13 @@ namespace Ryneus
         [SerializeField] private GameObject decideAnimation = null;
         [SerializeField] private MagicList magicList = null;
         [SerializeField] private BaseList commandList = null;
+        [SerializeField] private OnOffButton levelUpButton = null;
+        [SerializeField] private OnOffButton learnMagicButton = null;
+        [SerializeField] private Button learnMagicBackButton = null;
+        [SerializeField] private TextMeshProUGUI numinousText = null;
+        [SerializeField] private TextMeshProUGUI lvUpCostText = null;
 
+        public SkillInfo SelectMagic => (SkillInfo)magicList.ListData?.Data;
         private StatusViewInfo _statusViewInfo = null; 
 
         private System.Action _backEvent = null;
@@ -38,6 +45,25 @@ namespace Ryneus
             commandList.Initialize();
             SetInputHandler(commandList.gameObject);
 
+            levelUpButton?.SetCallHandler(() => 
+            {
+                if (levelUpButton.gameObject.activeSelf == false) return;
+                var eventData = new StatusViewEvent(CommandType.LevelUp);
+                _commandData(eventData);
+            });
+            learnMagicButton?.SetCallHandler(() => 
+            {
+                if (learnMagicButton.gameObject.activeSelf == false) return;
+                var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
+                _commandData(eventData);
+            });
+            learnMagicBackButton?.onClick.AddListener(() => 
+            {
+                if (learnMagicBackButton.gameObject.activeSelf == false) return;
+                var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
+                _commandData(eventData);
+            });
+            SetLearnMagicButtonActive(false);
             new StatusPresenter(this);
             selectCharacter.SetBusy(false);
         }
@@ -105,6 +131,14 @@ namespace Ryneus
             DisplayLvResetButton(statusViewInfo.DisplayLvResetButton);
             SetBackEvent(statusViewInfo.BackEvent);
             DisplayDecideButton();
+            if (statusViewInfo.StartIndex != -1)
+            {
+                var eventData = new StatusViewEvent(CommandType.SelectCharacter)
+                {
+                    template = statusViewInfo.StartIndex
+                };
+                _commandData(eventData);
+            }
         }
 
         public void CommandBack()
@@ -159,6 +193,17 @@ namespace Ryneus
                 OnClickLvReset();
             });
         }
+
+        public void SetNuminous(int numinous)
+        {
+            numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
+        }
+
+        public void SetLvUpCost(int cost)
+        {
+            lvUpCostText.SetText(cost.ToString() + DataSystem.GetText(1000));
+        }
+
 
         private void DisplayCharacterList(bool isDisplay)
         {
@@ -256,6 +301,32 @@ namespace Ryneus
             actorInfoComponent.UpdateInfo(actorInfo,party);
         }
 
+        public void ShowLeaningList(List<ListData> learnMagicList)
+        {
+            magicList.SetData(learnMagicList);
+            magicList.SetInputHandler(InputKeyType.Decide,() => 
+            {
+                var listData = magicList.ListData;
+                if (listData != null && listData.Enable)
+                {
+                    var data = (SkillInfo)listData.Data;
+                    if (data.Enable)
+                    {
+                        var eventData = new StatusViewEvent(CommandType.LearnMagic)
+                        {
+                            template = data
+                        };
+                        _commandData(eventData);
+                    }
+                }
+            });
+        }
+
+        public void SetLearnMagicButtonActive(bool IsActive)
+        {
+            learnMagicBackButton?.gameObject.SetActive(IsActive);
+        }
+
         public void CommandRefresh()
         {
             selectCharacter.RefreshCostInfo();
@@ -345,6 +416,8 @@ namespace Ryneus
         public List<BattlerInfo> EnemyInfos => _enemyInfos;
         private bool _isBattle = false;
         public bool IsBattle => _isBattle;
+        private int _startIndex = -1;
+        public int StartIndex => _startIndex;
         
         public StatusViewInfo(System.Action backEvent)
         {
@@ -376,6 +449,11 @@ namespace Ryneus
             _enemyInfos = enemyInfos;
             _isBattle = isBattle;
         }
+
+        public void SetStartIndex(int actorIndex)
+        {
+            _startIndex = actorIndex;
+        }
     }
 }
 
@@ -390,8 +468,13 @@ namespace Status
         SelectSkillAction,
         DecideStage,
         CharacterList,
+        SelectCharacter,
         SelectCommandList,
         LvReset,
+        LevelUp,
+        ShowLearnMagic,
+        LearnMagic,
+        HideLearnMagic,
         Back
     }
 }

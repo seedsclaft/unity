@@ -738,5 +738,59 @@ namespace Ryneus
             var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             return actorInfo.SkillActionList(alchemyIds);
         }
+
+        public void ActorLevelUp(ActorInfo actorInfo)
+        {
+            var cost = TacticsUtility.TrainCost(actorInfo);
+            // 新規魔法取得があるか
+            var skills = actorInfo.LearningSkills(1);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
+            PartyInfo.ChangeCurrency(Currency - cost);
+            PartyInfo.SetLevelUpInfo(levelUpInfo);
+            foreach (var skill in skills)
+            {
+                actorInfo.AddSkillTriggerSkill(skill.Id);
+            }
+        }
+
+        public int ActorLevelUpCost(ActorInfo actorInfo)
+        {
+            return TacticsUtility.TrainCost(actorInfo);
+        }
+        
+        public void ActorLearnMagic(ActorInfo actorInfo,int skillId)
+        {
+            var skillInfo = new SkillInfo(skillId);
+            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
+            PartyInfo.ChangeCurrency(Currency - learningCost);
+            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
+            PartyInfo.SetLevelUpInfo(levelUpInfo);
+            // 作戦項目に追加
+            actorInfo.AddSkillTriggerSkill(skillId);
+        }
+
+        public List<ListData> SelectActorLearningMagicList(ActorInfo actorInfo,int selectAttribute = -1, int selectedSkillId = -1)
+        {
+            var skillInfos = new List<SkillInfo>();
+            
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
+            {
+                var skillInfo = new SkillInfo(alchemyId);
+                if (selectAttribute > 0)
+                {
+                    if ((int)skillInfo.Master.Attribute != selectAttribute)
+                    {
+                        continue;
+                    }
+                }
+                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
+                skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
+                skillInfo.SetLearningCost(cost);
+                skillInfos.Add(skillInfo);
+            }
+            var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
+            var listData = MakeListData(skillInfos,selectIndex);
+            return listData;
+        }
     }
 }

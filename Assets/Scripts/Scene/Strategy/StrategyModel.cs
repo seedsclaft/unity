@@ -133,13 +133,20 @@ namespace Ryneus
                         if (_battleResult)
                         { 
                             var beforeGain = getItemInfo.Param2;
-                            var gainCurrency = (int) Math.Round(getItemInfo.Param1 * recordScore);
+                            var gainCurrency = (int)Math.Round(getItemInfo.Param1 * recordScore);
+                            
+                            if (beforeGain == 0)
+                            {
+                                // 初クリア
+                                getItemInfo.SetParam2(gainCurrency);
+                                PartyInfo.ChangeCurrency(Currency + gainCurrency);
+                            } else 
                             if (gainCurrency > beforeGain)
                             {
                                 getItemInfo.SetParam2(gainCurrency);
+                                PartyInfo.ChangeCurrency(Currency + gainCurrency - beforeGain);
                                 //getItemInfo.MakeTextData();
                             }
-                            PartyInfo.ChangeCurrency(Currency + gainCurrency - beforeGain);
                             
                             // 獲得+Nu
                             resultInfo.SetTitle("+" + getItemInfo.Param1.ToString() + DataSystem.GetText(1000));
@@ -403,41 +410,31 @@ namespace Ryneus
 
         public void CommitCurrentResult()
         {
-            // 新たに選択したシンボル
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
-            
-            /*foreach (var record in records)
+            // バトルに敗北しているときは更新しない
+            if (BattleResult && BattleResultVictory() == false)
             {
-                if (record.IsSameSymbol(newSymbolInfo))
-                {
-                    record.SetSelected(true);
-                }
-            }
-            */
-            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
-            // 選択から外れたシンボル
-            var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(CurrentSelectRecord()));
-            foreach (var removeSymbolInfo in removeSymbolInfos)
+
+            } else
             {
-                removeSymbolInfo.SetSelected(false);
-                // 選択から外れたシンボルがバトルならレベルアップを無効にする
-                /*
-                var levelUpInfos = PartyInfo.LevelUpInfos.FindAll(a => a.StageId == removeSymbolInfo.StageId && a.Seek == removeSymbolInfo.Seek && a.SeekIndex == removeSymbolInfo.SeekIndex);
-                foreach (var levelUpInfo in levelUpInfos)
+                // 新たに選択したシンボル
+                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
+                
+                PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
+                // 選択から外れたシンボル
+                var removeSymbolInfos = records.FindAll(a => a.Selected && !a.IsSameSymbol(CurrentSelectRecord()));
+                foreach (var removeSymbolInfo in removeSymbolInfos)
                 {
-                    levelUpInfo.SetEnable(false);
-                }
-                */
-                // 選択から外れた救命人数を初期化
-                foreach (var getItemInfo in removeSymbolInfo.SymbolInfo.GetItemInfos)
-                {
-                    if (getItemInfo.GetItemType == GetItemType.SaveHuman)
+                    removeSymbolInfo.SetSelected(false);
+                    // 選択から外れた救命人数を初期化
+                    foreach (var getItemInfo in removeSymbolInfo.SymbolInfo.GetItemInfos)
                     {
-                        getItemInfo.SetParam2(0);
+                        if (getItemInfo.GetItemType == GetItemType.SaveHuman)
+                        {
+                            getItemInfo.SetParam2(0);
+                        }
                     }
                 }
             }
-
 
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
@@ -460,19 +457,19 @@ namespace Ryneus
 
         public void CommitCurrentParallelResult()
         {
-            // 新たに選択したシンボル
-            
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
-            /*foreach (var record in records)
+            // バトルに敗北しているときは更新しない
+            if (BattleResult && BattleResultVictory() == false)
             {
-                if (record.IsSameSymbol(newSymbolInfo))
-                {
-                    record.SetSelected(true);
-                }
-            }*/
-            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
-            // 並行世界化回数を増やす
-            PartyInfo.UseParallel();
+
+            } else
+            {
+                // 新たに選択したシンボル
+                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
+                
+                PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
+                // 並行世界化回数を増やす
+                PartyInfo.UseParallel();
+            }
 
             // 復帰処理
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);

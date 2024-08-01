@@ -80,10 +80,10 @@ namespace Ryneus
 	public enum TacticsCommandType 
 	{
 		None,
-		Paradigm,
+		Paradigm = 1,
+		Status = 2,
 		Train,
 		Alchemy,
-		Status,
 		Symbol,
 	}
 

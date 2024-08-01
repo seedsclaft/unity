@@ -44,6 +44,7 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
             _view.SetAttributeList(_model.AttributeTabList());
+            _view.SetStatusButtonEvent(() => CommandStatus(_view.CharacterSelectIndex));
             CommandRefresh();
             _view.ChangeUIActive(true);
         }
@@ -164,9 +165,19 @@ namespace Ryneus
             }
         }
 
-        private void CommandStatus()
+        private void CommandStatus(int startIndex = -1)
         {
             _model.SetStatusPastActorInfos();
+            int actorId = -1;
+            if (startIndex != -1)
+            {
+                // actorIdに変換
+                var actor = _model.TacticsActor();
+                if (actor != null)
+                {
+                    actorId = _model.TacticsActor().ActorId;
+                }
+            }
             var statusViewInfo = new StatusViewInfo(() => 
             {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
@@ -174,10 +185,15 @@ namespace Ryneus
                 _view.SetHelpInputInfo("TACTICS");
                 _view.SetNuminous(_model.Currency);
                 _view.SetBusy(false);
+                _view.CallChangeSelectTacticsActor();
             });
             _view.ChangeUIActive(false);
             statusViewInfo.SetDisplayDecideButton(false);
             statusViewInfo.SetDisplayLevelResetButton(true);
+            if (actorId != -1)
+            {
+                statusViewInfo.SetStartIndex(actorId);
+            }
             _view.CommandCallStatus(statusViewInfo);
         }
 

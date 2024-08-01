@@ -94,6 +94,11 @@ namespace Ryneus
             battleSelectCharacter.HideActionList();
         }
 
+        public void SetStatusButtonEvent(System.Action statusEvent)
+        {
+            battleSelectCharacter.SetStatusButtonEvent(statusEvent);
+        }
+
         private void OnClickBack()
         {
             var eventData = new TrainViewEvent(CommandType.Back);
@@ -188,20 +193,25 @@ namespace Ryneus
             selectCharacter.SetInputHandlerCommand(() => CallTrainCommand());
             selectCharacter.CharacterList.SetSelectedHandler(() => 
             {
-                var listData = selectCharacter.CharacterData;
-                if (listData != null && listData.Enable)
-                {
-                    var data = (TacticsActorInfo)listData.Data;
-                    var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)
-                    {
-                        template = data.ActorInfo.ActorId
-                    };
-                    _commandData(eventData);
-                }
+                CallChangeSelectTacticsActor();
             });
             selectCharacter.SetTacticsCommandData(tacticsCommandData);
             //selectCharacter.UpdateSmoothSelect();
             selectCharacter.gameObject.SetActive(true);
+        }
+
+        public void CallChangeSelectTacticsActor()
+        {
+            var listData = selectCharacter.CharacterData;
+            if (listData != null && listData.Enable)
+            {
+                var data = (TacticsActorInfo)listData.Data;
+                var eventData = new TrainViewEvent(CommandType.ChangeSelectTacticsActor)
+                {
+                    template = data.ActorInfo.ActorId
+                };
+                _commandData(eventData);
+            }
         }
 
         public void RefreshTacticsActor(List<ListData> tacticsActorInfo)

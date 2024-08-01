@@ -51,8 +51,23 @@ namespace Ryneus
                 case Status.CommandType.CharacterList:
                     CommandCharacterList();
                     return;
+                case Status.CommandType.SelectCharacter:
+                    CommandSelectCharacter((int)viewEvent.template);
+                    return;
                 case Status.CommandType.LvReset:
                     CommandLvReset();
+                    return;
+                case Status.CommandType.LevelUp:
+                    CommandLevelUp();
+                    return;
+                case Status.CommandType.ShowLearnMagic:
+                    CommandShowLearnMagic();
+                    return;
+                case Status.CommandType.LearnMagic:
+                    CommandLearnMagic((SkillInfo)viewEvent.template);
+                    return;
+                case Status.CommandType.HideLearnMagic:
+                    CommandHideLearnMagic();
                     return;
                 case Status.CommandType.SelectCommandList:
                     CommandSelectCommandList((SystemData.CommandData)viewEvent.template);
@@ -85,6 +100,12 @@ namespace Ryneus
             _view.CommandCallCharacterList(characterListInfo);
         }
 
+        public void CommandSelectCharacter(int actorId)
+        {
+            _model.SelectActor(actorId);
+            CommandRefresh();
+        }
+
         private void CommandLvReset()
         {
             SetBusy(true);
@@ -103,6 +124,111 @@ namespace Ryneus
                 _view.CommandCallCaution(cautionInfo);
                 SetBusy(false);
             }
+        }
+
+        private void CommandLevelUp()
+        {
+            if (_model.CheckActorTrain())
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+                // 新規魔法取得があるか
+                var skills = _model.CurrentActor.LearningSkills(1);
+                
+                var from = _model.SelectActorEvaluate();
+                _model.CommandLevelUp();
+                var to = _model.SelectActorEvaluate();
+                
+                if (skills.Count > 0)
+                {
+                    _busy = true;
+                    _view.SetBusy(true);
+                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
+                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                    var popupInfo = new PopupInfo
+                    {
+                        PopupType = PopupType.LearnSkill,
+                        EndEvent = () =>
+                        {
+                            _busy = false;
+                            _view.SetBusy(false);
+                            CommandRefresh();
+                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                        },
+                        template = learnSkillInfo
+                    };
+                    _view.CommandCallPopup(popupInfo);
+                } else
+                {
+                    var cautionInfo = new CautionInfo();
+                    cautionInfo.SetLevelUp(from,to);
+                    _view.CommandCallCaution(cautionInfo);
+
+                    CommandRefresh();
+                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+                }
+            } else
+            {
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.System.GetTextData(11170).Text);
+                _view.CommandCallCaution(cautionInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            }
+        }
+
+        private void CommandShowLearnMagic()
+        {
+            _view.SetLearnMagicButtonActive(true);
+            var lastSelectSkillId = -1;
+            var lastSelectSkill = _view.SelectMagic;
+            if (lastSelectSkill != null)
+            {
+                lastSelectSkillId = lastSelectSkill.Id;
+            }
+            _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));            
+        }
+
+        private void CommandLearnMagic(SkillInfo skillInfo)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,skillInfo));
+            _view.CommandCallConfirm(popupInfo);
+        }
+
+        private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType,SkillInfo skillInfo)
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                var from = _model.SelectActorEvaluate();
+                _model.LearnMagic(skillInfo.Id);
+                var to = _model.SelectActorEvaluate();
+
+                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.LearnSkill,
+                    EndEvent = () =>
+                    {
+                        _view.SetNuminous(_model.Currency);
+                        _view.CommandRefresh();
+                        CommandShowLearnMagic();
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    },
+                    template = learnSkillInfo
+                };
+                _view.CommandCallPopup(popupInfo);
+            } else
+            {
+            }
+        }
+
+        private void CommandHideLearnMagic()
+        {
+            _view.SetLearnMagicButtonActive(false);
+            CommandRefresh();
         }
 
         private void UpdatePopupActorLvReset(ConfirmCommandType confirmCommandType)
@@ -217,6 +343,8 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
+            _view.SetNuminous(_model.Currency);
+            _view.SetLvUpCost(_model.LevelUpCost());
             _view.CommandRefresh();
             var skillListData = _model.SkillActionList();
             if (skillListData.Count > 0)

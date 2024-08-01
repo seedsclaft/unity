@@ -351,7 +351,7 @@ namespace Ryneus
         {
             var currentTurn = _model.CurrentStage.CurrentSeek;
             var currentStage = _model.CurrentStage.Id;
-            if (recordInfo.StageSymbolData.Seek == currentTurn)
+            if (recordInfo.StageSymbolData.Seek == currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 現在
                 CommandCurrentSelectRecord(recordInfo);
@@ -363,7 +363,7 @@ namespace Ryneus
                 cautionInfo.SetTitle(DataSystem.GetText(23060));
                 _view.CommandCallCaution(cautionInfo);
             } else
-            if (recordInfo.StageSymbolData.Seek < currentTurn)
+            if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 過去
                 if (_model.RemakeHistory())

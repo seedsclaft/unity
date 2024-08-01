@@ -75,6 +75,10 @@ namespace Ryneus
 
         public bool IsEnableStage(int stageId,int seek)
         {
+            if (IsTrainData())
+            {
+                return true;
+            }
             return _stageId == stageId && _seek <= seek || _stageId < stageId;
         }
 

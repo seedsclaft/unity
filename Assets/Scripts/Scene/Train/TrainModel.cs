@@ -56,30 +56,12 @@ namespace Ryneus
 
         public void SelectActorTrain()
         {
-            var actorInfo = TacticsActor();
-            var cost = TacticsUtility.TrainCost(actorInfo);
-            // 新規魔法取得があるか
-            var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
-            PartyInfo.ChangeCurrency(Currency - cost);
-            PartyInfo.SetLevelUpInfo(levelUpInfo);
-            foreach (var skill in skills)
-            {
-                actorInfo.AddSkillTriggerSkill(skill.Id);
-            }
+            ActorLevelUp(TacticsActor());
         }
 
         public void LearnMagic(int skillId)
         {
-            var actorInfo = TacticsActor();
-            var skillInfo = new SkillInfo(skillId);
-            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
-            PartyInfo.ChangeCurrency(Currency - learningCost);
-            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
-            PartyInfo.SetLevelUpInfo(levelUpInfo);
-            // 作戦項目に追加
-            actorInfo.AddSkillTriggerSkill(skillId);
-            //actorInfo.GainNuminousCost(learningCost);
+            ActorLearnMagic(TacticsActor(),skillId);
         }
 
         public void SaveTempBattleMembers()
@@ -126,28 +108,7 @@ namespace Ryneus
 
         public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
         {
-            var skillInfos = new List<SkillInfo>();
-            var actorInfo = TacticsActor();
-            
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
-            {
-                //if (actorInfo.IsLearnedSkill(alchemyId)) continue;
-                var skillInfo = new SkillInfo(alchemyId);
-                if (_selectAttribute > 0)
-                {
-                    if ((int)skillInfo.Master.Attribute != _selectAttribute)
-                    {
-                        continue;
-                    }
-                }
-                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
-                skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
-                skillInfo.SetLearningCost(cost);
-                skillInfos.Add(skillInfo);
-            }
-            var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
-            var listData = MakeListData(skillInfos,selectIndex);
-            return listData;
+            return SelectActorLearningMagicList(TacticsActor(),_selectAttribute,selectedSkillId);
         }
 
         public List<ListData> AttributeTabList()

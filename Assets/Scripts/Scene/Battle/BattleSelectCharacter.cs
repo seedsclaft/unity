@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Ryneus
 {
@@ -19,6 +20,8 @@ namespace Ryneus
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private OnOffButton lvResetButton;
         [SerializeField] private SkillTriggerList skillTriggerList;
+
+        [SerializeField] private Button statusButton;
         private bool _isInit = false;
 
         public int SelectedTabIndex => toggleSelect.SelectTabIndex;
@@ -81,6 +84,15 @@ namespace Ryneus
             lvResetButton?.SetCallHandler(() => 
             {
                 lvResetEvent?.Invoke();
+            });
+        }
+
+        public void SetStatusButtonEvent(System.Action statusEvent)
+        {
+            statusButton?.gameObject.SetActive(true);
+            statusButton.onClick.AddListener(() => 
+            {
+                statusEvent?.Invoke();
             });
         }
 
