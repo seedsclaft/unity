@@ -21,7 +21,7 @@ namespace Ryneus
             return level * TacticsCostRate(actorInfo);
         }
 
-        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers,int rank)
+        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers,int rank = -1)
         {
             var cost = 1;
             var rankCost = ConvertRankCost(rank);

@@ -561,17 +561,22 @@ namespace Ryneus
             // 挑発
             if (subject != null && subject.IsState(StateType.Substitute))
             {
-                targetIndexList.Clear();
-                int substituteId = subject.GetStateInfo(StateType.Substitute).BattlerId;
-                if (targetIndexList.Contains(substituteId))
+                // 対象と挑発した対象が同じパーティなら有効
+                var substituteState = subject.GetStateInfo(StateType.Substitute);
+                if (targetIndexList.FindIndex(a => GetBattlerInfo(a).IsActor == GetBattlerInfo(substituteState.BattlerId).IsActor) > -1)
                 {
-                    targetIndexList.Add(substituteId);
-                } else
-                {
-                    var tempIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,false);
-                    if (tempIndexList.Contains(substituteId))
+                    targetIndexList.Clear();
+                    int substituteId = subject.GetStateInfo(StateType.Substitute).BattlerId;
+                    if (targetIndexList.Contains(substituteId))
                     {
                         targetIndexList.Add(substituteId);
+                    } else
+                    {
+                        var tempIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,false);
+                        if (tempIndexList.Contains(substituteId))
+                        {
+                            targetIndexList.Add(substituteId);
+                        }
                     }
                 }
             }

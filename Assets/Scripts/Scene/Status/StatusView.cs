@@ -25,6 +25,7 @@ namespace Ryneus
         [SerializeField] private Button learnMagicBackButton = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
         [SerializeField] private TextMeshProUGUI lvUpCostText = null;
+        [SerializeField] private GameObject levelUpObj = null;
 
         public SkillInfo SelectMagic => (SkillInfo)magicList.ListData?.Data;
         private StatusViewInfo _statusViewInfo = null; 
@@ -171,6 +172,7 @@ namespace Ryneus
 
         private void DisplayDecideButton()
         {
+            levelUpObj.SetActive(!_isDisplayDecide);
             decideButton.gameObject.SetActive(_isDisplayDecide);
             commandList.gameObject.SetActive(!_isDisplayDecide);
             ChangeBackCommandActive(!_isDisplayDecide);
@@ -203,7 +205,6 @@ namespace Ryneus
         {
             lvUpCostText.SetText(cost.ToString() + DataSystem.GetText(1000));
         }
-
 
         private void DisplayCharacterList(bool isDisplay)
         {

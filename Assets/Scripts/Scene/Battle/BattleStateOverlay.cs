@@ -52,16 +52,13 @@ namespace Ryneus
                 var stateIconImage = _stateIconImages[i];
                 SetActiveStateIcon(stateIconImage,true);
                 var spriteAtlas = Resources.Load<SpriteAtlas>("Texture/Icons");
-                if (stateIconImage != null)
-                {
-                    stateIconImage.SetStateImage(spriteAtlas.GetSprite(stateInfo.Master.IconPath));
-                }
+                stateIconImage?.SetStateImage(spriteAtlas.GetSprite(stateInfo.Master.IconPath));
             }
         }
 
         private void SetActiveStateIcon(BattleStateIcon stateIconImage ,bool isActive)
         {
-            stateIconImage.transform.parent.gameObject.SetActive(isActive);
+            stateIconImage.gameObject.SetActive(isActive);
         }
 
         private void HideStateIcons()

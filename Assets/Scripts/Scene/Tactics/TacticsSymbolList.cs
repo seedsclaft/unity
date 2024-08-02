@@ -143,7 +143,7 @@ namespace Ryneus
         {
             UpdateUnSelectAll();
             UpdateSelectIndex(selectIndex);
-            if (ObjectList.Count > selectIndex)
+            if (ObjectList.Count > selectIndex && selectIndex > -1)
             {
                 var tacticsSymbol = ObjectList[selectIndex].GetComponentInChildren<TacticsSymbol>();
                 tacticsSymbol.SetSelectable(true);

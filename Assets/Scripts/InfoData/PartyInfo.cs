@@ -45,7 +45,7 @@ namespace Ryneus
 
         public bool RemakeHistory()
         {
-            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null;
+            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
         }
 
         public bool ParallelHistory()
@@ -55,7 +55,7 @@ namespace Ryneus
 
         public bool EnableMultiverse()
         {
-            return true;//_scorePrizeInfos.Find(a => a.EnableMultiverse()) != null;
+            return true;//_scorePrizeInfos.Find(a => a.EnableMultiverse()) != null; 
         }
 
         // 戻り先の1番目のシンボル
