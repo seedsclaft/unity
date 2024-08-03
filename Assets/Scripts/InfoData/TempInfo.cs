@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Ryneus
 {
@@ -10,8 +9,6 @@ namespace Ryneus
         private List<ActorInfo> _tempActorInfos = new ();
         // バトル前のアクターデータを設定
         public List<ActorInfo> TempActorInfos => _tempActorInfos;
-        private List<SkillInfo> _tempAlcanaSkillInfos = new ();
-        public List<SkillInfo> TempAlcanaSkillInfos => _tempAlcanaSkillInfos;
         private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
         public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
         private bool _tempInputType = false;
@@ -30,16 +27,6 @@ namespace Ryneus
         public void ClearBattleActors()
         {
             _tempActorInfos.Clear();
-        }
-
-        public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
-        {
-            _tempAlcanaSkillInfos = skillInfos;
-        }
-
-        public void ClearAlcana()
-        {
-            _tempAlcanaSkillInfos.Clear();
         }
         
         public void SetRankingInfo(int stageId,List<RankingInfo> rankingInfos)
@@ -78,20 +65,6 @@ namespace Ryneus
         public void SetInReplay(bool inReplay)
         {
             _inReplay = inReplay;
-        }
-        
-        private bool _battleResultVictory = false;
-        public bool BattleResultVictory => _battleResultVictory;
-        public void SetBattleResultVictory(bool isVictory)
-        {
-            _battleResultVictory = isVictory;
-        }
-
-        private int _battleResultScore = 0;
-        public int BattleResultScore => _battleResultScore;
-        public void SetBattleScore(int score)
-        {
-            _battleResultScore = score;
         }
     }
 }

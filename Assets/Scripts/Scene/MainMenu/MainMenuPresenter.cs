@@ -50,39 +50,16 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
-                case CommandType.TacticsCommand:
-                    CommandTacticsCommand((TacticsCommandType)viewEvent.template);
-                    break;
                 case CommandType.NextStage:
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     _model.StartSelectStage(_model.NextStage().Id);
                     _view.CommandGotoSceneChange(Scene.Tactics);
                     break;
-            }
-            if (viewEvent.commandType == CommandType.StageSelect)
-            {
-                CommandStageSelect((int)viewEvent.template);
-            }
-            if (viewEvent.commandType == CommandType.SelectSideMenu)
-            {
-                CommandSelectSideMenu();
-            }
-        }
-
-        private void CommandTacticsCommand(TacticsCommandType tacticsCommandType)
-        {
-            _model.SetTacticsCommandType(tacticsCommandType);
-            _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
-            _view.CallTrainCommand(tacticsCommandType);
-            switch (tacticsCommandType)
-            {
-                case TacticsCommandType.Paradigm:
-                    return;
-                case TacticsCommandType.Train:
+                case CommandType.StageSelect:
+                    CommandStageSelect((int)viewEvent.template);
                     break;
-                case TacticsCommandType.Alchemy:
-                    break;
-                case TacticsCommandType.Status:
+                case CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
                     break;
             }
         }
@@ -100,12 +77,6 @@ namespace Ryneus
             }
         }
 
-        private void CommandSlotPopup()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.CommandSceneChange(Scene.Slot);
-        }
-
         private void CommandSelectSideMenu()
         {
             var sideMenuViewInfo = new SideMenuViewInfo
@@ -118,6 +89,5 @@ namespace Ryneus
             };
             _view.CommandCallSideMenu(sideMenuViewInfo);
         }    
-        
     }
 }

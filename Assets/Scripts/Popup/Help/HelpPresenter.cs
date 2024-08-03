@@ -21,11 +21,12 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("HELP_LIST");
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(HelpViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

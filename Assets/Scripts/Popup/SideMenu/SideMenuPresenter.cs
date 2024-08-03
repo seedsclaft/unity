@@ -26,11 +26,12 @@ namespace Ryneus
             ClosePopup();
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("SideMenu");
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(SideMenuViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

@@ -880,7 +880,7 @@ MonoBehaviour:
   _backCommand: {fileID: 0}
   _backGround: {fileID: 0}
   uiRoot: {fileID: 0}
-  sideMenuButton: {fileID: 3764402222588852243}
+  sideMenuButton: {fileID: 8399614092077785951}
   versionText: {fileID: 2891911273548843730}
   tapTitle: {fileID: 2422647260831475595}
 --- !u!1 &4949163051166969355
@@ -1292,7 +1292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 608, y: 360}
+  m_AnchoredPosition: {x: 600, y: 360}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8324469770264883655
@@ -6203,12 +6203,12 @@ PrefabInstance:
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 65
+      value: 102
       objectReference: {fileID: 0}
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 114
+      value: 171
       objectReference: {fileID: 0}
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
@@ -6286,16 +6286,16 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2364375024769084149}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3764402222588852243 stripped
+--- !u!114 &8399614092077785951 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1509309982421799654, guid: 23de268d301efe244983fa295a02390b,
+  m_CorrespondingSourceObject: {fileID: 6079470327203875242, guid: 23de268d301efe244983fa295a02390b,
     type: 3}
   m_PrefabInstance: {fileID: 2364375024769084149}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9147260058400904256

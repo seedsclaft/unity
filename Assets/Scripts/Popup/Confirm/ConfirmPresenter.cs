@@ -21,13 +21,15 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
+            _view.OpenAnimation();
             _busy = false;
         }
 
         
         private void UpdateCommand(ConfirmViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.IsNoChoice)

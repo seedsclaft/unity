@@ -75,7 +75,7 @@ namespace Ryneus
             
             tacticsSymbolList.Initialize();
 
-            SideMenuButton.onClick.AddListener(() => 
+            SideMenuButton.SetCallHandler(() => 
             {
                 CallSideMenu();
             });

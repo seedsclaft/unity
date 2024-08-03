@@ -11,6 +11,7 @@ namespace Ryneus
         [SerializeField] private BaseList commandList = null;
         [SerializeField] private TextMeshProUGUI titleText = null;
         [SerializeField] private BaseList skillInfoList = null;
+        [SerializeField] private ConfirmAnimation confirmAnimation = null;
         private System.Action<ConfirmCommandType> _confirmEvent = null;
         private new System.Action<ConfirmViewEvent> _commandData = null;
         private ConfirmInfo _confirmInfo = null;
@@ -20,7 +21,12 @@ namespace Ryneus
             base.Initialize();
             commandList.Initialize();
             skillInfoList.Initialize();
+            SetBaseAnimation(confirmAnimation);
             new ConfirmPresenter(this);
+        }
+        public void OpenAnimation()
+        {
+            confirmAnimation.OpenAnimation(UiRoot.transform,null);
         }
         
         public void SetTitle(string title)

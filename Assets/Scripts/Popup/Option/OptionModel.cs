@@ -25,12 +25,14 @@ namespace Ryneus
                 {
                     continue;
                 }
-    //#endif
-                var optionInfo = new OptionInfo();
-                optionInfo.OptionCommand = optionCommand;
-                optionInfo.SliderEvent = sliderEvent;
-                optionInfo.MuteEvent = muteEvent;
-                optionInfo.ToggleEvent = toggleEvent;
+                //#endif
+                var optionInfo = new OptionInfo
+                {
+                    OptionCommand = optionCommand,
+                    SliderEvent = sliderEvent,
+                    MuteEvent = muteEvent,
+                    ToggleEvent = toggleEvent
+                };
                 list.Add(optionInfo);
             }
             return MakeListData(list);
@@ -49,10 +51,12 @@ namespace Ryneus
             var commandDates = new List<SystemData.CommandData>();
             foreach (var categoryId in categoryIds)
             {
-                var Command = new SystemData.CommandData();
-                Command.Key = categoryId.ToString();
-                Command.Name = DataSystem.GetText(categoryId + 6000);
-                Command.Id = categoryId;
+                var Command = new SystemData.CommandData
+                {
+                    Key = categoryId.ToString(),
+                    Name = DataSystem.GetText(categoryId + 6000),
+                    Id = categoryId
+                };
                 commandDates.Add(Command);
             }
 

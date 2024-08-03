@@ -2381,18 +2381,18 @@ namespace Ryneus
             return isVictory;
         }
 
-        public void MakeBattleScore(bool isVictory)
+        public int MakeBattleScore(bool isVictory)
         {
             if (isVictory)
             {
-                TempInfo.SetBattleResultVictory(true);
                 var score = 100f;
                 var turns = (5 * _troop.BattlerInfos.Count) - _turnCount;
                 score += turns;
                 score = Math.Max(0,score);
                 score = Math.Min(100,score);
-                TempInfo.SetBattleScore((int)score);
+                return (int)score;
             }
+            return 0;
         }
 
         public List<GetItemInfo> MakeBattlerResult()
@@ -2405,11 +2405,6 @@ namespace Ryneus
         public bool CheckDefeat()
         {
             bool isDefeat = _party.BattlerInfos.Find(a => a.IsAlive()) == null;
-            if (isDefeat)
-            {
-                TempInfo.SetBattleResultVictory(false);
-                TempInfo.SetBattleScore(0);
-            }
             return isDefeat;
         }
 

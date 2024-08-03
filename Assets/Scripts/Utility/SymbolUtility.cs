@@ -282,8 +282,10 @@ namespace Ryneus
         {
             // 候補を生成
             var stageSymbolList = stageSymbolDates.FindAll(a => a.Seek == 0);
-            var stageSymbolData = new StageSymbolData();
-            stageSymbolData.SymbolType = SymbolType.None;
+            var stageSymbolData = new StageSymbolData
+            {
+                SymbolType = SymbolType.None
+            };
             int targetRand = Random.Range(0,stageSymbolList.Sum(a => a.Rate));
             while (stageSymbolData.SymbolType == SymbolType.None)
             {

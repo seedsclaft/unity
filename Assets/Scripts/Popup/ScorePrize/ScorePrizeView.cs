@@ -7,6 +7,7 @@ namespace Ryneus
     public class ScorePrizeView : BaseView
     {
         [SerializeField] private BaseList scorePrizeList = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<ScorePrizeViewEvent> _commandData = null;
         private System.Action<int> _callEvent = null;
         
@@ -14,9 +15,15 @@ namespace Ryneus
         {
             base.Initialize();
             scorePrizeList.Initialize();
+            SetBaseAnimation(popupAnimation);
             new ScorePrizePresenter(this);
             scorePrizeList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             SetInputHandler(scorePrizeList.GetComponent<IInputHandlerEvent>());
+        }
+        
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
         }
         
         public void SetEvent(System.Action<ScorePrizeViewEvent> commandData)

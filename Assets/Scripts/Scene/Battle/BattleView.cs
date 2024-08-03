@@ -70,7 +70,7 @@ namespace Ryneus
             battleGridLayer.Initialize();
             battleActorList.Initialize();
             battleEnemyLayer.Initialize();
-            SideMenuButton.onClick.AddListener(() => 
+            SideMenuButton.SetCallHandler(() => 
             {
                 CallSideMenu();
             });

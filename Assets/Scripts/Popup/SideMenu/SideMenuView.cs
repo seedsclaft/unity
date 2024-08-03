@@ -10,6 +10,7 @@ namespace Ryneus
     {
         [SerializeField] private BaseList sideMenuInfoList = null;
         [SerializeField] private Button closeButton = null;
+        [SerializeField] private SideMenuAnimation sideMenuAnimation = null;
         private new System.Action<SideMenuViewEvent> _commandData = null;
 
         public SystemData.CommandData SideMenuCommand 
@@ -29,11 +30,17 @@ namespace Ryneus
         {
             base.Initialize();
             sideMenuInfoList.Initialize();
-            new SideMenuPresenter(this);
             closeButton.onClick.AddListener(() => 
             {
                 BackEvent();
             });
+            SetBaseAnimation(sideMenuAnimation);
+            new SideMenuPresenter(this);
+        }
+
+        public void OpenAnimation()
+        {
+            sideMenuAnimation?.OpenAnimation(UiRoot.transform,null);
         }
 
         private void OnClickSideMenu()
@@ -77,7 +84,7 @@ namespace SideMenu
     public enum CommandType
     {
         None = 0,
-        SelectSideMenu = 1,
+        SelectSideMenu,
     }
 }
 

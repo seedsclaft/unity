@@ -144,7 +144,6 @@ namespace Ryneus
                     CommandHelpView((List<ListData>)viewEvent.template);
                     break;
                 case Base.CommandType.CallSlotSaveView:
-                    CommandSlotSaveView((SlotSaveViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallSkillTriggerView:
                     CommandSkillTriggerView((SkillTriggerViewInfo)viewEvent.template);
@@ -333,7 +332,7 @@ namespace Ryneus
             sideMenuView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.CloseStatus));
-                if (sideMenuViewInfo.EndEvent != null) sideMenuViewInfo.EndEvent();
+                sideMenuViewInfo.EndEvent?.Invoke();
             });
             sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
             _currentScene.SetBusy(true);
@@ -381,21 +380,6 @@ namespace Ryneus
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
             });
-            SetIsBusyMainAndStatus();
-        }
-
-        private void CommandSlotSaveView(SlotSaveViewInfo slotSaveViewInfo)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.SlotSave,helpWindow);
-            var slotSaveView = prefab.GetComponent<SlotSaveView>();
-            slotSaveView.Initialize();
-            slotSaveView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (slotSaveViewInfo.EndEvent != null) slotSaveViewInfo.EndEvent();
-            });
-            slotSaveView.SetEvent((type) => UpdateCommand(type));
-            slotSaveView.SetSlotSaveViewInfo(slotSaveViewInfo);
             SetIsBusyMainAndStatus();
         }
 

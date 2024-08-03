@@ -6,9 +6,12 @@ using DG.Tweening;
 
 namespace Ryneus
 {
-    public class BaseAnimation : MonoBehaviour
+    public class BaseAnimation : MonoBehaviour 
     {
+        [SerializeField] private CanvasGroup baseCanvas = null;
+        public CanvasGroup BaseCanvas => baseCanvas;
         private static Sequence _sequence;
+        public bool Busy = false;
         public static void MoveAndFade(RectTransform rect,Image image,float moveX,float fade,float duration = 0.1f,System.Action endEvent = null)
         {
             _sequence = DOTween.Sequence()
@@ -23,10 +26,7 @@ namespace Ryneus
 
         public static void Kill()
         {
-            if (_sequence != null)
-            {
-                _sequence.Complete();
-            }
+            _sequence?.Complete();
         }
     }
 }

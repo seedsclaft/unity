@@ -22,11 +22,12 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
             _view.SetScorePrize(_model.ScorePrize());
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(ScorePrizeViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

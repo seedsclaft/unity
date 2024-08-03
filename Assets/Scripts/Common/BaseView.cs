@@ -22,8 +22,12 @@ namespace Ryneus
         private System.Action _backEvent = null;
         public System.Action BackEvent => _backEvent;
         [SerializeField] private GameObject uiRoot = null;
-        [SerializeField] private Button sideMenuButton = null;
-        public Button SideMenuButton => sideMenuButton;
+        public GameObject UiRoot => uiRoot;
+        [SerializeField] private OnOffButton sideMenuButton = null;
+        public OnOffButton SideMenuButton => sideMenuButton;
+        private BaseAnimation baseAnimation = null;
+        public void SetBaseAnimation(BaseAnimation animation) => baseAnimation = animation;
+        public bool AnimationBusy => baseAnimation.Busy;
         private int _wait = 0;
         public System.Action _waitEndEvent = null;
 
@@ -199,8 +203,10 @@ namespace Ryneus
 
         public void CommandCallSideMenu(SideMenuViewInfo sideMenuViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallSideMenu);
-            eventData.template = sideMenuViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallSideMenu)
+            {
+                template = sideMenuViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
@@ -222,15 +228,6 @@ namespace Ryneus
         {
             var eventData = new ViewEvent(Base.CommandType.CallHelpView);
             eventData.template = helpTextList;
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandSlotSave(SlotSaveViewInfo slotSaveViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallSlotSaveView)
-            {
-                template = slotSaveViewInfo
-            };
             CallSceneChangeCommand(eventData);
         }
 
@@ -436,7 +433,7 @@ namespace Ryneus
             CallTutorialFocus,
             CloseTutorialFocus,
             SceneShowUI,
-            SceneHideUI
+            SceneHideUI,
         }
     }
 }

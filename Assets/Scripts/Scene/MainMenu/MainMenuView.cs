@@ -8,13 +8,9 @@ namespace Ryneus
 {
     public class MainMenuView : BaseView
     {
-        //[SerializeField] private TrainView trainView = null;
-        //[SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private BaseList stageList = null;
         [SerializeField] private StageInfoComponent component;
         [SerializeField] private OnOffButton nextStageButton;
-        //[SerializeField] private TextMeshProUGUI numinous = null;
-        //[SerializeField] private TextMeshProUGUI totalScore = null;
 
         private new System.Action<MainMenuViewEvent> _commandData = null;
 
@@ -22,13 +18,10 @@ namespace Ryneus
         {
             base.Initialize();
             stageList.Initialize();
-            SideMenuButton.onClick.AddListener(() => 
+            SideMenuButton.SetCallHandler(() => 
             {
                 CallSideMenu();
             });
-            //tacticsCommandList.Initialize();
-            //trainView.Initialize(base._commandData);
-            //trainView.SetHelpWindow(HelpWindow);
             nextStageButton?.SetText(DataSystem.GetText(17010));
             nextStageButton?.SetCallHandler(() => 
             {
@@ -36,88 +29,6 @@ namespace Ryneus
                 _commandData(eventData);
             });
             new MainMenuPresenter(this);
-        }
-
-        public void SetTacticsCommand(List<ListData> menuCommands)
-        {
-            /*
-            tacticsCommandList.SetData(menuCommands);
-            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallTacticsCommand());
-            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
-            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
-            SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
-            UpdateHelpWindow();
-            */
-        }
-        
-        public void CallTrainCommand(TacticsCommandType tacticsCommandType)
-        {
-            //trainView.CallTrainCommand(tacticsCommandType);
-        }
-        
-        private void UpdateHelpWindow()
-        {
-            /*
-            var listData = tacticsCommandList.ListData;
-            if (listData != null)
-            {
-                var commandData = (SystemData.CommandData)listData.Data;
-                HelpWindow.SetHelpText(commandData.Help);
-            }
-            */
-        }
-
-        private void CallTacticsCommand()
-        {
-            /*
-            var listData = tacticsCommandList.ListData;
-            if (listData != null && listData.Enable)
-            {
-                var commandData = (SystemData.CommandData)listData.Data;
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new MainMenuViewEvent(CommandType.TacticsCommand);
-                eventData.template = commandData.Id;
-                _commandData(eventData);
-            }
-            */
-        }
-
-        public void ShowCommandList()
-        {
-            //sideMenuList.gameObject.SetActive(true);
-            //tacticsCommandList.gameObject.SetActive(true);
-        }
-
-        public void HideCommandList()
-        {
-            //sideMenuList.gameObject.SetActive(false);
-            //tacticsCommandList.gameObject.SetActive(false);
-        }
-        
-        public void ShowSelectCharacter(List<ListData> tacticsActorInfo,TacticsCommandData tacticsCommandData)
-        {
-            //trainView.ShowSelectCharacter(tacticsActorInfo,tacticsCommandData);
-        }
-
-        public void HideSelectCharacter()
-        {
-            //trainView.HideSelectCharacter();
-        }
-
-
-        public void ShowLeaningList(List<ListData> learnMagicList)
-        {
-            //trainView.ShowLeaningList(learnMagicList);
-        }
-
-        public void SetNuminous(int value)
-        {
-            //numinous.SetText(DataSystem.GetReplaceDecimalText(value));
-        }
-
-        public void SetTotalScore(int value)
-        {
-            //totalScore.SetText(DataSystem.GetReplaceDecimalText(value));
         }
 
         public void SetInitHelpText()
@@ -154,7 +65,8 @@ namespace Ryneus
             SetInputHandler(stageList.GetComponent<IInputHandlerEvent>());
         }
         
-        private void CallMainMenuStage(){
+        private void CallMainMenuStage()
+        {
             var listData = stageList.ListData;
             if (listData != null)
             {
@@ -165,7 +77,8 @@ namespace Ryneus
             }
         }    
         
-        private void CallStageRanking(int stageId = -1){
+        private void CallStageRanking(int stageId = -1)
+        {
             var listData = stageList.ListData;
             if (listData != null)
             {

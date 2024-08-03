@@ -26,13 +26,15 @@ namespace Ryneus
             _view.SetOptionCategoryList(_model.OptionCategoryList());
             _view.SetHelpWindow();
             CommandSelectCategory();
+            _view.OpenAnimation();
             _busy = false;
         }
 
         
         private void UpdateCommand(OptionViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.ChangeOptionValue)

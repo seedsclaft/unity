@@ -8,12 +8,20 @@ namespace Ryneus
     public class CreditView : BaseView,IInputHandlerEvent
     {
         [SerializeField] private ScrollRect scrollRect = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<CreditViewEvent> _commandData = null;
         public override void Initialize() 
         {
             base.Initialize();
+            
+            SetBaseAnimation(popupAnimation);
             new CreditPresenter(this);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
         }
 
         public void SetEvent(System.Action<CreditViewEvent> commandData)

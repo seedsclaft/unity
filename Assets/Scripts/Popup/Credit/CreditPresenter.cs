@@ -17,12 +17,13 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
+            _view.OpenAnimation();
             _busy = false;
         }
 
         private void UpdateCommand(CreditViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

@@ -714,7 +714,7 @@ MonoBehaviour:
   _backCommand: {fileID: 7009138044241348967}
   _backGround: {fileID: 0}
   uiRoot: {fileID: 8273644768559239518}
-  sideMenuButton: {fileID: 6232159298264424602}
+  sideMenuButton: {fileID: 1644280878081440726}
   battleActorList: {fileID: 5634883886793260616}
   battleEnemyLayer: {fileID: 8809458293464566285}
   battleGridLayer: {fileID: 450716801963125888}
@@ -1145,7 +1145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 608, y: 360}
+  m_AnchoredPosition: {x: 600, y: 360}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2808479446398288436
@@ -8289,12 +8289,12 @@ PrefabInstance:
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 65
+      value: 102
       objectReference: {fileID: 0}
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 114
+      value: 171
       objectReference: {fileID: 0}
     - target: {fileID: 3359600672119100716, guid: 23de268d301efe244983fa295a02390b,
         type: 3}
@@ -8366,16 +8366,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23de268d301efe244983fa295a02390b, type: 3}
---- !u!114 &6232159298264424602 stripped
+--- !u!114 &1644280878081440726 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1509309982421799654, guid: 23de268d301efe244983fa295a02390b,
+  m_CorrespondingSourceObject: {fileID: 6079470327203875242, guid: 23de268d301efe244983fa295a02390b,
     type: 3}
   m_PrefabInstance: {fileID: 4796112268091798140}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &7786870748870846288 stripped

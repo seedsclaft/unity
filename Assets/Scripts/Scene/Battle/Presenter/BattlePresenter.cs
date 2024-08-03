@@ -871,14 +871,16 @@ namespace Ryneus
                 _view.StartBattleStartAnim(DataSystem.GetText(15020));
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
                 strategySceneInfo.BattleTurn = _model.TurnCount;
-                _model.MakeBattleScore(true);
+                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true);
+                strategySceneInfo.BattleResultVictory = true;
             } else
             if (_model.CheckDefeat())
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(15030)); 
                 strategySceneInfo.GetItemInfos = new List<GetItemInfo>();  
                 strategySceneInfo.BattleTurn = -1; 
-                _model.MakeBattleScore(false);       
+                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false);
+                strategySceneInfo.BattleResultVictory = false;
             }
             _model.EndBattle();
             _battleEnded = true;
@@ -919,11 +921,14 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             if (_busy) return;
-            var sideMenuViewInfo = new SideMenuViewInfo();
-            sideMenuViewInfo.EndEvent = () => {
+            var sideMenuViewInfo = new SideMenuViewInfo
+            {
+                EndEvent = () =>
+                {
 
+                },
+                CommandLists = _model.SideMenu()
             };
-            sideMenuViewInfo.CommandLists = _model.SideMenu();
             _view.CommandCallSideMenu(sideMenuViewInfo);
         }    
         

@@ -15,7 +15,7 @@ namespace Ryneus
         public override void Initialize() 
         {
             base.Initialize();
-            SideMenuButton.onClick.AddListener(() => 
+            SideMenuButton.SetCallHandler(() => 
             {
                 CallSideMenu();
             });

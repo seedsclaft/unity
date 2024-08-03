@@ -7,15 +7,22 @@ namespace Ryneus
     public class HelpView : BaseView
     {
         [SerializeField] private BaseList helpTextList = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<HelpViewEvent> _commandData = null;
         private System.Action<int> _callEvent = null;
         
         public override void Initialize() 
         {
             base.Initialize();
+            SetBaseAnimation(popupAnimation);
             new HelpPresenter(this);
         }
         
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
+        }
+
         public void SetHelp(List<ListData> helpText)
         {
             helpTextList.Initialize();

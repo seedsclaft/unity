@@ -13,6 +13,7 @@ namespace Ryneus
         private new System.Action<OptionViewEvent> _commandData = null;
         [SerializeField] private BaseList optionCategoryList = null;
         [SerializeField] private BaseList optionList = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         public ListData OptionCommand => optionList.ListData;
         public int OptionCategoryIndex => optionCategoryList.Index;
 
@@ -23,10 +24,16 @@ namespace Ryneus
             optionList.Initialize();
             SetInputHandler(optionList.GetComponent<IInputHandlerEvent>());
             SetInputHandler(optionCategoryList.GetComponent<IInputHandlerEvent>());
+            SetBaseAnimation(popupAnimation);
             new OptionPresenter(this);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
         
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
+        }
+
         public void SetOptionCategoryList(List<ListData> optionData)
         {
             optionCategoryList.SetData(optionData);

@@ -256,16 +256,6 @@ namespace Ryneus
             return skillInfos;
         }
 
-        public bool NeedAlcana()
-        {
-            return false;
-        }
-        
-        public void SetAlcanaSkillInfo(List<SkillInfo> skillInfos)
-        {
-            TempInfo.SetAlcanaSkillInfo(skillInfos);
-        }
-
         public string SelectAddActorConfirmText(string actorName)
         {
             int textId = 14180;
@@ -404,11 +394,6 @@ namespace Ryneus
         public TroopInfo CurrentTroopInfo()
         {
             return CurrentSelectRecord().SymbolInfo.TroopInfo;
-        }
-
-        public bool BattleResultVictory()
-        {
-            return TempInfo.BattleResultVictory;
         }
 
         /// <summary>
@@ -676,12 +661,6 @@ namespace Ryneus
         public List<int> SaveAdsCommandTextIds()
         {
             return new List<int>(){3053,3051};
-        }
-
-        public void SetActorsData(int index)
-        {
-            PartyInfo.InitActorInfos();
-            var slotData = CurrentData.PlayerInfo.SlotSaveList[index];
         }
 
         public bool SelectableSlot(int index)

@@ -10,6 +10,10 @@ namespace Ryneus
 
         private bool _battleResult = false;
         public bool BattleResult => _battleResult;
+        public bool BattleResultVictory()
+        {
+            return SceneParam.BattleResultVictory;
+        }
         public StrategyModel()
         {
             _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
@@ -121,7 +125,7 @@ namespace Ryneus
             var getItemInfos = SceneParam.GetItemInfos;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
-            var recordScore = TempInfo.BattleResultScore * 0.01f;
+            var recordScore = SceneParam.BattleResultScore * 0.01f;
             //record.ClearSelectedIndex();
             foreach (var getItemInfo in getItemInfos)
             {
@@ -324,7 +328,7 @@ namespace Ryneus
             {
                 return null;
             }
-            var recordScore = TempInfo.BattleResultScore;
+            var recordScore = SceneParam.BattleResultScore;
             if (recordScore >= 0)
             {
                 return recordScore.ToString() + "%";
@@ -444,17 +448,6 @@ namespace Ryneus
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
-        public List<SymbolInfo> SelectedSymbolInfos(int stageId)
-        {
-            var list = new List<SymbolInfo>();
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId);
-            foreach (var record in records)
-            {
-                list.Add(record.SymbolInfo);
-            }
-            return list;
-        }
-
         public void CommitCurrentParallelResult()
         {
             // バトルに敗北しているときは更新しない
@@ -480,28 +473,12 @@ namespace Ryneus
             //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
-        public bool ChainParallelMode()
-        {
-            var chain = false;
-            var beforeRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
-            foreach (var record in beforeRecords)
-            {
-                if (record.Selected == false)
-                {
-                    chain = true;
-                }
-            }
-            return chain;
-        }
-
         public bool EnableBattleSkip()
         {
             // スキップ廃止
             return false;
             //return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
         }
-
-
 
         public void ReturnTempBattleMembers()
         {
@@ -519,5 +496,7 @@ namespace Ryneus
         public int BattleTurn;
         public List<GetItemInfo> GetItemInfos;
         public List<ActorInfo> ActorInfos;
+        public int BattleResultScore;
+        public bool BattleResultVictory;
     }
 }

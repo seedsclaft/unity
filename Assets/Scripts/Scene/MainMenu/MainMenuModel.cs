@@ -5,52 +5,6 @@ namespace Ryneus
 {
     public class MainMenuModel : BaseModel
     {
-        private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
-        public TacticsCommandType TacticsCommandType => _TacticsCommandType;
-        public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
-        {
-            _TacticsCommandType = tacticsCommandType;
-        }
-
-        private int _selectActorId = 0;
-        public void SetSelectActorId(int actorId)
-        {
-            _selectActorId = actorId;
-        }    
-        public ActorInfo TacticsActor()
-        {
-            return StageMembers().Find(a => a.ActorId == _selectActorId);
-        }
-        
-        public List<ListData> TacticsCommand()
-        {
-            var commandListDates = new List<SystemData.CommandData>();
-            foreach (var commandListData in DataSystem.TacticsCommand)
-            {
-                if ((TacticsCommandType)commandListData.Id != TacticsCommandType.Paradigm)
-                {
-                    commandListDates.Add(commandListData);
-                }
-            }
-            return MakeListData(commandListDates);
-        }
-
-        public string TacticsCommandInputInfo()
-        {
-            switch (_TacticsCommandType)
-            {
-                case TacticsCommandType.Train:
-                    return "TRAIN";
-                case TacticsCommandType.Alchemy:
-                    return "ALCHEMY";
-                    /*
-                case TacticsCommandType.Recovery:
-                    return "RECOVERY";
-                    */
-            }
-            return "";
-        }
-
         public List<ListData> Stages()
         {
             var list = new List<StageInfo>();
