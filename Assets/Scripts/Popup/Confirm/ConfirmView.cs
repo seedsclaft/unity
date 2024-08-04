@@ -24,6 +24,7 @@ namespace Ryneus
             SetBaseAnimation(confirmAnimation);
             new ConfirmPresenter(this);
         }
+
         public void OpenAnimation()
         {
             confirmAnimation.OpenAnimation(UiRoot.transform,null);

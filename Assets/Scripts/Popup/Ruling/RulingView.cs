@@ -15,6 +15,7 @@ namespace Ryneus
         
         [SerializeField] private BaseList ruleList = null;
         [SerializeField] private TextMeshProUGUI titleText = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<RulingViewEvent> _commandData = null;
 
         public override void Initialize() 
@@ -35,9 +36,15 @@ namespace Ryneus
                 eventData.template = data;
                 _commandData(eventData);
             });
+            SetBaseAnimation(popupAnimation);
             new RulingPresenter(this);
         }
         
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
+        }
+
         public void SetTitle(string title)
         {
             titleText.text = title;

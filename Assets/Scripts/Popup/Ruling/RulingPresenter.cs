@@ -25,6 +25,7 @@ namespace Ryneus
             _view.SetRuleCommand(_model.RulingCommand());
             CommandRefresh();
             _view.CommandSelectRule(_model.RuleHelp());
+            _view.OpenAnimation();
             _busy = false;
         }
 

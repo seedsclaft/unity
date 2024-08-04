@@ -453,6 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 569621482461537653}
+  - component: {fileID: 6116190346530956035}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -472,7 +473,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2913696437531242863}
   - {fileID: 6882136695474213352}
   m_Father: {fileID: 1482440901965782817}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -481,6 +481,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &6116190346530956035
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2763590506293175058}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2819883536062109221
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,7 +896,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4644838514397385931}
-  m_Father: {fileID: 569621482461537653}
+  m_Father: {fileID: 1482440901965782817}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4977114157821746180
 GameObject:
@@ -896,6 +908,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482440901965782817}
   - component: {fileID: 9117099244767721767}
+  - component: {fileID: 1666259648872671728}
   m_Layer: 5
   m_Name: PopupSkillDetail
   m_TagString: Untagged
@@ -916,6 +929,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4214659035178538098}
+  - {fileID: 2913696437531242863}
   - {fileID: 569621482461537653}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -938,11 +952,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backCommand: {fileID: 7102144706739486485}
   _backGround: {fileID: 0}
-  uiRoot: {fileID: 0}
+  uiRoot: {fileID: 2763590506293175058}
   sideMenuButton: {fileID: 0}
   commandList: {fileID: 7576893219148288908}
   titleText: {fileID: 7310816681583832016}
   skillInfoList: {fileID: 2645013531368423424}
+  confirmAnimation: {fileID: 1666259648872671728}
+--- !u!114 &1666259648872671728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4977114157821746180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665e27e3cdef3d84b999a27375700e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCanvas: {fileID: 6116190346530956035}
+  Busy: 0
 --- !u!1 &5608147145033257564
 GameObject:
   m_ObjectHideFlags: 0

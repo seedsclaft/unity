@@ -21,6 +21,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
+            _view.OpenAnimation();
             _view.CommandGameSystem(Base.CommandType.CallLoading);
             var saveData = await _model.ClearParty();
             _view.CommandGameSystem(Base.CommandType.CloseLoading);

@@ -22,6 +22,7 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
             _view.SetCharacterList(_model.CharacterList());
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(CharacterListViewEvent viewEvent)

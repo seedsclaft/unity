@@ -7,6 +7,7 @@ namespace Ryneus
     public class CharacterListView : BaseView
     {
         [SerializeField] private BaseList characterList = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<CharacterListViewEvent> _commandData = null;
         private System.Action<int> _callEvent = null;
         
@@ -14,12 +15,18 @@ namespace Ryneus
         {
             base.Initialize();
             characterList.Initialize();
+            SetBaseAnimation(popupAnimation);
             new CharacterListPresenter(this);
             characterList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             characterList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
             SetInputHandler(characterList.GetComponent<IInputHandlerEvent>());
         }
 
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
+        }
+        
         public void SetViewInfo(CharacterListInfo characterListInfo)
         {
             _callEvent = characterListInfo.CallEvent;

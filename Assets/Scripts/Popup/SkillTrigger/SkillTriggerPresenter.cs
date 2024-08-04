@@ -23,6 +23,7 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,0));
             _view.SetTriggerCategoryList(_model.SkillTriggerCategoryList());
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(SkillTriggerViewEvent viewEvent)

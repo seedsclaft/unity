@@ -10,20 +10,26 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI evaluateText = null;
         [SerializeField] private TextMeshProUGUI afterEvaluateText = null;
         [SerializeField] private SkillInfoComponent skillInfoComponent = null;
-        [SerializeField] private CanvasGroup canvasGroup = null;
+        [SerializeField] private ConfirmAnimation confirmAnimation = null;
 
         public override void Initialize() 
         {
             base.Initialize();
+            SetBaseAnimation(confirmAnimation);
+            OpenAnimation();
         }
-        
+
+        public void OpenAnimation()
+        {
+            confirmAnimation.OpenAnimation(UiRoot.transform,null);
+        }
+
         public void SetLearnSkillInfo(LearnSkillInfo learnSkillInfo)
         {
             evaluateText?.SetText(learnSkillInfo.From.ToString());
             afterEvaluateText?.SetText(learnSkillInfo.To.ToString());
             skillInfoComponent.UpdateInfo(learnSkillInfo.SkillInfo);
         }
-
         
         public void InputHandler(InputKeyType keyType, bool pressed)
         {

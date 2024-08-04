@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private BaseList triggerCategory1List = null;
         [SerializeField] private BaseList triggerCategory2List = null;
         [SerializeField] private Button listBlock = null;
+        [SerializeField] private PopupAnimation popupAnimation = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
         public int SkillTriggerIndex => skillTriggerList.Index;
         private SkillTriggerViewInfo _skillTriggerViewInfo;
@@ -55,9 +56,14 @@ namespace Ryneus
             {
                 CancelSelect();
             });
+            SetBaseAnimation(popupAnimation);
             new SkillTriggerPresenter(this);
         }
 
+        public void OpenAnimation()
+        {
+            popupAnimation.OpenAnimation(UiRoot.transform,null);
+        }
 
         public void SetSkillTriggerViewInfo(SkillTriggerViewInfo skillTriggerViewInfo)
         {

@@ -247,6 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 411187731738599636}
   - component: {fileID: 1095492747247402303}
+  - component: {fileID: 1537813293613488744}
   m_Layer: 5
   m_Name: PopupSkillTrigger
   m_TagString: Untagged
@@ -266,6 +267,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3674933733409312647}
   - {fileID: 2161722917911979841}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -297,6 +299,21 @@ MonoBehaviour:
   triggerCategory1List: {fileID: 5279109085496346036}
   triggerCategory2List: {fileID: 8885955186847264549}
   listBlock: {fileID: 6949415940103370314}
+  popupAnimation: {fileID: 1537813293613488744}
+--- !u!114 &1537813293613488744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157738747983297934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e507eed2e1c0c44bbc705f953f036a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCanvas: {fileID: 8474775359929359771}
+  Busy: 0
 --- !u!1 &1581377571576579691
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2161722917911979841}
+  - component: {fileID: 8474775359929359771}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -541,7 +559,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3674933733409312647}
   - {fileID: 1233222128015906903}
   - {fileID: 2937543715186760817}
   m_Father: {fileID: 411187731738599636}
@@ -551,6 +568,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &8474775359929359771
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898229821374275561}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2034513146799552342
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +723,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1564449233063723404}
-  m_Father: {fileID: 2161722917911979841}
+  m_Father: {fileID: 411187731738599636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

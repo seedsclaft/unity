@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3494927186515047143}
+  - component: {fileID: 2211994390665409981}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -28,7 +29,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3238951256318173942}
   - {fileID: 3860774439115149899}
   - {fileID: 694544636430584433}
   - {fileID: 5277527012473444103}
@@ -40,6 +40,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &2211994390665409981
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423781656636282485}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &964456180123554237
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3520135531575516889}
   - component: {fileID: 9118989837423849062}
+  - component: {fileID: 6146729758627571242}
   m_Layer: 5
   m_Name: PopupLearnSkill
   m_TagString: Untagged
@@ -244,6 +257,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6747232051201396542}
+  - {fileID: 3238951256318173942}
   - {fileID: 3494927186515047143}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -271,7 +285,21 @@ MonoBehaviour:
   evaluateText: {fileID: 5473913256435177436}
   afterEvaluateText: {fileID: 9040142875941584603}
   skillInfoComponent: {fileID: 5084540526339253778}
-  canvasGroup: {fileID: 0}
+  confirmAnimation: {fileID: 6146729758627571242}
+--- !u!114 &6146729758627571242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142364306323360253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665e27e3cdef3d84b999a27375700e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCanvas: {fileID: 2211994390665409981}
+  Busy: 0
 --- !u!1 &3196150546032208778
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +870,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5156003444539729805}
-  m_Father: {fileID: 3494927186515047143}
+  m_Father: {fileID: 3520135531575516889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6496947227548022361
 GameObject:
