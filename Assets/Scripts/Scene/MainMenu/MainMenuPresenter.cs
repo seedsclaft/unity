@@ -44,7 +44,7 @@ namespace Ryneus
 
         private void UpdateCommand(MainMenuViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

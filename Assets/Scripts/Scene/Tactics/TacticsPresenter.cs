@@ -105,7 +105,7 @@ namespace Ryneus
 
         private void UpdateCommand(TacticsViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

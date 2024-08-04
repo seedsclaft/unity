@@ -897,7 +897,6 @@ GameObject:
   - component: {fileID: 3824196378661808413}
   - component: {fileID: 2182901229186267567}
   - component: {fileID: 4714346885792150345}
-  - component: {fileID: 8251115242161684738}
   m_Layer: 5
   m_Name: TacticsSelectCharacter
   m_TagString: Untagged
@@ -995,27 +994,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!95 &8251115242161684738
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6111246838795042124}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7263548aa1432854890872ef62459d49, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6405033030619767960
 GameObject:
   m_ObjectHideFlags: 0

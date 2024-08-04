@@ -77,7 +77,7 @@ namespace Ryneus
             {
                 CommandSkipBattle();
             }
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

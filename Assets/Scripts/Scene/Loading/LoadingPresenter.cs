@@ -28,7 +28,8 @@ namespace Ryneus
 
         private void UpdateCommand(LoadingViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
         }

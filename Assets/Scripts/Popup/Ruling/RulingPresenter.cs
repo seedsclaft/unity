@@ -32,7 +32,8 @@ namespace Ryneus
         
         private void UpdateCommand(RulingViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             switch (viewEvent.commandType)

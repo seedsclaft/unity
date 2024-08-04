@@ -140,7 +140,8 @@ namespace Ryneus
             {
                 CommandSkipBattle();
             }
-            if (_busy){
+            if (_busy)
+            {
                 return;
             }
             switch (viewEvent.commandType)

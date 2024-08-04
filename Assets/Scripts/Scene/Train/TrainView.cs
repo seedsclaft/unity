@@ -18,6 +18,7 @@ namespace Ryneus
 
 
         [SerializeField] private Button commandHelpButton = null;
+        [SerializeField] private TrainAnimation trainAnimation = null;
 
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
 
@@ -39,9 +40,15 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetBackCommand(() => OnClickBack());
+            SetBaseAnimation(trainAnimation);
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
         }
+
+        public void OpenAnimation()
+        {
+        }
+
 
         public void SetParentInputKeyActive(System.Action<TrainViewEvent,TacticsCommandType> inputKeyEvent)
         {
@@ -198,6 +205,7 @@ namespace Ryneus
             selectCharacter.SetTacticsCommandData(tacticsCommandData);
             //selectCharacter.UpdateSmoothSelect();
             selectCharacter.gameObject.SetActive(true);
+            trainAnimation.OpenCharacterListAnimation(selectCharacter.transform,null);
         }
 
         public void CallChangeSelectTacticsActor()
@@ -258,6 +266,7 @@ namespace Ryneus
             battleSelectCharacter.SetSkillInfos(skillInfos);
             battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
+            trainAnimation.OpenAnimation(battleSelectCharacter.transform,null);
         }
 
         public void ShowLeaningList(List<ListData> learnMagicList)
@@ -272,6 +281,7 @@ namespace Ryneus
             battleSelectCharacter.SetSkillInfos(learnMagicList);
             battleSelectCharacter.ShowActionList();
             SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
+            trainAnimation.OpenAnimation(battleSelectCharacter.transform,null);
         }
 
         public void CommandSelectActorAlchemy()

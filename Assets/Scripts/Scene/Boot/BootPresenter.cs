@@ -56,7 +56,8 @@ namespace Ryneus
         
         private void UpdateCommand(BootViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.LogoClick)

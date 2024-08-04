@@ -46,12 +46,13 @@ namespace Ryneus
             _view.SetAttributeList(_model.AttributeTabList());
             _view.SetStatusButtonEvent(() => CommandStatus(_view.CharacterSelectIndex));
             CommandRefresh();
+            _view.OpenAnimation();
             _view.ChangeUIActive(true);
         }
 
         private void UpdateCommand(TrainViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }

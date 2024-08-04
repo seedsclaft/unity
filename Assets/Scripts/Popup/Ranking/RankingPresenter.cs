@@ -28,7 +28,8 @@ namespace Ryneus
 
         private void UpdateCommand(RankingViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             if (viewEvent.commandType == CommandType.RankingOpen)

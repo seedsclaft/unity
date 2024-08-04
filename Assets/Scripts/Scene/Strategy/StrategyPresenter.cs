@@ -40,7 +40,8 @@ namespace Ryneus
 
         private void UpdateCommand(StrategyViewEvent viewEvent)
         {
-            if (_busy){
+            if (_busy || _view.AnimationBusy)
+            {
                 return;
             }
             Debug.Log(viewEvent.commandType);

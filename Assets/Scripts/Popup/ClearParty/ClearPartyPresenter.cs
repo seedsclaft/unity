@@ -54,7 +54,7 @@ namespace Ryneus
 
         private void UpdateCommand(ClearPartyViewEvent viewEvent)
         {
-            if (_busy)
+            if (_busy || _view.AnimationBusy)
             {
                 return;
             }
