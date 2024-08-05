@@ -40,5 +40,10 @@ namespace Ryneus
         {
             if (ListData == null) return;
         }
+
+        public void SetActiveCursor(bool isActive)
+        {
+            Cursor.SetActive(isActive);
+        }
     }
 }

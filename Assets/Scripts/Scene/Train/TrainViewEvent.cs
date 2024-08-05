@@ -33,6 +33,7 @@ namespace Train
         ChangeSelectTacticsActor,
         BattleReplay,
         ShowTacticsCharacter,
+        EnemyInfo,
 
         SelectAttribute,
     }

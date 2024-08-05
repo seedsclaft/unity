@@ -110,13 +110,14 @@ namespace Ryneus
                         CommandActorLearnMagic((SkillInfo)viewEvent.template);  
                     }
                     break;
+                case CommandType.CommandHelp:
+                    CommandCommandHelp();
+                    break;
+                case CommandType.EnemyInfo:
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                    CommandEnemyInfo();
+                    break;
             }
-            if (viewEvent.commandType == CommandType.CommandHelp)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CommandCommandHelp();
-            }
-            
         }
 
         private void UpdatePopupSkillInfo()
@@ -465,6 +466,7 @@ namespace Ryneus
 
         private void CommandCommandHelp()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             switch (_model.TacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
@@ -482,8 +484,19 @@ namespace Ryneus
                 return;
                 */
             }
-            
         }
 
+        private void CommandEnemyInfo()
+        {
+            var enemyInfos = _model.CurrentTroopInfo().BattlerInfos;
+            var enemyViewInfo = new StatusViewInfo(() => 
+            {
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.ChangeUIActive(true);
+            });
+            enemyViewInfo.SetEnemyInfos(enemyInfos,false);
+            _view.CommandCallEnemyInfo(enemyViewInfo);
+            _view.ChangeUIActive(false);
+        }
     }
 }

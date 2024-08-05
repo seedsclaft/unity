@@ -16,10 +16,6 @@ namespace Ryneus
         public int EnemyListIndex => battleEnemyLayer.Index;
 
         private bool _isBattle = false;
-        protected void Awake()
-        {
-            InitializeInput();
-        }
 
         public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle)
         {
@@ -122,10 +118,7 @@ namespace Ryneus
 
         public void CommandBack()
         {
-            if (_backEvent != null)
-            {
-                _backEvent();
-            }
+            _backEvent?.Invoke();
         }
 
         public void InputHandler(InputKeyType keyType,bool pressed)

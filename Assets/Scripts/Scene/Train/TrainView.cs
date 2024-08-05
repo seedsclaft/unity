@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Train;
+using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -16,7 +17,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
 
-
+        [SerializeField] private OnOffButton enemyInfoButton = null;
         [SerializeField] private Button commandHelpButton = null;
         [SerializeField] private TrainAnimation trainAnimation = null;
 
@@ -41,6 +42,13 @@ namespace Ryneus
             });
             SetBackCommand(() => OnClickBack());
             SetBaseAnimation(trainAnimation);
+            enemyInfoButton?.SetCallHandler(() => 
+            {
+                var eventData = new TrainViewEvent(CommandType.EnemyInfo);
+                _commandData(eventData);
+                enemyInfoButton.SetActiveCursor(false);
+            });
+            enemyInfoButton?.SetText(DataSystem.GetText(809));
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
         }

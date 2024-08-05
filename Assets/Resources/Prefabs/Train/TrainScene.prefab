@@ -107,6 +107,7 @@ MonoBehaviour:
   battleSelectCharacter: {fileID: 8085892022736257718}
   selectCharacter: {fileID: 3174677508097824922}
   numinousText: {fileID: 0}
+  enemyInfoButton: {fileID: 3348788211452770532}
   commandHelpButton: {fileID: 8549492499876477145}
   trainAnimation: {fileID: 6087770916928728178}
 --- !u!114 &6087770916928728178
@@ -780,6 +781,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc8713169b85012449bd82718fe00b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3348788211452770532 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3991798016092096867, guid: 21f5705db8ea4e249a00cee12bfa5f76,
+    type: 3}
+  m_PrefabInstance: {fileID: 1809600459937100167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!225 &6372672105065153230 stripped

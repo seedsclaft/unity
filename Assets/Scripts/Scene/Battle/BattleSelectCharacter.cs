@@ -22,6 +22,7 @@ namespace Ryneus
         [SerializeField] private SkillTriggerList skillTriggerList;
 
         [SerializeField] private Button statusButton;
+        [SerializeField] private BaseList kindList;
         private bool _isInit = false;
 
         public int SelectedTabIndex => toggleSelect.SelectTabIndex;
@@ -59,6 +60,8 @@ namespace Ryneus
             conditionList.Initialize();
             skillTriggerList?.Initialize();
             attributeList?.Initialize();
+            kindList?.Initialize();
+            kindList?.gameObject?.SetActive(kindList != null);
             //SetInputHandler(attributeList.GetComponent<IInputHandlerEvent>());
             attributeList?.gameObject.SetActive(false);
             _isInit = true;
@@ -168,6 +171,7 @@ namespace Ryneus
         public void SetEnemyBattlerInfo(BattlerInfo enemyInfo)
         {
             battlerInfoComponent.UpdateInfo(enemyInfo);
+            kindList?.SetData(ListData.MakeListData(enemyInfo.Kinds));
         }
 
         public void SetInputHandlerAction(InputKeyType keyType,System.Action callEvent)
