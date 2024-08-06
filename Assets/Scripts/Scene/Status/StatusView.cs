@@ -26,6 +26,9 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI numinousText = null;
         [SerializeField] private TextMeshProUGUI lvUpCostText = null;
         [SerializeField] private GameObject levelUpObj = null;
+        [SerializeField] private StatusAnimation statusAnimation = null;
+        [SerializeField] private GameObject leftRoot = null;
+        [SerializeField] private GameObject rightRoot = null;
 
         public SkillInfo SelectMagic => (SkillInfo)magicList.ListData?.Data;
         private StatusViewInfo _statusViewInfo = null; 
@@ -66,8 +69,16 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetLearnMagicButtonActive(false);
+            SetBaseAnimation(statusAnimation);
             new StatusPresenter(this,actorInfos);
             selectCharacter.SetBusy(false);
+        }
+
+        public void OpenAnimation()
+        {
+            //statusAnimation.OpenAnimation(UiRoot.transform,null);
+            statusAnimation.LeftAnimation(leftRoot.transform,null);
+            statusAnimation.RightAnimation(rightRoot.transform,null);
         }
 
         private void InitializeSelectCharacter()

@@ -79,15 +79,11 @@ namespace Ryneus
 
         private void CommandSelectSideMenu()
         {
-            var sideMenuViewInfo = new SideMenuViewInfo
+            _busy = true;
+            CommandCallSideMenu(_model.SideMenu(),() => 
             {
-                EndEvent = () =>
-                {
-
-                },
-                CommandLists = _model.SideMenu()
-            };
-            _view.CommandCallSideMenu(sideMenuViewInfo);
+                _busy = false;
+            });
         }    
     }
 }

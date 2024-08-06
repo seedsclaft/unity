@@ -74,11 +74,6 @@ namespace Ryneus
             }
         }
 
-        private void UpdatePopupSkillInfo(ConfirmCommandType confirmCommandType)
-        {
-            _view.CommandGameSystem(Base.CommandType.ClosePopup);
-        }
-
         private void CommandStartStrategy()
         {
             if (_model.BattleResult)
@@ -295,14 +290,13 @@ namespace Ryneus
 
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
-            popupInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            confirmInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void UpdateSelectAlcana(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 // アルカナ選択
@@ -335,23 +329,22 @@ namespace Ryneus
             }
             var continuePopupTitle = _model.ContinuePopupTitle();
             var needAdsContinue = _model.NeedAdsContinue();
-            var popupInfo = new ConfirmInfo(continuePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(continuePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
                         
-            popupInfo.SetSelectIndex(1);
+            confirmInfo.SetSelectIndex(1);
             if (needAdsContinue)
             {
                 //popupInfo.SetDisableIds(new List<int>(){1});
-                popupInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
+                confirmInfo.SetCommandTextIds(_model.SaveAdsCommandTextIds());
             } else
             {
             }
-            _view.CommandCallConfirm(popupInfo);
+            _view.CommandCallConfirm(confirmInfo);
             //_view.ChangeUIActive(false);
         }
 
         private void UpdatePopupContinueCommand(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var needAdsContinue = _model.NeedAdsContinue();
@@ -369,8 +362,8 @@ namespace Ryneus
                             _view.CommandGameSystem(Base.CommandType.CloseLoading);
                             // 失敗した時
                             var savePopupTitle = _model.FailedSavePopupTitle();
-                            var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
-                            _view.CommandCallConfirm(popupInfo);
+                            var confirmInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupContinueCommand((ConfirmCommandType)a));
+                            _view.CommandCallConfirm(confirmInfo);
                         }
                     );
     #endif
@@ -407,10 +400,10 @@ namespace Ryneus
 
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
         {
-            var popupInfo = new ConfirmInfo("",(menuCommandInfo) => UpdatePopupSkillInfo((ConfirmCommandType)menuCommandInfo));
-            popupInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
-            popupInfo.SetIsNoChoice(true);
-            _view.CommandCallSkillDetail(popupInfo);
+            var confirmInfo = new ConfirmInfo("",(a) => {});
+            confirmInfo.SetSkillInfo(_model.BasicSkillInfos(getItemInfo));
+            confirmInfo.SetIsNoChoice(true);
+            _view.CommandCallSkillDetail(confirmInfo);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 

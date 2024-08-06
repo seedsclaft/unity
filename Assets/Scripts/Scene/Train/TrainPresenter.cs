@@ -120,11 +120,6 @@ namespace Ryneus
             }
         }
 
-        private void UpdatePopupSkillInfo()
-        {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-        }
-
         private void CommandBack()
         {
             if (_backCommand != CommandType.None)
@@ -156,7 +151,7 @@ namespace Ryneus
                         ShowLearningSkillInfos();
                     } else
                     {
-                        _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
+                        ShowCharacterDetail();
                     }
                     _view.ShowBattleReplay(false);
                     _backCommand = CommandType.DecideTacticsCommand;
@@ -216,8 +211,7 @@ namespace Ryneus
                         {
                             _busy = false;
                             _view.SetBusy(false);
-                            UpdatePopupSkillInfo();
-                            _view.ShowCharacterDetail(_model.TacticsActor(), _model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
+                            ShowCharacterDetail();
                             CommandRefresh();
                             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                         },
@@ -226,19 +220,14 @@ namespace Ryneus
                     _view.CommandCallPopup(popupInfo);
                 } else
                 {
-                    var cautionInfo = new CautionInfo();
-                    cautionInfo.SetLevelUp(from,to);
-                    _view.CommandCallCaution(cautionInfo);
-
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
+                    CommandCautionInfo("",from,to);
+                    ShowCharacterDetail();
                     CommandRefresh();
                     SoundManager.Instance.PlayStaticSe(SEType.CountUp);
                 }
             } else
             {
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetTitle(DataSystem.System.GetTextData(11170).Text);
-                _view.CommandCallCaution(cautionInfo);
+                CommandCautionInfo(DataSystem.GetText(11170));
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
             }
         }
@@ -275,12 +264,17 @@ namespace Ryneus
             {
                 case TacticsCommandType.Paradigm:
                 case TacticsCommandType.Train:
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
+                    ShowCharacterDetail();
                     break;
                 case TacticsCommandType.Alchemy:
                     ShowLearningSkillInfos();
                     break;
             }
+        }
+
+        private void ShowCharacterDetail()
+        {
+            _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));  
         }
 
         private void CommandSelectAttribute(int attribute)
@@ -346,13 +340,12 @@ namespace Ryneus
 
         private void CommandActorLearnMagic(SkillInfo skillInfo)
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var from = _model.SelectActorEvaluate();
@@ -373,7 +366,6 @@ namespace Ryneus
                             template = _model.TacticsCommandType
                         };
                         UpdateCommand(backEvent);
-                        UpdatePopupSkillInfo();
                         CommandRefresh();
                         SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                     },
@@ -430,9 +422,7 @@ namespace Ryneus
         private void CheckBattleMember()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            var cautionInfo = new CautionInfo();
-            cautionInfo.SetTitle(DataSystem.GetText(11160));
-            _view.CommandCallCaution(cautionInfo);
+            CommandCautionInfo(DataSystem.GetText(11160));
         }
 
         private void ShowLearningSkillInfos()
@@ -456,22 +446,22 @@ namespace Ryneus
         private void CommandCommandHelp()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var helpKey = "";
             switch (_model.TacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
-                _view.CommandHelpList(DataSystem.HelpText("Battle"));
-                return;
+                    helpKey = "Battle";
+                    break;
                 case TacticsCommandType.Train:
-                _view.CommandHelpList(DataSystem.HelpText("LevelUp"));
-                return;
+                    helpKey = "LevelUp";
+                    break;
                 case TacticsCommandType.Alchemy:
-                _view.CommandHelpList(DataSystem.HelpText("Alchemy"));
-                return;
-                /*
-                case TacticsCommandType.Recovery:
-                _view.CommandHelpList(DataSystem.HelpText("Recovery"));
-                return;
-                */
+                    helpKey = "Alchemy";
+                    break;
+            }
+            if (helpKey != "")
+            {
+                _view.CommandHelpList(DataSystem.HelpText(helpKey));
             }
         }
 

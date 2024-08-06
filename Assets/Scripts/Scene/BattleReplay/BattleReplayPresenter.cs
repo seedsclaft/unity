@@ -107,12 +107,11 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             if (_busy) return;
-            var sideMenuViewInfo = new SideMenuViewInfo();
-            sideMenuViewInfo.EndEvent = () => {
-
-            };
-            sideMenuViewInfo.CommandLists = _model.SideMenu();
-            _view.CommandCallSideMenu(sideMenuViewInfo);
+            _busy = true;
+            CommandCallSideMenu(_model.SideMenu(),() => 
+            {
+                _busy = false;
+            });
         }
 
         private void CommandChangeBattleSpeed()

@@ -25,6 +25,7 @@ namespace Ryneus
 
             CommandRefresh();
             if (_model.ActorInfos.Count == 1) _view.HideArrows();
+            _view.OpenAnimation();
         }
 
         private void UpdateCommand(StatusViewEvent viewEvent)
@@ -120,9 +121,7 @@ namespace Ryneus
             } else
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetTitle(DataSystem.GetText(14150));
-                _view.CommandCallCaution(cautionInfo);
+                CommandCautionInfo(DataSystem.GetText(14150));
                 SetBusy(false);
             }
         }
@@ -161,18 +160,14 @@ namespace Ryneus
                     _view.CommandCallPopup(popupInfo);
                 } else
                 {
-                    var cautionInfo = new CautionInfo();
-                    cautionInfo.SetLevelUp(from,to);
-                    _view.CommandCallCaution(cautionInfo);
+                    CommandCautionInfo("",from,to);
 
                     CommandRefresh();
                     SoundManager.Instance.PlayStaticSe(SEType.CountUp);
                 }
             } else
             {
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetTitle(DataSystem.System.GetTextData(11170).Text);
-                _view.CommandCallCaution(cautionInfo);
+                CommandCautionInfo(DataSystem.GetText(11170));
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
             }
         }
@@ -192,13 +187,12 @@ namespace Ryneus
         private void CommandLearnMagic(SkillInfo skillInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,skillInfo));
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,skillInfo));
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType,SkillInfo skillInfo)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var from = _model.SelectActorEvaluate();
@@ -234,7 +228,6 @@ namespace Ryneus
 
         private void UpdatePopupActorLvReset(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var currency = _model.ActorLvReset();
@@ -242,7 +235,6 @@ namespace Ryneus
                 {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     CommandRefresh();
-                    _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                     SetBusy(false);
                 });
                 confirmInfo.SetIsNoChoice(true);
@@ -291,8 +283,6 @@ namespace Ryneus
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-
             if (_popupCommandType == Status.CommandType.SelectSkillAction)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)

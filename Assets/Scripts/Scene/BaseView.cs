@@ -212,22 +212,28 @@ namespace Ryneus
 
         public void CommandCallRanking(RankingViewInfo rankingViewInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallRankingView);
-            eventData.template = rankingViewInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallRankingView)
+            {
+                template = rankingViewInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandCallCharacterList(CharacterListInfo characterListInfo)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallCharacterListView);
-            eventData.template = characterListInfo;
+            var eventData = new ViewEvent(Base.CommandType.CallCharacterListView)
+            {
+                template = characterListInfo
+            };
             CallSceneChangeCommand(eventData);
         }
 
         public void CommandHelpList(List<ListData> helpTextList)
         {
-            var eventData = new ViewEvent(Base.CommandType.CallHelpView);
-            eventData.template = helpTextList;
+            var eventData = new ViewEvent(Base.CommandType.CallHelpView)
+            {
+                template = helpTextList
+            };
             CallSceneChangeCommand(eventData);
         }
 
@@ -340,7 +346,8 @@ namespace Ryneus
         {
             if (_backCommand != null)
             {
-                _backCommand.onClick.AddListener(() => {
+                _backCommand.onClick.AddListener(() => 
+                {
                             
                     if (!_backCommand.gameObject.activeSelf) return;
                     callEvent();

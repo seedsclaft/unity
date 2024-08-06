@@ -233,6 +233,10 @@ namespace Ryneus
             var confirmView = prefab.GetComponent<ConfirmView>();
             confirmView.Initialize();
             confirmView.SetViewInfo(confirmInfo);
+            confirmView.SetBackEvent(() => 
+            {
+                UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
+            });
             SetIsBusyMainAndStatus();
         }
 

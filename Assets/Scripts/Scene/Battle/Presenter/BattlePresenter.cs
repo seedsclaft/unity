@@ -198,7 +198,6 @@ namespace Ryneus
 
         private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
         }
 
         private void CommandBack()
@@ -216,13 +215,13 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             if (_model.EnableEscape())
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(410),(a) => UpdatePopupEscape((ConfirmCommandType)a));
-                _view.CommandCallConfirm(popupInfo);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(410),(a) => UpdatePopupEscape((ConfirmCommandType)a));
+                _view.CommandCallConfirm(confirmInfo);
             } else
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(412),(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(412),(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
             }
         }
 
@@ -917,15 +916,11 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             if (_busy) return;
-            var sideMenuViewInfo = new SideMenuViewInfo
+            _busy = true;
+            CommandCallSideMenu(_model.SideMenu(),() => 
             {
-                EndEvent = () =>
-                {
-
-                },
-                CommandLists = _model.SideMenu()
-            };
-            _view.CommandCallSideMenu(sideMenuViewInfo);
+                _busy = false;
+            });
         }    
         
         private void CommandChangeBattleAuto()

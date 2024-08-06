@@ -103,7 +103,6 @@ namespace Ryneus
             // 成功表示
             var confirmInfo = new ConfirmInfo(DataSystem.GetText(11080),(a) => 
             {
-                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 if (isReturnScene)
                 {
                     _view.CommandGotoSceneChange(Scene.Tactics);
@@ -156,6 +155,36 @@ namespace Ryneus
             enemyViewInfo.SetEnemyInfos(battlerInfos,inBattle);
             _view.CommandCallEnemyInfo(enemyViewInfo);
             _view.ChangeUIActive(false);
+        }
+
+        
+        public void CommandCallSideMenu(List<ListData> sideMenuCommands,System.Action closeEvent = null)
+        {
+            var sideMenuViewInfo = new SideMenuViewInfo
+            {
+                EndEvent = () =>
+                {
+                    closeEvent?.Invoke();
+                },
+                CommandLists = sideMenuCommands
+            };
+            _view.CommandCallSideMenu(sideMenuViewInfo);
+        }
+
+        public void CloseConfirm()
+        {
+            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+        }
+
+        public void CommandCautionInfo(string title,int from = -1,int to = -1)
+        {
+            var cautionInfo = new CautionInfo();
+            cautionInfo.SetTitle(title);
+            if (from != -1 && to != -1)
+            {
+                cautionInfo.SetLevelUp(from,to);
+            }
+            _view.CommandCallCaution(cautionInfo);
         }
     }
 }

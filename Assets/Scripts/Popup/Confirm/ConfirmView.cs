@@ -112,6 +112,7 @@ namespace Ryneus
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
                 _confirmEvent(commandType);
+                BackEvent();
             }
         }
 

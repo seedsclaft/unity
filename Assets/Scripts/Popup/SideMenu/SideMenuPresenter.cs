@@ -93,16 +93,14 @@ namespace Ryneus
         {  
             if (_model.PartyInfo.ReturnSymbol != null)
             {
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetTitle(DataSystem.GetText(23071));
-                _view.CommandCallCaution(cautionInfo);
+                CommandCautionInfo(DataSystem.GetText(23071));
                 ClosePopup();
                 return;
             }
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout(a));
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout(a));
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void UpdatePopupDropout(ConfirmCommandType confirmCommandType)
@@ -157,9 +155,7 @@ namespace Ryneus
         {
             if (_model.PartyInfo.ReturnSymbol != null)
             {
-                var cautionInfo = new CautionInfo();
-                cautionInfo.SetTitle(DataSystem.GetText(23070));
-                _view.CommandCallCaution(cautionInfo);
+                CommandCautionInfo(DataSystem.GetText(23070));
                 ClosePopup();
                 return;
             }
@@ -170,35 +166,33 @@ namespace Ryneus
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(581),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(581),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void CommandTitle()
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(583),(a) => UpdatePopupTitle((ConfirmCommandType)a));
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(583),(a) => UpdatePopupTitle((ConfirmCommandType)a));
+            _view.CommandCallConfirm(confirmInfo);
         }
 
         private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 _model.DeletePlayerData();
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => 
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => 
                 {
                     SoundManager.Instance.StopBgm();
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                    _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                     _view.CommandGotoSceneChange(Scene.Boot);
                 });
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
             } else
             {            
                 ClosePopup();
@@ -207,7 +201,6 @@ namespace Ryneus
 
         private void UpdatePopupTitle(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);

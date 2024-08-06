@@ -53,7 +53,6 @@ namespace Ryneus
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
             }
@@ -62,9 +61,9 @@ namespace Ryneus
 
         private void CommandStartEntry()
         {
-            var popupInfo = new ConfirmInfo(DataSystem.GetText(5000),(a) => UpdatePopup((ConfirmCommandType)a));
-            popupInfo.SetIsNoChoice(true);
-            _view.CommandCallConfirm(popupInfo);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(5000),(a) => UpdatePopup((ConfirmCommandType)a));
+            confirmInfo.SetIsNoChoice(true);
+            _view.CommandCallConfirm(confirmInfo);
             _view.ShowNameEntry("");
         }
 
@@ -72,9 +71,9 @@ namespace Ryneus
         {
             if (nameText == "")
             {
-                var popupInfo = new ConfirmInfo(DataSystem.GetText(5002),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(5002),(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
             } else
             {
                 _model.SetPlayerName(nameText);

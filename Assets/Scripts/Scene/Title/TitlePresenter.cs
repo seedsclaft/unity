@@ -79,9 +79,9 @@ namespace Ryneus
             var loadSuccess = SaveSystem.LoadPlayerInfo();
             if (loadSuccess == false)
             {
-                var popupInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
-                popupInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(popupInfo);
+                var confirmInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
                 return;
             }
             // プレイヤーネームを設定しなおし
@@ -105,20 +105,11 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             _busy = true;
-            var sideMenuViewInfo = new SideMenuViewInfo
-            {
-                EndEvent = () =>
-                {
-                    _busy = false;
-                },
-                CommandLists = _model.SideMenu()
-            };
-            _view.CommandCallSideMenu(sideMenuViewInfo);
+            CommandCallSideMenu(_model.SideMenu(),() => {_busy = false;});
         }
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             _view.CommandGotoSceneChange(Scene.Title);
         }
     }
