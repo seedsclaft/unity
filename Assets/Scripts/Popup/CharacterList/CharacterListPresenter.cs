@@ -9,10 +9,10 @@ namespace Ryneus
         CharacterListView _view = null;
 
         private bool _busy = true;
-        public CharacterListPresenter(CharacterListView view)
+        public CharacterListPresenter(CharacterListView view,List<ActorInfo> actorInfos)
         {
             _view = view;
-            _model = new CharacterListModel();
+            _model = new CharacterListModel(actorInfos);
 
             Initialize();
         }
@@ -46,5 +46,11 @@ namespace Ryneus
         private System.Action _backEvent;
         public System.Action BackEvent => _backEvent;
         
+        private List<ActorInfo> _actorInfos;
+        public List<ActorInfo> ActorInfos => _actorInfos;
+        public void SetActorInfos(List<ActorInfo> actorInfos)
+        {
+            _actorInfos = actorInfos;
+        }
     }
 }

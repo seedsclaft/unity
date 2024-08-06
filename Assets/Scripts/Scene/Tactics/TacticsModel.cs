@@ -146,13 +146,12 @@ namespace Ryneus
             return skillInfos;
         }
 
-        public void SetTempAddActorStatusInfos(int actorId)
+        public List<ActorInfo> AddActorInfos(int actorId)
         {
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
-            TempInfo.SetTempStatusActorInfos(actorInfos);
+            return PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
         }
 
-        public void SetTempAddSelectActorStatusInfos()
+        public List<ActorInfo> AddSelectActorInfos()
         {
             var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             // 違うworldNoのActorIdも含まない
@@ -160,11 +159,10 @@ namespace Ryneus
             var anotherActorIdList = PartyInfo.CurrentActorIdList(99,99,worldNo);
 
             pastActorIdList.AddRange(anotherActorIdList);
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
-            TempInfo.SetTempStatusActorInfos(actorInfos);
+            return PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
         }
 
-        public void SetTempAddSelectActorGetItemInfoStatusInfos(List<GetItemInfo> getItemInfos)
+        public List<ActorInfo> AddSelectActorGetItemInfos(List<GetItemInfo> getItemInfos)
         {
             var actorInfos = new List<ActorInfo>();
             foreach (var getItemInfo in getItemInfos)
@@ -175,7 +173,7 @@ namespace Ryneus
                     actorInfos.Add(actorInfo);
                 }
             }
-            TempInfo.SetTempStatusActorInfos(actorInfos);
+            return actorInfos;
         }
 
         public AdvData StartTacticsAdvData()
@@ -251,13 +249,6 @@ namespace Ryneus
                 };
                 list.Add(saveCommand);
             }
-            var stageCommand = new SystemData.CommandData
-            {
-                Id = 3,
-                Name = "ステージ選択へ",
-                Key = "Retire"
-            };
-            list.Add(stageCommand);
             var titleCommand = new SystemData.CommandData
             {
                 Id = 4,

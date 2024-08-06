@@ -8,11 +8,11 @@ namespace Ryneus
         private StatusView _view = null;
         private Status.CommandType _popupCommandType = Status.CommandType.None;
         private bool _busy = false;
-        public StatusPresenter(StatusView view)
+        public StatusPresenter(StatusView view,List<ActorInfo> actorInfos)
         {
             _view = view;
             SetView(_view);
-            _model = new StatusModel();
+            _model = new StatusModel(actorInfos);
             SetModel(_model);
             Initialize();
         }
@@ -24,7 +24,7 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandRefresh();
-            if (_model.StatusActors().Count == 1) _view.HideArrows();
+            if (_model.ActorInfos.Count == 1) _view.HideArrows();
         }
 
         private void UpdateCommand(StatusViewEvent viewEvent)
@@ -97,6 +97,7 @@ namespace Ryneus
                 CommandRefresh();
                 SetBusy(false);
             });
+            characterListInfo.SetActorInfos(_model.ActorInfos);
             _view.CommandCallCharacterList(characterListInfo);
         }
 
@@ -346,7 +347,7 @@ namespace Ryneus
             _view.SetNuminous(_model.Currency);
             _view.SetLvUpCost(_model.LevelUpCost());
             _view.CommandRefresh();
-            var skillListData = _model.SkillActionList();
+            var skillListData = _model.SkillActionList(_model.CurrentActor);
             if (skillListData.Count > 0)
             {
                 skillListData[0].SetSelected(true);

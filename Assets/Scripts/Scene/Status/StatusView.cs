@@ -33,8 +33,9 @@ namespace Ryneus
         private System.Action _backEvent = null;
         private bool _isDisplayDecide => _statusViewInfo != null && _statusViewInfo.DisplayDecideButton;
         private string _helpText;
+        private bool _isDisplayLevelObj => _statusViewInfo != null && _statusViewInfo.DisplayLvResetButton;
         private bool _isDisplayBack => _statusViewInfo != null && _statusViewInfo.DisplayBackButton;
-        public override void Initialize() 
+        public void Initialize(List<ActorInfo> actorInfos) 
         {
             base.Initialize();
             selectCharacter.Initialize();
@@ -65,7 +66,7 @@ namespace Ryneus
                 _commandData(eventData);
             });
             SetLearnMagicButtonActive(false);
-            new StatusPresenter(this);
+            new StatusPresenter(this,actorInfos);
             selectCharacter.SetBusy(false);
         }
 
@@ -172,9 +173,9 @@ namespace Ryneus
 
         private void DisplayDecideButton()
         {
-            levelUpObj.SetActive(!_isDisplayDecide);
+            levelUpObj.SetActive(_isDisplayLevelObj);
             decideButton.gameObject.SetActive(_isDisplayDecide);
-            commandList.gameObject.SetActive(!_isDisplayDecide);
+            commandList.gameObject.SetActive(_isDisplayLevelObj);
             ChangeBackCommandActive(!_isDisplayDecide);
             if (_isDisplayDecide)
             {
@@ -413,6 +414,8 @@ namespace Ryneus
         public bool DisplayCharacterList => _displayCharacterList;
         private bool _displayLvResetButton = false;
         public bool DisplayLvResetButton => _displayLvResetButton;
+        private List<ActorInfo> _actorInfos = null;
+        public List<ActorInfo> ActorInfos => _actorInfos;
         private List<BattlerInfo> _enemyInfos = null;
         public List<BattlerInfo> EnemyInfos => _enemyInfos;
         private bool _isBattle = false;
@@ -448,6 +451,12 @@ namespace Ryneus
         public void SetEnemyInfos(List<BattlerInfo> enemyInfos,bool isBattle)
         {
             _enemyInfos = enemyInfos;
+            _isBattle = isBattle;
+        }
+
+        public void SetActorInfos(List<ActorInfo> actorInfos,bool isBattle)
+        {
+            _actorInfos = actorInfos;
             _isBattle = isBattle;
         }
 

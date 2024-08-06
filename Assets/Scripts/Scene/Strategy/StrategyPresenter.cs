@@ -113,7 +113,7 @@ namespace Ryneus
                     bonusList.Add(false);
                 }
                 // 勝利時
-                if (_model.BattleResultVictory())
+                if (_model.BattleResultVictory)
                 {
                     _model.MakeLvUpData();
                     _model.MakeSelectRelicData();
@@ -148,7 +148,7 @@ namespace Ryneus
         {
             if (_model.BattleResult)
             {
-                if (_model.BattleResultVictory())
+                if (_model.BattleResultVictory)
                 {
                     if (_model.LevelUpData.Count == 0)
                     {
@@ -263,7 +263,7 @@ namespace Ryneus
                 CheckTacticsActors();
             } else
             {
-                if (_model.BattleResult && _model.BattleResultVictory() == false)
+                if (_model.BattleResult && _model.BattleResultVictory == false)
                 {
                     _model.ReturnTempBattleMembers(); 
                     _view.CommandChangeViewToTransition(null);  
@@ -318,7 +318,7 @@ namespace Ryneus
             // ロスト判定
             var lostMembers = _model.LostMembers();
             // コンテニュー判定
-            if (_model.BattleResultVictory() == true && lostMembers.Count == 0)
+            if (_model.BattleResultVictory == true && lostMembers.Count == 0)
             {
                 return;
             }
@@ -397,18 +397,12 @@ namespace Ryneus
 
         private void ShowStatus()
         {
-            _model.SetStatusActorInfos();
-            var statusViewInfo = new StatusViewInfo(() => 
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CommandStatusInfo(_model.StageMembers(),false,true,false,false,-1,() => 
             {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 SetHelpInputSkipEnable();
                 _view.SetHelpText(DataSystem.GetText(14010));
-                _view.ChangeUIActive(true);
             });
-            statusViewInfo.SetDisplayDecideButton(false);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
@@ -422,20 +416,16 @@ namespace Ryneus
 
         private void CommandCallEnemyInfo()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);  
             var enemyIndex = _model.CurrentStage.CurrentSeekIndex;
             var enemyInfos = _model.TacticsSymbols()[enemyIndex].SymbolInfo.BattlerInfos();
-            
-            var statusViewInfo = new StatusViewInfo(() => 
-            {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
+            _busy = true;
+            CommandEnemyInfo(enemyInfos,false,() => 
+            { 
                 SetHelpInputSkipEnable();
                 _view.SetHelpText(DataSystem.GetText(14010));
-            });
-            statusViewInfo.SetEnemyInfos(enemyInfos,false);
-            _view.CommandCallEnemyInfo(statusViewInfo);
-            _view.ChangeUIActive(false);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);    
+                _busy = false;
+            });  
         }
 
         private void SetHelpInputSkipEnable()
@@ -465,7 +455,7 @@ namespace Ryneus
                 }
                 _view.CommandGotoSceneChange(Scene.Tactics);
             } else
-            if (_model.BattleResult && _model.BattleResultVictory() == false)
+            if (_model.BattleResult && _model.BattleResultVictory == false)
             {
                 // 敗北して戻る
                 _model.ReturnTempBattleMembers();

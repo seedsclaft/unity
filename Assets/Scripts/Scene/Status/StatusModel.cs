@@ -5,6 +5,12 @@ namespace Ryneus
 {
     public class StatusModel : BaseModel
     {
+        private List<ActorInfo> _actorInfos = null;
+        public List<ActorInfo> ActorInfos => _actorInfos;
+        public StatusModel(List<ActorInfo> actorInfos)
+        {
+            _actorInfos = actorInfos;
+        }
         public string HelpText()
         {
             int textId = -1;
@@ -21,34 +27,28 @@ namespace Ryneus
         private int _currentIndex = 0;
         public void SelectActor(int actorId)
         {
-            var index = StatusActors().FindIndex(a => a.ActorId == actorId);
+            var index = _actorInfos.FindIndex(a => a.ActorId == actorId);
             _currentIndex = index;
         }
 
-        public ActorInfo CurrentActor => StatusActors()[_currentIndex];
+        public ActorInfo CurrentActor => _actorInfos[_currentIndex];
 
         public void ChangeActorIndex(int value)
         {
             _currentIndex += value;
-            if (_currentIndex > StatusActors().Count-1)
+            if (_currentIndex > _actorInfos.Count-1)
             {
                 _currentIndex = 0;
             } else
             if (_currentIndex < 0)
             {
-                _currentIndex = StatusActors().Count-1;
+                _currentIndex = _actorInfos.Count-1;
             }
         }
         
         public void SetActorLastSkillId(int selectSkillId)
         {
             CurrentActor.SetLastSelectSkillId(selectSkillId);
-        }
-
-        public List<ListData> SkillActionList()
-        {
-            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-            return CurrentActor.SkillActionList(alchemyIds);
         }
 
         public void SelectAddActor()
@@ -83,7 +83,7 @@ namespace Ryneus
 
         public int ActorLvReset()
         {
-            var tempActor = TempInfo.TempStatusActorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
+            var tempActor = _actorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
             var currency = tempActor.ActorLevelReset();
             PartyInfo.ChangeCurrency(PartyInfo.Currency + currency);
             return currency;
@@ -117,7 +117,7 @@ namespace Ryneus
 
         public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
         {
-            return SelectActorLearningMagicList(CurrentActor,-1,selectedSkillId);
+            return ActorLearningMagicList(CurrentActor,-1,selectedSkillId);
         }
 
         public void LearnMagic(int skillId)

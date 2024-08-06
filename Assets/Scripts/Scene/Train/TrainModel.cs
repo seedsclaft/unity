@@ -108,7 +108,7 @@ namespace Ryneus
 
         public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
         {
-            return SelectActorLearningMagicList(TacticsActor(),_selectAttribute,selectedSkillId);
+            return ActorLearningMagicList(TacticsActor(),_selectAttribute,selectedSkillId);
         }
 
         public List<ListData> AttributeTabList()
@@ -120,12 +120,6 @@ namespace Ryneus
                 list.Add(attributeType);
             }
             return MakeListData(list);
-        }
-
-        public void SetTempAddActorStatusInfos(int actorId)
-        {
-            var actorInfos = PartyInfo.ActorInfos.FindAll(a => a.ActorId == actorId);
-            TempInfo.SetTempStatusActorInfos(actorInfos);
         }
 
         public List<ListData> TacticsCharacterData(int selectIndex = 0)

@@ -5,9 +5,15 @@ namespace Ryneus
 {
     public class CharacterListModel : BaseModel
     {
+        private List<ActorInfo> _actorInfos = null;
+        public CharacterListModel(List<ActorInfo> actorInfos)
+        {
+            _actorInfos = actorInfos;
+        }
+
         public List<ListData> CharacterList()
         {
-            return MakeListData(StatusActors());
+            return MakeListData(_actorInfos);
         }
     }
 }

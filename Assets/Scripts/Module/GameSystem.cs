@@ -72,15 +72,15 @@ namespace Ryneus
     #endif
         }
 
-        private BaseView CreateStatus(StatusType statusType)
+        private BaseView CreateStatus(StatusType statusType,StatusViewInfo statusViewInfo)
         {
             var prefab = statusAssign.CreatePopup(statusType,helpWindow);
             if (statusType == StatusType.Status)
             {
-                prefab.GetComponent<StatusView>().Initialize();
+                prefab.GetComponent<StatusView>().Initialize(statusViewInfo.ActorInfos);
             } else
             {
-                prefab.GetComponent<EnemyInfoView>().Initialize();
+                prefab.GetComponent<EnemyInfoView>().Initialize(statusViewInfo.EnemyInfos,statusViewInfo.IsBattle);
             }
             return prefab.GetComponent<BaseView>();
         }
@@ -152,10 +152,10 @@ namespace Ryneus
                     CommandCallSkillLogView((SkillLogViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallStatusView:
-                    var statusView = CreateStatus(StatusType.Status) as StatusView;
                     var statusViewInfo = (StatusViewInfo)viewEvent.template;
-                    statusView.SetViewInfo(statusViewInfo);
+                    var statusView = CreateStatus(StatusType.Status,statusViewInfo) as StatusView;
                     statusView.SetEvent((type) => UpdateCommand(type));
+                    statusView.SetViewInfo(statusViewInfo);
                     _currentScene.SetBusy(true);
                     break;
                 case Base.CommandType.CloseStatus:
@@ -163,11 +163,10 @@ namespace Ryneus
                     _currentScene.SetBusy(false);
                     break;
                 case Base.CommandType.CallEnemyInfoView:
-                    var enemyInfoView = CreateStatus(StatusType.EnemyDetail) as EnemyInfoView;
                     var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
-                    enemyInfoView.Initialize(enemyStatusInfo.EnemyInfos,enemyStatusInfo.IsBattle);
-                    enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
+                    var enemyInfoView = CreateStatus(StatusType.EnemyDetail,enemyStatusInfo) as EnemyInfoView;
                     enemyInfoView.SetEvent((type) => UpdateCommand(type));
+                    enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
                     _currentScene.SetBusy(true);
                     break;
                 case Base.CommandType.CallAdvScene:
@@ -357,7 +356,7 @@ namespace Ryneus
         {
             var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
             var characterListView = prefab.GetComponent<CharacterListView>();
-            characterListView.Initialize();
+            characterListView.Initialize(characterListInfo.ActorInfos);
             characterListView.SetViewInfo(characterListInfo);
             characterListView.SetBackEvent(() => 
             {

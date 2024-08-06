@@ -194,11 +194,6 @@ namespace Ryneus
 
         private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)
         {
-            _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-            var statusViewInfo = new StatusViewInfo(null);
-            statusViewInfo.SetDisplayDecideButton(true);
-            statusViewInfo.SetDisplayBackButton(false);
-            _view.CommandCallStatus(statusViewInfo);
         }
 
         private void UpdatePopupSaveCommand(ConfirmCommandType confirmCommandType,bool isReturnScene)
@@ -628,23 +623,18 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseConfirm);
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
+                List<ActorInfo> actorInfos;
                 if (_model.CurrentSelectRecord().StageSymbolData.Param2 == 0)
                 {
-                    _model.SetTempAddSelectActorStatusInfos();
+                    actorInfos = _model.AddSelectActorInfos();
                 } else
                 {
-                    _model.SetTempAddSelectActorGetItemInfoStatusInfos(_model.CurrentSelectRecord().SymbolInfo.GetItemInfos);
+                    actorInfos = _model.AddSelectActorGetItemInfos(_model.CurrentSelectRecord().SymbolInfo.GetItemInfos);
                 }
-                var statusViewInfo = new StatusViewInfo(() => 
+                CommandStatusInfo(actorInfos,false,false,false,true,-1,() => 
                 {
-                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                    _view.ChangeUIActive(true);
+
                 });
-                statusViewInfo.SetDisplayCharacterList(false);
-                statusViewInfo.SetDisplayDecideButton(true);
-                statusViewInfo.SetDisplayBackButton(false);
-                _view.CommandCallStatus(statusViewInfo);
-                _view.ChangeUIActive(false);
             } else
             {
                 CancelSelectSymbol();
@@ -828,46 +818,31 @@ namespace Ryneus
                 case SymbolType.Battle:
                 case SymbolType.Boss:
                     var enemyInfos = symbolInfo.SymbolInfo.BattlerInfos();
-                    
-                    var enemyViewInfo = new StatusViewInfo(() => 
-                    {
-                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                        _view.ChangeUIActive(true);
-                    });
-                    enemyViewInfo.SetEnemyInfos(enemyInfos,false);
-                    _view.CommandCallEnemyInfo(enemyViewInfo);
-                    _view.ChangeUIActive(false);
+                    _busy = true;
+                    CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
                     break;
                 case SymbolType.Alcana:
                     CommandPopupAlcanaInfo(symbolInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Actor:
-                    _model.SetTempAddActorStatusInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1);
-                    var statusViewInfo = new StatusViewInfo(() => 
+                    CommandStatusInfo(_model.AddActorInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
                     {
-                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                        _view.ChangeUIActive(true);
+
                     });
-                    statusViewInfo.SetDisplayCharacterList(false);
-                    _view.CommandCallStatus(statusViewInfo);
-                    _view.ChangeUIActive(false);
                     break;
                 case SymbolType.SelectActor:
+                    List<ActorInfo> actorInfos;
                     if (symbolInfo.StageSymbolData.Param2 == 0)
                     {
-                        _model.SetTempAddSelectActorStatusInfos();
+                        actorInfos = _model.AddSelectActorInfos();
                     } else
                     {
-                        _model.SetTempAddSelectActorGetItemInfoStatusInfos(symbolInfo.SymbolInfo.GetItemInfos);
+                        actorInfos = _model.AddSelectActorGetItemInfos(symbolInfo.SymbolInfo.GetItemInfos);
                     }
-                    var statusViewInfo2 = new StatusViewInfo(() => 
+                    CommandStatusInfo(actorInfos,false,true,false,false,-1,() => 
                     {
-                        _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                        _view.ChangeUIActive(true);
+
                     });
-                    statusViewInfo2.SetDisplayCharacterList(false);
-                    _view.CommandCallStatus(statusViewInfo2);
-                    _view.ChangeUIActive(false);
                     break;
                 case SymbolType.Shop:
                     CommandPopupShopInfo(symbolInfo.SymbolInfo.GetItemInfos);
@@ -875,7 +850,6 @@ namespace Ryneus
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
-
 
         private void CommandSelectSideMenu()
         {

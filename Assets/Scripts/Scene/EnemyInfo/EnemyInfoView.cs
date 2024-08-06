@@ -19,6 +19,7 @@ namespace Ryneus
 
         public void Initialize(List<BattlerInfo> battlerInfos,bool isBattle)
         {
+            base.Initialize();
             _isBattle = isBattle;
             battleEnemyLayer.Initialize();
             battleEnemyLayer.SetSelectedHandler(() => 

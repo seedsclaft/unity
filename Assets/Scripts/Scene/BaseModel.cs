@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Ryneus
 {
-    public class BaseModel
+    public partial class BaseModel
     {
         public SaveInfo CurrentData => GameSystem.CurrentData;
         public SaveStageInfo CurrentSaveData => GameSystem.CurrentStageData;
@@ -58,7 +58,7 @@ namespace Ryneus
         public List<ActorInfo> StageMembers()
         {
             var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-            actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 :-1);
+            actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 : -1);
             return actorInfos;
         }
 
@@ -72,11 +72,6 @@ namespace Ryneus
         public List<ActorInfo> PartyMembers()
         {
             return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-        }
-
-        public List<ActorInfo> StatusActors()
-        {
-            return TempInfo.TempStatusActorInfos;
         }
 
         public string TacticsBgmKey()
@@ -162,36 +157,6 @@ namespace Ryneus
             return menuCommandDates;
         }
 
-        public List<ListData> MakeListData<T>(List<T> dataList,int selectIndex = 0)
-        {
-            var listData = ListData.MakeListData(dataList);
-            if (selectIndex != -1 && listData.Count > selectIndex)
-            {
-                listData[selectIndex].SetSelected(true);
-            }
-            return listData;
-        }
-
-        public List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = 0)
-        {
-            var listData = ListData.MakeListData(dataList,enable);
-            if (selectIndex != -1 && listData.Count > selectIndex)
-            {
-                listData[selectIndex].SetSelected(true);
-            }
-            return listData;
-        }
-
-        public List<ListData> ConfirmCommand()
-        {
-            return MakeListData(BaseConfirmCommand(3050,3051));
-        }
-
-        public List<ListData> NoChoiceConfirmCommand()
-        {
-            return MakeListData(new List<SystemData.CommandData>(){BaseConfirmCommand(3052,0)[0]});
-        }
-
         public List<SkillInfo> BasicSkillInfos(GetItemInfo getItemInfo)
         {
             var skillInfos = new List<SkillInfo>();
@@ -262,15 +227,10 @@ namespace Ryneus
             return DataSystem.GetReplaceText(textId,actorName);
         }
 
-        public void SetStatusActorInfos()
-        {
-            TempInfo.SetTempStatusActorInfos(StageMembers());
-        }
-
         /// <summary>
         /// 加入歴あるキャラも含めたステータスメンバー
         /// </summary>
-        public void SetStatusPastActorInfos()
+        public List<ActorInfo> PastActorInfos()
         {
             var stageMembers = StageMembers();
             foreach (var actorInfo in PartyInfo.ActorInfos)
@@ -284,7 +244,7 @@ namespace Ryneus
                     }
                 }
             }
-            TempInfo.SetTempStatusActorInfos(stageMembers);
+            return stageMembers;
         }
 
         public string GetAdvFile(int id)
@@ -712,12 +672,6 @@ namespace Ryneus
             }
         }
 
-        public List<ListData> SkillActionList(ActorInfo actorInfo)
-        {
-            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-            return actorInfo.SkillActionList(alchemyIds);
-        }
-
         public void ActorLevelUp(ActorInfo actorInfo)
         {
             var cost = TacticsUtility.TrainCost(actorInfo);
@@ -748,28 +702,5 @@ namespace Ryneus
             actorInfo.AddSkillTriggerSkill(skillId);
         }
 
-        public List<ListData> SelectActorLearningMagicList(ActorInfo actorInfo,int selectAttribute = -1, int selectedSkillId = -1)
-        {
-            var skillInfos = new List<SkillInfo>();
-            
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
-            {
-                var skillInfo = new SkillInfo(alchemyId);
-                if (selectAttribute > 0)
-                {
-                    if ((int)skillInfo.Master.Attribute != selectAttribute)
-                    {
-                        continue;
-                    }
-                }
-                var cost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
-                skillInfo.SetEnable(Currency >= cost && !actorInfo.IsLearnedSkill(alchemyId));
-                skillInfo.SetLearningCost(cost);
-                skillInfos.Add(skillInfo);
-            }
-            var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
-            var listData = MakeListData(skillInfos,selectIndex);
-            return listData;
-        }
     }
 }

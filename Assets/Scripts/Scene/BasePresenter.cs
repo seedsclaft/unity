@@ -116,5 +116,46 @@ namespace Ryneus
             _view.CommandCallConfirm(confirmInfo);
         }
 
+        /// <summary>
+        /// ステータス詳細を表示
+        /// </summary>
+        /// <param name="actorInfos"></param>
+        public void CommandStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,System.Action closeEvent = null)
+        {
+            var statusViewInfo = new StatusViewInfo(() => 
+            {
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.ChangeUIActive(true);
+                closeEvent?.Invoke();
+            });
+            statusViewInfo.SetActorInfos(actorInfos,inBattle);
+            if (startIndex > -1)
+            {
+                statusViewInfo.SetStartIndex(startIndex);
+            }
+            statusViewInfo.SetDisplayDecideButton(addActor);
+            statusViewInfo.SetDisplayCharacterList(!addActor);
+            statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
+            statusViewInfo.SetDisplayBackButton(backButton);
+            _view.CommandCallStatus(statusViewInfo);
+            _view.ChangeUIActive(false);
+        }
+
+        /// <summary>
+        /// 敵詳細を表示
+        /// </summary>
+        /// <param name="battlerInfos"></param>
+        public void CommandEnemyInfo(List<BattlerInfo> battlerInfos,bool inBattle,System.Action closeEvent = null)
+        {
+            var enemyViewInfo = new StatusViewInfo(() => 
+            {
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.ChangeUIActive(true);
+                closeEvent?.Invoke();
+            });
+            enemyViewInfo.SetEnemyInfos(battlerInfos,inBattle);
+            _view.CommandCallEnemyInfo(enemyViewInfo);
+            _view.ChangeUIActive(false);
+        }
     }
 }

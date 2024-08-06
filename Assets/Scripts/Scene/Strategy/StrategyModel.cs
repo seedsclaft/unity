@@ -7,17 +7,16 @@ namespace Ryneus
     {
         private StrategySceneInfo _sceneParam;
         public StrategySceneInfo SceneParam => _sceneParam;
+        private bool _battleResultVictory = false;
+        public bool BattleResultVictory => _battleResultVictory;
 
         private bool _battleResult = false;
         public bool BattleResult => _battleResult;
-        public bool BattleResultVictory()
-        {
-            return SceneParam.BattleResultVictory;
-        }
         public StrategyModel()
         {
             _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
             _battleResult = _sceneParam.ActorInfos.FindAll(a => a.BattleIndex >= 0).Count > 0;
+            _battleResultVictory = _sceneParam.BattleResultVictory;
         }
         public void ClearSceneParam()
         {
@@ -359,7 +358,7 @@ namespace Ryneus
 
         public List<ListData> ResultCommand()
         {
-            if (_battleResult && BattleResultVictory() == false)
+            if (_battleResult && _battleResultVictory == false)
             {
                 return MakeListData(BaseConfirmCommand(3040,3054)); // 再戦
             }
@@ -415,7 +414,7 @@ namespace Ryneus
         public void CommitCurrentResult()
         {
             // バトルに敗北しているときは更新しない
-            if (BattleResult && BattleResultVictory() == false)
+            if (BattleResult && _battleResultVictory == false)
             {
 
             } else
@@ -451,7 +450,7 @@ namespace Ryneus
         public void CommitCurrentParallelResult()
         {
             // バトルに敗北しているときは更新しない
-            if (BattleResult && BattleResultVictory() == false)
+            if (BattleResult && _battleResultVictory == false)
             {
 
             } else

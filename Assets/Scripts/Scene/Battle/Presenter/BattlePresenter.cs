@@ -228,18 +228,13 @@ namespace Ryneus
 
         private void CommandEnemyDetail(int enemyIndex)
         {
-            //if (_view.SkillList.skillActionList.gameObject.activeSelf) return;
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);  
             _busy = true;
             var enemyInfo = _model.GetBattlerInfo(enemyIndex);
-            
-            var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+            CommandEnemyInfo(new List<BattlerInfo>(){enemyInfo},true,() => 
+            {
                 _busy = false;
             });
-            statusViewInfo.SetEnemyInfos(new List<BattlerInfo>(){enemyInfo},true);
-            _view.CommandCallEnemyInfo(statusViewInfo);
-            //_view.SetActiveUi(false);
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);    
         }
 
         private void CommandStartBattleAction()

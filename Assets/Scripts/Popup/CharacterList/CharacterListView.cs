@@ -11,12 +11,12 @@ namespace Ryneus
         private new System.Action<CharacterListViewEvent> _commandData = null;
         private System.Action<int> _callEvent = null;
         
-        public override void Initialize() 
+        public void Initialize(List<ActorInfo> actorInfos) 
         {
             base.Initialize();
             characterList.Initialize();
             SetBaseAnimation(popupAnimation);
-            new CharacterListPresenter(this);
+            new CharacterListPresenter(this,actorInfos);
             characterList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             characterList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
             SetInputHandler(characterList.GetComponent<IInputHandlerEvent>());

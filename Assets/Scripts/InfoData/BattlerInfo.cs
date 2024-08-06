@@ -135,7 +135,7 @@ namespace Ryneus
             {
                 _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
             }
-            SetKindTypes();
+            SetKindTypes(actorInfo.Master.Kinds);
             AddKindPassive();
             foreach (var skill in _skills)
             {
@@ -184,7 +184,7 @@ namespace Ryneus
                     _skills.Add(skillInfo);
                 }
             }
-            SetKindTypes();
+            SetKindTypes(enemyData.Kinds);
             AddKindPassive();
             foreach (var skill in _skills)
             {
@@ -222,7 +222,7 @@ namespace Ryneus
                     _skills.Add(skillInfo);
                 }
             }
-            SetKindTypes();
+            SetKindTypes(EnemyData.Kinds);
             AddKindPassive();
             foreach (var skill in _skills)
             {
@@ -272,10 +272,10 @@ namespace Ryneus
             _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? -1 : 1);
         }
 
-        private void SetKindTypes()
+        private void SetKindTypes(List<KindType> kindTypes)
         {
             _kinds.Clear();
-            foreach (var kind in EnemyData.Kinds)
+            foreach (var kind in kindTypes)
             {
                 _kinds.Add(kind);
             }

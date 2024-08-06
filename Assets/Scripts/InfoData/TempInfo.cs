@@ -43,14 +43,6 @@ namespace Ryneus
         {
             _tempInputType = inputType;
         }    
-        
-        
-        private List<ActorInfo> _tempStatusActorInfos = new ();
-        public List<ActorInfo> TempStatusActorInfos => _tempStatusActorInfos;
-        public void SetTempStatusActorInfos(List<ActorInfo> tempStatusActorInfos)
-        {
-            _tempStatusActorInfos = tempStatusActorInfos;
-        }
 
         // リプレイデータ
         private SaveBattleInfo _clearPartyReplayData;

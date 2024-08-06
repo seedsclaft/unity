@@ -169,7 +169,6 @@ namespace Ryneus
 
         private void CommandStatus(int startIndex = -1)
         {
-            _model.SetStatusPastActorInfos();
             int actorId = -1;
             if (startIndex != -1)
             {
@@ -180,23 +179,14 @@ namespace Ryneus
                     actorId = _model.TacticsActor().ActorId;
                 }
             }
-            var statusViewInfo = new StatusViewInfo(() => 
+
+            CommandStatusInfo(_model.PastActorInfos(),false,true,true,false,actorId,() => 
             {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
                 _view.SetHelpInputInfo("TACTICS");
                 _view.SetNuminous(_model.Currency);
                 _view.SetBusy(false);
                 _view.CallChangeSelectTacticsActor();
             });
-            _view.ChangeUIActive(false);
-            statusViewInfo.SetDisplayDecideButton(false);
-            statusViewInfo.SetDisplayLevelResetButton(true);
-            if (actorId != -1)
-            {
-                statusViewInfo.SetStartIndex(actorId);
-            }
-            _view.CommandCallStatus(statusViewInfo);
         }
 
         private void CommandSelectActorTrain()
@@ -407,7 +397,6 @@ namespace Ryneus
                 if (_model.BattleMembers().Count > 0)
                 {
                     _model.SaveTempBattleMembers();
-                    _model.SetStatusActorInfos();
                     _view.CommandChangeViewToTransition(null);
                     // ボス戦なら
                     if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
@@ -489,14 +478,8 @@ namespace Ryneus
         private void CommandEnemyInfo()
         {
             var enemyInfos = _model.CurrentTroopInfo().BattlerInfos;
-            var enemyViewInfo = new StatusViewInfo(() => 
-            {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
-            });
-            enemyViewInfo.SetEnemyInfos(enemyInfos,false);
-            _view.CommandCallEnemyInfo(enemyViewInfo);
-            _view.ChangeUIActive(false);
+            _busy = true;
+            CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
         }
     }
 }
