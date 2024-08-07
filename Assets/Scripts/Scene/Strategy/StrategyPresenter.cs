@@ -452,12 +452,11 @@ namespace Ryneus
             {
                 // 敗北して戻る
                 _model.ReturnTempBattleMembers();
-                var returnSeekIndex = _model.CurrentStage.CurrentSeekIndex;
                 _model.EndStrategy();
                 var tacticsSceneInfo = new TacticsSceneInfo
                 {
                     ReturnBeforeBattle = true,
-                    SeekIndex = returnSeekIndex
+                    SeekIndex = _model.CurrentStage.CurrentSeekIndex
                 };
                 _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
             } else
@@ -472,7 +471,12 @@ namespace Ryneus
                 } else
                 {
                     _model.SeekStage();
-                    _view.CommandGotoSceneChange(Scene.Tactics);
+                    var tacticsSceneInfo = new TacticsSceneInfo
+                    {
+                        ReturnNextBattle = true,
+                        SeekIndex = _model.CurrentStage.CurrentSeekIndex
+                    };
+                    _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
                 }
             }
             //_model.TempInfo.ClearTempGetItemInfos();

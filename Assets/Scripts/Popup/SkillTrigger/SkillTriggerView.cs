@@ -117,6 +117,7 @@ namespace Ryneus
             triggerCategory1List.gameObject.SetActive(false);
             triggerCategory2List.gameObject.SetActive(false);
             listBlock.gameObject.SetActive(false);
+            
         }
 
         public void SetSkillList(List<ListData> skillInfos)

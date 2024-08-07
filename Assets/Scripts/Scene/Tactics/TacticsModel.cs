@@ -561,6 +561,7 @@ namespace Ryneus
     {
         // バトル直前に戻る
         public bool ReturnBeforeBattle;
+        public bool ReturnNextBattle;
         public int SeekIndex = 0;
     }
 

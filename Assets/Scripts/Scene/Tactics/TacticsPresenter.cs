@@ -99,6 +99,19 @@ namespace Ryneus
                     CommandSelectRecordSeek(currentRecord);
                     CommandSelectRecord(currentRecord);
                 }
+            } else
+            if (_model.SceneParam != null && _model.SceneParam.ReturnNextBattle)
+            {
+                // 勝利して戻ってきたとき
+                _model.SetStageSeekIndex(_model.SceneParam.SeekIndex);
+                var currentRecord = _model.CurrentSelectRecord();
+                if (currentRecord != null)
+                {
+                    CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
+                    //CommandStageSymbol();
+                    //CommandSelectRecordSeek(currentRecord);
+                    //CommandSelectRecord(currentRecord);
+                }
             }
         }
 

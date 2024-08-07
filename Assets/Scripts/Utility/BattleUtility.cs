@@ -62,7 +62,8 @@ namespace Ryneus
         // 行動前パッシブ
         public static List<TriggerTiming> BeforeActionInfoTriggerTimings()
         {
-            return new List<TriggerTiming>(){
+            return new List<TriggerTiming>()
+            {
                 TriggerTiming.BeforeSelfUse,
                 TriggerTiming.BeforeFriendUse,
                 TriggerTiming.BeforeOpponentUse,

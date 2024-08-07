@@ -43,7 +43,8 @@ namespace Ryneus
             {
                 categoryIndex = 1;
             }
-            return categoryIndex;
+            var findIndex = _categoryIndexes.FindIndex(a => a == categoryIndex);
+            return findIndex;
         }
 
         public List<ListData> SkillTriggerSkillList()
@@ -75,7 +76,8 @@ namespace Ryneus
 
         public List<SkillTriggerData> SkillTriggerDataList(int index,int category)
         {
-            var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == _categoryIndexes[category-1]);
+            var triggerCategory = _categoryIndexes[category-1];
+            var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == triggerCategory);
             // 対象のマッチング
             var skillTriggerData = CurrentActor.SkillTriggerInfos;
             if (skillTriggerData.Count > index)
@@ -85,6 +87,9 @@ namespace Ryneus
                 {
                     case TargetType.All:
                     list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend || a.TargetType == TargetType.Opponent);
+                    break;
+                    case TargetType.Self:
+                    list = list.FindAll(a => (int)a.TargetType == -1 || a.TargetType == TargetType.All || a.TargetType == TargetType.Friend);
                     break;
                     case TargetType.IsTriggerTarget:
                     if (skill.IsHpHealFeature())

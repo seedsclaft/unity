@@ -152,7 +152,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;
             var categoryIndex = _model.SelectCategoryIndex(index,0);
-            _view.ShowTrigger1Category(categoryIndex-1);
+            _view.ShowTrigger1Category(categoryIndex);
         }
 
         private void CommandCallTrigger2Select()
@@ -160,7 +160,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;
             var categoryIndex = _model.SelectCategoryIndex(index,1);
-            _view.ShowTrigger2Category(categoryIndex-1);
+            _view.ShowTrigger2Category(categoryIndex);
         }
 
         private void CommandCallTriggerUp()

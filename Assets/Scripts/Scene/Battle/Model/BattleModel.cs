@@ -581,6 +581,12 @@ namespace Ryneus
                 }
             }
             // かばう
+            CalcCoverTargetIndexes(targetIndexList);
+            return targetIndexList;
+        }
+
+        public void CalcCoverTargetIndexes(List<int> targetIndexList)
+        {
             var coverBattlerId = -1;
             var coveredBattlerId = -1;
             foreach (var coverTargetIndex in targetIndexList)
@@ -604,7 +610,6 @@ namespace Ryneus
                 }
                 targetIndexList.Remove(coveredBattlerId);
             }
-            return targetIndexList;
         }
 
         public bool CanUseCondition(int skillId,BattlerInfo subject,int targetIndex)
@@ -2183,6 +2188,8 @@ namespace Ryneus
                         indexList.Add(actionResultInfo.TargetIndex);
                     } 
                 }
+                // かばう判定
+                CalcCoverTargetIndexes(indexList);
                 return indexList;
             }
             var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex,baseActionInfo,baseActionResultInfos);
