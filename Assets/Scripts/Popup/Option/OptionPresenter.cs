@@ -5,7 +5,7 @@ using Option;
 
 namespace Ryneus
 {
-    public class OptionPresenter 
+    public class OptionPresenter : BasePresenter
     {
         OptionView _view = null;
 
@@ -17,13 +17,15 @@ namespace Ryneus
             _model = new OptionModel();
             _model.ChangeTempInputType(GameSystem.ConfigData.InputType);
 
+            SetView(_view);
+            SetModel(_model);
             Initialize();
         }
 
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetOptionCategoryList(_model.OptionCategoryList());
+            _view.SetOptionCategoryList(GetListData(_model.OptionCategoryList()));
             _view.SetHelpWindow();
             CommandSelectCategory();
             _view.OpenAnimation();
@@ -217,12 +219,12 @@ namespace Ryneus
             var categoryIndex = _view.OptionCategoryIndex + 1;
             if (categoryIndex >= 1 && categoryIndex < 3)
             {
-                _view.SetOptionList(_model.OptionCommandData(
+                _view.SetOptionList(GetListData(_model.OptionCommandData(
                     categoryIndex,
                     (a) => CommandVolumeSlider(a),
                     (a) => CommandVolumeMute(a),
                     (a) => CommandChangeToggle(a)
-                ));
+                )));
                 _view.CommandRefresh();
             }
         }

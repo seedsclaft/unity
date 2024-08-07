@@ -43,7 +43,7 @@ namespace Ryneus
             _view.ChangeBackCommandActive(false);
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
-            _view.SetAttributeList(_model.AttributeTabList());
+            _view.SetAttributeList(GetListData(_model.AttributeTabList()));
             _view.SetStatusButtonEvent(() => CommandStatus(_view.CharacterSelectIndex));
             CommandRefresh();
             _view.OpenAnimation();
@@ -186,50 +186,16 @@ namespace Ryneus
 
         private void CommandSelectActorTrain()
         {
-            if (_model.CheckActorTrain())
+            _busy = true;
+            _view.SetBusy(true);
+            CommandActorLevelUp(_model.TacticsActor(),() => 
             {
-                SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
-                // 新規魔法取得があるか
-                var skills = _model.TacticsActor().LearningSkills(1);
-                
-                var from = _model.SelectActorEvaluate();
-                _model.SelectActorTrain();
-                var to = _model.SelectActorEvaluate();
-                
-                if (skills.Count > 0)
-                {
-                    _busy = true;
-                    _view.SetBusy(true);
-                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
-                    CommandSelectTacticsCommand(_model.TacticsCommandType);
-                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-
-                    var popupInfo = new PopupInfo
-                    {
-                        PopupType = PopupType.LearnSkill,
-                        EndEvent = () =>
-                        {
-                            _busy = false;
-                            _view.SetBusy(false);
-                            ShowCharacterDetail();
-                            CommandRefresh();
-                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                        },
-                        template = learnSkillInfo
-                    };
-                    _view.CommandCallPopup(popupInfo);
-                } else
-                {
-                    CommandCautionInfo("",from,to);
-                    ShowCharacterDetail();
-                    CommandRefresh();
-                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
-                }
-            } else
-            {
-                CommandCautionInfo(DataSystem.GetText(11170));
-                SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            }
+                _busy = false;
+                _view.SetBusy(false);
+                CommandSelectTacticsCommand(_model.TacticsCommandType);
+                ShowCharacterDetail();
+                CommandRefresh();
+            });
         }
 
         private void CommandCancelTacticsCommand()

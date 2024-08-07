@@ -89,20 +89,14 @@ namespace Ryneus
             return currency;
         }
 
-        public List<ListData> SkillTrigger(int selectIndex = -1)
+        public List<SkillTriggerInfo> SkillTrigger(int selectIndex = -1)
         {
-            var listData = MakeListData(CurrentActor.SkillTriggerInfos,selectIndex);
-            return listData;
+            return CurrentActor.SkillTriggerInfos;
         }
 
-        public List<ListData> StatusCommand()
+        public List<SystemData.CommandData> StatusCommand()
         {
-            return MakeListData( DataSystem.StatusCommand );
-        }
-
-        public bool CheckActorTrain()
-        {
-            return Currency >= ActorLevelUpCost(CurrentActor);
+            return DataSystem.StatusCommand;
         }
 
         public int SelectActorEvaluate()

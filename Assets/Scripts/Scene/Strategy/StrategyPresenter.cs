@@ -28,7 +28,7 @@ namespace Ryneus
             _view.SetHelpWindow();
 
             _view.InitActors();
-            _view.InitResultList(_model.ResultCommand());
+            _view.InitResultList(GetListData(_model.ResultCommand()));
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);
@@ -231,7 +231,7 @@ namespace Ryneus
 
         private void ShowResultList()
         {
-            _view.ShowResultList(_model.ResultViewInfos,_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn(),_model.BattleResultScore());
+            _view.ShowResultList(GetListData(_model.ResultViewInfos),_model.BattleSaveHumanResultInfo(),_model.BattleResultTurn(),_model.BattleResultScore());
         }
 
         private void CommandResultClose(SystemData.CommandData commandData)

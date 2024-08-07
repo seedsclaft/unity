@@ -105,7 +105,7 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             _busy = true;
-            CommandCallSideMenu(_model.SideMenu(),() => {_busy = false;});
+            CommandCallSideMenu(GetListData(_model.SideMenu()),() => {_busy = false;});
         }
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)

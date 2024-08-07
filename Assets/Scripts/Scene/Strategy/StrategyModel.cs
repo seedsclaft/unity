@@ -23,7 +23,7 @@ namespace Ryneus
             _sceneParam = null;
         }
         private List<StrategyResultViewInfo> _resultInfos = new();
-        public List<ListData> ResultViewInfos => MakeListData(_resultInfos);
+        public List<StrategyResultViewInfo> ResultViewInfos => _resultInfos;
 
         private string _saveHumanText = "";
         
@@ -289,11 +289,6 @@ namespace Ryneus
             _learnSkillInfo.RemoveAt(0);
         }
 
-        public List<ListData> BattleResultInfos()
-        {
-            return MakeListData(SceneParam.GetItemInfos.FindAll(a => a.GetItemType != GetItemType.SaveHuman));
-        }
-
         public string BattleSaveHumanResultInfo()
         {
             if (!_battleResult)
@@ -356,13 +351,13 @@ namespace Ryneus
             return BattleResultActors().FindAll(a => a.BattleIndex >= 0 && a.CurrentHp == 0);
         }
 
-        public List<ListData> ResultCommand()
+        public List<SystemData.CommandData> ResultCommand()
         {
             if (_battleResult && _battleResultVictory == false)
             {
-                return MakeListData(BaseConfirmCommand(3040,3054)); // 再戦
+                return BaseConfirmCommand(3040,3054); // 再戦
             }
-            return MakeListData(BaseConfirmCommand(3040,4));
+            return BaseConfirmCommand(3040,4);
         }
 
         public bool IsBonusTactics(int actorId)

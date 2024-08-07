@@ -17,6 +17,11 @@ namespace Ryneus
             _model = model;
         }
 
+        public List<ListData> GetListData<T>(List<T> dataList,int selectIndex = 0)
+        {
+            return _model.MakeListData(dataList,selectIndex);
+        }
+
         public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)
         {
             var isAbort = false;
@@ -185,6 +190,49 @@ namespace Ryneus
                 cautionInfo.SetLevelUp(from,to);
             }
             _view.CommandCallCaution(cautionInfo);
+        }
+
+        public void CommandActorLevelUp(ActorInfo actorInfo,System.Action endEvent = null)
+        {
+            if (_model.EnableActorLevelUp(actorInfo))
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
+                // 新規魔法取得があるか
+                var skills = actorInfo.LearningSkills(1);
+                
+                var from = actorInfo.Evaluate();
+                _model.ActorLevelUp(actorInfo);
+                var to = actorInfo.Evaluate();
+                
+                if (skills.Count > 0)
+                {
+                    //_busy = true;
+                    _view.SetBusy(true);
+                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
+                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                    var popupInfo = new PopupInfo
+                    {
+                        PopupType = PopupType.LearnSkill,
+                        EndEvent = () =>
+                        {
+                            endEvent?.Invoke();
+                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                        },
+                        template = learnSkillInfo
+                    };
+                    _view.CommandCallPopup(popupInfo);
+                } else
+                {
+                    CommandCautionInfo("",from,to);
+                    endEvent?.Invoke();
+                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
+                }
+            } else
+            {
+                CommandCautionInfo(DataSystem.GetText(11170));
+                SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            }
         }
     }
 }

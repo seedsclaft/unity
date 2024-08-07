@@ -20,7 +20,7 @@ namespace Ryneus
         private void Initialize()
         { 
             _view.SetHelpWindow(_model.HelpText());
-            _view.SetUIButton(_model.StatusCommand());
+            _view.SetUIButton(GetListData(_model.StatusCommand()));
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandRefresh();
@@ -128,48 +128,14 @@ namespace Ryneus
 
         private void CommandLevelUp()
         {
-            if (_model.CheckActorTrain())
+            _busy = true;
+            _view.SetBusy(true);
+            CommandActorLevelUp(_model.CurrentActor,() => 
             {
-                SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
-                // 新規魔法取得があるか
-                var skills = _model.CurrentActor.LearningSkills(1);
-                
-                var from = _model.SelectActorEvaluate();
-                _model.CommandLevelUp();
-                var to = _model.SelectActorEvaluate();
-                
-                if (skills.Count > 0)
-                {
-                    _busy = true;
-                    _view.SetBusy(true);
-                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
-                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-
-                    var popupInfo = new PopupInfo
-                    {
-                        PopupType = PopupType.LearnSkill,
-                        EndEvent = () =>
-                        {
-                            _busy = false;
-                            _view.SetBusy(false);
-                            CommandRefresh();
-                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                        },
-                        template = learnSkillInfo
-                    };
-                    _view.CommandCallPopup(popupInfo);
-                } else
-                {
-                    CommandCautionInfo("",from,to);
-
-                    CommandRefresh();
-                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
-                }
-            } else
-            {
-                CommandCautionInfo(DataSystem.GetText(11170));
-                SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            }
+                _busy = false;
+                _view.SetBusy(false);
+                CommandRefresh();
+            });
         }
 
         private void CommandShowLearnMagic()
@@ -342,7 +308,7 @@ namespace Ryneus
             {
                 skillListData[0].SetSelected(true);
             }
-            _view.CommandRefreshStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),_model.SkillTrigger());
+            _view.CommandRefreshStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),GetListData(_model.SkillTrigger()));
         }
 
         private void SaveSelectedSkillId()

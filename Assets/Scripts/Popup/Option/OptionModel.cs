@@ -11,7 +11,7 @@ namespace Ryneus
 
         }
 
-        public List<ListData> OptionCommandData(int categoryIndex,System.Action<float> sliderEvent,System.Action<bool> muteEvent,System.Action<int> toggleEvent)
+        public List<OptionInfo> OptionCommandData(int categoryIndex,System.Action<float> sliderEvent,System.Action<bool> muteEvent,System.Action<int> toggleEvent)
         {
             var list = new List<OptionInfo>();
             foreach (var optionCommand in DataSystem.OptionCommand)
@@ -35,10 +35,10 @@ namespace Ryneus
                 };
                 list.Add(optionInfo);
             }
-            return MakeListData(list);
+            return list;
         }
 
-        public List<ListData> OptionCategoryList()
+        public List<SystemData.CommandData> OptionCategoryList()
         {
             var categoryIds = new List<int>();
             foreach (var optionCommand in DataSystem.OptionCommand)
@@ -60,7 +60,7 @@ namespace Ryneus
                 commandDates.Add(Command);
             }
 
-            return MakeListData(commandDates);
+            return commandDates;
         }
 
         public int OptionIndex(OptionCategory optionCategory)

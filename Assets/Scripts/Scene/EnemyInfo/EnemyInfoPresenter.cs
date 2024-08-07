@@ -4,7 +4,7 @@ using EnemyInfo;
 
 namespace Ryneus
 {
-    public class EnemyInfoPresenter 
+    public class EnemyInfoPresenter : BasePresenter
     {
         EnemyInfoModel _model = null;
         EnemyInfoView _view = null;
@@ -15,6 +15,8 @@ namespace Ryneus
             _view = view;
             _model = new EnemyInfoModel(enemyInfos);
 
+            SetView(_view);
+            SetModel(_model);
             Initialize();
         }
 
@@ -22,7 +24,7 @@ namespace Ryneus
         {
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetEnemies(_model.EnemyInfoListDates());
+            _view.SetEnemies(GetListData(_model.EnemyBattlerInfos));
             CommandRefresh();
             _busy = false;
         }
@@ -61,8 +63,8 @@ namespace Ryneus
         {
             var skillInfos = _model.SkillActionList();
             var lastSelectIndex = 0;
-            _view.SetCondition(_model.SelectCharacterConditions());
-            _view.CommandRefreshStatus(skillInfos,_model.CurrentEnemy,_model.EnemySkillTriggerInfo(),_model.EnemyIndexes(),lastSelectIndex);
+            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
+            _view.CommandRefreshStatus(GetListData(skillInfos,0),_model.CurrentEnemy,GetListData(_model.EnemySkillTriggerInfo(),0),_model.EnemyIndexes(),lastSelectIndex);
         }
     }
 }

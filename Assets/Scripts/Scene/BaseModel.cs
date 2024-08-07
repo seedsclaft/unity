@@ -674,7 +674,7 @@ namespace Ryneus
 
         public void ActorLevelUp(ActorInfo actorInfo)
         {
-            var cost = TacticsUtility.TrainCost(actorInfo);
+            var cost = ActorLevelUpCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
             var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
@@ -691,6 +691,11 @@ namespace Ryneus
             return TacticsUtility.TrainCost(actorInfo);
         }
         
+        public bool EnableActorLevelUp(ActorInfo actorInfo)
+        {
+            return Currency >= ActorLevelUpCost(actorInfo);
+        }
+
         public void ActorLearnMagic(ActorInfo actorInfo,int skillId)
         {
             var skillInfo = new SkillInfo(skillId);

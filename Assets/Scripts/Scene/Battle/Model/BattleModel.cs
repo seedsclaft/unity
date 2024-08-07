@@ -330,7 +330,7 @@ namespace Ryneus
             return _battlers.Find(a => a.Index == index);
         }
 
-        public List<ListData> SkillActionList()
+        public List<SkillInfo> SkillActionList()
         {
             var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsParamUpSkill() == false);
             for (int i = 0; i < skillInfos.Count;i++)
@@ -359,15 +359,15 @@ namespace Ryneus
             skillInfos.AddRange(sortList1);
             skillInfos.AddRange(sortList2);
             skillInfos.AddRange(sortList3);
-            return MakeListData(skillInfos);
+            return skillInfos;
         }
 
-        public int SelectSkillIndex(List<ListData> skillInfos)
+        public int SelectSkillIndex(List<SkillInfo> skillInfos)
         {
             int selectIndex = 0;
             if (_currentBattler != null && _currentBattler.IsActor == true)
             {
-                var skillIndex = skillInfos.FindIndex(a => ((SkillInfo)a.Data).Id == _currentBattler.LastSelectSkillId);
+                var skillIndex = skillInfos.FindIndex(a => a.Id == _currentBattler.LastSelectSkillId);
                 if (skillIndex > -1)
                 {
                     selectIndex = skillIndex;
@@ -2443,7 +2443,7 @@ namespace Ryneus
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }
 
-        public List<ListData> SideMenu()
+        public List<SystemData.CommandData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
             var menuCommand = new SystemData.CommandData
@@ -2453,7 +2453,7 @@ namespace Ryneus
                 Key = "Help"
             };
             list.Add(menuCommand);
-            return MakeListData(list);
+            return list;
         }
 
         public SystemData.CommandData BattleAutoButton()
@@ -2472,9 +2472,9 @@ namespace Ryneus
             ConfigUtility.ChangeBattleAuto(!GameSystem.ConfigData.BattleAuto);
         }
 
-        public List<ListData> SelectCharacterConditions()
+        public List<StateInfo> SelectCharacterConditions()
         {
-            return MakeListData(_currentBattler.StateInfos);
+            return _currentBattler.StateInfos;
         }
 
         public int WaitFrameTime(int time)

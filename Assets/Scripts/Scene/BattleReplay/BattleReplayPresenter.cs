@@ -108,7 +108,7 @@ namespace Ryneus
         {
             if (_busy) return;
             _busy = true;
-            CommandCallSideMenu(_model.SideMenu(),() => 
+            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
             {
                 _busy = false;
             });

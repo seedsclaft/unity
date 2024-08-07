@@ -14,7 +14,7 @@ namespace Ryneus
             return GameSystem.Version;
         }
 
-        public List<ListData> SideMenu()
+        public List<SystemData.CommandData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
             var optionCommand = new SystemData.CommandData
@@ -45,7 +45,7 @@ namespace Ryneus
                 Key = "EndGame"
             };
             list.Add(endCommand);
-            return MakeListData(list);
+            return list;
         }
     }
 }

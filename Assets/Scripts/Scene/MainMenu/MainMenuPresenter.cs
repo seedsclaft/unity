@@ -27,7 +27,7 @@ namespace Ryneus
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
 
-            _view.SetStagesData(_model.Stages());
+            _view.SetStagesData(GetListData(_model.Stages()));
             _view.SetBackGround(_model.NextStage().Master.BackGround);
             _view.SetStageData(_model.NextStage());
             //_view.SetNuminous(_model.Currency);
@@ -80,7 +80,7 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             _busy = true;
-            CommandCallSideMenu(_model.SideMenu(),() => 
+            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
             {
                 _busy = false;
             });

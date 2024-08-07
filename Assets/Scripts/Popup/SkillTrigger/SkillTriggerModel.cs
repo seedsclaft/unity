@@ -63,17 +63,17 @@ namespace Ryneus
             return MakeListData(list);
         }
         
-        public List<ListData> SkillTriggerCategoryList()
+        public List<string> SkillTriggerCategoryList()
         {
             var list = new List<string>();
             foreach (var categoryIndex in _categoryIndexes)
             {
                 list.Add(DataSystem.GetText(categoryIndex + 24109));
             }
-            return MakeListData(list);
+            return list;
         }
 
-        public List<ListData> SkillTriggerDataList(int index,int category)
+        public List<SkillTriggerData> SkillTriggerDataList(int index,int category)
         {
             var list = DataSystem.SkillTriggers.FindAll(a => a.Category == -1 || a.Category == _categoryIndexes[category-1]);
             // 対象のマッチング
@@ -103,7 +103,7 @@ namespace Ryneus
             }
             // ソート
             list.Sort((a,b) => a.Priority >= b.Priority ? 1 : -1);
-            return MakeListData(list);
+            return list;
         }
 
         public void SetSkillTriggerSkill(int index,int skillId)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ryneus
 {
-    public class SkillTriggerPresenter 
+    public class SkillTriggerPresenter : BasePresenter
     {
         SkillTriggerModel _model = null;
         SkillTriggerView _view = null;
@@ -14,6 +14,8 @@ namespace Ryneus
             _view = view;
             _model = new SkillTriggerModel();
 
+            SetView(_view);
+            SetModel(_model);
             Initialize();
             _busy = false;
         }
@@ -22,7 +24,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,0));
-            _view.SetTriggerCategoryList(_model.SkillTriggerCategoryList());
+            _view.SetTriggerCategoryList(GetListData(_model.SkillTriggerCategoryList()));
             _view.OpenAnimation();
         }
 
@@ -109,7 +111,7 @@ namespace Ryneus
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
-                _view.SetTrigger1List(list);
+                _view.SetTrigger1List(GetListData(list));
             }
         }
 
@@ -120,7 +122,7 @@ namespace Ryneus
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
-                _view.SetTrigger2List(list);
+                _view.SetTrigger2List(GetListData(list));
             }
         }
 

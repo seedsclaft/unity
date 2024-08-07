@@ -391,7 +391,7 @@ namespace Ryneus
             _view.SetAnimationBusy(false);
             _view.SetHelpText(DataSystem.GetText(15010));
             _view.SelectedCharacter(_model.CurrentBattler);
-            _view.SetCondition(_model.SelectCharacterConditions());
+            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
             _view.ChangeSideMenuButtonActive(true);
             RefreshSkillInfos();
             _view.BattlerBattleClearSelect();
@@ -416,7 +416,7 @@ namespace Ryneus
             _view.SetAnimationBusy(false);
             _view.SetHelpText(DataSystem.GetText(15010));
             //_view.SelectedCharacter(_model.CurrentBattler);
-            _view.SetCondition(_model.SelectCharacterConditions());
+            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
             //_view.ChangeSideMenuButtonActive(true);
             RefreshSkillInfos();
             _view.BattlerBattleClearSelect();
@@ -845,7 +845,7 @@ namespace Ryneus
         private void RefreshSkillInfos()
         {
             var skillInfos = _model.SkillActionList();
-            _view.RefreshMagicList(skillInfos,_model.SelectSkillIndex(skillInfos));
+            _view.RefreshMagicList(GetListData(skillInfos),_model.SelectSkillIndex(skillInfos));
             //SoundManager.Instance.PlayStaticSe(SEType.Cursor);
         }
 
@@ -917,7 +917,7 @@ namespace Ryneus
         {
             if (_busy) return;
             _busy = true;
-            CommandCallSideMenu(_model.SideMenu(),() => 
+            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
             {
                 _busy = false;
             });

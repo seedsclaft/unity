@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -29,7 +28,6 @@ namespace Ryneus
         private int _firstRecordIndex = -1;
         public int FirstRecordIndex => _firstRecordIndex;
 
-        
         private List<int> _shopSelectIndexes = new ();
 
 
@@ -97,12 +95,6 @@ namespace Ryneus
         {
             CurrentStage.SetSeekIndex(seekIndex);
         }
-
-        public void SaveTempBattleMembers()
-        {
-            TempInfo.CashBattleActors(BattleMembers());
-        }
-
 
         public List<SkillInfo> AlcanaMagicSkillInfos(List<GetItemInfo> getItemInfos)
         {
@@ -266,7 +258,6 @@ namespace Ryneus
             };
             return MakeListData(list,enable);
         }
-
 
         public string TacticsCommandInputInfo()
         {

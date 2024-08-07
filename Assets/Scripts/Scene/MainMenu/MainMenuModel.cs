@@ -5,7 +5,7 @@ namespace Ryneus
 {
     public class MainMenuModel : BaseModel
     {
-        public List<ListData> Stages()
+        public List<StageInfo> Stages()
         {
             var list = new List<StageInfo>();
             var stages = DataSystem.Stages.FindAll(a => a.Selectable);
@@ -28,7 +28,7 @@ namespace Ryneus
                 stageInfo.SetScoreMax(scoreMax);
                 list.Add(stageInfo);
             }
-            return MakeListData(list);
+            return list;
         }
 
         public void StartSelectStage(int stageId)
@@ -90,7 +90,7 @@ namespace Ryneus
             return null;
         }
 
-        public List<ListData> SideMenu()
+        public List<SystemData.CommandData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();
             var menuCommand = new SystemData.CommandData
@@ -107,7 +107,7 @@ namespace Ryneus
                 Key = "Save"
             };
             list.Add(saveCommand);
-            return MakeListData(list);
+            return list;
         }
     }
 }

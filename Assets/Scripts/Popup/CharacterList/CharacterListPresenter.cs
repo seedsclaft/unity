@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ryneus
 {
-    public class CharacterListPresenter 
+    public class CharacterListPresenter :BasePresenter
     {
         CharacterListModel _model = null;
         CharacterListView _view = null;
@@ -14,6 +14,8 @@ namespace Ryneus
             _view = view;
             _model = new CharacterListModel(actorInfos);
 
+            SetView(_view);
+            SetModel(_model);
             Initialize();
         }
 
@@ -21,7 +23,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
-            _view.SetCharacterList(_model.CharacterList());
+            _view.SetCharacterList(GetListData(_model.ActorInfos));
             _view.OpenAnimation();
         }
 

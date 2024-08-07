@@ -116,10 +116,7 @@ namespace Ryneus
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
         {
             var actorInfo = _actorInfos.Find(a => a.ActorId == levelUpInfo.ActorId);
-            if (actorInfo != null)
-            {
-                actorInfo.SetLevelUpInfo(levelUpInfo);
-            }
+            actorInfo?.SetLevelUpInfo(levelUpInfo);
         }
 
         public void ClearData()

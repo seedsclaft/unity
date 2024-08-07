@@ -5,9 +5,9 @@ namespace Ryneus
 {
     public class ScorePrizeModel : BaseModel
     {
-        public List<ListData> ScorePrize()
+        public List<ScorePrizeInfo> ScorePrize()
         {
-            return MakeListData(PartyInfo.ScorePrizeInfos);
+            return PartyInfo.ScorePrizeInfos;
         }
     }
 }

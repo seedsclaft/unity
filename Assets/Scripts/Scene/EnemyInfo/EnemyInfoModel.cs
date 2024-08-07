@@ -11,14 +11,10 @@ namespace Ryneus
         }
         
         private List<BattlerInfo> _enemyBattlerInfos = new();
+        public List<BattlerInfo> EnemyBattlerInfos => _enemyBattlerInfos;
 
         private int _currentIndex = 0; 
         public int CurrentIndex => _currentIndex;
-
-        public List<ListData> EnemyInfoListDates()
-        {
-            return MakeListData(_enemyBattlerInfos,0);
-        }
 
         public List<int> EnemyIndexes()
         {
@@ -37,7 +33,7 @@ namespace Ryneus
 
         public BattlerInfo CurrentEnemy => _currentIndex > -1 ? _enemyBattlerInfos[_currentIndex] : null;
         
-        public List<ListData> SkillActionList()
+        public List<SkillInfo> SkillActionList()
         {
             var skillInfos = new List<SkillInfo>();
             if (CurrentEnemy != null)
@@ -46,20 +42,20 @@ namespace Ryneus
             }
             skillInfos.ForEach(a => a.SetEnable(true));
             skillInfos.Sort((a,b) => {return a.Id - b.Id;});
-            return MakeListData(skillInfos);
+            return skillInfos;
         }
 
-        public List<ListData> SelectCharacterConditions()
+        public List<StateInfo> SelectCharacterConditions()
         {
             var stateInfos = new List<StateInfo>();
             if (CurrentEnemy != null)
             {
                 stateInfos = CurrentEnemy.StateInfos;
             }
-            return MakeListData(stateInfos);
+            return stateInfos;
         }
 
-        public List<ListData> EnemySkillTriggerInfo()
+        public List<SkillTriggerInfo> EnemySkillTriggerInfo()
         {
             var skillInfos = new List<SkillInfo>();
             if (CurrentEnemy != null)
@@ -82,7 +78,7 @@ namespace Ryneus
                 skillTriggerInfos.Add(skillTriggerInfo);
             }
             skillTriggerInfos = skillTriggerInfos.FindAll(a => skillInfos.Find(b => b.Id == a.SkillId) != null);
-            return MakeListData(skillTriggerInfos,0);
+            return skillTriggerInfos;
         }
     }
 }

@@ -43,20 +43,9 @@ namespace Ryneus
             _tacticsCommandEnables[tacticsCommand] = isEnable;
         }
 
-        public bool CheckActorTrain()
-        {
-            var cost = TacticsUtility.TrainCost(TacticsActor());
-            return Currency >= cost;
-        }
-
         public int SelectActorEvaluate()
         {
             return TacticsActor().Evaluate();
-        }
-
-        public void SelectActorTrain()
-        {
-            ActorLevelUp(TacticsActor());
         }
 
         public void LearnMagic(int skillId)
@@ -111,7 +100,7 @@ namespace Ryneus
             return ActorLearningMagicList(TacticsActor(),_selectAttribute,selectedSkillId);
         }
 
-        public List<ListData> AttributeTabList()
+        public List<AttributeType> AttributeTabList()
         {
             var list = new List<AttributeType>();
             foreach (var attribute in Enum.GetValues(typeof(AttributeType)))
@@ -119,7 +108,7 @@ namespace Ryneus
                 var attributeType = (AttributeType)attribute;
                 list.Add(attributeType);
             }
-            return MakeListData(list);
+            return list;
         }
 
         public List<ListData> TacticsCharacterData(int selectIndex = 0)
@@ -233,29 +222,6 @@ namespace Ryneus
             if (actorInfo.LineIndex == LineType.Back && isFront == true)
             {
                 actorInfo.SetLineIndex(LineType.Front);
-            }
-        }
-
-        public void AssignBattlerIndex()
-        {
-            var idList = PartyInfo.LastBattlerIdList;
-            foreach (var id in idList)
-            {
-                var actor = StageMembers().Find(a => a.ActorId == id);
-                if (actor != null)
-                {
-                    actor.SetBattleIndex(id);
-                }
-            }
-        }
-
-
-
-        public void ResetBattlerIndex()
-        {
-            foreach (var stageMember in StageMembers())
-            {
-                stageMember.SetBattleIndex(-1);
             }
         }
 

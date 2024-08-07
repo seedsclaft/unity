@@ -12,7 +12,7 @@ namespace Ryneus
         {
             _currentCategory = category;
             var command = RulingCommand()[0];
-            var data = (SystemData.CommandData)command.Data;
+            var data = command;
             SetId(data.Id);
         }
 
@@ -23,7 +23,7 @@ namespace Ryneus
             _currentId = id;
         }
 
-        public List<ListData> RulingCommand()
+        public List<SystemData.CommandData> RulingCommand()
         {
             var list = new List<SystemData.CommandData>();
             foreach (var rule in DataSystem.Rules)
@@ -40,10 +40,10 @@ namespace Ryneus
                     list.Add(ruleCommand);
                 }
             }
-            return MakeListData(list);
+            return list;
         }
 
-        public List<ListData> RuleHelp()
+        public List<string> RuleHelp()
         {
             var helpList = new List<string>();
             var rule = DataSystem.Rules.Find(a => a.Id == _currentId);
@@ -54,7 +54,7 @@ namespace Ryneus
                     helpList.Add(item);
                 }
             }
-            return MakeListData(helpList);
+            return helpList;
         }
     }
 }
