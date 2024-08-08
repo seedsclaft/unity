@@ -452,12 +452,12 @@ namespace Ryneus
             {
                 // 敗北して戻る
                 _model.ReturnTempBattleMembers();
-                _model.EndStrategy();
                 var tacticsSceneInfo = new TacticsSceneInfo
                 {
                     ReturnBeforeBattle = true,
                     SeekIndex = _model.CurrentStage.CurrentSeekIndex
                 };
+                _model.EndStrategy();
                 _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
             } else
             {

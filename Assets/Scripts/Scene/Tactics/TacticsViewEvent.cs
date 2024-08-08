@@ -31,6 +31,7 @@ namespace Tactics
         Parallel,
         DecideRecord,
         CallEnemyInfo,
+        CallAddActorInfo,
         Back,
         SelectSideMenu,
         StageHelp,

@@ -20,12 +20,9 @@ namespace Ryneus
         [SerializeField] private GameObject decideAnimation = null;
         [SerializeField] private MagicList magicList = null;
         [SerializeField] private BaseList commandList = null;
-        [SerializeField] private OnOffButton levelUpButton = null;
-        [SerializeField] private OnOffButton learnMagicButton = null;
-        [SerializeField] private Button learnMagicBackButton = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
-        [SerializeField] private TextMeshProUGUI lvUpCostText = null;
-        [SerializeField] private GameObject levelUpObj = null;
+        [SerializeField] private StatusLevelUp statusLevelUp = null;
+        
         [SerializeField] private StatusAnimation statusAnimation = null;
         [SerializeField] private GameObject leftRoot = null;
         [SerializeField] private GameObject rightRoot = null;
@@ -50,25 +47,8 @@ namespace Ryneus
             commandList.Initialize();
             SetInputHandler(commandList.gameObject);
 
-            levelUpButton?.SetCallHandler(() => 
-            {
-                if (levelUpButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.LevelUp);
-                _commandData(eventData);
-            });
-            learnMagicButton?.SetCallHandler(() => 
-            {
-                if (learnMagicButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
-                _commandData(eventData);
-            });
-            learnMagicBackButton?.onClick.AddListener(() => 
-            {
-                if (learnMagicBackButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
-                _commandData(eventData);
-            });
-            SetLearnMagicButtonActive(false);
+            statusLevelUp.Initialize();
+            
             SetBaseAnimation(statusAnimation);
             new StatusPresenter(this,actorInfos);
             selectCharacter.SetBusy(false);
@@ -134,6 +114,7 @@ namespace Ryneus
         public void SetEvent(System.Action<StatusViewEvent> commandData)
         {
             _commandData = commandData;
+            statusLevelUp.SetEvent(commandData);
         }
 
         public void SetViewInfo(StatusViewInfo statusViewInfo)
@@ -184,7 +165,7 @@ namespace Ryneus
 
         private void DisplayDecideButton()
         {
-            levelUpObj.SetActive(_isDisplayLevelObj);
+            statusLevelUp.SetActive(_isDisplayLevelObj);
             decideButton.gameObject.SetActive(_isDisplayDecide);
             commandList.gameObject.SetActive(_isDisplayLevelObj);
             ChangeBackCommandActive(!_isDisplayDecide);
@@ -215,7 +196,12 @@ namespace Ryneus
 
         public void SetLvUpCost(int cost)
         {
-            lvUpCostText.SetText(cost.ToString() + DataSystem.GetText(1000));
+            statusLevelUp.SetLvUpCost(cost);
+        }
+
+        public void SetToLvText(int current)
+        {
+            statusLevelUp.ToLvText(current);
         }
 
         private void DisplayCharacterList(bool isDisplay)
@@ -337,7 +323,7 @@ namespace Ryneus
 
         public void SetLearnMagicButtonActive(bool IsActive)
         {
-            learnMagicBackButton?.gameObject.SetActive(IsActive);
+            statusLevelUp.SetLearnMagicButtonActive(IsActive);
         }
 
         public void CommandRefresh()

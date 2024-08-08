@@ -64,7 +64,8 @@ namespace Ryneus
                 case GetItemType.LearnSkill:
                     return DataSystem.FindSkill(_param2).Name;
                 case GetItemType.AddActor:
-                    return DataSystem.FindActor(_param1).Name;
+                    return "選択して仲間召喚";
+                    //return DataSystem.FindActor(_param1).Name;
                 case GetItemType.SelectAddActor:
                     return "選択して仲間召喚";
                 case GetItemType.SaveHuman:
@@ -89,6 +90,20 @@ namespace Ryneus
         public bool IsAttributeSkill()
         {
             return (int)_getItemType >= (int)GetItemType.AttributeFire && (int)_getItemType <= (int)GetItemType.AttributeDark;
+        }
+
+        public bool IsAddActor()
+        {
+            return _getItemType == GetItemType.AddActor || _getItemType == GetItemType.SelectAddActor;
+        }
+
+        /// <summary>
+        /// TacticsSymbolの獲得欄に表示するか
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDisplayTacticsSymbol()
+        {
+            return _getItemType != GetItemType.SelectRelic && _getItemType != GetItemType.SelectAddActor && _getItemType != GetItemType.AddActor;
         }
     }
 }

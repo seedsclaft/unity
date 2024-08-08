@@ -21,12 +21,12 @@ namespace Ryneus
             return false;
         }
 
-        public List<GetItemInfo> GetItemInfos()
+        public List<GetItemInfo> SelectRelicInfos()
         {
             var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
             if (tacticsSymbol.GetItemList.Index != -1)
             {
-                return tacticsSymbol.GetItemInfos();
+                return tacticsSymbol.SelectRelicInfos();
             }
             return null;
         }

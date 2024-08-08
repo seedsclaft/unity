@@ -42,6 +42,7 @@ namespace Ryneus
             _view.SetHelpWindow();
             _view.ChangeBackCommandActive(false);
             _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetStatusEvent((type) => UpdateStatusCommand(type));
             _view.SetSelectCharacter(_model.TacticsCharacterData(),_model.NoChoiceConfirmCommand());
             _view.SetAttributeList(GetListData(_model.AttributeTabList()));
             _view.SetStatusButtonEvent(() => CommandStatus(_view.CharacterSelectIndex));
@@ -117,6 +118,30 @@ namespace Ryneus
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     CommandEnemyInfo();
                     break;
+            }
+        }
+
+        private void UpdateStatusCommand(StatusViewEvent viewEvent)
+        {
+            if (_busy || _view.AnimationBusy)
+            {
+                return;
+            }
+            UnityEngine.Debug.Log(viewEvent.commandType);
+            switch (viewEvent.commandType)
+            {
+                case Status.CommandType.LevelUp:
+                    CommandLevelUp();
+                    return;
+                case Status.CommandType.ShowLearnMagic:
+                    CommandShowLearnMagic();
+                    return;
+                case Status.CommandType.LearnMagic:
+                    CommandLearnMagic((SkillInfo)viewEvent.template);
+                    return;
+                case Status.CommandType.HideLearnMagic:
+                    CommandHideLearnMagic();
+                    return;
             }
         }
 
@@ -226,6 +251,8 @@ namespace Ryneus
         private void CommandChangeSelectTacticsActor(int actorId)
         {
             _model.SetSelectActorId(actorId);
+            _view.SetLvUpCost(_model.ActorLevelUpCost(_model.TacticsActor()));
+            _view.SetToLvText(_model.TacticsActor().Level);
             switch (_model.TacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
@@ -407,6 +434,9 @@ namespace Ryneus
             _view.SetNuminous(_model.Currency);
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
+            ShowCharacterDetail();
+            _view.SetLvUpCost(_model.ActorLevelUpCost(_model.TacticsActor()));
+            _view.SetToLvText(_model.TacticsActor().Level);
         }
 
         private void CommandCommandHelp()
@@ -436,6 +466,72 @@ namespace Ryneus
             var enemyInfos = _model.CurrentTroopInfo().BattlerInfos;
             _busy = true;
             CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
+        }
+        
+        private void CommandLevelUp()
+        {
+            _busy = true;
+            _view.SetBusy(true);
+            CommandActorLevelUp(_model.TacticsActor(),() => 
+            {
+                _busy = false;
+                _view.SetBusy(false);
+                CommandRefresh();
+            });
+        }
+
+        private void CommandShowLearnMagic()
+        {
+            _view.SetLearnMagicButtonActive(true);
+            var lastSelectSkillId = -1;
+            var lastSelectSkill = _view.SelectMagic;
+            if (lastSelectSkill != null)
+            {
+                lastSelectSkillId = lastSelectSkill.Id;
+            }
+            _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));            
+        }
+
+        private void CommandLearnMagic(SkillInfo skillInfo)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,skillInfo));
+            _view.CommandCallConfirm(confirmInfo);
+        }
+
+        private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType,SkillInfo skillInfo)
+        {
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                var from = _model.SelectActorEvaluate();
+                _model.LearnMagic(skillInfo.Id);
+                var to = _model.SelectActorEvaluate();
+
+                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.LearnSkill,
+                    EndEvent = () =>
+                    {
+                        _view.SetNuminous(_model.Currency);
+                        _view.CommandRefresh();
+                        CommandShowLearnMagic();
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    },
+                    template = learnSkillInfo
+                };
+                _view.CommandCallPopup(popupInfo);
+            } else
+            {
+            }
+        }
+
+        private void CommandHideLearnMagic()
+        {
+            _view.SetLearnMagicButtonActive(false);
+            CommandRefresh();
         }
     }
 }

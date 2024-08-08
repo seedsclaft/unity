@@ -147,6 +147,9 @@ namespace Ryneus
                     if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandCallEnemyInfo((SymbolResultInfo)viewEvent.template);
                     break;
+                case CommandType.CallAddActorInfo:
+                    CommandCallAddActorInfo((SymbolResultInfo)viewEvent.template,false);
+                    break;
                 case CommandType.PopupSkillInfo:
                     CommandPopupSkillInfo((List<GetItemInfo>)viewEvent.template);
                     break;
@@ -548,8 +551,8 @@ namespace Ryneus
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
                 getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
-                _model.MakeSelectRelic(alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
+                _model.MakeSelectRelic(alcanaSelect.Id);
             }
         }
 
@@ -613,18 +616,7 @@ namespace Ryneus
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                List<ActorInfo> actorInfos;
-                if (_model.CurrentSelectRecord().StageSymbolData.Param2 == 0)
-                {
-                    actorInfos = _model.AddSelectActorInfos();
-                } else
-                {
-                    actorInfos = _model.AddSelectActorGetItemInfos(_model.CurrentSelectRecord().SymbolInfo.GetItemInfos);
-                }
-                CommandStatusInfo(actorInfos,false,false,false,true,-1,() => 
-                {
-
-                });
+                CommandCallAddActorInfo(_model.CurrentSelectRecord(),true);
             } else
             {
                 CancelSelectSymbol();
@@ -769,44 +761,60 @@ namespace Ryneus
             _view.CommandRefresh();
         }
 
-        private void CommandCallEnemyInfo(SymbolResultInfo symbolInfo)
+        private void CommandCallEnemyInfo(SymbolResultInfo symbolResultInfo)
         {
-            switch (symbolInfo.SymbolType)
+            switch (symbolResultInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
-                    var enemyInfos = symbolInfo.SymbolInfo.BattlerInfos();
+                    var enemyInfos = symbolResultInfo.SymbolInfo.BattlerInfos();
                     _busy = true;
                     CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
                     break;
                 case SymbolType.Alcana:
-                    CallPopupSkillDetail(DataSystem.GetText(11140),_model.BasicSkillGetItemInfos(symbolInfo.SymbolInfo.GetItemInfos));
+                    CallPopupSkillDetail(DataSystem.GetText(11140),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
                 case SymbolType.Actor:
-                    CommandStatusInfo(_model.AddActorInfos(symbolInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
+                    CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
                     {
 
                     });
                     break;
                 case SymbolType.SelectActor:
-                    List<ActorInfo> actorInfos;
-                    if (symbolInfo.StageSymbolData.Param2 == 0)
-                    {
-                        actorInfos = _model.AddSelectActorInfos();
-                    } else
-                    {
-                        actorInfos = _model.AddSelectActorGetItemInfos(symbolInfo.SymbolInfo.GetItemInfos);
-                    }
-                    CommandStatusInfo(actorInfos,false,true,false,false,-1,() => 
-                    {
-
-                    });
+                    CommandCallAddActorInfo(symbolResultInfo,false);
                     break;
                 case SymbolType.Shop:
-                    CallPopupSkillDetail(DataSystem.GetText(11192),_model.BasicSkillGetItemInfos(symbolInfo.SymbolInfo.GetItemInfos));
+                    CallPopupSkillDetail(DataSystem.GetText(11192),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+        }
+
+        private void CommandCallAddActorInfo(SymbolResultInfo symbolResultInfo,bool addCommand)
+        {
+            List<ActorInfo> actorInfos;
+            if (symbolResultInfo.StageSymbolData.Param2 == 0)
+            {
+                actorInfos = _model.AddSelectActorInfos();
+            } else
+            {
+                actorInfos = _model.AddSelectActorGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos);
+            }
+            if (addCommand)
+            {
+                // 加入する用
+                CommandStatusInfo(actorInfos,false,false,false,true,-1,() => 
+                {
+
+                });
+            } else
+            {
+                // 確認する用
+                CommandStatusInfo(actorInfos,false,true,false,false,-1,() => 
+                {
+
+                });
+            }
         }
 
         private void CommandSelectSideMenu()

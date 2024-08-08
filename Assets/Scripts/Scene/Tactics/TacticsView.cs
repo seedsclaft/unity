@@ -397,7 +397,7 @@ namespace Ryneus
                 }
             } else
             {
-                var getItemInfos = tacticsSymbolList.GetItemInfos();
+                var getItemInfos = tacticsSymbolList.SelectRelicInfos();
                 if (getItemInfos != null)
                 {
                     var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
@@ -415,6 +415,19 @@ namespace Ryneus
                             template = new List<GetItemInfo>(){getItemInfo}
                         };
                         _commandData(eventData);
+                    }
+                    if (getItemInfo != null && getItemInfo.IsAddActor())
+                    {
+                        var listData = tacticsSymbolList.ListData;
+                        if (listData != null)
+                        {
+                            var data = (SymbolResultInfo)listData.Data;
+                            var eventData = new TacticsViewEvent(CommandType.CallAddActorInfo)
+                            {
+                                template = data
+                            };
+                            _commandData(eventData);
+                        }
                     }
                 }
             }

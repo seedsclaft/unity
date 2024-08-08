@@ -28,7 +28,7 @@ namespace Ryneus
             _selectable = selectable;
         }
         public int GetItemIndex => _getItemIndex;
-        public List<GetItemInfo> GetItemInfos()
+        public List<GetItemInfo> SelectRelicInfos()
         {
             if (ListData == null) return null;
             if (_selectRelicInfos.Count != 0)
@@ -37,6 +37,7 @@ namespace Ryneus
             }
             return null;
         }
+        
         public GetItemInfo GetItemInfo()
         {
             if (ListData == null) return null;
@@ -111,6 +112,7 @@ namespace Ryneus
 
         private List<ListData> MakeGetItemListData(SymbolInfo symbolInfo)
         {
+            _selectRelicInfos.Clear();
             var list = new List<ListData>();
             foreach (var getItemInfo in symbolInfo.GetItemInfos)
             {
@@ -118,7 +120,7 @@ namespace Ryneus
                 {
                     continue;
                 }
-                if (getItemInfo.GetItemType != GetItemType.SelectRelic && getItemInfo.GetItemType != GetItemType.SelectAddActor)
+                if (getItemInfo.IsDisplayTacticsSymbol())
                 {
                     var data = new ListData(getItemInfo);
                     data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
@@ -139,6 +141,12 @@ namespace Ryneus
             if (selectAddActor != null)
             {
                 var data = new ListData(selectAddActor);
+                list.Add(data);
+            }
+            var addActor = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor);
+            if (addActor != null)
+            {
+                var data = new ListData(addActor);
                 list.Add(data);
             }
             return list;

@@ -51,15 +51,6 @@ namespace Ryneus
             CurrentActor.SetLastSelectSkillId(selectSkillId);
         }
 
-        public void SelectAddActor()
-        {
-            if (CurrentStage == null)
-            {
-                CurrentSaveData.SetResumeStage(true);
-                PartyInfo.ChangeCurrency(DataSystem.System.InitCurrency);
-            }
-        }
-
         public List<ActorInfo> MakeSelectActorInfos()
         {
             return new List<ActorInfo>(){CurrentActor};
@@ -67,7 +58,15 @@ namespace Ryneus
 
         public List<GetItemInfo> MakeSelectGetItemInfos()
         {
-            var getItemInfo = CurrentSelectRecord().SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
+            var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.AddActor);
+            var getItemInfo = getItemInfos.Find(a => a.Param1 == CurrentActor.ActorId);
+            if (getItemInfo != null)
+            {
+                //getItemInfo.SetParam1(CurrentActor.ActorId);
+                getItemInfo.SetParam2(CurrentActor.ActorId);
+                return new List<GetItemInfo>(){getItemInfo};
+            }
+            getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectAddActor);
             if (getItemInfo != null)
             {
                 getItemInfo.SetParam1(CurrentActor.ActorId);

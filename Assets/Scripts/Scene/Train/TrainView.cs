@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Train;
-using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -16,10 +15,12 @@ namespace Ryneus
         //private BaseList attributeList = null;
         [SerializeField] private TextMeshProUGUI numinousText = null;
         private new System.Action<TrainViewEvent> _commandData = null;
+        private new System.Action<StatusViewEvent> _statusCommandData = null;
 
         [SerializeField] private OnOffButton enemyInfoButton = null;
         [SerializeField] private Button commandHelpButton = null;
         [SerializeField] private TrainAnimation trainAnimation = null;
+        [SerializeField] private StatusLevelUp statusLevelUp = null;
 
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
 
@@ -49,6 +50,8 @@ namespace Ryneus
                 enemyInfoButton.SetActiveCursor(false);
             });
             enemyInfoButton?.SetText(DataSystem.GetText(809));
+            statusLevelUp.Initialize();
+            statusLevelUp.SetActive(false);
             new TrainPresenter(this);
             selectCharacter.gameObject.SetActive(false);
         }
@@ -127,6 +130,27 @@ namespace Ryneus
         public void SetEvent(System.Action<TrainViewEvent> commandData)
         {
             _commandData = commandData;
+        }
+
+        public void SetStatusEvent(System.Action<StatusViewEvent> commandData)
+        {
+            _statusCommandData = commandData;
+            statusLevelUp.SetEvent(commandData);
+        }
+
+        public void SetLvUpCost(int cost)
+        {
+            statusLevelUp.SetLvUpCost(cost);
+        }
+        
+        public void SetToLvText(int current)
+        {
+            statusLevelUp.ToLvText(current);
+        }
+        
+        public void SetLearnMagicButtonActive(bool IsActive)
+        {
+            statusLevelUp.SetLearnMagicButtonActive(IsActive);
         }
 
         public void SetSelectCharacter(List<ListData> tacticsActorInfo,List<ListData> confirmCommands)
@@ -239,6 +263,7 @@ namespace Ryneus
         {
             //attributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(false);
+            statusLevelUp.SetActive(false);
             selectCharacter.gameObject.SetActive(false); 
             SetHelpInputInfo("TACTICS");
         }
@@ -262,6 +287,7 @@ namespace Ryneus
         {
             battleSelectCharacter.AttributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(true);
+            statusLevelUp.SetActive(true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
@@ -281,6 +307,7 @@ namespace Ryneus
         {
             battleSelectCharacter.AttributeList.gameObject.SetActive(true);
             battleSelectCharacter.gameObject.SetActive(true);
+            statusLevelUp.SetActive(true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
@@ -359,10 +386,10 @@ namespace Ryneus
             var listData = battleSelectCharacter.ActionData;
             if (listData != null && listData.Enable)
             {
-                var eventData = new TrainViewEvent(CommandType.ActorLearnMagic);
+                var eventData = new StatusViewEvent(Status.CommandType.LearnMagic);
                 var data = listData;
                 eventData.template = listData;
-                _commandData(eventData);
+                _statusCommandData(eventData);
             }
         }
 
