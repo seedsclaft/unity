@@ -142,12 +142,14 @@ namespace Ryneus
             {
                 var data = new ListData(selectAddActor);
                 list.Add(data);
-            }
-            var addActor = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor);
-            if (addActor != null)
+            } else
             {
-                var data = new ListData(addActor);
-                list.Add(data);
+                var addActor = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor);
+                if (addActor != null)
+                {
+                    var data = new ListData(addActor);
+                    list.Add(data);
+                }
             }
             return list;
         }

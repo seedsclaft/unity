@@ -1059,12 +1059,12 @@ namespace Ryneus
 
         public List<SkillInfo> ActiveSkills()
         {
-            return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive && a.Master.SkillType != SkillType.UseAlcana);
+            return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive && a.Master.SkillType != SkillType.UseAlcana && a.Master.SkillType != SkillType.Relic);
         }
 
         public List<SkillInfo> PassiveSkills()
         {
-            return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive || a.Master.SkillType == SkillType.UseAlcana);
+            return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive || a.Master.SkillType == SkillType.UseAlcana || a.Master.SkillType == SkillType.Relic);
         }
 
         public List<StateInfo> IconStateInfos()

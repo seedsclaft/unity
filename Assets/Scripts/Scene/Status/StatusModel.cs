@@ -67,12 +67,13 @@ namespace Ryneus
                 return new List<GetItemInfo>(){getItemInfo};
             }
             getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectAddActor);
-            if (getItemInfo != null)
+            if (getItemInfos.Count > 0)
             {
-                getItemInfo.SetParam1(CurrentActor.ActorId);
-                getItemInfo.SetParam2(CurrentActor.ActorId);
+                getItemInfos[0].SetParam1(CurrentActor.ActorId);
+                getItemInfos[0].SetParam2(CurrentActor.ActorId);
+                return getItemInfos;
             }
-            return new List<GetItemInfo>(){getItemInfo};
+            return new List<GetItemInfo>(){};
         }
 
         public bool EnableLvReset()

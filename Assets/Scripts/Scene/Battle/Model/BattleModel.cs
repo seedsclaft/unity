@@ -386,6 +386,10 @@ namespace Ryneus
             {
                 return false;
             }
+            if (skillInfo.Master.SkillType == SkillType.Relic)
+            {
+                return false;
+            }
             if (skillInfo.Master.SkillType == SkillType.Messiah)
             {
                 return false;
@@ -2071,7 +2075,7 @@ namespace Ryneus
                         var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
                         var abnormalStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Abnormal);
                         var abnormalTarget = abnormalStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
-                        if (abnormalTarget)
+                        if (abnormalTarget && battlerInfo.IsActor == targetBattlerInfo.IsActor)
                         {
                             list.Add(targetBattlerInfo.Index);
                         }

@@ -2269,6 +2269,12 @@ MonoBehaviour:
       TriggerTiming: 32
       Param1: 0
       Param2: 0
+      Param3: 1
+    - SkillId: 13020
+      TriggerType: 18010
+      TriggerTiming: 32
+      Param1: 0
+      Param2: 0
       Param3: 0
     ScopeTriggers: []
   - Id: 13030
@@ -2409,7 +2415,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 13070
       FeatureType: 5050
-      Param1: 400
+      Param1: 200
       Param2: 0
       Param3: 0
       Rate: 100
@@ -2942,7 +2948,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 0
+    CountTurn: 2
     Rank: 20
     Attribute: 5
     Scope: 1
@@ -5118,7 +5124,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 4
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u6700\u5927H\uFF50\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5148,7 +5154,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 5
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u81EA\u8EAB\u304C\u6700\u521D\u306BActive\u9B54\u6CD5\u3092\u767A\u52D5\u3057\u305F\u6642\n\u767A\u52D5\u3057\u305F\u9B54\u6CD5\u306ECT-/f[f,0,1]"
     Range: 2
@@ -5178,7 +5184,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 1
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5208,7 +5214,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 3
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306EDEF\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5238,7 +5244,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 2
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306ESPD\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5268,7 +5274,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 5
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 1
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306EATK\u3092/f[f,0,3]\u30C0\u30A6\u30F3(\u6C38\u7D9A)"
     Range: 2
@@ -5298,7 +5304,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 5
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 1
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306EDEF\u3092/f[f,0,3]\u30C0\u30A6\u30F3(\u6C38\u7D9A)"
     Range: 2
@@ -5328,7 +5334,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 1
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)3\u56DE\u884C\u52D5\u3059\u308B\u6BCE\u306B\n\\s\u306ECT-/f[f,0,1]"
     Range: 2
@@ -5370,7 +5376,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 4
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)Hp\u56DE\u5FA9\u3059\u308B\u52B9\u679C\u3092\u53D7\u3051\u308B\u3068\u304D\n\\s\u306EHp\u56DE\u5FA9\u91CF\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5400,7 +5406,7 @@ MonoBehaviour:
     Rank: 200
     Attribute: 3
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n/f[f,0,3]%\u30C0\u30E1\u30FC\u30B8\u306E\u30AB\u30A6\u30F3\u30BF\u3092\u4ED8\u4E0E(\u6C38\u7D9A)"
     Range: 2
@@ -5430,7 +5436,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 2
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)10\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\n1\u56DE\u3060\u3051\u518D\u884C\u52D5\u3067\u304D\u308B"
     Range: 2
@@ -5472,7 +5478,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 5
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306E\u884C\u52D5\u3067\u6575\u3092\u5012\u3057\u305F\u6642\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5508,7 +5514,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 3
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)3\u56DE\u884C\u52D5\u3059\u308B\u6BCE\u306B\n1\u56DE\u3060\u3051\\s\u306E\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u3092/f[f,0,3]\u30C0\u30A6\u30F3"
     Range: 2
@@ -5550,7 +5556,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 3
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)2\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\n\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E"
     Range: 2
@@ -5592,7 +5598,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 4
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30B9\u30C6\u30FC\u30B8\u306E\u30DC\u30B9\u3068\u30D0\u30C8\u30EB\u3059\u308B\u6642\n\\s\u306E\u6700\u5927H\uFF50\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5622,7 +5628,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 4
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u3063\u305F\u6642\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE1\u540D\u9650\u308A\n\\s\u3092\u8607\u751F\u3057Hp\u3092/f[f,0,1]\u56DE\u5FA9\u3059\u308B"
     Range: 2
@@ -5670,7 +5676,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 4
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u6700\u5927H\uFF50\u3092/f[f,0,3]\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
     Range: 2
@@ -5700,7 +5706,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 1
     Scope: 1
-    SkillType: 2
+    SkillType: 5
     TargetType: 7
     Help: "(\u6761\u4EF6)7\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\u306B\u8FFD\u6483\u3067\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\n\\s\u306B/f[f,0,3]\u30C0\u30E1\u30FC\u30B8"
     Range: 2
@@ -5736,7 +5742,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 3
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E"
     Range: 2
@@ -5766,7 +5772,7 @@ MonoBehaviour:
     Rank: 210
     Attribute: 2
     Scope: 3
-    SkillType: 2
+    SkillType: 5
     TargetType: 2
     Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u5F85\u6A5F\u6642\u9593\u3092/f[f,0,1]\u6E1B\u5C11\u3059\u308B"
     Range: 2

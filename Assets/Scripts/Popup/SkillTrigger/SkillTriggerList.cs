@@ -89,6 +89,7 @@ namespace Ryneus
             var startIndex = GetStartIndex();
             var itemIndex = selectIndex - startIndex;
             if (itemIndex < 0) return;
+            if (ItemPrefabList.Count <= itemIndex) return;
             var skillTriggerListItem = ItemPrefabList[itemIndex].GetComponent<SkillTriggerListItem>();
             skillTriggerListItem.UpdateItemIndex(_selectItemIndex);
             foreach (var ItemPrefab in ItemPrefabList)

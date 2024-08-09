@@ -200,6 +200,7 @@ namespace Ryneus
         Passive = 2, // パッシブ
         Messiah = 3, // 神化
         Awaken = 4, // 覚醒
+        Relic = 5, // レリック
         UseAlcana = 11, // アルカナ使用
     }
 

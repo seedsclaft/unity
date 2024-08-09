@@ -124,7 +124,10 @@ namespace Ryneus
                                         Type = GetItemType.AddActor,
                                         Param1 = actorInfos[rand].ActorId
                                     };
-                                    getItemInfos.Add(new GetItemInfo(actorData2));
+                                    if (getItemInfos.Find(a => a.Param1 == actorData2.Param1) == null)
+                                    {
+                                        getItemInfos.Add(new GetItemInfo(actorData2));
+                                    }
                                 }
                             }
                         }
@@ -149,8 +152,11 @@ namespace Ryneus
                                         Param1 = alcanaSkills[rand].Value.Id
                                     };
                                     var getItemInfo = new GetItemInfo(alcanaData);
-                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                    getItemInfos.Add(getItemInfo);
+                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
+                                    {
+                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                        getItemInfos.Add(getItemInfo);
+                                    }
                                 }
                             }
                             alcanaRank = 10;
@@ -169,8 +175,11 @@ namespace Ryneus
                                         Param1 = alcanaSkills[rand].Value.Id
                                     };
                                     var getItemInfo = new GetItemInfo(alcanaData);
-                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                    getItemInfos.Add(getItemInfo);
+                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
+                                    {
+                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                        getItemInfos.Add(getItemInfo);
+                                    }
                                 }
                             }
                             alcanaRank = 20;
@@ -189,8 +198,11 @@ namespace Ryneus
                                         Param1 = alcanaSkills[rand].Value.Id
                                     };
                                     var getItemInfo = new GetItemInfo(alcanaData);
-                                    symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                    getItemInfos.Add(getItemInfo);
+                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
+                                    {
+                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
+                                        getItemInfos.Add(getItemInfo);
+                                    }
                                 }
                             }
                         }
@@ -253,8 +265,10 @@ namespace Ryneus
                             Param1 = alcanaSkills[rand].Value.Id
                         };
                         var getItemInfo = new GetItemInfo(alcanaData);
-                        //symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                        getItemInfos.Add(getItemInfo);
+                        if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
+                        {
+                            getItemInfos.Add(getItemInfo);
+                        }
                     }
                 }
             }

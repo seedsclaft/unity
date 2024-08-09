@@ -231,6 +231,7 @@ namespace Ryneus
             } else
             {
                 CommandCautionInfo(DataSystem.GetText(11170));
+                endEvent?.Invoke();
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
             }
         }
