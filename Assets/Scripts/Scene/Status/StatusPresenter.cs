@@ -130,7 +130,7 @@ namespace Ryneus
         {
             _busy = true;
             _view.SetBusy(true);
-            CommandActorLevelUp(_model.CurrentActor,() => 
+            CommandLevelUp(_model.CurrentActor,() => 
             {
                 _busy = false;
                 _view.SetBusy(false);
@@ -152,38 +152,13 @@ namespace Ryneus
 
         private void CommandLearnMagic(SkillInfo skillInfo)
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,skillInfo));
-            _view.CommandCallConfirm(confirmInfo);
-        }
-
-        private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType,SkillInfo skillInfo)
-        {
-            if (confirmCommandType == ConfirmCommandType.Yes)
+            CommandLearnMagic(_model.CurrentActor,skillInfo,() => 
             {
-                var from = _model.SelectActorEvaluate();
-                _model.LearnMagic(skillInfo.Id);
-                var to = _model.SelectActorEvaluate();
-
-                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
-                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.LearnSkill,
-                    EndEvent = () =>
-                    {
-                        _view.SetNuminous(_model.Currency);
-                        _view.CommandRefresh();
-                        CommandShowLearnMagic();
-                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                    },
-                    template = learnSkillInfo
-                };
-                _view.CommandCallPopup(popupInfo);
-            } else
-            {
-            }
+                _view.SetNuminous(_model.Currency);
+                _view.CommandRefresh();
+                CommandShowLearnMagic();
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            });
         }
 
         private void CommandHideLearnMagic()

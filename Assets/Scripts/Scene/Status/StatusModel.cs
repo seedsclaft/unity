@@ -99,24 +99,9 @@ namespace Ryneus
             return DataSystem.StatusCommand;
         }
 
-        public int SelectActorEvaluate()
-        {
-            return CurrentActor.Evaluate();
-        }
-
-        public void CommandLevelUp()
-        {
-            ActorLevelUp(CurrentActor);
-        }
-
         public List<ListData> SelectActorLearningMagicList(int selectedSkillId = -1)
         {
             return ActorLearningMagicList(CurrentActor,-1,selectedSkillId);
-        }
-
-        public void LearnMagic(int skillId)
-        {
-            ActorLearnMagic(CurrentActor,skillId);
         }
 
         public int LevelUpCost()

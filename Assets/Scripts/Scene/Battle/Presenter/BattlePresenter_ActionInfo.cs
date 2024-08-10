@@ -139,6 +139,7 @@ namespace Ryneus
             {
                 // ダメージなどを適用
                 _model.ExecCurrentAction(actionInfo,true);
+                _model.CheckTriggerActiveInfos(TriggerTiming.HpDamaged,actionInfo,actionInfo.ActionResults,true);
                 _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),actionInfo,actionInfo.ActionResults);
             
                 StartDeathAnimation(actionInfo.ActionResults);

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Ryneus
 {
@@ -69,13 +68,22 @@ namespace Ryneus
             if (_initializeList == false)
             {
                 InitializeRefresh(selectIndex);
-                initializeAfterEvent?.Invoke();
             } else
             {
                 Refresh(selectIndex);
-                initializeAfterEvent?.Invoke();
             }
+            initializeAfterEvent?.Invoke();
             _initializeList = true;
+        }
+
+        /// <summary>
+        /// リストの中身を更新する
+        /// </summary>
+        /// <param name="listData"></param>
+        public void RefreshListData(List<ListData> listData)
+        {
+            SetListData(listData);
+            Refresh(Index);
         }
 
         private void InitializeRefresh(int selectIndex)
@@ -83,17 +91,9 @@ namespace Ryneus
             UpdateItemPrefab(selectIndex);
             UpdateAllItems();
             UpdateSelectIndex(selectIndex);
-            //base.Refresh(selectIndex);
-            if (selectIndex > 0)
-            {
-                //Canvas.ForceUpdateCanvases();
-                //UpdateScrollRect(selectIndex);
-                //UpdateListItem();
-            }
             _beforeSelectIndex = selectIndex;
         }
 
-        
         private void SetListCallHandler()
         {
             for (int i = 0; i < ItemPrefabList.Count;i++)

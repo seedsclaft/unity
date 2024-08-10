@@ -74,7 +74,7 @@ namespace Ryneus
                         if (actionResultInfo.TargetIndex != actionResultInfo.SubjectIndex)
                         {
                             var targetBattlerInfo = checkTriggerInfo.GetBattlerInfo(actionResultInfo.TargetIndex);
-                            if (actionResultInfo.DeadIndexList.Contains(targetBattlerInfo.Index))
+                            if (battlerInfo.IsActor == targetBattlerInfo.IsActor && actionResultInfo.DeadIndexList.Contains(targetBattlerInfo.Index))
                             {
                                 isTrigger = true;
                             }               

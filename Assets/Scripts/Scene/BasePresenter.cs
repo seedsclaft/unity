@@ -234,6 +234,46 @@ namespace Ryneus
                 endEvent?.Invoke();
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
             }
+        }        
+        
+        public void CommandLevelUp(ActorInfo actorInfo,System.Action endEvent = null)
+        {
+            CommandActorLevelUp(actorInfo,() => 
+            {
+                endEvent?.Invoke();
+            });
+        }
+
+        public void CommandLearnMagic(ActorInfo actorInfo,SkillInfo skillInfo,System.Action endEvent = null)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,actorInfo,skillInfo,endEvent));
+            _view.CommandCallConfirm(confirmInfo);
+        }
+
+        private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType, ActorInfo actorInfo,SkillInfo skillInfo,System.Action endEvent = null)
+        {
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                var from = actorInfo.Evaluate();
+                _model.ActorLearnMagic(actorInfo,skillInfo.Id);
+                var to = actorInfo.Evaluate();
+
+                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
+                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.LearnSkill,
+                    EndEvent = () =>
+                    {
+                        endEvent?.Invoke();
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    },
+                    template = learnSkillInfo
+                };
+                _view.CommandCallPopup(popupInfo);
+            }
         }
     }
 }

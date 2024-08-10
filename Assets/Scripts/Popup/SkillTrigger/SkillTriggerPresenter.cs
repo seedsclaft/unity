@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -34,6 +35,7 @@ namespace Ryneus
             {
                 return;
             }
+            LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case SkillTrigger.CommandType.CallSkillSelect:
@@ -180,7 +182,7 @@ namespace Ryneus
         private void CommandRefresh()
         {
             var selectIndex = _view.SkillTriggerIndex;
-            _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,selectIndex));
+            _view.RefreshSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,selectIndex));
         }
     }
     public class SkillTriggerViewInfo

@@ -149,13 +149,14 @@ namespace Ryneus
 
         public void SetTriggerIndexDown(int index)
         {
-            if (index <= _skillTriggerInfos.Count)
+            if (index+1 >= _skillTriggerInfos.Count)
             {
-                var upTriggerData = _skillTriggerInfos[index+1];
-                var downTriggerData = _skillTriggerInfos[index];
-                upTriggerData.SetPriority(index);
-                downTriggerData.SetPriority(index+1);
+                return;
             }
+            var upTriggerData = _skillTriggerInfos[index+1];
+            var downTriggerData = _skillTriggerInfos[index];
+            upTriggerData.SetPriority(index);
+            downTriggerData.SetPriority(index+1);
             _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
         }
 

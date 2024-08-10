@@ -88,6 +88,11 @@ namespace Ryneus
             skillTriggerList.Activate();
         }
 
+        public void RefreshSkillTrigger(List<ListData> skillTriggerLists)
+        {
+            skillTriggerList.RefreshListData(skillTriggerLists);
+        }
+
         public void HideSelectList()
         {
             skillList.Hide();

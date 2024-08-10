@@ -504,7 +504,7 @@ namespace Ryneus
                 actionInfo.SetCandidateTargetIndexList(indexList);
                 _model.MakeCurseActionResults(actionInfo,indexList);
                 // 行動割り込みスキル判定
-                _model.CheckTriggerSkillInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
+                _model.CheckTriggerActiveInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
                 _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Interrupt},actionInfo,actionInfo.ActionResults);
                 _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
             }
@@ -717,8 +717,8 @@ namespace Ryneus
             // 行動者のActionInfoか
             bool isTriggeredSkill = actionInfo.TriggeredSkill;
             // TriggerAfterがある
-            var result = _model.CheckTriggerSkillInfos(TriggerTiming.After,actionInfo,actionInfo.ActionResults,true);
-            var result2 = _model.CheckTriggerSkillInfos(TriggerTiming.AfterAndStartBattle,actionInfo,actionInfo.ActionResults,true);
+            var result = _model.CheckTriggerActiveInfos(TriggerTiming.After,actionInfo,actionInfo.ActionResults,true);
+            var result2 = _model.CheckTriggerActiveInfos(TriggerTiming.AfterAndStartBattle,actionInfo,actionInfo.ActionResults,true);
             result.AddRange(result2);
 
             if (result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)

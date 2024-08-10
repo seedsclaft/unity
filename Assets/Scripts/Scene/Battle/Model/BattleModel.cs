@@ -1566,7 +1566,7 @@ namespace Ryneus
         }
 
         // リザルトから発生するトリガースキルを生成
-        public List<ActionInfo> CheckTriggerSkillInfos(TriggerTiming triggerTiming,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos,bool makeResult = false)
+        public List<ActionInfo> CheckTriggerActiveInfos(TriggerTiming triggerTiming,ActionInfo actionInfo,List<ActionResultInfo> actionResultInfos,bool makeResult = false)
         {
             var madeActionInfos = new List<ActionInfo>();
             var actionInfos = new List<ActionInfo>();

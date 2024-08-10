@@ -54,7 +54,8 @@ namespace Ryneus
         
         public static List<TriggerTiming> HpDamagedTriggerTimings()
         {
-            return new List<TriggerTiming>(){
+            return new List<TriggerTiming>()
+            {
                 TriggerTiming.HpDamaged,
             };
         }

@@ -25,8 +25,8 @@ MonoBehaviour:
     Kinds: 040000000b000000
     HpGrowth: 90
     MpGrowth: 0
-    AtkGrowth: 60
-    DefGrowth: 80
+    AtkGrowth: 50
+    DefGrowth: 70
     SpdGrowth: 50
     LearningSkills:
     - SkillId: 3010
@@ -95,8 +95,8 @@ MonoBehaviour:
       Trigger1: 1161
       Trigger2: 0
     - SkillId: 5090
-      Trigger1: 0
-      Trigger2: 0
+      Trigger1: 6150
+      Trigger2: 14211
     - SkillId: 15090
       Trigger1: 0
       Trigger2: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
     HpGrowth: 80
     MpGrowth: 0
     AtkGrowth: 75
-    DefGrowth: 40
+    DefGrowth: 35
     SpdGrowth: 50
     LearningSkills:
     - SkillId: 1010
@@ -185,7 +185,7 @@ MonoBehaviour:
       Trigger1: 5061
       Trigger2: 0
     - SkillId: 1060
-      Trigger1: 14311
+      Trigger1: 5061
       Trigger2: 0
     - SkillId: 1020
       Trigger1: 5121
@@ -250,7 +250,7 @@ MonoBehaviour:
     Kinds: 060000000b000000
     HpGrowth: 90
     MpGrowth: 0
-    AtkGrowth: 60
+    AtkGrowth: 55
     DefGrowth: 40
     SpdGrowth: 30
     LearningSkills:
@@ -275,7 +275,7 @@ MonoBehaviour:
       Trigger1: 5061
       Trigger2: 0
     - SkillId: 2060
-      Trigger1: 14311
+      Trigger1: 1054
       Trigger2: 0
     - SkillId: 12090
       Trigger1: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
     HpGrowth: 100
     MpGrowth: 0
     AtkGrowth: 50
-    DefGrowth: 70
+    DefGrowth: 60
     SpdGrowth: 40
     LearningSkills:
     - SkillId: 3010
@@ -430,7 +430,7 @@ MonoBehaviour:
     Kinds: 050000000b000000
     HpGrowth: 50
     MpGrowth: 0
-    AtkGrowth: 70
+    AtkGrowth: 60
     DefGrowth: 20
     SpdGrowth: 70
     LearningSkills:
@@ -473,9 +473,9 @@ MonoBehaviour:
       _def: 8
       _spd: 23
     Kinds: 050000000b000000
-    HpGrowth: 80
+    HpGrowth: 70
     MpGrowth: 0
-    AtkGrowth: 70
+    AtkGrowth: 60
     DefGrowth: 50
     SpdGrowth: 60
     LearningSkills:
@@ -518,10 +518,10 @@ MonoBehaviour:
       _def: 6
       _spd: 17
     Kinds: 010000000b000000
-    HpGrowth: 90
+    HpGrowth: 80
     MpGrowth: 0
     AtkGrowth: 80
-    DefGrowth: 40
+    DefGrowth: 30
     SpdGrowth: 50
     LearningSkills:
     - SkillId: 5010
@@ -565,7 +565,7 @@ MonoBehaviour:
     Kinds: 040000000b000000
     HpGrowth: 100
     MpGrowth: 0
-    AtkGrowth: 80
+    AtkGrowth: 70
     DefGrowth: 40
     SpdGrowth: 50
     LearningSkills:
@@ -617,7 +617,7 @@ MonoBehaviour:
     HpGrowth: 110
     MpGrowth: 0
     AtkGrowth: 60
-    DefGrowth: 30
+    DefGrowth: 25
     SpdGrowth: 40
     LearningSkills:
     - SkillId: 1010
@@ -659,10 +659,10 @@ MonoBehaviour:
       _def: 3
       _spd: 25
     Kinds: 060000000b000000
-    HpGrowth: 80
+    HpGrowth: 70
     MpGrowth: 0
     AtkGrowth: 85
-    DefGrowth: 30
+    DefGrowth: 20
     SpdGrowth: 70
     LearningSkills:
     - SkillId: 1010
@@ -906,11 +906,11 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 5080
-      Trigger1: 0
-      Trigger2: 0
+      Trigger1: 6150
+      Trigger2: 14211
     - SkillId: 5090
-      Trigger1: 0
-      Trigger2: 0
+      Trigger1: 6150
+      Trigger2: 14211
     - SkillId: 15050
       Trigger1: 0
       Trigger2: 0
@@ -953,7 +953,7 @@ MonoBehaviour:
       TriggerDates: []
     - SkillId: 200520
       Level: 1
-      Weight: 0
+      Weight: 100
       TriggerDates: []
     - SkillId: 200530
       Level: 1
@@ -1138,6 +1138,193 @@ MonoBehaviour:
       _def: 10
       _spd: 15
     Kinds: 030000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1001
+    Name: "\u30DF\u30AB"
+    ImagePath: Actor0001
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1002
+    Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
+    ImagePath: Actor0002
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1003
+    Name: "\u30A2\u30EA\u30A8\u30B9"
+    ImagePath: Actor0003
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1004
+    Name: "\u30B7\u30A4\u30CA"
+    ImagePath: Actor0004
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1005
+    Name: "\u30EC\u30C0"
+    ImagePath: Actor0005
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1006
+    Name: "\u30EA\u30B7\u30A7\u30EA"
+    ImagePath: Actor0006
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1007
+    Name: "\u30E6\u30CB"
+    ImagePath: Actor0007
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1008
+    Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
+    ImagePath: Actor0008
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1009
+    Name: "\u30CA\u30C4\u30AD"
+    ImagePath: Actor0009
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1010
+    Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
+    ImagePath: Actor0010
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 1011
+    Name: "\u30BB\u30EA\u30CA"
+    ImagePath: Actor0011
+    BaseStatus:
+      _hp: 75
+      _mp: 0
+      _atk: 15
+      _def: 10
+      _spd: 15
+    Kinds: 
     HpGrowth: 100
     MpGrowth: 0
     AtkGrowth: 70
