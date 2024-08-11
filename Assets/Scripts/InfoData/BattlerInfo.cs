@@ -873,6 +873,11 @@ namespace Ryneus
             return (int)Math.Ceiling(mpCost * MpCostRate());
         }
 
+        /// <summary>
+        /// 攻撃力
+        /// </summary>
+        /// <param name="isNoEffect">バフ込みか</param>
+        /// <returns></returns>
         public int CurrentAtk(bool isNoEffect = false)
         {
             int atk = Status.Atk;
@@ -974,6 +979,16 @@ namespace Ryneus
             eva += StateEffectAll(StateType.EvaUp);
             eva -= (int)DeBuffUpperParam(StateEffectAll(StateType.EvaDown));
             return eva;
+        }
+
+        public float CurrentDamageRate(bool isNoEffect = false)
+        {
+            float DamageRate = 1;
+            if (isNoEffect == false)
+            {
+                DamageRate += StateEffectAll(StateType.DamageUp) * 0.01f;
+            }
+            return DamageRate;
         }
 
         private float DeBuffUpperParam(int param)

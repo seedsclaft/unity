@@ -23,21 +23,13 @@ namespace Ryneus
                     return (battlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0;
                 }
                 case TriggerType.ActionCountPer:
-                var actionCount = 0;
-                foreach (var member in checkTriggerInfo.Friends)
-                {
-                    actionCount += member.TurnCount;
-                }
-                foreach (var member in checkTriggerInfo.Opponents)
-                {
-                    actionCount += member.TurnCount;
-                }
+                var turns = checkTriggerInfo.Turns;
                 if (triggerData.Param1 > 0)
                 {
-                    return (actionCount % triggerData.Param1) - triggerData.Param2 == 0;
+                    return (turns % triggerData.Param1) - triggerData.Param2 == 0;
                 } else
                 {
-                    return actionCount - triggerData.Param2 == 0;
+                    return turns - triggerData.Param2 == 0;
                 }
                 case TriggerType.SelfTargetOnly:
                     return battlerInfo.IsAlive();

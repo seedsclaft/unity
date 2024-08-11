@@ -121,10 +121,6 @@ namespace Ryneus
 
         private int _hpDamage = 0;
         public int HpDamage => _hpDamage;
-        public void SetHpDamage(int hpDamage)
-        {
-            _hpDamage = hpDamage;
-        }
         private int _overkillHpDamage = 0;
         public int OverkillHpDamage => _overkillHpDamage;
         private int _hpHeal = 0;
@@ -444,21 +440,7 @@ namespace Ryneus
 
         private float CurrentDamageRate(BattlerInfo battlerInfo,bool isNoEffect,bool isOneTarget)
         {
-            float UpperDamageRate = 1;
-            if (isNoEffect == false)
-            {
-                if (battlerInfo.IsState(StateType.DamageUp))
-                {
-                    UpperDamageRate += battlerInfo.StateEffectAll(StateType.DamageUp) * 0.01f;
-                }
-                /*
-                if (battlerInfo.IsState(StateType.Rebellious) && isOneTarget)
-                {
-                    UpperDamageRate += 1f - (battlerInfo.Hp / (float)battlerInfo.MaxHp);
-                }
-                */
-            }
-            return UpperDamageRate;
+            return battlerInfo.CurrentDamageRate(isNoEffect);
         }
 
         private float CalcDamageValue(BattlerInfo subject,BattlerInfo target,float SkillDamage,bool isNoEffect)
@@ -544,50 +526,47 @@ namespace Ryneus
             return range;
         }
 
+        private float CalcHpDamage(float atkValue,BattlerInfo subject,BattlerInfo target,float featureValue,bool isNoEffect,bool isOneTarget)
+        {
+            float DamageValue = CalcAttackDamageValue(atkValue,subject,featureValue,isNoEffect,isOneTarget);
+            CalcFreezeDamage(subject,DamageValue);
+
+            // 攻撃ダメージ - 防御値
+            int DefValue = CurrentDefense(subject,target,isNoEffect);
+            DamageValue *= GetDefenseRateValue(atkValue,DefValue);
+            float hpDamage = CalcDamageValue(subject,target,DamageValue,isNoEffect);
+
+            // 効果補正
+            return CalcDamageEffect(hpDamage,subject,target,isNoEffect);
+        }
+
+        private float CalcAttackDamageValue(float atkValue,BattlerInfo subject,float featureValue,bool isNoEffect,bool isOneTarget)
+        {
+            float DamageRate = featureValue * CurrentDamageRate(subject,isNoEffect,isOneTarget);
+            return DamageRate * atkValue * 0.01f;
+        }
+        
+
         private void MakeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = 0;
-            int AtkValue = CurrentAttack(subject,isNoEffect);
-            int DefValue = CurrentDefense(subject,target,isNoEffect);
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            float DamageRate = featureData.Param1 * UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
-            CalcFreezeDamage(subject,SkillDamage);
-
-            SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            // 属性補正
-            // クリティカル
-            hpDamage = CalcDamageEffect(hpDamage,subject,target,isNoEffect);
-            if (!isNoEffect)
-            {
-                CalcCounterDamage(subject,target,hpDamage);
-            }
-            _reHeal += CalcDrainValue(subject,hpDamage);
-            if (range > 0)
-            {
-                // S⇒L Range.Sスキル = range=1で15%カット
-                // L⇒L Range.Sスキル = range=2で30%カット
-                // S⇒L Range.Lスキル = range=0
-                // L⇒L Range.Lスキル = range=1で15%カット
-                //hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
-            }
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            // 攻撃ダメージ
+            float AtkValue = CurrentAttack(subject,isNoEffect) * 0.5f;
+            var hpDamage = CalcHpDamage(AtkValue,subject,target,featureData.Param1,isNoEffect,isOneTarget);
+            _hpDamage += (int)hpDamage;
         }
 
         private void MakeHpPerDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = (int)Math.Round(target.MaxHp * 0.01f * featureData.Param1);
+            var hpDamage = target.MaxHp * 0.01f * featureData.Param1;
             hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            _hpDamage += (int)hpDamage;
         }
 
         private void MakeHpAddDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = (int)Math.Round(_hpDamage * 0.01f * featureData.Param1);
+            var hpDamage = _hpDamage * 0.01f * featureData.Param1;
             hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage;
+            _hpDamage += (int)hpDamage;
             // 追加ダメージで戦闘不能にならない
             if (_hpDamage > target.Hp)
             {
@@ -597,103 +576,51 @@ namespace Ryneus
 
         private void MakeRevengeHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = 0;
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            float DamageRate = featureData.Param1 * UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * subject.DamagedValue;
-            CalcFreezeDamage(subject,SkillDamage);
-
-            SkillDamage *= 1;
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            // 属性補正
-            // クリティカル
-            hpDamage = CalcDamageEffect(hpDamage,subject,target,isNoEffect);
-            if (!isNoEffect)
-            {
-                CalcCounterDamage(subject,target,hpDamage);
-            }
-            _reHeal += CalcDrainValue(subject,hpDamage);
-            if (range > 0)
-            {
-                // S⇒L Range.Sスキル = range=1で15%カット
-                // L⇒L Range.Sスキル = range=2で30%カット
-                // S⇒L Range.Lスキル = range=0
-                // L⇒L Range.Lスキル = range=1で15%カット
-                //hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
-            }
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            // 攻撃ダメージ
+            float AtkValue = subject.DamagedValue;
+            var hpDamage = CalcHpDamage(AtkValue,subject,target,featureData.Param1,isNoEffect,isOneTarget);
+            _hpDamage += (int)hpDamage; 
         }
 
         private void MakePenetrateHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = 0;
-            int AtkValue = CurrentAttack(subject,isNoEffect);
+            float atkValue = CurrentAttack(subject,isNoEffect);
+            float DamageValue = CalcAttackDamageValue(atkValue,subject,featureData.Param1,isNoEffect,isOneTarget);
+            CalcFreezeDamage(subject,DamageValue);
+
+            // 攻撃ダメージ - 防御値
             int DefValue = CurrentDefense(subject,target,isNoEffect);
             // 無視分を反映
             DefValue = (int)(DefValue * (1f - featureData.Param3 * 0.01f));
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            float DamageRate = featureData.Param1 * UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
-            CalcFreezeDamage(subject,SkillDamage);
+            DamageValue *= GetDefenseRateValue(atkValue,DefValue);
+            float hpDamage = CalcDamageValue(subject,target,DamageValue,isNoEffect);
 
-            SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            // 属性補正
-            // クリティカル
+            // 効果補正
             hpDamage = CalcDamageEffect(hpDamage,subject,target,isNoEffect);
-            if (!isNoEffect)
-            {
-                CalcCounterDamage(subject,target,hpDamage);
-            }
-            _reHeal += CalcDrainValue(subject,hpDamage);
-            if (range > 0)
-            {
-                // S⇒L Range.Sスキル = range=1で15%カット
-                // L⇒L Range.Sスキル = range=2で30%カット
-                // S⇒L Range.Lスキル = range=0
-                // L⇒L Range.Lスキル = range=1で15%カット
-                //hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
-            }
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            _hpDamage += (int)hpDamage; 
         }
 
         private void MakeHpParamHpDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget,int range)
         {
-            var hpDamage = 0;
-            int AtkValue = CurrentAttack(subject,isNoEffect);
-            int DefValue = CurrentDefense(subject,target,isNoEffect);
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            float DamageRate = featureData.Param1 * UpperDamageRate;
+            int atkValue = CurrentAttack(subject,isNoEffect);
+    
+            float DamageRate = featureData.Param1 * CurrentDamageRate(subject,isNoEffect,isOneTarget);
             float HpRate = 1 - subject.HpRate * featureData.Param3;
             DamageRate += HpRate;
-            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
-            CalcFreezeDamage(subject,SkillDamage);
+            float DamageValue = DamageRate * atkValue * 0.01f;
+            CalcFreezeDamage(subject,DamageValue);
 
-            SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            // 属性補正
-            // クリティカル
+            // 攻撃ダメージ - 防御値
+            int DefValue = CurrentDefense(subject,target,isNoEffect);
+            DamageValue *= GetDefenseRateValue(atkValue,DefValue);
+            float hpDamage = CalcDamageValue(subject,target,DamageValue,isNoEffect);
+
+            // 効果補正
             hpDamage = CalcDamageEffect(hpDamage,subject,target,isNoEffect);
-            if (!isNoEffect)
-            {
-                CalcCounterDamage(subject,target,hpDamage);
-            }
-            _reHeal += CalcDrainValue(subject,hpDamage);
-            if (range > 0)
-            {
-                // S⇒L Range.Sスキル = range=1で15%カット
-                // L⇒L Range.Sスキル = range=2で30%カット
-                // S⇒L Range.Lスキル = range=0
-                // L⇒L Range.Lスキル = range=1で15%カット
-                //hpDamage = (int)MathF.Round((float)hpDamage * (1 - (0.15f * range)));
-            }
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            _hpDamage += (int)hpDamage;
         }
 
-        private int CalcDamageEffect(int hpDamage,BattlerInfo subject,BattlerInfo target,bool isNoEffect)
+        private float CalcDamageEffect(float hpDamage,BattlerInfo subject,BattlerInfo target,bool isNoEffect)
         {
             // クリティカル
             if (IsCritical(subject,target))
@@ -713,7 +640,12 @@ namespace Ryneus
             {
                 hpDamage = target.Hp;
             }
-            return hpDamage;
+            if (!isNoEffect)
+            {
+                CalcCounterDamage(subject,target,hpDamage);
+            }
+            _reHeal += CalcDrainValue(subject,hpDamage);
+            return CalcDamageShield(subject,target,hpDamage);
         }
 
         private void MakeHpHeal(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
@@ -789,57 +721,22 @@ namespace Ryneus
 
         private void MakeHpStateDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
         {
-            var hpDamage = 0;
-            int AtkValue = CurrentAttack(subject,isNoEffect);
-            int DefValue = CurrentDefense(subject,target,isNoEffect);
+            float atkValue = CurrentAttack(subject,isNoEffect) * 0.5f;
             float DamageRate = featureData.Param2;
             if (target.IsState((StateType)featureData.Param3))
             {
                 DamageRate = featureData.Param1;
             }
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            DamageRate *= UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * (AtkValue * 0.5f);
-            CalcFreezeDamage(subject,SkillDamage);
-
-            SkillDamage *= GetDefenseRateValue(AtkValue * 0.5f,DefValue);
-            //SkillDamage -= (DefValue * 0.5f);
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            // 属性補正
-            // クリティカル
-            hpDamage = CalcDamageEffect(hpDamage,subject,target,isNoEffect);
-            if (!isNoEffect)
-            {
-                CalcCounterDamage(subject,target,hpDamage);
-            }
-            _reHeal += CalcDrainValue(subject,hpDamage);
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage; 
+            var hpDamage = CalcHpDamage(atkValue,subject,target,DamageRate,isNoEffect,isOneTarget);
+            _hpDamage += (int)hpDamage;
         }
 
         // 呪いダメージ計算
         private void MakeHpCursedDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData,bool isNoEffect,bool isOneTarget)
         {
-            var hpDamage = 0;
-            int AtkValue = featureData.Param1;
-            float DamageRate = 100;
-            float UpperDamageRate = CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            DamageRate *= UpperDamageRate;
-            float SkillDamage = DamageRate * 0.01f * AtkValue;
-            hpDamage = (int)Mathf.Round(CalcDamageValue(subject,target,SkillDamage,isNoEffect));
-            hpDamage = Mathf.Max(1,hpDamage);
-            if (IsNoDamage(target,isNoEffect))
-            {
-                hpDamage = 0;
-            }
-            /*
-            if (subject.IsState(StateType.Drain))
-            {
-                _reHeal = (int)Mathf.Floor(hpDamage * subject.StateEffectAll(StateType.Drain) * 0.01f);
-            }
-            */
-            hpDamage = CalcDamageShield(subject,target,hpDamage);
-            _hpDamage += hpDamage;
+            float atkValue = featureData.Param1 * 0.5f;
+            var hpDamage = CalcHpDamage(atkValue,subject,target,100,isNoEffect,isOneTarget);
+            _hpDamage += (int)hpDamage;
         }
 
         private void MakeCtDamage(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
@@ -1242,7 +1139,7 @@ namespace Ryneus
             return ReDamage;
         }
 
-        private int CalcDrainValue(BattlerInfo subject,int hpDamage)
+        private int CalcDrainValue(BattlerInfo subject,float hpDamage)
         {
             if (subject.IsState(StateType.Drain) && !subject.IsState(StateType.NotHeal))
             {
@@ -1340,14 +1237,14 @@ namespace Ryneus
             return hpDamage;
         }
 
-        private int CalcAddDamage(BattlerInfo subject,BattlerInfo target,int hpDamage)
+        private float CalcAddDamage(BattlerInfo subject,BattlerInfo target,float hpDamage)
         {
-            var addDamage = 0;
+            var addDamage = 0f;
             if (subject.IsState(StateType.MpCostZeroAddDamage))
             {
                 if (DataSystem.FindSkill(_skillId).CountTurn == 0)
                 {
-                    addDamage = (int)Math.Round(hpDamage * 0.01f * subject.StateEffectAll(StateType.MpCostZeroAddDamage));
+                    addDamage = hpDamage * 0.01f * subject.StateEffectAll(StateType.MpCostZeroAddDamage);
                 }
                 if (hpDamage < target.Hp)
                 {
@@ -1385,7 +1282,7 @@ namespace Ryneus
             }
         }
 
-        private int CalcDamageShield(BattlerInfo subject,BattlerInfo target,int hpDamage)
+        private float CalcDamageShield(BattlerInfo subject,BattlerInfo target,float hpDamage)
         {
             var shield = target.StateEffectAll(StateType.DamageShield);
             if (shield > hpDamage)
@@ -1396,16 +1293,16 @@ namespace Ryneus
             return hpDamage;
         }
 
-        private int ApplyCritical(int value,BattlerInfo subject)
+        private int ApplyCritical(float value,BattlerInfo subject)
         {
             var criticalDamageRate = 1.5f + CriticalDamageRate(subject);
             return Mathf.FloorToInt( value * criticalDamageRate );
         }
 
-        private int ApplyVariance(int value)
+        private float ApplyVariance(float value)
         {
             int rand = new System.Random().Next(-5, 5);
-            return (int)Mathf.Floor(value * (1 + rand * 0.01f));
+            return (value * (1 + rand * 0.01f));
         }
 
         private void SeekStateCount(BattlerInfo battlerInfo,StateType stateType)

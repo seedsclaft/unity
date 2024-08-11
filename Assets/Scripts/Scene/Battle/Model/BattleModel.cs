@@ -1826,7 +1826,7 @@ namespace Ryneus
             var friends = battlerInfo.IsActor ? _party : _troop;            
             var opponents = battlerInfo.IsActor ? _troop : _party;
             bool IsTriggered = false;
-            var checkTriggerInfo = new CheckTriggerInfo(battlerInfo,BattlerActors(),BattlerEnemies(),actionInfo,actionResultInfos);
+            var checkTriggerInfo = new CheckTriggerInfo(_turnCount,battlerInfo,BattlerActors(),BattlerEnemies(),actionInfo,actionResultInfos);
             if (triggerDates.Count > 0)
             {
                 foreach (var triggerData in triggerDates)

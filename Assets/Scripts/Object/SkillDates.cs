@@ -410,7 +410,7 @@ namespace Ryneus
         HpConsumeDamage = 1080,
         RevengeHpDamage = 1090,
         PenetrateHpDamage = 1100,
-        HpParamHpDamage = 1110,
+        HpParamHpDamage = 1110, // 残りHp比例ダメージ
         HpHeal = 2010,
         RemainHpOne = 2020,
         RemainHpOneTarget = 2030,
