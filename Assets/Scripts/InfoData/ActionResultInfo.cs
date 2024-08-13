@@ -338,6 +338,9 @@ namespace Ryneus
                 case FeatureType.ChangeFeatureParam3StageWinCount:
                     MakeAddFeatureParamStageWinCount(subject,target,featureData,3);
                     return;
+                case FeatureType.ChangeMagicCountTurn:
+                    MakeChangeMagicCountTurn(subject,target,featureData);
+                    return;
                 case FeatureType.ChangeFeatureRate:
                     MakeChangeFeatureRate(subject,target,featureData,1);
                     return;
@@ -1024,6 +1027,16 @@ namespace Ryneus
                             break;
                     }
                 }
+            }
+        }
+
+        public void MakeChangeMagicCountTurn(BattlerInfo subject,BattlerInfo target,SkillData.FeatureData featureData)
+        {
+            // 即代入
+            var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
+            if (skillInfo != null)
+            {
+                skillInfo.SetCountTurn(featureData.Param3);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -164,6 +165,10 @@ namespace Ryneus
                     }
                     help = help.Replace(split.ToString(),"");
                 }
+            }
+            if (Master.Name.Contains("+"))
+            {
+                help = help.Replace("/n",Master.Name.Replace("+",""));
             }
             return help;
         }

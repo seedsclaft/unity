@@ -442,6 +442,7 @@ namespace Ryneus
         ChangeFeatureParam2StageWinCount = 6050,
         ChangeFeatureParam3StageWinCount = 6060,
         ChangeFeatureRate = 6070,
+        ChangeMagicCountTurn = 6080,
         ChangeSkillRepeatTime = 6100,
         ChangeSkillScope = 6210,
         AddSkillPlusSkill = 6310,
