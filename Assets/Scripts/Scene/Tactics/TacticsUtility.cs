@@ -72,7 +72,7 @@ namespace Ryneus
 
         public static int RecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
         {
-            return (int)Mathf.Ceil((float)actorInfo.Level * 0.1f) * TacticsCostRate(actorInfo);
+            return (int)Mathf.Ceil(actorInfo.LinkedLevel() * 0.1f) * TacticsCostRate(actorInfo);
         }
 
         public static int RemainRecoveryCost(ActorInfo actorInfo,bool checkAlcana = false)
@@ -89,7 +89,7 @@ namespace Ryneus
 
         public static int ResourceGain(ActorInfo actorInfo)
         {
-            return actorInfo.Level;
+            return actorInfo.LinkedLevel();
         }
     }
 }

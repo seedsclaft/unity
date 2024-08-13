@@ -673,15 +673,9 @@ namespace Ryneus
                     case FeatureType.CtHeal:
                     if (subject != null)
                     {
-                        if (subject.IsActor)
+                        if (target.Skills.Find(a => a.CountTurn > 0) != null)
                         {
                             IsEnable = true;
-                        } else
-                        {
-                            if (target.Skills.Find(a => a.CountTurn > 0) != null)
-                            {
-                                IsEnable = true;
-                            }
                         }
                     }
                     break;

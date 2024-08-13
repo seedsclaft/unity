@@ -73,5 +73,10 @@ namespace Ryneus
         {
             return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.Multiverse) != null;
         }
+
+        public bool EnableLvLink()
+        {
+            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.LvLink) != null;
+        }
     }
 }

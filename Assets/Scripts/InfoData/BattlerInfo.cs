@@ -109,7 +109,7 @@ namespace Ryneus
         {
             _skillTriggerInfos = actorInfo.SkillTriggerInfos;
             _charaId = actorInfo.ActorId;
-            _level = actorInfo.Level;
+            _level = actorInfo.LinkedLevel();
             var statusInfo = new StatusInfo();
             statusInfo.SetParameter(
                 actorInfo.CurrentParameter(StatusParamType.Hp),

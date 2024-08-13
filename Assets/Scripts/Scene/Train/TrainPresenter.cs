@@ -252,7 +252,7 @@ namespace Ryneus
         {
             _model.SetSelectActorId(actorId);
             _view.SetLvUpCost(_model.ActorLevelUpCost(_model.TacticsActor()));
-            _view.SetToLvText(_model.TacticsActor().Level);
+            _view.SetToLvText(_model.TacticsActor().LinkedLevel());
             switch (_model.TacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
@@ -436,7 +436,7 @@ namespace Ryneus
             _view.CommandRefresh();
             ShowCharacterDetail();
             _view.SetLvUpCost(_model.ActorLevelUpCost(_model.TacticsActor()));
-            _view.SetToLvText(_model.TacticsActor().Level);
+            _view.SetToLvText(_model.TacticsActor().LinkedLevel());
         }
 
         private void CommandCommandHelp()

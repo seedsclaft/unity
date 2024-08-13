@@ -45,7 +45,7 @@ namespace Ryneus
 
         public bool RemakeHistory()
         {
-            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
+            return _scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
         }
 
         public bool ParallelHistory()
@@ -55,7 +55,12 @@ namespace Ryneus
 
         public bool EnableMultiverse()
         {
-            return true;//_scorePrizeInfos.Find(a => a.EnableMultiverse()) != null; 
+            return _scorePrizeInfos.Find(a => a.EnableMultiverse()) != null; 
+        }
+
+        public bool EnableLvLink()
+        {
+            return _scorePrizeInfos.Find(a => a.EnableLvLink()) != null; 
         }
 
         // 戻り先の1番目のシンボル
@@ -119,6 +124,17 @@ namespace Ryneus
             actorInfo?.SetLevelUpInfo(levelUpInfo);
         }
 
+        private int LevelLinkValue(List<ActorInfo> actorInfos)
+        {
+            if (EnableLvLink() && actorInfos.Count > 5)
+            {
+                actorInfos.Sort((a,b) => a.Level - b.Level > 0 ? -1 : 1);
+                var targetActor = actorInfos[4];
+                return targetActor.Level;
+            }
+            return 0;
+        }
+
         public void ClearData()
         {
             _actorInfos.Clear();
@@ -147,6 +163,20 @@ namespace Ryneus
                     actorInfo.SetAddTiming(AddTimingText(actorInfo));
                     actorInfos.Add(actorInfo);
                 }
+            }
+            var levelLinkValue = LevelLinkValue(actorInfos);
+            actorInfos.ForEach((ActorInfo a) => a.SetLevelLinked(false));
+            if (actorInfos.Count > 5)
+            {
+                actorInfos.Sort((a,b) => a.Level - b.Level > 0 ? -1 : 1);
+                for (int i = 0;i < actorInfos.Count;i++)
+                {
+                    actorInfos[i].SetLevelLinked(i > 4);
+                }
+            }
+            foreach (var actorInfo in actorInfos)
+            {
+                actorInfo?.SetLevelLink(levelLinkValue);
             }
             return actorInfos;
         }

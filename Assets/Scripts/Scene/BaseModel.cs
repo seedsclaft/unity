@@ -58,7 +58,7 @@ namespace Ryneus
         public List<ActorInfo> StageMembers()
         {
             var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-            actorInfos.Sort((a,b)=> a.Level < b.Level ? 1 : -1);
+            actorInfos.Sort((a,b)=> a.LinkedLevel() < b.LinkedLevel() ? 1 : -1);
             return actorInfos;
         }
 
@@ -244,6 +244,7 @@ namespace Ryneus
                     }
                 }
             }
+            stageMembers.Sort((a,b) => a.Level - b.Level > 0 ? -1 : 1);
             return stageMembers;
         }
 
@@ -693,7 +694,12 @@ namespace Ryneus
         
         public bool EnableActorLevelUp(ActorInfo actorInfo)
         {
-            return Currency >= ActorLevelUpCost(actorInfo);
+            return actorInfo.LevelLinked == false && Currency >= ActorLevelUpCost(actorInfo);
+        }
+
+        public bool ActorLevelLinked(ActorInfo actorInfo)
+        {
+            return actorInfo.LevelLinked;
         }
 
         public void ActorLearnMagic(ActorInfo actorInfo,int skillId)

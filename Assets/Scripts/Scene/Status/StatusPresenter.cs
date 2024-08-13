@@ -276,7 +276,7 @@ namespace Ryneus
         {
             _view.SetNuminous(_model.Currency);
             _view.SetLvUpCost(_model.LevelUpCost());
-            _view.SetToLvText(_model.CurrentActor.Level);
+            _view.SetToLvText(_model.CurrentActor.LinkedLevel());
             _view.CommandRefresh();
             var skillListData = _model.SkillActionList(_model.CurrentActor);
             if (skillListData.Count > 0)

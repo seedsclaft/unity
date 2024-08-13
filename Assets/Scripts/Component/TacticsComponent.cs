@@ -57,7 +57,7 @@ namespace Ryneus
 
             if (afterLv != null && tacticsCommandType == TacticsCommandType.Train)
             {
-                afterLv.text = (actorInfo.Level+1).ToString();
+                afterLv.text = (actorInfo.LinkedLevel()+1).ToString();
             }
 
             if (trainCost != null)

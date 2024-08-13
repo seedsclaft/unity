@@ -373,37 +373,31 @@ namespace Ryneus
             {
                 var lv = stageSymbolData.Seek + CurrentStage.Master.StageLv + plusLevel;
                 troopInfo.MakeEnemyRandomTroopDates(lv);
-                /*
-                for (int i = 0;i < enemyCount;i++)
+                // 確定報酬でNuminos
+                var numinosGetItem = new GetItemData
                 {
-                    int rand = new System.Random().Next(1, CurrentStage.Master.RandomTroopCount);
-                    var enemyData = DataSystem.Enemies.Find(a => a.Id == rand);
-                    var enemy = new BattlerInfo(enemyData,PartyInfo.ClearTroopCount + 1,i,0,false);
-                    troopInfo.AddEnemy(enemy);
-                }
-                */
+                    Param1 = (lv / 2) + 9,
+                    Type = GetItemType.Numinous
+                };
+                troopInfo.AddGetItemInfo(new GetItemInfo(numinosGetItem));
                 // ランダム報酬データ設定
-                // 80 = Numinos,10 = Rank1,7 = Rank2,3 = Rank3
+                // 70 = Rank1 Passive,7 = Rank2 Passive,20 = Rank1 Active,3 = Rank2 Active
                 GetItemData getItemData = null;
                 int rand = Random.Range(0,100);
-                if (rand < 80)
-                {
-                    getItemData = new GetItemData
-                    {
-                        Param1 = (lv / 2) + 9,
-                        Type = GetItemType.Numinous
-                    };
-                } else
-                if (rand >= 80 && rand < 90)
-                {
-                    getItemData = AddSkillGetItemData(2);
-                } else
-                if (rand >= 91 && rand < 97)
+                if (rand < 70)
                 {
                     getItemData = AddSkillGetItemData(10);
                 } else
+                if (rand >= 70 && rand < 77)
                 {
                     getItemData = AddSkillGetItemData(20);
+                } else
+                if (rand >= 77 && rand < 97)
+                {
+                    getItemData = AddSkillGetItemData(1);
+                } else
+                {
+                    getItemData = AddSkillGetItemData(2);
                 }
                 if (getItemData != null)
                 {

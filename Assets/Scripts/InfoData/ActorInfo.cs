@@ -57,12 +57,29 @@ namespace Ryneus
         }
 
         public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData() && a.IsEnableStage(_stageId,_seek)).Count + 1;
+        private int _levelLink = -1;
+
+        public void SetLevelLink(int levelLink)
+        {
+            _levelLink = levelLink;
+        }
+        public int LinkedLevel()
+        {
+            if (_levelLink >= Level)
+            {
+                return _levelLink;
+            }
+            return Level;
+        }
+        private bool _levelLinked = false;
+        public bool LevelLinked => _levelLinked;
+        public void SetLevelLinked(bool levelLinked) => _levelLinked = levelLinked;
         public void SetStageSeek(int stageId,int seek)
         {
             _stageId = stageId;
             _seek = seek;
         }
-        public StatusInfo CurrentStatus => LevelUpStatus(Level);
+        public StatusInfo CurrentStatus => LevelUpStatus(LinkedLevel());
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
         public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
 
@@ -299,7 +316,7 @@ namespace Ryneus
                 if (list.Find(a => a.Id == _learningData.SkillId) != null) continue;
                 if (LearnSkillIds().Contains(_learningData.SkillId)) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
-                if (Level >= _learningData.Level)
+                if (LinkedLevel() >= _learningData.Level)
                 {
                     skillInfo.SetLearningState(LearningState.Learned);
                 } else
@@ -384,7 +401,7 @@ namespace Ryneus
 
         public List<SkillInfo> LearningSkills(int plusLv = 0)
         {
-            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (Level+plusLv));
+            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (LinkedLevel()+plusLv));
         }
 
         public bool IsLearnedSkill(int skillId)
@@ -407,7 +424,7 @@ namespace Ryneus
 
         public int CurrentParameter(StatusParamType statusParamType)
         {
-            return LevelUpStatus(Level).GetParameter(statusParamType);
+            return LevelUpStatus(LinkedLevel()).GetParameter(statusParamType);
         }
 
         public void ChangeHp(int hp)

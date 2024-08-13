@@ -164,6 +164,20 @@ namespace Ryneus
                 bindTargetIndexList = targetIndexWithInList;
             }
 
+            // 限定条件を満たしている方を優先する
+            if (bindTargetIndexList.Count > 1)
+            {
+                var isDifferentParam2 = triggerDates.Count == 2 && triggerDates.FindAll(a => a.Param2 == 1).Count == 1;
+                if (isDifferentParam2)
+                {
+                    var prioryTargetIndexList = triggerDates[0].Param2 == 0 ? targetIndexList1 : targetIndexList2;
+                    if (prioryTargetIndexList.Count > 0)
+                    {
+                        bindTargetIndexList = prioryTargetIndexList;
+                    }
+                }
+            }
+
             // ～が高い・低い順位で選択
             var friendTargets = new List<BattlerInfo>();
             var opponentTargets = new List<BattlerInfo>();

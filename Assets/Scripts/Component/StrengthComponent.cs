@@ -25,19 +25,19 @@ namespace Ryneus
             }
             if (currentStatus != null)
             {
-                var before = _actorInfo.LevelUpStatus(_actorInfo.Level-1).GetParameter(statusParamType);
+                var before = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()-1).GetParameter(statusParamType);
                 currentStatus.text = before.ToString();
             }
             if (afterStatus != null)
             {
-                var before = _actorInfo.LevelUpStatus(_actorInfo.Level-1).GetParameter(statusParamType);
-                var plus = _actorInfo.LevelUpStatus(_actorInfo.Level).GetParameter(statusParamType);
+                var before = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()-1).GetParameter(statusParamType);
+                var plus = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()).GetParameter(statusParamType);
                 afterStatus.gameObject.SetActive(plus > before);
                 afterStatus.text = plus.ToString();
             }
             if (usePoint != null)
             {
-                int UseCost = _actorInfo.LevelGrowthRate(statusParamType,actorInfo.Level);
+                int UseCost = _actorInfo.LevelGrowthRate(statusParamType,actorInfo.LinkedLevel());
                 //var _currentAlcana = GameSystem.CurrentStageData.CurrentAlcana;
                 //if (_currentAlcana != null && _currentAlcana.IsStatusCostDown((StatusParamType)statusParamType))
                 //{

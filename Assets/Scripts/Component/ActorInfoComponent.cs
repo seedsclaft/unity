@@ -60,7 +60,11 @@ namespace Ryneus
                 }
             }
             demigod?.SetText(actorInfo.DemigodParam.ToString());
-            lv?.SetText(actorInfo.Level.ToString());
+            lv?.SetText(actorInfo.LinkedLevel().ToString());
+            if (lv != null && actorInfo.LevelLinked)
+            {
+                lv.color = DataSystem.PowerUpColor;
+            }
             if (sp != null){
             }
             if (statusInfoComponent != null)

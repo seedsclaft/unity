@@ -73,10 +73,9 @@ namespace Ryneus
                 case GetItemType.SelectRelic:
                     return "選択してレア魔法入手";
                 case GetItemType.RemakeHistory:
-                    break;
                 case GetItemType.ParallelHistory:
-                    break;
                 case GetItemType.Multiverse:
+                case GetItemType.LvLink:
                     break;
             }
             return "";

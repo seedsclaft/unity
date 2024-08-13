@@ -114,7 +114,7 @@ namespace Ryneus
             FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
 
             //var cnf = db.Collection(key).OrderByDescending("Score").Limit(100);
-            var cnf = db.Collection(key).Limit(100);
+            var cnf = db.Collection(key).Limit(10);
             
             cnf.GetSnapshotAsync().ContinueWithOnMainThread(task =>
             {

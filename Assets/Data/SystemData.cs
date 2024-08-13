@@ -137,5 +137,6 @@ namespace Ryneus
 		RemakeHistory = 101,
 		ParallelHistory = 102,
 		Multiverse = 103,
+		LvLink = 104,
 	}
 }

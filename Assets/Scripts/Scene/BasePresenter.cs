@@ -230,7 +230,8 @@ namespace Ryneus
                 }
             } else
             {
-                CommandCautionInfo(DataSystem.GetText(11170));
+                var textId = _model.ActorLevelLinked(actorInfo) ? 11171 : 11170;
+                CommandCautionInfo(DataSystem.GetText(textId));
                 endEvent?.Invoke();
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
             }
