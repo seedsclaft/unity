@@ -250,7 +250,7 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank < 200)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank < RankType.RelicRank1)
                     {
                         alchemyIdList.Add(getItemInfo.Param1);
                     }
@@ -269,13 +269,34 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank >= 200)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank >= RankType.RelicRank1)
                     {
                         alcanaIdList.Add(getItemInfo.Param1);
                     }
                 }
             }
             return alcanaIdList;
+        }
+
+        // 所持している魔法全てのId
+        public List<int> CurrentAllSkillIds(int stageId,int seek,int worldNo)
+        {
+            var skillIds = new List<int>();
+            var alchemyIds = CurrentAlchemyIdList(stageId,seek,worldNo);
+            var actorInfos = CurrentActorInfos(stageId,seek,worldNo);
+            foreach (var actorInfo in actorInfos)
+            {
+                var skillInfos = actorInfo.SkillActionList(alchemyIds);
+                foreach (var skillInfo in skillInfos)
+                {
+                    skillIds.Add(skillInfo.Id);
+                }
+            }
+            foreach (var alchemyId in alchemyIds)
+            {
+                skillIds.Add(alchemyId);
+            }
+            return skillIds;
         }
 
         public int ActorLevelReset(ActorInfo actorInfo)

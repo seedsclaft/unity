@@ -60,7 +60,7 @@ namespace Ryneus
                 }
                 foreach (var skill in DataSystem.Skills)
                 {
-                    if (skill.Value.Rank > 2 || skill.Value.Rank == 0)
+                    if (skill.Value.Rank > RankType.PassiveRank2 || skill.Value.Rank == 0)
                     {
                         continue;
                     }

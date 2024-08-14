@@ -332,7 +332,7 @@ namespace Ryneus
 
         public List<SkillInfo> SkillActionList()
         {
-            var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsParamUpSkill() == false);
+            var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsEnhanceSkill() == false);
             for (int i = 0; i < skillInfos.Count;i++)
             {
                 skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],_currentBattler));

@@ -36,10 +36,16 @@ namespace Ryneus
             return MakeListData(new List<SystemData.CommandData>(){BaseConfirmCommand(3052,0)[0]});
         }
 
-        public List<ListData> SkillActionList(ActorInfo actorInfo)
+        public List<SkillInfo> SkillActionList(ActorInfo actorInfo)
         {
             var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             return actorInfo.SkillActionList(alchemyIds);
+        }
+
+        public List<ListData> SkillActionListData(ActorInfo actorInfo)
+        {
+            var data = SkillActionList(actorInfo);
+            return MakeListData(data,(a) => { return true;},-1);
         }
 
         public List<ListData> ActorLearningMagicList(ActorInfo actorInfo,int selectAttribute = -1, int selectedSkillId = -1)

@@ -21,7 +21,7 @@ namespace Ryneus
             return level * TacticsCostRate(actorInfo);
         }
 
-        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers,int rank = -1)
+        public static int LearningMagicCost(ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> stageMembers,RankType rank = RankType.None)
         {
             var cost = 1;
             var rankCost = ConvertRankCost(rank);
@@ -57,15 +57,18 @@ namespace Ryneus
             return Mathf.FloorToInt(cost * TacticsCostRate(actorInfo) * rankCost);
         }
 
-        private static int ConvertRankCost(int rank)
+        private static int ConvertRankCost(RankType rankType)
         {
-            switch (rank)
+            switch (rankType)
             {
-                case 10:
-                return 1;
-                case 2:
-                case 20:
-                return 2;
+                case RankType.ActiveRank1:
+                case RankType.PassiveRank1:
+                case RankType.EnhanceRank1:
+                    return 1;
+                case RankType.ActiveRank2:
+                case RankType.PassiveRank2:
+                case RankType.EnhanceRank2:
+                    return 2;
             }
             return 1;
         }

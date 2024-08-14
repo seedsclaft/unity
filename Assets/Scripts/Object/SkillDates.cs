@@ -18,7 +18,7 @@ namespace Ryneus
         public int AnimationId;
         public AnimationType AnimationType;
         public int CountTurn;
-        public int Rank;
+        public RankType Rank;
         public AttributeType Attribute;
         public ScopeType Scope;
         public SkillType SkillType;
@@ -196,11 +196,12 @@ namespace Ryneus
     public enum SkillType
     {
         None = 0,
-        Active = 1, // 通常スキル
+        Active = 1, // アクティブ
         Passive = 2, // パッシブ
         Messiah = 3, // 神化
         Awaken = 4, // 覚醒
         Relic = 5, // レリック
+        Enhance = 6, // 強化
         UseAlcana = 11, // アルカナ使用
     }
 
@@ -212,6 +213,20 @@ namespace Ryneus
         Ice = 3,
         Shine = 4,
         Dark = 5
+    }
+
+    public enum RankType
+    {
+        None = 0,
+        ActiveRank1 = 1,
+        ActiveRank2 = 2,
+        PassiveRank1 = 10,
+        PassiveRank2 = 20,
+        EnhanceRank1 = 100,
+        EnhanceRank2 = 110,
+        RelicRank1 = 200,
+        RelicRank2 = 210,
+        Uniq = 1000,
     }
 
     public enum TargetType

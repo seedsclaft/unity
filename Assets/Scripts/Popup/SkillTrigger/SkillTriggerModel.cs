@@ -25,7 +25,7 @@ namespace Ryneus
             _actorId = actorId;
             Func<SkillTriggerInfo,bool> enable = (a) => 
             {
-                return a.SkillId == 0 || SkillActionList(CurrentActor).Find(b => (b.Data as SkillInfo).LearningState == LearningState.Learned && (b.Data as SkillInfo).Id == a.SkillId) != null;
+                return a.SkillId == 0 || SkillActionList(CurrentActor).Find(b => b.LearningState == LearningState.Learned && b.Id == a.SkillId) != null;
             };
             var listData = MakeListData(CurrentActor.SkillTriggerInfos,enable,selectIndex);
             return listData;
@@ -57,11 +57,13 @@ namespace Ryneus
                 var listData = MakeListData(list);
                 foreach (var actionInfo in SkillActionList(CurrentActor))
                 {
-                    listData.Add(actionInfo);
+                    if (actionInfo.IsEnhanceSkill() == false)
+                    {
+                        list.Add(actionInfo);
+                    }
                 }
-                return listData;
             }
-            return MakeListData(list);
+            return MakeListData(list,(a) => { return true;},-1);
         }
         
         public List<string> SkillTriggerCategoryList()

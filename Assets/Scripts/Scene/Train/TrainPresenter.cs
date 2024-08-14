@@ -267,7 +267,7 @@ namespace Ryneus
 
         private void ShowCharacterDetail()
         {
-            _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));  
+            _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionListData(_model.TacticsActor()));  
         }
 
         private void CommandSelectAttribute(int attribute)

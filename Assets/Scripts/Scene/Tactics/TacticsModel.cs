@@ -454,7 +454,7 @@ namespace Ryneus
 
         public int ShopLearningCost(SkillInfo skillInfo)
         {
-            if (skillInfo.Master.Rank >= 20)
+            if (skillInfo.Master.Rank == RankType.ActiveRank2 || skillInfo.Master.Rank == RankType.PassiveRank2 || skillInfo.Master.Rank == RankType.EnhanceRank2)
             {
                 return 20;
             }

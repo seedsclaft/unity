@@ -395,7 +395,7 @@ namespace Ryneus
                 case SymbolType.Boss:
                     _view.ChangeBackCommandActive(true);
                     _view.ChangeSymbolBackCommandActive(true);
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionList(_model.TacticsActor()));
+                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionListData(_model.TacticsActor()));
 
                     _view.ShowConfirmCommand();
                     _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());

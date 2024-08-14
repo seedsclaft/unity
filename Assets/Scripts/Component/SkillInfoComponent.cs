@@ -151,18 +151,18 @@ namespace Ryneus
             }
         }
 
-        private void UpdateSkillRank(int skillRank)
+        private void UpdateSkillRank(RankType rankType)
         {
             var rankText = "N";
-            if (skillRank >= 210)
+            if (rankType >= RankType.Uniq)
             {
                 rankText = "SSR";
             } else
-            if (skillRank >= 200)
+            if (rankType >= RankType.RelicRank1)
             {
                 rankText = "SR";
             } else
-            if (skillRank >= 20)
+            if (rankType == RankType.ActiveRank2 || rankType == RankType.PassiveRank2)
             {
                 rankText = "R";
             }

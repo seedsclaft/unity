@@ -25,6 +25,11 @@ namespace Ryneus
         public SkillInfo SkillInfo => _skillInfo;
         public void SetSkillInfo(SkillInfo skillInfo)
         {
+            if (skillInfo.IsEnhanceSkill())
+            {
+                // 強化魔法は設定しなくて良い
+                return;
+            }
             _skillInfo = skillInfo;
         }
         private List<SkillTriggerData> _skillTriggerDates = new ();
@@ -33,6 +38,5 @@ namespace Ryneus
         {
             _skillTriggerDates = skillTriggerDates;
         }
-
     }
 }

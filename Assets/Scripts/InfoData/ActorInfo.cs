@@ -574,7 +574,7 @@ namespace Ryneus
             return total;
         }
     
-        public List<ListData> SkillActionList(List<int> alchemyIds)
+        public List<SkillInfo> SkillActionList(List<int> alchemyIds)
         {
             var skillInfos = LearningSkillInfos(alchemyIds).FindAll(a => a.Id > 100);
 
@@ -602,8 +602,8 @@ namespace Ryneus
             skillInfos.AddRange(sortList2);
             sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
             skillInfos.AddRange(sortList3);
-            //skillInfos.Sort((a,b) => {return a.LearningState > b.LearningState ? 1 : -1;});
-            return ListData.MakeListData(skillInfos,(a) => { return true;},-1);
+            return skillInfos;
+            //return ListData.MakeListData(skillInfos,(a) => { return true;},-1);
         }
 
         public List<SkillInfo> SkillInfos()

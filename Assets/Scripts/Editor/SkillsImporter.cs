@@ -106,7 +106,6 @@ namespace Ryneus
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
-
                         var SkillData = new SkillData
                         {
                             Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
@@ -116,7 +115,7 @@ namespace Ryneus
                             AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AnimationType),
                             //SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
                             CountTurn = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.CountTurn),
-                            Rank = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Rank),
+                            Rank = (RankType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Rank),
                             Attribute = (AttributeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Attribute),
                             SkillType = (SkillType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.SkillType),
                             TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TargetType),

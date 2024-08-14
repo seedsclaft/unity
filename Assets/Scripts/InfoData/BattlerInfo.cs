@@ -121,7 +121,12 @@ namespace Ryneus
             _status = statusInfo;
             _index = index;
             _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
-            _skills = _skills.FindAll(a => a.IsParamUpSkill() || (_skillTriggerInfos != null && _skillTriggerInfos.Find(b => b.SkillId == a.Id) != null));
+            var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
+            foreach (var enhanceSkill in enhanceSkills)
+            {
+                var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
+            }
+            _skills = _skills.FindAll(a => _skillTriggerInfos != null && _skillTriggerInfos.Find(b => b.SkillId == a.Id) != null);
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;
@@ -190,6 +195,11 @@ namespace Ryneus
             {
                 skill.SetUseCount(0);
                 skill.SetCountTurn(0);
+            }            
+            var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
+            foreach (var enhanceSkill in enhanceSkills)
+            {
+                var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
             _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             foreach (var skillInfo in _skills)
@@ -1074,12 +1084,12 @@ namespace Ryneus
 
         public List<SkillInfo> ActiveSkills()
         {
-            return _skills.FindAll(a => a.Master.SkillType != SkillType.Passive && a.Master.SkillType != SkillType.UseAlcana && a.Master.SkillType != SkillType.Relic);
+            return _skills.FindAll(a => a.IBattleActiveSkill());
         }
 
         public List<SkillInfo> PassiveSkills()
         {
-            return _skills.FindAll(a => a.Master.SkillType == SkillType.Passive || a.Master.SkillType == SkillType.UseAlcana || a.Master.SkillType == SkillType.Relic);
+            return _skills.FindAll(a => a.IBattlePassiveSkill());
         }
 
         public List<StateInfo> IconStateInfos()

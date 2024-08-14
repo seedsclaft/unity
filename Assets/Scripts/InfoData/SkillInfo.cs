@@ -124,9 +124,19 @@ namespace Ryneus
             return gainAp;
         }
 
-        public bool IsParamUpSkill()
+        public bool IBattleActiveSkill()
         {
-            return FeatureDates.Find(a => a.FeatureType >= FeatureType.ChangeFeatureParam1 && a.FeatureType < FeatureType.PlusSkill) != null;
+            return Master.SkillType != SkillType.Passive && Master.SkillType != SkillType.UseAlcana && Master.SkillType != SkillType.Relic;
+        }
+
+        public bool IBattlePassiveSkill()
+        {
+            return Master.SkillType == SkillType.Passive || Master.SkillType == SkillType.UseAlcana || Master.SkillType == SkillType.Relic;
+        }
+
+        public bool IsEnhanceSkill()
+        {
+            return Master.SkillType == SkillType.Enhance;
         }
 
         public string ConvertHelpText()

@@ -66,7 +66,7 @@ namespace Ryneus
                         // アルカナランダムで報酬設定
                         if (stageSymbolData.Param1 == -1)
                         {
-                            var relicInfos = MakeSelectRelicGetItemInfos(stageSymbolData.Param2);
+                            var relicInfos = MakeSelectRelicGetItemInfos((RankType)stageSymbolData.Param2);
                             //symbolInfo.SetGetItemInfos(relicInfos);
                             getItemInfos.AddRange(relicInfos);
                         }
@@ -133,10 +133,10 @@ namespace Ryneus
                         }
                         break;
                         case SymbolType.Shop:
-                        // Rank1,2,3から1つずつランダム設定
+                        // Rank1,2から1つずつランダム設定
                         if (stageSymbolData.Param1 == -1)
                         {
-                            var alcanaRank = 2;
+                            var alcanaRank = RankType.ActiveRank1;
                             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             var count = 1;
@@ -159,7 +159,7 @@ namespace Ryneus
                                     }
                                 }
                             }
-                            alcanaRank = 10;
+                            alcanaRank = RankType.PassiveRank1;
                             alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             count = 2;
@@ -182,7 +182,7 @@ namespace Ryneus
                                     }
                                 }
                             }
-                            alcanaRank = 20;
+                            alcanaRank = RankType.PassiveRank2;
                             alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             count = 1;
@@ -216,7 +216,7 @@ namespace Ryneus
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                         if (prizeSet.GetItem.Type == GetItemType.SelectRelic)
                         {
-                            var relicInfos = MakeSelectRelicGetItemInfos(getItemInfo.Param2);
+                            var relicInfos = MakeSelectRelicGetItemInfos((RankType)getItemInfo.Param2);
                             getItemInfos.AddRange(relicInfos);
                         } else
                         {
@@ -231,10 +231,10 @@ namespace Ryneus
             return symbolInfos;
         }
 
-        private static List<GetItemInfo> MakeSelectRelicGetItemInfos(int rank)
+        private static List<GetItemInfo> MakeSelectRelicGetItemInfos(RankType rankType)
         {
             var getItemInfos = new List<GetItemInfo>();
-            var alcanaRank = rank;
+            var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
             var count = 2;
@@ -381,24 +381,13 @@ namespace Ryneus
                 };
                 troopInfo.AddGetItemInfo(new GetItemInfo(numinosGetItem));
                 // ランダム報酬データ設定
-                // 70 = Rank1 Passive,7 = Rank2 Passive,20 = Rank1 Active,3 = Rank2 Active
-                GetItemData getItemData = null;
-                int rand = Random.Range(0,100);
-                if (rand < 70)
-                {
-                    getItemData = AddSkillGetItemData(10);
-                } else
-                if (rand >= 70 && rand < 77)
-                {
-                    getItemData = AddSkillGetItemData(20);
-                } else
-                if (rand >= 77 && rand < 97)
-                {
-                    getItemData = AddSkillGetItemData(1);
-                } else
-                {
-                    getItemData = AddSkillGetItemData(2);
-                }
+                // 70 = Rank1 Passive,
+                // 7 = Rank2 Passive,
+                // 15 = Rank1 Active,
+                // 3 = Rank2 Active
+                // 3 = Rank1 Enhance
+                // 2 = Rank2 Enhance
+                var getItemData = MakeSkillGetItemInfo();
                 if (getItemData != null)
                 {
                     troopInfo.AddGetItemInfo(new GetItemInfo(getItemData));
@@ -415,11 +404,52 @@ namespace Ryneus
             return troopInfo;
         }
 
-        private static GetItemData AddSkillGetItemData(int rank)
+        private static GetItemData MakeSkillGetItemInfo()
+        {
+            GetItemData getItemData = null;
+            int rand = Random.Range(0,100);
+            if (rand < 70)
+            {
+                getItemData = AddSkillGetItemData(RankType.PassiveRank1);
+            } else
+            if (rand >= 70 && rand < 77)
+            {
+                getItemData = AddSkillGetItemData(RankType.PassiveRank2);
+            } else
+            if (rand >= 77 && rand < 92)
+            {
+                getItemData = AddSkillGetItemData(RankType.ActiveRank1);
+            } else
+            if (rand >= 92 && rand < 95)
+            {
+                getItemData = AddSkillGetItemData(RankType.ActiveRank2);
+            } else
+            if (rand >= 95 && rand < 98)
+            {
+                getItemData = AddSkillGetItemData(RankType.EnhanceRank1);
+            } else
+            {
+                getItemData = AddSkillGetItemData(RankType.EnhanceRank2);
+            }
+            // 有効な強化でなければ再抽選
+            var skillId = getItemData.Param1;
+            var skillData = DataSystem.FindSkill(skillId);
+            if (skillData.Rank == RankType.EnhanceRank1 || skillData.Rank == RankType.EnhanceRank2)
+            {
+                var beforeSkillId = skillData.Id - 400000;
+                if (!PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(beforeSkillId))
+                {
+                    return MakeSkillGetItemInfo();
+                }
+            }
+            return getItemData;
+        }
+
+        private static GetItemData AddSkillGetItemData(RankType rankType)
         {
             var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
-            var skills = skillList.FindAll(a => a.Rank == rank && !hasSkills.Contains(a.Id));
+            var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
             if (skills.Count > 0)
             {
                 var skillRand = Random.Range(0,skills.Count);

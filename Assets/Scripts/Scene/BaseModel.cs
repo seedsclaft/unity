@@ -168,7 +168,7 @@ namespace Ryneus
             }
             if (getItemInfo.IsAttributeSkill())
             {
-                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                 foreach (var skillData in skillDates)
                 {
                     var skillInfo = new SkillInfo(skillData.Key);
@@ -192,7 +192,7 @@ namespace Ryneus
                 }
                 if (getItemInfo.IsAttributeSkill())
                 {
-                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                     foreach (var skillData in skillDates)
                     {
                         var skillInfo = new SkillInfo(skillData.Key);
