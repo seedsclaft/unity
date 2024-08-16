@@ -13,7 +13,9 @@ namespace Ryneus
         [SerializeField] private GameObject backUnMask3;
         [SerializeField] private RawImage mainBack;
         [SerializeField] private Image actorMain;
+        [SerializeField] private Image enemyMain;
         [SerializeField] private CanvasGroup actorCanvasGroup;
+        [SerializeField] private CanvasGroup enemyCanvasGroup;
         [SerializeField] private GameObject skillUnMask;
         [SerializeField] private CanvasGroup skillCanvasGroup;
         [SerializeField] private CanvasGroup skillNameCanvasGroup;
@@ -66,21 +68,32 @@ namespace Ryneus
                 .Append(backUnMask3.transform.DOLocalMove(new Vector3(-1600,-400,0),time2))
                 .SetEase(Ease.InOutCubic);
 
-            actorMain.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-240,-240,0);
+            RectTransform targetRect;
+            if (battlerInfo.IsActor)
+            {
+                targetRect = actorMain.gameObject.GetComponent<RectTransform>();
+                targetRect.localPosition = new Vector3(-240,-240,0);
+            } else
+            {
+                targetRect = enemyMain.gameObject.GetComponent<RectTransform>();
+                targetRect.localPosition = new Vector3(-240,0,0);
+            }
+            CanvasGroup targetCanvas = battlerInfo.IsActor ? actorCanvasGroup : enemyCanvasGroup;
             actorCanvasGroup.alpha = 0;
+            enemyCanvasGroup.alpha = 0;
             var delay = 0.1f / speedRate;
             var actor = DOTween.Sequence()
                 .SetDelay(delay)
-                .Append(actorMain.transform.DOLocalMove(new Vector3(-184,-240,0),time2 - delay))
-                .Join(actorCanvasGroup.DOFade(1,time2 - delay))
-                .Append(actorMain.transform.DOLocalMove(new Vector3(-184 + 24,-240,0),time3))
-                .Append(actorMain.transform.DOLocalMove(new Vector3(1280,-144,0),time4))
-                .Join(actorCanvasGroup.DOFade(0,time4))
+                .Append(targetRect.DOLocalMove(new Vector3(-184,targetRect.localPosition.y,0),time2 - delay))
+                .Join(targetCanvas.DOFade(1,time2 - delay))
+                .Append(targetRect.DOLocalMove(new Vector3(-184 + 24,targetRect.localPosition.y,0),time3))
+                .Append(targetRect.DOLocalMove(new Vector3(1280,targetRect.localPosition.y + 96,0),time4))
+                .Join(targetCanvas.DOFade(0,time4))
                 .SetEase(Ease.InOutCubic)
-                .OnComplete(() => {
+                .OnComplete(() => 
+                {
                     mainBack.gameObject.SetActive(false);
                     gameObject.SetActive(false);
-
                 });
         
 

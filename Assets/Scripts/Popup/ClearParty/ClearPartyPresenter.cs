@@ -48,7 +48,12 @@ namespace Ryneus
                 }
                 //_model.SetPartyBattlerIdList();
                 SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
-                _view.CommandSceneChange(Scene.Battle);
+                var battleSceneInfo = new BattleSceneInfo
+                {
+                    ActorInfos = _model.BattleMembers(),
+                    EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
+                };
+                _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
             });
         }
 

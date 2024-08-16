@@ -430,6 +430,7 @@ namespace Ryneus
         private void CommandCancelSelectSymbol()
         {
             _model.ResetRecordStage();
+            _model.SetFirstBattleActorId();
             CommandRefresh();
             _view.ShowSymbolList();
             _view.HideSelectCharacter();

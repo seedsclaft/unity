@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -24,6 +26,7 @@ namespace Ryneus
         private int _selectActorId = 0;
         public void SetSelectActorId(int actorId)
         {
+            LogOutput.Log(_selectActorId);
             _selectActorId = actorId;
         }    
         public ActorInfo TacticsActor()
@@ -83,6 +86,13 @@ namespace Ryneus
                 return;
             }
             actorInfo.SetBattleIndex(battleIndex);
+        }
+
+        public int SelectedActorIdBySelectIndex(List<ListData> listData,int selectIndex)
+        {
+            var actorInfo = (TacticsActorInfo)listData[selectIndex].Data;
+            SetSelectActorId(actorInfo.ActorInfo.ActorId);
+            return actorInfo.ActorInfo.ActorId;
         }
 
         private void RemoveBattleActor(ActorInfo actorInfo)

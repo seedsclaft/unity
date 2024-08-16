@@ -432,14 +432,17 @@ namespace Ryneus
                 getItemData = AddSkillGetItemData(RankType.EnhanceRank2);
             }
             // 有効な強化でなければ再抽選
-            var skillId = getItemData.Param1;
-            var skillData = DataSystem.FindSkill(skillId);
-            if (skillData.Rank == RankType.EnhanceRank1 || skillData.Rank == RankType.EnhanceRank2)
+            if (getItemData != null)
             {
-                var beforeSkillId = skillData.Id - 400000;
-                if (!PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(beforeSkillId))
+                var skillId = getItemData.Param1;
+                var skillData = DataSystem.FindSkill(skillId);
+                if (skillData.Rank == RankType.EnhanceRank1 || skillData.Rank == RankType.EnhanceRank2)
                 {
-                    return MakeSkillGetItemInfo();
+                    var beforeSkillId = skillData.Id - 400000;
+                    if (!PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(beforeSkillId))
+                    {
+                        return MakeSkillGetItemInfo();
+                    }
                 }
             }
             return getItemData;

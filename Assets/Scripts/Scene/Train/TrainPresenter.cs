@@ -301,7 +301,9 @@ namespace Ryneus
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
-            _view.RefreshTacticsActor(_model.TacticsBattleCharacterData(_view.CharacterSelectIndex));
+            var listData = _model.TacticsBattleCharacterData(_view.CharacterSelectIndex);
+            _view.RefreshTacticsActor(listData);
+            CommandChangeSelectTacticsActor(_model.SelectedActorIdBySelectIndex(listData,_view.CharacterSelectIndex));
             CommandRefresh();
         }
 
@@ -401,7 +403,12 @@ namespace Ryneus
                     }
                     _model.SetPartyBattlerIdList();
                     SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
-                    _view.CommandSceneChange(Scene.Battle);
+                    var battleSceneInfo = new BattleSceneInfo
+                    {
+                        ActorInfos = _model.BattleMembers(),
+                        EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
+                    };
+                    _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
                 } else
                 {
                     CheckBattleMember();

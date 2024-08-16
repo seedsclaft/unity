@@ -277,8 +277,14 @@ namespace Ryneus
                         {
                             PlayTacticsBgm();
                         }
-                    }      
-                    _view.CommandGotoSceneChange(Scene.Battle);
+                    }
+                    SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
+                    var battleSceneInfo = new BattleSceneInfo
+                    {
+                        ActorInfos = _model.BattleMembers(),
+                        EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
+                    };
+                    _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
                 } else
                 {
                     ShowStatus();

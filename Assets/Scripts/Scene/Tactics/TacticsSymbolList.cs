@@ -8,6 +8,7 @@ namespace Ryneus
     public class TacticsSymbolList : BaseList
     {
         [SerializeField] private Button symbolBackButton = null;
+        [SerializeField] private TacticsSymbolListAnimation tacticsSymbolListAnimation = null;
         public bool IsSelectSymbol()
         {
             if (ItemPrefabList.Count > Index)
@@ -47,6 +48,11 @@ namespace Ryneus
             {
                 backEvent?.Invoke();
             });
+        }
+
+        public void OpenAnimation()
+        {
+            tacticsSymbolListAnimation.OpenAnimation(ScrollRect.transform,null);
         }
 
         public void ChangeSymbolBackCommandActive(bool IsActive)
@@ -91,13 +97,11 @@ namespace Ryneus
                 {
                     tacticsSymbol.SetSelectable(true);
                 }
-                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             } else
             if (keyType == InputKeyType.Down)
             {
                 var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
                 tacticsSymbol.UpdateItemIndex(tacticsSymbol.GetItemIndex+1);
-                //Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             }
         }
 

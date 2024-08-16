@@ -5,20 +5,35 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Effekseer;
 using Cysharp.Threading.Tasks;
-using UtageExtensions;
 
 namespace Ryneus
 {
     public class BattleAwakenAnimation : MonoBehaviour
     {
+        [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private Image actorMain;
+        [SerializeField] private Image enemyMain;
+        [SerializeField] private GameObject enemyMainObject;
         [SerializeField] private EffekseerEmitter emitter;
         [SerializeField] private CanvasGroup canvasGroup;
-        public async void StartAnimation(Sprite actorSprite,float speedRate)
+        public void StartAnimation(BattlerInfo battlerInfo,Sprite actorSprite,float speedRate,bool isActor)
         {
             canvasGroup.alpha = 0;
             emitter.transform.DOScaleY(2.0f,0);
-            actorMain.sprite = actorSprite;
+            if (isActor)
+            {
+                actorMain.sprite = actorSprite;
+            } else
+            {
+                battlerInfoComponent.UpdateInfo(battlerInfo);
+            }
+            actorMain.gameObject.SetActive(isActor);
+            enemyMainObject.SetActive(!isActor);
+            StartEmitterAnimation(speedRate);
+        }
+
+        private async void StartEmitterAnimation(float speedRate)
+        {
             emitter.Play();
 
             var time1 = 0.3f / speedRate;

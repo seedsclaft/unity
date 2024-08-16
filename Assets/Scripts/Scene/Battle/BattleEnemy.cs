@@ -16,7 +16,6 @@ namespace Ryneus
         [SerializeField] private EffekseerEmitter cursorEffekseerEmitter;
 
         private BattlerInfo _battlerInfo;
-        private string textureName = null;
         private bool _isFront = false;
 
         public int EnemyIndex => _battlerInfo.Index;
@@ -57,36 +56,6 @@ namespace Ryneus
         {
             var pressListener = clickButton.gameObject.AddComponent<ContentPressListener>();
             pressListener.SetPressEvent(() => handler(_battlerInfo.Index));
-        }
-
-        private void Update() 
-        {
-            if (enemyImage.mainTexture != null && textureName != enemyImage.mainTexture.name)
-            {
-                UpdateSizeDelta();
-                textureName = enemyImage.mainTexture.name;
-            }
-        }
-
-        private void UpdateSizeDelta()
-        {
-            var sizeX = _isFront == true ? 200 : 240;
-            var sizeY = _isFront == true ? 160 : 240;
-            var width = Mathf.Max(sizeX,enemyImage.mainTexture.width);
-            var height = sizeY;
-            var objectRect = gameObject.GetComponent<RectTransform>();
-            var rect = Cursor.GetComponent<RectTransform>();
-            var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
-            var statusRect = statusObject.GetComponent<RectTransform>();
-            var damageRect = battlerInfoComponent.BattleDamageRoot.gameObject.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(width,height);
-            objectRect.sizeDelta = new Vector2(width,height);
-            effectRect.sizeDelta = new Vector2(width,height);
-            if (_isFront == false && enemyImage.mainTexture.height > 390)
-            {
-                statusRect.localPosition = new Vector2(0,0);
-                damageRect.localPosition = new Vector2(0,0);
-            }
         }
         
         public void SetSelect(EffekseerEffectAsset effekseerEffectAsset)

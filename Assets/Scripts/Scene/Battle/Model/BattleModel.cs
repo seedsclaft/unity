@@ -9,8 +9,11 @@ namespace Ryneus
     {
         public BattleModel()
         {
+            _sceneParam = (BattleSceneInfo)GameSystem.SceneStackManager.LastSceneParam;
             InitializeCheckTrigger();
         }
+        private BattleSceneInfo _sceneParam;
+        public BattleSceneInfo SceneParam => _sceneParam;
         private int _actionIndex = 0;
         private int _turnCount = 1;
         public int TurnCount => _turnCount;
@@ -104,13 +107,13 @@ namespace Ryneus
         {
             _actionIndex = 0;
             _battlers.Clear();
-            var battleMembers = BattleMembers();
+            var battleMembers = _sceneParam.ActorInfos;
             foreach (var actorInfo in battleMembers)
             {
                 var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex);
                 _battlers.Add(battlerInfo);
             }
-            var enemies = CurrentTroopInfo().BattlerInfos;
+            var enemies = _sceneParam.EnemyInfos;
             foreach (var enemy in enemies)
             {
                 enemy.ResetData();
@@ -196,18 +199,6 @@ namespace Ryneus
             }
         }
         
-        public List<ActionResultInfo> UpdateChainState()
-        {
-            var actionResultInfos = new List<ActionResultInfo>();
-            return actionResultInfos;
-        }
-
-        public List<ActionResultInfo> UpdateBenedictionState()
-        {
-            var actionResultInfos = new List<ActionResultInfo> ();
-            return actionResultInfos;
-        }
-
         public void SetLastSkill(int skillId)
         {
             _currentBattler.SetLastSelectSkillId(skillId);
@@ -268,51 +259,6 @@ namespace Ryneus
             {
                 _currentBattler = battlerInfo;
             }
-        }
-
-        public List<int> CheckChainBattler(BattlerInfo subject)
-        {
-            var targetIndexes = new List<int>();
-            /*
-            foreach (var battler in FieldBattlerInfos())
-            {
-                var stateInfos = battler.GetStateInfoAll(StateType.Chain);
-                for (var i = stateInfos.Count-1; 0 <= i;i--)
-                {
-                    if (stateInfos[i].BattlerId == subject.Index)
-                    {
-                        if (battler.IsAlive())
-                        {
-                            targetIndexes.Add(stateInfos[i].TargetIndex);
-                        } else
-                        {
-                            battler.RemoveState(stateInfos[i],true);
-                        }
-                    }
-                }
-            }
-            */
-            return targetIndexes;
-        }
-
-        // 攻撃を受けた対象が付与したステートを取得
-        private List<StateInfo> CheckAttackedBattlerState(StateType stateType,int targetIndex)
-        {
-            var stateInfos = new List<StateInfo>();
-            foreach (var battler in FieldBattlerInfos())
-            {
-                var chainStateInfos = battler.GetStateInfoAll(stateType);
-                // 末尾から取得
-                for (int i = chainStateInfos.Count-1; 0 <= i;i--)
-                {
-                    // 付与者と攻撃対象が同じ
-                    if (chainStateInfos[i].BattlerId == targetIndex)
-                    {
-                        stateInfos.Add(chainStateInfos[i]);
-                    }
-                }
-            }
-            return stateInfos;
         }
 
         public List<BattlerInfo> BattlerActors()
@@ -527,7 +473,6 @@ namespace Ryneus
             switch (scopeType)
             {
                 case ScopeType.All:
-                    break;
                 case ScopeType.WithoutSelfAll:
                     break;
                 case ScopeType.Line:
@@ -1061,6 +1006,16 @@ namespace Ryneus
         public Sprite AwakenSprite(int actorId)
         {
             var result = ResourceSystem.LoadActorCutinSprite(DataSystem.FindActor(actorId).ImagePath);
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+        }
+
+        public Sprite AwakenEnemySprite(int enemyId)
+        {
+            var result = ResourceSystem.LoadEnemySprite(DataSystem.Enemies.Find(a => a.Id == enemyId).ImagePath);
             if (result != null)
             {
                 return result;
@@ -2528,5 +2483,11 @@ namespace Ryneus
             testActionIndex++;
         }
     #endif
+    }
+
+    public class BattleSceneInfo
+    {
+        public List<ActorInfo> ActorInfos;
+        public List<BattlerInfo> EnemyInfos;
     }
 }

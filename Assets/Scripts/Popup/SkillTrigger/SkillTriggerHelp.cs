@@ -31,7 +31,7 @@ namespace Ryneus
                 trigger2Help?.SetText("-");
             } else
             {
-                trigger2Help?.SetText(help1);
+                trigger2Help?.SetText(help2);
             }
         }
     }

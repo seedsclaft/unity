@@ -72,8 +72,6 @@ namespace Ryneus
             tacticsCommandList.Initialize();
             tacticsAlcana.gameObject.SetActive(false);
             alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
-            
-            tacticsSymbolList.Initialize();
 
             SideMenuButton.SetCallHandler(() => 
             {
@@ -497,6 +495,7 @@ namespace Ryneus
         {
             tacticsSymbolList.gameObject.SetActive(true);
             tacticsSymbolList.ResetInputFrame(1);
+            tacticsSymbolList.OpenAnimation();
             SetHelpInputInfo("ENEMY_SELECT");
             symbolRecordList.ScrollRect.enabled = false;
         }

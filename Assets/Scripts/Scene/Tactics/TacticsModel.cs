@@ -12,11 +12,33 @@ namespace Ryneus
         public TacticsModel()
         {
             _sceneParam = (TacticsSceneInfo)GameSystem.SceneStackManager.LastSceneParam;
+            SetFirstBattleActorId();
+        }
+
+        public void SetFirstBattleActorId()
+        {
+            var stageMembers = StageMembers();
+            if (stageMembers.Count > 0)
+            {
+                var firstBattler = stageMembers.Find(a => a.BattleIndex == 1);
+                if (firstBattler != null)
+                {
+                    SetSelectActorId(firstBattler.ActorId);
+                } else
+                {
+                    SetSelectActorId(stageMembers[0].ActorId);
+                }
+            }
         }
         
+        private int _selectActorId = 0;
+        public void SetSelectActorId(int actorId)
+        {
+            _selectActorId = actorId;
+        }    
         public ActorInfo TacticsActor()
         {
-            return StageMembers()[0];
+            return StageMembers().Find(a => a.ActorId == _selectActorId);
         }
 
         private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;

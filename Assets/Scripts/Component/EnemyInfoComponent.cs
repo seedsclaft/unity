@@ -16,7 +16,6 @@ namespace Ryneus
         [SerializeField] private StatusInfoComponent needStatusInfoComponent;
         [SerializeField] private TextMeshProUGUI gridKey;
         [SerializeField] private List<GameObject> actorOnlyGameObjects;
-        
 
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
@@ -39,7 +38,6 @@ namespace Ryneus
             {
                 UpdateNeedStatus(battlerInfo);
             }
-            
         }
 
         private void UpdateMainThumb(string imagePath,int x,int y,float scale)

@@ -38,31 +38,5 @@ namespace Ryneus
                 Disable.SetActive(true);
             }
         }
-
-        private void UpdateLocalPosition(BattlerInfo battlerInfo)
-        {
-            if (_isInitialized) 
-            {
-                return;
-            }
-
-            var positionX = 0;
-            if (battlerInfo.LineIndex == LineType.Front)
-            {
-                if (!battlerInfo.IsActor)
-                {
-                    positionX *= -1;
-                }
-            } else
-            {
-                positionX *= -1;
-                if (!battlerInfo.IsActor)
-                {
-                    positionX *= -1;
-                }
-            }
-            //thumbRect.localPosition = new Vector3(positionX + thumbRect.localPosition.x,thumbRect.localPosition.y,0);
-            _isInitialized = true;
-        }
     }
 }

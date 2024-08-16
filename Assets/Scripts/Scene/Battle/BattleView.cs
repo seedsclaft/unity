@@ -600,13 +600,13 @@ namespace Ryneus
             //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
         }
 
-        public async UniTask StartAnimationAwaken(Sprite actorSprite)
+        public async UniTask StartAnimationAwaken(BattlerInfo battlerInfo,Sprite actorSprite,bool isActor)
         {
             var speed = GameSystem.ConfigData.BattleSpeed;
             if (GameSystem.ConfigData.BattleAnimationSkip == false)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Demigod);
-                battleAwakenAnimation.StartAnimation(actorSprite,speed);
+                battleAwakenAnimation.StartAnimation(battlerInfo,actorSprite,speed,isActor);
                 HideStateOverlay();
                 SetAnimationBusy(true);
                 await UniTask.DelayFrame((int)(60 / speed));

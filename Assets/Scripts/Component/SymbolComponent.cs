@@ -10,6 +10,7 @@ namespace Ryneus
     {
         [SerializeField] private TextMeshProUGUI commandTitle;
         [SerializeField] private Image symbolImage;
+        [SerializeField] private Image enemyImage;
         [SerializeField] private List<Sprite> symbolSprites;
         [SerializeField] private GameObject evaluateRoot;
         [SerializeField] private TextMeshProUGUI evaluate;
@@ -76,19 +77,22 @@ namespace Ryneus
             if (_symbolInfo.SymbolType == SymbolType.None) 
             {
                 symbolImage.gameObject.SetActive(false);
+                enemyImage.gameObject.SetActive(false);
                 return;
             }
             if (_symbolInfo.SymbolType == SymbolType.Group) return;
             if (_symbolInfo.SymbolType == SymbolType.Random) return;
             if (_symbolInfo.SymbolType == SymbolType.Battle || _symbolInfo.SymbolType == SymbolType.Boss)
             {
-                symbolImage.gameObject.SetActive(true);
-                symbolImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
+                symbolImage.gameObject.SetActive(false);
+                enemyImage.gameObject.SetActive(true);
+                enemyImage.sprite = ResourceSystem.LoadEnemySprite(_symbolInfo.TroopInfo.BossEnemy.EnemyData.ImagePath);
             } else
             {
                 if (symbolImage != null && symbolSprites != null)
                 {
                     symbolImage.gameObject.SetActive(true);
+                    enemyImage.gameObject.SetActive(false);
                     if (_symbolInfo.SymbolType == SymbolType.SelectActor)
                     {
                         symbolImage.sprite = symbolSprites[(int)SymbolType.Actor];
