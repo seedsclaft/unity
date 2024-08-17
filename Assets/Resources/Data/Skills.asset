@@ -908,7 +908,7 @@ MonoBehaviour:
     AnimationId: 401
     AnimationType: 1
     CountTurn: 0
-    Rank: 0
+    Rank: 2
     Attribute: 4
     Scope: 1
     SkillType: 1
@@ -1143,7 +1143,7 @@ MonoBehaviour:
     AnimationId: 501
     AnimationType: 3
     CountTurn: 5
-    Rank: 0
+    Rank: 2
     Attribute: 5
     Scope: 3
     SkillType: 1
@@ -1221,7 +1221,7 @@ MonoBehaviour:
     AnimationId: 501
     AnimationType: 1
     CountTurn: 2
-    Rank: 0
+    Rank: 2
     Attribute: 5
     Scope: 1
     SkillType: 1
@@ -3185,7 +3185,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 3
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u81EA\u5206\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u3092\u8607\u751F\u3057/f[f,2,2]\u30BF\u30FC\u30F3/f[f,2,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u81EA\u5206\u4EE5\u5916\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\\s\u3092\u8607\u751F\u3057Hp\u3092/f[f,1,1]\u56DE\u5FA9\n\u795E\u5316\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 0
@@ -3197,16 +3197,10 @@ MonoBehaviour:
       Param3: 0
       Rate: 100
     - SkillId: 100410
-      FeatureType: 2030
-      Param1: 0
+      FeatureType: 2010
+      Param1: 25
       Param2: 0
       Param3: 0
-      Rate: 100
-    - SkillId: 100410
-      FeatureType: 3010
-      Param1: 2040
-      Param2: 999
-      Param3: 10
       Rate: 100
     - SkillId: 100410
       FeatureType: 7010
@@ -3239,17 +3233,16 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9
-      \u795E\u5316\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     FeatureDates:
     - SkillId: 100420
-      FeatureType: 2010
-      Param1: 25
-      Param2: 0
-      Param3: 0
+      FeatureType: 3010
+      Param1: 2040
+      Param2: 999
+      Param3: 10
       Rate: 100
     - SkillId: 100420
       FeatureType: 7010

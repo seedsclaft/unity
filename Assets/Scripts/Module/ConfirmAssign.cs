@@ -41,7 +41,8 @@ namespace Ryneus
 
         public void CloseConfirm()
         {
-            foreach(Transform child in confirmRoot.transform){
+            foreach(Transform child in confirmRoot.transform)
+            {
                 Destroy(child.gameObject);
             }
             confirmRoot.gameObject.SetActive(false);

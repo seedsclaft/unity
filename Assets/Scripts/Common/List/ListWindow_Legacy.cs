@@ -53,7 +53,7 @@ namespace Ryneus
         {
             for (int i = 0;i < _itemPrefabList.Count;i++)
             {
-                if (ListDates.Count > i)
+                if (ListDates.Count > i && _itemPrefabList[i] != null)
                 {
                     var listItem = _itemPrefabList[i].GetComponent<ListItem>();
                     listItem.SetListData(ListDates[i],i);

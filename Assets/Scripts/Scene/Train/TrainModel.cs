@@ -26,7 +26,6 @@ namespace Ryneus
         private int _selectActorId = 0;
         public void SetSelectActorId(int actorId)
         {
-            LogOutput.Log(_selectActorId);
             _selectActorId = actorId;
         }    
         public ActorInfo TacticsActor()

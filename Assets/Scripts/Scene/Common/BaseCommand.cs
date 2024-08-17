@@ -12,7 +12,7 @@ namespace Ryneus
             if (ListData == null) return;
             var data = (SystemData.CommandData)ListData.Data;
             commandName.text = data.Name;
-            Disable.gameObject.SetActive(ListData.Enable == false);
+            Disable?.gameObject.SetActive(ListData.Enable == false);
         }
     }
 }

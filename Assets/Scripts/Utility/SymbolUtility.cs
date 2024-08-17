@@ -136,7 +136,7 @@ namespace Ryneus
                         // Rank1,2から1つずつランダム設定
                         if (stageSymbolData.Param1 == -1)
                         {
-                            var alcanaRank = RankType.ActiveRank1;
+                            var alcanaRank = RankType.ActiveRank2;
                             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
                             var count = 1;
