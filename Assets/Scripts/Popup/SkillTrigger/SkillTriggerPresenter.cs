@@ -90,7 +90,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;
-            _model.SetSkillTrigger1(index,triggerType);
+            _model.SetSkillTrigger(index,1,triggerType);
             _view.HideSelectList();
             _view.HideSelectCategoryList();
             CommandRefresh();
@@ -100,7 +100,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var index = _view.SkillTriggerIndex;
-            _model.SetSkillTrigger2(index,triggerType);
+            _model.SetSkillTrigger(index,2,triggerType);
             _view.HideSelectList();
             _view.HideSelectCategoryList();
             CommandRefresh();
@@ -185,6 +185,7 @@ namespace Ryneus
             _view.RefreshSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,selectIndex));
         }
     }
+
     public class SkillTriggerViewInfo
     {
         private System.Action _endEvent = null;

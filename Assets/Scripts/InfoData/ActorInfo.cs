@@ -119,34 +119,34 @@ namespace Ryneus
             }
         }
         
-        public void SetSkillTriggerTrigger1(int index,SkillTriggerData triggerType)
+        public void SetSkillTriggerTrigger(int index,int triggerIndex,SkillTriggerData triggerType)
         {
             if (_skillTriggerInfos.Count > index)
             {
                 var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
-                var list = new List<SkillTriggerData>();
-                if (triggerType == null && triggerTypes[1] != null)
+                SkillTriggerData triggerData1 = null;
+                SkillTriggerData triggerData2 = null;
+                if (triggerIndex == 1)
                 {
-                    list.Add(triggerTypes[1]);
-                    list.Add(triggerType);
+                    if (triggerType == null && triggerTypes[1] != null)
+                    {
+                        triggerData1 = triggerTypes[1];
+                        triggerData2 = triggerType;
+                    } else
+                    {
+                        triggerData1 = triggerType;
+                        triggerData2 = triggerTypes[1];
+                    }
                 } else
+                if (triggerIndex == 2)
                 {
-                    list.Add(triggerType);
-                    list.Add(triggerTypes[1]);
+                    triggerData1 = triggerTypes[0];
+                    triggerData2 = triggerType;
                 }
-                _skillTriggerInfos[index].UpdateTriggerDates(list);
-            }
-        }
-
-        public void SetSkillTriggerTrigger2(int index,SkillTriggerData triggerType)
-        {
-            if (_skillTriggerInfos.Count > index)
-            {
-                var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
                 var list = new List<SkillTriggerData>
                 {
-                    triggerTypes[0],
-                    triggerType
+                    triggerData1,
+                    triggerData2
                 };
                 _skillTriggerInfos[index].UpdateTriggerDates(list);
             }

@@ -412,38 +412,25 @@ namespace Ryneus
             {
                 getItemData = AddSkillGetItemData(RankType.PassiveRank1);
             } else
-            if (rand >= 70 && rand < 77)
+            if (rand >= 70 && rand < 80)
             {
                 getItemData = AddSkillGetItemData(RankType.PassiveRank2);
             } else
-            if (rand >= 77 && rand < 92)
-            {
-                getItemData = AddSkillGetItemData(RankType.ActiveRank1);
-            } else
-            if (rand >= 92 && rand < 95)
+            if (rand >= 80 && rand < 85)
             {
                 getItemData = AddSkillGetItemData(RankType.ActiveRank2);
             } else
-            if (rand >= 95 && rand < 98)
+            if (rand >= 85 && rand < 95)
             {
-                getItemData = AddSkillGetItemData(RankType.EnhanceRank1);
+                getItemData = AddEnhanceSkillGetItemData(RankType.EnhanceRank1);
             } else
             {
-                getItemData = AddSkillGetItemData(RankType.EnhanceRank2);
+                getItemData = AddEnhanceSkillGetItemData(RankType.EnhanceRank2);
             }
-            // 有効な強化でなければ再抽選
-            if (getItemData != null)
+            // 候補なければ再抽選
+            if (getItemData == null)
             {
-                var skillId = getItemData.Param1;
-                var skillData = DataSystem.FindSkill(skillId);
-                if (skillData.Rank == RankType.EnhanceRank1 || skillData.Rank == RankType.EnhanceRank2)
-                {
-                    var beforeSkillId = skillData.Id - 400000;
-                    if (!PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(beforeSkillId))
-                    {
-                        return MakeSkillGetItemInfo();
-                    }
-                }
+                return MakeSkillGetItemInfo();
             }
             return getItemData;
         }
@@ -453,6 +440,27 @@ namespace Ryneus
             var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
+            if (skills.Count > 0)
+            {
+                var skillRand = Random.Range(0,skills.Count);
+                var getItemData = new GetItemData
+                {
+                    Param1 = skills[skillRand].Id,
+                    Type = GetItemType.Skill
+                };
+                return getItemData;
+            }
+            return null;
+        }
+
+        private static GetItemData AddEnhanceSkillGetItemData(RankType rankType)
+        {
+            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var skillList = new List<SkillData>(DataSystem.Skills.Values);
+            var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
+            var allSkillIds = PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            // 強化可能な所持魔法に絞る
+            skills = skills.FindAll(a => allSkillIds.Contains(a.Id - 400000));
             if (skills.Count > 0)
             {
                 var skillRand = Random.Range(0,skills.Count);

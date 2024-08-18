@@ -1047,7 +1047,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 4060
       FeatureType: 3020
-      Param1: 0
+      Param1: 1
       Param2: 0
       Param3: 0
       Rate: 100
@@ -2975,12 +2975,12 @@ MonoBehaviour:
     CountTurn: 0
     Rank: 1000
     Attribute: 1
-    Scope: 3
+    Scope: 2
     SkillType: 4
     TargetType: 1
     Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
       \u795E\u5316\u89E3\u9664"
-    Range: 2
+    Range: 1
     RepeatTime: 1
     AliveType: 1
     FeatureDates:
@@ -4239,13 +4239,13 @@ MonoBehaviour:
     TriggerDates:
     - SkillId: 200410
       TriggerType: 7010
-      TriggerTiming: 3
+      TriggerTiming: 2
       Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 200410
-      TriggerType: 20050
-      TriggerTiming: 3
+      TriggerType: 12063
+      TriggerTiming: 2
       Param1: 0
       Param2: 0
       Param3: 0

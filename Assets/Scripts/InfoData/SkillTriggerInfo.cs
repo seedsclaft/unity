@@ -25,7 +25,7 @@ namespace Ryneus
         public SkillInfo SkillInfo => _skillInfo;
         public void SetSkillInfo(SkillInfo skillInfo)
         {
-            if (skillInfo.IsEnhanceSkill())
+            if (skillInfo != null && skillInfo.IsEnhanceSkill())
             {
                 // 強化魔法は設定しなくて良い
                 return;

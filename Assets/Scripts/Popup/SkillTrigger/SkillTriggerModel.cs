@@ -116,17 +116,19 @@ namespace Ryneus
         public void SetSkillTriggerSkill(int index,int skillId)
         {
             var skills = CurrentActor.SkillInfos();
-            CurrentActor.SetSkillTriggerSkill(index,skills.Find(a => a.Id == skillId));
+            var skillInfo = skills.Find(a => a.Id == skillId);
+            CurrentActor.SetSkillTriggerSkill(index,skillInfo);
+            if (skillInfo == null)
+            {
+                var triggerData = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                CurrentActor.SetSkillTriggerTrigger(index,1,triggerData);
+                CurrentActor.SetSkillTriggerTrigger(index,2,triggerData);
+            }
         }
 
-        public void SetSkillTrigger1(int index,SkillTriggerData triggerData)
+        public void SetSkillTrigger(int index,int triggerIndex,SkillTriggerData triggerData)
         {
-            CurrentActor.SetSkillTriggerTrigger1(index,triggerData);
-        }
-
-        public void SetSkillTrigger2(int index,SkillTriggerData triggerData)
-        {
-            CurrentActor.SetSkillTriggerTrigger2(index,triggerData);
+            CurrentActor.SetSkillTriggerTrigger(index,triggerIndex,triggerData);
         }
 
         public void SetTriggerIndexUp(int index)

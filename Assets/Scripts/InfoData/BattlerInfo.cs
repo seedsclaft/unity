@@ -794,7 +794,7 @@ namespace Ryneus
                     if (stateInfo.StateType == StateType.Death)
                     {
                         _preserveAlive = true;
-                        if (_hp == 0)_hp = 1;
+                        //if (_hp == 0)_hp = 1;
                     }
                 }
                 IsRemoved = true;
