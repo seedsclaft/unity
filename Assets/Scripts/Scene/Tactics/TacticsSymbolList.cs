@@ -42,6 +42,16 @@ namespace Ryneus
             return null;
         }
 
+        public int GetItemInfoIndex()
+        {
+            var tacticsSymbol = ItemPrefabList[Index].GetComponent<TacticsSymbol>();
+            if (tacticsSymbol.GetItemList.Index != -1)
+            {
+                return tacticsSymbol.GetItemList.Index;
+            }
+            return -1;
+        }
+
         public void Initialize(System.Action backEvent)
         {
             symbolBackButton?.onClick.AddListener(() => 

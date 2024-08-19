@@ -123,10 +123,13 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             foreach (var getItemInfo in getItemInfos)
             {
-                var skillInfo = new SkillInfo(getItemInfo.Param1);
-                var cost = 0;
-                skillInfo.SetEnable(cost <= PartyInfo.Currency);
-                skillInfos.Add(skillInfo);
+                if (getItemInfo.GetItemType == GetItemType.Skill)
+                {
+                    var skillInfo = new SkillInfo(getItemInfo.Param1);
+                    var cost = 0;
+                    skillInfo.SetEnable(cost <= PartyInfo.Currency);
+                    skillInfos.Add(skillInfo);
+                }
             }
             return skillInfos;
         }
@@ -134,7 +137,7 @@ namespace Ryneus
         public void MakeSelectRelic(int skillId)
         {
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos;
-            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
+            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
             var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)

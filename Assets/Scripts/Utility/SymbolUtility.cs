@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Ryneus
@@ -14,8 +13,8 @@ namespace Ryneus
         public static List<SymbolResultInfo> StageResultInfos(List<StageSymbolData> stageSymbolDates)
         {
             var symbolInfos = new List<SymbolResultInfo>();
-            var symbols = stageSymbolDates.FindAll(a => a.Seek > 0);
-            foreach (var symbolMaster in symbols)
+            var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0);
+            foreach (var symbolMaster in symbolDates)
             {
                 var symbolInfo = new SymbolInfo(symbolMaster.SymbolType);
                 var stageSymbolData = new StageSymbolData();
@@ -47,6 +46,7 @@ namespace Ryneus
                         symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
                     }
                 }
+                // 報酬リスト
                 var getItemInfos = new List<GetItemInfo>();
                 switch (stageSymbolData.SymbolType)
                 {
@@ -67,146 +67,57 @@ namespace Ryneus
                         if (stageSymbolData.Param1 == -1)
                         {
                             var relicInfos = MakeSelectRelicGetItemInfos((RankType)stageSymbolData.Param2);
-                            //symbolInfo.SetGetItemInfos(relicInfos);
                             getItemInfos.AddRange(relicInfos);
                         }
                         break;
                     case SymbolType.Resource:
                         // 報酬設定
-                        var resourceData = new GetItemData
-                        {
-                            Type = GetItemType.Numinous,
-                            Param1 = stageSymbolData.Param1
-                        };
-                        getItemInfos.Add(new GetItemInfo(resourceData));
+                        getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,stageSymbolData.Param1));
                         break;
                     case SymbolType.Actor:
                         // 表示用に報酬設定
-                        var actorData = new GetItemData
-                        {
-                            Type = GetItemType.AddActor,
-                            Param1 = stageSymbolData.Param1
-                        };
-                        getItemInfos.Add(new GetItemInfo(actorData));
+                        getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,stageSymbolData.Param1));
                         break;
                     case SymbolType.SelectActor:
+                        // タイトル表示用
+                        getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectAddActor,-1));
                         // 表示用に報酬設定
                         if (stageSymbolData.Param2 == 0)
                         {
-                            var actorData2 = new GetItemInfo(new GetItemData());
-                            getItemInfos.Add(actorData2);
+                            // 自由選択
                         } else
                         {
                             // 選択できるアクターが3人まで
                             var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
                             var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
-                            var count = 2;
-                            if (actorInfos.Count < 2)
+                            var count = 3;
+                            if (actorInfos.Count < count)
                             {
                                 count = actorInfos.Count;
                             }
                             if (count == 0)
                             {
                                 // 報酬設定
-                                var resourceData2 = new GetItemData
-                                {
-                                    Type = GetItemType.Numinous,
-                                    Param1 = 20
-                                };
-                                getItemInfos.Add(new GetItemInfo(resourceData2));
+                                getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,20));
                             } else
                             {
                                 while (getItemInfos.Count <= count)
                                 {
                                     var rand = Random.Range(0,actorInfos.Count);
-                                    var actorData2 = new GetItemData
+                                    if (getItemInfos.Find(a => a.Param1 == actorInfos[rand].ActorId) == null)
                                     {
-                                        Type = GetItemType.AddActor,
-                                        Param1 = actorInfos[rand].ActorId
-                                    };
-                                    if (getItemInfos.Find(a => a.Param1 == actorData2.Param1) == null)
-                                    {
-                                        getItemInfos.Add(new GetItemInfo(actorData2));
+                                        getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,actorInfos[rand].ActorId));
                                     }
                                 }
                             }
                         }
                         break;
                         case SymbolType.Shop:
-                        // Rank1,2から1つずつランダム設定
-                        if (stageSymbolData.Param1 == -1)
-                        {
-                            var alcanaRank = RankType.ActiveRank2;
-                            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-                            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-                            var count = 1;
-                            while (getItemInfos.Count <= count)
-                            {
-                                var rand = Random.Range(0,alcanaSkills.Count);
-                                // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
-                                {
-                                    var alcanaData = new GetItemData
-                                    {
-                                        Type = GetItemType.Skill,
-                                        Param1 = alcanaSkills[rand].Value.Id
-                                    };
-                                    var getItemInfo = new GetItemInfo(alcanaData);
-                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
-                                    {
-                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                        getItemInfos.Add(getItemInfo);
-                                    }
-                                }
-                            }
-                            alcanaRank = RankType.PassiveRank1;
-                            alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-                            alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-                            count = 2;
-                            while (getItemInfos.Count <= count)
-                            {
-                                var rand = Random.Range(0,alcanaSkills.Count);
-                                // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
-                                {
-                                    var alcanaData = new GetItemData
-                                    {
-                                        Type = GetItemType.Skill,
-                                        Param1 = alcanaSkills[rand].Value.Id
-                                    };
-                                    var getItemInfo = new GetItemInfo(alcanaData);
-                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
-                                    {
-                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                        getItemInfos.Add(getItemInfo);
-                                    }
-                                }
-                            }
-                            alcanaRank = RankType.PassiveRank2;
-                            alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-                            alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-                            count = 1;
-                            while (getItemInfos.Count <= count)
-                            {
-                                var rand = Random.Range(0,alcanaSkills.Count);
-                                // 報酬設定
-                                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
-                                {
-                                    var alcanaData = new GetItemData
-                                    {
-                                        Type = GetItemType.Skill,
-                                        Param1 = alcanaSkills[rand].Value.Id
-                                    };
-                                    var getItemInfo = new GetItemInfo(alcanaData);
-                                    if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
-                                    {
-                                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(alcanaData)});
-                                        getItemInfos.Add(getItemInfo);
-                                    }
-                                }
-                            }
-                        }
-                        break;
+                            // Rank1,2からランダム設定
+                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.ActiveRank2,1);
+                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank1,2);
+                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank2,4);
+                            break;
                 }
                 if (stageSymbolData.PrizeSetId > 0)
                 {
@@ -231,26 +142,54 @@ namespace Ryneus
             return symbolInfos;
         }
 
-        private static List<GetItemInfo> MakeSelectRelicGetItemInfos(RankType rankType)
+        private static GetItemInfo MakeGetItemInfo(GetItemType getItemType,int param1)
         {
-            var getItemInfos = new List<GetItemInfo>();
+            var getItemData = new GetItemData
+            {
+                Type = getItemType,
+                Param1 = param1
+            };
+            return new GetItemInfo(getItemData);
+        }
+
+        private static void MakeShopGetItemInfos(List<GetItemInfo> getItemInfos,SymbolInfo symbolInfo,RankType rankType,int count)
+        {
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
-            var count = 2;
-            if (alcanaSkills.Count < 2)
+            while (getItemInfos.Count <= count)
+            {
+                var rand = Random.Range(0,alcanaSkills.Count);
+                // 報酬設定
+                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                {
+                    var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
+                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                    {
+                        symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
+                        getItemInfos.Add(getItemInfo);
+                    }
+                }
+            }
+        }
+
+        private static List<GetItemInfo> MakeSelectRelicGetItemInfos(RankType rankType)
+        {
+            var getItemInfos = new List<GetItemInfo>();
+            // タイトル表示用
+            getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectRelic,-1));
+            var alcanaRank = rankType;
+            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+            var count = 3;
+            if (alcanaSkills.Count < count)
             {
                 count = alcanaSkills.Count;
             }
             if (count == 0)
             {
                 // 報酬設定
-                var resourceData2 = new GetItemData
-                {
-                    Type = GetItemType.Numinous,
-                    Param1 = 20
-                };
-                getItemInfos.Add(new GetItemInfo(resourceData2));
+                getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,20));
             } else
             {
                 while (getItemInfos.Count <= count)
@@ -259,13 +198,8 @@ namespace Ryneus
                     if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         // 報酬設定
-                        var alcanaData = new GetItemData
-                        {
-                            Type = GetItemType.SelectRelic,
-                            Param1 = alcanaSkills[rand].Value.Id
-                        };
-                        var getItemInfo = new GetItemInfo(alcanaData);
-                        if (getItemInfos.Find(a => a.Param1 == alcanaData.Param1) == null)
+                        var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
+                        if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                         {
                             getItemInfos.Add(getItemInfo);
                         }

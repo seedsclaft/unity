@@ -62,7 +62,6 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             
             _view.SetStageInfo(_model.CurrentStage);
-            _view.SetParallelCommand(_model.ParallelCommand());
             _view.SetMultiverse(_model.PartyInfo.EnableMultiverse(),_model.CurrentStage.WorldNo);
             _view.SetTacticsCommand(_model.TacticsCommand());
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
@@ -108,9 +107,6 @@ namespace Ryneus
                 if (currentRecord != null)
                 {
                     CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
-                    //CommandStageSymbol();
-                    //CommandSelectRecordSeek(currentRecord);
-                    //CommandSelectRecord(currentRecord);
                 }
             }
         }
@@ -279,7 +275,8 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             //Symbolに対応したシンボルを表示
             _view.SetSymbols(_model.StageResultInfos(symbolResultInfo));
-            _view.ShowSymbolList();
+            _view.ShowRecordList();
+            _view.SetActiveParallelToggle(_model.ParallelHistory());
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
@@ -289,7 +286,6 @@ namespace Ryneus
                 // 過去の中ではさらに過去に戻らない
                 if (_model.PartyInfo.ReturnSymbol == null)
                 {
-                    _view.ShowParallelList();
                 }
             }
             //_backCommand = CommandType.TacticsCommand;
@@ -341,7 +337,6 @@ namespace Ryneus
 
         private void CommandStageSymbol()
         {
-            _view.HideParallelList();
             _view.HideSelectCharacter();
             _view.HideRecordList();
             _view.ShowSymbolRecord();
@@ -367,7 +362,27 @@ namespace Ryneus
             } else
             if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
-                // 過去
+                // 並行世界化する場合
+                if (_view.CheckParallelToggle)
+                {
+                    if (_model.ParallelHistory())
+                    {
+                        if (_model.PartyInfo.ParallelCount > 0)
+                        {
+                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a,recordInfo));
+                            _view.CommandCallConfirm(confirmInfo);
+                        } else
+                        {
+                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23021,_model.PartyInfo.ParallelCount.ToString()),(a) => {});
+                            confirmInfo.SetIsNoChoice(true);
+                            _view.CommandCallConfirm(confirmInfo);
+                        }
+                    } else
+                    {
+                        CommandCautionInfo(DataSystem.GetText(23030));
+                    }
+                } else
+                // 過去改編
                 if (_model.RemakeHistory())
                 {
                     var confirmInfo = new ConfirmInfo(DataSystem.GetText(23010),(a) =>
@@ -432,7 +447,8 @@ namespace Ryneus
             _model.ResetRecordStage();
             _model.SetFirstBattleActorId();
             CommandRefresh();
-            _view.ShowSymbolList();
+            _view.ShowRecordList();
+            _view.SetActiveParallelToggle(_model.ParallelHistory());
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _backCommand = CommandType.SelectTacticsCommand;
@@ -440,9 +456,9 @@ namespace Ryneus
 
         private void CancelSelectSymbol()
         {
-            _model.ResetRecordStage();
             CommandRefresh();
             CommandSelectRecordSeek(_model.CurrentSelectRecord());
+            _model.ResetRecordStage();
         }
 
         private void CommandDecideRecord()
@@ -467,54 +483,20 @@ namespace Ryneus
 
         private void CommandParallel()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var ParallelIndex = _view.ParallelListIndex;
-            if (ParallelIndex == 0)
-            {
-                if (_model.RemakeHistory())
-                {
-                    CommandDecideRecord();
-                } else
-                {
-                    CommandCautionInfo(DataSystem.GetText(23030));
-                }
-                return;
-            }
-            if (_model.ParallelHistory())
-            {
-                if (_model.PartyInfo.ParallelCount > 0)
-                {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
-                    _view.CommandCallConfirm(confirmInfo);
-                } else
-                {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23021,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a));
-                    confirmInfo.SetIsNoChoice(true);
-                    _view.CommandCallConfirm(confirmInfo);
-                }
-            } else
-            {
-                CommandCautionInfo(DataSystem.GetText(23030));
-            }
         }
 
-        private void UpdatePopupCheckParallelRecord(ConfirmCommandType confirmCommandType)
+        private void UpdatePopupCheckParallelRecord(ConfirmCommandType confirmCommandType,SymbolResultInfo symbolResultInfo)
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                var symbolResultInfo = _view.SymbolResultInfo();
                 if (symbolResultInfo != null)
                 {
                     // 過去のステージを作る
                     _model.SetReturnRecordStage(symbolResultInfo);
-                    _model.SetParallelMode();
-                    _view.CommandGotoSceneChange(Scene.Tactics);
+                    _model.SetParallelMode(true);
+                    CommandCurrentSelectRecord(symbolResultInfo);
                 }
             }
-        }
-
-        private void UpdatePopupNoParallelRecord()
-        {
         }
 
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
@@ -670,7 +652,7 @@ namespace Ryneus
         
         private void CheckAlcanaSymbol(List<SkillInfo> skillInfos)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,""),(a) => UpdatePopupAlcanaSymbol((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,""),(a) => UpdatePopupAlcanaSymbol(a),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(skillInfos);
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -683,7 +665,6 @@ namespace Ryneus
                 // アルカナ選択
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.AlcanaMagicSkillInfos(getItemInfos)));
-                //GotoStrategyScene(getItemInfos,_model.StageMembers());
             } else
             {
                 CancelSelectSymbol();
@@ -810,8 +791,9 @@ namespace Ryneus
                 });
             } else
             {
+                var getItemInfo = _view.SymbolGetItemInfo;
                 // 確認する用
-                CommandStatusInfo(actorInfos,false,true,false,false,-1,() => 
+                CommandStatusInfo(actorInfos,false,true,false,false,getItemInfo.Param1,() => 
                 {
 
                 });
@@ -845,9 +827,9 @@ namespace Ryneus
 
         private void CommandCancelRecordList()
         {
+            _model.ResetRecordStage();
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.HideRecordList();
-            _view.HideParallelList();
             _view.ChangeSymbolBackCommandActive(false);
             _backCommand = CommandType.CancelSymbolRecord;
         }

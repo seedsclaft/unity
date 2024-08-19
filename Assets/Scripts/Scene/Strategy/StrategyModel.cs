@@ -106,13 +106,14 @@ namespace Ryneus
             if (record != null && record.SymbolInfo.Cleared) return;
             
             var getItemInfos = SceneParam.GetItemInfos;
-            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
-            if (selectRelicInfos.Count > 0)
+            var selectRelicInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectRelic);
+            if (selectRelicInfo != null)
             {
+                var relicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
                 _relicData = new List<SkillInfo>();
-                foreach (var selectRelicInfo in selectRelicInfos)
+                foreach (var relicInfo in relicInfos)
                 {
-                    var skillInfo = new SkillInfo(selectRelicInfo.Param1);
+                    var skillInfo = new SkillInfo(relicInfo.Param1);
                     skillInfo.SetEnable(true);
                     _relicData.Add(skillInfo);
                 }
@@ -222,6 +223,7 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.SelectRelic:
+                        /*
                         // アルカナ選択の時は既にFlagを変えておく
                         if (getItemInfo.GetFlag == true)
                         {
@@ -230,6 +232,7 @@ namespace Ryneus
                             resultInfo.SetTitle(relicData.Name);
                             _resultInfos.Add(resultInfo);
                         }
+                        */
                         break;
                 }
             }
@@ -268,7 +271,7 @@ namespace Ryneus
         public void MakeSelectRelic(int skillId)
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectRelic);
+            var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
             var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)

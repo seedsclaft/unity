@@ -173,15 +173,7 @@ MonoBehaviour:
       Rate: 100
       Param1: 2
       Param2: -1
-      PrizeSetId: 0
-    - StageId: 1
-      Seek: 7
-      SeekIndex: 1
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 200
-      PrizeSetId: 0
+      PrizeSetId: 252
     Tutorials: []
   - Id: 2
     Name: "A.D.3492 \u30DB\u30EF\u30A4\u30C8\u30F4\u30A7\u30FC\u30EB\u306E\u9759\u5BC2"
@@ -317,7 +309,7 @@ MonoBehaviour:
       Rate: 100
       Param1: 4
       Param2: -1
-      PrizeSetId: 0
+      PrizeSetId: 252
     - StageId: 2
       Seek: 7
       SeekIndex: 1
@@ -481,19 +473,19 @@ MonoBehaviour:
     - StageId: 3
       Seek: 7
       SeekIndex: 0
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 200
-      PrizeSetId: 0
-    - StageId: 3
-      Seek: 7
-      SeekIndex: 1
       SymbolType: 8
       Rate: 100
       Param1: 0
       Param2: -1
       PrizeSetId: 252
+    - StageId: 3
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 200
+      PrizeSetId: 0
     Tutorials: []
   - Id: 4
     Name: "A.D.2458 \u30A2\u30BD\u30FB\u30AB\u30BF\u30B9\u30C8\u30ED\u30D5"
@@ -649,19 +641,19 @@ MonoBehaviour:
     - StageId: 4
       Seek: 7
       SeekIndex: 0
+      SymbolType: 8
+      Rate: 100
+      Param1: 0
+      Param2: -1
+      PrizeSetId: 252
+    - StageId: 4
+      Seek: 7
+      SeekIndex: 1
       SymbolType: 4
       Rate: 100
       Param1: -1
       Param2: 200
       PrizeSetId: 0
-    - StageId: 4
-      Seek: 7
-      SeekIndex: 1
-      SymbolType: 8
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 252
     Tutorials: []
   - Id: 5
     Name: "A.D.2065 \u5357\u6D77\u30C8\u30E9\u30D5\u5DE8\u5927\u5730\u9707"
@@ -833,19 +825,19 @@ MonoBehaviour:
     - StageId: 5
       Seek: 7
       SeekIndex: 0
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 210
-      PrizeSetId: 0
-    - StageId: 5
-      Seek: 7
-      SeekIndex: 1
       SymbolType: 8
       Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 252
+    - StageId: 5
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 210
+      PrizeSetId: 0
     Tutorials: []
   - Id: 6
     Name: "A.D.2011 \u6771\u65E5\u672C\u5927\u9707\u707D"
@@ -1017,19 +1009,19 @@ MonoBehaviour:
     - StageId: 6
       Seek: 7
       SeekIndex: 0
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 210
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 7
-      SeekIndex: 1
       SymbolType: 8
       Rate: 100
       Param1: 0
       Param2: 0
       PrizeSetId: 252
+    - StageId: 6
+      Seek: 7
+      SeekIndex: 1
+      SymbolType: 4
+      Rate: 100
+      Param1: -1
+      Param2: 210
+      PrizeSetId: 0
     Tutorials: []
   - Id: 7
     Name: "A.D.1995 \u962A\u795E\u30FB\u6DE1\u8DEF\u5927\u9707\u707D"

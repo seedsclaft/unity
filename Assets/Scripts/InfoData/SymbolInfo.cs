@@ -16,6 +16,10 @@ namespace Ryneus
         }
         private List<GetItemInfo> _getItemInfos = new ();
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
+        public void SetGetItemInfos(List<GetItemInfo> getItemInfos)
+        {
+            _getItemInfos = getItemInfos;
+        }
         private bool _lastSelected;
         public bool LastSelected => _lastSelected;
         public void SetLastSelected(bool lastSelected)
@@ -37,11 +41,6 @@ namespace Ryneus
         public List<BattlerInfo> BattlerInfos()
         {
             return _troopInfo.BattlerInfos;
-        }
-
-        public void SetGetItemInfos(List<GetItemInfo> getItemInfos)
-        {
-            _getItemInfos = getItemInfos;
         }
 
         public int BattleEvaluate()

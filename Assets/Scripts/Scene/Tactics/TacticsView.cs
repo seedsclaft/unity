@@ -16,7 +16,6 @@ namespace Ryneus
         [SerializeField] private StageInfoComponent stageInfoComponent = null;
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
         [SerializeField] private BaseList symbolRecordList = null;
-        [SerializeField] private BaseList parallelList = null;
         [SerializeField] private MagicList alcanaSelectList = null;
 
         [SerializeField] private TextMeshProUGUI saveScoreText = null;
@@ -32,6 +31,8 @@ namespace Ryneus
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
+        [SerializeField] private GameObject parallelHistoryObj = null;
+        [SerializeField] private Toggle parallelHistoryToggle = null;
         public void SetActiveBackGround(bool isActive)
         {
             backGround.SetActive(isActive);
@@ -46,8 +47,9 @@ namespace Ryneus
         }
 
 
-        public int ParallelListIndex => parallelList.Index;
+        public GetItemInfo SymbolGetItemInfo => tacticsSymbolList.GetItemInfo();
         public int AlcanaListIndex => alcanaSelectList.Index;
+        public bool CheckParallelToggle => parallelHistoryToggle.isOn;
         public SymbolResultInfo SymbolResultInfo() 
         {
             var listData = symbolRecordList.ListData;
@@ -101,7 +103,6 @@ namespace Ryneus
                 _commandData(eventData);
             });
 
-            parallelList.Initialize();
             trainView.Initialize(base._commandData);
             trainView.SetParentInputKeyActive((a,b) => UpdateChildInputKeyActive(a,b));
             trainView.SetHelpWindow(HelpWindow);
@@ -111,9 +112,9 @@ namespace Ryneus
             var presenter = new TacticsPresenter(this);
             trainView.HideSelectCharacter();
             HideSymbolRecord();
-            HideParallelList();
             alcanaSelectList.Hide();
             presenter.CommandReturnStrategy();
+            parallelHistoryObj.SetActive(false);
         }
 
         public void StartAnimation()
@@ -396,7 +397,7 @@ namespace Ryneus
             } else
             {
                 var getItemInfos = tacticsSymbolList.SelectRelicInfos();
-                if (getItemInfos != null)
+                if (getItemInfos != null && getItemInfos.Count > 0)
                 {
                     var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
                     {
@@ -466,13 +467,6 @@ namespace Ryneus
             }
         }
 
-        public void SetParallelCommand(List<ListData> commands)
-        {
-            parallelList.SetData(commands);
-            parallelList.SetInputHandler(InputKeyType.Cancel,() => CallSymbolRecord());
-            parallelList.SetInputHandler(InputKeyType.Decide,() => OnClickParallel());
-        }
-
         public void SetMultiverse(bool enable,int worldNo)
         {
             leftButton?.gameObject?.SetActive(false);
@@ -481,17 +475,7 @@ namespace Ryneus
             //rightButton?.gameObject?.SetActive(enable && worldNo == 0);
         }
 
-        public void ShowParallelList()
-        {
-            //parallelList.gameObject.SetActive(true);
-        }
-
-        public void HideParallelList()
-        {
-            parallelList.gameObject.SetActive(false);
-        }
-
-        public void ShowSymbolList()
+        public void ShowRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(true);
             tacticsSymbolList.ResetInputFrame(1);
@@ -503,8 +487,14 @@ namespace Ryneus
         public void HideRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(false);
+            SetActiveParallelToggle(false);
             SetHelpInputInfo("TACTICS");
             symbolRecordList.ScrollRect.enabled = true;
+        }
+
+        public void SetActiveParallelToggle(bool isActive)
+        {
+            parallelHistoryObj.SetActive(isActive);
         }
 
         public void SetSaveScore(int saveScore)

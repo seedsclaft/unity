@@ -375,15 +375,16 @@ namespace Ryneus
             {
                 CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
                 CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
-                CurrentStage.SetSeekIndex(-1);
+                CurrentStage.SetSeekIndex(0);
+                SetParallelMode(false);
             }
             PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
         }
         
-        public void SetParallelMode()
+        public void SetParallelMode(bool isActive)
         {
-            CurrentStage.SetParallelMode(true);
+            CurrentStage.SetParallelMode(isActive);
         }
 
         public async UniTask LoadBattleResources(List<BattlerInfo> battlers)

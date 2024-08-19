@@ -16,7 +16,6 @@ namespace Ryneus
         private System.Action<int> _getItemInfoSelectHandler = null;
         [SerializeField] private GameObject selected = null;
 
-        private List<GetItemInfo> _selectRelicInfos = new ();
 
         private int _getItemIndex = -1;
         private bool _selectable = false;
@@ -31,11 +30,8 @@ namespace Ryneus
         public List<GetItemInfo> SelectRelicInfos()
         {
             if (ListData == null) return null;
-            if (_selectRelicInfos.Count != 0)
-            {
-                return _selectRelicInfos;
-            }
-            return null;
+            var data = (SymbolResultInfo)ListData.Data;
+            return data.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
         }
         
         public GetItemInfo GetItemInfo()
@@ -107,12 +103,10 @@ namespace Ryneus
             UpdateItemIndex(_getItemIndex);
             UpdateSelected(data.Selected);
             Cursor?.SetActive(ListData.Enable);
-            //UpdateCleared(data);
         }
 
         private List<ListData> MakeGetItemListData(SymbolInfo symbolInfo)
         {
-            _selectRelicInfos.Clear();
             var list = new List<ListData>();
             foreach (var getItemInfo in symbolInfo.GetItemInfos)
             {
@@ -120,36 +114,9 @@ namespace Ryneus
                 {
                     continue;
                 }
-                if (getItemInfo.IsDisplayTacticsSymbol())
-                {
-                    var data = new ListData(getItemInfo);
-                    data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
-                    list.Add(data);
-                }
-                if (getItemInfo.GetItemType == GetItemType.SelectRelic)
-                {
-                    _selectRelicInfos.Add(getItemInfo);
-                }
-            }
-            var selectRelic = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectRelic);
-            if (selectRelic != null)
-            {
-                var data = new ListData(selectRelic);
+                var data = new ListData(getItemInfo);
+                data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
                 list.Add(data);
-            }
-            var selectAddActor = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
-            if (selectAddActor != null)
-            {
-                var data = new ListData(selectAddActor);
-                list.Add(data);
-            } else
-            {
-                var addActor = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor);
-                if (addActor != null)
-                {
-                    var data = new ListData(addActor);
-                    list.Add(data);
-                }
             }
             return list;
         }
@@ -171,12 +138,6 @@ namespace Ryneus
         private void UpdateSelected(bool select)
         {
             selected.SetActive(select);
-        }
-
-        private void UpdateCleared(SymbolInfo symbolInfo)
-        {
-            if (selected == null) return;
-            //cleared.SetActive(symbolInfo.Cleared);
         }
 
         private void LateUpdate() 

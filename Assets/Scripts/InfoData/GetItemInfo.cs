@@ -21,16 +21,17 @@ namespace Ryneus
 
         public GetItemInfo(GetItemData getItemData)
         {
-            if (getItemData != null)
+            if (getItemData == null)
             {
-                _param1 = getItemData.Param1;
-                _param2 = getItemData.Param2;
-                _getItemType = getItemData.Type;
-                if (IsSkill())
-                {
-                    var skillData = DataSystem.FindSkill(_param1);
-                    _skillId = skillData.Id;
-                }
+                return;
+            }
+            _param1 = getItemData.Param1;
+            _param2 = getItemData.Param2;
+            _getItemType = getItemData.Type;
+            if (IsSkill())
+            {
+                var skillData = DataSystem.FindSkill(_param1);
+                _skillId = skillData.Id;
             }
         }
 
@@ -64,8 +65,7 @@ namespace Ryneus
                 case GetItemType.LearnSkill:
                     return DataSystem.FindSkill(_param2).Name;
                 case GetItemType.AddActor:
-                    return "選択して仲間召喚";
-                    //return DataSystem.FindActor(_param1).Name;
+                    return DataSystem.FindActor(_param1).Name;
                 case GetItemType.SelectAddActor:
                     return "選択して仲間召喚";
                 case GetItemType.SaveHuman:
@@ -83,7 +83,7 @@ namespace Ryneus
         
         public bool IsSkill()
         {
-            return _getItemType == GetItemType.Skill || _getItemType == GetItemType.SelectRelic;
+            return _getItemType == GetItemType.Skill;
         }
 
         public bool IsAttributeSkill()
@@ -94,15 +94,6 @@ namespace Ryneus
         public bool IsAddActor()
         {
             return _getItemType == GetItemType.AddActor || _getItemType == GetItemType.SelectAddActor;
-        }
-
-        /// <summary>
-        /// TacticsSymbolの獲得欄に表示するか
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDisplayTacticsSymbol()
-        {
-            return _getItemType != GetItemType.SelectRelic && _getItemType != GetItemType.SelectAddActor && _getItemType != GetItemType.AddActor;
         }
     }
 }
