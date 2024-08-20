@@ -93,7 +93,7 @@ namespace Ryneus
         {  
             if (_model.PartyInfo.ReturnSymbol != null)
             {
-                CommandCautionInfo(DataSystem.GetText(23071));
+                CommandCautionInfo(DataSystem.GetText(19360));
                 ClosePopup();
                 return;
             }
@@ -155,7 +155,7 @@ namespace Ryneus
         {
             if (_model.PartyInfo.ReturnSymbol != null)
             {
-                CommandCautionInfo(DataSystem.GetText(23070));
+                CommandCautionInfo(DataSystem.GetText(19350));
                 ClosePopup();
                 return;
             }
@@ -166,7 +166,7 @@ namespace Ryneus
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(581),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(13300),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -174,7 +174,7 @@ namespace Ryneus
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(583),(a) => UpdatePopupTitle((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(13320),(a) => UpdatePopupTitle((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -185,7 +185,7 @@ namespace Ryneus
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 _model.DeletePlayerData();
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
-                var confirmInfo = new ConfirmInfo(DataSystem.GetText(582),(a) => 
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(13310),(a) => 
                 {
                     SoundManager.Instance.StopBgm();
                     _view.CommandGameSystem(Base.CommandType.CloseStatus);

@@ -216,7 +216,7 @@ namespace Ryneus
 
         private void UpdateCaption(StatusParamType statusParamType,TextMeshProUGUI caption)
         {
-            var textId = 300 + (int)statusParamType;
+            var textId = 2100 + (int)statusParamType;
             caption?.SetText(DataSystem.GetText(textId));
         }
     }

@@ -20,28 +20,28 @@ namespace Ryneus
             var optionCommand = new SystemData.CommandData
             {
                 Id = 1,
-                Name = DataSystem.GetText(701),
+                Name = DataSystem.GetText(13410),
                 Key = "Option"
             };
             list.Add(optionCommand);
             var menuCommand = new SystemData.CommandData
             {
                 Id = 2,
-                Name = DataSystem.GetText(700),
+                Name = DataSystem.GetText(13400),
                 Key = "License"
             };
             list.Add(menuCommand);
             var initCommand = new SystemData.CommandData
             {
                 Id = 3,
-                Name = DataSystem.GetText(708),
+                Name = DataSystem.GetText(13420),
                 Key = "InitializeData"
             };
             list.Add(initCommand);
             var endCommand = new SystemData.CommandData
             {
                 Id = 4,
-                Name = DataSystem.GetText(710),
+                Name = DataSystem.GetText(13430),
                 Key = "EndGame"
             };
             list.Add(endCommand);

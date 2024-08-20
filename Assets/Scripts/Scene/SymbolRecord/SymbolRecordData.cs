@@ -44,18 +44,18 @@ namespace Ryneus
                 nextObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
                 currentObj?.SetActive(dates[0].SymbolType == SymbolType.None);
-                var textId = 81;
+                var textId = 19631;
                 if (nextObj.activeSelf)
                 {
-                    textId = 82;
+                    textId = 19632;
                 } else
                 if (futureObj.activeSelf)
                 {
-                    textId = 83;
+                    textId = 19633;
                 } else
                 if (currentObj.activeSelf)
                 {
-                    textId = 84;
+                    textId = 19634;
                 }
                 seekerText?.SetText(DataSystem.GetText(textId));
                 if (dates[0].SymbolType == SymbolType.None)

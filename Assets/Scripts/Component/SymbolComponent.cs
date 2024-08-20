@@ -62,7 +62,7 @@ namespace Ryneus
                 if (_symbolInfo.SymbolType > SymbolType.None && _symbolInfo.SymbolType < SymbolType.Group)
                 {
                     commandTitle.transform.parent.gameObject.SetActive(true);
-                    var textId = 40 + (int)_symbolInfo.SymbolType;
+                    var textId = 19610 + (int)_symbolInfo.SymbolType;
                     commandTitle.text = DataSystem.GetTextData(textId).Text;
                     //commandTitle.transform.parent.gameObject.SetActive(!_symbolInfo.Past);
                 } else

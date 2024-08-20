@@ -335,7 +335,7 @@ namespace Ryneus
 
         private void CommandActorLearnMagic(SkillInfo skillInfo)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19510,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(19520,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -422,7 +422,7 @@ namespace Ryneus
         private void CheckBattleMember()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            CommandCautionInfo(DataSystem.GetText(11160));
+            CommandCautionInfo(DataSystem.GetText(19400));
         }
 
         private void ShowLearningSkillInfos()

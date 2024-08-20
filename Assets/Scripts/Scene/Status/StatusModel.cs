@@ -11,17 +11,10 @@ namespace Ryneus
         {
             _actorInfos = actorInfos;
         }
+
         public string HelpText()
         {
-            int textId = -1;
-            if (CurrentStage == null)
-            {
-                textId = 11090;
-            } else
-            {
-                textId = 11050;
-            }
-            return DataSystem.GetText(textId);
+            return DataSystem.GetText(18010);
         }
 
         private int _currentIndex = 0;

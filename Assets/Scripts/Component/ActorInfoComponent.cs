@@ -203,8 +203,9 @@ namespace Ryneus
             }
         }
 
-        private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param){
-            var textId = 321 + (int)param;
+        private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param)
+        {
+            var textId = 2000 + (int)param;
             textMeshProUGUI.text = DataSystem.GetText(textId);
         }
         

@@ -49,7 +49,7 @@ namespace Ryneus
                 _commandData(eventData);
                 enemyInfoButton.SetActiveCursor(false);
             });
-            enemyInfoButton?.SetText(DataSystem.GetText(809));
+            enemyInfoButton?.SetText(DataSystem.GetText(19800));
             statusLevelUp.Initialize();
             statusLevelUp.SetActive(false);
             new TrainPresenter(this);

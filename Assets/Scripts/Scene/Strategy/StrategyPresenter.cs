@@ -113,7 +113,7 @@ namespace Ryneus
                     _model.MakeLvUpData();
                     _model.MakeSelectRelicData();
                     _model.MakeResult();
-                    _view.SetTitle(DataSystem.GetText(14030));
+                    _view.SetTitle(DataSystem.GetText(20010));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                     if (_model.LevelUpData.Count > 0)
                     {
@@ -122,7 +122,7 @@ namespace Ryneus
                     }
                 } else
                 {
-                    _view.SetTitle(DataSystem.GetText(14030));
+                    _view.SetTitle(DataSystem.GetText(20010));
                     _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
                 }
             } else
@@ -134,7 +134,7 @@ namespace Ryneus
                 {
                     bonusList.Add(_model.IsBonusTactics(item.ActorId));
                 }
-                _view.SetTitle(DataSystem.GetText(14020));
+                _view.SetTitle(DataSystem.GetText(20040));
                 _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
             }
         }
@@ -296,7 +296,7 @@ namespace Ryneus
 
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11140),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19200),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -400,7 +400,7 @@ namespace Ryneus
             CommandStatusInfo(_model.StageMembers(),false,true,false,false,-1,() => 
             {
                 SetHelpInputSkipEnable();
-                _view.SetHelpText(DataSystem.GetText(14010));
+                _view.SetHelpText(DataSystem.GetText(20020));
             });
         }
 
@@ -422,7 +422,7 @@ namespace Ryneus
             CommandEnemyInfo(enemyInfos,false,() => 
             { 
                 SetHelpInputSkipEnable();
-                _view.SetHelpText(DataSystem.GetText(14010));
+                _view.SetHelpText(DataSystem.GetText(20020));
                 _busy = false;
             });  
         }

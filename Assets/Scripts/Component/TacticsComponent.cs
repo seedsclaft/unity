@@ -138,7 +138,7 @@ namespace Ryneus
 
         private string BattleIndexText(int battleIndex)
         {
-            return DataSystem.System.GetTextData(battleIndex + 2000 - 1).Text;
+            return DataSystem.System.GetTextData(battleIndex + 19600 - 1).Text;
         }
     }
 }

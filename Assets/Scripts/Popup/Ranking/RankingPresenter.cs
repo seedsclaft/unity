@@ -58,7 +58,6 @@ namespace Ryneus
             _model.MakeDetailPartyInfo(listIndex);
             var statusViewInfo = new StatusViewInfo(() => {
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                //_view.SetHelpText(DataSystem.GetTextData(14010).Text);
                 _view.ChangeUIActive(true);
                 _view.CommandSceneShowUI();
             });

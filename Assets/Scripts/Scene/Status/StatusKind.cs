@@ -17,7 +17,7 @@ namespace Ryneus
             var kindText = "";
             if (data != KindType.None)
             {
-                kindText = DataSystem.GetText((int)data + 500);
+                kindText = DataSystem.GetText((int)data + 18800);
             }
             kindName?.SetText(kindText);
         }

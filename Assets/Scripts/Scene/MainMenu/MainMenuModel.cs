@@ -96,14 +96,14 @@ namespace Ryneus
             var menuCommand = new SystemData.CommandData
             {
                 Id = 2,
-                Name = DataSystem.GetText(703),
+                Name = DataSystem.GetText(19700),
                 Key = "Help"
             };
             list.Add(menuCommand);
             var saveCommand = new SystemData.CommandData
             {
                 Id = 3,
-                Name = DataSystem.GetText(707),
+                Name = DataSystem.GetText(19710),
                 Key = "Save"
             };
             list.Add(saveCommand);

@@ -209,7 +209,5 @@ namespace Ryneus
         Strategy,
         Slot,
         FastBattle,
-        AlcanaSelect,
-        AlcanaResult,
     }
 }

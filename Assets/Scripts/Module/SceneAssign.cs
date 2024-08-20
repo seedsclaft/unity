@@ -15,8 +15,6 @@ namespace Ryneus
         [SerializeField] private GameObject strategyScene = null;
         [SerializeField] private GameObject slotScene = null;
         [SerializeField] private GameObject fastBattleScene = null;
-        [SerializeField] private GameObject alcanaSelectScene = null;
-        [SerializeField] private GameObject alcanaResultScene = null;
         public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
         {
             var prefab = Instantiate(GetSceneObject(scene));
@@ -50,10 +48,6 @@ namespace Ryneus
                 return slotScene;
                 case Scene.FastBattle:
                 return fastBattleScene;
-                case Scene.AlcanaSelect:
-                return alcanaSelectScene;
-                case Scene.AlcanaResult:
-                return alcanaResultScene;
             }
             return null;
         }

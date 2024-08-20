@@ -53,13 +53,13 @@ namespace Ryneus
                     var skillData = DataSystem.FindSkill(_param1);
                     return skillData.Name;
                 case GetItemType.Demigod:
-                    return DataSystem.GetText(14042) + "+" + _param1.ToString();
+                    return DataSystem.GetText(20210) + "+" + _param1.ToString();
                 case GetItemType.Ending:
                     break;
                 case GetItemType.StatusUp:
-                    return DataSystem.GetReplaceText(14070,_param1.ToString());
+                    return DataSystem.GetReplaceText(20220,_param1.ToString());
                 case GetItemType.Regeneration:
-                    return DataSystem.GetReplaceText(3240,_param1.ToString());
+                    return DataSystem.GetReplaceText(20230,_param1.ToString());
                 case GetItemType.ReBirth:
                     break;
                 case GetItemType.LearnSkill:
@@ -67,11 +67,11 @@ namespace Ryneus
                 case GetItemType.AddActor:
                     return DataSystem.FindActor(_param1).Name;
                 case GetItemType.SelectAddActor:
-                    return "選択して仲間召喚";
+                    return DataSystem.GetText(20240);
                 case GetItemType.SaveHuman:
-                    return DataSystem.GetText(14100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1);
+                    return DataSystem.GetText(19100) + DataSystem.GetReplaceDecimalText(_param2) + "/" + DataSystem.GetReplaceDecimalText(_param1);
                 case GetItemType.SelectRelic:
-                    return "選択してレア魔法入手";
+                    return DataSystem.GetText(20250);
                 case GetItemType.RemakeHistory:
                 case GetItemType.ParallelHistory:
                 case GetItemType.Multiverse:

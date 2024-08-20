@@ -16,10 +16,10 @@ namespace Ryneus
             var data = (ScorePrizeInfo)ListData.Data;
             if (data != null)
             {
-                score?.SetText(DataSystem.GetReplaceDecimalText(data.Score) + "人");
+                score?.SetText(DataSystem.GetReplaceDecimalText(data.Score) + DataSystem.GetText(113040));
                 prizeName?.SetText(data.Title);
                 prizeHelp?.SetText(data.Help);
-                var textId = data._getFlag ? 14190 : 14191;
+                var textId = data._getFlag ? 113000 : 113010;
                 getFlag?.SetText(DataSystem.GetText(textId));
             }
         }

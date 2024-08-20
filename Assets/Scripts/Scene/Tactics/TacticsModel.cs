@@ -245,14 +245,14 @@ namespace Ryneus
             var retire = new SystemData.CommandData
             {
                 Id = 1,
-                Name = DataSystem.GetText(701),
+                Name = DataSystem.GetText(13410),
                 Key = "Option"
             };
             list.Add(retire);
             var menuCommand = new SystemData.CommandData
             {
                 Id = 2,
-                Name = DataSystem.GetText(703),
+                Name = DataSystem.GetText(19700),
                 Key = "Help"
             };
             list.Add(menuCommand);
@@ -261,7 +261,7 @@ namespace Ryneus
                 var saveCommand = new SystemData.CommandData
                 {
                     Id = 3,
-                    Name = DataSystem.GetText(707),
+                    Name = DataSystem.GetText(19710),
                     Key = "Save"
                 };
                 list.Add(saveCommand);
@@ -269,7 +269,7 @@ namespace Ryneus
             var titleCommand = new SystemData.CommandData
             {
                 Id = 4,
-                Name = DataSystem.GetText(709),
+                Name = DataSystem.GetText(19720),
                 Key = "Title"
             };
             list.Add(titleCommand);
@@ -298,20 +298,6 @@ namespace Ryneus
                     */
             }
             return "";
-        }
-
-        public TacticsCommandData TacticsCommandData()
-        {
-            var tacticsCommandData = new TacticsCommandData
-            {
-                Title = CommandTitle(),
-            };
-            return tacticsCommandData;
-        }
-
-        private string CommandTitle()
-        {
-            return DataSystem.GetText((int)_TacticsCommandType);
         }
 
         public void AssignBattlerIndex()
@@ -412,38 +398,6 @@ namespace Ryneus
             return listData;
         }
 
-        public List<ListData> ParallelCommand()
-        {
-            var menuCommandDates = new List<SystemData.CommandData>();
-            var yesCommand = new SystemData.CommandData
-            {
-                Key = "Yes",
-                Name = DataSystem.GetText(23050),
-                Id = 0
-            };
-            var noCommand = new SystemData.CommandData
-            {
-                Key = "No",
-                Name = DataSystem.GetText(23040),
-                Id = 1
-            };
-            menuCommandDates.Add(noCommand);
-            menuCommandDates.Add(yesCommand);            
-            Func<SystemData.CommandData,bool> enable = (a) => 
-            {
-                if (a.Key == "Yes")
-                {
-                    return PartyInfo.ParallelHistory();
-                } else
-                if (a.Key == "No")
-                {
-                    return PartyInfo.RemakeHistory();
-                }
-                return false;
-            };
-            return MakeListData(menuCommandDates,enable,-1);
-        }
-        
         public bool RemakeHistory()
         {
             return PartyInfo.RemakeHistory();

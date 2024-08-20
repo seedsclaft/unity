@@ -106,7 +106,7 @@ namespace Ryneus
             _model.GainSaveCount();
             _model.SavePlayerStageData(true);
             // 成功表示
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11080),(a) => 
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19500),(a) => 
             {
                 if (isReturnScene)
                 {
@@ -230,7 +230,7 @@ namespace Ryneus
                 }
             } else
             {
-                var textId = _model.ActorLevelLinked(actorInfo) ? 11171 : 11170;
+                var textId = _model.ActorLevelLinked(actorInfo) ? 19420 : 19410;
                 CommandCautionInfo(DataSystem.GetText(textId));
                 endEvent?.Invoke();
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);

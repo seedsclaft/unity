@@ -160,7 +160,7 @@ namespace Ryneus
                             if (minusCurrency > 0)
                             {
                                 var minusResultInfo = new StrategyResultViewInfo();
-                                minusResultInfo.SetTitle("評価損失: -" + minusCurrency.ToString() + DataSystem.GetText(1000));
+                                minusResultInfo.SetTitle(DataSystem.GetText(20050) + minusCurrency.ToString() + DataSystem.GetText(1000));
                                 _resultInfos.Add(minusResultInfo);
                             }
                         } else
@@ -203,7 +203,7 @@ namespace Ryneus
                         //record.AddSelectedIndex(getItemInfo.Param1);
                         // キャラ加入
                         var actorData = DataSystem.FindActor(getItemInfo.Param1);
-                        resultInfo.SetTitle(DataSystem.GetReplaceText(14120,actorData.Name));
+                        resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData.Name));
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.SaveHuman:
@@ -250,17 +250,17 @@ namespace Ryneus
                     {
                         case GetItemType.RemakeHistory:
                             getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(16010));
+                            resultInfo.SetTitle(DataSystem.GetText(20100));
                             _resultInfos.Add(resultInfo);
                             break;
                         case GetItemType.ParallelHistory:
                             getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(16020));
+                            resultInfo.SetTitle(DataSystem.GetText(20110));
                             _resultInfos.Add(resultInfo);
                             break;
                         case GetItemType.Multiverse:
                             getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(16030));
+                            resultInfo.SetTitle(DataSystem.GetText(20120));
                             _resultInfos.Add(resultInfo);
                             break;
                     }

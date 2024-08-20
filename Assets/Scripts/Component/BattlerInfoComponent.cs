@@ -166,7 +166,8 @@ namespace Ryneus
             ChangeSpd(_battlerInfo.CurrentSpd(false));
             if (battlePosition != null)
             {
-                battlePosition.text = _battlerInfo.LineIndex == LineType.Front ? "F" : "B";
+                var textId = _battlerInfo.LineIndex == LineType.Front ? 2012 : 2013;
+                battlePosition.text = DataSystem.GetText(textId);
             }
             if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
         }

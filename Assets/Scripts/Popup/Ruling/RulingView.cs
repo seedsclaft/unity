@@ -25,9 +25,9 @@ namespace Ryneus
             commandList.Initialize();
             toggleSelect.Initialize(new List<string>()
             {
-                DataSystem.GetText(900),
-                DataSystem.GetText(901),
-                DataSystem.GetText(902)
+                DataSystem.GetText(102000),
+                DataSystem.GetText(102010),
+                DataSystem.GetText(102020)
             });
             toggleSelect.SetSelectTabHandler(() => 
             {

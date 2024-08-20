@@ -256,7 +256,7 @@ namespace Ryneus
             _model.GainSaveCount();
             _model.SavePlayerStageData(true);
             // 成功表示
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11084),(a) => 
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19500),(a) => 
             {
                 if (isReturnScene)
                 {
@@ -358,7 +358,7 @@ namespace Ryneus
             if (recordInfo.StageSymbolData.Seek > currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 未来
-                CommandCautionInfo(DataSystem.GetText(23060));
+                CommandCautionInfo(DataSystem.GetText(19340));
             } else
             if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
@@ -369,23 +369,23 @@ namespace Ryneus
                     {
                         if (_model.PartyInfo.ParallelCount > 0)
                         {
-                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23020,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a,recordInfo));
+                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19310,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a,recordInfo));
                             _view.CommandCallConfirm(confirmInfo);
                         } else
                         {
-                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(23021,_model.PartyInfo.ParallelCount.ToString()),(a) => {});
+                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19320,_model.PartyInfo.ParallelCount.ToString()),(a) => {});
                             confirmInfo.SetIsNoChoice(true);
                             _view.CommandCallConfirm(confirmInfo);
                         }
                     } else
                     {
-                        CommandCautionInfo(DataSystem.GetText(23030));
+                        CommandCautionInfo(DataSystem.GetText(19330));
                     }
                 } else
                 // 過去改編
                 if (_model.RemakeHistory())
                 {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(23010),(a) =>
+                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(19300),(a) =>
                     {
                         if (a == ConfirmCommandType.Yes)
                         {
@@ -425,10 +425,10 @@ namespace Ryneus
                     CheckActorSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.SelectActor:
-                    CheckSelectActorSymbol(recordInfo.SymbolInfo.GetItemInfos);
+                    CheckSelectActorSymbol();
                     break;
                 case SymbolType.Shop:
-                    CheckShopStageSymbol(recordInfo.SymbolInfo.GetItemInfos);
+                    CheckShopStageSymbol();
                     break;
                 case SymbolType.Alcana:
                     CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
@@ -463,7 +463,7 @@ namespace Ryneus
 
         private void CommandDecideRecord()
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(23010),(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19300),(a) => UpdatePopupCheckStartRecord((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -504,7 +504,7 @@ namespace Ryneus
             var symbolType = _model.CurrentSelectRecord().SymbolType;
             if (symbolType == SymbolType.Alcana && _alcanaSelectBusy)
             {
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11142,skillInfo.Master.Name),(a) => UpdateSelectAlcana(a),ConfirmType.SkillDetail);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19250,skillInfo.Master.Name),(a) => UpdateSelectAlcana(a),ConfirmType.SkillDetail);
                 confirmInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
                 _view.CommandCallConfirm(confirmInfo);
             } else
@@ -512,12 +512,12 @@ namespace Ryneus
             {
                 if (_model.EnableShopMagic(skillInfo))
                 {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,_model.ShopLearningCost(skillInfo).ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdateShop(a,skillInfo),ConfirmType.SkillDetail);
+                    var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19260,_model.ShopLearningCost(skillInfo).ToString()) + DataSystem.GetReplaceText(19250,skillInfo.Master.Name),(a) => UpdateShop(a,skillInfo),ConfirmType.SkillDetail);
                     confirmInfo.SetSkillInfo(new List<SkillInfo>(){skillInfo});
                     _view.CommandCallConfirm(confirmInfo);
                 } else
                 {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(11170),(a) => 
+                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(19410),(a) => 
                     {
                     });
                     confirmInfo.SetIsNoChoice(true);
@@ -553,7 +553,7 @@ namespace Ryneus
 
         private void CommandEndShopSelect()
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11191),(a) => UpdatePopupEndShopSelect((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19230),(a) => UpdatePopupEndShopSelect((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -572,7 +572,7 @@ namespace Ryneus
         private void CheckActorSymbol(GetItemInfo getItemInfo)
         {
             var actorData = DataSystem.FindActor(getItemInfo.Param1);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11120,actorData.Name),(a) => UpdatePopupActorSymbol((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19270,actorData.Name),(a) => UpdatePopupActorSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -589,9 +589,9 @@ namespace Ryneus
             }
         }
 
-        private void CheckSelectActorSymbol(List<GetItemInfo> getItemInfos)
+        private void CheckSelectActorSymbol()
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11180),(a) => UpdatePopupSelectActorSymbol((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19210),(a) => UpdatePopupSelectActorSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -606,9 +606,9 @@ namespace Ryneus
             }
         }
 
-        private void CheckShopStageSymbol(List<GetItemInfo> getItemInfos)
+        private void CheckShopStageSymbol()
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(11190),(a) => UpdatePopupShopSymbol((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19220),(a) => UpdatePopupShopSymbol((ConfirmCommandType)a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -628,8 +628,6 @@ namespace Ryneus
 
         private void CheckRecoverSymbol(GetItemInfo getItemInfo)
         {
-            //var popupInfo = new ConfirmInfo(DataSystem.GetReplaceText(11130,getItemInfo.ResultName),(a) => UpdatePopupRecoverSymbol((ConfirmCommandType)a));
-            //_view.CommandCallConfirm(popupInfo);
         }
 
         private void UpdatePopupRecoverSymbol(ConfirmCommandType confirmCommandType)
@@ -652,7 +650,7 @@ namespace Ryneus
         
         private void CheckAlcanaSymbol(List<SkillInfo> skillInfos)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11140,""),(a) => UpdatePopupAlcanaSymbol(a),ConfirmType.SkillDetail);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19200,""),(a) => UpdatePopupAlcanaSymbol(a),ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(skillInfos);
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -673,7 +671,7 @@ namespace Ryneus
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11141,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19280,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -729,7 +727,7 @@ namespace Ryneus
                 CallPopupSkillDetail("",_model.BasicSkillInfos(getItemInfos[0]));
             } else
             {
-                CallPopupSkillDetail(DataSystem.GetText(11140),_model.BasicSkillGetItemInfos(getItemInfos));
+                CallPopupSkillDetail(DataSystem.GetText(19200),_model.BasicSkillGetItemInfos(getItemInfos));
             }
         }
 
@@ -754,7 +752,7 @@ namespace Ryneus
                     CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
                     break;
                 case SymbolType.Alcana:
-                    CallPopupSkillDetail(DataSystem.GetText(11140),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
+                    CallPopupSkillDetail(DataSystem.GetText(19200),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
                 case SymbolType.Actor:
                     CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
@@ -766,7 +764,7 @@ namespace Ryneus
                     CommandCallAddActorInfo(symbolResultInfo,false);
                     break;
                 case SymbolType.Shop:
-                    CallPopupSkillDetail(DataSystem.GetText(11192),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
+                    CallPopupSkillDetail(DataSystem.GetText(19240),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
             }
             SoundManager.Instance.PlayStaticSe(SEType.Decide);

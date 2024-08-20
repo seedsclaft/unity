@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 311
+  id: 18410
 --- !u!222 &3787430135277490020
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 8655681203569402652}
   - component: {fileID: 7625345192605987999}
   - component: {fileID: 2178847436280230715}
+  - component: {fileID: 3269542765361101426}
   m_Layer: 5
   m_Name: Caption
   m_TagString: Untagged
@@ -320,6 +321,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3269542765361101426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079627608853829061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 18440
 --- !u!1 &1414841769347577526
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 340
+  id: 18430
 --- !u!222 &4913739002774301387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2110,6 +2124,7 @@ GameObject:
   - component: {fileID: 3644704058348365098}
   - component: {fileID: 5413506663914550806}
   - component: {fileID: 7920893603485641830}
+  - component: {fileID: 7649637295792099175}
   m_Layer: 5
   m_Name: Caption
   m_TagString: Untagged
@@ -2234,6 +2249,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7649637295792099175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644992679333497496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 18450
 --- !u!1 &3736092918725904378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,7 +3404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 310
+  id: 18400
 --- !u!222 &977916557802354319
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5022,7 +5050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f44f7c136c1dcf4b86a8b7fad1fad41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 317
+  id: 18420
 --- !u!222 &6308879662913437771
 CanvasRenderer:
   m_ObjectHideFlags: 0

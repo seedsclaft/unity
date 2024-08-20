@@ -115,7 +115,7 @@ namespace Ryneus
             if (range != null)
             {
                 range.gameObject.SetActive(true);
-                var rangeTextId = skillData.Range == RangeType.S ? 351 : 352;
+                var rangeTextId = skillData.Range == RangeType.S ? 2210 : 2220;
                 range.text = DataSystem.GetText(rangeTextId);
             }
         }
@@ -153,20 +153,20 @@ namespace Ryneus
 
         private void UpdateSkillRank(RankType rankType)
         {
-            var rankText = "N";
+            var textId = 2310;
             if (rankType >= RankType.Uniq)
             {
-                rankText = "SSR";
+                textId = 2340;
             } else
             if (rankType >= RankType.RelicRank1)
             {
-                rankText = "SR";
+                textId = 2330;
             } else
             if (rankType == RankType.ActiveRank2 || rankType == RankType.PassiveRank2)
             {
-                rankText = "R";
+                textId = 2320;
             }
-            rank?.SetText(rankText.ToString());
+            rank?.SetText(DataSystem.GetText(textId));
         }
 
         public void Clear()

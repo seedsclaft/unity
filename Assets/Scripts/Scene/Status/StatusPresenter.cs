@@ -115,13 +115,13 @@ namespace Ryneus
             if (enable)
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14160,_model.CurrentActor.Master.Name),(a) => UpdatePopupActorLvReset(a));
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(18300,_model.CurrentActor.Master.Name),(a) => UpdatePopupActorLvReset(a));
                 _view.CommandCallConfirm(confirmInfo);
                 _popupCommandType = Status.CommandType.DecideStage;
             } else
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
-                CommandCautionInfo(DataSystem.GetText(14150));
+                CommandCautionInfo(DataSystem.GetText(18340));
                 SetBusy(false);
             }
         }
@@ -172,7 +172,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var currency = _model.ActorLvReset();
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(14170,currency.ToString()),(a) => 
+                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(18310,currency.ToString()),(a) => 
                 {
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     CommandRefresh();
@@ -215,7 +215,7 @@ namespace Ryneus
         {
             SetBusy(true);
             var actorInfo = _model.CurrentActor;
-            var text = DataSystem.GetReplaceText(14180,actorInfo.Master.Name);
+            var text = DataSystem.GetReplaceText(18320,actorInfo.Master.Name);
             var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup(menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
             _popupCommandType = Status.CommandType.DecideStage;

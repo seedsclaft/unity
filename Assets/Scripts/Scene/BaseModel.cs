@@ -559,7 +559,7 @@ namespace Ryneus
 
         public string SavePopupTitle()
         {
-            return DataSystem.GetText(11080);
+            return DataSystem.GetText(19500);
         }
 
         public string FailedSavePopupTitle()

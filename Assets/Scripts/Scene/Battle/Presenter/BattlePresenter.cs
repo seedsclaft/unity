@@ -81,8 +81,8 @@ namespace Ryneus
             _view.ChangeBackCommandActive(false);
             _view.SetBattleAutoButton(false);
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
-            _view.SetBattleSkipButton(DataSystem.GetText(62));
-            _view.SetSkillLogButton(DataSystem.GetText(63));
+            _view.SetBattleSkipButton(DataSystem.GetText(16010));
+            _view.SetSkillLogButton(DataSystem.GetText(16020));
             _view.SetActors(_model.BattlerActors());
             _view.SetEnemies(_model.BattlerEnemies());
             _view.BattlerBattleClearSelect();
@@ -212,17 +212,6 @@ namespace Ryneus
 
         private void CommandEscape()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            if (_model.EnableEscape())
-            {
-                var confirmInfo = new ConfirmInfo(DataSystem.GetText(410),(a) => UpdatePopupEscape((ConfirmCommandType)a));
-                _view.CommandCallConfirm(confirmInfo);
-            } else
-            {
-                var confirmInfo = new ConfirmInfo(DataSystem.GetText(412),(a) => UpdatePopupNoEscape((ConfirmCommandType)a));
-                confirmInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(confirmInfo);
-            }
         }
 
         private void CommandEnemyDetail(int enemyIndex)
@@ -389,7 +378,6 @@ namespace Ryneus
         private void CommandDecideActor()
         {
             _view.SetAnimationBusy(false);
-            _view.SetHelpText(DataSystem.GetText(15010));
             _view.SelectedCharacter(_model.CurrentBattler);
             _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
             _view.ChangeSideMenuButtonActive(true);
@@ -414,7 +402,6 @@ namespace Ryneus
         private void CommandDecideEnemy()
         {
             _view.SetAnimationBusy(false);
-            _view.SetHelpText(DataSystem.GetText(15010));
             //_view.SelectedCharacter(_model.CurrentBattler);
             _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
             //_view.ChangeSideMenuButtonActive(true);
@@ -574,11 +561,11 @@ namespace Ryneus
             }
             if (actionResultInfo.ApHeal > 0)
             {    
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(432,actionResultInfo.ApHeal.ToString()));
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(16200,actionResultInfo.ApHeal.ToString()));
             }
             if (actionResultInfo.ApDamage > 0)
             {    
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(433,actionResultInfo.ApDamage.ToString()));
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetReplaceText(16210,actionResultInfo.ApDamage.ToString()));
             }
             if (actionResultInfo.ReDamage > 0 || actionResultInfo.CurseDamage > 0)
             {
@@ -624,7 +611,7 @@ namespace Ryneus
             if (actionResultInfo.StartDash)
             {        
                 //先制攻撃
-                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetText(431));
+                _view.StartStatePopup(targetIndex,DamageType.State,DataSystem.GetText(16220));
             }
         }
 
@@ -863,7 +850,7 @@ namespace Ryneus
             };
             if (_model.CheckVictory())
             {
-                _view.StartBattleStartAnim(DataSystem.GetText(15020));
+                _view.StartBattleStartAnim(DataSystem.GetText(16100));
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
                 strategySceneInfo.BattleTurn = _model.TurnCount;
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true);
@@ -871,7 +858,7 @@ namespace Ryneus
             } else
             if (_model.CheckDefeat())
             {
-                _view.StartBattleStartAnim(DataSystem.GetText(15030)); 
+                _view.StartBattleStartAnim(DataSystem.GetText(16110)); 
                 strategySceneInfo.GetItemInfos = new List<GetItemInfo>();  
                 strategySceneInfo.BattleTurn = -1; 
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false);

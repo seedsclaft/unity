@@ -2409,7 +2409,7 @@ namespace Ryneus
             var menuCommand = new SystemData.CommandData
             {
                 Id = 2,
-                Name = DataSystem.GetText(703),
+                Name = DataSystem.GetText(19700),
                 Key = "Help"
             };
             list.Add(menuCommand);
@@ -2445,11 +2445,12 @@ namespace Ryneus
 
         public string BattleStartText()
         {
+            var textId = 19611;
             if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
             {
-                return DataSystem.GetText(42);
+                textId = 19612;
             }
-            return DataSystem.GetText(41);
+            return DataSystem.GetText(textId);
         }
         
     #if UNITY_EDITOR

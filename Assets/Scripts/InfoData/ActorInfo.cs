@@ -488,18 +488,6 @@ namespace Ryneus
             return attributeValues;
         }
 
-        public List<string> AttributeValues(List<ActorInfo> actorInfos)
-        {
-            var attributeParams = AttributeRanks(actorInfos);
-            var attributeValues = new List<string>();
-            foreach (var attribute in GetAttributeRank())
-            {
-                int textId = 320 + (int)attribute;
-                attributeValues.Add(DataSystem.GetText(textId));
-            }
-            return attributeValues;
-        }
-
         private List<int> AlchemyAttributeRates(List<ActorInfo> actorInfos)
         {
             var attributeRanks = AttributeRanks(actorInfos);
