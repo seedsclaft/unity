@@ -341,7 +341,7 @@ MonoBehaviour:
     HpGrowth: 100
     MpGrowth: 0
     AtkGrowth: 50
-    DefGrowth: 60
+    DefGrowth: 75
     SpdGrowth: 40
     LearningSkills:
     - SkillId: 3010
@@ -476,7 +476,7 @@ MonoBehaviour:
     HpGrowth: 70
     MpGrowth: 0
     AtkGrowth: 60
-    DefGrowth: 50
+    DefGrowth: 60
     SpdGrowth: 60
     LearningSkills:
     - SkillId: 3010
@@ -927,12 +927,12 @@ MonoBehaviour:
     Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
     ImagePath: Bifrons
     BaseStatus:
-      _hp: 75
+      _hp: 100
       _mp: 0
-      _atk: 16
-      _def: 12
+      _atk: 12
+      _def: 21
       _spd: 13
-    Kinds: 050000000c000000
+    Kinds: 060000000c000000
     HpGrowth: 100
     MpGrowth: 0
     AtkGrowth: 70

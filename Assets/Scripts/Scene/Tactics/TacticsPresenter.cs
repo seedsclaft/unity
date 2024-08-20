@@ -363,7 +363,7 @@ namespace Ryneus
             if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 並行世界化する場合
-                if (_view.CheckParallelToggle)
+                if (_view.CheckParallelToggle && recordInfo.Selected == false)
                 {
                     if (_model.ParallelHistory())
                     {

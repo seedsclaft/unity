@@ -248,7 +248,7 @@ namespace Ryneus
         public void CommandLearnMagic(ActorInfo actorInfo,SkillInfo skillInfo,System.Action endEvent = null)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(11150,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(11151,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,actorInfo,skillInfo,endEvent));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19510,skillInfo.LearningCost.ToString()) + DataSystem.GetReplaceText(19520,skillInfo.Master.Name),(a) => UpdatePopupLearnSkill(a,actorInfo,skillInfo,endEvent));
             _view.CommandCallConfirm(confirmInfo);
         }
 
