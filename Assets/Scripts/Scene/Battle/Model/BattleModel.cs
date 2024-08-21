@@ -2364,7 +2364,7 @@ namespace Ryneus
 
         public bool CheckDefeat()
         {
-            bool isDefeat = _party.BattlerInfos.Find(a => a.IsAlive()) == null;
+            bool isDefeat = _party.BattlerInfos.Find(a => a.IsAlive()) == null || _turnCount > 150;
             return isDefeat;
         }
 

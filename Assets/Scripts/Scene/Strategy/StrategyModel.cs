@@ -360,7 +360,8 @@ namespace Ryneus
             {
                 return BaseConfirmCommand(3040,3054); // 再戦
             }
-            return BaseConfirmCommand(3040,4);
+            return BaseConfirmCommand(3040,19040
+);
         }
 
         public bool IsBonusTactics(int actorId)

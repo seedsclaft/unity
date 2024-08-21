@@ -157,17 +157,12 @@ namespace Ryneus
             _bossFlag = isBoss;
             var statusInfo = new StatusInfo();
             int plusHpParam = isBoss == true ? 50 : 0;
-            float lvRate = lv;
-            if (lv >= 20)
-            {
-                lvRate = 20 + ((lv-20) / 2);
-            }
             statusInfo.SetParameter(
-                enemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lvRate * enemyData.HpGrowth * 0.01f),
-                Math.Min(50, enemyData.BaseStatus.Mp + (int)Math.Floor(lvRate * enemyData.MpGrowth * 0.01f)),
-                enemyData.BaseStatus.Atk + (int)Math.Floor(lvRate * enemyData.AtkGrowth * 0.01f),
-                enemyData.BaseStatus.Def + (int)Math.Floor(lvRate * enemyData.DefGrowth * 0.01f),
-                Math.Min(100, enemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * enemyData.SpdGrowth * 0.01f))
+                (int)(enemyData.BaseStatus.Hp + (plusHpParam + lv * enemyData.HpGrowth * 0.01f)),
+                Math.Min(50, (int)(enemyData.BaseStatus.Mp + (lv * enemyData.MpGrowth * 0.01f))),
+                (int)(enemyData.BaseStatus.Atk + (lv * enemyData.AtkGrowth * 0.01f)),
+                (int)(enemyData.BaseStatus.Def + (lv * enemyData.DefGrowth * 0.01f)),
+                Math.Min(100, (int)(enemyData.BaseStatus.Spd + (lv * enemyData.SpdGrowth * 0.01f)))
             );
             _demigodParam = lv / 2;
             _status = statusInfo;
@@ -245,17 +240,12 @@ namespace Ryneus
         {
             var statusInfo = new StatusInfo();
             int plusHpParam = _bossFlag == true ? 50 : 0;
-            float lvRate = _level;
-            if (_level >= 20)
-            {
-                lvRate = 20 + ((_level-20) / 2);
-            }
             statusInfo.SetParameter(
-                EnemyData.BaseStatus.Hp + (int)Math.Floor(plusHpParam + lvRate * EnemyData.HpGrowth * 0.01f),
-                Math.Min(50, EnemyData.BaseStatus.Mp + (int)Math.Floor(lvRate * EnemyData.MpGrowth * 0.01f)),
-                EnemyData.BaseStatus.Atk + (int)Math.Floor(lvRate * EnemyData.AtkGrowth * 0.01f),
-                EnemyData.BaseStatus.Def + (int)Math.Floor(lvRate * EnemyData.DefGrowth * 0.01f),
-                Math.Min(100, EnemyData.BaseStatus.Spd + (int)Math.Floor(lvRate * EnemyData.SpdGrowth * 0.01f))
+                (int)(EnemyData.BaseStatus.Hp + (plusHpParam + _level * EnemyData.HpGrowth * 0.01f)),
+                Math.Min(50, (int)(EnemyData.BaseStatus.Mp + (_level * EnemyData.MpGrowth * 0.01f))),
+                (int)(EnemyData.BaseStatus.Atk + (_level * EnemyData.AtkGrowth * 0.01f)),
+                (int)(EnemyData.BaseStatus.Def + (_level * EnemyData.DefGrowth * 0.01f)),
+                Math.Min(100, (int)(EnemyData.BaseStatus.Spd + (_level * EnemyData.SpdGrowth * 0.01f)))
             );
             _demigodParam = _level / 2;
             _status = statusInfo;

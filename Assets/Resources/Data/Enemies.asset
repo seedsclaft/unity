@@ -34,16 +34,20 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 3060
-      Level: 20
+      Level: 11
       Weight: 70
       TriggerDates: []
     - SkillId: 3050
-      Level: 40
+      Level: 26
       Weight: 100
       TriggerDates: []
     - SkillId: 13070
-      Level: 60
+      Level: 41
       Weight: 200
+      TriggerDates: []
+    - SkillId: 403060
+      Level: 56
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
@@ -56,6 +60,9 @@ MonoBehaviour:
       Trigger1: 14215
       Trigger2: 0
     - SkillId: 13070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403060
       Trigger1: 0
       Trigger2: 0
   - Id: 2
@@ -79,16 +86,20 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 5040
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 15090
-      Level: 40
+      Level: 26
       Weight: 200
       TriggerDates: []
     - SkillId: 15010
-      Level: 60
+      Level: 41
       Weight: 300
+      TriggerDates: []
+    - SkillId: 415090
+      Level: 56
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 5010
@@ -101,6 +112,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 15010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 415090
       Trigger1: 0
       Trigger2: 0
   - Id: 3
@@ -124,16 +138,20 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 2070
-      Level: 20
+      Level: 11
       Weight: 150
       TriggerDates: []
     - SkillId: 12020
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 12090
-      Level: 60
+      Level: 41
       Weight: 200
+      TriggerDates: []
+    - SkillId: 412020
+      Level: 56
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 2010
@@ -146,6 +164,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12090
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 412020
       Trigger1: 0
       Trigger2: 0
   - Id: 4
@@ -169,15 +190,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1060
-      Level: 20
+      Level: 11
       Weight: 150
       TriggerDates: []
     - SkillId: 1020
-      Level: 40
+      Level: 26
       Weight: 100
       TriggerDates: []
     - SkillId: 11020
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401060
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -191,6 +216,9 @@ MonoBehaviour:
       Trigger1: 5121
       Trigger2: 0
     - SkillId: 11020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 401060
       Trigger1: 0
       Trigger2: 0
   - Id: 5
@@ -214,15 +242,19 @@ MonoBehaviour:
       Weight: 25
       TriggerDates: []
     - SkillId: 2030
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 12040
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 12050
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 402030
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -236,6 +268,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 402030
       Trigger1: 0
       Trigger2: 0
   - Id: 6
@@ -259,15 +294,19 @@ MonoBehaviour:
       Weight: 100
       TriggerDates: []
     - SkillId: 2060
-      Level: 20
+      Level: 11
       Weight: 150
       TriggerDates: []
     - SkillId: 12090
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 12060
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 402060
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -281,6 +320,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 12060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 402060
       Trigger1: 0
       Trigger2: 0
   - Id: 7
@@ -304,16 +346,20 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 3070
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 13030
-      Level: 40
+      Level: 26
       Weight: 200
       TriggerDates: []
     - SkillId: 13090
-      Level: 60
+      Level: 41
       Weight: 300
+      TriggerDates: []
+    - SkillId: 403070
+      Level: 56
+      Weight: 0
       TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
@@ -326,6 +372,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 13090
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403070
       Trigger1: 0
       Trigger2: 0
   - Id: 8
@@ -349,15 +398,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 3020
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 13020
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 13040
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 403020
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -371,6 +424,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 13040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403020
       Trigger1: 0
       Trigger2: 0
   - Id: 9
@@ -394,15 +450,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1040
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 11040
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 11050
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401040
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -416,6 +476,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 11050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 401040
       Trigger1: 0
       Trigger2: 0
   - Id: 10
@@ -439,15 +502,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 2050
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 12070
-      Level: 40
+      Level: 26
       Weight: 120
       TriggerDates: []
     - SkillId: 12030
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 412070
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -461,6 +528,9 @@ MonoBehaviour:
       Trigger1: 13022
       Trigger2: 0
     - SkillId: 12030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 412070
       Trigger1: 0
       Trigger2: 0
   - Id: 11
@@ -484,15 +554,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 3040
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 3030
-      Level: 40
+      Level: 26
       Weight: 200
       TriggerDates: []
     - SkillId: 13060
-      Level: 60
+      Level: 41
+      Weight: 300
+      TriggerDates: []
+    - SkillId: 403030
+      Level: 41
       Weight: 300
       TriggerDates: []
     SkillTriggerDates:
@@ -506,6 +580,9 @@ MonoBehaviour:
       Trigger1: 5041
       Trigger2: 0
     - SkillId: 13060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403030
       Trigger1: 0
       Trigger2: 0
   - Id: 12
@@ -529,15 +606,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 15010
-      Level: 20
+      Level: 11
       Weight: 0
       TriggerDates: []
     - SkillId: 15040
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 15020
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 415010
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -551,6 +632,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 15020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 415010
       Trigger1: 0
       Trigger2: 0
   - Id: 13
@@ -574,11 +658,11 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 4030
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 4060
-      Level: 40
+      Level: 26
       Weight: 100
       TriggerDates:
       - SkillId: 0
@@ -588,7 +672,11 @@ MonoBehaviour:
         Param2: 0
         Param3: 0
     - SkillId: 14080
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 404030
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -603,6 +691,9 @@ MonoBehaviour:
       Trigger2: 0
     - SkillId: 14080
       Trigger1: 1033
+      Trigger2: 0
+    - SkillId: 404030
+      Trigger1: 0
       Trigger2: 0
   - Id: 14
     Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
@@ -625,15 +716,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1070
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 11060
-      Level: 40
+      Level: 26
       Weight: 0
       TriggerDates: []
     - SkillId: 11070
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401010
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -647,6 +742,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 11070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 401010
       Trigger1: 0
       Trigger2: 0
   - Id: 15
@@ -670,15 +768,19 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1050
-      Level: 20
+      Level: 11
       Weight: 100
       TriggerDates: []
     - SkillId: 1080
-      Level: 40
+      Level: 26
       Weight: 200
       TriggerDates: []
     - SkillId: 11030
-      Level: 60
+      Level: 41
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401050
+      Level: 56
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
@@ -692,6 +794,9 @@ MonoBehaviour:
       Trigger1: 9031
       Trigger2: 0
     - SkillId: 11030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 401050
       Trigger1: 0
       Trigger2: 0
   - Id: 101
@@ -715,11 +820,11 @@ MonoBehaviour:
       Weight: 50
       TriggerDates: []
     - SkillId: 1060
-      Level: 20
+      Level: 1
       Weight: 100
       TriggerDates: []
     - SkillId: 11010
-      Level: 40
+      Level: 1
       Weight: 0
       TriggerDates: []
     - SkillId: 200110

@@ -66,7 +66,7 @@ namespace Ryneus
         {
             selectCharacter.ShowActionList();
             selectCharacter.SetEnemyBattlerInfo(battlerInfo);
-            selectCharacter.SetSkillInfos(skillInfos);
+            //selectCharacter.SetSkillInfos(skillInfos);
             selectCharacter.SetSkillTriggerList(skillTriggerInfos);
             selectCharacter.RefreshAction(lastSelectIndex);
             enemyInfoComponent.Clear();
