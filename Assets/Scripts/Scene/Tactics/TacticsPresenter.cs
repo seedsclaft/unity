@@ -56,7 +56,7 @@ namespace Ryneus
         private void InitializeView()
         {
             _view.ChangeUIActive(false);
-            _model.AssignBattlerIndex();
+            //_model.AssignBattlerIndex();
             _view.SetHelpWindow();
             _view.ChangeBackCommandActive(false);
             _view.SetEvent((type) => UpdateCommand(type));

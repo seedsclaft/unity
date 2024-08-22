@@ -48,23 +48,23 @@ namespace Ryneus
             switch (viewEvent.commandType)
             {
                 case CommandType.StartStrategy:
-                CommandStartStrategy();
-                break;
+                    CommandStartStrategy();
+                    break;
                 case CommandType.EndAnimation:
-                CommandEndAnimation();
-                break;
+                    CommandEndAnimation();
+                    break;
                 case CommandType.CallEnemyInfo:
-                CommandCallEnemyInfo();
-                break;
+                    CommandCallEnemyInfo();
+                    break;
                 case CommandType.PopupSkillInfo:
-                CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
-                break;
+                    CommandPopupSkillInfo((GetItemInfo)viewEvent.template);
+                    break;
                 case CommandType.ResultClose:
-                CommandResultClose((SystemData.CommandData)viewEvent.template);
-                break;
+                    CommandResultClose((SystemData.CommandData)viewEvent.template);
+                    break;
                 case CommandType.EndLvUpAnimation:
                     NextSeekResult();
-                break;
+                    break;
                 case CommandType.LvUpNext:
                     CommandLvUpNext();
                     break;

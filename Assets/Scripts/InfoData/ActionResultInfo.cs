@@ -641,7 +641,14 @@ namespace Ryneus
             }
             if (IsDeadlyDamage(subject,target,isNoEffect))
             {
-                hpDamage = target.Hp;
+                // 対象がボスの場合は残りHpの50%ダメージ
+                if (target.Kinds.Contains(KindType.Boss))
+                {
+                    hpDamage = Math.Max(target.Hp / 2,hpDamage);
+                } else
+                {
+                    hpDamage = target.Hp;
+                }
             }
             if (!isNoEffect)
             {

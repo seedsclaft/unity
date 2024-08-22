@@ -85,7 +85,7 @@ namespace Ryneus
         public List<int> LastBattlerIdList => _lastBattlerIdList;
         public void SetLastBattlerIdList(List<int> lastBattlerIdList)
         {
-            _lastBattlerIdList = lastBattlerIdList;
+            //_lastBattlerIdList = lastBattlerIdList;
         }
 
         public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,int worldNo) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek && a.WorldNo == worldNo);
