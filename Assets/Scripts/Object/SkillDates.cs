@@ -27,6 +27,7 @@ namespace Ryneus
         public RangeType Range;
         public int RepeatTime;
         public AliveType AliveType;
+        public int TimingOnlyCount; // 同じタイミングで発動できる回数
         //public int TurnCount;
 
         public List<FeatureData> FeatureDates;
@@ -123,6 +124,8 @@ namespace Ryneus
                 return DataSystem.GetText(625);
                 case ScopeType.OneAndNeighbor:
                 return DataSystem.GetText(651);
+                case ScopeType.Neighbor:
+                return DataSystem.GetText(652);
             }
             return "";
         }
@@ -191,6 +194,7 @@ namespace Ryneus
         WithoutSelfAll = 13,
         RandomOne = 21,
         OneAndNeighbor = 31,
+        Neighbor = 32,
     }
 
     public enum SkillType
@@ -355,7 +359,6 @@ namespace Ryneus
         TargetBuff = 12043, // 攻撃を受けた対象がバフ状態になった
         OneAttackOverDamage = 12050, // 1回の攻撃で〇ダメージ以上受ける
         FriendAttackedAction = 12060, // 味方が攻撃を受ける
-        SelfAttackedAction = 12061, // 自身が攻撃を受ける
         SelfAbnormalAction = 12063, // 自身が状態異常を受ける
         SelfPassiveAction = 12066, // 自身がパッシブを受ける
         FriendAction = 12070, // 味方が行動を成功する
@@ -371,7 +374,6 @@ namespace Ryneus
         LvUpper = 14410, // Lvが〇以上
         SelfAttackActionInfo = 15010, // 自身が攻撃タイプの行動をしようとしている
         FriendAttackActionInfo = 15011, // 味方が攻撃タイプの行動をしようとしている
-        OpponentAttackActionInfo = 15012, // 相手が攻撃タイプの行動をしようとしている
         SelfActionInfo = 16010, // 行動したのが自身
         SkillUsedCount = 17010, // 魔法を〇回使用する
         AttackedCount = 17020, // 攻撃を〇回受ける

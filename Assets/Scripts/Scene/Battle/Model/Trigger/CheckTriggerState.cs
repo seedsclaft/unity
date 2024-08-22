@@ -307,6 +307,11 @@ namespace Ryneus
                 break;
             }
         }
+
+        public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+
+        }
     }
 }
 

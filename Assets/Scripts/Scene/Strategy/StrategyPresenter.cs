@@ -76,7 +76,7 @@ namespace Ryneus
 
         private void CommandStartStrategy()
         {
-            if (_model.BattleResult)
+            if (_model.InBattleResult)
             {
                 SeekStrategyState();
             } else
@@ -99,7 +99,7 @@ namespace Ryneus
 
         private void SeekStrategyState()
         {
-            if (_model.BattleResult)
+            if (_model.InBattleResult)
             {
                 var battledResultActors = _model.BattleResultActors();
                 var bonusList = new List<bool>();
@@ -141,7 +141,7 @@ namespace Ryneus
 
         private void CommandEndAnimation()
         {
-            if (_model.BattleResult)
+            if (_model.InBattleResult)
             {
                 if (_model.BattleResultVictory)
                 {
@@ -238,7 +238,7 @@ namespace Ryneus
         {
             if (commandData.Key == "Yes")
             {
-                if (_model.BattleResult)
+                if (_model.InBattleResult)
                 {
                     var battledMembers = _model.BattleResultActors();
                     if (battledMembers != null && battledMembers.Count > 0)
@@ -258,7 +258,7 @@ namespace Ryneus
                 CheckTacticsActors();
             } else
             {
-                if (_model.BattleResult && _model.BattleResultVictory == false)
+                if (_model.InBattleResult && _model.BattleResultVictory == false)
                 {
                     _model.ReturnTempBattleMembers(); 
                     _view.CommandChangeViewToTransition(null);  
@@ -454,7 +454,7 @@ namespace Ryneus
                 }
                 _view.CommandGotoSceneChange(Scene.Tactics);
             } else
-            if (_model.BattleResult && _model.BattleResultVictory == false)
+            if (_model.InBattleResult && _model.BattleResultVictory == false)
             {
                 // 敗北して戻る
                 _model.ReturnTempBattleMembers();

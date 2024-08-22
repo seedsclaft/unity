@@ -10,12 +10,12 @@ namespace Ryneus
         private bool _battleResultVictory = false;
         public bool BattleResultVictory => _battleResultVictory;
 
-        private bool _battleResult = false;
-        public bool BattleResult => _battleResult;
+        private bool _inBattleResult = false;
+        public bool InBattleResult => _inBattleResult;
         public StrategyModel()
         {
             _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
-            _battleResult = _sceneParam.ActorInfos.FindAll(a => a.BattleIndex >= 0).Count > 0;
+            _inBattleResult = _sceneParam.InBattle;
             _battleResultVictory = _sceneParam.BattleResultVictory;
         }
         public void ClearSceneParam()
@@ -51,16 +51,7 @@ namespace Ryneus
         {
             if (SceneParam != null)
             {
-                var actorInfos = SceneParam.ActorInfos.FindAll(a => a.BattleIndex == -1);
-                var list = new List<ActorInfo>();
-                for (int i = 0;i < 5;i++)
-                {
-                    if (actorInfos.Count > i)
-                    {
-                        list.Add(actorInfos[i]);
-                    }
-                }
-                return list;
+                return SceneParam.ActorInfos;
             }
             return null;
         }
@@ -134,7 +125,7 @@ namespace Ryneus
                 {
                     case GetItemType.Numinous:
                         getItemInfo.SetGetFlag(true);
-                        if (_battleResult)
+                        if (_inBattleResult)
                         { 
                             var beforeGain = getItemInfo.Param2;
                             var gainCurrency = (int)Math.Round(getItemInfo.Param1 * recordScore);
@@ -294,7 +285,7 @@ namespace Ryneus
 
         public string BattleSaveHumanResultInfo()
         {
-            if (!_battleResult)
+            if (!_inBattleResult)
             {
                 return null;
             }
@@ -307,7 +298,7 @@ namespace Ryneus
 
         public string BattleResultTurn()
         {
-            if (!_battleResult)
+            if (!_inBattleResult)
             {
                 return null;
             }
@@ -321,7 +312,7 @@ namespace Ryneus
 
         public string BattleResultScore()
         {
-            if (!_battleResult)
+            if (!_inBattleResult)
             {
                 return null;
             }
@@ -335,7 +326,7 @@ namespace Ryneus
 
         public List<ActorInfo> BattleResultActors()
         {
-            return SceneParam.ActorInfos.FindAll(a => a.BattleIndex >= 0);
+            return SceneParam.ActorInfos;
         }
 
         public void ClearBattleData(List<ActorInfo> actorInfos)
@@ -344,7 +335,7 @@ namespace Ryneus
             {
                 if (actorInfo.BattleIndex >= 0)
                 {
-                    actorInfo.SetBattleIndex(-1);
+                    //actorInfo.SetBattleIndex(-1);
                 }
             }
         }
@@ -356,7 +347,7 @@ namespace Ryneus
 
         public List<SystemData.CommandData> ResultCommand()
         {
-            if (_battleResult && _battleResultVictory == false)
+            if (_inBattleResult && _battleResultVictory == false)
             {
                 return BaseConfirmCommand(3040,3054); // 再戦
             }
@@ -413,7 +404,7 @@ namespace Ryneus
         public void CommitCurrentResult()
         {
             // バトルに敗北しているときは更新しない
-            if (BattleResult && _battleResultVictory == false)
+            if (InBattleResult && _battleResultVictory == false)
             {
 
             } else
@@ -449,7 +440,7 @@ namespace Ryneus
         public void CommitCurrentParallelResult()
         {
             // バトルに敗北しているときは更新しない
-            if (BattleResult && _battleResultVictory == false)
+            if (InBattleResult && _battleResultVictory == false)
             {
 
             } else
@@ -494,6 +485,7 @@ namespace Ryneus
         public int BattleTurn;
         public List<GetItemInfo> GetItemInfos;
         public List<ActorInfo> ActorInfos;
+        public bool InBattle;
         public int BattleResultScore;
         public bool BattleResultVictory;
     }

@@ -245,7 +245,8 @@ namespace Ryneus
                     var strategySceneInfo = new StrategySceneInfo
                     {
                         GetItemInfos = makeSelectGetItemInfos,
-                        ActorInfos = makeSelectActorInfos
+                        ActorInfos = makeSelectActorInfos,
+                        InBattle = false
                     };
                     _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
                 } else

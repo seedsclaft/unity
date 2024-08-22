@@ -93,23 +93,27 @@ namespace Ryneus
                 {
                     if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
                     {
-                        var results = actionInfo.ActionResults.FindAll(a => a.HpDamage > 0 && checkTriggerInfo.Friends.Find(b => b.Index == a.TargetIndex && b.Index != battlerInfo.Index) != null);
-                        if (results.Count > 0)
+                        var results = actionInfo.ActionResults.FindAll(a => checkTriggerInfo.Friends.Find(b => b.Index == a.TargetIndex) != null);
+                        foreach (var result in results)
                         {
-                            isTrigger = true;
-                        }
-                    }
-                }
-                break;
-                case TriggerType.SelfAttackedAction:
-                if (battlerInfo.IsAlive())
-                {
-                    if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
-                    {
-                        var results = actionInfo.ActionResults.FindAll(a => a.HpDamage > 0 && a.TargetIndex == battlerInfo.Index);
-                        if (results.Count > 0)
-                        {
-                            isTrigger = true;
+                            // Param2で対象を指定
+                            if ((ScopeType)triggerData.Param2 == ScopeType.Self)
+                            {
+                                if (result.TargetIndex == battlerInfo.Index)
+                                {
+                                    isTrigger = true;
+                                }
+                            } else
+                            if ((ScopeType)triggerData.Param2 == ScopeType.WithoutSelfAll)
+                            {
+                                if (result.TargetIndex != battlerInfo.Index)
+                                {
+                                    isTrigger = true;
+                                }
+                            } else
+                            {
+                                isTrigger = true;
+                            }
                         }
                     }
                 }
@@ -224,6 +228,45 @@ namespace Ryneus
         public void AddTargetIndexList(List<int> targetIndexList,List<int> targetIndexes,BattlerInfo targetBattler,SkillData.TriggerData triggerData,SkillData skillData,CheckTriggerInfo checkTriggerInfo)
         {
             
+        }
+
+        public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+            var actionInfo = checkTriggerInfo.ActionInfo;
+            var actionResultInfos = checkTriggerInfo.ActionResultInfos;
+            switch (triggerData.TriggerType)
+            {
+                case TriggerType.FriendAttackedAction:
+                if (battlerInfo.IsAlive())
+                {
+                    if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
+                    {
+                        var results = actionInfo.ActionResults.FindAll(a => checkTriggerInfo.Friends.Find(b => b.Index == a.TargetIndex) != null);
+                        foreach (var result in results)
+                        {
+                            // Param2で対象を指定
+                            if ((ScopeType)triggerData.Param2 == ScopeType.Self)
+                            {
+                                if (result.TargetIndex == battlerInfo.Index)
+                                {
+                                    targetIndexList.Add(result.TargetIndex);
+                                }
+                            } else
+                            if ((ScopeType)triggerData.Param2 == ScopeType.WithoutSelfAll)
+                            {
+                                if (result.TargetIndex != battlerInfo.Index)
+                                {
+                                    targetIndexList.Add(result.TargetIndex);
+                                }
+                            } else
+                            {
+                                targetIndexList.Add(result.TargetIndex);
+                            }
+                        }
+                    }
+                }
+                break;
+            }
         }
     }
 }

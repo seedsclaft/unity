@@ -53,5 +53,9 @@ namespace Ryneus
             
         }
         
+        public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+
+        }
     }
 }

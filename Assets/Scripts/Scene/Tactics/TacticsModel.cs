@@ -412,7 +412,7 @@ namespace Ryneus
         {
             foreach (var stageMember in StageMembers())
             {
-                stageMember.SetBattleIndex(-1);
+                //stageMember.SetBattleIndex(-1);
             }
         }
 

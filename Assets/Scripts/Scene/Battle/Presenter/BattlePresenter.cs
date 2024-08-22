@@ -846,7 +846,8 @@ namespace Ryneus
             if (_battleEnded == true) return;
             var strategySceneInfo = new StrategySceneInfo
             {
-                ActorInfos = _model.BattleMembers()
+                ActorInfos = _model.BattleMembers(),
+                InBattle = true
             };
             if (_model.CheckVictory())
             {

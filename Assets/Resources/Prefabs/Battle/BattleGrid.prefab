@@ -208,6 +208,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   battlePosition: {fileID: 0}
   evaluate: {fileID: 0}
+  additiveFaceThumb: {fileID: 0}
 --- !u!114 &8854605350616589065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +247,7 @@ MonoBehaviour:
   element5Cost: {fileID: 0}
   recoveryCost: {fileID: 0}
   resourceGain: {fileID: 0}
+  addTiming: {fileID: 0}
 --- !u!114 &9028357228907078409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,7 +747,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 6}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 280, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2263619915808841391
 CanvasRenderer:

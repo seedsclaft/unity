@@ -31,28 +31,6 @@ namespace Ryneus
                     }
                 }
                 break;
-                case TriggerType.OpponentAttackActionInfo:
-                if (battlerInfo.IsAlive() && checkTriggerInfo.ActionInfo != null && checkTriggerInfo.ActionInfo.Master.IsHpDamageFeature())
-                {
-                    if (battlerInfo.IsActor != checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex).IsActor)
-                    {
-                        if (battlerInfo.Index != checkTriggerInfo.ActionInfo.SubjectIndex)
-                        {
-                            // Param2が1の時は結果の攻撃対象に自身を指定
-                            if (triggerData.Param2 == 1)
-                            {
-                                if (checkTriggerInfo.ActionResultInfos.Count > 0)
-                                {
-                                    isTrigger = checkTriggerInfo.ActionResultInfos.Find(a => a.TargetIndex == battlerInfo.Index) != null;
-                                }
-                            } else
-                            {
-                                isTrigger = true;
-                            }
-                        }
-                    }
-                }
-                break;
             }
             return isTrigger;
         }
@@ -65,6 +43,11 @@ namespace Ryneus
         public void AddTargetIndexList(List<int> targetIndexList,List<int> targetIndexes,BattlerInfo targetBattler,SkillData.TriggerData triggerData,SkillData skillData,CheckTriggerInfo checkTriggerInfo)
         {
             
+        }
+
+        public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+
         }
     }
 }

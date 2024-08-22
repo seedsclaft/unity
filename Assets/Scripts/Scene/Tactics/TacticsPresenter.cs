@@ -692,7 +692,8 @@ namespace Ryneus
             var strategySceneInfo = new StrategySceneInfo
             {
                 GetItemInfos = getItemInfos.FindAll(a => !a.GetFlag),
-                ActorInfos = actorInfos
+                ActorInfos = actorInfos,
+                InBattle = false
             };
             _model.ResetBattlerIndex();
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
