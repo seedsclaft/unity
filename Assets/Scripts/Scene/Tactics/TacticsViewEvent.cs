@@ -42,5 +42,6 @@ namespace Tactics
         EndShopSelect,
         NormalWorld,
         AnotherWorld,
+        SelectCharaLayer,
     }
 }

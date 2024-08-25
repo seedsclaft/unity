@@ -201,6 +201,9 @@ namespace Ryneus
                 case CommandType.AnotherWorld:
                     CommandAnotherWorld();
                     break;
+                case CommandType.SelectCharaLayer:
+                    CommandSelectCharaLayer((int)viewEvent.template);
+                    break;
             }
         }
 
@@ -874,6 +877,14 @@ namespace Ryneus
             _view.ChangeBackCommandActive(false);
             _view.ChangeSymbolBackCommandActive(false);
             _backCommand = CommandType.None;
+        }
+
+        private void CommandSelectCharaLayer(int actorId)
+        {
+            CommandStatusInfo(_model.StageMembers(),false,true,false,false,actorId,() => 
+            {
+                _view.SetHelpText(DataSystem.GetText(20020));
+            });
         }
     }
 }

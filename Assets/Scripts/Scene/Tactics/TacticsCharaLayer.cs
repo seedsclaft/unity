@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Ryneus
 {
@@ -9,27 +10,36 @@ namespace Ryneus
         [SerializeField] private List<GameObject> tacticsCharaRoots;
         [SerializeField] private GameObject tacticsCharaPrefab;
 
-        private List<TacticsChara> _tacticsCharacters = new List<TacticsChara>();
+        private List<TacticsChara> _tacticsCharacters = new ();
 
-        public void SetData(List<ActorInfo> actorInfos)
+        public ActorInfo ActorInfo()
+        {
+            var clicked = _tacticsCharacters.Find(a => a.Cursor.activeSelf);
+            clicked?.HideCursor();
+            return clicked.ActorInfo;
+        }
+
+        public void SetData(List<ActorInfo> actorInfos,System.Action clickEvent)
         {
             _tacticsCharacters.ForEach(a => a.Hide());
             for (int i = 0; i < actorInfos.Count;i++)
             {
-                if (tacticsCharaRoots.Count > i)
+                if (tacticsCharaRoots.Count <= i)
                 {
-                    if (_tacticsCharacters.Count <= i)
-                    {
-                        var prefab = Instantiate(tacticsCharaPrefab);
-                        prefab.transform.SetParent(tacticsCharaRoots[i].transform, false);
-                        var comp = prefab.GetComponent<TacticsChara>();
-                        _tacticsCharacters.Add(comp);
-                    }
-                    var rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
-                    _tacticsCharacters[i].Show();
-                    _tacticsCharacters[i].Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
-                    _tacticsCharacters[i].SetData(actorInfos[i]);
+                    continue;
                 }
+                if (_tacticsCharacters.Count <= i)
+                {
+                    var prefab = Instantiate(tacticsCharaPrefab);
+                    prefab.transform.SetParent(tacticsCharaRoots[i].transform, false);
+                    var comp = prefab.GetComponent<TacticsChara>();
+                    _tacticsCharacters.Add(comp);
+                }
+                var rectTransform = tacticsCharaRoots[i].GetComponent<RectTransform>();
+                _tacticsCharacters[i].Show();
+                _tacticsCharacters[i].Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
+                _tacticsCharacters[i].SetData(actorInfos[i]);
+                _tacticsCharacters[i].SetCallHandler(clickEvent);
             }
         }
     }

@@ -265,7 +265,18 @@ namespace Ryneus
 
         public void SetTacticsCharaLayer(List<ActorInfo> actorInfos)
         {
-            tacticsCharaLayer.SetData(actorInfos);
+            tacticsCharaLayer.SetData(actorInfos,() => 
+            {
+                var actorInfo = tacticsCharaLayer.ActorInfo();
+                if (actorInfo != null)
+                {
+                    var eventData = new TacticsViewEvent(CommandType.SelectCharaLayer)
+                    {
+                        template = actorInfo.ActorId
+                    };
+                    _commandData(eventData);
+                }
+            });
         }
 
         public void SetSymbols(List<ListData> symbolInfos)

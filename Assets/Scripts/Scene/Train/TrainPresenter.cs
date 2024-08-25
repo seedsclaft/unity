@@ -127,7 +127,7 @@ namespace Ryneus
             {
                 return;
             }
-            UnityEngine.Debug.Log(viewEvent.commandType);
+            Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case Status.CommandType.LevelUp:
