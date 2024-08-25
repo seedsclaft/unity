@@ -9,16 +9,19 @@ public class ContentDragListener : MonoBehaviour, IBeginDragHandler, IDragHandle
     private System.Action<int,int> _dragMoveAction;
     private System.Action _dragEndAction;
     private bool _endDrag;
-    public void OnBeginDrag(PointerEventData eventData) {
+    public void OnBeginDrag(PointerEventData eventData) 
+    {
         _endDrag = false;
         _startPos = eventData.position;
     }
 
-    public void OnDrag(PointerEventData eventData) {
+    public void OnDrag(PointerEventData eventData) 
+    {
         SendDragPosition(eventData);
     }
 
-    public void OnEndDrag(PointerEventData eventData) {
+    public void OnEndDrag(PointerEventData eventData) 
+    {
         if (_dragEndAction != null)
         {
             _dragEndAction();

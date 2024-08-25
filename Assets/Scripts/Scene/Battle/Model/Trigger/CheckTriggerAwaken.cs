@@ -115,7 +115,28 @@ namespace Ryneus
 
         public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
         {
+            switch (triggerData.TriggerType)
+            {
+                case TriggerType.FriendIsAwaken:
+                    targetIndexList.AddRange(CheckFriendIsAwaken(triggerData,battlerInfo,checkTriggerInfo));
+                    break;
+            }
+        }
 
+        private List<int> CheckFriendIsAwaken(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+            var list = new List<int>();
+            if (battlerInfo.IsAlive())
+            {
+                foreach (var targetBattler in checkTriggerInfo.Friends)
+                {
+                    if (targetBattler.IsAwaken)
+                    {
+                        list.Add(targetBattler.Index);
+                    }
+                }
+            }
+            return list;
         }
     }
 }

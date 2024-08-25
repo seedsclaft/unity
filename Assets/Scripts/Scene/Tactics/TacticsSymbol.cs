@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TerrainTools;
 using UnityEngine.UI;
 
 namespace Ryneus
@@ -22,6 +23,9 @@ namespace Ryneus
         public bool Selectable => _selectable;
 
         private bool _getItemInit = false;
+        private PartyInfo partyInfo => GameSystem.CurrentStageData.Party;
+        private StageInfo currentStageInfo => GameSystem.CurrentStageData.CurrentStage;
+        
         public void SetSelectable(bool selectable)
         {
             _selectable = selectable;
@@ -116,6 +120,14 @@ namespace Ryneus
                 }
                 var data = new ListData(getItemInfo);
                 data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+                if (getItemInfo.GetItemType == GetItemType.Skill)
+                {
+                    // 入手済みなら
+                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.CurrentSeek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    {
+                        data.SetEnable(false);
+                    }
+                }
                 list.Add(data);
             }
             return list;

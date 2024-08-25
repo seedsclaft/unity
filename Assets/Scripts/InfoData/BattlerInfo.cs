@@ -35,6 +35,8 @@ namespace Ryneus
         public int Mp => _mp;
         public float MpRate => _mp > 0 ? _mp / (float)MaxMp : 0;
         private float _ap;
+        private float _preserveMinusAp = 0;
+
         public float Ap => _ap;
         
         private List<SkillInfo> _skills;
@@ -365,6 +367,11 @@ namespace Ryneus
             var speed = CurrentSpd(false);
             var baseSpeed = new List<int>{50,75,100,150};
             _ap = 1000 + rand;
+            if (_preserveMinusAp > 0)
+            {
+                _ap -= _preserveMinusAp;
+                _preserveMinusAp = 0;
+            }
             var speedCount = -1;
             for (var i = 0;i < baseSpeed.Count;i++)
             {
@@ -544,7 +551,7 @@ namespace Ryneus
             _ap += value;
             if (_ap < 0)
             {
-                _ap = 0;
+                _preserveMinusAp = _ap * -1;
             }
         }
 

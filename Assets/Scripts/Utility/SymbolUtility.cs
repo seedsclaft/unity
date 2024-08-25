@@ -116,7 +116,7 @@ namespace Ryneus
                             // Rank1,2からランダム設定
                             MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.ActiveRank2,1);
                             MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank1,2);
-                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank2,4);
+                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank2,3);
                             break;
                 }
                 if (stageSymbolData.PrizeSetId > 0)

@@ -75,7 +75,7 @@ namespace Ryneus
         public void SetSelect()
         {
             if (cursor == null) return;
-            if (disable != null && disable.activeSelf) return;
+            //if (disable != null && disable.activeSelf) return;
             cursor.SetActive(true);
             foreach (var text in textUguiList)
             {
@@ -119,10 +119,7 @@ namespace Ryneus
             var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener>();
             enterListener.SetEnterEvent(() => 
             {
-                //if (disable == null || disable.activeSelf == false)
-                //{
-                    handler(_index);
-                //}
+                handler(_index);
             });
             enterListener.SetExitEvent(() => 
             {

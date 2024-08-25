@@ -2021,54 +2021,6 @@ namespace Ryneus
             }
             switch (triggerData.TriggerType)
             {
-                case TriggerType.TargetHpRateUnder:
-                if (battlerInfo.IsAlive())
-                {
-                    foreach (var actionResultInfo in actionResultInfos)
-                    {
-                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                        var targetHp = 0f;
-                        if (targetBattlerInfo.Hp != 0)
-                        {
-                            targetHp = targetBattlerInfo.Hp / (float)targetBattlerInfo.MaxHp;
-                        }
-                        if (targetHp <= triggerData.Param1 * 0.01f)
-                        {
-                            list.Add(targetBattlerInfo.Index);
-                        }
-                    }
-                }
-                break;
-                case TriggerType.TargetAbnormal:
-                if (battlerInfo.IsAlive())
-                {
-                    foreach (var actionResultInfo in actionResultInfos)
-                    {
-                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                        var abnormalStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Abnormal);
-                        var abnormalTarget = abnormalStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
-                        if (abnormalTarget && battlerInfo.IsActor == targetBattlerInfo.IsActor)
-                        {
-                            list.Add(targetBattlerInfo.Index);
-                        }
-                    }
-                }
-                break;
-                case TriggerType.TargetBuff:
-                if (battlerInfo.IsAlive())
-                {
-                    foreach (var actionResultInfo in actionResultInfos)
-                    {
-                        var targetBattlerInfo = GetBattlerInfo(actionResultInfo.TargetIndex);
-                        var buffStates = actionResultInfo.AddedStates.FindAll(a => a.Master.Buff);
-                        var buffTarget = buffStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;
-                        if (buffTarget)
-                        {
-                            list.Add(targetBattlerInfo.Index);
-                        }
-                    }
-                }
-                break;
                 case TriggerType.ActionResultDeath:
                 if (battlerInfo.IsAlive())
                 {
@@ -2078,24 +2030,6 @@ namespace Ryneus
                         var targetBattlerInfo = GetBattlerInfo(deathTarget.TargetIndex);
                         list.Add(targetBattlerInfo.Index);
                     }
-                }
-                break;
-                case TriggerType.FriendIsAwaken:
-                if (battlerInfo.IsAlive())
-                {
-                    foreach (var targetBattler in friends.AliveBattlerInfos)
-                    {
-                        if (targetBattler.IsAwaken)
-                        {
-                            list.Add(targetBattler.Index);
-                        }
-                    }
-                }
-                break;
-                case TriggerType.FriendAttackActionInfo:
-                if (battlerInfo.IsAlive() && actionInfo != null)
-                {
-                    list.Add(actionInfo.SubjectIndex);
                 }
                 break;
             }

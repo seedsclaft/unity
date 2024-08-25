@@ -9,7 +9,6 @@ namespace Ryneus
     {
         [SerializeField] private SkillInfoComponent skillInfoComponent;
         [SerializeField] private TextMeshProUGUI titleName;
-        [SerializeField] private TextMeshProUGUI resultName;
 
         public void UpdateViewItem()
         {
@@ -17,12 +16,12 @@ namespace Ryneus
             {
                 return;
             }
-            var _data = (GetItemInfo)ListData.Data;
-            if (_data == null) return;
+            var data = (GetItemInfo)ListData.Data;
+            if (data == null) return;
             if (skillInfoComponent != null)
             {
-                var skillId = _data.SkillId;
-                if (_data.GetItemType == GetItemType.SelectRelic)
+                var skillId = data.SkillId;
+                if (data.GetItemType == GetItemType.SelectRelic)
                 {
                     skillId = 0;
                 }
@@ -30,20 +29,12 @@ namespace Ryneus
             }
             if (titleName != null)
             {
-                titleName.gameObject.SetActive(_data.GetTitleData() != "");
-                titleName.text = _data.GetTitleData();
+                titleName.gameObject.SetActive(data.GetTitleData() != "");
+                titleName.text = data.GetTitleData();
             }
-            /*
-            if (resultName != null)
-            {
-                resultName.gameObject.SetActive(_data.ResultName != "");
-                resultName.text = _data.ResultName;
-                resultName.rectTransform.sizeDelta = new Vector2(resultName.preferredWidth,resultName.preferredHeight);
-            }
-            */
             if (Disable != null)
             {
-                Disable.gameObject.SetActive(ListData.Enable == false);
+                Disable?.gameObject.SetActive(ListData.Enable == false);
             }
         }
     }

@@ -20,17 +20,8 @@ namespace Ryneus
                 }
                 break;
                 case TriggerType.FriendAttackActionInfo:
-                if (battlerInfo.IsAlive() && checkTriggerInfo.ActionInfo != null && checkTriggerInfo.ActionInfo.Master.IsHpDamageFeature())
-                {
-                    if (battlerInfo.IsActor == checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex).IsActor)
-                    {
-                        if (battlerInfo.Index != checkTriggerInfo.ActionInfo.SubjectIndex)
-                        {
-                            isTrigger = true;
-                        }
-                    }
-                }
-                break;
+                    isTrigger = CheckFriendAttackActionInfo(triggerData,battlerInfo,checkTriggerInfo).Count > 0;
+                    break;
             }
             return isTrigger;
         }
@@ -47,7 +38,39 @@ namespace Ryneus
 
         public void AddTriggerTargetList(List<int> targetIndexList,SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
         {
+            switch (triggerData.TriggerType)
+            {
+                case TriggerType.FriendAttackActionInfo:
+                    targetIndexList.AddRange(CheckFriendAttackActionInfo(triggerData,battlerInfo,checkTriggerInfo));
+                    break;
+            }
+        }
 
+        private List<int> CheckFriendAttackActionInfo(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+            var list = new List<int>();
+            var actionInfo = checkTriggerInfo.ActionInfo;
+            var actionResultInfos = checkTriggerInfo.ActionResultInfos;
+            if (!battlerInfo.IsAlive())
+            {
+                return list;
+            }
+            if (actionInfo == null)
+            {
+                return list;
+            }
+            if (!actionInfo.Master.IsHpDamageFeature())
+            {
+                return list;
+            }
+            if (battlerInfo.IsActor == checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+            {
+                if (battlerInfo.Index != actionInfo.SubjectIndex)
+                {
+                    list.Add(actionInfo.SubjectIndex);
+                }
+            }
+            return list;
         }
     }
 }

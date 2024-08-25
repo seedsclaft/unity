@@ -140,10 +140,6 @@ namespace Ryneus
 
         private int _apHeal = 0;
         public int ApHeal => _apHeal;
-        public void SetApHeal(int apHeal)
-        {
-            _apHeal = apHeal;
-        }
         private int _reDamage = 0;
         public int ReDamage => _reDamage;
         public void SetReDamage(int reDamage)
@@ -841,7 +837,8 @@ namespace Ryneus
                     FeatureType = FeatureType.AddState,
                     Param1 = featureData.Param1,
                     Param2 = featureData.Param2,
-                    Param3 = featureData.Param3
+                    Param3 = featureData.Param3,
+                    Rate = 100
                 };
                 MakeAddState(target,subject,counterAddState,false);
             }
@@ -1091,7 +1088,8 @@ namespace Ryneus
                     FeatureType = FeatureType.AddState,
                     Param1 = (int)lastAbnormal.Master.StateType,
                     Param2 = lastAbnormal.Turns,
-                    Param3 = lastAbnormal.Effect
+                    Param3 = lastAbnormal.Effect,
+                    Rate = 100
                 };
                 MakeAddState(subject,target,abnormalFeature);
             }
@@ -1109,7 +1107,8 @@ namespace Ryneus
                         FeatureType = FeatureType.AddState,
                         Param1 = (int)buffState.Master.StateType,
                         Param2 = buffState.Turns,
-                        Param3 = buffState.Effect
+                        Param3 = buffState.Effect,
+                        Rate = 100
                     };
                     MakeAddState(subject,subject,buffFeature);
                 }
