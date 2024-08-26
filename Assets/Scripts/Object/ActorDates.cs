@@ -17,6 +17,7 @@ namespace Ryneus
         public string Name;
         public string SubName;
         public int ClassId;
+        public UnitType UnitType;
         public string ImagePath;
         public int InitLv;
         public int MaxLv;
@@ -33,6 +34,16 @@ namespace Ryneus
         public List<KindType> Kinds;
         public List<LearningData> LearningSkills = new();
         public List<SkillTriggerActorData> SkillTriggerDates = new();
+    }
+
+    public enum UnitType
+    {
+        None = 0,
+        Attacker,
+        Defender,
+        Enhancer,
+        Healer,
+        Jammer
     }
 
     [Serializable]

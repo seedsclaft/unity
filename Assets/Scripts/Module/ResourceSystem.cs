@@ -161,6 +161,16 @@ namespace Ryneus
             return LoadResourceSpriteAtlas("Texture/SpellIcons");
         }
 
+        public static SpriteAtlas LoadUnitTypeIcons()
+        {
+            return LoadResourceSpriteAtlas("Texture/UnitType");
+        }
+
+        public static SpriteAtlas LoadUnitTypeBackIcons()
+        {
+            return LoadResourceSpriteAtlas("Texture/UnitTypeBack");
+        }
+
         public static SpriteAtlas LoadIcons()
         {
             return LoadResourceSpriteAtlas("Texture/Icons");

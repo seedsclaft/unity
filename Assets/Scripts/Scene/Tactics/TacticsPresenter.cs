@@ -793,9 +793,14 @@ namespace Ryneus
                 });
             } else
             {
+                var selectActorId = -1;
                 var getItemInfo = _view.SymbolGetItemInfo;
+                if (getItemInfo != null)
+                {
+                    selectActorId = getItemInfo.Param1;
+                }
                 // 確認する用
-                CommandStatusInfo(actorInfos,false,true,false,false,getItemInfo.Param1,() => 
+                CommandStatusInfo(actorInfos,false,true,false,false,selectActorId,() => 
                 {
 
                 });
@@ -881,7 +886,7 @@ namespace Ryneus
 
         private void CommandSelectCharaLayer(int actorId)
         {
-            CommandStatusInfo(_model.StageMembers(),false,true,false,false,actorId,() => 
+            CommandStatusInfo(_model.StageMembers(),false,true,true,false,actorId,() => 
             {
                 _view.SetHelpText(DataSystem.GetText(20020));
             });

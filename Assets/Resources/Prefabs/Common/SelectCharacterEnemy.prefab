@@ -4217,7 +4217,7 @@ PrefabInstance:
     - target: {fileID: 2397192218920283626, guid: bf6c28c076115c34d99e234ec6622c82,
         type: 3}
       propertyPath: actorOnlyGameObjects.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2397192218920283626, guid: bf6c28c076115c34d99e234ec6622c82,
         type: 3}
@@ -4229,6 +4229,11 @@ PrefabInstance:
       propertyPath: actorOnlyGameObjects.Array.data[3]
       value: 
       objectReference: {fileID: 1474596598948415488}
+    - target: {fileID: 2397192218920283626, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: actorOnlyGameObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 303937419366756768}
     - target: {fileID: 2706426820594106779, guid: bf6c28c076115c34d99e234ec6622c82,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4974,6 +4979,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7986118576318357793, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986118576318357793, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986118576318357793, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986118576318357793, guid: bf6c28c076115c34d99e234ec6622c82,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8205145246291532168, guid: bf6c28c076115c34d99e234ec6622c82,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5244,6 +5269,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf6c28c076115c34d99e234ec6622c82, type: 3}
+--- !u!1 &303937419366756768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8134813219080244435, guid: bf6c28c076115c34d99e234ec6622c82,
+    type: 3}
+  m_PrefabInstance: {fileID: 8418183167183420787}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1474596598948415488 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6964171644301620595, guid: bf6c28c076115c34d99e234ec6622c82,

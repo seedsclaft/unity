@@ -14,6 +14,7 @@ namespace Ryneus
 			Id = 0,
 			NameId,
 			ClassId = 4,
+			UnitType,
 			ImagePath,
 			InitLv,
 			MaxLv,
@@ -116,6 +117,7 @@ namespace Ryneus
                             SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
 
                             ClassId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ClassId),
+                            UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.UnitType),
                             ImagePath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.ImagePath),
                             InitLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.InitLv),
                             MaxLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.MaxLv)

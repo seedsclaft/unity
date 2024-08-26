@@ -42,6 +42,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI recoveryCost;
         [SerializeField] private TextMeshProUGUI resourceGain;
         [SerializeField] private TextMeshProUGUI addTiming;
+        [SerializeField] private Image unitTypeImage;
+        [SerializeField] private Image unitTypeImageBack;
 
         public void UpdateInfo(ActorInfo actorInfo,List<ActorInfo> actorInfos)
         {
@@ -120,93 +122,80 @@ namespace Ryneus
             }
         }
 
-
         public void UpdateData(ActorData actorData)
         {
-            if (mainThumb != null)
-            {
-                UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
-            }
-            if (awakenThumb != null)
-            {
-                UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
-            }
-            if (clipThumb != null)
-            {
-                UpdateClipThumb(actorData.ImagePath);
-            }
-            if (faceThumb != null)
-            {
-                UpdateMainFaceThumb(actorData.ImagePath);
-            }
-            if (awakenFaceThumb != null)
-            {
-                UpdateAwakenFaceThumb(actorData.ImagePath);
-            }
-            if (nameText != null)
-            {
-                nameText.text = actorData.Name;
-            }
-            if (subNameText != null)
-            {
-                subNameText.text = actorData.SubName;
-            }
+            UpdateMainThumb(actorData.ImagePath,actorData.X,actorData.Y,actorData.Scale);
+            UpdateAwakenThumb(actorData.ImagePath,actorData.AwakenX,actorData.AwakenY,actorData.AwakenScale);
+            UpdateClipThumb(actorData.ImagePath);
+            UpdateMainFaceThumb(actorData.ImagePath);
+            UpdateAwakenFaceThumb(actorData.ImagePath);
+            nameText?.SetText(actorData.Name);
+            subNameText?.SetText(actorData.SubName);
+            UpdateUnitType(actorData.UnitType);
+            UpdateUnitTypeBack(actorData.UnitType);
         }
+
         private void UpdateMainThumb(string imagePath,int x,int y,float scale)
         {
-            var handle = ResourceSystem.LoadActorMainSprite(imagePath);
-            if (mainThumb != null)
+            if (mainThumb == null)
             {
-                var rect = mainThumb.GetComponent<RectTransform>();
-                rect.localPosition = new Vector3(x, y, 0);
-                rect.localScale = new Vector3(scale, scale, 1);
-                mainThumb.sprite = handle;
-                rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
+                return;
             }
+            var handle = ResourceSystem.LoadActorMainSprite(imagePath);
+            var rect = mainThumb.GetComponent<RectTransform>();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
+            mainThumb.sprite = handle;
+            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
         }
 
         private void UpdateAwakenThumb(string imagePath,int x,int y,float scale)
         {
-            var handle = ResourceSystem.LoadActorAwakenSprite(imagePath);
-            if (awakenThumb != null)
+            if (awakenThumb == null)
             {
-                var rect = awakenThumb.GetComponent<RectTransform>();
-                rect.localPosition = new Vector3(x, y, 0);
-                rect.localScale = new Vector3(scale, scale, 1);
-                awakenThumb.sprite = handle;
-                rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
+                return;
             }
+            var handle = ResourceSystem.LoadActorAwakenSprite(imagePath);
+            var rect = awakenThumb.GetComponent<RectTransform>();
+            rect.localPosition = new Vector3(x, y, 0);
+            rect.localScale = new Vector3(scale, scale, 1);
+            awakenThumb.sprite = handle;
+            rect.sizeDelta = new Vector3(mainThumb.mainTexture.width, mainThumb.mainTexture.height, 1);
         }
 
         private void UpdateClipThumb(string imagePath)
         {
-            var handle = ResourceSystem.LoadActorClipSprite(imagePath);
-            if (clipThumb != null) clipThumb.sprite = handle;
+            if (clipThumb == null) 
+            {
+                return;
+            }
+            clipThumb.sprite = ResourceSystem.LoadActorClipSprite(imagePath);;
         }
 
         private void UpdateMainFaceThumb(string imagePath)
         {   
-            var handle = ResourceSystem.LoadActorMainFaceSprite(imagePath);
-            if (faceThumb != null) 
+            if (faceThumb == null)
             {
-                faceThumb.sprite = handle;
-                faceThumb.gameObject.SetActive(true);
+                return;
             }
+            faceThumb.sprite = ResourceSystem.LoadActorMainFaceSprite(imagePath);
+            faceThumb.gameObject.SetActive(true);
         }
 
         private void UpdateAwakenFaceThumb(string imagePath)
         {
-            if (awakenFaceThumb != null)
+            if (awakenFaceThumb == null)
             {
-                awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
-                awakenFaceThumb.gameObject.SetActive(true);
+                return;
             }
+            awakenFaceThumb.sprite = ResourceSystem.LoadActorAwakenFaceSprite(imagePath);
+            awakenFaceThumb.gameObject.SetActive(true);
         }
 
         private void UpdateAttributeParam(TextMeshProUGUI textMeshProUGUI,AttributeRank param)
         {
             var textId = 2000 + (int)param;
-            textMeshProUGUI.text = DataSystem.GetText(textId);
+            textMeshProUGUI?.SetText(DataSystem.GetText(textId));
         }
         
         public void SetAwakeMode(bool IsAwaken)
@@ -248,6 +237,28 @@ namespace Ryneus
                 awakenFaceThumb.sprite = null;
                 awakenFaceThumb.gameObject.SetActive(false);
             }
+        }
+
+        private void UpdateUnitType(UnitType unitType)
+        {
+            if (unitTypeImage == null)
+            {
+                return;
+            }
+            unitTypeImage.gameObject.SetActive(true);
+            var spriteAtlas = ResourceSystem.LoadUnitTypeIcons();
+            unitTypeImage.sprite = spriteAtlas.GetSprite(unitType.ToString());
+        }
+
+        private void UpdateUnitTypeBack(UnitType unitType)
+        {
+            if (unitTypeImageBack == null)
+            {
+                return;
+            }
+            unitTypeImageBack.gameObject.SetActive(true);
+            var spriteAtlas = ResourceSystem.LoadUnitTypeBackIcons();
+            unitTypeImageBack.sprite = spriteAtlas.GetSprite(unitType.ToString());
         }
     }
 }
