@@ -79,45 +79,14 @@ namespace Ryneus
                         getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,stageSymbolData.Param1));
                         break;
                     case SymbolType.SelectActor:
-                        // タイトル表示用
-                        getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectAddActor,-1));
-                        // 表示用に報酬設定
-                        if (stageSymbolData.Param2 == 0)
-                        {
-                            // 自由選択
-                        } else
-                        {
-                            // 選択できるアクターが3人まで
-                            var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
-                            var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
-                            var count = 3;
-                            if (actorInfos.Count < count)
-                            {
-                                count = actorInfos.Count;
-                            }
-                            if (count == 0)
-                            {
-                                // 報酬設定
-                                getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,20));
-                            } else
-                            {
-                                while (getItemInfos.Count <= count)
-                                {
-                                    var rand = Random.Range(0,actorInfos.Count);
-                                    if (getItemInfos.Find(a => a.Param1 == actorInfos[rand].ActorId) == null)
-                                    {
-                                        getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,actorInfos[rand].ActorId));
-                                    }
-                                }
-                            }
-                        }
+                        getItemInfos.AddRange(MakeSelectActorGetItemInfos(stageSymbolData.Param2 == 0));
                         break;
-                        case SymbolType.Shop:
-                            // Rank1,2からランダム設定
-                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.ActiveRank2,1);
-                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank1,2);
-                            MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank2,3);
-                            break;
+                    case SymbolType.Shop:
+                        // Rank1,2からランダム設定
+                        MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.ActiveRank2,1);
+                        MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank1,2);
+                        MakeShopGetItemInfos(getItemInfos,symbolInfo,RankType.PassiveRank2,3);
+                        break;
                 }
                 if (stageSymbolData.PrizeSetId > 0)
                 {
@@ -127,8 +96,11 @@ namespace Ryneus
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                         if (prizeSet.GetItem.Type == GetItemType.SelectRelic)
                         {
-                            var relicInfos = MakeSelectRelicGetItemInfos((RankType)getItemInfo.Param2);
-                            getItemInfos.AddRange(relicInfos);
+                            getItemInfos.AddRange(MakeSelectRelicGetItemInfos((RankType)getItemInfo.Param2));
+                        } else
+                        if (prizeSet.GetItem.Type == GetItemType.SelectAddActor)
+                        {
+                            getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
                         } else
                         {
                             getItemInfos.Add(getItemInfo);
@@ -171,6 +143,44 @@ namespace Ryneus
                     }
                 }
             }
+        }
+
+        private static List<GetItemInfo> MakeSelectActorGetItemInfos(bool freeSelect)
+        {
+            var getItemInfos = new List<GetItemInfo>();
+            // タイトル表示用
+            getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectAddActor,-1));
+            // 表示用に報酬設定
+            if (freeSelect)
+            {
+                // 自由選択
+            } else
+            {
+                // 選択できるアクターが3人まで
+                var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+                var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
+                var count = 3;
+                if (actorInfos.Count < count)
+                {
+                    count = actorInfos.Count;
+                }
+                if (count == 0)
+                {
+                    // 報酬設定
+                    getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,20));
+                } else
+                {
+                    while (getItemInfos.Count <= count)
+                    {
+                        var rand = Random.Range(0,actorInfos.Count);
+                        if (getItemInfos.Find(a => a.Param1 == actorInfos[rand].ActorId) == null)
+                        {
+                            getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,actorInfos[rand].ActorId));
+                        }
+                    }
+                }
+            }
+            return getItemInfos;
         }
 
         private static List<GetItemInfo> MakeSelectRelicGetItemInfos(RankType rankType)

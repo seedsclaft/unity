@@ -161,7 +161,6 @@ namespace Ryneus
                             _resultInfos.Add(resultInfo);
                             PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
                         }
-
                         break;
                     case GetItemType.Skill:
                         getItemInfo.SetGetFlag(true);
@@ -172,26 +171,13 @@ namespace Ryneus
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.Regeneration:
-                        /*
-                        foreach (var stageMember in StageMembers())
-                        {
-                            if (stageMember.Lost == false)
-                            {
-                                stageMember.ChangeHp(stageMember.CurrentHp + getItemInfo.Param1);
-                                stageMember.ChangeMp(stageMember.CurrentMp + getItemInfo.Param1);
-                            }
-                        }
-                        */
-                        break;
                     case GetItemType.Demigod:
-                        break;
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.AddActor:
                     case GetItemType.SelectAddActor:
                         getItemInfo.SetGetFlag(true);
                         getItemInfo.SetParam2(getItemInfo.Param1);
-                        //record.AddSelectedIndex(getItemInfo.Param1);
                         // キャラ加入
                         var actorData = DataSystem.FindActor(getItemInfo.Param1);
                         resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData.Name));
@@ -214,16 +200,7 @@ namespace Ryneus
                         }
                         break;
                     case GetItemType.SelectRelic:
-                        /*
                         // アルカナ選択の時は既にFlagを変えておく
-                        if (getItemInfo.GetFlag == true)
-                        {
-                            var relicData = DataSystem.FindSkill(getItemInfo.Param1);
-                            resultInfo.SetSkillId(relicData.Id);
-                            resultInfo.SetTitle(relicData.Name);
-                            _resultInfos.Add(resultInfo);
-                        }
-                        */
                         break;
                 }
             }
@@ -231,10 +208,10 @@ namespace Ryneus
             record.SymbolInfo.SetCleared(true); 
             // スコア報酬を更新
             PartyInfo.UpdateScorePrizeInfos();
-            var nexScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
-            foreach (var nexScorePrizeInfo in nexScorePrizeInfos)
+            var nextScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
+            foreach (var nextScorePrizeInfo in nextScorePrizeInfos)
             {
-                foreach (var prizeMaster in nexScorePrizeInfo.PrizeMaster)
+                foreach (var prizeMaster in nextScorePrizeInfo.PrizeMaster)
                 {
                     var resultInfo = new StrategyResultViewInfo();
                     switch(prizeMaster.GetItem.Type)
@@ -351,19 +328,11 @@ namespace Ryneus
             {
                 return BaseConfirmCommand(3040,3054); // 再戦
             }
-            return BaseConfirmCommand(3040,19040
-);
+            return BaseConfirmCommand(3040,19040);
         }
 
         public bool IsBonusTactics(int actorId)
         {
-            /*
-            var result = _resultInfos.Find(a => a.ActorId == actorId);
-            if (result != null)
-            {
-                return result.IsBonus;
-            }
-            */
             return false;
         }
         
@@ -400,7 +369,6 @@ namespace Ryneus
             PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
         }
 
-
         public void CommitCurrentResult()
         {
             // バトルに敗北しているときは更新しない
@@ -434,7 +402,6 @@ namespace Ryneus
             CurrentStage.SetSeekIndex(-1);
             PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
-            //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
         public void CommitCurrentParallelResult()
@@ -459,7 +426,6 @@ namespace Ryneus
             CurrentStage.SetSeekIndex(-1);
             PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
-            //PartyInfo.SetStageSymbolInfos(SelectedSymbolInfos(CurrentStage.Id));
         }
 
         public bool EnableBattleSkip()

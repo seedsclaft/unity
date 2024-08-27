@@ -777,7 +777,7 @@ namespace Ryneus
         private void CommandCallAddActorInfo(SymbolResultInfo symbolResultInfo,bool addCommand)
         {
             List<ActorInfo> actorInfos;
-            if (symbolResultInfo.StageSymbolData.Param2 == 0)
+            if (symbolResultInfo.StageSymbolData.Param2 == 0 && symbolResultInfo.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor) == null)
             {
                 actorInfos = _model.AddSelectActorInfos();
             } else

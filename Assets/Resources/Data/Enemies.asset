@@ -819,39 +819,63 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
-    - SkillId: 11010
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200110
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200120
-      Level: 1
-      Weight: 150
-      TriggerDates: []
-    - SkillId: 200130
-      Level: 1
-      Weight: 0
-      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
       Trigger1: 5061
       Trigger2: 0
-    - SkillId: 11010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200110
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200120
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200130
-      Trigger1: 0
-      Trigger2: 0
   - Id: 102
+    Name: "\u30D9\u30EA\u30C8"
+    ImagePath: Berith
+    BaseStatus:
+      _hp: 50
+      _mp: 0
+      _atk: 23
+      _def: 6
+      _spd: 18
+    Kinds: 040000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 60
+    DefGrowth: 35
+    SpdGrowth: 40
+    LearningSkills:
+    - SkillId: 5010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 15050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200210
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 200220
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 200230
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200210
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200220
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200230
+      Trigger1: 0
+      Trigger2: 0
+  - Id: 103
     Name: "\u30D1\u30A4\u30E2\u30F3"
     ImagePath: Paimon
     BaseStatus:
@@ -879,15 +903,15 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
-    - SkillId: 200210
+    - SkillId: 200310
       Level: 1
       Weight: 0
       TriggerDates: []
-    - SkillId: 200220
+    - SkillId: 200320
       Level: 1
       Weight: 150
       TriggerDates: []
-    - SkillId: 200230
+    - SkillId: 200330
       Level: 1
       Weight: 0
       TriggerDates: []
@@ -901,16 +925,16 @@ MonoBehaviour:
     - SkillId: 14080
       Trigger1: 1033
       Trigger2: 0
-    - SkillId: 200210
+    - SkillId: 200310
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 200220
+    - SkillId: 200320
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 200230
+    - SkillId: 200330
       Trigger1: 0
       Trigger2: 0
-  - Id: 103
+  - Id: 104
     Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
     ImagePath: Andras
     BaseStatus:
@@ -930,63 +954,6 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
-    - SkillId: 200310
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200320
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 200330
-      Level: 1
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200310
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200320
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 200330
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 104
-    Name: "\u30D9\u30EA\u30C8"
-    ImagePath: Berith
-    BaseStatus:
-      _hp: 50
-      _mp: 0
-      _atk: 23
-      _def: 6
-      _spd: 18
-    Kinds: 040000000c000000
-    HpGrowth: 100
-    MpGrowth: 0
-    AtkGrowth: 60
-    DefGrowth: 35
-    SpdGrowth: 40
-    LearningSkills:
-    - SkillId: 5010
-      Level: 1
-      Weight: 50
-      TriggerDates: []
-    - SkillId: 5080
-      Level: 1
-      Weight: 100
-      TriggerDates: []
-    - SkillId: 5040
-      Level: 1
-      Weight: 150
-      TriggerDates: []
-    - SkillId: 15050
-      Level: 1
-      Weight: 0
-      TriggerDates: []
     - SkillId: 200410
       Level: 1
       Weight: 0
@@ -1000,16 +967,7 @@ MonoBehaviour:
       Weight: 0
       TriggerDates: []
     SkillTriggerDates:
-    - SkillId: 5010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 5080
-      Trigger1: 6150
-      Trigger2: 14211
-    - SkillId: 5040
-      Trigger1: 6150
-      Trigger2: 14211
-    - SkillId: 15050
+    - SkillId: 2010
       Trigger1: 0
       Trigger2: 0
     - SkillId: 200410
