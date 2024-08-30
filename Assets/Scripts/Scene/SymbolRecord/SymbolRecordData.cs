@@ -39,7 +39,7 @@ namespace Ryneus
                 var symbolStageId = dates[0].StageSymbolData.StageId;
                 var symbolSeek = dates[0].StageSymbolData.Seek;
                 var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
-                var currentTurn = GameSystem.CurrentStageData.CurrentStage.CurrentSeek;
+                var currentTurn = GameSystem.CurrentStageData.CurrentStage.Seek;
                 pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
                 nextObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);

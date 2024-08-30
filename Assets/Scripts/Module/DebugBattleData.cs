@@ -66,7 +66,7 @@ namespace Ryneus
                 };
                 var symbolInfo = new SymbolInfo(SymbolType.Battle);
                 symbolInfo.SetTroopInfo(troopInfo);
-                var record = new SymbolResultInfo(symbolInfo,stageSymbol,0);
+                var record = new SymbolResultInfo(symbolInfo,stageSymbol);
                 currentStageData.Party.SetSymbolResultInfo(record);
             } else
             {
@@ -109,7 +109,7 @@ namespace Ryneus
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 //symbolInfo.SetSelected(true);
                 symbol.SeekIndex = actorId;
-                var record = new SymbolResultInfo(symbolInfo,symbol,0);
+                var record = new SymbolResultInfo(symbolInfo,symbol);
                 record.SetSelected(true);
                 symbolInfos.Add(record);
             }
@@ -136,7 +136,7 @@ namespace Ryneus
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 //symbolInfo.SetSelected(true);
                 symbol.SeekIndex = skillId;
-                var record = new SymbolResultInfo(symbolInfo,symbol,0);
+                var record = new SymbolResultInfo(symbolInfo,symbol);
                 record.SetSelected(true);
                 symbolInfos.Add(record);
             }

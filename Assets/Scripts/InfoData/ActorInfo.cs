@@ -17,6 +17,7 @@ namespace Ryneus
         public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
         private int _stageId = 1;
         private int _seek = 1;
+        private WorldType _worldType = WorldType.Main;
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
         {
             var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
@@ -48,6 +49,18 @@ namespace Ryneus
             }
             return currency;
         }
+
+        public void ResetParamData(int stageId,int seek,WorldType worldType)
+        {
+            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
+            {
+                var levelUpInfo = _levelUpInfos[i];
+                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldNo == worldType)
+                {
+                    _levelUpInfos.Remove(levelUpInfo);
+                }
+            }
+        }
         
         private string _addTiming = "";
         public string AddTiming => _addTiming;
@@ -56,7 +69,7 @@ namespace Ryneus
             _addTiming = addTiming;
         }
 
-        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData() && a.IsEnableStage(_stageId,_seek)).Count + 1;
+        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData() && a.IsEnableStage(_stageId,_seek,_worldType)).Count + 1;
         private int _levelLink = -1;
 
         public void SetLevelLink(int levelLink)
@@ -74,10 +87,11 @@ namespace Ryneus
         private bool _levelLinked = false;
         public bool LevelLinked => _levelLinked;
         public void SetLevelLinked(bool levelLinked) => _levelLinked = levelLinked;
-        public void SetStageSeek(int stageId,int seek)
+        public void SetStageSeek(int stageId,int seek,WorldType worldType)
         {
             _stageId = stageId;
             _seek = seek;
+            _worldType = worldType;
         }
         public StatusInfo CurrentStatus => LevelUpStatus(LinkedLevel());
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
@@ -192,7 +206,7 @@ namespace Ryneus
         private List<int> LearnSkillIds()
         {
             var list = new List<int>();
-            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.IsEnableStage(_stageId,_seek));
+            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.IsEnableStage(_stageId,_seek,_worldType));
             foreach (var learnSkill in learnSkills)
             {
                 list.Add(learnSkill.SkillId);
@@ -351,10 +365,10 @@ namespace Ryneus
 
         public int TrainCost()
         {
-            return _levelUpInfos.FindAll(a => a.IsTrainData()).Count + 1;
+            return _levelUpInfos.FindAll(a => a.IsEnableStage(_stageId,_seek,_worldType) && a.IsTrainData()).Count + 1;
         }
 
-        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,int worldNo)
+        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,WorldType worldNo)
         {
             var levelUpInfo = new LevelUpInfo
             (
@@ -410,7 +424,7 @@ namespace Ryneus
             return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
-        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,int worldNo = -1)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,WorldType worldNo = WorldType.Main)
         {
             var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex,worldNo);
             skillLevelUpInfo.SetSkillId(skillId);

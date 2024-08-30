@@ -19,6 +19,7 @@ namespace Ryneus
         [SerializeField] private GameObject skillLogPrefab = null;
         [SerializeField] private GameObject scorePrizePrefab = null;
         [SerializeField] private GameObject clearPartyPrefab = null;
+        [SerializeField] private GameObject checkConflictPrefab = null;
         
         public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
         {
@@ -66,6 +67,8 @@ namespace Ryneus
                 return scorePrizePrefab;
                 case PopupType.ClearParty:
                 return clearPartyPrefab;
+                case PopupType.CheckConflict:
+                return checkConflictPrefab;
             }
             return null;
         }
@@ -98,5 +101,6 @@ namespace Ryneus
         SkillLog,
         ScorePrize,
         ClearParty,
+        CheckConflict,
     }
 }

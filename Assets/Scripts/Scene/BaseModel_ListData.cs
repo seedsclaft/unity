@@ -37,8 +37,12 @@ namespace Ryneus
         }
 
         public List<SkillInfo> SkillActionList(ActorInfo actorInfo)
-        {
-            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+        {            
+            if (actorInfo == null)
+            {
+                return new List<SkillInfo>();
+            }
+            var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             return actorInfo.SkillActionList(alchemyIds);
         }
 
@@ -52,7 +56,7 @@ namespace Ryneus
         {
             var skillInfos = new List<SkillInfo>();
             
-            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
+            foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo))
             {
                 var skillInfo = new SkillInfo(alchemyId);
                 if (selectAttribute > 0)

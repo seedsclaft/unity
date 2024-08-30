@@ -6,8 +6,8 @@ namespace Ryneus
     [Serializable]
     public class SymbolInfo
     {
-        private SymbolType _SymbolType;
-        public SymbolType SymbolType => _SymbolType;
+        private SymbolType _symbolType;
+        public SymbolType SymbolType => _symbolType;
         private TroopInfo _troopInfo;
         public TroopInfo TroopInfo => _troopInfo;
         public void SetTroopInfo(TroopInfo troopInfo)
@@ -34,8 +34,31 @@ namespace Ryneus
         }
         public SymbolInfo(SymbolType symbolType)
         {
-            _SymbolType = symbolType;
+            _symbolType = symbolType;
             //_stageSymbolData = symbol;
+        }
+
+        public void CopyData(SymbolInfo symbolInfo)
+        {
+            _troopInfo = symbolInfo._troopInfo;
+            _getItemInfos = new List<GetItemInfo>();
+            foreach (var getItemInfo in symbolInfo.GetItemInfos)
+            {
+                var getItem = new GetItemInfo(null);
+                getItem.CopyData(getItemInfo);
+                _getItemInfos.Add(getItem);
+            }
+            _cleared = symbolInfo._cleared;
+        }
+
+        public void ResetParamData()
+        {
+            foreach (var getItemInfo in GetItemInfos)
+            {
+                getItemInfo.SetParam2(0);
+                getItemInfo.SetGetFlag(false);
+            }
+            _cleared = false;
         }
 
         public List<BattlerInfo> BattlerInfos()
@@ -79,5 +102,7 @@ namespace Ryneus
         {
             return SymbolType == SymbolType.Battle || SymbolType == SymbolType.Boss;
         }
+
+
     }
 }

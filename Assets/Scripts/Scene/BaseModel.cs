@@ -18,11 +18,13 @@ namespace Ryneus
 
         public PartyInfo PartyInfo => CurrentSaveData.Party;
 
-        public int Currency => PartyInfo.Currency;
-        public int TotalScore => PartyInfo.TotalScore();
+        public int Currency => PartyInfo.GetCurrency(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+        public int TotalScore => PartyInfo.TotalScore(CurrentStage.WorldNo);
 
-        public int RemainTurns => CurrentStage.Master.StageSymbols.Max(a => a.Seek) - CurrentStage.CurrentSeek + 1;
+        public int RemainTurns => CurrentStage.Master.StageSymbols.Max(a => a.Seek) - CurrentStage.Seek + 1;
 
+        public bool BrunchMode => PartyInfo.ReturnSymbol != null;
+        public bool NeedEndBrunch => PartyInfo.NeedEndBrunch();
         public CancellationTokenSource _cancellationTokenSource;
         private List<StageTutorialData> _currentStageTutorialDates = new ();
         public List<StageTutorialData> CurrentStageTutorialDates => _currentStageTutorialDates;
@@ -57,7 +59,7 @@ namespace Ryneus
 
         public List<ActorInfo> StageMembers()
         {
-            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             actorInfos.Sort((a,b)=> a.LinkedLevel() < b.LinkedLevel() ? 1 : -1);
             return actorInfos;
         }
@@ -71,7 +73,7 @@ namespace Ryneus
         
         public List<ActorInfo> PartyMembers()
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
         }
 
         public string TacticsBgmKey()
@@ -95,14 +97,14 @@ namespace Ryneus
 
         public List<StageEventData> StageEvents(EventTiming eventTiming)
         {
-            int CurrentTurn = CurrentStage.CurrentSeek;
+            int CurrentTurn = CurrentStage.Seek;
             var eventKeys = CurrentStage.ReadEventKeys;
             return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
         }
         
         public bool SetStageTutorials(EventTiming eventTiming)
         {
-            int CurrentTurn = CurrentStage.CurrentSeek;
+            int CurrentTurn = CurrentStage.Seek;
             _currentStageTutorialDates = StageTutorialDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
             return _currentStageTutorialDates.Count > 0;
         }
@@ -206,13 +208,13 @@ namespace Ryneus
         
         public List<SymbolResultInfo> TacticsSymbols()
         {
-            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
         }
 
         public List<SkillInfo> AlcanaSkillInfos()
         {
             var skillInfos = new List<SkillInfo>();
-            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo))
+            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo))
             {
                 var skillInfo = new SkillInfo(alchemyId);
                 skillInfo.SetEnable(true);
@@ -238,7 +240,7 @@ namespace Ryneus
                 if (!stageMembers.Contains(actorInfo))
                 {
                     var levelUpInfos = actorInfo.LevelUpInfos;
-                    if (levelUpInfos.FindAll(a => a.WorldNo != CurrentStage.WorldNo).Count > 0)
+                    if (levelUpInfos.FindAll(a => (int)a.WorldNo != (int)CurrentStage.WorldNo).Count > 0)
                     {
                         stageMembers.Add(actorInfo);
                     }
@@ -279,7 +281,7 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
+                var record = new SymbolResultInfo(symbolInfo,symbol);
                 if (addActor == false)
                 {
                     record.SetSelected(true);
@@ -289,7 +291,7 @@ namespace Ryneus
                         // 初期アクター
                         addActorGetItemInfo.SetParam2(1);
                         addActorGetItemInfo.SetGetFlag(true);
-                        addActor = true;
+                        //addActor = true;
                     }
                 }
                 recordInfos.Add(record);
@@ -309,8 +311,20 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,symbol,GameSystem.CurrentStageData.Party.Currency);
-                record.SetWorldNo(1);
+                var record = new SymbolResultInfo(symbolInfo,symbol);
+                record.SetWorldNo(WorldType.Brunch);
+                if (addActor == false)
+                {
+                    record.SetSelected(true);
+                    var addActorGetItemInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
+                    if (addActorGetItemInfo != null)
+                    {
+                        // 初期アクター
+                        addActorGetItemInfo.SetParam2(1);
+                        addActorGetItemInfo.SetGetFlag(true);
+                        //addActor = true;
+                    }
+                }
                 recordInfos.Add(record);
             }
             return recordInfos;
@@ -335,20 +349,22 @@ namespace Ryneus
             {
                 PartyInfo.SetSymbolResultInfo(record);
             }
+            /*
             // アナザーデータ作成
             foreach (var record in StageResultInfos(CurrentStage.Id))
             {
-                record.SetWorldNo(1);
-                record.SetSelected(false);
+                record.SetWorldNo(WorldType.Brunch);
+                //record.SetSelected(false);
                 PartyInfo.SetSymbolResultInfo(record);
             }
+            */
             //MakeSymbolResultInfos();
             SavePlayerStageData(true);
         }
 
         public SymbolResultInfo CurrentSelectRecord()
         {
-            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
@@ -363,22 +379,9 @@ namespace Ryneus
         /// <param name="returnSymbol"></param>
         public void SetReturnRecordStage(SymbolResultInfo returnSymbol)
         {
-            PartyInfo.SetReturnStageIdSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
+            PartyInfo.SetReturnStageIdSeek(CurrentStage.Id,CurrentStage.Seek);
             CurrentStage.SetStageId(returnSymbol.StageId);
             CurrentStage.SetCurrentTurn(returnSymbol.Seek);
-            SetStageSeek();
-        }
-
-        public void ResetRecordStage()
-        {
-            if (PartyInfo.ReturnSymbol != null)
-            {
-                CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
-                CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
-                CurrentStage.SetSeekIndex(0);
-                SetParallelMode(false);
-            }
-            PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
         }
         
@@ -483,7 +486,7 @@ namespace Ryneus
             } else
             if (CurrentStage.Master.RankingStage == RankingType.Turns)
             {
-                evaluate = CurrentStage.CurrentSeek - 1;
+                evaluate = CurrentStage.Seek - 1;
             }
             return evaluate;
         }
@@ -659,7 +662,7 @@ namespace Ryneus
             if (CurrentStage != null)
             {
                 stageKey.Append(string.Format(CurrentStage.Id.ToString("00")));
-                stageKey.Append(string.Format(CurrentStage.CurrentSeek.ToString("00")));
+                stageKey.Append(string.Format(CurrentStage.Seek.ToString("00")));
                 stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
             }
             return stageKey.ToString();
@@ -669,7 +672,7 @@ namespace Ryneus
         {
             foreach (var actorInfo in PartyInfo.ActorInfos)
             {
-                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek);
+                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
                 actorInfo.ChangeHp(actorInfo.MaxHp);
             }
         }
@@ -679,7 +682,7 @@ namespace Ryneus
             var cost = ActorLevelUpCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldNo);
             PartyInfo.ChangeCurrency(Currency - cost);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             foreach (var skill in skills)
@@ -708,11 +711,159 @@ namespace Ryneus
             var skillInfo = new SkillInfo(skillId);
             var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
             PartyInfo.ChangeCurrency(Currency - learningCost);
-            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.CurrentSeek,-1,CurrentStage.WorldNo);
+            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldNo);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             // 作戦項目に追加
             actorInfo.AddSkillTriggerSkill(skillId);
         }
 
+        /// <summary>
+        /// ブランチを作る
+        /// </summary>
+        /// <param name="symbolResultInfo"></param>
+        public void MakeBrunch(SymbolResultInfo symbolResultInfo)
+        {
+            PartyInfo.SetBrunchStageIdSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,true);
+            
+            // 以前のデータを作成
+            var resultInfos = PartyInfo.SymbolRecordList;
+            // 既存レコード複製
+            foreach (var resultInfo in resultInfos)
+            {
+                if (resultInfo.WorldNo == WorldType.Main)
+                {
+                    var copy = resultInfos.Find(a => a.IsSameStageSeek(resultInfo.StageId,resultInfo.Seek,WorldType.Brunch));
+                    // ブランチより前は値をコピー
+                    if (resultInfo.StageId == symbolResultInfo.StageId && resultInfo.Seek < symbolResultInfo.Seek
+                    || resultInfo.StageId < symbolResultInfo.StageId)
+                    {
+                        copy.CopyParamData(resultInfo);
+                    }
+                }
+            }
+            SetReturnRecordStage(symbolResultInfo);
+        }
+
+        /// <summary>
+        /// マージリクエストする
+        /// </summary>
+        public bool MergeRequest()
+        {
+            // コンフリクト
+            var conflict = false;
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            // ステージ比較
+            foreach (var resultInfo in selectRecords)
+            {
+                var main = PartyInfo.SymbolRecordList.Find(a => a.IsSameStageSeek(resultInfo.StageId,resultInfo.Seek,WorldType.Main));
+                var brunch = resultInfo;
+                // 選択が違う
+                if (main.Selected != brunch.Selected)
+                {
+                    conflict = true;
+                } else
+                {
+                    // バトル
+                    if (main.SymbolInfo.IsBattleSymbol())
+                    {
+                        if (main.BattleScore != brunch.BattleScore)
+                        {
+                            conflict = true;
+                        }
+                    } else
+                    {
+                        var mainGetItemInfos = main.SymbolInfo.GetItemInfos;
+                        for(int i = 0;i < mainGetItemInfos.Count;i++)
+                        {
+                            var brunchGetItemInfo = brunch.SymbolInfo.GetItemInfos[i];
+                            if (mainGetItemInfos[i].GetFlag != brunchGetItemInfo.GetFlag)
+                            {
+                                conflict = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            // 育成状態比較
+            var mainActorInfos = PartyInfo.CurrentActorInfos(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Main);
+            var brunchActorInfos = PartyInfo.CurrentActorInfos(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Brunch);
+            
+            var mainAlchemyIds = PartyInfo.CurrentAlchemyIdList(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Main);
+            var brunchAlchemyIds = PartyInfo.CurrentAlchemyIdList(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Brunch);
+            foreach (var mainActorInfo in mainActorInfos)
+            {
+                var brunchActorInfo = brunchActorInfos.Find(a => a.ActorId == mainActorInfo.ActorId);
+                if (mainActorInfo.Level != brunchActorInfo.Level)
+                {
+                    conflict = true;
+                }
+                foreach (var skillInfo in mainActorInfo.SkillActionList(mainAlchemyIds))
+                {
+                    if (!brunchActorInfo.IsLearnedSkill(skillInfo.Id))
+                    {
+                        conflict = true;
+                    }
+                }
+            }
+            foreach (var brunchActorInfo in brunchActorInfos)
+            {
+                var mainActorInfo = mainActorInfos.Find(a => a.ActorId == brunchActorInfo.ActorId);
+                foreach (var skillInfo in brunchActorInfo.SkillActionList(brunchAlchemyIds))
+                {
+                    if (!mainActorInfo.IsLearnedSkill(skillInfo.Id))
+                    {
+                        conflict = true;
+                    }
+                }
+            }
+            return conflict;
+        }
+
+        /// <summary>
+        /// マージする
+        /// </summary>
+        public void MergeBrunch()
+        {            
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            
+            var brunchSymbol = PartyInfo.BrunchBaseSymbol;
+            var returnSymbol = PartyInfo.ReturnSymbol;
+            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            
+            foreach (var resultInfo in selectRecords)
+            {
+                PartyInfo.MergeBrunch(resultInfo);
+            }
+            CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
+            CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
+            CurrentStage.SetSeekIndex(0);
+            CurrentStage.SetWorldNo(WorldType.Main);
+            PartyInfo.ClearBrunch();
+            SetStageSeek();
+        }
+
+        /// <summary>
+        /// リバースする
+        /// </summary>
+        public void ReverseBrunch()
+        {            
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            
+            var brunchSymbol = PartyInfo.BrunchBaseSymbol;
+            var returnSymbol = PartyInfo.ReturnSymbol;
+            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            
+            foreach (var resultInfo in selectRecords)
+            {
+                PartyInfo.ReverseBrunch(resultInfo);
+            }
+            CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
+            CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
+            CurrentStage.SetSeekIndex(0);
+            CurrentStage.SetWorldNo(WorldType.Main);
+            PartyInfo.ClearBrunch();
+            SetStageSeek();
+        }
     }
 }

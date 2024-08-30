@@ -293,7 +293,6 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
-
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
             var confirmInfo = new ConfirmInfo(DataSystem.GetText(19200),(a) => UpdateSelectAlcana((ConfirmCommandType)a),ConfirmType.SkillDetail);
@@ -441,6 +440,7 @@ namespace Ryneus
         private void EndStrategy()
         {
             _view.EndShinyEffect();
+            /*
             if (_model.PartyInfo.ReturnSymbol != null)
             {
                 _model.SetSelectSymbol();
@@ -454,6 +454,7 @@ namespace Ryneus
                 }
                 _view.CommandGotoSceneChange(Scene.Tactics);
             } else
+            */
             if (_model.InBattleResult && _model.BattleResultVictory == false)
             {
                 // 敗北して戻る
@@ -485,7 +486,6 @@ namespace Ryneus
                     _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
                 }
             }
-            //_model.TempInfo.ClearTempGetItemInfos();
         }
     }
 }

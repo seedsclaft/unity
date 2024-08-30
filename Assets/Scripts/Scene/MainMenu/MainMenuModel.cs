@@ -47,7 +47,7 @@ namespace Ryneus
                 }
                 foreach (var record in StageResultInfos(stageId))
                 {
-                    record.SetWorldNo(1);
+                    record.SetWorldNo(WorldType.Brunch);
                     PartyInfo.SetSymbolResultInfo(record);
                 }
             }

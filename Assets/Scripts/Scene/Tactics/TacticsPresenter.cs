@@ -62,14 +62,14 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             
             _view.SetStageInfo(_model.CurrentStage);
-            _view.SetMultiverse(_model.PartyInfo.EnableMultiverse(),_model.CurrentStage.WorldNo);
+            _view.SetMultiverse(_model.BrunchMode,_model.CurrentStage.WorldNo);
             _view.SetTacticsCommand(_model.TacticsCommand());
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             _view.SetSymbolRecords(_model.SymbolRecords());
             _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
-            if (_model.PartyInfo.ReturnSymbol != null)
+            if (_model.BrunchMode)
             {
                 _view.SetPastMode();
             }
@@ -86,6 +86,12 @@ namespace Ryneus
 
         public void CommandReturnStrategy()
         {
+            // マージリクエストが必要なら
+            if (_model.BrunchMode && _model.NeedEndBrunch)
+            {
+                CommandNeedEndBrunch();
+                return;
+            }
             if (_model.SceneParam != null && _model.SceneParam.ReturnBeforeBattle)
             {
                 // 敗北して戻ってきたとき
@@ -108,6 +114,30 @@ namespace Ryneus
                 {
                     CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
                 }
+            }
+        }
+
+        private void CommandNeedEndBrunch()
+        {
+            var conflict = _model.MergeRequest();
+            if (conflict == false)
+            {
+                _model.MergeBrunch();
+                _view.CommandGotoSceneChange(Scene.Tactics);
+            } else
+            {
+                // コンフリクト確認
+                _busy = true;
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.CheckConflict,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
             }
         }
 
@@ -284,7 +314,7 @@ namespace Ryneus
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
             // 過去
-            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.CurrentSeek)
+            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.Seek)
             {
                 // 過去の中ではさらに過去に戻らない
                 if (_model.PartyInfo.ReturnSymbol == null)
@@ -351,7 +381,7 @@ namespace Ryneus
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            var currentTurn = _model.CurrentStage.CurrentSeek;
+            var currentTurn = _model.CurrentStage.Seek;
             var currentStage = _model.CurrentStage.Id;
             if (recordInfo.StageSymbolData.Seek == currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
@@ -366,6 +396,7 @@ namespace Ryneus
             if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
             {
                 // 並行世界化する場合
+                /*
                 if (_view.CheckParallelToggle && recordInfo.Selected == false)
                 {
                     if (_model.ParallelHistory())
@@ -385,15 +416,17 @@ namespace Ryneus
                         CommandCautionInfo(DataSystem.GetText(19330));
                     }
                 } else
-                // 過去改編
-                if (_model.RemakeHistory())
+                */
+                // ブランチを作成
+                if (_model.RemakeHistory() && _model.CurrentStage.WorldNo == WorldType.Main)
                 {
                     var confirmInfo = new ConfirmInfo(DataSystem.GetText(19300),(a) =>
                     {
                         if (a == ConfirmCommandType.Yes)
                         {
-                            _model.SetReturnRecordStage(recordInfo);
-                            CommandCurrentSelectRecord(recordInfo);
+                            _model.MakeBrunch(recordInfo);
+                            _model.CommandAnotherWorld();
+                            _view.CommandGotoSceneChange(Scene.Tactics);
                         }
                     });
                     _view.CommandCallConfirm(confirmInfo);
@@ -447,7 +480,7 @@ namespace Ryneus
 
         private void CommandCancelSelectSymbol()
         {
-            _model.ResetRecordStage();
+            //_model.ResetRecordStage();
             _model.SetFirstBattleActorId();
             CommandRefresh();
             _view.ShowRecordList();
@@ -461,7 +494,7 @@ namespace Ryneus
         {
             CommandRefresh();
             CommandSelectRecordSeek(_model.CurrentSelectRecord());
-            _model.ResetRecordStage();
+            //_model.ResetRecordStage();
         }
 
         private void CommandDecideRecord()
@@ -834,7 +867,7 @@ namespace Ryneus
 
         private void CommandCancelRecordList()
         {
-            _model.ResetRecordStage();
+            //_model.ResetRecordStage();
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.HideRecordList();
             _view.ChangeSymbolBackCommandActive(false);

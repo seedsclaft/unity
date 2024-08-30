@@ -178,13 +178,13 @@ namespace Ryneus
             {
                 // 同じステージ進捗度でWorldをまたげない
                 var current = CurrentSelectRecord();
-                var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;
+                var worldNo = CurrentStage.WorldNo == WorldType.Main ? WorldType.Brunch : WorldType.Main;
                 var levelUpDataInfos = a.ActorInfo.LevelUpInfos;
                 if (levelUpDataInfos.Find(b => b.HasSameStageSeekBattleResultData(current.StageId,current.Seek,worldNo)) != null)
                 {
-                    a.DisableText = "同じ進行度の別世界でバトルを行っています";    
-                    RemoveBattleActor(a.ActorInfo);
-                    return false;
+                    //a.DisableText = "同じ進行度の別世界でバトルを行っています";    
+                    //RemoveBattleActor(a.ActorInfo);
+                    return true;
                 }
                 return true;
             };

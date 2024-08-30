@@ -123,7 +123,7 @@ namespace Ryneus
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
                     // 入手済みなら
-                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.CurrentSeek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
                     {
                         data.SetEnable(false);
                     }

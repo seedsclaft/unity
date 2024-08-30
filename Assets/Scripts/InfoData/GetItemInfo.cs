@@ -41,6 +41,7 @@ namespace Ryneus
             _param2 = getItemInfo.Param2;
             _getItemType = getItemInfo.GetItemType;
             _skillId = getItemInfo.SkillId;
+            _getFlag = getItemInfo.GetFlag;
         }
 
         public string GetTitleData()

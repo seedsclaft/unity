@@ -20,7 +20,7 @@ namespace Ryneus
             _savedCount++;
         }
         private int _currentSeek;
-        public int CurrentSeek => _currentSeek;
+        public int Seek => _currentSeek;
         public void SetCurrentTurn(int currentSeek)
         {
             _currentSeek = currentSeek;
@@ -59,9 +59,9 @@ namespace Ryneus
             _currentSeekIndex = battleIndex;
         }
 
-        private int _worldNo;
-        public int WorldNo => _worldNo;
-        public void SetWorldNo(int worldNo)
+        private WorldType _worldNo;
+        public WorldType WorldNo => _worldNo;
+        public void SetWorldNo(WorldType worldNo)
         {
             _worldNo = worldNo;
         }

@@ -59,7 +59,6 @@ namespace Ryneus
         public void MakeLvUpData()
         {
             if (_levelUpData.Count > 0) return;
-            if (PartyInfo.ReturnSymbol != null) return;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             if (record != null && record.SymbolInfo.Cleared) return;
             //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
@@ -70,7 +69,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldNo);
+                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.Seek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldNo);
                 PartyInfo.SetLevelUpInfo(levelUpInfo);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
@@ -94,7 +93,7 @@ namespace Ryneus
         public void MakeSelectRelicData()
         {
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
-            if (record != null && record.SymbolInfo.Cleared) return;
+            if (record != null && record.EndFlag) return;
             
             var getItemInfos = SceneParam.GetItemInfos;
             var selectRelicInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectRelic);
@@ -159,6 +158,7 @@ namespace Ryneus
                             // 獲得+Nu
                             resultInfo.SetTitle("+" + getItemInfo.Param1.ToString() + DataSystem.GetText(1000));
                             _resultInfos.Add(resultInfo);
+                            getItemInfo.SetParam2(getItemInfo.Param1);
                             PartyInfo.ChangeCurrency(Currency + getItemInfo.Param1);
                         }
                         break;
@@ -207,7 +207,7 @@ namespace Ryneus
             // クリアフラグを立てる
             record.SymbolInfo.SetCleared(true); 
             // スコア報酬を更新
-            PartyInfo.UpdateScorePrizeInfos();
+            PartyInfo.UpdateScorePrizeInfos(CurrentStage.WorldNo);
             var nextScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
             foreach (var nextScorePrizeInfo in nextScorePrizeInfos)
             {
@@ -348,6 +348,10 @@ namespace Ryneus
         public void SeekStage()
         {
             CurrentStage.SeekStage();
+            if (CurrentStage.WorldNo == WorldType.Brunch)
+            {
+                PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
+            }
             SetStageSeek();
         }
 
@@ -368,7 +372,7 @@ namespace Ryneus
         {
             PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
         }
-
+/*
         public void CommitCurrentResult()
         {
             // バトルに敗北しているときは更新しない
@@ -378,7 +382,7 @@ namespace Ryneus
             } else
             {
                 // 新たに選択したシンボル
-                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
+                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo));
                 
                 PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
                 // 選択から外れたシンボル
@@ -413,7 +417,7 @@ namespace Ryneus
             } else
             {
                 // 新たに選択したシンボル
-                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo));
+                var records = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo));
                 
                 PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
                 // 並行世界化回数を増やす
@@ -427,7 +431,7 @@ namespace Ryneus
             PartyInfo.ClearReturnStageIdSeek();
             SetStageSeek();
         }
-
+*/
         public bool EnableBattleSkip()
         {
             // スキップ廃止

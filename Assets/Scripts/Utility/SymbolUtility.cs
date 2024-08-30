@@ -12,7 +12,7 @@ namespace Ryneus
         public static PartyInfo PartyInfo => CurrentSaveData.Party;
         public static List<SymbolResultInfo> StageResultInfos(List<StageSymbolData> stageSymbolDates)
         {
-            var symbolInfos = new List<SymbolResultInfo>();
+            var resultInfos = new List<SymbolResultInfo>();
             var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0);
             foreach (var symbolMaster in symbolDates)
             {
@@ -108,10 +108,16 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,stageSymbolData,GameSystem.CurrentStageData.Party.Currency);
-                symbolInfos.Add(record);
+                var record = new SymbolResultInfo(symbolInfo,stageSymbolData);
+                resultInfos.Add(record);
+                // ブランチ用データ作成
+                var brunchSymbol = new SymbolInfo(symbolInfo.SymbolType);
+                brunchSymbol.CopyData(symbolInfo);
+                var brunchRecord = new SymbolResultInfo(brunchSymbol,stageSymbolData);
+                brunchRecord.SetWorldNo(WorldType.Brunch);
+                resultInfos.Add(brunchRecord);
             }
-            return symbolInfos;
+            return resultInfos;
         }
 
         private static GetItemInfo MakeGetItemInfo(GetItemType getItemType,int param1)
@@ -127,7 +133,7 @@ namespace Ryneus
         private static void MakeShopGetItemInfos(List<GetItemInfo> getItemInfos,SymbolInfo symbolInfo,RankType rankType,int count)
         {
             var alcanaRank = rankType;
-            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
             while (getItemInfos.Count <= count)
             {
@@ -157,7 +163,7 @@ namespace Ryneus
             } else
             {
                 // 選択できるアクターが3人まで
-                var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+                var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
                 var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
                 var count = 3;
                 if (actorInfos.Count < count)
@@ -189,7 +195,7 @@ namespace Ryneus
             // タイトル表示用
             getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectRelic,-1));
             var alcanaRank = rankType;
-            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
             var count = 3;
             if (alcanaSkills.Count < count)
@@ -269,7 +275,7 @@ namespace Ryneus
                         var list = new List<int>();
                         foreach (var actorInfo in PartyInfo.ActorInfos)
                         {
-                            if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(actorInfo.ActorId))
+                            if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo).Contains(actorInfo.ActorId))
                             {
                                 list.Add(actorInfo.ActorId);
                             }
@@ -280,7 +286,7 @@ namespace Ryneus
                         stageSymbolData.Param2 = 0;
                         break;
                     case SymbolType.Alcana:
-                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo).Contains(symbol.Param1))
+                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo).Contains(symbol.Param1))
                         {
                             stageSymbolData.CopyParamData(symbol);
                         }
@@ -381,7 +387,7 @@ namespace Ryneus
 
         private static GetItemData AddSkillGetItemData(RankType rankType)
         {
-            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
             if (skills.Count > 0)
@@ -399,10 +405,10 @@ namespace Ryneus
 
         private static GetItemData AddEnhanceSkillGetItemData(RankType rankType)
         {
-            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
-            var allSkillIds = PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var allSkillIds = PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             // 強化可能な所持魔法に絞る
             skills = skills.FindAll(a => allSkillIds.Contains(a.Id - 400000));
             if (skills.Count > 0)

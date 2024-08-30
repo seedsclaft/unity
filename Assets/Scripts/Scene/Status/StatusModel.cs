@@ -78,7 +78,7 @@ namespace Ryneus
         {
             var tempActor = _actorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
             var currency = tempActor.ActorLevelReset();
-            PartyInfo.ChangeCurrency(PartyInfo.Currency + currency);
+            PartyInfo.ChangeCurrency(Currency+ currency);
             return currency;
         }
 

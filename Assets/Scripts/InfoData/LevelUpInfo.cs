@@ -35,10 +35,10 @@ namespace Ryneus
         public int Seek => _seek;
         private int _seekIndex = -1;
         public int SeekIndex => _seekIndex;
-        private int _worldNo = -1;
-        public int WorldNo => _worldNo;
+        private WorldType _worldNo;
+        public WorldType WorldNo => _worldNo;
 
-        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,int worldNo)
+        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,WorldType worldNo)
         {
             _actorId = actorId;
             _currency = currency;
@@ -50,7 +50,7 @@ namespace Ryneus
 
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex;
+            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex && levelUpInfo.WorldNo == _worldNo;
         }
 
         public bool IsLevelUpData()
@@ -73,16 +73,12 @@ namespace Ryneus
             return IsLevelUpData() && _currency > 0;
         }
 
-        public bool IsEnableStage(int stageId,int seek)
+        public bool IsEnableStage(int stageId,int seek,WorldType worldType)
         {
-            if (IsTrainData())
-            {
-                return true;
-            }
-            return _stageId == stageId && _seek <= seek || _stageId < stageId;
+            return worldType == _worldNo && (_stageId == stageId && _seek <= seek || _stageId < stageId);
         }
 
-        public bool HasSameStageSeekBattleResultData(int stageId,int seek,int worldNo)
+        public bool HasSameStageSeekBattleResultData(int stageId,int seek,WorldType worldNo)
         {
             return IsBattleResultData() && _stageId == stageId && _seek == seek && _worldNo == worldNo;
         }

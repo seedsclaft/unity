@@ -478,12 +478,12 @@ namespace Ryneus
             }
         }
 
-        public void SetMultiverse(bool enable,int worldNo)
+        public void SetMultiverse(bool enable,WorldType worldNo)
         {
-            leftButton?.gameObject?.SetActive(false);
-            rightButton?.gameObject?.SetActive(false);
-            //leftButton?.gameObject?.SetActive(enable && worldNo == 1);
-            //rightButton?.gameObject?.SetActive(enable && worldNo == 0);
+            //leftButton?.gameObject?.SetActive(false);
+            //rightButton?.gameObject?.SetActive(false);
+            leftButton?.gameObject?.SetActive(enable && worldNo == WorldType.Brunch);
+            rightButton?.gameObject?.SetActive(enable && worldNo == WorldType.Main);
         }
 
         public void ShowRecordList()

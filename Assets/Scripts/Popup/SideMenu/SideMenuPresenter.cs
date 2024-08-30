@@ -91,7 +91,7 @@ namespace Ryneus
 
         private void CommandDropout()
         {  
-            if (_model.PartyInfo.ReturnSymbol != null)
+            if (_model.BrunchMode)
             {
                 CommandCautionInfo(DataSystem.GetText(19360));
                 ClosePopup();
@@ -153,12 +153,14 @@ namespace Ryneus
 
         public void CommandSave(bool returnScene)
         {
-            if (_model.PartyInfo.ReturnSymbol != null)
+            /*
+            if (_model.BrunchMode)
             {
                 CommandCautionInfo(DataSystem.GetText(19350));
                 ClosePopup();
                 return;
             }
+            */
             base.CommandSave(returnScene);
         }
 

@@ -25,17 +25,41 @@ namespace Ryneus
             }
         }
 
-        private int _currency = 0;
-        public int Currency => _currency;
+        public int GetCurrency(int stageId,int seek,WorldType worldType)
+        {
+            var currency = 0;
+            var records = EnableResultInfos(stageId,seek,worldType);
+            foreach (var resultInfo in records)
+            {
+                var getItemInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Numinous);
+                foreach (var getItemInfo in getItemInfos)
+                {
+                    currency += getItemInfo.Param2;
+                }
+            }
+            var consume = 0;
+            var actorInfos = CurrentActorInfos(stageId,seek,worldType);
+            foreach (var actorInfo in actorInfos)
+            {
+                foreach (var levelUpInfo in actorInfo.LevelUpInfos)
+                {
+                    if (levelUpInfo.IsEnableStage(stageId,seek,worldType))
+                    {
+                        consume += levelUpInfo.Currency;
+                    }
+                }
+            }
+            return currency - consume;
+        }
         public int ParallelCount => _scorePrizeInfos.FindAll(a => a.Used == false && a.EnableParallel()).Count;
         private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
         private List<ScorePrizeInfo> _scorePrizeInfos = new ();
         public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
-        public void UpdateScorePrizeInfos()
+        public void UpdateScorePrizeInfos(WorldType worldType)
         {
-            _scorePrizeInfos.ForEach(a => a.UpdateGetFlag(TotalScore()));
+            _scorePrizeInfos.ForEach(a => a.UpdateGetFlag(TotalScore(worldType)));
         }
         
         public List<ScorePrizeInfo> CheckGainScorePrizeInfos()
@@ -45,7 +69,7 @@ namespace Ryneus
 
         public bool RemakeHistory()
         {
-            return _scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
+            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
         }
 
         public bool ParallelHistory()
@@ -76,9 +100,38 @@ namespace Ryneus
             _returnSymbol = symbolData;
         }
 
-        public void ClearReturnStageIdSeek() 
+        // 戻り先の始点のシンボル
+        private StageSymbolData _brunchSymbol = null;
+        public StageSymbolData BrunchSymbol => _brunchSymbol;
+        private StageSymbolData _brunchBaseSymbol = null;
+        public StageSymbolData BrunchBaseSymbol => _brunchBaseSymbol;
+        public void SetBrunchStageIdSeek(int stageId,int seek,bool writeBase) 
+        {
+            var symbolData = new StageSymbolData
+            {
+                StageId = stageId,
+                Seek = seek
+            };
+            _brunchSymbol = symbolData;
+            if (writeBase)
+            {
+                _brunchBaseSymbol = symbolData;
+            }
+        }
+
+        public bool NeedEndBrunch()
+        {
+            if (_returnSymbol == null) return false;
+            if (_brunchSymbol == null) return false;
+
+            return _brunchSymbol.StageId == _returnSymbol.StageId && _brunchSymbol.Seek == _returnSymbol.Seek;
+        }
+
+        public void ClearBrunch() 
         {
             _returnSymbol = null;
+            _brunchSymbol = null;
+            _brunchBaseSymbol = null;
         }
 
         private List<int> _lastBattlerIdList = new();
@@ -88,7 +141,7 @@ namespace Ryneus
             //_lastBattlerIdList = lastBattlerIdList;
         }
 
-        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,int worldNo) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek && a.WorldNo == worldNo);
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,WorldType worldNo) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek && a.WorldNo == worldNo);
         
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
@@ -106,6 +159,47 @@ namespace Ryneus
             _symbolRecordList.Add(symbolResultInfo);
             _symbolRecordList.Sort((a,b) => a.SortKey() - b.SortKey() > 0 ? 1 : -1);
         }
+
+        /// <summary>
+        /// ブランチをメインにマージ
+        /// </summary>
+        /// <param name="symbolResultInfo"></param>
+        public void MergeBrunch(SymbolResultInfo symbolResultInfo)
+        {
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main));
+            if (findIndex > -1)
+            {
+                var main = _symbolRecordList[findIndex];
+                main.CopyParamData(symbolResultInfo);
+                symbolResultInfo.ResetParamData();
+                // ブランチの成長データを削除
+                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.ResetParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                }
+            }
+        }
+
+        /// <summary>
+        /// ブランチをメインにマージ
+        /// </summary>
+        /// <param name="symbolResultInfo"></param>
+        public void ReverseBrunch(SymbolResultInfo symbolResultInfo)
+        {
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main));
+            if (findIndex > -1)
+            {
+                symbolResultInfo.ResetParamData();
+                // ブランチの成長データを削除
+                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.ResetParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                }
+            }
+        }
+
         public void SetSelectSymbol(SymbolResultInfo symbolResultInfo,bool isSelect)
         {
             var record = _symbolRecordList.Find(a => a.IsSameSymbol(symbolResultInfo));
@@ -113,7 +207,7 @@ namespace Ryneus
             SetSymbolResultInfo(record);
         }
 
-        private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,int worldNo)
+        private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,WorldType worldNo)
         {
             return _symbolRecordList.FindAll(a => a.EnableStage(stageId,seek,worldNo));
         }
@@ -138,7 +232,6 @@ namespace Ryneus
         public void ClearData()
         {
             _actorInfos.Clear();
-            _currency = 0;
             _symbolRecordList.Clear();
             _scorePrizeInfos.Clear();
         }
@@ -151,7 +244,7 @@ namespace Ryneus
             _actorInfos = actorInfos;
         }
         
-        public List<ActorInfo> CurrentActorInfos(int stageId,int seek,int worldNo)
+        public List<ActorInfo> CurrentActorInfos(int stageId,int seek,WorldType worldNo)
         {
             var actorIdList = CurrentActorIdList(stageId,seek,worldNo);
             var actorInfos = new List<ActorInfo>();
@@ -196,7 +289,7 @@ namespace Ryneus
             return DataSystem.GetText(391);
         }
 
-        public List<int> CurrentActorIdList(int stageId,int seek,int worldNo)
+        public List<int> CurrentActorIdList(int stageId,int seek,WorldType worldNo)
         {
             var actorIdList = new List<int>();
             var records = EnableResultInfos(stageId,seek,worldNo);
@@ -218,7 +311,7 @@ namespace Ryneus
             return actorIdList;
         }
         
-        public List<int> PastActorIdList(int stageId,int seek,int worldNo)
+        public List<int> PastActorIdList(int stageId,int seek,WorldType worldNo)
         {
             var actorIdList = new List<int>();
             var records = EnableResultInfos(stageId,seek,worldNo);
@@ -240,7 +333,7 @@ namespace Ryneus
             return actorIdList;
         }
 
-        public List<int> CurrentAlchemyIdList(int stageId,int seek,int worldNo)
+        public List<int> CurrentAlchemyIdList(int stageId,int seek,WorldType worldNo)
         {
             var alchemyIdList = new List<int>();
             var records = EnableResultInfos(stageId,seek,worldNo);
@@ -259,7 +352,7 @@ namespace Ryneus
             return alchemyIdList;
         }
 
-        public List<int> CurrentAlcanaIdList(int stageId,int seek,int worldNo)
+        public List<int> CurrentAlcanaIdList(int stageId,int seek,WorldType worldNo)
         {
             var alcanaIdList = new List<int>();
             var records = EnableResultInfos(stageId,seek,worldNo);
@@ -279,7 +372,7 @@ namespace Ryneus
         }
 
         // 所持している魔法全てのId
-        public List<int> CurrentAllSkillIds(int stageId,int seek,int worldNo)
+        public List<int> CurrentAllSkillIds(int stageId,int seek,WorldType worldNo)
         {
             var skillIds = new List<int>();
             var alchemyIds = CurrentAlchemyIdList(stageId,seek,worldNo);
@@ -358,15 +451,14 @@ namespace Ryneus
 
         public void ChangeCurrency(int currency)
         {
-            _currency = currency;
         }
 
-        public int TotalScore()
+        public int TotalScore(WorldType worldType)
         {
             var score = 0;
             foreach (var record in SymbolRecordList)
             {
-                if (record._selected)
+                if (record._selected && record.WorldNo == worldType)
                 {
                     score += record.BattleScore;
                 }

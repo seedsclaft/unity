@@ -94,7 +94,7 @@ namespace Ryneus
                 var enable = false;
                 if (PartyInfo.RemakeHistory())
                 {
-                    if (a.StageSymbolData.StageId == CurrentStage.Id && a.StageSymbolData.Seek <= CurrentStage.CurrentSeek)
+                    if (a.StageSymbolData.StageId == CurrentStage.Id && a.StageSymbolData.Seek <= CurrentStage.Seek)
                     {
                         enable = true;
                     }
@@ -103,7 +103,7 @@ namespace Ryneus
                         enable = true;
                     }
                 }
-                return a.StageSymbolData.Seek == CurrentStage.CurrentSeek || enable;
+                return a.StageSymbolData.Seek == CurrentStage.Seek || enable;
             };
             var seekIndex = 0;
             if (CurrentSelectRecord() != null)
@@ -127,7 +127,7 @@ namespace Ryneus
                 {
                     var skillInfo = new SkillInfo(getItemInfo.Param1);
                     var cost = 0;
-                    skillInfo.SetEnable(cost <= PartyInfo.Currency);
+                    skillInfo.SetEnable(cost <= Currency);
                     skillInfos.Add(skillInfo);
                 }
             }
@@ -155,7 +155,7 @@ namespace Ryneus
             {
                 var skillInfo = new SkillInfo(getItemInfo.Param1);
                 var cost = ShopLearningCost(skillInfo);
-                skillInfo.SetEnable(cost <= PartyInfo.Currency && !_shopSelectIndexes.Contains(index));
+                skillInfo.SetEnable(cost <= Currency && !_shopSelectIndexes.Contains(index));
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);
                 index++;
@@ -170,9 +170,9 @@ namespace Ryneus
 
         public List<ActorInfo> AddSelectActorInfos()
         {
-            var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.CurrentSeek,CurrentStage.WorldNo);
+            var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             // 違うworldNoのActorIdも含まない
-            var worldNo = CurrentStage.WorldNo == 0 ? 1 : 0;
+            var worldNo = CurrentStage.WorldNo == WorldType.Main ? WorldType.Brunch : WorldType.Main;
             var anotherActorIdList = PartyInfo.CurrentActorIdList(99,99,worldNo);
 
             pastActorIdList.AddRange(anotherActorIdList);
@@ -323,8 +323,15 @@ namespace Ryneus
             var stageSeekList = new List<int>();
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && PartyInfo.EnableMultiverse() && a.Seek == 0);
             selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
+            // ブランチは始点と終点を作る
+            if (CurrentStage.WorldNo == WorldType.Brunch)
+            {
+                var brunchSymbol = PartyInfo.BrunchBaseSymbol;
+                var returnSymbol = PartyInfo.ReturnSymbol;
+                selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            }
             // 現在を挿入
-            var currentSeek = CurrentStage.CurrentSeek;
+            var currentSeek = CurrentStage.Seek;
             // ストック数
             var stockCount = PartyInfo.StageStockCount;
             foreach (var selectRecord in selectRecords)
@@ -363,7 +370,7 @@ namespace Ryneus
                 SymbolType = SymbolType.None
             };
             var currentInfo = new SymbolInfo(SymbolType.None);
-            var currentResult = new SymbolResultInfo(currentInfo,currentSymbol,0);
+            var currentResult = new SymbolResultInfo(currentInfo,currentSymbol);
             currentResult.SetWorldNo(CurrentStage.WorldNo);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};
@@ -419,7 +426,7 @@ namespace Ryneus
         public bool EnableShopMagic(SkillInfo skillInfo)
         {
             var cost = ShopLearningCost(skillInfo);
-            return cost <= PartyInfo.Currency;
+            return cost <= Currency;
         }
 
         public void PayShopCurrency(SkillInfo skillInfo,int index)
@@ -457,48 +464,20 @@ namespace Ryneus
 
         public void CommandNormalWorld()
         {
-            SetWorldCurrentStage(0);
+            SetWorldCurrentStage(WorldType.Main);
         }
 
         public void CommandAnotherWorld()
         {
-            SetWorldCurrentStage(1);
+            SetWorldCurrentStage(WorldType.Brunch);
         }
 
-        private void SetWorldCurrentStage(int worldNo)
+        private void SetWorldCurrentStage(WorldType worldNo)
         {
             CurrentStage.SetWorldNo(worldNo);
-            // 進捗度を調整
-            var selectedRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldNo);
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == worldNo);
-            
-            if (selectedRecords.Count > 0)
-            {
-                var lastRecord = selectRecords[selectRecords.Count-1];
-                foreach (var selectRecord in selectRecords)
-                {
-                    if (selectedRecords.Find(a => a.StageId == selectRecord.StageId && a.Seek == selectRecord.Seek) == null)
-                    {
-                        if (selectRecord.StageId < lastRecord.StageId)
-                        {
-                            lastRecord = selectRecord;
-                            continue;
-                        }
-                        
-                        if (selectRecord.Seek < lastRecord.Seek)
-                        {
-                            lastRecord = selectRecord;
-                            continue;
-                        }
-                    }
-                }
-                CurrentStage.SetStageId(lastRecord.StageId);
-                CurrentStage.SetCurrentTurn(lastRecord.Seek);
-            } else
-            {
-                CurrentStage.SetStageId(0);
-                CurrentStage.SetCurrentTurn(0);  
-            }
+            var symbolData = worldNo == WorldType.Main ? PartyInfo.ReturnSymbol : PartyInfo.BrunchSymbol;
+            CurrentStage.SetStageId(symbolData.StageId);
+            CurrentStage.SetCurrentTurn(symbolData.Seek);
             SetStageSeek();
         }
 
