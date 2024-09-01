@@ -29,15 +29,15 @@ namespace Ryneus
             {
                 if (symbolComponents.Count > 0)
                 {
-                    var symbolComponent = symbolComponents[data.StageSymbolData.SeekIndex];
+                    var symbolComponent = symbolComponents[data.SeekIndex];
                     symbolComponent.gameObject.SetActive(true);
                     symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
                 }
             }
             if (dates.Count > 0)
             {
-                var symbolStageId = dates[0].StageSymbolData.StageId;
-                var symbolSeek = dates[0].StageSymbolData.Seek;
+                var symbolStageId = dates[0].StageId;
+                var symbolSeek = dates[0].Seek;
                 var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
                 var currentTurn = GameSystem.CurrentStageData.CurrentStage.Seek;
                 pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
@@ -63,7 +63,7 @@ namespace Ryneus
                     stageDataText?.SetText("");
                 } else
                 {
-                    stageDataText?.SetText(dates[0].StageSymbolData.StageId.ToString() + "-" + dates[0].StageSymbolData.Seek.ToString());
+                    stageDataText?.SetText(dates[0].StageId.ToString() + "-" + dates[0].Seek.ToString());
                 }
             }
         }

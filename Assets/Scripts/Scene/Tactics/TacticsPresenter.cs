@@ -383,17 +383,17 @@ namespace Ryneus
         {
             var currentTurn = _model.CurrentStage.Seek;
             var currentStage = _model.CurrentStage.Id;
-            if (recordInfo.StageSymbolData.Seek == currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
+            if (recordInfo.Seek == currentTurn && recordInfo.StageId == currentStage)
             {
                 // 現在
                 CommandCurrentSelectRecord(recordInfo);
             } else
-            if (recordInfo.StageSymbolData.Seek > currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
+            if (recordInfo.Seek > currentTurn && recordInfo.StageId == currentStage)
             {
                 // 未来
                 CommandCautionInfo(DataSystem.GetText(19340));
             } else
-            if (recordInfo.StageSymbolData.StageId < currentStage || recordInfo.StageSymbolData.Seek < currentTurn && recordInfo.StageSymbolData.StageId == currentStage)
+            if (recordInfo.StageId < currentStage || recordInfo.Seek < currentTurn && recordInfo.StageId == currentStage)
             {
                 // 並行世界化する場合
                 /*
@@ -437,7 +437,7 @@ namespace Ryneus
         private void CommandCurrentSelectRecord(SymbolResultInfo recordInfo)
         {
             _view.HideSymbolRecord();
-            _model.SetStageSeekIndex(recordInfo.StageSymbolData.SeekIndex);
+            _model.SetStageSeekIndex(recordInfo.SeekIndex);
             _view.HideRecordList();
             // 回路解析
             switch (recordInfo.SymbolType)
@@ -569,7 +569,7 @@ namespace Ryneus
                 // アルカナ選択
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
-                getItemInfos = getItemInfos.FindAll(a => a.Param1 == alcanaSelect.Id);
+                getItemInfos = getItemInfos.FindAll(a => a.ResultParam1 == alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
                 _model.MakeSelectRelic(alcanaSelect.Id);
             }
@@ -607,7 +607,7 @@ namespace Ryneus
 
         private void CheckActorSymbol(GetItemInfo getItemInfo)
         {
-            var actorData = DataSystem.FindActor(getItemInfo.Param1);
+            var actorData = DataSystem.FindActor(getItemInfo.ResultParam1);
             var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19270,actorData.Name),(a) => UpdatePopupActorSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -617,7 +617,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
-                var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
+                var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].ResultParam1);
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
@@ -707,7 +707,7 @@ namespace Ryneus
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19280,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19280,getItemInfo.ResultParam1.ToString()),(a) => UpdatePopupResourceSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -792,7 +792,7 @@ namespace Ryneus
                     CallPopupSkillDetail(DataSystem.GetText(19200),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
                 case SymbolType.Actor:
-                    CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
+                    CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].ResultParam1),false,true,false,false,-1,() => 
                     {
 
                     });
@@ -830,7 +830,7 @@ namespace Ryneus
                 var getItemInfo = _view.SymbolGetItemInfo;
                 if (getItemInfo != null)
                 {
-                    selectActorId = getItemInfo.Param1;
+                    selectActorId = getItemInfo.ResultParam1;
                 }
                 // 確認する用
                 CommandStatusInfo(actorInfos,false,true,false,false,selectActorId,() => 

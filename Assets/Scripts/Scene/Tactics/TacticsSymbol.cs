@@ -119,11 +119,11 @@ namespace Ryneus
                     continue;
                 }
                 var data = new ListData(getItemInfo);
-                data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+                //data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
                     // 入手済みなら
-                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.ResultParam1))
                     {
                         data.SetEnable(false);
                     }

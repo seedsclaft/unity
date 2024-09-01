@@ -6,8 +6,9 @@ namespace Ryneus
     [Serializable]
     public class SymbolInfo
     {
-        private SymbolType _symbolType;
-        public SymbolType SymbolType => _symbolType;
+        private StageSymbolData _stageSymbolData;
+        public StageSymbolData Master => _stageSymbolData;
+        public SymbolType SymbolType => Master.SymbolType;
         private TroopInfo _troopInfo;
         public TroopInfo TroopInfo => _troopInfo;
         public void SetTroopInfo(TroopInfo troopInfo)
@@ -26,16 +27,9 @@ namespace Ryneus
         {
             _lastSelected = lastSelected;
         }
-        private bool _cleared;
-        public bool Cleared => _cleared;
-        public void SetCleared(bool cleared)
+        public SymbolInfo(StageSymbolData stageSymbolData)
         {
-            _cleared = cleared;
-        }
-        public SymbolInfo(SymbolType symbolType)
-        {
-            _symbolType = symbolType;
-            //_stageSymbolData = symbol;
+            _stageSymbolData = stageSymbolData;
         }
 
         public void CopyData(SymbolInfo symbolInfo)
@@ -48,17 +42,15 @@ namespace Ryneus
                 getItem.CopyData(getItemInfo);
                 _getItemInfos.Add(getItem);
             }
-            _cleared = symbolInfo._cleared;
         }
 
         public void ResetParamData()
         {
             foreach (var getItemInfo in GetItemInfos)
             {
-                getItemInfo.SetParam2(0);
+                getItemInfo.SetResultParam2(0);
                 getItemInfo.SetGetFlag(false);
             }
-            _cleared = false;
         }
 
         public List<BattlerInfo> BattlerInfos()
@@ -87,7 +79,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.SaveHuman)
                 {
-                    scoreMax += getItemInfo.Param1;
+                    scoreMax += getItemInfo.ResultParam1;
                 }
             }
             return scoreMax;

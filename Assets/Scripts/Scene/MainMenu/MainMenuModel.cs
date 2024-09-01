@@ -56,19 +56,19 @@ namespace Ryneus
         
         private bool SelectedStage(int stageId)
         {
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageId);
             return records.Count > 0;
         }
 
         public int SelectedStageCurrentTurn(int stageId)
         {
             var turn = 0;
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.Selected);
+            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageId && a.Selected);
             foreach (var record in records)
             {
-                if (record.StageSymbolData.Seek >= turn)
+                if (record.Seek >= turn)
                 {
-                    turn = record.StageSymbolData.Seek;
+                    turn = record.Seek;
                 }
             }
             return turn + 1;

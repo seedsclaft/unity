@@ -6,12 +6,11 @@ namespace Ryneus
     [Serializable]
     public class SymbolResultInfo
     {
-        private StageSymbolData _stageSymbolData;
-        public StageSymbolData StageSymbolData => _stageSymbolData;
-        public int StageId => StageSymbolData.StageId;
-        public int Seek => StageSymbolData.Seek;
-        public int SeekIndex => StageSymbolData.SeekIndex;
-        public SymbolType SymbolType => StageSymbolData.SymbolType;
+        public StageSymbolData StageSymbolData => SymbolInfo.Master;
+        public int StageId => SymbolInfo.Master.StageId;
+        public int Seek => SymbolInfo.Master.Seek;
+        public int SeekIndex => SymbolInfo.Master.SeekIndex;
+        public SymbolType SymbolType => SymbolInfo.Master.SymbolType;
 
         public bool _selected;
         public bool Selected => _selected;
@@ -26,21 +25,12 @@ namespace Ryneus
             _battleScore = battleScore;
         }
 
-        // 確定しているか
-        public bool _endFlag = false;
-        public bool EndFlag => _endFlag;
-        public void SetEndFlag(bool endFlag)
-        {
-            _endFlag = endFlag;
-        }
-
         private SymbolInfo _symbolInfo;
         public SymbolInfo SymbolInfo => _symbolInfo;
 
         public SymbolResultInfo(SymbolInfo symbolInfo,StageSymbolData stageSymbolData)
         {
             _symbolInfo = symbolInfo;
-            _stageSymbolData = stageSymbolData;
             _selected = false;
         }
 

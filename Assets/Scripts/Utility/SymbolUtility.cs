@@ -16,7 +16,7 @@ namespace Ryneus
             var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0);
             foreach (var symbolMaster in symbolDates)
             {
-                var symbolInfo = new SymbolInfo(symbolMaster.SymbolType);
+                var symbolInfo = new SymbolInfo(symbolMaster);
                 var stageSymbolData = new StageSymbolData();
                 stageSymbolData.CopyData(symbolMaster);
                 // グループ指定
@@ -28,7 +28,7 @@ namespace Ryneus
                     stageSymbolData.StageId = symbolMaster.StageId;
                     stageSymbolData.Seek = symbolMaster.Seek;
                     stageSymbolData.SeekIndex = symbolMaster.SeekIndex;
-                    symbolInfo = new SymbolInfo(stageSymbolData.SymbolType);
+                    symbolInfo = new SymbolInfo(stageSymbolData);
                     if (stageSymbolData.SymbolType == SymbolType.Battle)
                     {
                         symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
@@ -40,7 +40,7 @@ namespace Ryneus
                     stageSymbolData.StageId = symbolMaster.StageId;
                     stageSymbolData.Seek = symbolMaster.Seek;
                     stageSymbolData.SeekIndex = symbolMaster.SeekIndex;
-                    symbolInfo = new SymbolInfo(stageSymbolData.SymbolType);
+                    symbolInfo = new SymbolInfo(stageSymbolData);
                     if (stageSymbolData.SymbolType == SymbolType.Battle && stageSymbolData.Param1 == -1)
                     {
                         symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
@@ -96,11 +96,11 @@ namespace Ryneus
                         var getItemInfo = new GetItemInfo(prizeSet.GetItem);
                         if (prizeSet.GetItem.Type == GetItemType.SelectRelic)
                         {
-                            getItemInfos.AddRange(MakeSelectRelicGetItemInfos((RankType)getItemInfo.Param2));
+                            getItemInfos.AddRange(MakeSelectRelicGetItemInfos((RankType)getItemInfo.ResultParam2));
                         } else
                         if (prizeSet.GetItem.Type == GetItemType.SelectAddActor)
                         {
-                            getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
+                            getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.ResultParam2 == 0));
                         } else
                         {
                             getItemInfos.Add(getItemInfo);
@@ -111,7 +111,7 @@ namespace Ryneus
                 var record = new SymbolResultInfo(symbolInfo,stageSymbolData);
                 resultInfos.Add(record);
                 // ブランチ用データ作成
-                var brunchSymbol = new SymbolInfo(symbolInfo.SymbolType);
+                var brunchSymbol = new SymbolInfo(stageSymbolData);
                 brunchSymbol.CopyData(symbolInfo);
                 var brunchRecord = new SymbolResultInfo(brunchSymbol,stageSymbolData);
                 brunchRecord.SetWorldNo(WorldType.Brunch);
@@ -139,10 +139,10 @@ namespace Ryneus
             {
                 var rand = Random.Range(0,alcanaSkills.Count);
                 // 報酬設定
-                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                if (getItemInfos.Find(a => a.ResultParam1 == alcanaSkills[rand].Value.Id) == null)
                 {
                     var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
-                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                    if (getItemInfos.Find(a => a.ResultParam1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
                         getItemInfos.Add(getItemInfo);
@@ -179,7 +179,7 @@ namespace Ryneus
                     while (getItemInfos.Count <= count)
                     {
                         var rand = Random.Range(0,actorInfos.Count);
-                        if (getItemInfos.Find(a => a.Param1 == actorInfos[rand].ActorId) == null)
+                        if (getItemInfos.Find(a => a.ResultParam1 == actorInfos[rand].ActorId) == null)
                         {
                             getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,actorInfos[rand].ActorId));
                         }
@@ -211,11 +211,11 @@ namespace Ryneus
                 while (getItemInfos.Count <= count)
                 {
                     var rand = Random.Range(0,alcanaSkills.Count);
-                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                    if (getItemInfos.Find(a => a.ResultParam1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         // 報酬設定
                         var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
-                        if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
+                        if (getItemInfos.Find(a => a.ResultParam1 == alcanaSkills[rand].Value.Id) == null)
                         {
                             getItemInfos.Add(getItemInfo);
                         }

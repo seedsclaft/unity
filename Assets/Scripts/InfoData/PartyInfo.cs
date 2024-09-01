@@ -34,7 +34,7 @@ namespace Ryneus
                 var getItemInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Numinous);
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    currency += getItemInfo.Param2;
+                    currency += getItemInfo.ResultParam2;
                 }
             }
             var consume = 0;
@@ -141,7 +141,7 @@ namespace Ryneus
             //_lastBattlerIdList = lastBattlerIdList;
         }
 
-        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,WorldType worldNo) => _symbolRecordList.FindAll(a => a.StageSymbolData.StageId == stageId && a.StageSymbolData.Seek == seek && a.WorldNo == worldNo);
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,WorldType worldNo) => _symbolRecordList.FindAll(a => a.StageId == stageId && a.Seek == seek && a.WorldNo == worldNo);
         
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
@@ -277,7 +277,7 @@ namespace Ryneus
         private string AddTimingText(ActorInfo actorInfo)
         {
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            var find = records.Find(a => a.SymbolInfo.GetItemInfos.Find(b => b.GetFlag && b.Param2 == actorInfo.ActorId) != null);
+            var find = records.Find(a => a.SymbolInfo.GetItemInfos.Find(b => b.GetFlag && b.ResultParam2 == actorInfo.ActorId) != null);
             if (find != null)
             {
                 if (find.StageId == 0)
@@ -300,7 +300,7 @@ namespace Ryneus
                 {
                     if (getItemInfo.GetFlag)
                     {
-                        var actorId = getItemInfo.Param2;
+                        var actorId = getItemInfo.ResultParam2;
                         if (!actorIdList.Contains(actorId))
                         {
                             actorIdList.Add(actorId);
@@ -322,7 +322,7 @@ namespace Ryneus
                 {
                     if (getItemInfo.GetFlag)
                     {
-                        var actorId = getItemInfo.Param2;
+                        var actorId = getItemInfo.ResultParam2;
                         if (!actorIdList.Contains(actorId))
                         {
                             actorIdList.Add(actorId);
@@ -343,9 +343,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank < RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.ResultParam1).Rank < RankType.RelicRank1)
                     {
-                        alchemyIdList.Add(getItemInfo.Param1);
+                        alchemyIdList.Add(getItemInfo.ResultParam1);
                     }
                 }
             }
@@ -362,9 +362,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank >= RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.ResultParam1).Rank >= RankType.RelicRank1)
                     {
-                        alcanaIdList.Add(getItemInfo.Param1);
+                        alcanaIdList.Add(getItemInfo.ResultParam1);
                     }
                 }
             }
@@ -404,9 +404,9 @@ namespace Ryneus
             {
                 if (symbolResultInfo.Selected)
                 {
-                    if (symbolResultInfo.StageSymbolData.StageId > stageId)
+                    if (symbolResultInfo.StageId > stageId)
                     {
-                        stageId = symbolResultInfo.StageSymbolData.StageId;
+                        stageId = symbolResultInfo.StageId;
                     }
                 }
             }
@@ -415,11 +415,11 @@ namespace Ryneus
             {
                 if (symbolResultInfo.Selected)
                 {
-                    if (symbolResultInfo.StageSymbolData.StageId == stageId)
+                    if (symbolResultInfo.StageId == stageId)
                     {
-                        if (symbolResultInfo.StageSymbolData.Seek > currentTurn)
+                        if (symbolResultInfo.Seek > currentTurn)
                         {
-                            currentTurn = symbolResultInfo.StageSymbolData.Seek;
+                            currentTurn = symbolResultInfo.Seek;
                         }
                     }
                 }

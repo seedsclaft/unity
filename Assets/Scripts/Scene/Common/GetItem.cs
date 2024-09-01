@@ -34,7 +34,7 @@ namespace Ryneus
             }
             if (Disable != null)
             {
-                Disable?.gameObject.SetActive(ListData.Enable == false);
+                Disable?.gameObject.SetActive(ListData.Enable == false || data.GetFlag);
             }
         }
     }

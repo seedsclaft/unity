@@ -88,22 +88,22 @@ namespace Ryneus
         public List<ListData> StageResultInfos(SymbolResultInfo symbolResultInfo)
         {
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo));
-            selectRecords.Sort((a,b) => a.StageSymbolData.SeekIndex > b.StageSymbolData.SeekIndex ? 1 : -1);
+            selectRecords.Sort((a,b) => a.SeekIndex > b.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
                 var enable = false;
                 if (PartyInfo.RemakeHistory())
                 {
-                    if (a.StageSymbolData.StageId == CurrentStage.Id && a.StageSymbolData.Seek <= CurrentStage.Seek)
+                    if (a.StageId == CurrentStage.Id && a.Seek <= CurrentStage.Seek)
                     {
                         enable = true;
                     }
-                    if (a.StageSymbolData.StageId < CurrentStage.Id)
+                    if (a.StageId < CurrentStage.Id)
                     {
                         enable = true;
                     }
                 }
-                return a.StageSymbolData.Seek == CurrentStage.Seek || enable;
+                return a.Seek == CurrentStage.Seek || enable;
             };
             var seekIndex = 0;
             if (CurrentSelectRecord() != null)
@@ -125,7 +125,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.Param1);
+                    var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
                     var cost = 0;
                     skillInfo.SetEnable(cost <= Currency);
                     skillInfos.Add(skillInfo);
@@ -139,7 +139,7 @@ namespace Ryneus
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos;
             var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
-            var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
+            var selectRelic = selectRelicInfos.Find(a => a.ResultParam1 == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)
             {
                 selectRelicInfo.SetGetFlag(false);
@@ -153,7 +153,7 @@ namespace Ryneus
             var index = 0;
             foreach (var getItemInfo in getItemInfos)
             {
-                var skillInfo = new SkillInfo(getItemInfo.Param1);
+                var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
                 var cost = ShopLearningCost(skillInfo);
                 skillInfo.SetEnable(cost <= Currency && !_shopSelectIndexes.Contains(index));
                 skillInfo.SetLearningCost(cost);
@@ -186,7 +186,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {
-                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.Param1);
+                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.ResultParam1);
                     actorInfos.Add(actorInfo);
                 }
             }
@@ -321,7 +321,7 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
             selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
             // ブランチは始点と終点を作る
             if (CurrentStage.WorldNo == WorldType.Brunch)
@@ -340,7 +340,7 @@ namespace Ryneus
                 {
                     //continue;
                 }
-                var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
+                var stageKey = (selectRecord.StageId-1)*100 + selectRecord.Seek;
                 if (!stageSeekList.Contains(stageKey))
                 {
                     stageSeekList.Add(stageKey);
@@ -356,7 +356,7 @@ namespace Ryneus
             var lastSelectSeek = selectRecords.Count > 0 ? selectRecords.Select(a => a.Seek).Max() : -1;
             foreach (var selectRecord in selectRecords)
             {
-                var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
+                var stageKey = (selectRecord.StageId-1)*100 + selectRecord.Seek;
                 if (recordList.ContainsKey(stageKey))
                 {
                     recordList[stageKey].Add(selectRecord);
@@ -369,7 +369,7 @@ namespace Ryneus
                 SeekIndex = 0,
                 SymbolType = SymbolType.None
             };
-            var currentInfo = new SymbolInfo(SymbolType.None);
+            var currentInfo = new SymbolInfo(currentSymbol);
             var currentResult = new SymbolResultInfo(currentInfo,currentSymbol);
             currentResult.SetWorldNo(CurrentStage.WorldNo);
             currentInfo.SetLastSelected(true);

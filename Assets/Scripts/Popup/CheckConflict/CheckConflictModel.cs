@@ -12,8 +12,8 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && PartyInfo.EnableMultiverse() && a.Seek == 0);
-            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.EndFlag == false && a.Seek > 0 || a.EndFlag == false && PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
             // 始点と終点を作る
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.ReturnSymbol;
@@ -22,7 +22,7 @@ namespace Ryneus
 
             foreach (var selectRecord in brunchRecords)
             {
-                var stageKey = (selectRecord.StageSymbolData.StageId-1)*100 + selectRecord.StageSymbolData.Seek;
+                var stageKey = (selectRecord.StageId-1)*100 + selectRecord.Seek;
                 if (!stageSeekList.Contains(stageKey))
                 {
                     stageSeekList.Add(stageKey);
@@ -37,7 +37,7 @@ namespace Ryneus
             var lastSelectSeek = brunchRecords.Count > 0 ? brunchRecords.Select(a => a.Seek).Max() : -1;
             foreach (var mainRecord in mainRecords)
             {
-                var stageKey = (mainRecord.StageSymbolData.StageId-1)*100 + mainRecord.StageSymbolData.Seek;
+                var stageKey = (mainRecord.StageId-1)*100 + mainRecord.Seek;
                 if (recordList.ContainsKey(stageKey))
                 {
                     var list = new List<SymbolResultInfo>();

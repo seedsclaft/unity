@@ -164,13 +164,13 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             if (getItemInfo.IsSkill())
             {
-                var skillInfo = new SkillInfo(getItemInfo.Param1);
+                var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
                 skillInfo.SetEnable(true);
                 skillInfos.Add(skillInfo);
             }
             if (getItemInfo.IsAttributeSkill())
             {
-                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                 foreach (var skillData in skillDates)
                 {
                     var skillInfo = new SkillInfo(skillData.Key);
@@ -188,13 +188,13 @@ namespace Ryneus
             {
                 if (getItemInfo.IsSkill())
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.Param1);
+                    var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
                     skillInfo.SetEnable(true);
                     skillInfos.Add(skillInfo);
                 }
                 if (getItemInfo.IsAttributeSkill())
                 {
-                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.Param1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                     foreach (var skillData in skillDates)
                     {
                         var skillInfo = new SkillInfo(skillData.Key);
@@ -269,7 +269,7 @@ namespace Ryneus
             bool addActor = false;
             foreach (var symbol in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol.SymbolType);
+                var symbolInfo = new SymbolInfo(symbol);
                 var getItemInfos = new List<GetItemInfo>();
                 if (symbol.PrizeSetId > 0)
                 {
@@ -289,7 +289,7 @@ namespace Ryneus
                     if (addActorGetItemInfo != null)
                     {
                         // 初期アクター
-                        addActorGetItemInfo.SetParam2(1);
+                        addActorGetItemInfo.SetResultParam2(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         //addActor = true;
                     }
@@ -299,7 +299,7 @@ namespace Ryneus
             // アナザー世界のレコードを作る
             foreach (var symbol in symbols)
             {
-                var symbolInfo = new SymbolInfo(symbol.SymbolType);
+                var symbolInfo = new SymbolInfo(symbol);
                 var getItemInfos = new List<GetItemInfo>();
                 if (symbol.PrizeSetId > 0)
                 {
@@ -320,7 +320,7 @@ namespace Ryneus
                     if (addActorGetItemInfo != null)
                     {
                         // 初期アクター
-                        addActorGetItemInfo.SetParam2(1);
+                        addActorGetItemInfo.SetResultParam2(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         //addActor = true;
                     }
@@ -365,7 +365,7 @@ namespace Ryneus
         public SymbolResultInfo CurrentSelectRecord()
         {
             var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
-            return symbolInfos.Find(a => a.StageSymbolData.SeekIndex == CurrentStage.CurrentSeekIndex);
+            return symbolInfos.Find(a => a.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
         public TroopInfo CurrentTroopInfo()

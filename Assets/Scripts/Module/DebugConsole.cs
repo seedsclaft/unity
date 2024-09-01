@@ -47,7 +47,7 @@ namespace Ryneus
                     };
                     stageSymbol.SymbolType = SymbolType.Actor;
                     stageSymbol.Param1 = i;
-                    var symbolInfo = new SymbolInfo(stageSymbol.SymbolType);
+                    var symbolInfo = new SymbolInfo(stageSymbol);
                     var getItemData = new GetItemData();
                     getItemData.Type = GetItemType.AddActor;
                     getItemData.Param1 = i;
@@ -70,7 +70,7 @@ namespace Ryneus
                         Seek = 0,
                         SeekIndex = 0
                     };
-                    var symbolInfo = new SymbolInfo(stageSymbol.SymbolType);
+                    var symbolInfo = new SymbolInfo(stageSymbol);
                     var getItemData = new GetItemData();
                     getItemData.Type = GetItemType.Skill;
                     getItemData.Param1 = skill.Value.Id;
