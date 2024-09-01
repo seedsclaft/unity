@@ -440,21 +440,6 @@ namespace Ryneus
         private void EndStrategy()
         {
             _view.EndShinyEffect();
-            /*
-            if (_model.PartyInfo.ReturnSymbol != null)
-            {
-                _model.SetSelectSymbol();
-                //_model.EndStrategy();
-                if (_model.CurrentStage.ParallelStage)
-                {
-                    _model.CommitCurrentParallelResult();
-                } else
-                {
-                    _model.CommitCurrentResult();
-                }
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            } else
-            */
             if (_model.InBattleResult && _model.BattleResultVictory == false)
             {
                 // 敗北して戻る
@@ -471,7 +456,7 @@ namespace Ryneus
                 // レコード新規保存
                 _model.SetSelectSymbol();
                 _model.EndStrategy();
-                if (_model.RemainTurns == 1)
+                if (_model.RemainTurns == 1 && _model.BrunchMode == false)
                 {
                     _model.EndStage();
                     _view.CommandGotoSceneChange(Scene.MainMenu);

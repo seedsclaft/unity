@@ -77,9 +77,9 @@ namespace Ryneus
             var scoreMax = 0;
             foreach (var getItemInfo in GetItemInfos)
             {
-                if (getItemInfo.GetItemType == GetItemType.SaveHuman)
+                if (getItemInfo.GetItemType == GetItemType.BattleScoreBonus)
                 {
-                    scoreMax += getItemInfo.ResultParam;
+                    scoreMax += getItemInfo.ResultParam * getItemInfo.Param1;
                 }
             }
             return scoreMax;

@@ -125,7 +125,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.ResultParam);
+                    var skillInfo = new SkillInfo(getItemInfo.Param1);
                     var cost = 0;
                     skillInfo.SetEnable(cost <= Currency);
                     skillInfos.Add(skillInfo);
@@ -139,7 +139,7 @@ namespace Ryneus
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos;
             var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
-            var selectRelic = selectRelicInfos.Find(a => a.ResultParam == skillId);
+            var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)
             {
                 selectRelicInfo.SetGetFlag(false);
@@ -153,7 +153,7 @@ namespace Ryneus
             var index = 0;
             foreach (var getItemInfo in getItemInfos)
             {
-                var skillInfo = new SkillInfo(getItemInfo.ResultParam);
+                var skillInfo = new SkillInfo(getItemInfo.Param1);
                 var cost = ShopLearningCost(skillInfo);
                 skillInfo.SetEnable(cost <= Currency && !_shopSelectIndexes.Contains(index));
                 skillInfo.SetLearningCost(cost);
@@ -186,7 +186,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {
-                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.ResultParam);
+                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.Param1);
                     actorInfos.Add(actorInfo);
                 }
             }

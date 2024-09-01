@@ -59,6 +59,11 @@ namespace Ryneus
         {
             return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex && symbolResultInfo.WorldNo == _worldNo;
         }
+
+        public bool IsSameSymbol(SymbolResultInfo symbolResultInfo,WorldType worldType)
+        {
+            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex && worldType == _worldNo;
+        }
 /*
         public bool IsSameSymbol(int stageId,int seek,int seekIndex)
         {

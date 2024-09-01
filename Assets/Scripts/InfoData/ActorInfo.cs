@@ -50,6 +50,17 @@ namespace Ryneus
             return currency;
         }
 
+        public void RemoveLevelUpInfos(WorldType worldType)
+        {
+            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
+            {
+                var levelUpInfo = _levelUpInfos[i];
+                if ( levelUpInfo.WorldNo == worldType)
+                {
+                    _levelUpInfos.Remove(levelUpInfo);
+                }
+            }
+        }
 
         public void RemoveParamData(int stageId,int seek,WorldType worldType)
         {

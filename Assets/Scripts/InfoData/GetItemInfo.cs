@@ -75,8 +75,8 @@ namespace Ryneus
                     return DataSystem.FindActor(Param1).Name;
                 case GetItemType.SelectAddActor:
                     return DataSystem.GetText(20240);
-                case GetItemType.SaveHuman:
-                    return DataSystem.GetText(19100) + DataSystem.GetReplaceDecimalText(_resultParam) + "/" + DataSystem.GetReplaceDecimalText(Param1);
+                case GetItemType.BattleScoreBonus:
+                    return DataSystem.GetReplaceText(20260,_resultParam.ToString()) + "x" + Param1.ToString();
                 case GetItemType.SelectRelic:
                     return DataSystem.GetText(20250);
                 case GetItemType.RemakeHistory:

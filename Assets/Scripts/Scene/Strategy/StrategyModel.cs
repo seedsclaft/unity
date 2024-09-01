@@ -184,20 +184,20 @@ namespace Ryneus
                         resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData.Name));
                         _resultInfos.Add(resultInfo);
                         break;
-                    case GetItemType.SaveHuman:
+                    case GetItemType.BattleScoreBonus:
                         getItemInfo.SetGetFlag(true);
                         var beforeSave = getItemInfo.ResultParam;
-                        var saveHuman = (int)Math.Round(getItemInfo.Param1 * recordScore);
-                        if (saveHuman > beforeSave)
+                        var battleScore = SceneParam.BattleResultScore;
+                        if (battleScore > beforeSave)
                         {
-                            getItemInfo.SetResultParam(saveHuman);
-                            record.SetBattleScore(saveHuman);
+                            getItemInfo.SetResultParam(battleScore);
+                            record.SetBattleScore(battleScore);
                             // 救命人数
-                            _saveHumanText = DataSystem.GetReplaceDecimalText(beforeSave) + "→" + DataSystem.GetReplaceDecimalText(saveHuman) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
+                            //_saveHumanText = DataSystem.GetReplaceDecimalText(beforeSave) + "→" + DataSystem.GetReplaceDecimalText(saveHuman) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         } else
                         {
                             // 救命人数
-                            _saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
+                            //_saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         }
                         break;
                     case GetItemType.SelectRelic:
@@ -347,9 +347,17 @@ namespace Ryneus
 
         public void SeekStage()
         {
-            CurrentStage.SeekStage();
+            if (RemainTurns > 1)
+            {
+                CurrentStage.SeekStage();
+            }
             if (CurrentStage.WorldNo == WorldType.Brunch)
             {
+                if (RemainTurns == 1)
+                {
+                    CurrentSaveData.MakeStageData(CurrentStage.Id+1);
+                    CurrentStage.SetCurrentTurn(1);
+                }
                 PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
             }
             SetStageSeek();

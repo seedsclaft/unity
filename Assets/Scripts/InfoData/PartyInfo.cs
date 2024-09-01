@@ -166,7 +166,7 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void MergeBrunch(SymbolResultInfo symbolResultInfo)
         {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main) && a.SeekIndex == symbolResultInfo.SeekIndex);
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo,WorldType.Main));
             if (findIndex > -1)
             {
                 var main = _symbolRecordList[findIndex];
@@ -192,7 +192,7 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void ReverseBrunch(SymbolResultInfo symbolResultInfo)
         {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main) && a.SeekIndex == symbolResultInfo.SeekIndex);
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo,WorldType.Main));
             if (findIndex > -1)
             {
                 symbolResultInfo.ResetParamData();
@@ -200,8 +200,17 @@ namespace Ryneus
                 var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
                 foreach (var actorInfo in actorInfos)
                 {
-                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                    actorInfo.RemoveLevelUpInfos(WorldType.Brunch);
                 }
+            }
+        }
+
+        public void ResetBrunchData()
+        {
+            var resultInfos = SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            foreach (var resultInfo in resultInfos)
+            {
+                resultInfo.ResetParamData();
             }
         }
 
@@ -476,14 +485,16 @@ namespace Ryneus
         {
         }
 
-        public int TotalScore(WorldType worldType)
+        public float TotalScore(WorldType worldType)
         {
-            var score = 0;
-            foreach (var record in SymbolRecordList)
+            var score = 0f;
+            var resultInfos = SymbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldType);
+            foreach (var record in resultInfos)
             {
-                if (record._selected && record.WorldNo == worldType)
+                var saveHuman = record.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.BattleScoreBonus);
+                if (saveHuman?.ResultParam > 0)
                 {
-                    score += record.BattleScore;
+                    score += saveHuman.ResultParam * saveHuman.Param1 * 0.01f;
                 }
             }
             return score;

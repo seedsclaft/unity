@@ -26,7 +26,7 @@ namespace Ryneus
             _used = false;
         }
 
-        public void UpdateGetFlag(int point)
+        public void UpdateGetFlag(float point)
         {
             if (_getFlag == false)
             {

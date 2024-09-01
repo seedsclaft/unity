@@ -132,7 +132,7 @@ namespace Ryneus
 		LearnSkill = 41,
 		AddActor = 51,
 		SelectAddActor = 52,
-		SaveHuman = 61,
+		BattleScoreBonus = 61,
 		SelectRelic = 71,
 		RemakeHistory = 101,
 		ParallelHistory = 102,

@@ -501,9 +501,9 @@ namespace Ryneus
             parallelHistoryObj.SetActive(isActive);
         }
 
-        public void SetSaveScore(int saveScore)
+        public void SetSaveScore(float saveScore)
         {
-            saveScoreText?.SetText(DataSystem.GetReplaceDecimalText(saveScore));
+            saveScoreText?.SetText("+" + saveScore.ToString("F2"));
         }
         
         public void StartAlcanaAnimation(System.Action endEvent)

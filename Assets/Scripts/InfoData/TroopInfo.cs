@@ -49,7 +49,6 @@ namespace Ryneus
                     AddEnemy(battlerInfo);
                 }
             }
-            MakeGetItemInfos();
         }
 
         public void MakeEnemyRandomTroopDates(int level)
@@ -71,37 +70,15 @@ namespace Ryneus
             }
             var getItemData2 = new GetItemData
             {
-                Param1 = level * 100,
-                Type = GetItemType.SaveHuman
+                Param1 = 1,
+                Type = GetItemType.BattleScoreBonus
             };
             _getItemInfos.Add(new GetItemInfo(getItemData2));
-            /*
-            var getItemData = new GetItemData
-            {
-                Param1 = level + 4,
-                Type = GetItemType.Numinous
-            };
-            _getItemInfos.Add(new GetItemInfo(getItemData));
-            */
         }
 
         public void AddEnemy(BattlerInfo battlerInfo)
         {
             _battlerInfos.Add(battlerInfo);
-        }
-
-        public void MakeGetItemInfos()
-        {
-            /*
-            var prizeSetId = TroopMaster.PrizeSetId;
-            var prizeSetDates = DataSystem.PrizeSets.FindAll(a => a.Id == prizeSetId);
-            foreach (var prizeSetData in prizeSetDates)
-            {
-                var getItemData = prizeSetData.GetItem;
-                var getItemInfo = new GetItemInfo(getItemData);
-                AddGetItemInfo(getItemInfo);
-            }
-            */
         }
         
         public void AddGetItemInfo(GetItemInfo getItemInfo)

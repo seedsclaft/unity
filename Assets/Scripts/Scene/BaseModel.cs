@@ -19,7 +19,7 @@ namespace Ryneus
         public PartyInfo PartyInfo => CurrentSaveData.Party;
 
         public int Currency => PartyInfo.GetCurrency(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
-        public int TotalScore => PartyInfo.TotalScore(CurrentStage.WorldNo);
+        public float TotalScore => PartyInfo.TotalScore(CurrentStage.WorldNo);
 
         public int RemainTurns => CurrentStage.Master.StageSymbols.Max(a => a.Seek) - CurrentStage.Seek + 1;
 
@@ -164,7 +164,7 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             if (getItemInfo.IsSkill())
             {
-                var skillInfo = new SkillInfo(getItemInfo.ResultParam);
+                var skillInfo = new SkillInfo(getItemInfo.Param1);
                 skillInfo.SetEnable(true);
                 skillInfos.Add(skillInfo);
             }
@@ -188,7 +188,7 @@ namespace Ryneus
             {
                 if (getItemInfo.IsSkill())
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.ResultParam);
+                    var skillInfo = new SkillInfo(getItemInfo.Param1);
                     skillInfo.SetEnable(true);
                     skillInfos.Add(skillInfo);
                 }
@@ -728,21 +728,42 @@ namespace Ryneus
             PartyInfo.SetBrunchStageIdSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,true);
             
             // 以前のデータを作成
-            var resultInfos = PartyInfo.SymbolRecordList;
+            var resultInfos = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Main);
             // 既存レコード複製
             foreach (var resultInfo in resultInfos)
             {
-                if (resultInfo.WorldNo == WorldType.Main)
+                var copy = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(resultInfo,WorldType.Brunch));
+                // ブランチより前は値をコピー
+                if (resultInfo.StageId == symbolResultInfo.StageId && resultInfo.Seek < symbolResultInfo.Seek
+                || resultInfo.StageId < symbolResultInfo.StageId)
                 {
-                    var copy = resultInfos.Find(a => a.IsSameStageSeek(resultInfo.StageId,resultInfo.Seek,WorldType.Brunch));
-                    // ブランチより前は値をコピー
-                    if (resultInfo.StageId == symbolResultInfo.StageId && resultInfo.Seek < symbolResultInfo.Seek
-                    || resultInfo.StageId < symbolResultInfo.StageId)
-                    {
-                        copy.CopyParamData(resultInfo);
-                    }
+                    copy.CopyParamData(resultInfo);
                 }
             }
+            // ブランチの成長データを作成
+            var actorInfos = PartyInfo.CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main);
+            foreach (var actorInfo in actorInfos)
+            {
+                actorInfo.RemoveLevelUpInfos(WorldType.Brunch);
+            }
+            foreach (var actorInfo in actorInfos)
+            {
+                var addLevelUpInfos = new List<LevelUpInfo>();
+                foreach (var levelUpInfo in actorInfo.LevelUpInfos)
+                {
+                    if (levelUpInfo.StageId == symbolResultInfo.StageId && levelUpInfo.Seek < symbolResultInfo.Seek
+                    || levelUpInfo.StageId < symbolResultInfo.StageId)
+                    {
+                        var brunchLevelUpInfo = new LevelUpInfo(levelUpInfo.ActorId,levelUpInfo.Currency,levelUpInfo.StageId,levelUpInfo.Seek,levelUpInfo.SeekIndex,WorldType.Brunch);
+                        addLevelUpInfos.Add(brunchLevelUpInfo);
+                    }
+                }
+                foreach (var addLevelUpInfo in addLevelUpInfos)
+                {
+                    actorInfo.SetLevelUpInfo(addLevelUpInfo);   
+                }
+            }
+                        
             SetReturnRecordStage(symbolResultInfo);
         }
 
@@ -769,6 +790,8 @@ namespace Ryneus
             {
                 PartyInfo.MergeBrunch(resultInfo);
             }
+            // ブランチのステージを初期化
+            PartyInfo.ResetBrunchData();
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(0);
@@ -792,6 +815,8 @@ namespace Ryneus
             {
                 PartyInfo.ReverseBrunch(resultInfo);
             }
+            // ブランチのステージを初期化
+            PartyInfo.ResetBrunchData();
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(0);

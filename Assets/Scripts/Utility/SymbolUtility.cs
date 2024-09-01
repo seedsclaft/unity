@@ -317,12 +317,13 @@ namespace Ryneus
         {
             var troopId = stageSymbolData.Param1;
             var plusLevel = stageSymbolData.Param2;
+            var userLevel = (int)PartyInfo.TotalScore(WorldType.Main);
             var troopInfo = new TroopInfo(troopId,troopId == -1);
+            var lv = userLevel + plusLevel;
             // ランダム生成
             if (troopId == -1)
             {
-                var lv = stageSymbolData.Seek + CurrentStage.Master.StageLv + plusLevel;
-                troopInfo.MakeEnemyRandomTroopDates(lv);
+                troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + lv);
                 // 確定報酬でNuminos
                 var numinosGetItem = new GetItemData
                 {
@@ -349,7 +350,7 @@ namespace Ryneus
                 Debug.LogError("troopId" + troopId + "のデータが不足");
             } else
             {
-                troopInfo.MakeEnemyTroopDates(plusLevel);
+                troopInfo.MakeEnemyTroopDates(lv);
             }
             return troopInfo;
         }
