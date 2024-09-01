@@ -229,6 +229,9 @@ namespace Ryneus
                 case CommandType.SelectCharaLayer:
                     CommandSelectCharaLayer((int)viewEvent.template);
                     break;
+                case CommandType.MargeRequest:
+                    CommandMargeRequest();
+                    break;
             }
         }
 
@@ -920,6 +923,18 @@ namespace Ryneus
             {
                 _view.SetHelpText(DataSystem.GetText(20020));
             });
+        }
+
+        private void CommandMargeRequest()
+        {
+            var confirmInfo = new ConfirmInfo("マージしますか？",(a) => 
+            {
+                if (a == ConfirmCommandType.Yes)
+                {
+                    CommandNeedEndBrunch();
+                }
+            });
+            _view.CommandCallConfirm(confirmInfo);
         }
     }
 }

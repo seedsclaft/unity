@@ -783,8 +783,8 @@ namespace Ryneus
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
-            var returnSymbol = PartyInfo.ReturnSymbol;
-            selectRecords = selectRecords.FindAll(a => a.Selected && a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            var returnSymbol = PartyInfo.BrunchSymbol;
+            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
             
             foreach (var resultInfo in selectRecords)
             {
@@ -808,8 +808,8 @@ namespace Ryneus
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
-            var returnSymbol = PartyInfo.ReturnSymbol;
-            selectRecords = selectRecords.FindAll(a => a.Selected && a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            var returnSymbol = PartyInfo.BrunchSymbol;
+            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
             
             foreach (var resultInfo in selectRecords)
             {

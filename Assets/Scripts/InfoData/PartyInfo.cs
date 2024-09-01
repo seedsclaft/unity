@@ -181,7 +181,7 @@ namespace Ryneus
                 // ブランチの成長データをマージ
                 foreach (var actorInfo in actorInfos)
                 {
-                    actorInfo.MargeParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                    actorInfo.MargeLevelUpInfo(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace Ryneus
                 var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
                 foreach (var actorInfo in actorInfos)
                 {
-                    actorInfo.RemoveLevelUpInfos(WorldType.Brunch);
+                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 }
             }
         }

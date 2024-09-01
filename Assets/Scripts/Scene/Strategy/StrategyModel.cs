@@ -347,13 +347,14 @@ namespace Ryneus
 
         public void SeekStage()
         {
+            var seekStage = RemainTurns == 1;
             if (RemainTurns > 1)
             {
                 CurrentStage.SeekStage();
             }
             if (CurrentStage.WorldNo == WorldType.Brunch)
             {
-                if (RemainTurns == 1)
+                if (seekStage)
                 {
                     CurrentSaveData.MakeStageData(CurrentStage.Id+1);
                     CurrentStage.SetCurrentTurn(1);

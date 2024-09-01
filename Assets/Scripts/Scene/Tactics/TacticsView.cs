@@ -28,6 +28,7 @@ namespace Ryneus
         [SerializeField] private Button scorePrizeButton = null;
         [SerializeField] private Button leftButton = null;
         [SerializeField] private Button rightButton = null;
+        [SerializeField] private OnOffButton margeButton = null;
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
@@ -93,6 +94,11 @@ namespace Ryneus
             symbolRecordList.SetInputHandler(InputKeyType.Cancel,() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.CancelSymbolRecord);
+                _commandData(eventData);
+            });
+            margeButton.SetCallHandler(() => 
+            {
+                var eventData = new TacticsViewEvent(CommandType.MargeRequest);
                 _commandData(eventData);
             });
 
@@ -477,6 +483,8 @@ namespace Ryneus
             //rightButton?.gameObject?.SetActive(false);
             leftButton?.gameObject?.SetActive(enable && worldNo == WorldType.Brunch);
             rightButton?.gameObject?.SetActive(enable && worldNo == WorldType.Main);
+            
+            margeButton.gameObject.SetActive(worldNo == WorldType.Brunch);
         }
 
         public void ShowRecordList()

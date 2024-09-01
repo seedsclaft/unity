@@ -43,5 +43,6 @@ namespace Tactics
         NormalWorld,
         AnotherWorld,
         SelectCharaLayer,
+        MargeRequest,
     }
 }

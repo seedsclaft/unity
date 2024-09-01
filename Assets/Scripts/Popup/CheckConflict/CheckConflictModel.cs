@@ -41,10 +41,13 @@ namespace Ryneus
                 if (recordList.ContainsKey(stageKey) && mainRecord.Selected)
                 {
                     var list = new List<SymbolResultInfo>();
-                    list.Add(mainRecord);
                     var brunchRecord = brunchRecords.Find(a => a.Selected && a.IsSameStageSeek(mainRecord.StageId,mainRecord.Seek,WorldType.Brunch));
-                    list.Add(brunchRecord);
-                    recordList[stageKey] = list;
+                    if (brunchRecord != null)
+                    {
+                        list.Add(mainRecord);
+                        list.Add(brunchRecord);
+                        recordList[stageKey] = list;
+                    }
                 }
             }
     
@@ -52,7 +55,10 @@ namespace Ryneus
             var result = recordList.OrderBy(a => a.Key).ToList();
             foreach (var resultData in result)
             {
-                resultList.Add(resultData.Value);
+                if (resultData.Value.Count == 2)
+                {
+                    resultList.Add(resultData.Value);
+                }
             }
             return resultList;
         }

@@ -74,7 +74,7 @@ namespace Ryneus
             }
         }
         
-        public void MargeParamData(int stageId,int seek,WorldType worldType)
+        public void MargeLevelUpInfo(int stageId,int seek,WorldType worldType)
         {
             for (int i = _levelUpInfos.Count-1;i >= 0;i--)
             {
