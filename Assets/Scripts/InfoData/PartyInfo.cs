@@ -34,7 +34,7 @@ namespace Ryneus
                 var getItemInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Numinous);
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    currency += getItemInfo.ResultParam2;
+                    currency += getItemInfo.ResultParam;
                 }
             }
             var consume = 0;
@@ -166,36 +166,59 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void MergeBrunch(SymbolResultInfo symbolResultInfo)
         {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main));
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main) && a.SeekIndex == symbolResultInfo.SeekIndex);
             if (findIndex > -1)
             {
                 var main = _symbolRecordList[findIndex];
                 main.CopyParamData(symbolResultInfo);
                 symbolResultInfo.ResetParamData();
-                // ブランチの成長データを削除
-                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                // 元の成長データを削除
+                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 foreach (var actorInfo in actorInfos)
                 {
-                    actorInfo.ResetParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main);
+                }
+                // ブランチの成長データをマージ
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.MargeParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
                 }
             }
         }
 
         /// <summary>
-        /// ブランチをメインにマージ
+        /// ブランチのデータリセット
         /// </summary>
         /// <param name="symbolResultInfo"></param>
         public void ReverseBrunch(SymbolResultInfo symbolResultInfo)
         {
-            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main));
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main) && a.SeekIndex == symbolResultInfo.SeekIndex);
             if (findIndex > -1)
             {
                 symbolResultInfo.ResetParamData();
-                // ブランチの成長データを削除
+                // 成長データを削除
                 var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
                 foreach (var actorInfo in actorInfos)
                 {
-                    actorInfo.ResetParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                }
+            }
+        }
+
+        /// <summary>
+        /// ブランチのデータリセット
+        /// </summary>
+        /// <param name="symbolResultInfo"></param>
+        public void ResetCurrentLevelUpInfo(int stageId,int seek,WorldType worldType)
+        {
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameStageSeek(stageId,seek,worldType));
+            if (findIndex > -1)
+            {
+                // 成長データを削除
+                var actorInfos = CurrentActorInfos(stageId,seek,worldType);
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.RemoveParamData(stageId,seek,worldType);
                 }
             }
         }
@@ -277,7 +300,7 @@ namespace Ryneus
         private string AddTimingText(ActorInfo actorInfo)
         {
             var records = _symbolRecordList.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
-            var find = records.Find(a => a.SymbolInfo.GetItemInfos.Find(b => b.GetFlag && b.ResultParam2 == actorInfo.ActorId) != null);
+            var find = records.Find(a => a.SymbolInfo.GetItemInfos.Find(b => b.GetFlag && b.ResultParam == actorInfo.ActorId) != null);
             if (find != null)
             {
                 if (find.StageId == 0)
@@ -300,7 +323,7 @@ namespace Ryneus
                 {
                     if (getItemInfo.GetFlag)
                     {
-                        var actorId = getItemInfo.ResultParam2;
+                        var actorId = getItemInfo.ResultParam;
                         if (!actorIdList.Contains(actorId))
                         {
                             actorIdList.Add(actorId);
@@ -322,7 +345,7 @@ namespace Ryneus
                 {
                     if (getItemInfo.GetFlag)
                     {
-                        var actorId = getItemInfo.ResultParam2;
+                        var actorId = getItemInfo.ResultParam;
                         if (!actorIdList.Contains(actorId))
                         {
                             actorIdList.Add(actorId);
@@ -343,9 +366,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.ResultParam1).Rank < RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.ResultParam).Rank < RankType.RelicRank1)
                     {
-                        alchemyIdList.Add(getItemInfo.ResultParam1);
+                        alchemyIdList.Add(getItemInfo.ResultParam);
                     }
                 }
             }
@@ -362,9 +385,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.ResultParam1).Rank >= RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.ResultParam).Rank >= RankType.RelicRank1)
                     {
-                        alcanaIdList.Add(getItemInfo.ResultParam1);
+                        alcanaIdList.Add(getItemInfo.ResultParam);
                     }
                 }
             }

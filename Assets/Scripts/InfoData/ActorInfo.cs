@@ -50,7 +50,8 @@ namespace Ryneus
             return currency;
         }
 
-        public void ResetParamData(int stageId,int seek,WorldType worldType)
+
+        public void RemoveParamData(int stageId,int seek,WorldType worldType)
         {
             for (int i = _levelUpInfos.Count-1;i >= 0;i--)
             {
@@ -62,6 +63,18 @@ namespace Ryneus
             }
         }
         
+        public void MargeParamData(int stageId,int seek,WorldType worldType)
+        {
+            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
+            {
+                var levelUpInfo = _levelUpInfos[i];
+                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldNo == worldType)
+                {
+                    levelUpInfo.SetWorldType(WorldType.Main);
+                }
+            }
+        }
+
         private string _addTiming = "";
         public string AddTiming => _addTiming;
         public void SetAddTiming(string addTiming)

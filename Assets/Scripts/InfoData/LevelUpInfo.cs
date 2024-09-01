@@ -37,6 +37,10 @@ namespace Ryneus
         public int SeekIndex => _seekIndex;
         private WorldType _worldNo;
         public WorldType WorldNo => _worldNo;
+        public void SetWorldType(WorldType worldType)
+        {
+            _worldNo = worldType;
+        }
 
         public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,WorldType worldNo)
         {

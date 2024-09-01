@@ -102,7 +102,7 @@ namespace Ryneus
                 _relicData = new List<SkillInfo>();
                 foreach (var relicInfo in relicInfos)
                 {
-                    var skillInfo = new SkillInfo(relicInfo.ResultParam1);
+                    var skillInfo = new SkillInfo(relicInfo.ResultParam);
                     skillInfo.SetEnable(true);
                     _relicData.Add(skillInfo);
                 }
@@ -125,27 +125,27 @@ namespace Ryneus
                         getItemInfo.SetGetFlag(true);
                         if (_inBattleResult)
                         { 
-                            var beforeGain = getItemInfo.ResultParam2;
-                            var gainCurrency = (int)Math.Round(getItemInfo.ResultParam1 * recordScore);
+                            var beforeGain = getItemInfo.ResultParam;
+                            var gainCurrency = (int)Math.Round(getItemInfo.Param1 * recordScore);
                             
                             if (beforeGain == 0)
                             {
                                 // 初クリア
-                                getItemInfo.SetResultParam2(gainCurrency);
+                                getItemInfo.SetResultParam(gainCurrency);
                                 PartyInfo.ChangeCurrency(Currency + gainCurrency);
                             } else 
                             if (gainCurrency > beforeGain)
                             {
-                                getItemInfo.SetResultParam2(gainCurrency);
+                                getItemInfo.SetResultParam(gainCurrency);
                                 PartyInfo.ChangeCurrency(Currency + gainCurrency - beforeGain);
                                 //getItemInfo.MakeTextData();
                             }
                             
                             // 獲得+Nu
-                            resultInfo.SetTitle("+" + getItemInfo.ResultParam1.ToString() + DataSystem.GetText(1000));
+                            resultInfo.SetTitle("+" + getItemInfo.ResultParam.ToString() + DataSystem.GetText(1000));
                             _resultInfos.Add(resultInfo);
                             // 損失-Nu
-                            var minusCurrency = getItemInfo.ResultParam1 - gainCurrency;
+                            var minusCurrency = getItemInfo.ResultParam - gainCurrency;
                             if (minusCurrency > 0)
                             {
                                 var minusResultInfo = new StrategyResultViewInfo();
@@ -155,18 +155,20 @@ namespace Ryneus
                         } else
                         {
                             // 獲得+Nu
-                            resultInfo.SetTitle("+" + getItemInfo.ResultParam1.ToString() + DataSystem.GetText(1000));
+                            var gain = getItemInfo.Param1;
+                            resultInfo.SetTitle("+" + gain.ToString() + DataSystem.GetText(1000));
                             _resultInfos.Add(resultInfo);
-                            getItemInfo.SetResultParam2(getItemInfo.ResultParam1);
-                            PartyInfo.ChangeCurrency(Currency + getItemInfo.ResultParam1);
+                            getItemInfo.SetResultParam(gain);
+                            PartyInfo.ChangeCurrency(Currency + gain);
                         }
                         break;
                     case GetItemType.Skill:
                         getItemInfo.SetGetFlag(true);
                         // 魔法取得
-                        var skillData = DataSystem.FindSkill(getItemInfo.ResultParam1);
+                        var skillData = DataSystem.FindSkill(getItemInfo.Param1);
                         resultInfo.SetSkillId(skillData.Id);
                         resultInfo.SetTitle(skillData.Name);
+                        getItemInfo.SetResultParam(skillData.Id);
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.Regeneration:
@@ -176,26 +178,26 @@ namespace Ryneus
                     case GetItemType.AddActor:
                     case GetItemType.SelectAddActor:
                         getItemInfo.SetGetFlag(true);
-                        getItemInfo.SetResultParam2(getItemInfo.ResultParam1);
+                        getItemInfo.SetResultParam(getItemInfo.Param1);
                         // キャラ加入
-                        var actorData = DataSystem.FindActor(getItemInfo.ResultParam1);
+                        var actorData = DataSystem.FindActor(getItemInfo.Param1);
                         resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData.Name));
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.SaveHuman:
                         getItemInfo.SetGetFlag(true);
-                        var beforeSave = getItemInfo.ResultParam2;
-                        var saveHuman = (int)Math.Round(getItemInfo.ResultParam1 * recordScore);
+                        var beforeSave = getItemInfo.ResultParam;
+                        var saveHuman = (int)Math.Round(getItemInfo.Param1 * recordScore);
                         if (saveHuman > beforeSave)
                         {
-                            getItemInfo.SetResultParam2(saveHuman);
+                            getItemInfo.SetResultParam(saveHuman);
                             record.SetBattleScore(saveHuman);
                             // 救命人数
-                            _saveHumanText = DataSystem.GetReplaceDecimalText(beforeSave) + "→" + DataSystem.GetReplaceDecimalText(saveHuman) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.ResultParam1);
+                            _saveHumanText = DataSystem.GetReplaceDecimalText(beforeSave) + "→" + DataSystem.GetReplaceDecimalText(saveHuman) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         } else
                         {
                             // 救命人数
-                            _saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.ResultParam1);
+                            _saveHumanText = DataSystem.GetReplaceDecimalText((int)recordScore) + "/" + DataSystem.GetReplaceDecimalText(getItemInfo.Param1);
                         }
                         break;
                     case GetItemType.SelectRelic:
@@ -238,12 +240,13 @@ namespace Ryneus
             var getItemInfos = SceneParam.GetItemInfos;
             var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
-            var selectRelic = selectRelicInfos.Find(a => a.ResultParam1 == skillId);
+            var selectRelic = selectRelicInfos.Find(a => a.Param1 == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)
             {
                 selectRelicInfo.SetGetFlag(false);
             }
             selectRelic.SetGetFlag(true);
+            selectRelic.SetResultParam(skillId);
             var resultInfo = new StrategyResultViewInfo();
             resultInfo.SetSkillId(skillId);
             resultInfo.SetTitle(DataSystem.FindSkill(skillId).Name);

@@ -62,17 +62,12 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             
             _view.SetStageInfo(_model.CurrentStage);
-            _view.SetMultiverse(_model.BrunchMode,_model.CurrentStage.WorldNo);
             _view.SetTacticsCommand(_model.TacticsCommand());
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             _view.SetSymbolRecords(_model.SymbolRecords());
             _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
-            if (_model.BrunchMode)
-            {
-                _view.SetPastMode();
-            }
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
@@ -512,7 +507,7 @@ namespace Ryneus
                 {
                     // 過去のステージを作る
                     _model.SetReturnRecordStage(symbolResultInfo);
-                    _view.CommandGotoSceneChange(Scene.Tactics);
+                    //_view.CommandGotoSceneChange(Scene.Tactics);
                 }
             }
         }
@@ -569,7 +564,7 @@ namespace Ryneus
                 // アルカナ選択
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
                 var alcanaSelect = _view.AlcanaSelectSkillInfo();
-                getItemInfos = getItemInfos.FindAll(a => a.ResultParam1 == alcanaSelect.Id);
+                getItemInfos = getItemInfos.FindAll(a => a.Param2 == alcanaSelect.Id);
                 GotoStrategyScene(getItemInfos,_model.StageMembers());
                 _model.MakeSelectRelic(alcanaSelect.Id);
             }
@@ -607,7 +602,7 @@ namespace Ryneus
 
         private void CheckActorSymbol(GetItemInfo getItemInfo)
         {
-            var actorData = DataSystem.FindActor(getItemInfo.ResultParam1);
+            var actorData = DataSystem.FindActor(getItemInfo.Param1);
             var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19270,actorData.Name),(a) => UpdatePopupActorSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
@@ -617,7 +612,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
-                var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].ResultParam1);
+                var actorInfos = _model.PartyInfo.ActorInfos.FindAll(a => a.ActorId == getItemInfos[0].Param1);
                 GotoStrategyScene(getItemInfos,actorInfos);
             } else
             {
@@ -707,7 +702,7 @@ namespace Ryneus
 
         private void CheckResourceSymbol(GetItemInfo getItemInfo)
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19280,getItemInfo.ResultParam1.ToString()),(a) => UpdatePopupResourceSymbol(a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19280,getItemInfo.Param1.ToString()),(a) => UpdatePopupResourceSymbol(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -776,6 +771,8 @@ namespace Ryneus
             _view.SetTacticsCharaLayer(_model.StageMembers());
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
+            _view.SetPastMode(_model.CurrentStage.WorldNo == WorldType.Brunch);
+            _view.SetWorldMove(_model.BrunchMode,_model.CurrentStage.WorldNo);
         }
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolResultInfo)
@@ -792,7 +789,7 @@ namespace Ryneus
                     CallPopupSkillDetail(DataSystem.GetText(19200),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
                 case SymbolType.Actor:
-                    CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].ResultParam1),false,true,false,false,-1,() => 
+                    CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
                     {
 
                     });
@@ -830,7 +827,7 @@ namespace Ryneus
                 var getItemInfo = _view.SymbolGetItemInfo;
                 if (getItemInfo != null)
                 {
-                    selectActorId = getItemInfo.ResultParam1;
+                    selectActorId = getItemInfo.Param1;
                 }
                 // 確認する用
                 CommandStatusInfo(actorInfos,false,true,false,false,selectActorId,() => 

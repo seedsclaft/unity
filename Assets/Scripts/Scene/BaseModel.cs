@@ -164,13 +164,13 @@ namespace Ryneus
             var skillInfos = new List<SkillInfo>();
             if (getItemInfo.IsSkill())
             {
-                var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
+                var skillInfo = new SkillInfo(getItemInfo.ResultParam);
                 skillInfo.SetEnable(true);
                 skillInfos.Add(skillInfo);
             }
             if (getItemInfo.IsAttributeSkill())
             {
-                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                 foreach (var skillData in skillDates)
                 {
                     var skillInfo = new SkillInfo(skillData.Key);
@@ -188,13 +188,13 @@ namespace Ryneus
             {
                 if (getItemInfo.IsSkill())
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
+                    var skillInfo = new SkillInfo(getItemInfo.ResultParam);
                     skillInfo.SetEnable(true);
                     skillInfos.Add(skillInfo);
                 }
                 if (getItemInfo.IsAttributeSkill())
                 {
-                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam1 && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
+                    var skillDates = DataSystem.Skills.Where(a => a.Value.Rank == (RankType)getItemInfo.ResultParam && a.Value.Attribute == (AttributeType)((int)getItemInfo.GetItemType - 10));
                     foreach (var skillData in skillDates)
                     {
                         var skillInfo = new SkillInfo(skillData.Key);
@@ -289,7 +289,7 @@ namespace Ryneus
                     if (addActorGetItemInfo != null)
                     {
                         // 初期アクター
-                        addActorGetItemInfo.SetResultParam2(1);
+                        addActorGetItemInfo.SetResultParam(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         //addActor = true;
                     }
@@ -320,7 +320,7 @@ namespace Ryneus
                     if (addActorGetItemInfo != null)
                     {
                         // 初期アクター
-                        addActorGetItemInfo.SetResultParam2(1);
+                        addActorGetItemInfo.SetResultParam(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         //addActor = true;
                     }
@@ -723,6 +723,8 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void MakeBrunch(SymbolResultInfo symbolResultInfo)
         {
+            // 今のターン中の成長データを削除
+            PartyInfo.ResetCurrentLevelUpInfo(CurrentStage.Id,CurrentStage.Seek,WorldType.Main);
             PartyInfo.SetBrunchStageIdSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,true);
             
             // 以前のデータを作成
@@ -749,75 +751,7 @@ namespace Ryneus
         /// </summary>
         public bool MergeRequest()
         {
-            // コンフリクト
-            var conflict = false;
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
-            // ステージ比較
-            foreach (var resultInfo in selectRecords)
-            {
-                var main = PartyInfo.SymbolRecordList.Find(a => a.IsSameStageSeek(resultInfo.StageId,resultInfo.Seek,WorldType.Main));
-                var brunch = resultInfo;
-                // 選択が違う
-                if (main.Selected != brunch.Selected)
-                {
-                    conflict = true;
-                } else
-                {
-                    // バトル
-                    if (main.SymbolInfo.IsBattleSymbol())
-                    {
-                        if (main.BattleScore != brunch.BattleScore)
-                        {
-                            conflict = true;
-                        }
-                    } else
-                    {
-                        var mainGetItemInfos = main.SymbolInfo.GetItemInfos;
-                        for(int i = 0;i < mainGetItemInfos.Count;i++)
-                        {
-                            var brunchGetItemInfo = brunch.SymbolInfo.GetItemInfos[i];
-                            if (mainGetItemInfos[i].GetFlag != brunchGetItemInfo.GetFlag)
-                            {
-                                conflict = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            // 育成状態比較
-            var mainActorInfos = PartyInfo.CurrentActorInfos(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Main);
-            var brunchActorInfos = PartyInfo.CurrentActorInfos(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Brunch);
-            
-            var mainAlchemyIds = PartyInfo.CurrentAlchemyIdList(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Main);
-            var brunchAlchemyIds = PartyInfo.CurrentAlchemyIdList(PartyInfo.ReturnSymbol.StageId,PartyInfo.ReturnSymbol.Seek,WorldType.Brunch);
-            foreach (var mainActorInfo in mainActorInfos)
-            {
-                var brunchActorInfo = brunchActorInfos.Find(a => a.ActorId == mainActorInfo.ActorId);
-                if (mainActorInfo.Level != brunchActorInfo.Level)
-                {
-                    conflict = true;
-                }
-                foreach (var skillInfo in mainActorInfo.SkillActionList(mainAlchemyIds))
-                {
-                    if (!brunchActorInfo.IsLearnedSkill(skillInfo.Id))
-                    {
-                        conflict = true;
-                    }
-                }
-            }
-            foreach (var brunchActorInfo in brunchActorInfos)
-            {
-                var mainActorInfo = mainActorInfos.Find(a => a.ActorId == brunchActorInfo.ActorId);
-                foreach (var skillInfo in brunchActorInfo.SkillActionList(brunchAlchemyIds))
-                {
-                    if (!mainActorInfo.IsLearnedSkill(skillInfo.Id))
-                    {
-                        conflict = true;
-                    }
-                }
-            }
-            return conflict;
+            return true;
         }
 
         /// <summary>
@@ -829,7 +763,7 @@ namespace Ryneus
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.ReturnSymbol;
-            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            selectRecords = selectRecords.FindAll(a => a.Selected && a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
             
             foreach (var resultInfo in selectRecords)
             {
@@ -852,7 +786,7 @@ namespace Ryneus
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.ReturnSymbol;
-            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
+            selectRecords = selectRecords.FindAll(a => a.Selected && a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
             
             foreach (var resultInfo in selectRecords)
             {

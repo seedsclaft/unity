@@ -125,7 +125,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
-                    var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
+                    var skillInfo = new SkillInfo(getItemInfo.ResultParam);
                     var cost = 0;
                     skillInfo.SetEnable(cost <= Currency);
                     skillInfos.Add(skillInfo);
@@ -139,7 +139,7 @@ namespace Ryneus
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos;
             var selectRelicInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
             // 魔法取得
-            var selectRelic = selectRelicInfos.Find(a => a.ResultParam1 == skillId);
+            var selectRelic = selectRelicInfos.Find(a => a.ResultParam == skillId);
             foreach (var selectRelicInfo in selectRelicInfos)
             {
                 selectRelicInfo.SetGetFlag(false);
@@ -153,7 +153,7 @@ namespace Ryneus
             var index = 0;
             foreach (var getItemInfo in getItemInfos)
             {
-                var skillInfo = new SkillInfo(getItemInfo.ResultParam1);
+                var skillInfo = new SkillInfo(getItemInfo.ResultParam);
                 var cost = ShopLearningCost(skillInfo);
                 skillInfo.SetEnable(cost <= Currency && !_shopSelectIndexes.Contains(index));
                 skillInfo.SetLearningCost(cost);
@@ -186,7 +186,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {
-                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.ResultParam1);
+                    var actorInfo = PartyInfo.ActorInfos.Find(a => a.ActorId == getItemInfo.ResultParam);
                     actorInfos.Add(actorInfo);
                 }
             }
@@ -321,7 +321,7 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
             selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
             // ブランチは始点と終点を作る
             if (CurrentStage.WorldNo == WorldType.Brunch)

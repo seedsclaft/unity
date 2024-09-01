@@ -12,8 +12,8 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
-            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.Seek > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.StageId == 0);
+            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.StageId == 0);
             // 始点と終点を作る
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.ReturnSymbol;
@@ -38,11 +38,11 @@ namespace Ryneus
             foreach (var mainRecord in mainRecords)
             {
                 var stageKey = (mainRecord.StageId-1)*100 + mainRecord.Seek;
-                if (recordList.ContainsKey(stageKey))
+                if (recordList.ContainsKey(stageKey) && mainRecord.Selected)
                 {
                     var list = new List<SymbolResultInfo>();
                     list.Add(mainRecord);
-                    var brunchRecord = brunchRecords.Find(a => a.IsSameStageSeek(mainRecord.StageId,mainRecord.Seek,WorldType.Brunch));
+                    var brunchRecord = brunchRecords.Find(a => a.Selected && a.IsSameStageSeek(mainRecord.StageId,mainRecord.Seek,WorldType.Brunch));
                     list.Add(brunchRecord);
                     recordList[stageKey] = list;
                 }
@@ -61,13 +61,23 @@ namespace Ryneus
         public List<ActorInfo> MainActorInfos()
         {
             var returnSymbol = PartyInfo.ReturnSymbol;
-            return PartyInfo.CurrentActorInfos(returnSymbol.StageId,returnSymbol.Seek,WorldType.Main);
+            var actorInfos = PartyInfo.CurrentActorInfos(returnSymbol.StageId,returnSymbol.Seek,WorldType.Main);
+            foreach (var actorInfo in actorInfos)
+            {
+                actorInfo.SetStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Main);
+            }
+            return actorInfos;
         }
 
         public List<ActorInfo> BrunchActorInfos()
         {
             var brunchSymbol = PartyInfo.BrunchSymbol;
-            return PartyInfo.CurrentActorInfos(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Main);
+            var actorInfos = PartyInfo.CurrentActorInfos(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch);
+            foreach (var actorInfo in actorInfos)
+            {
+                actorInfo.SetStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch);
+            }
+            return actorInfos;
         }
     }
 }

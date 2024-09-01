@@ -52,18 +52,16 @@ namespace Ryneus
         public List<GetItemInfo> MakeSelectGetItemInfos()
         {
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.AddActor);
-            var getItemInfo = getItemInfos.Find(a => a.ResultParam1 == CurrentActor.ActorId);
+            var getItemInfo = getItemInfos.Find(a => a.Param1 == CurrentActor.ActorId);
             if (getItemInfo != null)
             {
-                //getItemInfo.SetParam1(CurrentActor.ActorId);
-                getItemInfo.SetResultParam2(CurrentActor.ActorId);
+                getItemInfo.SetResultParam(CurrentActor.ActorId);
                 return new List<GetItemInfo>(){getItemInfo};
             }
             getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.SelectAddActor);
             if (getItemInfos.Count > 0)
             {
-                getItemInfos[0].SetResultParam1(CurrentActor.ActorId);
-                getItemInfos[0].SetResultParam2(CurrentActor.ActorId);
+                getItemInfos[0].SetResultParam(CurrentActor.ActorId);
                 return getItemInfos;
             }
             return new List<GetItemInfo>(){};

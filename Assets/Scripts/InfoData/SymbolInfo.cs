@@ -38,7 +38,7 @@ namespace Ryneus
             _getItemInfos = new List<GetItemInfo>();
             foreach (var getItemInfo in symbolInfo.GetItemInfos)
             {
-                var getItem = new GetItemInfo(null);
+                var getItem = new GetItemInfo(getItemInfo.Master);
                 getItem.CopyData(getItemInfo);
                 _getItemInfos.Add(getItem);
             }
@@ -48,7 +48,7 @@ namespace Ryneus
         {
             foreach (var getItemInfo in GetItemInfos)
             {
-                getItemInfo.SetResultParam2(0);
+                getItemInfo.SetResultParam(0);
                 getItemInfo.SetGetFlag(false);
             }
         }
@@ -79,7 +79,7 @@ namespace Ryneus
             {
                 if (getItemInfo.GetItemType == GetItemType.SaveHuman)
                 {
-                    scoreMax += getItemInfo.ResultParam1;
+                    scoreMax += getItemInfo.ResultParam;
                 }
             }
             return scoreMax;

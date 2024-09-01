@@ -39,13 +39,6 @@ namespace Ryneus
         }
         [SerializeField] private _2dxFX_NoiseAnimated _2DxFX_NoiseAnimated = null;
         [SerializeField] private TextMeshProUGUI pastText = null;
-        public void SetPastMode()
-        {
-            pastText?.gameObject.SetActive(true);
-            //pastText?.SetText("");
-            _2DxFX_NoiseAnimated.enabled = true;
-        }
-
 
         public GetItemInfo SymbolGetItemInfo => tacticsSymbolList.GetItemInfo();
         public int AlcanaListIndex => alcanaSelectList.Index;
@@ -478,7 +471,7 @@ namespace Ryneus
             }
         }
 
-        public void SetMultiverse(bool enable,WorldType worldNo)
+        public void SetWorldMove(bool enable,WorldType worldNo)
         {
             //leftButton?.gameObject?.SetActive(false);
             //rightButton?.gameObject?.SetActive(false);
@@ -564,6 +557,12 @@ namespace Ryneus
         public void SetNuminous(int numinous)
         {
             trainView.SetNuminous(numinous);
+        }
+
+        public void SetPastMode(bool pastMode)
+        {
+            pastText?.gameObject.SetActive(pastMode);
+            _2DxFX_NoiseAnimated.enabled = pastMode;
         }
 
         public void UpdateInputKeyActive(TacticsViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
