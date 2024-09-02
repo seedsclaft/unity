@@ -16,6 +16,7 @@ namespace Ryneus
             var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0);
             foreach (var symbolMaster in symbolDates)
             {
+                var randFlag = false;
                 var symbolInfo = new SymbolInfo(symbolMaster);
                 var stageSymbolData = new StageSymbolData();
                 stageSymbolData.CopyData(symbolMaster);
@@ -32,6 +33,7 @@ namespace Ryneus
                     if (stageSymbolData.SymbolType == SymbolType.Battle)
                     {
                         symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
+                        randFlag = true;
                     }
                 }
                 if (stageSymbolData.SymbolType == SymbolType.Random)
@@ -55,6 +57,11 @@ namespace Ryneus
                         if (stageSymbolData.Param1 > 0)
                         {
                             symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
+                            if (randFlag)
+                            {
+                                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.Seek);
+                                symbolInfo.TroopInfo.AddGetItemInfo(numinosGetItem);
+                            }                    
                         }
                         
                         if (symbolInfo.TroopInfo != null && symbolInfo.TroopInfo.GetItemInfos.Count > 0)
@@ -108,12 +115,12 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,stageSymbolData);
+                var record = new SymbolResultInfo(symbolInfo);
                 resultInfos.Add(record);
                 // ブランチ用データ作成
                 var brunchSymbol = new SymbolInfo(stageSymbolData);
                 brunchSymbol.CopyData(symbolInfo);
-                var brunchRecord = new SymbolResultInfo(brunchSymbol,stageSymbolData);
+                var brunchRecord = new SymbolResultInfo(brunchSymbol);
                 brunchRecord.SetWorldNo(WorldType.Brunch);
                 resultInfos.Add(brunchRecord);
             }
@@ -139,10 +146,10 @@ namespace Ryneus
             {
                 var rand = Random.Range(0,alcanaSkills.Count);
                 // 報酬設定
-                if (getItemInfos.Find(a => a.ResultParam == alcanaSkills[rand].Value.Id) == null)
+                if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                 {
                     var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
-                    if (getItemInfos.Find(a => a.ResultParam == alcanaSkills[rand].Value.Id) == null)
+                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){getItemInfo});
                         getItemInfos.Add(getItemInfo);
@@ -153,9 +160,11 @@ namespace Ryneus
 
         private static List<GetItemInfo> MakeSelectActorGetItemInfos(bool freeSelect)
         {
-            var getItemInfos = new List<GetItemInfo>();
-            // タイトル表示用
-            getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectAddActor,-1));
+            var getItemInfos = new List<GetItemInfo>
+            {
+                // タイトル表示用
+                MakeGetItemInfo(GetItemType.SelectAddActor, -1)
+            };
             // 表示用に報酬設定
             if (freeSelect)
             {
@@ -179,7 +188,7 @@ namespace Ryneus
                     while (getItemInfos.Count <= count)
                     {
                         var rand = Random.Range(0,actorInfos.Count);
-                        if (getItemInfos.Find(a => a.ResultParam == actorInfos[rand].ActorId) == null)
+                        if (getItemInfos.Find(a => a.Param1 == actorInfos[rand].ActorId) == null)
                         {
                             getItemInfos.Add(MakeGetItemInfo(GetItemType.AddActor,actorInfos[rand].ActorId));
                         }
@@ -191,9 +200,11 @@ namespace Ryneus
 
         private static List<GetItemInfo> MakeSelectRelicGetItemInfos(RankType rankType)
         {
-            var getItemInfos = new List<GetItemInfo>();
-            // タイトル表示用
-            getItemInfos.Add(MakeGetItemInfo(GetItemType.SelectRelic,-1));
+            var getItemInfos = new List<GetItemInfo>
+            {
+                // タイトル表示用
+                MakeGetItemInfo(GetItemType.SelectRelic, -1)
+            };
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
@@ -211,11 +222,11 @@ namespace Ryneus
                 while (getItemInfos.Count <= count)
                 {
                     var rand = Random.Range(0,alcanaSkills.Count);
-                    if (getItemInfos.Find(a => a.ResultParam == alcanaSkills[rand].Value.Id) == null)
+                    if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                     {
                         // 報酬設定
                         var getItemInfo = MakeGetItemInfo(GetItemType.Skill,alcanaSkills[rand].Value.Id);
-                        if (getItemInfos.Find(a => a.ResultParam == alcanaSkills[rand].Value.Id) == null)
+                        if (getItemInfos.Find(a => a.Param1 == alcanaSkills[rand].Value.Id) == null)
                         {
                             getItemInfos.Add(getItemInfo);
                         }
@@ -317,20 +328,14 @@ namespace Ryneus
         {
             var troopId = stageSymbolData.Param1;
             var plusLevel = stageSymbolData.Param2;
-            var userLevel = (int)PartyInfo.TotalScore(WorldType.Main);
             var troopInfo = new TroopInfo(troopId,troopId == -1);
-            var lv = userLevel + plusLevel;
+            var lv = DataSystem.Stages.Find(a => a.Id == stageSymbolData.StageId).StageLv + plusLevel;
             // ランダム生成
             if (troopId == -1)
             {
                 troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + lv);
-                // 確定報酬でNuminos
-                var numinosGetItem = new GetItemData
-                {
-                    Param1 = (lv / 2) + 9,
-                    Type = GetItemType.Numinous
-                };
-                troopInfo.AddGetItemInfo(new GetItemInfo(numinosGetItem));
+                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.Seek);
+                troopInfo.AddGetItemInfo(numinosGetItem);
                 // ランダム報酬データ設定
                 // 70 = Rank1 Passive,
                 // 7 = Rank2 Passive,
@@ -355,26 +360,42 @@ namespace Ryneus
             return troopInfo;
         }
 
+        private static GetItemInfo MakeEnemyRandomNuminos(int seek)
+        {
+            var totalScore = (int)PartyInfo.TotalScore(WorldType.Main);
+            // 確定報酬でNuminos
+            var numinosGetItem = new GetItemData
+            {
+                Param1 = totalScore + seek,
+                Type = GetItemType.Numinous
+            };
+            return new GetItemInfo(numinosGetItem);
+        }
+
         private static GetItemData MakeSkillGetItemInfo()
         {
-            GetItemData getItemData = null;
-            int rand = Random.Range(0,100);
+            int rand = Random.Range(0, 100);
+            GetItemData getItemData;
             if (rand < 70)
             {
                 getItemData = AddSkillGetItemData(RankType.PassiveRank1);
-            } else
+            }
+            else
             if (rand >= 70 && rand < 80)
             {
                 getItemData = AddSkillGetItemData(RankType.PassiveRank2);
-            } else
+            }
+            else
             if (rand >= 80 && rand < 85)
             {
                 getItemData = AddSkillGetItemData(RankType.ActiveRank2);
-            } else
+            }
+            else
             if (rand >= 85 && rand < 95)
             {
                 getItemData = AddEnhanceSkillGetItemData(RankType.EnhanceRank1);
-            } else
+            }
+            else
             {
                 getItemData = AddEnhanceSkillGetItemData(RankType.EnhanceRank2);
             }
@@ -388,7 +409,7 @@ namespace Ryneus
 
         private static GetItemData AddSkillGetItemData(RankType rankType)
         {
-            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            var hasSkills = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
             if (skills.Count > 0)
@@ -406,7 +427,7 @@ namespace Ryneus
 
         private static GetItemData AddEnhanceSkillGetItemData(RankType rankType)
         {
-            var hasSkills = CurrentSaveData.Party.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            var hasSkills = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
             var allSkillIds = PartyInfo.CurrentAllSkillIds(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);

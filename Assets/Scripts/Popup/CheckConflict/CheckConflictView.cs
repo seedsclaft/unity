@@ -10,9 +10,9 @@ namespace Ryneus
     {
         [SerializeField] private BaseList resultList = null;
         [SerializeField] private BaseList mainActorList = null;
-        [SerializeField] private OnOffButton mainActorButton = null;
+        [SerializeField] private Button mainActorButton = null;
         [SerializeField] private BaseList brunchActorList = null;
-        [SerializeField] private OnOffButton brunchActorButton = null;
+        [SerializeField] private Button brunchActorButton = null;
         [SerializeField] private Toggle mainToggle = null;
         [SerializeField] private Toggle brunchToggle = null;
         [SerializeField] private PopupAnimation popupAnimation = null;
@@ -31,12 +31,12 @@ namespace Ryneus
             new CheckConflictPresenter(this);
             resultList.SetInputHandler(InputKeyType.Cancel,() => {});
             resultList.SetInputHandler(InputKeyType.Decide,() => {});
-            mainActorButton.SetCallHandler(() => 
+            mainActorButton.onClick.AddListener(() => 
             {
                 var eventData = new CheckConflictViewEvent(CommandType.MainActorStatus);
                 _commandData(eventData);
             });
-            brunchActorButton.SetCallHandler(() => 
+            brunchActorButton.onClick.AddListener(() => 
             {
                 var eventData = new CheckConflictViewEvent(CommandType.BrunchActorStatus);
                 _commandData(eventData);

@@ -370,7 +370,7 @@ namespace Ryneus
                 SymbolType = SymbolType.None
             };
             var currentInfo = new SymbolInfo(currentSymbol);
-            var currentResult = new SymbolResultInfo(currentInfo,currentSymbol);
+            var currentResult = new SymbolResultInfo(currentInfo);
             currentResult.SetWorldNo(CurrentStage.WorldNo);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};

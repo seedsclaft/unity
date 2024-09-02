@@ -28,7 +28,7 @@ namespace Ryneus
         private SymbolInfo _symbolInfo;
         public SymbolInfo SymbolInfo => _symbolInfo;
 
-        public SymbolResultInfo(SymbolInfo symbolInfo,StageSymbolData stageSymbolData)
+        public SymbolResultInfo(SymbolInfo symbolInfo)
         {
             _symbolInfo = symbolInfo;
             _selected = false;

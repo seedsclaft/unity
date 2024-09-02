@@ -61,8 +61,9 @@ namespace Ryneus
 
         private void CommandStartEntry()
         {
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(5000),(a) => UpdatePopup((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(5000),(a) => UpdatePopup(a));
             confirmInfo.SetIsNoChoice(true);
+            confirmInfo.SetBackEvent(() => UpdatePopup(ConfirmCommandType.Yes));
             _view.CommandCallConfirm(confirmInfo);
             _view.ShowNameEntry("");
         }

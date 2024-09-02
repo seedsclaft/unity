@@ -72,7 +72,7 @@ namespace Ryneus
         private void CommandMainToggle(bool isChecked)
         {
             _view.CheckBrunchToggle(!isChecked);
-            var confirmInfo = new ConfirmInfo("",(ConfirmCommandType a) => 
+            var confirmInfo = new ConfirmInfo("更新せずに元の進行状態に戻りますか？",(ConfirmCommandType a) => 
             {
                 if (a == ConfirmCommandType.Yes)
                 {
@@ -92,7 +92,7 @@ namespace Ryneus
         private void CommandBrunchToggle(bool isChecked)
         {
             _view.CheckMainToggle(!isChecked);
-            var confirmInfo = new ConfirmInfo("",(ConfirmCommandType a) => 
+            var confirmInfo = new ConfirmInfo("更新した内容を元の進行状態に統合しますか？",(ConfirmCommandType a) => 
             {
                 if (a == ConfirmCommandType.Yes)
                 {

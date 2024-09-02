@@ -287,7 +287,7 @@ namespace Ryneus
             {
                 return list;
             }
-            var results = actionInfo.ActionResults.FindAll(a => checkTriggerInfo.Friends.Find(b => b.Index == a.TargetIndex) == null);
+            var results = actionInfo.ActionResults.FindAll(a => checkTriggerInfo.Friends.Find(b => b.Index == a.TargetIndex) != null);
             foreach (var result in results)
             {
                 var targetBattlerInfo = checkTriggerInfo.GetBattlerInfo(result.TargetIndex);

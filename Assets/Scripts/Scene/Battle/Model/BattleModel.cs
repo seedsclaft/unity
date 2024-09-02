@@ -26,6 +26,8 @@ namespace Ryneus
 
         private List<BattlerInfo> _battlers = new List<BattlerInfo>();
         public List<BattlerInfo> Battlers => _battlers;
+        private Dictionary<int,BattleRecord> _battleRecords = new ();
+        public Dictionary<int,BattleRecord> BattleRecords => _battleRecords;
 
         private UnitInfo _party;
         private UnitInfo _troop;
@@ -102,16 +104,17 @@ namespace Ryneus
             return ResourceSystem.LoadBattleBackGround(CurrentStage.Master.BackGround);
         }
 
-
         public void CreateBattleData()
         {
             _actionIndex = 0;
             _battlers.Clear();
+            _battleRecords.Clear();
             var battleMembers = _sceneParam.ActorInfos;
             foreach (var actorInfo in battleMembers)
             {
                 var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex);
                 _battlers.Add(battlerInfo);
+                _battleRecords[battlerInfo.Index] = new BattleRecord(battlerInfo.Index);
             }
             var enemies = _sceneParam.EnemyInfos;
             foreach (var enemy in enemies)
@@ -121,6 +124,7 @@ namespace Ryneus
                 enemy.ResetParamInfos();
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
+                _battleRecords[enemy.Index] = new BattleRecord(enemy.Index);
             }
             // アルカナ
             var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
@@ -949,40 +953,6 @@ namespace Ryneus
             
             for (int i = 0; i < indexList.Count;i++)
             {
-                // 呪い
-                /*
-                var curseStateInfos = CheckAttackedBattlerState(StateType.DeBuffUpper,indexList[i]);
-                if (curseStateInfos.Count > 0)
-                {
-                    for (int j = 0; j < curseStateInfos.Count;j++)
-                    {
-                        var hpDamage = 0;
-                        for (int k = 0;k < actionResultInfos.Count;k++)
-                        {
-                            if (actionResultInfos[k].CursedDamage) continue;
-                            var cursedDamage = (actionResultInfos[k].OverkillHpDamage > actionResultInfos[k].HpDamage) ? actionResultInfos[k].OverkillHpDamage : actionResultInfos[k].HpDamage;
-                            if (k >= beforeCurseIndex && cursedDamage > 0 && curseStateInfos[j].BattlerId == actionResultInfos[k].TargetIndex)
-                            {
-                                hpDamage += cursedDamage;
-                            }
-                        }
-                        if (hpDamage > 0)
-                        {
-                            var featureData = new SkillData.FeatureData
-                            {
-                                FeatureType = FeatureType.HpCursedDamage,
-                                Param1 = (int)MathF.Floor(hpDamage * curseStateInfos[j].Effect * 0.01f)
-                            };
-
-                            var curseBattlerInfo = GetBattlerInfo(curseStateInfos[j].TargetIndex);
-                            var curseActionResultInfo = new ActionResultInfo(GetBattlerInfo(curseStateInfos[j].BattlerId),curseBattlerInfo,new List<SkillData.FeatureData>(){featureData},-1);
-                            //curseActionResultInfo.RemovedStates.Add(curseStateInfos[j]);
-                            curseActionResultInfo.SetCursedDamage(true);
-                            actionResultInfos.Add(curseActionResultInfo);
-                        }
-                    }
-                }
-                */
             }
         }
 
@@ -1181,8 +1151,11 @@ namespace Ryneus
             }
             if (actionResultInfo.HpDamage != 0)
             {
-                target.GainHp(-1 * actionResultInfo.HpDamage);
-                target.GainDamagedValue(actionResultInfo.HpDamage);
+                var hpDamage = actionResultInfo.HpDamage;
+                target.GainHp(-1 * hpDamage);
+                target.GainDamagedValue(hpDamage);
+                _battleRecords[subject.Index].GainAttackValue(hpDamage);
+                _battleRecords[target.Index].GainDamagedValue(hpDamage);
             }
             if (actionResultInfo.HpHeal != 0 && (!actionResultInfo.DeadIndexList.Contains(target.Index) || actionResultInfo.AliveIndexList.Contains(target.Index)))
             {
@@ -1219,6 +1192,8 @@ namespace Ryneus
                 if (reDamage > 0)
                 {
                     subject.GainHp(-1 * reDamage);
+                    _battleRecords[target.Index].GainAttackValue(reDamage);
+                    _battleRecords[subject.Index].GainDamagedValue(reDamage);
                 }
             }
             if (actionResultInfo.Missed == true)
@@ -2289,15 +2264,60 @@ namespace Ryneus
             return isVictory;
         }
 
-        public int MakeBattleScore(bool isVictory)
+        public int MakeBattleScore(bool isVictory,StrategySceneInfo strategySceneInfo)
         {
             if (isVictory)
             {
                 var score = 100f;
+                // ターン数の減点
                 var turns = (5 * _troop.BattlerInfos.Count) - _turnCount;
                 score += turns;
                 score = Math.Max(0,score);
                 score = Math.Min(100,score);
+                // 与ダメージ - 被ダメージの加算
+                //var attack = 0;
+                //var damaged = 0;
+                var attackPer = 0f;
+                var maxDamage = 0;
+                var defeated = 0;
+                var actorCount = 0;
+                foreach (var battleRecord in _battleRecords)
+                {
+                    if (battleRecord.Key < 10)
+                    {
+                        var actorHp = GetBattlerInfo(battleRecord.Key).MaxHp;
+                        attackPer += (float)(actorHp - battleRecord.Value.DamagedValue) / actorHp;
+                        //attack += battleRecord.Value.AttackValue;
+                        //damaged += battleRecord.Value.DamagedValue;
+                        actorCount++;
+                        if (battleRecord.Value.MaxDamage > maxDamage)
+                        {
+                            maxDamage = battleRecord.Value.MaxDamage;
+                        }
+                        if (!GetBattlerInfo(battleRecord.Key).IsAlive())
+                        {
+                            defeated += 1;
+                        }
+                    }
+                }
+                // 被ダメージ率の加算
+                if (attackPer > 0)
+                {
+                    score += (attackPer/actorCount) * 100;
+                }
+                // 最大ダメージ値の加算
+                if (maxDamage > 0)
+                {
+                    score += maxDamage / 10;
+                }
+                // 戦闘不能数の少なさで加算
+                if (defeated == 0)
+                {
+                    score += 25;
+                }
+                strategySceneInfo.BattleAttackPer = (int)((attackPer/actorCount) * 100);
+                strategySceneInfo.BattleMaxDamage = maxDamage;
+                strategySceneInfo.BattleDefeatedCount = defeated;
                 return (int)score;
             }
             return 0;

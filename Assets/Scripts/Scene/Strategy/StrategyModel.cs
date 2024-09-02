@@ -102,7 +102,7 @@ namespace Ryneus
                 _relicData = new List<SkillInfo>();
                 foreach (var relicInfo in relicInfos)
                 {
-                    var skillInfo = new SkillInfo(relicInfo.ResultParam);
+                    var skillInfo = new SkillInfo(relicInfo.Param1);
                     skillInfo.SetEnable(true);
                     _relicData.Add(skillInfo);
                 }
@@ -301,6 +301,48 @@ namespace Ryneus
             return null;
         }
 
+        public string BattleResultAttackPer()
+        {
+            if (!_inBattleResult)
+            {
+                return null;
+            }
+            var attackPer = SceneParam.BattleAttackPer;
+            if (attackPer > 0)
+            {
+                return "+" + attackPer.ToString() + "%";
+            }
+            return null;
+        }
+
+        public string BattleResultMaxDamage()
+        {
+            if (!_inBattleResult)
+            {
+                return null;
+            }
+            var maxDamage = SceneParam.BattleMaxDamage;
+            if (maxDamage > 0)
+            {
+                return maxDamage.ToString();
+            }
+            return null;
+        }
+
+        public string BattleResultDefeatedCount()
+        {
+            if (!_inBattleResult)
+            {
+                return null;
+            }
+            var defeatedCount = SceneParam.BattleDefeatedCount;
+            if (defeatedCount >= 0)
+            {
+                return defeatedCount.ToString();
+            }
+            return null;
+        }
+
         public List<ActorInfo> BattleResultActors()
         {
             return SceneParam.ActorInfos;
@@ -466,6 +508,9 @@ namespace Ryneus
         public List<ActorInfo> ActorInfos;
         public bool InBattle;
         public int BattleResultScore;
+        public int BattleAttackPer;
+        public int BattleMaxDamage;
+        public int BattleDefeatedCount;
         public bool BattleResultVictory;
     }
 }

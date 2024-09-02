@@ -173,6 +173,31 @@ namespace Ryneus
                 main.CopyParamData(symbolResultInfo);
                 symbolResultInfo.ResetParamData();
                 // 元の成長データを削除
+                /*
+                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main);
+                }
+                // ブランチの成長データをマージ
+                foreach (var actorInfo in actorInfos)
+                {
+                    actorInfo.MargeLevelUpInfo(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
+                }
+                */
+            }
+        }
+
+        /// <summary>
+        /// ブランチをメインにマージ
+        /// </summary>
+        /// <param name="symbolResultInfo"></param>
+        public void ResetActorLevelUpInfos(SymbolResultInfo symbolResultInfo)
+        {
+            var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo,WorldType.Main));
+            if (findIndex > -1)
+            {
+                // 元の成長データを削除
                 var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 foreach (var actorInfo in actorInfos)
                 {
@@ -491,10 +516,10 @@ namespace Ryneus
             var resultInfos = SymbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldType);
             foreach (var record in resultInfos)
             {
-                var saveHuman = record.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.BattleScoreBonus);
-                if (saveHuman?.ResultParam > 0)
+                var battleScoreBonus = record.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.BattleScoreBonus);
+                if (battleScoreBonus?.ResultParam > 0)
                 {
-                    score += saveHuman.ResultParam * saveHuman.Param1 * 0.01f;
+                    score += battleScoreBonus.ResultParam * battleScoreBonus.Param1 * 0.01f;
                 }
             }
             return score;

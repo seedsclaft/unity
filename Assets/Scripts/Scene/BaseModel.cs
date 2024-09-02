@@ -257,7 +257,7 @@ namespace Ryneus
 
         public void StageClear()
         {
-            CurrentSaveData.Party.StageClear(CurrentStage.Id);
+            PartyInfo.StageClear(CurrentStage.Id);
         }
 
         public List<SymbolResultInfo> OpeningStageResultInfos()
@@ -281,7 +281,7 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,symbol);
+                var record = new SymbolResultInfo(symbolInfo);
                 if (addActor == false)
                 {
                     record.SetSelected(true);
@@ -311,7 +311,7 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo,symbol);
+                var record = new SymbolResultInfo(symbolInfo);
                 record.SetWorldNo(WorldType.Brunch);
                 if (addActor == false)
                 {
@@ -755,6 +755,8 @@ namespace Ryneus
                     || levelUpInfo.StageId < symbolResultInfo.StageId)
                     {
                         var brunchLevelUpInfo = new LevelUpInfo(levelUpInfo.ActorId,levelUpInfo.Currency,levelUpInfo.StageId,levelUpInfo.Seek,levelUpInfo.SeekIndex,WorldType.Brunch);
+                        brunchLevelUpInfo.SetLevel(levelUpInfo.Level);
+                        brunchLevelUpInfo.SetEnable(levelUpInfo.Enable);
                         addLevelUpInfos.Add(brunchLevelUpInfo);
                     }
                 }
@@ -782,14 +784,24 @@ namespace Ryneus
         {            
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
             
-            var brunchSymbol = PartyInfo.BrunchBaseSymbol;
-            var returnSymbol = PartyInfo.BrunchSymbol;
-            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
-            
+            var brunchBaseSymbol = PartyInfo.BrunchBaseSymbol;
+            var brunchSymbol = PartyInfo.BrunchSymbol;
+            var returnSymbol = PartyInfo.ReturnSymbol;
+            // マージする範囲を更新
+            selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchBaseSymbol.StageId,brunchBaseSymbol.Seek,WorldType.Brunch));
+            // Seek毎にマージする
+            var keyList = new List<int>();
             foreach (var resultInfo in selectRecords)
             {
+                var key = resultInfo.StageId*10000 + resultInfo.Seek*1000;
+                if (!keyList.Contains(key))
+                {
+                    keyList.Add(key);
+                    PartyInfo.ResetActorLevelUpInfos(resultInfo);
+                }
                 PartyInfo.MergeBrunch(resultInfo);
             }
+            // マージしない範囲を更新
             // ブランチのステージを初期化
             PartyInfo.ResetBrunchData();
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);

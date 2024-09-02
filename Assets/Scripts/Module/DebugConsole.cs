@@ -52,7 +52,7 @@ namespace Ryneus
                     getItemData.Type = GetItemType.AddActor;
                     getItemData.Param1 = i;
                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
-                    var record = new SymbolResultInfo(symbolInfo,stageSymbol);
+                    var record = new SymbolResultInfo(symbolInfo);
                     
                     record.SetSelected(true);
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
@@ -71,11 +71,13 @@ namespace Ryneus
                         SeekIndex = 0
                     };
                     var symbolInfo = new SymbolInfo(stageSymbol);
-                    var getItemData = new GetItemData();
-                    getItemData.Type = GetItemType.Skill;
-                    getItemData.Param1 = skill.Value.Id;
+                    var getItemData = new GetItemData
+                    {
+                        Type = GetItemType.Skill,
+                        Param1 = skill.Value.Id
+                    };
                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
-                    var record = new SymbolResultInfo(symbolInfo,stageSymbol);
+                    var record = new SymbolResultInfo(symbolInfo);
                     
                     record.SetSelected(true);
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);

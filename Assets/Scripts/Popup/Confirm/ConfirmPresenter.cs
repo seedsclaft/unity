@@ -88,6 +88,12 @@ namespace Ryneus
         public List<int> CommandTextIds => _commandTextIds;
         private ConfirmType _confirmType;
         public ConfirmType ConfirmType => _confirmType;
+        private System.Action _backEvent = null;
+        public System.Action BackEvent => _backEvent;
+        public void SetBackEvent(System.Action backEvent)
+        {
+            _backEvent = backEvent;
+        }
 
         public ConfirmInfo(string title,System.Action<ConfirmCommandType> callEvent,ConfirmType confirmType = ConfirmType.Confirm)
         {

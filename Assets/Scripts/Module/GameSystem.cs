@@ -235,6 +235,7 @@ namespace Ryneus
             confirmView.SetViewInfo(confirmInfo);
             confirmView.SetBackEvent(() => 
             {
+                confirmInfo.BackEvent?.Invoke();
                 UpdateCommand(new ViewEvent(Base.CommandType.CloseConfirm));
             });
             SetIsBusyMainAndStatus();

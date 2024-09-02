@@ -96,6 +96,7 @@ namespace Ryneus
                 var eventData = new TacticsViewEvent(CommandType.CancelSymbolRecord);
                 _commandData(eventData);
             });
+            margeButton.SetText(DataSystem.GetText(19810));
             margeButton.SetCallHandler(() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.MargeRequest);

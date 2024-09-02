@@ -854,7 +854,7 @@ namespace Ryneus
                 _view.StartBattleStartAnim(DataSystem.GetText(16100));
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
                 strategySceneInfo.BattleTurn = _model.TurnCount;
-                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true);
+                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true,strategySceneInfo);
                 strategySceneInfo.BattleResultVictory = true;
             } else
             if (_model.CheckDefeat())
@@ -862,7 +862,7 @@ namespace Ryneus
                 _view.StartBattleStartAnim(DataSystem.GetText(16110)); 
                 strategySceneInfo.GetItemInfos = new List<GetItemInfo>();  
                 strategySceneInfo.BattleTurn = -1; 
-                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false);
+                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false,strategySceneInfo);
                 strategySceneInfo.BattleResultVictory = false;
             }
             _model.EndBattle();
