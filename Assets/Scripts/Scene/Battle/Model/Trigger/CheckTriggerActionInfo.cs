@@ -91,7 +91,7 @@ namespace Ryneus
                 case TriggerType.FriendAttackAction:
                     if (battlerInfo.IsAlive())
                     {
-                        if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
+                        if (actionInfo != null && actionInfo.TriggeredSkill == false && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
                         {
                             if (battlerInfo.IsActor == checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
                             {

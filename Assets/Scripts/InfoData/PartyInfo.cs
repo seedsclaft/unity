@@ -28,16 +28,21 @@ namespace Ryneus
         public int GetCurrency(int stageId,int seek,WorldType worldType)
         {
             var currency = 0;
+            var consume = 0;
             var records = EnableResultInfos(stageId,seek,worldType);
             foreach (var resultInfo in records)
             {
-                var getItemInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Numinous);
-                foreach (var getItemInfo in getItemInfos)
+                var currencyInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.Numinous);
+                foreach (var getItemInfo in currencyInfos)
                 {
                     currency += getItemInfo.ResultParam;
                 }
+                var shopSkillGetInfos = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.Skill);
+                foreach (var getItemInfo in shopSkillGetInfos)
+                {
+                    consume += getItemInfo.ResultParam;
+                }
             }
-            var consume = 0;
             var actorInfos = CurrentActorInfos(stageId,seek,worldType);
             foreach (var actorInfo in actorInfos)
             {
@@ -400,9 +405,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.ResultParam).Rank < RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank < RankType.RelicRank1)
                     {
-                        alchemyIdList.Add(getItemInfo.ResultParam);
+                        alchemyIdList.Add(getItemInfo.Param1);
                     }
                 }
             }
@@ -419,9 +424,9 @@ namespace Ryneus
                 var getItemInfos = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.IsSkill());
                 foreach (var getItemInfo in getItemInfos)
                 {
-                    if (DataSystem.FindSkill(getItemInfo.ResultParam).Rank >= RankType.RelicRank1)
+                    if (DataSystem.FindSkill(getItemInfo.Param1).Rank >= RankType.RelicRank1)
                     {
-                        alcanaIdList.Add(getItemInfo.ResultParam);
+                        alcanaIdList.Add(getItemInfo.Param1);
                     }
                 }
             }

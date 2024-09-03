@@ -168,7 +168,7 @@ namespace Ryneus
                         var skillData = DataSystem.FindSkill(getItemInfo.Param1);
                         resultInfo.SetSkillId(skillData.Id);
                         resultInfo.SetTitle(skillData.Name);
-                        getItemInfo.SetResultParam(skillData.Id);
+                        //getItemInfo.SetResultParam(skillData.Id);
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.Regeneration:
@@ -244,9 +244,10 @@ namespace Ryneus
             foreach (var selectRelicInfo in selectRelicInfos)
             {
                 selectRelicInfo.SetGetFlag(false);
+                var remove =_resultInfos.Find(a => a.SkillId == selectRelicInfo.Param1);
+                _resultInfos.Remove(remove);
             }
             selectRelic.SetGetFlag(true);
-            selectRelic.SetResultParam(skillId);
             var resultInfo = new StrategyResultViewInfo();
             resultInfo.SetSkillId(skillId);
             resultInfo.SetTitle(DataSystem.FindSkill(skillId).Name);
@@ -332,6 +333,10 @@ namespace Ryneus
         public string BattleResultDefeatedCount()
         {
             if (!_inBattleResult)
+            {
+                return null;
+            }
+            if (!_battleResultVictory)
             {
                 return null;
             }

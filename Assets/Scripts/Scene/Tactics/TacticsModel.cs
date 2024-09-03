@@ -150,15 +150,13 @@ namespace Ryneus
         public List<SkillInfo> ShopMagicSkillInfos(List<GetItemInfo> getItemInfos)
         {
             var skillInfos = new List<SkillInfo>();
-            var index = 0;
             foreach (var getItemInfo in getItemInfos)
             {
                 var skillInfo = new SkillInfo(getItemInfo.Param1);
                 var cost = ShopLearningCost(skillInfo);
-                skillInfo.SetEnable(cost <= Currency && !_shopSelectIndexes.Contains(index));
+                skillInfo.SetEnable(cost <= (Currency - LearningShopMagicCost()) && !_shopSelectIndexes.Contains(skillInfo.Id));
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);
-                index++;
             }
             return skillInfos;
         }
@@ -426,15 +424,34 @@ namespace Ryneus
         public bool EnableShopMagic(SkillInfo skillInfo)
         {
             var cost = ShopLearningCost(skillInfo);
-            return cost <= Currency;
+            return cost <= (Currency - LearningShopMagicCost());
         }
 
-        public void PayShopCurrency(SkillInfo skillInfo,int index)
+        public void PayShopCurrency(SkillInfo skillInfo)
         {
             if (EnableShopMagic(skillInfo))
             {
-                PartyInfo.ChangeCurrency(Currency - ShopLearningCost(skillInfo));
-                _shopSelectIndexes.Add(index);
+                var cost = ShopLearningCost(skillInfo);
+                var getItemInfo = CurrentSelectRecord().SymbolInfo.GetItemInfos.Find(a => a.Param1 == skillInfo.Id);
+                getItemInfo?.SetResultParam(cost);
+                //getItemInfo.SetGetFlag(true);
+                _shopSelectIndexes.Add(skillInfo.Id);
+            }
+        }
+
+        public bool IsSelectedShopMagic(SkillInfo skillInfo)
+        {
+            return _shopSelectIndexes.Contains(skillInfo.Id);
+        }
+
+        public void CancelShopCurrency(SkillInfo skillInfo)
+        {
+            if (EnableShopMagic(skillInfo))
+            {
+                var getItemInfo = CurrentSelectRecord().SymbolInfo.GetItemInfos.Find(a => a.Param1 == skillInfo.Id);
+                getItemInfo?.SetResultParam(0);
+                //getItemInfo.SetGetFlag(false);
+                _shopSelectIndexes.Remove(skillInfo.Id);
             }
         }
 
@@ -450,16 +467,24 @@ namespace Ryneus
         public List<GetItemInfo> LearningShopMagics()
         {
             var list = new List<GetItemInfo>();
-            int index = 0;
             foreach (var getItemInfo in CurrentSelectRecord().SymbolInfo.GetItemInfos)
             {
-                if (_shopSelectIndexes.Contains(index))
+                if (_shopSelectIndexes.Contains(getItemInfo.Param1))
                 {
                     list.Add(getItemInfo);
                 }
-                index++;
             }
             return list;
+        }
+
+        public int LearningShopMagicCost()
+        {
+            int cost = 0;
+            foreach (var getItemInfo in LearningShopMagics())
+            {
+                cost += getItemInfo.ResultParam;
+            }
+            return cost;
         }
 
         public void CommandNormalWorld()

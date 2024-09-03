@@ -555,7 +555,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (SkillInfo)listData.Data;
-                if (data != null && data.Enable)
+                if (data != null)
                 {
                     return data;
                 }

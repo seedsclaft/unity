@@ -533,6 +533,13 @@ namespace Ryneus
             }
         }
 
+        private void CommandRefreshShop()
+        {
+            _view.SetNuminous(_model.Currency - _model.LearningShopMagicCost());
+            var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
+            _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
+        }
+
         private void CommandSelectAlcanaList(SkillInfo skillInfo)
         {
             var symbolType = _model.CurrentSelectRecord().SymbolType;
@@ -544,6 +551,12 @@ namespace Ryneus
             } else
             if (symbolType == SymbolType.Shop && _shopSelectBusy)
             {
+                if (_model.IsSelectedShopMagic(skillInfo))
+                {
+                    // 既に選択済み
+                    _model.CancelShopCurrency(skillInfo);
+                    CommandRefreshShop();
+                } else
                 if (_model.EnableShopMagic(skillInfo))
                 {
                     var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19260,_model.ShopLearningCost(skillInfo).ToString()) + DataSystem.GetReplaceText(19250,skillInfo.Master.Name),(a) => UpdateShop(a,skillInfo),ConfirmType.SkillDetail);
@@ -578,10 +591,8 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 // 魔法入手、Nu消費
-                _model.PayShopCurrency(skillInfo,_view.AlcanaListIndex);
-                _view.SetNuminous(_model.Currency);
-                var getItemInfos = _model.CurrentSelectRecord().SymbolInfo.GetItemInfos;
-                _view.SetAlcanaSelectInfos(ListData.MakeListData(_model.ShopMagicSkillInfos(getItemInfos)));
+                _model.PayShopCurrency(skillInfo);
+                CommandRefreshShop();
             }
         }
 
@@ -922,6 +933,7 @@ namespace Ryneus
             CommandStatusInfo(_model.StageMembers(),false,true,true,false,actorId,() => 
             {
                 _view.SetHelpText(DataSystem.GetText(20020));
+                _view.SetNuminous(_model.Currency);
             });
         }
 

@@ -11,6 +11,7 @@ namespace Ryneus
         public int Param2 => Master.Param2;
         private GetItemType _getItemType = GetItemType.None;
         public GetItemType GetItemType => _getItemType;
+        // Numinosの獲得値、スキルを買った時のコスト
         private int _resultParam = -1;
         public int ResultParam => _resultParam;
         public void SetResultParam(int resultParam) => _resultParam = resultParam;
