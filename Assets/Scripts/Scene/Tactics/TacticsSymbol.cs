@@ -127,6 +127,11 @@ namespace Ryneus
                     {
                         data.SetEnable(false);
                     }
+                    if (partyInfo.CurrentAlcanaIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    {
+                        data.SetEnable(false);
+                    }
+                    
                 } else
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {

@@ -1216,8 +1216,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 1010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 1060
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 100110
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100120
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 100140
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 11060
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12060
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 1060
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 100110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100120
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100140
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11060
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12060
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1002
     Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
     ImagePath: Actor0002
@@ -1233,8 +1296,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 2010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 2070
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 100210
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100220
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 402070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12080
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 11080
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100210
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100220
+      Trigger1: 14211
+      Trigger2: 0
+    - SkillId: 402070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11080
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1003
     Name: "\u30A2\u30EA\u30A8\u30B9"
     ImagePath: Actor0003
@@ -1250,8 +1376,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 3010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 3020
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100310
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100320
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 403020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 403010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13080
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3020
+      Trigger1: 1023
+      Trigger2: 0
+    - SkillId: 100310
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100320
+      Trigger1: 14214
+      Trigger2: 0
+    - SkillId: 403020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14050
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1004
     Name: "\u30B7\u30A4\u30CA"
     ImagePath: Actor0004
@@ -1267,8 +1456,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 4010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 4030
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100410
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100420
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 404030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14080
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 4010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 4030
+      Trigger1: 1033
+      Trigger2: 0
+    - SkillId: 100410
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100420
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 404030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14020
+      Trigger1: 1023
+      Trigger2: 0
+    - SkillId: 14040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14090
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1005
     Name: "\u30EC\u30C0"
     ImagePath: Actor0005
@@ -1284,8 +1536,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 5010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 5070
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100510
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100520
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 15090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 405070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 15080
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 405010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 415090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5070
+      Trigger1: 5061
+      Trigger2: 0
+    - SkillId: 100510
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100520
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15090
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 405070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15080
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 405010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 415090
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1006
     Name: "\u30EA\u30B7\u30A7\u30EA"
     ImagePath: Actor0006
@@ -1301,8 +1616,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 1010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 1030
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100610
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100620
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 11040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 411040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1030
+      Trigger1: 14013
+      Trigger2: 0
+    - SkillId: 100610
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100620
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11040
+      Trigger1: 5042
+      Trigger2: 0
+    - SkillId: 401030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 411040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13040
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13050
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1007
     Name: "\u30E6\u30CB"
     ImagePath: Actor0007
@@ -1318,8 +1696,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 2010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 2040
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100710
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100720
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 12090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 412090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2040
+      Trigger1: 1023
+      Trigger2: 0
+    - SkillId: 100710
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100720
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12090
+      Trigger1: 5042
+      Trigger2: 0
+    - SkillId: 412090
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14030
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1008
     Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
     ImagePath: Actor0008
@@ -1335,8 +1776,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 3010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 3070
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100810
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100820
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 13060
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 403070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100810
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100820
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13060
+      Trigger1: 1023
+      Trigger2: 0
+    - SkillId: 403070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1009
     Name: "\u30CA\u30C4\u30AD"
     ImagePath: Actor0009
@@ -1352,8 +1856,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 1010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 1050
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 100910
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 100920
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 11070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 401050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 11030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 11020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 15040
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 1010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1050
+      Trigger1: 1151
+      Trigger2: 0
+    - SkillId: 100910
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 100920
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 401050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 11020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15040
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1010
     Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
     ImagePath: Actor0010
@@ -1369,8 +1936,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 2010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 2030
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 101010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101020
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 12010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 402030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 12030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 15070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 2010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 2030
+      Trigger1: 14215
+      Trigger2: 0
+    - SkillId: 101010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 101020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 402030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 12030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 15070
+      Trigger1: 0
+      Trigger2: 0
   - Id: 1011
     Name: "\u30BB\u30EA\u30CA"
     ImagePath: Actor0011
@@ -1386,5 +2016,68 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 3010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 3050
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 101110
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 101120
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 13090
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 403050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13050
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 13070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 14070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 3010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 3050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 101110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 101120
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13090
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13050
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 13070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 14070
+      Trigger1: 0
+      Trigger2: 0

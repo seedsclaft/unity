@@ -3343,7 +3343,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E\n\u795E\u5316\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u795E\u5316\u72B6\u614B\n/f[f,0,3]\u56DE\u5FA9\u306E\u30EA\u30B8\u30A7\u30CD\u4ED8\u4E0E(\u6C38\u7D9A)\n\u795E\u5316\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -5216,13 +5216,13 @@ MonoBehaviour:
     TriggerDates:
     - SkillId: 301060
       TriggerType: 0
-      TriggerTiming: 2
+      TriggerTiming: 11
       Param1: 0
       Param2: 0
       Param3: 1
     - SkillId: 301060
       TriggerType: 11010
-      TriggerTiming: 2
+      TriggerTiming: 11
       Param1: 1
       Param2: 0
       Param3: 0
@@ -7495,7 +7495,7 @@ MonoBehaviour:
     - SkillId: 415090
       FeatureType: 6030
       Param1: 15090
-      Param2: 1
+      Param2: 0
       Param3: 35
       Rate: 100
     TriggerDates: []

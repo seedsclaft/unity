@@ -825,10 +825,10 @@ MonoBehaviour:
     - StageId: 5
       Seek: 7
       SeekIndex: 0
-      SymbolType: 8
+      SymbolType: 4
       Rate: 100
-      Param1: 0
-      Param2: 0
+      Param1: -1
+      Param2: 20
       PrizeSetId: 0
     - StageId: 5
       Seek: 7
@@ -863,165 +863,37 @@ MonoBehaviour:
     StageEvents: []
     StageSymbols:
     - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 80
-      Param1: -1
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 5
-      Rate: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 8
-      Rate: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 4
-      Param1: 20
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 2
-      Param1: 30
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 1
-      Param1: 40
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
       Seek: 1
       SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 1
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 2
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 2
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 2
-      SeekIndex: 2
       SymbolType: 9
       Rate: 100
       Param1: -1
       Param2: 0
       PrizeSetId: 0
     - StageId: 6
-      Seek: 3
+      Seek: 2
       SeekIndex: 0
-      SymbolType: -1
+      SymbolType: 1
       Rate: 100
-      Param1: 0
+      Param1: 6021
       Param2: 0
-      PrizeSetId: 0
+      PrizeSetId: 6021
     - StageId: 6
       Seek: 3
-      SeekIndex: 1
-      SymbolType: -1
+      SeekIndex: 0
+      SymbolType: 1
       Rate: 100
-      Param1: 0
+      Param1: 6031
       Param2: 0
-      PrizeSetId: 0
+      PrizeSetId: 6031
     - StageId: 6
       Seek: 4
       SeekIndex: 0
       SymbolType: 1
-      Rate: 100
-      Param1: 6041
-      Param2: 0
-      PrizeSetId: 6041
-    - StageId: 6
-      Seek: 4
-      SeekIndex: 1
-      SymbolType: 1
-      Rate: 100
-      Param1: 6042
-      Param2: 0
-      PrizeSetId: 6042
-    - StageId: 6
-      Seek: 5
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 100
-      Param1: 60
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 5
-      SeekIndex: 1
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 20
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 6
-      SeekIndex: 0
-      SymbolType: 2
       Rate: 100
       Param1: 6101
       Param2: 0
       PrizeSetId: 6101
-    - StageId: 6
-      Seek: 7
-      SeekIndex: 0
-      SymbolType: 8
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 6
-      Seek: 7
-      SeekIndex: 1
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 210
-      PrizeSetId: 0
     Tutorials: []
   - Id: 7
     Name: "A.D.1995 \u962A\u795E\u30FB\u6DE1\u8DEF\u5927\u9707\u707D"
@@ -1045,39 +917,7 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 0
     StageEvents: []
-    StageSymbols:
-    - StageId: 7
-      Seek: 1
-      SeekIndex: 0
-      SymbolType: 9
-      Rate: 100
-      Param1: -1
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 7
-      Seek: 2
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 100
-      Param1: 7021
-      Param2: 0
-      PrizeSetId: 7021
-    - StageId: 7
-      Seek: 3
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 100
-      Param1: 7031
-      Param2: 0
-      PrizeSetId: 7031
-    - StageId: 7
-      Seek: 4
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 100
-      Param1: 7101
-      Param2: 0
-      PrizeSetId: 7101
+    StageSymbols: []
     Tutorials: []
   - Id: 8
     Name: "A.D.1923 \u95A2\u6771\u5927\u9707\u707D"
@@ -1101,207 +941,7 @@ MonoBehaviour:
     SubordinateValue: 0
     UseSlot: 0
     StageEvents: []
-    StageSymbols:
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 80
-      Param1: -1
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 5
-      Rate: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 8
-      Rate: 1
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 4
-      Param1: 20
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 2
-      Param1: 30
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 0
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 1
-      Param1: 40
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 1
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 1
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 2
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 2
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 2
-      SeekIndex: 2
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 3
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 3
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 4
-      SeekIndex: 0
-      SymbolType: 1
-      Rate: 100
-      Param1: 8001
-      Param2: 0
-      PrizeSetId: 50
-    - StageId: 8
-      Seek: 4
-      SeekIndex: 1
-      SymbolType: 1
-      Rate: 100
-      Param1: 8021
-      Param2: 0
-      PrizeSetId: 75
-    - StageId: 8
-      Seek: 5
-      SeekIndex: 0
-      SymbolType: 6
-      Rate: 100
-      Param1: 40
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 5
-      SeekIndex: 1
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 20
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 6
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 6
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 6
-      SeekIndex: 2
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 7
-      SeekIndex: 0
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 7
-      SeekIndex: 1
-      SymbolType: -1
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 8
-      SeekIndex: 0
-      SymbolType: 2
-      Rate: 100
-      Param1: 8011
-      Param2: 0
-      PrizeSetId: 60
-    - StageId: 8
-      Seek: 9
-      SeekIndex: 0
-      SymbolType: 4
-      Rate: 100
-      Param1: -1
-      Param2: 200
-      PrizeSetId: 0
-    - StageId: 8
-      Seek: 9
-      SeekIndex: 1
-      SymbolType: 8
-      Rate: 100
-      Param1: 0
-      Param2: 0
-      PrizeSetId: 0
+    StageSymbols: []
     Tutorials: []
   - Id: 100
     Name: "A.D.3946 VR\u50AC\u7720\u30B3\u30EC\u30AF\u30C6\u30A3\u30D6"

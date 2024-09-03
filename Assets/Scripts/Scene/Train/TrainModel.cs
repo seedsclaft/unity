@@ -149,7 +149,7 @@ namespace Ryneus
             var list = new List<TacticsActorInfo>();
             foreach (var member in StageMembers())
             {
-                if (member.BattleIndex >= 1)
+                //if (member.BattleIndex >= 1)
                 {
                     var tacticsActorInfo = new TacticsActorInfo
                     {
@@ -160,7 +160,8 @@ namespace Ryneus
                     list.Add(tacticsActorInfo);
                 }
             }
-            list.Sort((a,b) => a.ActorInfo.BattleIndex > b.ActorInfo.BattleIndex ? 1 : -1);
+            list.Sort((a,b) => a.ActorInfo.Level < b.ActorInfo.Level ? 1 : -1);
+            /*
             foreach (var member in StageMembers())
             {
                 if (member.BattleIndex < 1)
@@ -174,6 +175,7 @@ namespace Ryneus
                     list.Add(tacticsActorInfo);
                 }
             }
+            */
             Func<TacticsActorInfo,bool> enable = (a) => 
             {
                 // 同じステージ進捗度でWorldをまたげない
