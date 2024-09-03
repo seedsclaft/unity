@@ -80,7 +80,7 @@ namespace Ryneus
             {
                 mainThumb.gameObject.SetActive(false);
             }
-            nameText?.SetText("");
+            //nameText?.SetText("");
         }
 
         private void HideActorOnly()

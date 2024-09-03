@@ -764,7 +764,7 @@ MonoBehaviour:
     - Id: 6021
       TroopId: 6021
       EnemyId: 1002
-      Lv: 0
+      Lv: 10
       BossFlag: 1
       Line: 0
       StageLv: 0
@@ -772,26 +772,26 @@ MonoBehaviour:
       TroopId: 6021
       EnemyId: 1003
       Lv: 0
-      BossFlag: 0
+      BossFlag: 1
       Line: 0
       StageLv: 0
     - Id: 6021
       TroopId: 6021
       EnemyId: 1006
       Lv: 0
-      BossFlag: 0
+      BossFlag: 1
       Line: 1
       StageLv: 0
     - Id: 6021
       TroopId: 6021
-      EnemyId: 2
+      EnemyId: 8
       Lv: 0
       BossFlag: 0
       Line: 0
       StageLv: 0
     - Id: 6021
       TroopId: 6021
-      EnemyId: 12
+      EnemyId: 11
       Lv: 0
       BossFlag: 0
       Line: 0
@@ -801,8 +801,8 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 6031
       TroopId: 6031
-      EnemyId: 1009
-      Lv: 0
+      EnemyId: 1011
+      Lv: 10
       BossFlag: 1
       Line: 0
       StageLv: 0
@@ -810,14 +810,14 @@ MonoBehaviour:
       TroopId: 6031
       EnemyId: 1008
       Lv: 0
-      BossFlag: 0
+      BossFlag: 1
       Line: 0
       StageLv: 0
     - Id: 6031
       TroopId: 6031
-      EnemyId: 1011
+      EnemyId: 1010
       Lv: 0
-      BossFlag: 0
+      BossFlag: 1
       Line: 1
       StageLv: 0
     - Id: 6031
@@ -840,36 +840,36 @@ MonoBehaviour:
     - Id: 6101
       TroopId: 6101
       EnemyId: 1001
-      Lv: 20
+      Lv: 10
+      BossFlag: 1
+      Line: 0
+      StageLv: 0
+    - Id: 6101
+      TroopId: 6101
+      EnemyId: 1004
+      Lv: 0
       BossFlag: 1
       Line: 1
       StageLv: 0
     - Id: 6101
       TroopId: 6101
-      EnemyId: 1004
-      Lv: 10
-      BossFlag: 0
-      Line: 1
-      StageLv: 0
-    - Id: 6101
-      TroopId: 6101
       EnemyId: 1005
-      Lv: 10
-      BossFlag: 0
+      Lv: 0
+      BossFlag: 1
       Line: 0
       StageLv: 0
     - Id: 6101
       TroopId: 6101
       EnemyId: 1007
-      Lv: 10
-      BossFlag: 0
+      Lv: 0
+      BossFlag: 1
       Line: 0
       StageLv: 0
     - Id: 6101
       TroopId: 6101
-      EnemyId: 1010
-      Lv: 10
-      BossFlag: 0
-      Line: 1
+      EnemyId: 1009
+      Lv: 0
+      BossFlag: 1
+      Line: 0
       StageLv: 0
     StageTurn: 0

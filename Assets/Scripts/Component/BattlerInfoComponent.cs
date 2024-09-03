@@ -42,6 +42,14 @@ namespace Ryneus
             } else
             {
                 enemyInfoComponent.UpdateInfo(battlerInfo);
+                if (battlerInfo.IsActorView)
+                {
+                    actorInfoComponent?.UpdateData(battlerInfo.ActorInfo.Master);
+                    enemyInfoComponent?.Clear();
+                } else
+                {
+                    actorInfoComponent?.Clear();
+                }
             }
             if (evaluate != null)
             {
@@ -49,7 +57,7 @@ namespace Ryneus
             }
             if (additiveFaceThumb != null)
             {
-                if (battlerInfo.IsActor)
+                if (battlerInfo.IsActor || battlerInfo.IsActorView)
                 {
                     var handle = ResourceSystem.LoadActorMainFaceSprite(battlerInfo.ActorInfo.Master.ImagePath);
                     if (additiveFaceThumb != null) 
@@ -158,6 +166,14 @@ namespace Ryneus
             } else
             {
                 enemyInfoComponent.UpdateInfo(_battlerInfo);
+                if (_battlerInfo.IsActorView)
+                {                
+                    actorInfoComponent?.UpdateData(_battlerInfo.ActorInfo.Master);
+                    enemyInfoComponent?.Clear();
+                } else
+                {
+                    actorInfoComponent?.Clear();
+                }
             }
             ChangeHp(_battlerInfo.Hp);
             ChangeMp(_battlerInfo.Mp);

@@ -8,7 +8,6 @@ namespace Ryneus
     {
         [SerializeField] private BattlerInfoComponent battlerInfoComponent;
         [SerializeField] private RectTransform thumbRect;
-        private bool _isInitialized = false;
         public BattlerInfoComponent BattlerInfoComponent => battlerInfoComponent;
 
         public void SetDamageRoot(GameObject damageRoot)

@@ -1205,17 +1205,17 @@ MonoBehaviour:
     Name: "\u30DF\u30AB"
     ImagePath: Actor0001
     BaseStatus:
-      _hp: 75
+      _hp: 39
       _mp: 0
-      _atk: 15
-      _def: 10
+      _atk: 30
+      _def: 15
       _spd: 15
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 55
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 60
+    DefGrowth: 30
+    SpdGrowth: 35
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -1285,17 +1285,17 @@ MonoBehaviour:
     Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
     ImagePath: Actor0002
     BaseStatus:
-      _hp: 75
+      _hp: 29
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 21
+      _def: 5
+      _spd: 28
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 55
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 40
+    DefGrowth: 10
+    SpdGrowth: 65
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -1365,17 +1365,17 @@ MonoBehaviour:
     Name: "\u30A2\u30EA\u30A8\u30B9"
     ImagePath: Actor0003
     BaseStatus:
-      _hp: 75
+      _hp: 30
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 17
+      _def: 12
+      _spd: 9
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 75
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 25
+    DefGrowth: 40
+    SpdGrowth: 25
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -1445,17 +1445,17 @@ MonoBehaviour:
     Name: "\u30B7\u30A4\u30CA"
     ImagePath: Actor0004
     BaseStatus:
-      _hp: 75
+      _hp: 32
       _mp: 0
       _atk: 15
-      _def: 10
-      _spd: 15
+      _def: 7
+      _spd: 21
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 85
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 35
+    DefGrowth: 15
+    SpdGrowth: 30
     LearningSkills:
     - SkillId: 4010
       Level: 1
@@ -1481,7 +1481,7 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
-    - SkillId: 14020
+    - SkillId: 14010
       Level: 1
       Weight: 0
       TriggerDates: []
@@ -1512,7 +1512,7 @@ MonoBehaviour:
     - SkillId: 14080
       Trigger1: 0
       Trigger2: 0
-    - SkillId: 14020
+    - SkillId: 14010
       Trigger1: 1023
       Trigger2: 0
     - SkillId: 14040
@@ -1525,17 +1525,17 @@ MonoBehaviour:
     Name: "\u30EC\u30C0"
     ImagePath: Actor0005
     BaseStatus:
-      _hp: 75
+      _hp: 29
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 12
+      _def: 9
+      _spd: 12
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 70
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 30
+    DefGrowth: 40
+    SpdGrowth: 45
     LearningSkills:
     - SkillId: 5010
       Level: 1
@@ -1605,17 +1605,17 @@ MonoBehaviour:
     Name: "\u30EA\u30B7\u30A7\u30EA"
     ImagePath: Actor0006
     BaseStatus:
-      _hp: 75
+      _hp: 30
       _mp: 0
       _atk: 15
       _def: 10
-      _spd: 15
+      _spd: 20
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 50
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 50
+    DefGrowth: 30
+    SpdGrowth: 60
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -1659,7 +1659,7 @@ MonoBehaviour:
       Trigger2: 0
     - SkillId: 1030
       Trigger1: 14013
-      Trigger2: 0
+      Trigger2: 1023
     - SkillId: 100610
       Trigger1: 0
       Trigger2: 0
@@ -1685,17 +1685,17 @@ MonoBehaviour:
     Name: "\u30E6\u30CB"
     ImagePath: Actor0007
     BaseStatus:
-      _hp: 75
+      _hp: 40
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 22
+      _def: 18
+      _spd: 16
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 65
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 45
+    DefGrowth: 40
+    SpdGrowth: 30
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -1765,17 +1765,17 @@ MonoBehaviour:
     Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
     ImagePath: Actor0008
     BaseStatus:
-      _hp: 75
+      _hp: 36
       _mp: 0
       _atk: 15
-      _def: 10
-      _spd: 15
+      _def: 19
+      _spd: 16
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 80
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 40
+    DefGrowth: 45
+    SpdGrowth: 35
     LearningSkills:
     - SkillId: 3010
       Level: 1
@@ -1845,17 +1845,17 @@ MonoBehaviour:
     Name: "\u30CA\u30C4\u30AD"
     ImagePath: Actor0009
     BaseStatus:
-      _hp: 75
+      _hp: 36
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 27
+      _def: 12
+      _spd: 24
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 50
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 65
+    DefGrowth: 35
+    SpdGrowth: 55
     LearningSkills:
     - SkillId: 1010
       Level: 1
@@ -1925,17 +1925,17 @@ MonoBehaviour:
     Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
     ImagePath: Actor0010
     BaseStatus:
-      _hp: 75
+      _hp: 30
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 17
+      _def: 7
+      _spd: 31
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 40
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 30
+    DefGrowth: 15
+    SpdGrowth: 60
     LearningSkills:
     - SkillId: 2010
       Level: 1
@@ -2005,17 +2005,17 @@ MonoBehaviour:
     Name: "\u30BB\u30EA\u30CA"
     ImagePath: Actor0011
     BaseStatus:
-      _hp: 75
+      _hp: 34
       _mp: 0
-      _atk: 15
-      _def: 10
-      _spd: 15
+      _atk: 18
+      _def: 17
+      _spd: 18
     Kinds: 
-    HpGrowth: 100
+    HpGrowth: 65
     MpGrowth: 0
-    AtkGrowth: 70
-    DefGrowth: 50
-    SpdGrowth: 50
+    AtkGrowth: 40
+    DefGrowth: 25
+    SpdGrowth: 30
     LearningSkills:
     - SkillId: 3010
       Level: 1

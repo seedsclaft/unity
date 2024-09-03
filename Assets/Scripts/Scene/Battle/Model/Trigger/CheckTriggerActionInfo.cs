@@ -109,7 +109,7 @@ namespace Ryneus
                     {
                         if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpHealFeature())
                         {
-                            if (battlerInfo.IsActor != checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex).IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+                            if (battlerInfo.IsActor != checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex)?.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
                             {
                                 var results = actionInfo.ActionResults.FindAll(a => a.HpHeal > 0);
                                 if (results.Count > 0)
@@ -257,7 +257,7 @@ namespace Ryneus
             foreach (var result in results)
             {
                 var targetBattlerInfo = checkTriggerInfo.GetBattlerInfo(result.TargetIndex);
-                if (battlerInfo.IsActor == targetBattlerInfo.IsActor)
+                if (battlerInfo.IsActor != targetBattlerInfo.IsActor)
                 {
                     var buffStates = result.AddedStates.FindAll(a => a.Master.Buff);
                     var buffTarget = buffStates.Find(a => a.TargetIndex == targetBattlerInfo.Index) != null;

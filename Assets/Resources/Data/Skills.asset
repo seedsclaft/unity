@@ -2195,7 +2195,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 21
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 3
     Rank: 10
     Attribute: 3
     Scope: 1
@@ -2288,7 +2288,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 5
     Rank: 10
     Attribute: 3
     Scope: 1
@@ -2313,7 +2313,13 @@ MonoBehaviour:
       Param1: 0
       Param2: 0
       Param3: 0
-    ScopeTriggers: []
+    ScopeTriggers:
+    - SkillId: 13050
+      TriggerType: 18020
+      TriggerTiming: 0
+      Param1: 0
+      Param2: 0
+      Param3: 0
   - Id: 13060
     Name: "\u30B5\u30D7\u30E9\u30A4\u30AB\u30D0\u30FC"
     IconIndex: 6
@@ -2951,7 +2957,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 1
+    CountTurn: 2
     Rank: 20
     Attribute: 5
     Scope: 1
@@ -2982,7 +2988,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 61
     AnimationType: 1
-    CountTurn: 1
+    CountTurn: 2
     Rank: 20
     Attribute: 5
     Scope: 1

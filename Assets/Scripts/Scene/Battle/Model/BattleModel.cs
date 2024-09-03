@@ -1841,6 +1841,24 @@ namespace Ryneus
                                 }
                             }
                             break;
+                            case TriggerType.IsFriendBattler:
+                            if (battlerInfo.IsAlive())
+                            {
+                                if (actionResultInfos.Find(a => friends.AliveBattlerInfos.Find(b => GetBattlerInfo(a.TargetIndex).IsActor == battlerInfo.IsActor) != null) != null)
+                                {
+                                    IsTriggered = true;
+                                }
+                            }
+                            break;
+                            case TriggerType.IsOpponentBattler:
+                            if (battlerInfo.IsAlive())
+                            {
+                                if (actionResultInfos.Find(a => opponents.AliveBattlerInfos.Find(b => GetBattlerInfo(a.TargetIndex).IsActor != battlerInfo.IsActor) != null) != null)
+                                {
+                                    IsTriggered = true;
+                                }
+                            }
+                            break;
                             case TriggerType.ActionResultDeath:
                             if (battlerInfo.IsAlive())
                             {

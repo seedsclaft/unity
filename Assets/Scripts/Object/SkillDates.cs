@@ -381,6 +381,8 @@ namespace Ryneus
         DodgeCountOver = 17040, // 回避を〇回行う
         HpHealCountOver = 17050, // Hp回復魔法を〇回行う
         ChainCount = 17060, // 拘束成功回数
+        IsFriendBattler = 18010, // 自身の味方
+        IsOpponentBattler = 18020, // 自身の味方
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる
         DeadWithoutSelf = 20040, // 自身以外が戦闘不能
         SelfDead = 20050, // 自身が戦闘不能

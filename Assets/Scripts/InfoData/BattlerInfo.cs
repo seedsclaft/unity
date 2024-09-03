@@ -20,6 +20,9 @@ namespace Ryneus
         public int Index => _index;
         private bool _isActor = false;
         public bool IsActor => _isActor;
+        // 見た目上は味方か
+        private bool _isActorView = false;
+        public bool IsActorView => _isActorView;
         private bool _isAlcana = false;
         public bool isAlcana => _isAlcana;
         private int _charaId;
@@ -175,6 +178,11 @@ namespace Ryneus
             _hp = _status.Hp;
             _mp = _status.Mp;
             _lineIndex = lineIndex;
+            _isActorView = enemyData.Id > 1000;
+            if (_isActorView)
+            {
+                _actorInfo = new ActorInfo(DataSystem.FindActor(enemyData.Id-1000));
+            }
             _skills = new List<SkillInfo>();
             for (int i = 0;i < enemyData.LearningSkills.Count;i++)
             {

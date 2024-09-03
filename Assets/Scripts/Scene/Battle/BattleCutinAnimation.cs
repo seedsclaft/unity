@@ -69,7 +69,7 @@ namespace Ryneus
                 .SetEase(Ease.InOutCubic);
 
             RectTransform targetRect;
-            if (battlerInfo.IsActor)
+            if (battlerInfo.IsActor || battlerInfo.IsActorView)
             {
                 targetRect = actorMain.gameObject.GetComponent<RectTransform>();
                 targetRect.localPosition = new Vector3(-240,-240,0);
@@ -78,7 +78,7 @@ namespace Ryneus
                 targetRect = enemyMain.gameObject.GetComponent<RectTransform>();
                 targetRect.localPosition = new Vector3(-240,0,0);
             }
-            CanvasGroup targetCanvas = battlerInfo.IsActor ? actorCanvasGroup : enemyCanvasGroup;
+            CanvasGroup targetCanvas = battlerInfo.IsActor || battlerInfo.IsActorView ? actorCanvasGroup : enemyCanvasGroup;
             actorCanvasGroup.alpha = 0;
             enemyCanvasGroup.alpha = 0;
             var delay = 0.1f / speedRate;
