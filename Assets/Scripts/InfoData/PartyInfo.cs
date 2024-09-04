@@ -518,7 +518,7 @@ namespace Ryneus
         public float TotalScore(WorldType worldType)
         {
             var score = 0f;
-            var resultInfos = SymbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldType);
+            var resultInfos = _symbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldType);
             foreach (var record in resultInfos)
             {
                 var battleScoreBonus = record.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.BattleScoreBonus);

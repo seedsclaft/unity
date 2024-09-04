@@ -370,7 +370,7 @@ namespace Ryneus
             int rand = 0;
             if (IsBattleStart == true)
             {
-                rand = new Random().Next(-50, 50);
+                //rand = new Random().Next(-50, 50);
             }
             var speed = CurrentSpd(false);
             var baseSpeed = new List<int>{50,75,100,150};

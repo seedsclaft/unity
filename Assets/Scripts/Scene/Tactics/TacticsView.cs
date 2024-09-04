@@ -32,8 +32,6 @@ namespace Ryneus
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
-        [SerializeField] private GameObject parallelHistoryObj = null;
-        [SerializeField] private Toggle parallelHistoryToggle = null;
         public void SetActiveBackGround(bool isActive)
         {
             backGround.SetActive(isActive);
@@ -43,7 +41,6 @@ namespace Ryneus
 
         public GetItemInfo SymbolGetItemInfo => tacticsSymbolList.GetItemInfo();
         public int AlcanaListIndex => alcanaSelectList.Index;
-        public bool CheckParallelToggle => parallelHistoryToggle.isOn;
         public SymbolResultInfo SymbolResultInfo() 
         {
             var listData = symbolRecordList.ListData;
@@ -114,7 +111,6 @@ namespace Ryneus
             HideSymbolRecord();
             alcanaSelectList.Hide();
             presenter.CommandReturnStrategy();
-            parallelHistoryObj.SetActive(false);
         }
 
         public void StartAnimation()
@@ -500,14 +496,8 @@ namespace Ryneus
         public void HideRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(false);
-            SetActiveParallelToggle(false);
             SetHelpInputInfo("TACTICS");
             symbolRecordList.ScrollRect.enabled = true;
-        }
-
-        public void SetActiveParallelToggle(bool isActive)
-        {
-            parallelHistoryObj.SetActive(isActive);
         }
 
         public void SetSaveScore(float saveScore)

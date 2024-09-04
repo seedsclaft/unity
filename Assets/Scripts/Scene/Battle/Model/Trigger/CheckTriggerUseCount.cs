@@ -11,6 +11,7 @@ namespace Ryneus
             switch (triggerData.TriggerType)
             {
                 case TriggerType.InBattleUseCountUnder:
+                case TriggerType.InTurnUseCountUnder:
                     return true;
             }
             return isTrigger;

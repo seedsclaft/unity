@@ -352,6 +352,7 @@ namespace Ryneus
         Percent = 10020, // 〇%で
         AttackStateNoFreeze = 10110, // 攻撃成功時対象が凍結ではない%で
         InBattleUseCountUnder = 11010, // バトル中使用回数が〇以下
+        InTurnUseCountUnder = 11020, // ターン中使用回数が〇以下
         ActionMpCost = 12030, // 行動Magicの消費Mpが〇
         TargetHpRateUnder = 12040, // 攻撃を受けた対象のHpが〇%以下
         TargetDeath = 12041, // 攻撃を受けた対象が戦闘不能になった

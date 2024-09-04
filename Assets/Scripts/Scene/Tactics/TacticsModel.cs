@@ -408,11 +408,6 @@ namespace Ryneus
             return PartyInfo.RemakeHistory();
         }
 
-        public bool ParallelHistory()
-        {
-            return PartyInfo.ParallelHistory();
-        }
-
         public void ResetBattlerIndex()
         {
             foreach (var stageMember in StageMembers())

@@ -751,13 +751,9 @@ namespace Ryneus
                 var addLevelUpInfos = new List<LevelUpInfo>();
                 foreach (var levelUpInfo in actorInfo.LevelUpInfos)
                 {
-                    if (levelUpInfo.StageId == symbolResultInfo.StageId && levelUpInfo.Seek < symbolResultInfo.Seek
-                    || levelUpInfo.StageId < symbolResultInfo.StageId)
+                    if (levelUpInfo.StageId == symbolResultInfo.StageId && levelUpInfo.Seek < symbolResultInfo.Seek || levelUpInfo.StageId < symbolResultInfo.StageId)
                     {
-                        var brunchLevelUpInfo = new LevelUpInfo(levelUpInfo.ActorId,levelUpInfo.Currency,levelUpInfo.StageId,levelUpInfo.Seek,levelUpInfo.SeekIndex,WorldType.Brunch);
-                        brunchLevelUpInfo.SetLevel(levelUpInfo.Level);
-                        brunchLevelUpInfo.SetEnable(levelUpInfo.Enable);
-                        addLevelUpInfos.Add(brunchLevelUpInfo);
+                        addLevelUpInfos.Add(levelUpInfo.CopyBrunchData());
                     }
                 }
                 foreach (var addLevelUpInfo in addLevelUpInfos)
@@ -767,14 +763,6 @@ namespace Ryneus
             }
                         
             SetReturnRecordStage(symbolResultInfo);
-        }
-
-        /// <summary>
-        /// マージリクエストする
-        /// </summary>
-        public bool MergeRequest()
-        {
-            return true;
         }
 
         /// <summary>

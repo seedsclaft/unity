@@ -64,7 +64,8 @@ namespace Ryneus
                     {
                         if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.TriggeredSkill)
                         {
-                            var results = actionInfo.ActionResults.FindAll(a => a.TargetIndex == battlerInfo.Index);
+                            // 自分で発動したパッシブは除く
+                            var results = actionInfo.ActionResults.FindAll(a => a.TargetIndex == battlerInfo.Index && a.SubjectIndex != battlerInfo.Index);
                             if (results.Count > 0)
                             {
                                 isTrigger = true;

@@ -20,17 +20,18 @@ namespace Ryneus
             if (data == null) return;
             if (skillInfoComponent != null)
             {
-                var skillId = data.SkillId;
-                if (data.GetItemType == GetItemType.SelectRelic)
+                var skillId = 0;
+                if (data.IsSkill())
                 {
-                    skillId = 0;
+                    skillId = data.Param1;
                 }
                 skillInfoComponent.UpdateData(skillId);
             }
             if (titleName != null)
             {
-                titleName.gameObject.SetActive(data.GetTitleData() != "");
-                titleName.text = data.GetTitleData();
+                var title = data.GetTitleData();
+                titleName.gameObject.SetActive(title != "");
+                titleName.SetText(title);
             }
             if (Disable != null)
             {

@@ -58,9 +58,21 @@ namespace Ryneus
                 _turnActionInfos[_turnCount].Add(actionInfo);
             }
         }
-        private bool UsedTurnActionInfo(SkillInfo skillInfo,int subjectIndex)
+        private bool UsedTurnSameActionInfo(SkillInfo skillInfo,int subjectIndex)
         {
             return _turnActionInfos.ContainsKey(_turnCount) && _turnActionInfos[_turnCount].Find(a => a.Master.Id == skillInfo.Id && a.SubjectIndex == subjectIndex) != null;
+        }
+        private int UsedSameTurnActionInfo(SkillInfo skillInfo)
+        {
+            if (_turnActionInfos.ContainsKey(_turnCount))
+            {
+                var sameSkills = _turnActionInfos[_turnCount].FindAll(a => a.Master.Id == skillInfo.Id);
+                if (sameSkills != null)
+                {
+                    return sameSkills.Count;
+                }
+            }
+            return 0; 
         }
         private Dictionary<int,List<int>> _passiveSkillInfos = new ();
         private Dictionary<int,ICheckTrigger> _checkTriggerDict = new ();
@@ -539,11 +551,11 @@ namespace Ryneus
                 }
             }
             // かばう
-            CalcCoverTargetIndexes(targetIndexList);
+            CalcCoverTargetIndexes(targetIndexList,GetBattlerInfo(actionInfo.SubjectIndex).IsActor);
             return targetIndexList;
         }
 
-        public void CalcCoverTargetIndexes(List<int> targetIndexList)
+        public void CalcCoverTargetIndexes(List<int> targetIndexList,bool subjectIsActor)
         {
             var coverBattlerId = -1;
             var coveredBattlerId = -1;
@@ -551,7 +563,7 @@ namespace Ryneus
             {
                 var friends = GetBattlerInfo(coverTargetIndex).IsActor ? _party : _troop;
                 var coverBattlerInfo = friends.AliveBattlerInfos.Find(a => a.IsState(StateType.Cover));
-                if (coverBattlerInfo != null && coverBattlerId == -1)
+                if (coverBattlerInfo != null && coverBattlerId == -1 && coverBattlerInfo.IsActor != subjectIsActor)
                 {
                     if (coverBattlerInfo.Index != coverTargetIndex)
                     {
@@ -1506,7 +1518,7 @@ namespace Ryneus
                 triggeredSkills.Clear();
                 foreach (var skillInfo in checkBattler.ActiveSkills())
                 {
-                    if (UsedTurnActionInfo(skillInfo,checkBattler.Index))
+                    if (UsedTurnSameActionInfo(skillInfo,checkBattler.Index))
                     {
                         continue;
                     }
@@ -1577,6 +1589,15 @@ namespace Ryneus
                     if (inBattleUseCountUnder != null)
                     {
                         if (inBattleUseCountUnder.Param1 <= passiveInfo.UseCount)
+                        {
+                            continue;
+                        }
+                    }
+                    // ターン中〇回以下使用
+                    var inTurnUseCountUnder = triggerDates.Find(a => a.TriggerType == TriggerType.InTurnUseCountUnder);
+                    if (inTurnUseCountUnder != null)
+                    {
+                        if (inTurnUseCountUnder.Param1 <= UsedSameTurnActionInfo(passiveInfo))
                         {
                             continue;
                         }
@@ -1655,7 +1676,7 @@ namespace Ryneus
                 return null;
             }
             
-            if (UsedTurnActionInfo(passiveInfo,battlerInfo.Index))
+            if (UsedTurnSameActionInfo(passiveInfo,battlerInfo.Index))
             {
                 return null;
             }
@@ -2083,7 +2104,7 @@ namespace Ryneus
                     } 
                 }
                 // かばう判定
-                CalcCoverTargetIndexes(indexList);
+                CalcCoverTargetIndexes(indexList,GetBattlerInfo(actionInfo.SubjectIndex).IsActor);
                 return indexList;
             }
             var targetIndexList = GetSkillTargetIndexList(actionInfo.Master.Id,actionInfo.SubjectIndex,true,counterSubjectIndex,baseActionInfo,baseActionResultInfos);

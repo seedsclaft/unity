@@ -114,26 +114,18 @@ namespace Ryneus
 
         private void CommandNeedEndBrunch()
         {
-            var conflict = _model.MergeRequest();
-            if (conflict == false)
+            // コンフリクト確認
+            _busy = true;
+            var popupInfo = new PopupInfo
             {
-                _model.MergeBrunch();
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            } else
-            {
-                // コンフリクト確認
-                _busy = true;
-                var popupInfo = new PopupInfo
+                PopupType = PopupType.CheckConflict,
+                EndEvent = () =>
                 {
-                    PopupType = PopupType.CheckConflict,
-                    EndEvent = () =>
-                    {
-                        _busy = false;
-                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                    }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
 
@@ -307,7 +299,6 @@ namespace Ryneus
             //Symbolに対応したシンボルを表示
             _view.SetSymbols(_model.StageResultInfos(symbolResultInfo));
             _view.ShowRecordList();
-            _view.SetActiveParallelToggle(_model.ParallelHistory());
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
@@ -482,7 +473,6 @@ namespace Ryneus
             _model.SetFirstBattleActorId();
             CommandRefresh();
             _view.ShowRecordList();
-            _view.SetActiveParallelToggle(_model.ParallelHistory());
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _backCommand = CommandType.SelectTacticsCommand;

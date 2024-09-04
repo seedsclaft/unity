@@ -68,12 +68,12 @@ namespace Ryneus
                 var battlerInfo = new BattlerInfo(enemyData,level,_battlerInfos.Count,(LineType)lineRand,_battlerInfos.Count == 0);
                 AddEnemy(battlerInfo);
             }
-            var getItemData2 = new GetItemData
+            var battleScoreGetItem = new GetItemData
             {
                 Param1 = 1,
                 Type = GetItemType.BattleScoreBonus
             };
-            _getItemInfos.Add(new GetItemInfo(getItemData2));
+            _getItemInfos.Add(new GetItemInfo(battleScoreGetItem));
         }
 
         public void AddEnemy(BattlerInfo battlerInfo)

@@ -1066,8 +1066,8 @@ MonoBehaviour:
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 201
-    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
-    ImagePath: Astaroth
+    Name: "\u30A2\u30F3\u30EA\u30DE\u30E6"
+    ImagePath: Cyaegha
     BaseStatus:
       _hp: 75
       _mp: 0
@@ -1080,8 +1080,71 @@ MonoBehaviour:
     AtkGrowth: 70
     DefGrowth: 50
     SpdGrowth: 50
-    LearningSkills: []
-    SkillTriggerDates: []
+    LearningSkills:
+    - SkillId: 5010
+      Level: 1
+      Weight: 50
+      TriggerDates: []
+    - SkillId: 5020
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 3070
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 403070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 201010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 201020
+      Level: 1
+      Weight: 250
+      TriggerDates: []
+    - SkillId: 201030
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 405010
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    - SkillId: 405020
+      Level: 1
+      Weight: 0
+      TriggerDates: []
+    SkillTriggerDates:
+    - SkillId: 5010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 5020
+      Trigger1: 5121
+      Trigger2: 0
+    - SkillId: 3070
+      Trigger1: 9110
+      Trigger2: 0
+    - SkillId: 403070
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 201010
+      Trigger1: 5080
+      Trigger2: 0
+    - SkillId: 201020
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 201030
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 405010
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 405020
+      Trigger1: 0
+      Trigger2: 0
   - Id: 202
     Name: "\u30B6\u30AC\u30F3"
     ImagePath: Zagan
@@ -1100,8 +1163,8 @@ MonoBehaviour:
     LearningSkills: []
     SkillTriggerDates: []
   - Id: 203
-    Name: "\u30D6\u30A8\u30EB"
-    ImagePath: Buer
+    Name: "\u30A2\u30B9\u30BF\u30ED\u30C8"
+    ImagePath: Astaroth
     BaseStatus:
       _hp: 75
       _mp: 0

@@ -15,8 +15,6 @@ namespace Ryneus
         private int _resultParam = -1;
         public int ResultParam => _resultParam;
         public void SetResultParam(int resultParam) => _resultParam = resultParam;
-        private int _skillId = -1;
-        public int SkillId => _skillId;
         private bool _getFlag = false;
         public bool GetFlag => _getFlag;
         public void SetGetFlag(bool getFlag) => _getFlag = getFlag;
@@ -35,7 +33,6 @@ namespace Ryneus
         {
             _resultParam = getItemInfo.ResultParam;
             _getItemType = getItemInfo.GetItemType;
-            _skillId = getItemInfo.SkillId;
             _getFlag = getItemInfo.GetFlag;
         }
 
@@ -43,11 +40,6 @@ namespace Ryneus
         {
             _resultParam = 0;
             _getItemType = _getItemData.Type;
-            if (IsSkill())
-            {
-                var skillData = DataSystem.FindSkill(_getItemData.Param1);
-                _skillId = skillData.Id;
-            }
             _getFlag = false;
         }
 
@@ -63,7 +55,7 @@ namespace Ryneus
                 case GetItemType.Demigod:
                     return DataSystem.GetText(20210) + "+" + Param1.ToString();
                 case GetItemType.Ending:
-                    break;
+                    return DataSystem.GetText(20270);
                 case GetItemType.StatusUp:
                     return DataSystem.GetReplaceText(20220,_resultParam.ToString());
                 case GetItemType.Regeneration:
@@ -77,7 +69,7 @@ namespace Ryneus
                 case GetItemType.SelectAddActor:
                     return DataSystem.GetText(20240);
                 case GetItemType.BattleScoreBonus:
-                    return DataSystem.GetReplaceText(20260,_resultParam.ToString()) + "x" + Param1.ToString();
+                    return DataSystem.GetReplaceText(20260,(_resultParam*0.01f).ToString()) + "x" + Param1.ToString();
                 case GetItemType.SelectRelic:
                     return DataSystem.GetText(20250);
                 case GetItemType.RemakeHistory:

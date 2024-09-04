@@ -52,6 +52,15 @@ namespace Ryneus
             _worldNo = worldNo;
         }
 
+        public LevelUpInfo CopyBrunchData()
+        {
+            var newLevelUpInfo = new LevelUpInfo(_actorId,_currency,_stageId,_seek,_seekIndex,WorldType.Brunch);
+            newLevelUpInfo.SetLevel(_level);
+            newLevelUpInfo.SetEnable(_enable);
+            newLevelUpInfo.SetSkillId(_skillId);
+            return newLevelUpInfo;
+        }
+
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)
         {
             return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex && levelUpInfo.WorldNo == _worldNo;
