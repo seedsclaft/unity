@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +17,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI type;
         [SerializeField] private TextMeshProUGUI value;
         [SerializeField] private TextMeshProUGUI description;
+        [SerializeField] private GameObject descriptionListObj;
+        [SerializeField] private GameObject descriptionListTarget;
         [SerializeField] private TextMeshProUGUI range;
         [SerializeField] private TextMeshProUGUI learningCost;
         [SerializeField] private TextMeshProUGUI countTurn;
@@ -26,7 +28,8 @@ namespace Ryneus
         [SerializeField] private GameObject selectedAlcana;
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
 
-        public void UpdateInfo(SkillInfo skillInfo){
+        public void UpdateInfo(SkillInfo skillInfo)
+        {
             if (skillInfo == null)
             {
                 Clear();
@@ -34,6 +37,12 @@ namespace Ryneus
             }
             UpdateData(skillInfo.Id);
             description?.SetText(skillInfo.ConvertHelpText());
+            if (descriptionListObj != null && descriptionListTarget != null)
+            {
+                var height = Math.Max(32 + (skillInfo.Master.Help.Split("\n").Length-1) * 24,32 + 24*3);
+                descriptionListObj.GetComponent<RectTransform>().sizeDelta = new Vector2(440,height);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(descriptionListTarget.GetComponent<RectTransform>());
+            }
             if (selectable != null)
             {
                 selectable.SetActive(skillInfo.LearningState == LearningState.SelectLearn);
