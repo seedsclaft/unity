@@ -404,10 +404,6 @@ namespace Ryneus
             // S⇒L Range.Lスキル = range=0
             // L⇒L Range.Lスキル = range=1で15%カット
             hit += subject.CurrentHit();
-            if (subject.IsState(StateType.Blind))
-            {
-                hit -= subject.StateEffectAll(StateType.Blind);
-            }
             hit -= target.CurrentEva();
             if (hit < 10)
             {

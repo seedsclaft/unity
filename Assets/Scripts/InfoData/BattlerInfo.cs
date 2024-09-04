@@ -854,25 +854,6 @@ namespace Ryneus
             }
         }
 
-        public List<StateInfo> UpdateChainState()
-        {
-            var stateInfos = new List<StateInfo>();
-            for (var i = _stateInfos.Count-1;i >= 0;i--)
-            {
-                var stateInfo = _stateInfos[i];
-                if (stateInfo.RemovalTiming == RemovalTiming.UpdateChain)
-                {
-                    bool IsChainDamage = stateInfo.UpdateTurn();
-                    if (IsChainDamage)
-                    {
-                        stateInfo.ResetTurns();
-                        stateInfos.Add(stateInfo);
-                    }
-                }
-            }
-            return stateInfos;
-        }
-
         public float MpCostRate()
         {
             var mpCost = 1f;
