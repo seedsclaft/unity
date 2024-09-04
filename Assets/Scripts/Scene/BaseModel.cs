@@ -18,8 +18,8 @@ namespace Ryneus
 
         public PartyInfo PartyInfo => CurrentSaveData.Party;
 
-        public int Currency => PartyInfo.GetCurrency(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
-        public float TotalScore => PartyInfo.TotalScore(CurrentStage.WorldNo);
+        public int Currency => PartyInfo.GetCurrency(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
+        public float TotalScore => PartyInfo.TotalScore(CurrentStage.WorldType);
 
         public int RemainTurns => CurrentStage.Master.StageSymbols.Max(a => a.Seek) - CurrentStage.Seek + 1;
 
@@ -53,13 +53,11 @@ namespace Ryneus
         public void LostActors(List<ActorInfo> lostMembers)
         {
             lostMembers.ForEach(a => a.ChangeLost(false));
-            return;
-            lostMembers.ForEach(a => a.ChangeLost(true));
         }
 
         public List<ActorInfo> StageMembers()
         {
-            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            var actorInfos = PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             actorInfos.Sort((a,b)=> a.LinkedLevel() < b.LinkedLevel() ? 1 : -1);
             return actorInfos;
         }
@@ -73,7 +71,7 @@ namespace Ryneus
         
         public List<ActorInfo> PartyMembers()
         {
-            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            return PartyInfo.CurrentActorInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
         }
 
         public string TacticsBgmKey()
@@ -208,13 +206,13 @@ namespace Ryneus
         
         public List<SymbolResultInfo> TacticsSymbols()
         {
-            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            return PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
         }
 
         public List<SkillInfo> AlcanaSkillInfos()
         {
             var skillInfos = new List<SkillInfo>();
-            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo))
+            foreach (var alchemyId in PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType))
             {
                 var skillInfo = new SkillInfo(alchemyId);
                 skillInfo.SetEnable(true);
@@ -240,7 +238,7 @@ namespace Ryneus
                 if (!stageMembers.Contains(actorInfo))
                 {
                     var levelUpInfos = actorInfo.LevelUpInfos;
-                    if (levelUpInfos.FindAll(a => (int)a.WorldNo != (int)CurrentStage.WorldNo).Count > 0)
+                    if (levelUpInfos.FindAll(a => (int)a.WorldType != (int)CurrentStage.WorldType).Count > 0)
                     {
                         stageMembers.Add(actorInfo);
                     }
@@ -312,7 +310,7 @@ namespace Ryneus
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 var record = new SymbolResultInfo(symbolInfo);
-                record.SetWorldNo(WorldType.Brunch);
+                record.SetWorldType(WorldType.Brunch);
                 if (addActor == false)
                 {
                     record.SetSelected(true);
@@ -333,7 +331,7 @@ namespace Ryneus
         public List<SymbolResultInfo> StageResultInfos(int stageId)
         {
             var stageData = DataSystem.FindStage(stageId);
-            return SymbolUtility.StageResultInfos(stageData.StageSymbols);
+            return StageResultInfos(stageData.StageSymbols);
         }
 
         public void StartOpeningStage()
@@ -349,22 +347,12 @@ namespace Ryneus
             {
                 PartyInfo.SetSymbolResultInfo(record);
             }
-            /*
-            // アナザーデータ作成
-            foreach (var record in StageResultInfos(CurrentStage.Id))
-            {
-                record.SetWorldNo(WorldType.Brunch);
-                //record.SetSelected(false);
-                PartyInfo.SetSymbolResultInfo(record);
-            }
-            */
-            //MakeSymbolResultInfos();
             SavePlayerStageData(true);
         }
 
         public SymbolResultInfo CurrentSelectRecord()
         {
-            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+            var symbolInfos = PartyInfo.CurrentRecordInfos(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             return symbolInfos.Find(a => a.SeekIndex == CurrentStage.CurrentSeekIndex);
         }
 
@@ -383,11 +371,6 @@ namespace Ryneus
             CurrentStage.SetStageId(returnSymbol.StageId);
             CurrentStage.SetCurrentTurn(returnSymbol.Seek);
             SetStageSeek();
-        }
-        
-        public void SetParallelMode(bool isActive)
-        {
-            CurrentStage.SetParallelMode(isActive);
         }
 
         public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
@@ -628,11 +611,6 @@ namespace Ryneus
             return new List<int>(){3053,3051};
         }
 
-        public bool SelectableSlot(int index)
-        {
-            return CurrentData.PlayerInfo.SlotSaveList[index].ActorInfos.Count > 0;
-        }
-
         public int PartyEvaluate()
         {
             var evaluate = 0;
@@ -672,7 +650,7 @@ namespace Ryneus
         {
             foreach (var actorInfo in PartyInfo.ActorInfos)
             {
-                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
+                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
                 actorInfo.ChangeHp(actorInfo.MaxHp);
             }
         }
@@ -682,7 +660,7 @@ namespace Ryneus
             var cost = ActorLevelUpCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldNo);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldType);
             PartyInfo.ChangeCurrency(Currency - cost);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             foreach (var skill in skills)
@@ -711,7 +689,7 @@ namespace Ryneus
             var skillInfo = new SkillInfo(skillId);
             var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
             PartyInfo.ChangeCurrency(Currency - learningCost);
-            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldNo);
+            var levelUpInfo = actorInfo.LearnSkill(skillInfo.Id,learningCost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldType);
             PartyInfo.SetLevelUpInfo(levelUpInfo);
             // 作戦項目に追加
             actorInfo.AddSkillTriggerSkill(skillId);
@@ -728,7 +706,7 @@ namespace Ryneus
             PartyInfo.SetBrunchStageIdSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,true);
             
             // 以前のデータを作成
-            var resultInfos = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Main);
+            var resultInfos = PartyInfo.SymbolRecordList.FindAll(a => a.WorldType == WorldType.Main);
             // 既存レコード複製
             foreach (var resultInfo in resultInfos)
             {
@@ -770,7 +748,7 @@ namespace Ryneus
         /// </summary>
         public void MergeBrunch()
         {            
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             
             var brunchBaseSymbol = PartyInfo.BrunchBaseSymbol;
             var brunchSymbol = PartyInfo.BrunchSymbol;
@@ -795,7 +773,7 @@ namespace Ryneus
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(0);
-            CurrentStage.SetWorldNo(WorldType.Main);
+            CurrentStage.SetWorldType(WorldType.Main);
             PartyInfo.ClearBrunch();
             SetStageSeek();
         }
@@ -805,7 +783,7 @@ namespace Ryneus
         /// </summary>
         public void ReverseBrunch()
         {            
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.BrunchSymbol;
@@ -820,7 +798,7 @@ namespace Ryneus
             CurrentStage.SetStageId(PartyInfo.ReturnSymbol.StageId);
             CurrentStage.SetCurrentTurn(PartyInfo.ReturnSymbol.Seek);
             CurrentStage.SetSeekIndex(0);
-            CurrentStage.SetWorldNo(WorldType.Main);
+            CurrentStage.SetWorldType(WorldType.Main);
             PartyInfo.ClearBrunch();
             SetStageSeek();
         }

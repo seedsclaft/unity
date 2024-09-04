@@ -11,17 +11,9 @@ namespace Ryneus
 		private PartyInfo _party = null;
 		public PartyInfo Party => _party;
 
-		private bool _resumeStage = true;
-		public bool ResumeStage => _resumeStage;
-		public void SetResumeStage(bool resumeStage)
-		{
-			_resumeStage = resumeStage;
-		}
-
 		public void Initialize()
 		{
 			InitParty();
-			_resumeStage = false;
 			_currentStage = null;
 		}
 

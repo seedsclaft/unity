@@ -123,11 +123,11 @@ namespace Ryneus
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
                     // 入手済みなら
-                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.Param1))
                     {
                         data.SetEnable(false);
                     }
-                    if (partyInfo.CurrentAlcanaIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.Param1))
+                    if (partyInfo.CurrentAlcanaIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.Param1))
                     {
                         data.SetEnable(false);
                     }
@@ -136,7 +136,7 @@ namespace Ryneus
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {
                     // 入手済みなら
-                    if (partyInfo.CurrentActorIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldNo).Contains(getItemInfo.ResultParam))
+                    if (partyInfo.CurrentActorIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.ResultParam))
                     {
                         data.SetEnable(false);
                     }

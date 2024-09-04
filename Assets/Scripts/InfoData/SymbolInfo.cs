@@ -94,7 +94,5 @@ namespace Ryneus
         {
             return SymbolType == SymbolType.Battle || SymbolType == SymbolType.Boss;
         }
-
-
     }
 }

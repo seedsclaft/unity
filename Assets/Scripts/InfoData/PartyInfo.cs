@@ -56,7 +56,6 @@ namespace Ryneus
             }
             return currency - consume;
         }
-        public int ParallelCount => _scorePrizeInfos.FindAll(a => a.Used == false && a.EnableParallel()).Count;
         private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
@@ -70,16 +69,6 @@ namespace Ryneus
         public List<ScorePrizeInfo> CheckGainScorePrizeInfos()
         {
             return _scorePrizeInfos.FindAll(a => a.CheckFlag());
-        }
-
-        public bool RemakeHistory()
-        {
-            return true;//_scorePrizeInfos.Find(a => a.RemakeHistory()) != null; 
-        }
-
-        public bool ParallelHistory()
-        {
-            return _scorePrizeInfos.Find(a => a.ParallelHistory()) != null;
         }
 
         public bool EnableMultiverse()
@@ -146,7 +135,7 @@ namespace Ryneus
             //_lastBattlerIdList = lastBattlerIdList;
         }
 
-        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,WorldType worldNo) => _symbolRecordList.FindAll(a => a.StageId == stageId && a.Seek == seek && a.WorldNo == worldNo);
+        public List<SymbolResultInfo> CurrentRecordInfos(int stageId,int seek,WorldType worldType) => _symbolRecordList.FindAll(a => a.StageId == stageId && a.Seek == seek && a.WorldType == worldType);
         
         // ステージシンボルの結果
         private List<SymbolResultInfo> _symbolRecordList = new ();
@@ -177,19 +166,6 @@ namespace Ryneus
                 var main = _symbolRecordList[findIndex];
                 main.CopyParamData(symbolResultInfo);
                 symbolResultInfo.ResetParamData();
-                // 元の成長データを削除
-                /*
-                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
-                foreach (var actorInfo in actorInfos)
-                {
-                    actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Main);
-                }
-                // ブランチの成長データをマージ
-                foreach (var actorInfo in actorInfos)
-                {
-                    actorInfo.MargeLevelUpInfo(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
-                }
-                */
             }
         }
 
@@ -227,7 +203,7 @@ namespace Ryneus
             {
                 symbolResultInfo.ResetParamData();
                 // 成長データを削除
-                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo);
+                var actorInfos = CurrentActorInfos(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldType);
                 foreach (var actorInfo in actorInfos)
                 {
                     actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
@@ -237,7 +213,7 @@ namespace Ryneus
 
         public void ResetBrunchData()
         {
-            var resultInfos = SymbolRecordList.FindAll(a => a.WorldNo == WorldType.Brunch);
+            var resultInfos = SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             foreach (var resultInfo in resultInfos)
             {
                 resultInfo.ResetParamData();
@@ -269,9 +245,9 @@ namespace Ryneus
             SetSymbolResultInfo(record);
         }
 
-        private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,WorldType worldNo)
+        private List<SymbolResultInfo> EnableResultInfos(int stageId,int seek,WorldType worldType)
         {
-            return _symbolRecordList.FindAll(a => a.EnableStage(stageId,seek,worldNo));
+            return _symbolRecordList.FindAll(a => a.EnableStage(stageId,seek,worldType));
         }
 
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
@@ -306,9 +282,9 @@ namespace Ryneus
             _actorInfos = actorInfos;
         }
         
-        public List<ActorInfo> CurrentActorInfos(int stageId,int seek,WorldType worldNo)
+        public List<ActorInfo> CurrentActorInfos(int stageId,int seek,WorldType worldType)
         {
-            var actorIdList = CurrentActorIdList(stageId,seek,worldNo);
+            var actorIdList = CurrentActorIdList(stageId,seek,worldType);
             var actorInfos = new List<ActorInfo>();
             foreach (var actorId in actorIdList)
             {
@@ -351,10 +327,10 @@ namespace Ryneus
             return DataSystem.GetText(391);
         }
 
-        public List<int> CurrentActorIdList(int stageId,int seek,WorldType worldNo)
+        public List<int> CurrentActorIdList(int stageId,int seek,WorldType worldType)
         {
             var actorIdList = new List<int>();
-            var records = EnableResultInfos(stageId,seek,worldNo);
+            var records = EnableResultInfos(stageId,seek,worldType);
             records = records.FindAll(a => a.SymbolInfo.IsActorSymbol() && a.Selected);
             foreach (var record in records)
             {
@@ -373,10 +349,10 @@ namespace Ryneus
             return actorIdList;
         }
         
-        public List<int> PastActorIdList(int stageId,int seek,WorldType worldNo)
+        public List<int> PastActorIdList(int stageId,int seek,WorldType worldType)
         {
             var actorIdList = new List<int>();
-            var records = EnableResultInfos(stageId,seek,worldNo);
+            var records = EnableResultInfos(stageId,seek,worldType);
             records = records.FindAll(a => a.SymbolInfo.IsActorSymbol());
             foreach (var record in records)
             {
@@ -395,10 +371,10 @@ namespace Ryneus
             return actorIdList;
         }
 
-        public List<int> CurrentAlchemyIdList(int stageId,int seek,WorldType worldNo)
+        public List<int> CurrentAlchemyIdList(int stageId,int seek,WorldType worldType)
         {
             var alchemyIdList = new List<int>();
-            var records = EnableResultInfos(stageId,seek,worldNo);
+            var records = EnableResultInfos(stageId,seek,worldType);
             records = records.FindAll(a => a.Selected);
             foreach (var record in records)
             {
@@ -414,10 +390,10 @@ namespace Ryneus
             return alchemyIdList;
         }
 
-        public List<int> CurrentAlcanaIdList(int stageId,int seek,WorldType worldNo)
+        public List<int> CurrentAlcanaIdList(int stageId,int seek,WorldType worldType)
         {
             var alcanaIdList = new List<int>();
-            var records = EnableResultInfos(stageId,seek,worldNo);
+            var records = EnableResultInfos(stageId,seek,worldType);
             records = records.FindAll(a => a.Selected);
             foreach (var record in records)
             {
@@ -434,11 +410,11 @@ namespace Ryneus
         }
 
         // 所持している魔法全てのId
-        public List<int> CurrentAllSkillIds(int stageId,int seek,WorldType worldNo)
+        public List<int> CurrentAllSkillIds(int stageId,int seek,WorldType worldType)
         {
             var skillIds = new List<int>();
-            var alchemyIds = CurrentAlchemyIdList(stageId,seek,worldNo);
-            var actorInfos = CurrentActorInfos(stageId,seek,worldNo);
+            var alchemyIds = CurrentAlchemyIdList(stageId,seek,worldType);
+            var actorInfos = CurrentActorInfos(stageId,seek,worldType);
             foreach (var actorInfo in actorInfos)
             {
                 var skillInfos = actorInfo.SkillActionList(alchemyIds);
@@ -452,11 +428,6 @@ namespace Ryneus
                 skillIds.Add(alchemyId);
             }
             return skillIds;
-        }
-
-        public int ActorLevelReset(ActorInfo actorInfo)
-        {
-            return actorInfo.ActorLevelReset();
         }
 
         public (int,int) LastStageIdTurns()
@@ -518,7 +489,7 @@ namespace Ryneus
         public float TotalScore(WorldType worldType)
         {
             var score = 0f;
-            var resultInfos = _symbolRecordList.FindAll(a => a.Selected && a.WorldNo == worldType);
+            var resultInfos = _symbolRecordList.FindAll(a => a.Selected && a.WorldType == worldType);
             foreach (var record in resultInfos)
             {
                 var battleScoreBonus = record.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.BattleScoreBonus);
@@ -528,15 +499,6 @@ namespace Ryneus
                 }
             }
             return score;
-        }
-
-        public void UseParallel()
-        {
-            var find = _scorePrizeInfos.Find(a => a.EnableParallel());
-            if (find != null)
-            {
-                find.UseParallel();
-            }
         }
 
         // クリア情報

@@ -55,7 +55,7 @@ namespace Ryneus
             for (int i = _levelUpInfos.Count-1;i >= 0;i--)
             {
                 var levelUpInfo = _levelUpInfos[i];
-                if ( levelUpInfo.WorldNo == worldType)
+                if ( levelUpInfo.WorldType == worldType)
                 {
                     _levelUpInfos.Remove(levelUpInfo);
                 }
@@ -67,7 +67,7 @@ namespace Ryneus
             for (int i = _levelUpInfos.Count-1;i >= 0;i--)
             {
                 var levelUpInfo = _levelUpInfos[i];
-                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldNo == worldType)
+                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldType == worldType)
                 {
                     _levelUpInfos.Remove(levelUpInfo);
                 }
@@ -79,7 +79,7 @@ namespace Ryneus
             for (int i = _levelUpInfos.Count-1;i >= 0;i--)
             {
                 var levelUpInfo = _levelUpInfos[i];
-                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldNo == worldType)
+                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldType == worldType)
                 {
                     levelUpInfo.SetWorldType(WorldType.Main);
                 }
@@ -100,6 +100,7 @@ namespace Ryneus
         {
             _levelLink = levelLink;
         }
+
         public int LinkedLevel()
         {
             if (_levelLink >= Level)
@@ -392,11 +393,11 @@ namespace Ryneus
             return _levelUpInfos.FindAll(a => a.IsEnableStage(_stageId,_seek,_worldType) && a.IsTrainData()).Count + 1;
         }
 
-        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,WorldType worldNo)
+        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,WorldType worldType)
         {
             var levelUpInfo = new LevelUpInfo
             (
-                _actorId,useCost,stageId,seek,seekIndex,worldNo
+                _actorId,useCost,stageId,seek,seekIndex,worldType
             );
             levelUpInfo.SetLevel(Level);
             _levelUpInfos.Add(levelUpInfo);
@@ -448,9 +449,9 @@ namespace Ryneus
             return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
-        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,WorldType worldNo = WorldType.Main)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,WorldType worldType = WorldType.Main)
         {
-            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex,worldNo);
+            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex,worldType);
             skillLevelUpInfo.SetSkillId(skillId);
             return skillLevelUpInfo;
         }
@@ -629,7 +630,6 @@ namespace Ryneus
             sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
             skillInfos.AddRange(sortList3);
             return skillInfos;
-            //return ListData.MakeListData(skillInfos,(a) => { return true;},-1);
         }
 
         public List<SkillInfo> SkillInfos()
@@ -660,13 +660,13 @@ namespace Ryneus
             skillInfos.AddRange(sortList2);
             sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
             skillInfos.AddRange(sortList3);
-            //skillInfos.Sort((a,b) => {return a.LearningState > b.LearningState ? 1 : -1;});
             return skillInfos;
         }
     }
 
 
-    public enum AttributeRank {
+    public enum AttributeRank 
+    {
         S = 0,
         A = 1,
         B = 2,

@@ -49,26 +49,6 @@ namespace Ryneus
             return false;
         }
 
-        public bool RemakeHistory()
-        {
-            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.RemakeHistory) != null;
-        }
-
-        public bool ParallelHistory()
-        {
-            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ParallelHistory) != null;
-        }
-
-        public bool EnableParallel()
-        {
-            return _used == false && _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.ParallelHistory) != null;
-        }
-
-        public void UseParallel()
-        {
-            _used = true;
-        }
-
         public bool EnableMultiverse()
         {
             return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.Multiverse) != null;

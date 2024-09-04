@@ -69,7 +69,6 @@ namespace Ryneus
                         //_model.SetDefineBoss(stageEvent.Param);
                         break;
                     case StageEventType.SurvivalMode:
-                        _model.SetSurvivalMode();
                         break;
                 }
             }

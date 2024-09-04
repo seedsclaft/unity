@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Ryneus
 {
@@ -9,7 +8,6 @@ namespace Ryneus
     {
         public PlayerInfo()
         {
-            InitSlotInfo();
         }
 
         private int _userId = -1;
@@ -29,53 +27,6 @@ namespace Ryneus
         public void SetPlayerName(string name)
         {
             _playerName = name;
-        }
-
-        private Dictionary<int,int> _bestScore = new ();
-        public int GetBestScore(int stageId)
-        {
-            if (!_bestScore.ContainsKey(stageId))
-            {
-                return 0;
-            }
-            return _bestScore[stageId];
-        }
-        public void SetBestScore(int stageId,int score)
-        {
-            if (!_bestScore.ContainsKey(stageId))
-            {
-                _bestScore[stageId] = 0;
-            }
-            if (score > _bestScore[stageId])
-            {
-                _bestScore[stageId] = score;
-            }
-        }
-
-        private List<SlotInfo> _slotSaveList = new ();
-        public List<SlotInfo> SlotSaveList => _slotSaveList;
-        readonly int _slotSaveCount = 3;
-        
-        private void InitSlotInfo()
-        {
-            _slotSaveList.Clear();
-            for (int i = 0;i < _slotSaveCount;i++)
-            {
-                var slotInfo = new SlotInfo(new List<ActorInfo>(){});
-                _slotSaveList.Add(slotInfo);
-            }
-        }
-        
-        public void SaveSlotData(int index,SlotInfo slotInfo)
-        {
-            var saveSlot = new SlotInfo(slotInfo.ActorInfos);
-            saveSlot.SetTimeRecord();
-            UpdateSlotInfo(index,saveSlot);
-        }
-
-        private void UpdateSlotInfo(int slotId,SlotInfo slotInfo)
-        {
-            _slotSaveList[slotId] = slotInfo;
         }
 
         // 倒したTroopID

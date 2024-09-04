@@ -59,11 +59,11 @@ namespace Ryneus
             _currentSeekIndex = battleIndex;
         }
 
-        private WorldType _worldNo;
-        public WorldType WorldNo => _worldNo;
-        public void SetWorldNo(WorldType worldNo)
+        private WorldType _worldType;
+        public WorldType WorldType => _worldType;
+        public void SetWorldType(WorldType worldType)
         {
-            _worldNo = worldNo;
+            _worldType = worldType;
         }
 
         private List<int> _clearTroopIds = new ();
@@ -79,17 +79,6 @@ namespace Ryneus
         private EndingType _endingType = EndingType.C;
         public EndingType EndingType => _endingType;
         public void SetEndingType(EndingType endingType) {_endingType = endingType;}
-/*
-        private bool _stageClear = false;
-        public bool StageClear => _stageClear;
-        public void SetStageClear(bool stageClear) {_stageClear = stageClear;}
-*/
-        private bool _parallelStage = false;
-        public bool ParallelStage => _parallelStage;
-        public void SetParallelMode(bool parallelStage) {_parallelStage = parallelStage;}
-
-        private bool _survivalMode = false;
-        public bool SurvivalMode => _survivalMode;
 
         public StageInfo(StageData stageData)
         {
@@ -154,18 +143,11 @@ namespace Ryneus
             _clearTroopIds = stageInfo._clearTroopIds;
             //_readEventKeys = stageInfo._readEventKeys;
             _endingType = stageInfo._endingType;
-            //_stageClear = stageInfo._stageClear;
-            _survivalMode = stageInfo._survivalMode;
         }
 
         public int SelectActorIdsClassId(int selectIndex)
         {
             return 0;
-        }
-
-        public void SetSurvivalMode()
-        {
-            _survivalMode = true;
         }
     }
 }

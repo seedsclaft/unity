@@ -87,21 +87,18 @@ namespace Ryneus
 
         public List<ListData> StageResultInfos(SymbolResultInfo symbolResultInfo)
         {
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldNo));
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.IsSameStageSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,symbolResultInfo.WorldType));
             selectRecords.Sort((a,b) => a.SeekIndex > b.SeekIndex ? 1 : -1);
             Func<SymbolResultInfo,bool> enable = (a) => 
             {
                 var enable = false;
-                if (PartyInfo.RemakeHistory())
+                if (a.StageId == CurrentStage.Id && a.Seek <= CurrentStage.Seek)
                 {
-                    if (a.StageId == CurrentStage.Id && a.Seek <= CurrentStage.Seek)
-                    {
-                        enable = true;
-                    }
-                    if (a.StageId < CurrentStage.Id)
-                    {
-                        enable = true;
-                    }
+                    enable = true;
+                }
+                if (a.StageId < CurrentStage.Id)
+                {
+                    enable = true;
                 }
                 return a.Seek == CurrentStage.Seek || enable;
             };
@@ -168,10 +165,10 @@ namespace Ryneus
 
         public List<ActorInfo> AddSelectActorInfos()
         {
-            var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldNo);
-            // 違うworldNoのActorIdも含まない
-            var worldNo = CurrentStage.WorldNo == WorldType.Main ? WorldType.Brunch : WorldType.Main;
-            var anotherActorIdList = PartyInfo.CurrentActorIdList(99,99,worldNo);
+            var pastActorIdList = PartyInfo.CurrentActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
+            // 違うworldTypeのActorIdも含まない
+            var worldType = CurrentStage.WorldType == WorldType.Main ? WorldType.Brunch : WorldType.Main;
+            var anotherActorIdList = PartyInfo.CurrentActorIdList(99,99,worldType);
 
             pastActorIdList.AddRange(anotherActorIdList);
             return PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
@@ -193,25 +190,6 @@ namespace Ryneus
 
         public AdvData StartTacticsAdvData()
         {
-            /*
-            if (CurrentStage.SurvivalMode)
-            {
-                var isSurvivalGameOver = StageMembers().Count > 0 && !Actors().Exists(a => a.Lost == false);
-                if (isSurvivalGameOver)
-                {
-                    CurrentStage.SetEndingType(EndingType.C);
-                    return DataSystem.Adventures.Find(a => a.Id == 21);
-                }
-                var isSurvivalClear = RemainTurns <= 0;
-                if (isSurvivalClear)
-                {
-                    CurrentStage.SetEndingType(EndingType.A);
-                    StageClear();
-                    return DataSystem.Adventures.Find(a => a.Id == 151);
-                }
-                return null;
-            }
-            */
             var isGameOver = false;//PartyInfo.ActorIdList.Count > 0 && (Actors().Find(a => a.ActorId == PartyInfo.ActorIdList[0])).Lost;
             if (isGameOver)
             {
@@ -254,16 +232,6 @@ namespace Ryneus
                 Key = "Help"
             };
             list.Add(menuCommand);
-            if (CurrentStage.SurvivalMode == false)
-            {
-                var saveCommand = new SystemData.CommandData
-                {
-                    Id = 3,
-                    Name = DataSystem.GetText(19710),
-                    Key = "Save"
-                };
-                list.Add(saveCommand);
-            }
             var titleCommand = new SystemData.CommandData
             {
                 Id = 4,
@@ -320,9 +288,9 @@ namespace Ryneus
             
             var stageSeekList = new List<int>();
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
-            selectRecords = selectRecords.FindAll(a => a.WorldNo == CurrentStage.WorldNo);
+            selectRecords = selectRecords.FindAll(a => a.WorldType == CurrentStage.WorldType);
             // ブランチは始点と終点を作る
-            if (CurrentStage.WorldNo == WorldType.Brunch)
+            if (CurrentStage.WorldType == WorldType.Brunch)
             {
                 var brunchSymbol = PartyInfo.BrunchBaseSymbol;
                 var returnSymbol = PartyInfo.ReturnSymbol;
@@ -369,7 +337,7 @@ namespace Ryneus
             };
             var currentInfo = new SymbolInfo(currentSymbol);
             var currentResult = new SymbolResultInfo(currentInfo);
-            currentResult.SetWorldNo(CurrentStage.WorldNo);
+            currentResult.SetWorldType(CurrentStage.WorldType);
             currentInfo.SetLastSelected(true);
             var currentList = new List<SymbolResultInfo>(){currentResult};
     
@@ -379,7 +347,7 @@ namespace Ryneus
             {
                 resultList.Add(resultData.Value);
             }
-            var currentIndex = resultList.FindIndex(a => a[0].IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldNo));
+            var currentIndex = resultList.FindIndex(a => a[0].IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldType));
             if (currentIndex > -1)
             {
                 resultList.Insert(currentIndex, currentList);
@@ -393,7 +361,7 @@ namespace Ryneus
                 var list = new ListData(record);
                 list.SetSelected(false);
                 list.SetEnable(false);
-                if (record.Find(a => a.IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldNo)) != null)
+                if (record.Find(a => a.IsSameStageSeek(CurrentStage.Id,currentSeek,CurrentStage.WorldType)) != null)
                 {
                     list.SetSelected(true);
                 }
@@ -401,11 +369,6 @@ namespace Ryneus
             }
             _firstRecordIndex = listData.FindIndex(a => a.Selected);
             return listData;
-        }
-
-        public bool RemakeHistory()
-        {
-            return PartyInfo.RemakeHistory();
         }
 
         public void ResetBattlerIndex()
@@ -492,18 +455,13 @@ namespace Ryneus
             SetWorldCurrentStage(WorldType.Brunch);
         }
 
-        private void SetWorldCurrentStage(WorldType worldNo)
+        private void SetWorldCurrentStage(WorldType worldType)
         {
-            CurrentStage.SetWorldNo(worldNo);
-            var symbolData = worldNo == WorldType.Main ? PartyInfo.ReturnSymbol : PartyInfo.BrunchSymbol;
+            CurrentStage.SetWorldType(worldType);
+            var symbolData = worldType == WorldType.Main ? PartyInfo.ReturnSymbol : PartyInfo.BrunchSymbol;
             CurrentStage.SetStageId(symbolData.StageId);
             CurrentStage.SetCurrentTurn(symbolData.Seek);
             SetStageSeek();
-        }
-
-        public void SetSurvivalMode()
-        {
-            CurrentStage.SetSurvivalMode();
         }
 
         public bool CheckTutorial(TacticsViewEvent viewEvent)

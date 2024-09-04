@@ -180,9 +180,9 @@ namespace Ryneus
             {
                 // 同じステージ進捗度でWorldをまたげない
                 var current = CurrentSelectRecord();
-                var worldNo = CurrentStage.WorldNo == WorldType.Main ? WorldType.Brunch : WorldType.Main;
+                var worldType = CurrentStage.WorldType == WorldType.Main ? WorldType.Brunch : WorldType.Main;
                 var levelUpDataInfos = a.ActorInfo.LevelUpInfos;
-                if (levelUpDataInfos.Find(b => b.HasSameStageSeekBattleResultData(current.StageId,current.Seek,worldNo)) != null)
+                if (levelUpDataInfos.Find(b => b.HasSameStageSeekBattleResultData(current.StageId,current.Seek,worldType)) != null)
                 {
                     //a.DisableText = "同じ進行度の別世界でバトルを行っています";    
                     //RemoveBattleActor(a.ActorInfo);

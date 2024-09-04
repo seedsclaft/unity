@@ -69,7 +69,7 @@ namespace Ryneus
                 // 新規魔法取得があるか
                 var skills = lvUpActorInfo.LearningSkills(1);
                 var from = lvUpActorInfo.Evaluate();
-                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.Seek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldNo);
+                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.Seek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldType);
                 PartyInfo.SetLevelUpInfo(levelUpInfo);
                 var to = lvUpActorInfo.Evaluate();
                 if (skills.Count > 0)
@@ -191,7 +191,7 @@ namespace Ryneus
                 }
             }
             // スコア報酬を更新
-            PartyInfo.UpdateScorePrizeInfos(CurrentStage.WorldNo);
+            PartyInfo.UpdateScorePrizeInfos(CurrentStage.WorldType);
             var nextScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
             foreach (var nextScorePrizeInfo in nextScorePrizeInfos)
             {
@@ -384,7 +384,7 @@ namespace Ryneus
             {
                 CurrentStage.SeekStage();
             }
-            if (CurrentStage.WorldNo == WorldType.Brunch)
+            if (CurrentStage.WorldType == WorldType.Brunch)
             {
                 if (seekStage)
                 {

@@ -384,30 +384,8 @@ namespace Ryneus
             } else
             if (recordInfo.StageId < currentStage || recordInfo.Seek < currentTurn && recordInfo.StageId == currentStage)
             {
-                // 並行世界化する場合
-                /*
-                if (_view.CheckParallelToggle && recordInfo.Selected == false)
-                {
-                    if (_model.ParallelHistory())
-                    {
-                        if (_model.PartyInfo.ParallelCount > 0)
-                        {
-                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19310,_model.PartyInfo.ParallelCount.ToString()),(a) => UpdatePopupCheckParallelRecord(a,recordInfo));
-                            _view.CommandCallConfirm(confirmInfo);
-                        } else
-                        {
-                            var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(19320,_model.PartyInfo.ParallelCount.ToString()),(a) => {});
-                            confirmInfo.SetIsNoChoice(true);
-                            _view.CommandCallConfirm(confirmInfo);
-                        }
-                    } else
-                    {
-                        CommandCautionInfo(DataSystem.GetText(19330));
-                    }
-                } else
-                */
                 // ブランチを作成
-                if (_model.RemakeHistory() && _model.CurrentStage.WorldNo == WorldType.Main)
+                if (_model.CurrentStage.WorldType == WorldType.Main)
                 {
                     var confirmInfo = new ConfirmInfo(DataSystem.GetText(19300),(a) =>
                     {
@@ -507,20 +485,6 @@ namespace Ryneus
 
         private void CommandParallel()
         {
-        }
-
-        private void UpdatePopupCheckParallelRecord(ConfirmCommandType confirmCommandType,SymbolResultInfo symbolResultInfo)
-        {
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                if (symbolResultInfo != null)
-                {
-                    // 過去のステージを作る
-                    _model.SetReturnRecordStage(symbolResultInfo);
-                    _model.SetParallelMode(true);
-                    CommandCurrentSelectRecord(symbolResultInfo);
-                }
-            }
         }
 
         private void CommandRefreshShop()
@@ -775,8 +739,8 @@ namespace Ryneus
             _view.SetTacticsCharaLayer(_model.StageMembers());
             _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
             _view.CommandRefresh();
-            _view.SetPastMode(_model.CurrentStage.WorldNo == WorldType.Brunch);
-            _view.SetWorldMove(_model.BrunchMode,_model.CurrentStage.WorldNo);
+            _view.SetPastMode(_model.CurrentStage.WorldType == WorldType.Brunch);
+            _view.SetWorldMove(_model.BrunchMode,_model.CurrentStage.WorldType);
         }
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolResultInfo)

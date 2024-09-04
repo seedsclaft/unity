@@ -35,21 +35,21 @@ namespace Ryneus
         public int Seek => _seek;
         private int _seekIndex = -1;
         public int SeekIndex => _seekIndex;
-        private WorldType _worldNo;
-        public WorldType WorldNo => _worldNo;
+        private WorldType _worldType;
+        public WorldType WorldType => _worldType;
         public void SetWorldType(WorldType worldType)
         {
-            _worldNo = worldType;
+            _worldType = worldType;
         }
 
-        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,WorldType worldNo)
+        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,WorldType worldType)
         {
             _actorId = actorId;
             _currency = currency;
             _stageId = stageId;
             _seek = seek;
             _seekIndex = seekIndex;
-            _worldNo = worldNo;
+            _worldType = worldType;
         }
 
         public LevelUpInfo CopyBrunchData()
@@ -63,7 +63,7 @@ namespace Ryneus
 
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex && levelUpInfo.WorldNo == _worldNo;
+            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex && levelUpInfo.WorldType == _worldType;
         }
 
         public bool IsLevelUpData()
@@ -88,12 +88,12 @@ namespace Ryneus
 
         public bool IsEnableStage(int stageId,int seek,WorldType worldType)
         {
-            return worldType == _worldNo && (_stageId == stageId && _seek <= seek || _stageId < stageId);
+            return worldType == _worldType && (_stageId == stageId && _seek <= seek || _stageId < stageId);
         }
 
-        public bool HasSameStageSeekBattleResultData(int stageId,int seek,WorldType worldNo)
+        public bool HasSameStageSeekBattleResultData(int stageId,int seek,WorldType worldType)
         {
-            return IsBattleResultData() && _stageId == stageId && _seek == seek && _worldNo == worldNo;
+            return IsBattleResultData() && _stageId == stageId && _seek == seek && _worldType == worldType;
         }
     }
 }
