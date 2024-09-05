@@ -128,6 +128,7 @@ namespace Ryneus
         {
             var statusViewInfo = new StatusViewInfo(() => 
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 closeEvent?.Invoke();
@@ -153,6 +154,7 @@ namespace Ryneus
         {
             var enemyViewInfo = new StatusViewInfo(() => 
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _view.CommandGameSystem(Base.CommandType.CloseStatus);
                 _view.ChangeUIActive(true);
                 closeEvent?.Invoke();

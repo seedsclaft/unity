@@ -207,6 +207,7 @@ namespace Ryneus
                 _view.SetBusy(false);
                 _view.CallChangeSelectTacticsActor();
             });
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         private void CommandSelectActorTrain()

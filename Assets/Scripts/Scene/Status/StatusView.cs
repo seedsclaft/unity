@@ -65,7 +65,7 @@ namespace Ryneus
         {
             selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
             selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
+            selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail,false);
             selectCharacter.ShowActionList();
         }
         

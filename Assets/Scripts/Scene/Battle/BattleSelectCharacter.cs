@@ -99,9 +99,9 @@ namespace Ryneus
             });
         }
 
-        public void SelectCharacterTab(int tabIndex)
+        public void SelectCharacterTab(int tabIndex,bool needSe = true)
         {
-            toggleSelect.SetSelectTabIndex(tabIndex);
+            toggleSelect.SetSelectTabIndex(tabIndex,needSe);
         }
 
         public void SelectCharacterTabSmooth(int index)

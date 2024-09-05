@@ -55,7 +55,6 @@ namespace Ryneus
 
         private void CommandBack()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.CommandBack();
         }
 

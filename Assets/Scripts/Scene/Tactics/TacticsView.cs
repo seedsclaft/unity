@@ -447,7 +447,6 @@ namespace Ryneus
                 var data = (SymbolResultInfo)listData.Data;
                 if (data != null && data.SymbolType != SymbolType.None)
                 {
-                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
                     var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo)
                     {
                         template = data

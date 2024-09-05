@@ -165,7 +165,7 @@ namespace Ryneus
                         if (p3 == 2)
                         {
                             paramText = targetFeature.Param2.ToString();
-                        }
+                        } else
                         if (p3 == 3)
                         {
                             paramText = targetFeature.Param3.ToString();
@@ -179,6 +179,13 @@ namespace Ryneus
             if (Master.Name.Contains("+"))
             {
                 help = help.Replace("/n",Master.Name.Replace("+",""));
+            }
+            // ステート説明挿入
+            var state = FeatureDates.Find(a => a.FeatureType == FeatureType.AddState);
+            if (state != null)
+            {
+                var stateMaster = DataSystem.States.Find(a => (int)a.StateType == state.Param1);        
+                help = help.Replace("/s","【" + stateMaster.Name + "】" + "\n" + stateMaster.Help);
             }
             return help;
         }

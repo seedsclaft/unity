@@ -16,11 +16,14 @@ namespace Ryneus
 
         private int _selectTabIndex = -1;
         public int SelectTabIndex => _selectTabIndex;
-        public void SetSelectTabIndex(int selectIndex)
+        public void SetSelectTabIndex(int selectIndex,bool needSe = true)
         {
             if (_selectTabIndex != selectIndex)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                if (needSe)
+                {
+                    //SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
                 _selectTabIndex = selectIndex;
                 UpdateTabs();
             }

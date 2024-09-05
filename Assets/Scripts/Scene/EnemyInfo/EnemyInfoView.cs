@@ -57,7 +57,7 @@ namespace Ryneus
             });
             SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
             selectCharacter.HideActionList();
-            selectCharacter.SelectCharacterTab(0);
+            selectCharacter.SelectCharacterTab(0,false);
             selectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
         }
