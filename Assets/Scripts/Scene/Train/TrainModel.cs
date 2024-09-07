@@ -220,7 +220,7 @@ namespace Ryneus
 
         private string CommandTitle()
         {
-            return DataSystem.GetText(19000 + (int)_tacticsCommandType * 10);
+            return DataSystem.GetText(19001 + (int)_tacticsCommandType * 10);
         }
 
         public void ChangeBattleLineIndex(int actorId,bool isFront)

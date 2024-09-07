@@ -229,19 +229,6 @@ namespace Ryneus
 
         public void SetHelpWindow()
         {
-            /*
-            sideMenuList.SetHelpWindow(HelpWindow);
-            sideMenuList.SetOpenEvent(() => {
-                tacticsCommandList.Deactivate();
-                sideMenuList.Activate();
-            });
-            sideMenuList.SetCloseEvent(() => {
-                SetHelpInputInfo("TACTICS");
-                UpdateHelpWindow();
-                tacticsCommandList.Activate();
-                sideMenuList.Deactivate();
-            });
-            */
         }
 
         public void SetEvent(System.Action<TacticsViewEvent> commandData)

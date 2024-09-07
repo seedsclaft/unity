@@ -14,6 +14,8 @@ namespace Ryneus
     {   
         public int Id;
         public string Key;
+        public string GuideImagePath;
+        public int CommonHelpId;
         public string Help;
     }
 }

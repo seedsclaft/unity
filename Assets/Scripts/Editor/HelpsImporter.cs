@@ -14,6 +14,8 @@ namespace Ryneus
 		{
 			Id = 0,
 			Key,
+			GuideImagePath,
+			CommonHelpId,
 			Help,
 		}
 		static readonly string ExcelName = "Helps.xlsx";
@@ -72,7 +74,10 @@ namespace Ryneus
                         {
                             Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
                             Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Key),
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Help)).Help
+                            GuideImagePath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.GuideImagePath),
+                            CommonHelpId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.CommonHelpId),
+                            
+							Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Help)).Help
                         };
                         Data.Data.Add(HelpData);
 					}

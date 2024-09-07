@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Ryneus
@@ -20,66 +21,57 @@ namespace Ryneus
         [SerializeField] private GameObject scorePrizePrefab = null;
         [SerializeField] private GameObject clearPartyPrefab = null;
         [SerializeField] private GameObject checkConflictPrefab = null;
+        [SerializeField] private GameObject guidePrefab = null;
+
+        private List<BaseView> _stackPopupView = new ();
         
         public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
         {
-            if (confirmRoot.transform.childCount > 0)
-            {
-                ClosePopup();
-            }
             var prefab = Instantiate(GetPopupObject(popupType));
             prefab.transform.SetParent(confirmRoot.transform, false);
             confirmRoot.SetActive(true);
             var view = prefab.GetComponent<BaseView>();
             view?.SetHelpWindow(helpWindow);
+            _stackPopupView.Add(view);
             return prefab;
         }
 
         private GameObject GetPopupObject(PopupType popupType)
         {
-            switch (popupType)
+            return popupType switch
             {
-                case PopupType.SkillDetail:
-                return skillDetailPrefab;
-                case PopupType.Ruling:
-                return rulingPrefab;
-                case PopupType.Option:
-                return optionPrefab;
-                case PopupType.Ranking:
-                return rankingPrefab;
-                case PopupType.Credit:
-                return creditPrefab;
-                case PopupType.CharacterList:
-                return characterListPrefab;
-                case PopupType.Help:
-                return helpPrefab;
-                case PopupType.AlcanaList:
-                return alcanaListPrefab;
-                case PopupType.SlotSave:
-                return slotSavePrefab;
-                case PopupType.LearnSkill:
-                return learnSkillPrefab;
-                case PopupType.SkillTrigger:
-                return skillTriggerPrefab;
-                case PopupType.SkillLog:
-                return skillLogPrefab;
-                case PopupType.ScorePrize:
-                return scorePrizePrefab;
-                case PopupType.ClearParty:
-                return clearPartyPrefab;
-                case PopupType.CheckConflict:
-                return checkConflictPrefab;
-            }
-            return null;
+                PopupType.SkillDetail => skillDetailPrefab,
+                PopupType.Ruling => rulingPrefab,
+                PopupType.Option => optionPrefab,
+                PopupType.Ranking => rankingPrefab,
+                PopupType.Credit => creditPrefab,
+                PopupType.CharacterList => characterListPrefab,
+                PopupType.Help => helpPrefab,
+                PopupType.AlcanaList => alcanaListPrefab,
+                PopupType.SlotSave => slotSavePrefab,
+                PopupType.LearnSkill => learnSkillPrefab,
+                PopupType.SkillTrigger => skillTriggerPrefab,
+                PopupType.SkillLog => skillLogPrefab,
+                PopupType.ScorePrize => scorePrizePrefab,
+                PopupType.ClearParty => clearPartyPrefab,
+                PopupType.CheckConflict => checkConflictPrefab,
+                PopupType.Guide => guidePrefab,
+                _ => null,
+            };
         }
 
         public void ClosePopup()
         {
-            foreach(Transform child in confirmRoot.transform)
+            if (_stackPopupView.Count > 0)
             {
-                Destroy(child.gameObject);
+                var lastPopupView = _stackPopupView[_stackPopupView.Count-1];
+                _stackPopupView.Remove(lastPopupView);
+                Destroy(lastPopupView.gameObject);
             }
-            confirmRoot.SetActive(false);
+            if (_stackPopupView.Count == 0)
+            {
+                confirmRoot.SetActive(false);
+            }
         }
 
     }
@@ -102,5 +94,6 @@ namespace Ryneus
         ScorePrize,
         ClearParty,
         CheckConflict,
+        Guide,
     }
 }

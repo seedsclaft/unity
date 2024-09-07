@@ -266,12 +266,17 @@ namespace Ryneus
             baseView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (popupInfo.EndEvent != null) popupInfo.EndEvent();
+                popupInfo.EndEvent?.Invoke();
             });
             if (popupInfo.PopupType == PopupType.LearnSkill)
             {
                 var learnSkill = prefab.GetComponent<LearnSkillView>();
                 learnSkill.SetLearnSkillInfo((LearnSkillInfo)popupInfo.template);
+            } else
+            if (popupInfo.PopupType == PopupType.Guide)
+            {
+                var guide = prefab.GetComponent<GuideView>();
+                guide.SetGuide((string)popupInfo.template);
             }
             SetIsBusyMainAndStatus();
         }

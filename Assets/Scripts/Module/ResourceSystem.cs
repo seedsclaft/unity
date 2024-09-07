@@ -185,6 +185,11 @@ namespace Ryneus
         {
             return LoadResourceSpriteAtlas("Texture/Systems");
         }
+
+        public static Sprite LoadGuideSprite(string path)
+        {
+            return LoadResourceSprite("Texture/Guide/" + path);
+        }
     }
 
     public static class ResourceRequestExtenion

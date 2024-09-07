@@ -827,7 +827,18 @@ namespace Ryneus
         private void CommandStageHelp()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.CommandHelpList(DataSystem.HelpText("Tactics"));
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Guide,
+                template = "Tactics",
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void CommandCancelRecordList()

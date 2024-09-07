@@ -131,7 +131,8 @@ public class OptionViewEvent
     }
 }
 
-public class PopupInfo{
+public class PopupInfo
+{
     public PopupType PopupType;
     public System.Action EndEvent;
     public object template;
