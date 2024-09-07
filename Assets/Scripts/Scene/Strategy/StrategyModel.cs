@@ -188,6 +188,11 @@ namespace Ryneus
                     case GetItemType.SelectRelic:
                         // アルカナ選択の時は既にFlagを変えておく
                         break;
+                    case GetItemType.BattleNuminosBonus:
+                    case GetItemType.BattleEnemyLvUp:
+                        getItemInfo.SetGetFlag(true);
+                        getItemInfo.SetResultParam(getItemInfo.Param1);
+                        break;
                 }
             }
             // スコア報酬を更新

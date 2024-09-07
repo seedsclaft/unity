@@ -133,6 +133,8 @@ namespace Ryneus
 		AddActor = 51,
 		SelectAddActor = 52,
 		BattleScoreBonus = 61,
+		BattleNuminosBonus = 62,
+		BattleEnemyLvUp = 63,
 		SelectRelic = 71,
 		RemakeHistory = 101,
 		ParallelHistory = 102,

@@ -131,9 +131,9 @@ namespace Ryneus
             var enemies = _sceneParam.EnemyInfos;
             foreach (var enemy in enemies)
             {
-                enemy.ResetData();
-                enemy.ResetSkillInfos();
-                enemy.ResetParamInfos();
+                enemy.ResetData(enemy.Level);
+                //enemy.ResetSkillInfos();
+                enemy.InitParamInfos(enemy.EnemyData);
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
                 _battleRecords[enemy.Index] = new BattleRecord(enemy.Index);
@@ -2395,7 +2395,7 @@ namespace Ryneus
                 }
                 foreach (var battlerInfo in _troop.BattlerInfos)
                 {
-                    battlerInfo.ResetData();
+                    battlerInfo.ResetData(battlerInfo.Level);
                 }
                 if (CurrentSelectRecord().SaveBattleReplayStage())
                 {

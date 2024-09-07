@@ -501,6 +501,36 @@ namespace Ryneus
             return score;
         }
 
+        public int BattleEnemyLv(int stageId,int seek,WorldType worldType)
+        {
+            var enemyLv = 0;
+            var records = EnableResultInfos(stageId,seek,worldType);
+            foreach (var resultInfo in records)
+            {
+                var enemyLvBonus = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.BattleEnemyLvUp);
+                foreach (var getItemInfo in enemyLvBonus)
+                {
+                    enemyLv += getItemInfo.ResultParam;
+                }
+            }
+            return enemyLv;
+        }
+
+        public int BattleNuminosBonus(int stageId,int seek,WorldType worldType)
+        {
+            var numinosBonus = 0;
+            var records = EnableResultInfos(stageId,seek,worldType);
+            foreach (var resultInfo in records)
+            {
+                var enemyLvBonus = resultInfo.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.BattleNuminosBonus);
+                foreach (var getItemInfo in enemyLvBonus)
+                {
+                    numinosBonus += getItemInfo.ResultParam;
+                }
+            }
+            return numinosBonus;
+        }
+
         // クリア情報
         private Dictionary<int,int> _stageClearDict = new ();
         public Dictionary<int,int> StageClearDict => _stageClearDict;

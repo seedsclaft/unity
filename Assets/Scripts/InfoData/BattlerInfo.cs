@@ -145,44 +145,45 @@ namespace Ryneus
             {
                 _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
             }
-            SetKindTypes(actorInfo.Master.Kinds);
-            AddKindPassive();
-            foreach (var skill in _skills)
-            {
-                skill.SetUseCount(0);
-                skill.SetCountTurn(0);
-            }
+            InitKindTypes(actorInfo.Master.Kinds);
+            InitSkillCount();
             ResetAp(true);
         }
 
         public BattlerInfo(EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss)
         {
+            _enemyId = enemyData.Id;
             _charaId = enemyData.Id;
             _level = lv;
             _bossFlag = isBoss;
-            var statusInfo = new StatusInfo();
-            int plusHpParam = isBoss == true ? 50 : 0;
-            statusInfo.SetParameter(
-                (int)(enemyData.BaseStatus.Hp + (plusHpParam + lv * enemyData.HpGrowth * 0.01f)),
-                Math.Min(50, (int)(enemyData.BaseStatus.Mp + (lv * enemyData.MpGrowth * 0.01f))),
-                (int)(enemyData.BaseStatus.Atk + (lv * enemyData.AtkGrowth * 0.01f)),
-                (int)(enemyData.BaseStatus.Def + (lv * enemyData.DefGrowth * 0.01f)),
-                Math.Min(100, (int)(enemyData.BaseStatus.Spd + (lv * enemyData.SpdGrowth * 0.01f)))
-            );
-            _demigodParam = lv / 2;
-            _status = statusInfo;
+            InitParamInfos(enemyData);
             _index = index + 100;
             _isActor = false;
             _isAlcana = false;
-            _enemyId = enemyData.Id;
-            _hp = _status.Hp;
-            _mp = _status.Mp;
             _lineIndex = lineIndex;
             _isActorView = enemyData.Id > 1000;
             if (_isActorView)
             {
                 _actorInfo = new ActorInfo(DataSystem.FindActor(enemyData.Id-1000));
             }
+        }
+
+        public void InitParamInfos(EnemyData enemyData)
+        {
+            var statusInfo = new StatusInfo();
+            int plusHpParam = _bossFlag == true ? 50 : 0;
+            statusInfo.SetParameter(
+                (int)(enemyData.BaseStatus.Hp + (plusHpParam + _level * enemyData.HpGrowth * 0.01f)),
+                Math.Min(50, (int)(enemyData.BaseStatus.Mp + (_level * enemyData.MpGrowth * 0.01f))),
+                (int)(enemyData.BaseStatus.Atk + (_level * enemyData.AtkGrowth * 0.01f)),
+                (int)(enemyData.BaseStatus.Def + (_level * enemyData.DefGrowth * 0.01f)),
+                Math.Min(100, (int)(enemyData.BaseStatus.Spd + (_level * enemyData.SpdGrowth * 0.01f)))
+            );
+            _demigodParam = _level / 2;
+            _status = statusInfo;
+            _hp = _status.Hp;
+            _mp = _status.Mp;
+
             _skills = new List<SkillInfo>();
             for (int i = 0;i < enemyData.LearningSkills.Count;i++)
             {
@@ -194,13 +195,8 @@ namespace Ryneus
                     _skills.Add(skillInfo);
                 }
             }
-            SetKindTypes(enemyData.Kinds);
-            AddKindPassive();
-            foreach (var skill in _skills)
-            {
-                skill.SetUseCount(0);
-                skill.SetCountTurn(0);
-            }            
+            InitKindTypes(enemyData.Kinds);
+            InitSkillCount();
             var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
             foreach (var enhanceSkill in enhanceSkills)
             {
@@ -209,77 +205,35 @@ namespace Ryneus
             _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             foreach (var skillInfo in _skills)
             {
-                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
+                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == enemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
                 if (skillTriggerData == null)
                 {
                     continue;
                 }
-                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
+                var skillTriggerInfo = new SkillTriggerInfo(enemyData.Id,skillInfo);
                 var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
                 var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
-                _skillTriggerInfos.Add(skillTriggerInfo);
-            }
-            _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
-            ResetAp(true);
-        }
-        
-        public void ResetSkillInfos()
-        {
-            _skills = new List<SkillInfo>();
-            for (int i = 0;i < EnemyData.LearningSkills.Count;i++)
-            {
-                if (_level >= EnemyData.LearningSkills[i].Level)
-                {
-                    var skillInfo = new SkillInfo(EnemyData.LearningSkills[i].SkillId);
-                    skillInfo.SetTriggerDates(EnemyData.LearningSkills[i].TriggerDates);
-                    skillInfo.SetWeight(EnemyData.LearningSkills[i].Weight);
-                    _skills.Add(skillInfo);
-                }
-            }
-            SetKindTypes(EnemyData.Kinds);
-            AddKindPassive();
-            foreach (var skill in _skills)
-            {
-                skill.SetUseCount(0);
-                skill.SetCountTurn(0);
-            }
-        }
-
-        public void ResetParamInfos()
-        {
-            var statusInfo = new StatusInfo();
-            int plusHpParam = _bossFlag == true ? 50 : 0;
-            statusInfo.SetParameter(
-                (int)(EnemyData.BaseStatus.Hp + (plusHpParam + _level * EnemyData.HpGrowth * 0.01f)),
-                Math.Min(50, (int)(EnemyData.BaseStatus.Mp + (_level * EnemyData.MpGrowth * 0.01f))),
-                (int)(EnemyData.BaseStatus.Atk + (_level * EnemyData.AtkGrowth * 0.01f)),
-                (int)(EnemyData.BaseStatus.Def + (_level * EnemyData.DefGrowth * 0.01f)),
-                Math.Min(100, (int)(EnemyData.BaseStatus.Spd + (_level * EnemyData.SpdGrowth * 0.01f)))
-            );
-            _demigodParam = _level / 2;
-            _status = statusInfo;
-            _hp = _status.Hp;
-            _mp = _status.Mp;
-
-            _skillTriggerInfos.Clear();
-            AddKindPassive();
-            foreach (var skillInfo in _skills)
-            {
-                var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == EnemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
-                if (skillTriggerData == null)
-                {
-                    continue;
-                }
-                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
-                var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
-                var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
-                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
-                skillTriggerInfo.SetPriority(skillInfo.Weight);
                 _skillTriggerInfos.Add(skillTriggerInfo);
             }
             _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
             _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? -1 : 1);
+            ResetAp(true);
+        }
+
+        private void InitKindTypes(List<KindType> kindTypes)
+        {
+            SetKindTypes(kindTypes);
+            AddKindPassive();
+        }
+
+        private void InitSkillCount()
+        {
+            foreach (var skill in _skills)
+            {
+                skill.SetUseCount(0);
+                skill.SetCountTurn(0);
+            }            
         }
 
         private void SetKindTypes(List<KindType> kindTypes)
@@ -313,16 +267,13 @@ namespace Ryneus
                 var skillTrigger = new SkillTriggerInfo(_index,skillInfo);
                 _skillTriggerInfos.Add(skillTrigger);
             }
-            foreach (var skill in _skills)
-            {
-                skill.SetUseCount(0);
-                skill.SetCountTurn(0);
-            }
+            InitSkillCount();
             ResetAp(true);
         }
 
-        public void ResetData()
+        public void ResetData(int level)
         {
+            _level = level;
             _stateInfos.Clear();
             GainHp(_status.Hp);
             //GainMp(_status.Mp);
@@ -357,7 +308,8 @@ namespace Ryneus
             }
             foreach (var skillInfo in kindSkills)
             {
-                var skillTriggerInfo = new SkillTriggerInfo(EnemyData.Id,skillInfo);
+                var triggerId = _isActor ? _index : EnemyData.Id;
+                var skillTriggerInfo = new SkillTriggerInfo(triggerId,skillInfo);
                 var SkillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
                 var SkillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});

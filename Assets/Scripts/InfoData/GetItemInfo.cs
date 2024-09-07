@@ -70,6 +70,10 @@ namespace Ryneus
                     return DataSystem.GetText(20240);
                 case GetItemType.BattleScoreBonus:
                     return DataSystem.GetReplaceText(20260,(_resultParam*0.01f).ToString()) + "x" + Param1.ToString();
+                case GetItemType.BattleNuminosBonus:
+                    return DataSystem.GetReplaceText(20280,Param1.ToString());
+                case GetItemType.BattleEnemyLvUp:
+                    return DataSystem.GetReplaceText(20290,Param1.ToString());
                 case GetItemType.SelectRelic:
                     return DataSystem.GetText(20250);
                 case GetItemType.RemakeHistory:

@@ -283,6 +283,23 @@ MonoBehaviour:
       Line: 0
       StageLv: 0
     StageTurn: 0
+  - TroopId: 2102
+    TroopEnemies:
+    - Id: 2102
+      TroopId: 2102
+      EnemyId: 102
+      Lv: 20
+      BossFlag: 1
+      Line: 0
+      StageLv: 0
+    - Id: 2102
+      TroopId: 2102
+      EnemyId: 4
+      Lv: 10
+      BossFlag: 0
+      Line: 0
+      StageLv: 0
+    StageTurn: 0
   - TroopId: 2201
     TroopEnemies:
     - Id: 2201
@@ -559,6 +576,30 @@ MonoBehaviour:
       Line: 1
       StageLv: 0
     StageTurn: 0
+  - TroopId: 3102
+    TroopEnemies:
+    - Id: 3102
+      TroopId: 3102
+      EnemyId: 103
+      Lv: 25
+      BossFlag: 1
+      Line: 1
+      StageLv: 0
+    - Id: 3102
+      TroopId: 3102
+      EnemyId: 1
+      Lv: 15
+      BossFlag: 0
+      Line: 0
+      StageLv: 0
+    - Id: 3102
+      TroopId: 3102
+      EnemyId: 5
+      Lv: 15
+      BossFlag: 0
+      Line: 1
+      StageLv: 0
+    StageTurn: 0
   - TroopId: 4041
     TroopEnemies:
     - Id: 4041
@@ -641,6 +682,16 @@ MonoBehaviour:
       TroopId: 4101
       EnemyId: 104
       Lv: 30
+      BossFlag: 1
+      Line: 1
+      StageLv: 0
+    StageTurn: 0
+  - TroopId: 4102
+    TroopEnemies:
+    - Id: 4102
+      TroopId: 4102
+      EnemyId: 104
+      Lv: 40
       BossFlag: 1
       Line: 1
       StageLv: 0

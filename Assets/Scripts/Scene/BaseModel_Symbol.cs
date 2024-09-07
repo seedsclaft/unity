@@ -56,7 +56,7 @@ namespace Ryneus
                             symbolInfo.SetTroopInfo(BattleTroop(stageSymbolData));
                             if (randFlag)
                             {
-                                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.Seek);
+                                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.StageId,stageSymbolData.Seek);
                                 symbolInfo.TroopInfo.AddGetItemInfo(numinosGetItem);
                             }                    
                         }
@@ -105,6 +105,17 @@ namespace Ryneus
                         if (prizeSet.GetItem.Type == GetItemType.SelectAddActor)
                         {
                             getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
+                        } else
+                        if (prizeSet.GetItem.Type == GetItemType.Numinous)
+                        {
+                            var numinosBonus = PartyInfo.BattleNuminosBonus(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
+                            var data = new GetItemData
+                            {
+                                Param1 = getItemInfo.Param1 + numinosBonus,
+                                Param2 = getItemInfo.Param2,
+                                Type = GetItemType.Numinous
+                            };
+                            getItemInfos.Add(new GetItemInfo(data));
                         } else
                         {
                             getItemInfos.Add(getItemInfo);
@@ -324,14 +335,15 @@ namespace Ryneus
         private TroopInfo BattleTroop(StageSymbolData stageSymbolData)
         {
             var troopId = stageSymbolData.Param1;
-            var plusLevel = stageSymbolData.Param2;
+            var plusLv = PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
+            var plusNuminos = PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
             var troopInfo = new TroopInfo(troopId,troopId == -1);
-            var lv = DataSystem.Stages.Find(a => a.Id == stageSymbolData.StageId).StageLv + plusLevel;
+            var lv = DataSystem.Stages.Find(a => a.Id == stageSymbolData.StageId).StageLv + plusLv;
             // ランダム生成
             if (troopId == -1)
             {
                 troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + lv);
-                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.Seek);
+                var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.StageId,stageSymbolData.Seek);
                 troopInfo.AddGetItemInfo(numinosGetItem);
                 // ランダム報酬データ設定
                 // 70 = Rank1 Passive,
@@ -357,13 +369,14 @@ namespace Ryneus
             return troopInfo;
         }
 
-        private GetItemInfo MakeEnemyRandomNuminos(int seek)
+        private GetItemInfo MakeEnemyRandomNuminos(int stageId,int seek)
         {
+            var numinosBonus = PartyInfo.BattleNuminosBonus(stageId,seek,WorldType.Main);
             var totalScore = (int)PartyInfo.TotalScore(WorldType.Main);
             // 確定報酬でNuminos
             var numinosGetItem = new GetItemData
             {
-                Param1 = totalScore + seek,
+                Param1 = totalScore + seek + numinosBonus,
                 Type = GetItemType.Numinous
             };
             return new GetItemInfo(numinosGetItem);
