@@ -449,24 +449,18 @@ namespace Ryneus
 
         private void CommandCommandHelp()
         {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var helpKey = "";
-            switch (_model.TacticsCommandType)
+            _busy = true;
+            var popupInfo = new PopupInfo
             {
-                case TacticsCommandType.Paradigm:
-                    helpKey = "Battle";
-                    break;
-                case TacticsCommandType.Train:
-                    helpKey = "LevelUp";
-                    break;
-                case TacticsCommandType.Alchemy:
-                    helpKey = "Alchemy";
-                    break;
-            }
-            if (helpKey != "")
-            {
-                _view.CommandHelpList(DataSystem.HelpText(helpKey));
-            }
+                PopupType = PopupType.Guide,
+                template = "Battle",
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void CommandEnemyInfo()

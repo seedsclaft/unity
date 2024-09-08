@@ -17,6 +17,7 @@ namespace Ryneus
         private new System.Action<StatusViewEvent> _commandData = null;
         [SerializeField] private Button leftButton = null;
         [SerializeField] private Button rightButton = null;
+        [SerializeField] private Button helpButton = null;
         [SerializeField] private GameObject decideAnimation = null;
         [SerializeField] private MagicList magicList = null;
         [SerializeField] private BaseList commandList = null;
@@ -74,6 +75,7 @@ namespace Ryneus
             leftButton.onClick.AddListener(() => OnClickLeft());
             rightButton.onClick.AddListener(() => OnClickRight());
             decideButton.onClick.AddListener(() => OnClickDecide());
+            helpButton.onClick.AddListener(() => OnClickHelp());
             characterListButton.SetCallHandler(() => OnClickCharacterList());
             commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
             commandList.SetData(commandListData);
@@ -239,6 +241,12 @@ namespace Ryneus
         {
             if (!_isDisplayDecide) return;
             var eventData = new StatusViewEvent(CommandType.DecideActor);
+            _commandData(eventData);
+        }
+
+        private void OnClickHelp()
+        {
+            var eventData = new StatusViewEvent(CommandType.CallHelp);
             _commandData(eventData);
         }
 
@@ -482,6 +490,7 @@ namespace Status
         ShowLearnMagic,
         LearnMagic,
         HideLearnMagic,
+        CallHelp,
         Back
     }
 }

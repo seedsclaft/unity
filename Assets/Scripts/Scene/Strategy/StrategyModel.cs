@@ -287,7 +287,7 @@ namespace Ryneus
             var recordScore = SceneParam.BattleResultScore;
             if (recordScore >= 0)
             {
-                return recordScore.ToString() + "%";
+                return "+" + (recordScore*0.01f).ToString("F2") + "%";
             }
             return null;
         }

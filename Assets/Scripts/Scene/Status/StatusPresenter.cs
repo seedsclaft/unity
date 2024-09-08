@@ -73,6 +73,9 @@ namespace Ryneus
                 case Status.CommandType.SelectCommandList:
                     CommandSelectCommandList((SystemData.CommandData)viewEvent.template);
                     return;
+                case Status.CommandType.CallHelp:
+                    CommandCallHelp();
+                    return;
             }
         }
 
@@ -300,6 +303,22 @@ namespace Ryneus
         {
             _busy = busy;
             _view.SetBusy(busy);
+        }
+
+        private void CommandCallHelp()
+        {
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Guide,
+                template = "Status",
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
     }
 }
