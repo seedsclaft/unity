@@ -384,6 +384,8 @@ namespace Ryneus
         ChainCount = 17060, // 拘束成功回数
         IsFriendBattler = 18010, // 自身の味方
         IsOpponentBattler = 18020, // 自身の味方
+        AttackedActionIsScope = 19010, // 自身がParam1=Sconeの攻撃を受けるとき
+        AttackedActionIsKind = 19020, // 自身がParam1=Kindから攻撃を受けるとき
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる
         DeadWithoutSelf = 20040, // 自身以外が戦闘不能
         SelfDead = 20050, // 自身が戦闘不能

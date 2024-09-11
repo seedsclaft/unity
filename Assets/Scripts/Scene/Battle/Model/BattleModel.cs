@@ -96,6 +96,8 @@ namespace Ryneus
             _checkTriggerDict[15] = new CheckTriggerAttackAction();
 
             _checkTriggerDict[17] = new CheckTriggerBattleCount();
+
+            _checkTriggerDict[19] = new CheckTriggerAttackedAction();
         }
 
         public UniTask<List<AudioClip>> GetBattleBgm()
