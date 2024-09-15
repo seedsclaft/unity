@@ -151,7 +151,7 @@ namespace Ryneus
                 }
             }
             _symbolRecordList.Add(symbolResultInfo);
-            _symbolRecordList.Sort((a,b) => a.SortKey() - b.SortKey() > 0 ? 1 : -1);
+            _symbolRecordList.Sort((a,b) => a.SortKey() - b.SortKey() > 0 ? -1 : 1);
         }
 
         /// <summary>

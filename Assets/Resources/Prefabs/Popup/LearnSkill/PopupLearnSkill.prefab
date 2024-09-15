@@ -930,14 +930,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8784314}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f1b8b8e00f8522942bfe95ec3621256b, type: 3}
+  m_Sprite: {fileID: -1496380315, guid: 02dad5b0726506d44876f67ba3bb40d3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1202,6 +1202,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6685158610161820032}
     m_Modifications:
+    - target: {fileID: 1961450777153048150, guid: f1e8e54d70769694f9c1149d7d4eeb07,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3246568819696453900, guid: f1e8e54d70769694f9c1149d7d4eeb07,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3246568819696453900, guid: f1e8e54d70769694f9c1149d7d4eeb07,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5008359745749644051, guid: f1e8e54d70769694f9c1149d7d4eeb07,
         type: 3}
       propertyPath: m_AnchorMax.y

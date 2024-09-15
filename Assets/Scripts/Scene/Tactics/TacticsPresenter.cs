@@ -302,15 +302,6 @@ namespace Ryneus
             _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
-            // 過去
-            if (symbolResultInfo.StageId < _model.CurrentStage.Id || symbolResultInfo.Seek < _model.CurrentStage.Seek)
-            {
-                // 過去の中ではさらに過去に戻らない
-                if (_model.PartyInfo.ReturnSymbol == null)
-                {
-                }
-            }
-            //_backCommand = CommandType.TacticsCommand;
         }
 
         private void CommandCancelSymbolRecord()
@@ -413,12 +404,26 @@ namespace Ryneus
                 case SymbolType.Boss:
                     _view.ChangeBackCommandActive(true);
                     _view.ChangeSymbolBackCommandActive(true);
+                    /*
                     _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionListData(_model.TacticsActor()));
 
                     _view.ShowConfirmCommand();
                     _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());
                     _view.ShowSelectCharacter();
+                    */
                     CommandRefresh();
+                    _busy = true;
+                    var popupInfo = new PopupInfo
+                    {
+                        PopupType = PopupType.BattleParty,
+                        EndEvent = () =>
+                        {
+                            _busy = false;
+                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                            CommandCancelSelectSymbol();
+                        }
+                    };
+                    _view.CommandCallPopup(popupInfo);
                     _backCommand = CommandType.CancelSelectSymbol;
                     break;
                 case SymbolType.Recover:

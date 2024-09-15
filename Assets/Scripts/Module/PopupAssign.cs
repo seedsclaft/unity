@@ -22,6 +22,7 @@ namespace Ryneus
         [SerializeField] private GameObject clearPartyPrefab = null;
         [SerializeField] private GameObject checkConflictPrefab = null;
         [SerializeField] private GameObject guidePrefab = null;
+        [SerializeField] private GameObject battlePartyPrefab = null;
 
         private List<BaseView> _stackPopupView = new ();
         
@@ -56,6 +57,7 @@ namespace Ryneus
                 PopupType.ClearParty => clearPartyPrefab,
                 PopupType.CheckConflict => checkConflictPrefab,
                 PopupType.Guide => guidePrefab,
+                PopupType.BattleParty => battlePartyPrefab,
                 _ => null,
             };
         }
@@ -95,5 +97,6 @@ namespace Ryneus
         ClearParty,
         CheckConflict,
         Guide,
+        BattleParty,
     }
 }

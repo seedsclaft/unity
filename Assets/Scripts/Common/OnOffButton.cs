@@ -19,10 +19,13 @@ namespace Ryneus
         {
             _exitHandler = exitHandler;
             SetSelectHandler(
-                (a) => Cursor.SetActive(true),
+                (a) => 
+                {
+                    SetActiveCursor(true);
+                },
                 () => 
                 {
-                    Cursor.SetActive(false);
+                    SetActiveCursor(false);
                     _exitHandler?.Invoke();
                 }
             );
@@ -44,6 +47,13 @@ namespace Ryneus
         public void SetActiveCursor(bool isActive)
         {
             Cursor.SetActive(isActive);
+            if (isActive)
+            {
+                SetSelect();
+            } else
+            {
+                SetUnSelect();
+            }
         }
     }
 }

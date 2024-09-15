@@ -291,7 +291,6 @@ namespace Ryneus
                 }
             };
             _view.CommandCallPopup(popupInfo);
-            return;
         }
 
         private void CommandSelectActorParadigm()

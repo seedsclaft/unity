@@ -109,17 +109,6 @@ namespace Ryneus
             return ActorLearningMagicList(TacticsActor(),_selectAttribute,selectedSkillId);
         }
 
-        public List<AttributeType> AttributeTabList()
-        {
-            var list = new List<AttributeType>();
-            foreach (var attribute in Enum.GetValues(typeof(AttributeType)))
-            {
-                var attributeType = (AttributeType)attribute;
-                list.Add(attributeType);
-            }
-            return list;
-        }
-
         public List<ListData> TacticsCharacterData(int selectIndex = 0)
         {
             if (selectIndex < 0)

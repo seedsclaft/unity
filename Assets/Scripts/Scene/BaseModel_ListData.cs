@@ -75,5 +75,16 @@ namespace Ryneus
             var listData = MakeListData(skillInfos,selectIndex);
             return listData;
         }
+        
+        public List<AttributeType> AttributeTabList()
+        {
+            var list = new List<AttributeType>();
+            foreach (var attribute in Enum.GetValues(typeof(AttributeType)))
+            {
+                var attributeType = (AttributeType)attribute;
+                list.Add(attributeType);
+            }
+            return list;
+        }
     }
 }

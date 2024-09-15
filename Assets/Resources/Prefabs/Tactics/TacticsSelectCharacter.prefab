@@ -1135,6 +1135,8 @@ MonoBehaviour:
   recoveryCost: {fileID: 0}
   resourceGain: {fileID: 0}
   addTiming: {fileID: 0}
+  unitTypeImage: {fileID: 0}
+  unitTypeImageBack: {fileID: 0}
 --- !u!225 &4714346885792150345
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1536,7 +1538,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f1b8b8e00f8522942bfe95ec3621256b, type: 3}
+  m_Sprite: {fileID: -1496380315, guid: 02dad5b0726506d44876f67ba3bb40d3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
