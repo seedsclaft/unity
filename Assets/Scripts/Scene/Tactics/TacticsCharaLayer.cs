@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Ryneus
 {
@@ -40,6 +39,22 @@ namespace Ryneus
                 _tacticsCharacters[i].Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
                 _tacticsCharacters[i].SetData(actorInfos[i]);
                 _tacticsCharacters[i].SetCallHandler(clickEvent);
+                _tacticsCharacters[i].SetIndex(actorInfos[i].ActorId);
+                _tacticsCharacters[i].SetSelectHandler((a) => 
+                {
+                    SelectedEvent(a);
+                });
+            }
+        }
+
+        private void SelectedEvent(int actorId)
+        {
+            foreach (var tacticsChara in _tacticsCharacters)
+            {
+                if (tacticsChara.ActorInfo != null)
+                {
+                    tacticsChara.SetSelectCursor(actorId == tacticsChara.ActorInfo.ActorId);
+                }
             }
         }
     }

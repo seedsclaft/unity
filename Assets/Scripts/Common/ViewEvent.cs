@@ -39,7 +39,7 @@ namespace Ryneus
     abstract public class ListItem : MonoBehaviour
     {    
         public Button clickButton;
-        private int _index;
+        private int _index = -1;
         public int Index => _index;
         private ListData _listData;
         public ListData ListData => _listData;
@@ -119,7 +119,10 @@ namespace Ryneus
             var enterListener = clickButton.gameObject.AddComponent<ContentEnterListener>();
             enterListener.SetEnterEvent(() => 
             {
-                handler(_index);
+                if (_index != -1)
+                {
+                    handler(_index);
+                }
             });
             enterListener.SetExitEvent(() => 
             {
