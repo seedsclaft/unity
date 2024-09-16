@@ -34,7 +34,7 @@ namespace Ryneus
                 foreach (var rankingData in rankingDataList)
                 {
                     var data = (RankingInfo)rankingData.Data;
-                    rankingData.SetSelected(data.Name == CurrentData.PlayerInfo.PlayerName && data.Score == CurrentData.PlayerInfo.GetBestScore(_stageId));
+                    rankingData.SetSelected(data.Name == CurrentData.PlayerInfo.PlayerName && data.Score == PartyInfo.TotalScore(WorldType.Main));
                 }
                 endEvent(rankingDataList);
             }

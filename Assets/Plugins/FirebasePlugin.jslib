@@ -1,7 +1,7 @@
 var FirebasePlugin = {
 
-  FirebaseInit: function () {
-    console.log("FirebaseInit");
+  InitializeWebGL: function () {
+    console.log("InitializeWebGL");
     const FirebaseConfig = {
       apiKey: "AIzaSyCWY2ryuuifGEqqgDaktajcYYFFsWToI0A",
       authDomain: "norm-4d161.firebaseapp.com",

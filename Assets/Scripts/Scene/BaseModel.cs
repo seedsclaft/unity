@@ -502,8 +502,8 @@ namespace Ryneus
                     userId,
                     evaluate,
                     CurrentData.PlayerInfo.PlayerName,
-                    SelectIdxList(),
-                    SelectRankList()
+                    null,
+                    null
                 );
     #endif
                 await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
@@ -576,9 +576,6 @@ namespace Ryneus
         public bool EnableUserContinue()
         {
             var enable = true;
-    #if UNITY_WEBGL
-            enable = CurrentStage.ContinueCount < CurrentStage.Master.ContinueLimit;
-    #endif
             return enable;
         }
 

@@ -18,9 +18,9 @@ namespace Ryneus
         public static bool IsBusy = false;
         public static List<RankingInfo> RankingInfos = new ();
         public static int CurrentScore = 0;
-    #if UNITY_WEBGL
+#if UNITY_WEBGL
         [DllImport("__Internal")]
-        private static extern void FirebaseInit();
+        private static extern void InitializeWebGL();
 
         [DllImport("__Internal")]
         private static extern void FirebaseReadRankingData(int instanceId,Action<int,string> result);
@@ -38,9 +38,19 @@ namespace Ryneus
                 return;
             }
             _isInit = true;
-            FirebaseInit();
+#if !UNITY_EDITOR
+            InitializeWebGL();
+#endif
         }
 
+        public static List<SaveBattleInfo> ReplayData = new ();
+        public static void LoadReplayFile(string key)
+        {
+        }
+        
+        public static void UploadReplayFile(string key,string userId,SaveBattleInfo data)
+        {
+        }
         public void ReadRankingData(int stageId,string rankingTypeText)
         {
             if (!_isInit)

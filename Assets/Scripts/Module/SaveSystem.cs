@@ -112,11 +112,6 @@ namespace Ryneus
 					Debug.LogException(e);
 				} finally 
 				{
-					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-					if( TempFileStream != null )
-					{
-						TempFileStream.Close();
-					}
 				}
 			}
 			return default;
@@ -141,11 +136,6 @@ namespace Ryneus
 					return null;
 				} finally 
 				{
-					//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-					if( TempFileStream != null )
-					{
-						TempFileStream.Close();
-					}
 				}
 			}
 			return default;
