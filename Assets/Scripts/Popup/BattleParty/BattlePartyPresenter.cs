@@ -25,13 +25,13 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetStatusEvent((type) => UpdateStatusCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
-            _view.SetAttributeList(GetListData(_model.AttributeTabList()));
-            _view.SetTacticsMembers(GetListData(_model.StageMembers()));
+            CommandRefresh();
             var enemyInfos = _model.EnemyInfos();
             _view.SetEnemyMembers(GetListData(enemyInfos));
+            _view.SetAttributeList(GetListData(_model.AttributeTabList()));
+            _view.SetTacticsMembers(GetListData(_model.StageMembers()));
             _view.SetStatusButtonEvent(() => CommandStatusInfo());
             _view.OpenAnimation();
-            CommandRefresh();
             _busy = false;
         }
 
@@ -59,6 +59,7 @@ namespace Ryneus
                     CommandBattleStart();
                     break;
                 case CommandType.CommandHelp:
+                    CommandGuide();
                     break;
             }
         }
@@ -99,6 +100,7 @@ namespace Ryneus
         private void CommandSelectTacticsMember(ActorInfo actorInfo)
         {
             _model.SetCurrentActorInfo(actorInfo);
+            CommandRefresh();
         }
 
         private void CommandStatusInfo()
@@ -137,6 +139,7 @@ namespace Ryneus
             {
                 _model.SaveTempBattleMembers();
                 _view.CommandChangeViewToTransition(null);
+                _view.ChangeUIActive(false);
                 // ボス戦なら
                 if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
                 {
@@ -175,6 +178,23 @@ namespace Ryneus
         private void ShowCharacterDetail()
         {
             _view.ShowCharacterDetail(_model.CurrentActor,_model.StageMembers(),_model.SkillActionListData(_model.CurrentActor));  
+        }
+
+        private void CommandGuide()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Guide,
+                template = "Battle",
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
         
         private void CommandLevelUp()

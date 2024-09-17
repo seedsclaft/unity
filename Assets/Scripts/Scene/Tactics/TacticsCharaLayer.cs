@@ -57,5 +57,62 @@ namespace Ryneus
                 }
             }
         }
+
+        public TacticsChara ZoomActor(int actorId)
+        {
+            var find = _tacticsCharacters.Find(a => a.ActorInfo?.ActorId == actorId);
+            if (find != null)
+            {
+                find.ZoomActor();
+                HideWithOutActor(actorId);
+                return find;
+            }
+            return null;
+        }
+
+        public void EndZoomActor()
+        {
+            foreach (var tacticsChara in _tacticsCharacters)
+            {
+                if (tacticsChara.ActorInfo != null)
+                {
+                    tacticsChara.EndZoomActor();
+                }
+            }
+        }
+
+        public void EndStatusCursor()
+        {
+            foreach (var tacticsChara in _tacticsCharacters)
+            {
+                if (tacticsChara.ActorInfo != null)
+                {
+                    tacticsChara.KillSequence();
+                    tacticsChara.EndSelectCursor();
+                }
+            }
+        } 
+        
+        public void ShowActor()
+        {
+            foreach (var tacticsChara in _tacticsCharacters)
+            {
+                if (tacticsChara.ActorInfo != null)
+                {
+                    tacticsChara.ShowActor();
+                }
+            }
+        }
+
+        public void HideWithOutActor(int withOutActorId)
+        {
+            foreach (var tacticsChara in _tacticsCharacters)
+            {
+                if (tacticsChara.ActorInfo != null && withOutActorId != tacticsChara.ActorInfo.ActorId)
+                {
+                    tacticsChara.HideActor();
+                }
+            }
+        }
     }
 }

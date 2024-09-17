@@ -165,6 +165,33 @@ namespace Ryneus
         }
 
         
+        /// <summary>
+        /// ステータス詳細を表示
+        /// </summary>
+        /// <param name="actorInfos"></param>
+        public void CommandTacticsStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,System.Action closeEvent = null,System.Action<int> charaLayerEvent = null)
+        {
+            var statusViewInfo = new StatusViewInfo(() => 
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.ChangeUIActive(true);
+                closeEvent?.Invoke();
+            });
+            statusViewInfo.SetActorInfos(actorInfos,inBattle);
+            if (startIndex > -1)
+            {
+                statusViewInfo.SetStartIndex(startIndex);
+            }
+            statusViewInfo.SetDisplayDecideButton(addActor);
+            statusViewInfo.SetDisplayCharacterList(!addActor);
+            statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
+            statusViewInfo.SetDisplayBackButton(backButton);
+            statusViewInfo.SetCharaLayerEvent(charaLayerEvent);
+            _view.CommandCallTacticsStatus(statusViewInfo);
+            //_view.ChangeUIActive(false);
+        }
+
         public void CommandCallSideMenu(List<ListData> sideMenuCommands,System.Action closeEvent = null)
         {
             var sideMenuViewInfo = new SideMenuViewInfo

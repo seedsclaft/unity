@@ -228,7 +228,7 @@ namespace Ryneus
             var borderRect = battleGridLayer.GetComponent<RectTransform>();
             AnimationUtility.LocalMoveToTransform(borderRect.gameObject,
                 new Vector3(borderRect.localPosition.x,borderRect.localPosition.y,0),
-                new Vector3(borderRect.localPosition.x,borderRect.localPosition.y-360,0),
+                new Vector3(borderRect.localPosition.x,borderRect.localPosition.y-480,0),
                 duration);
         }
 

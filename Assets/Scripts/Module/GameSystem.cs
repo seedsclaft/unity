@@ -79,8 +79,12 @@ namespace Ryneus
             {
                 prefab.GetComponent<StatusView>().Initialize(statusViewInfo.ActorInfos);
             } else
+            if (statusType == StatusType.EnemyDetail)
             {
                 prefab.GetComponent<EnemyInfoView>().Initialize(statusViewInfo.EnemyInfos,statusViewInfo.IsBattle);
+            } else
+            {
+                prefab.GetComponent<TacticsStatusView>().Initialize(statusViewInfo.ActorInfos);
             }
             return prefab.GetComponent<BaseView>();
         }
@@ -167,6 +171,14 @@ namespace Ryneus
                     var enemyInfoView = CreateStatus(StatusType.EnemyDetail,enemyStatusInfo) as EnemyInfoView;
                     enemyInfoView.SetEvent((type) => UpdateCommand(type));
                     enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
+                    _currentScene.SetBusy(true);
+                    break;
+                case Base.CommandType.CallTacticsStatusView:
+                    var tacticsStatusInfo = (StatusViewInfo)viewEvent.template;
+                    var tacticsStatusInfoView = CreateStatus(StatusType.TacticsStatus,tacticsStatusInfo) as TacticsStatusView;
+                    tacticsStatusInfoView.SetEvent((type) => UpdateCommand(type));
+                    tacticsStatusInfoView.SetViewInfo(tacticsStatusInfo);
+                    tacticsStatusInfoView.SetBackEvent(tacticsStatusInfo.BackEvent);
                     _currentScene.SetBusy(true);
                     break;
                 case Base.CommandType.CallAdvScene:

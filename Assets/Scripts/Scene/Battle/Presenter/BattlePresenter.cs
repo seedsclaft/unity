@@ -66,6 +66,7 @@ namespace Ryneus
             
             _view.CommandStartTransition(() => 
             {
+                _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 StartBattle();
             });
         }

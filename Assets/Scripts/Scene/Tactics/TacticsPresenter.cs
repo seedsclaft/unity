@@ -299,7 +299,6 @@ namespace Ryneus
             //Symbolに対応したシンボルを表示
             _view.SetSymbols(_model.StageResultInfos(symbolResultInfo));
             _view.ShowRecordList();
-            _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
         }
@@ -335,7 +334,6 @@ namespace Ryneus
         {
             _model.SetTacticsCommandType(tacticsCommandType);
             _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
-            _view.CallTrainCommand(tacticsCommandType);
             switch (tacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
@@ -344,19 +342,41 @@ namespace Ryneus
                 case TacticsCommandType.Train:
                 case TacticsCommandType.Alchemy:
                 case TacticsCommandType.Status:
+                    CommandStatus();
                     break;
             }
         }
 
         private void CommandStageSymbol()
         {
-            _view.HideSelectCharacter();
             _view.HideRecordList();
             _view.ShowSymbolRecord();
             _view.SetPositionSymbolRecords(_model.FirstRecordIndex);
             _view.ChangeBackCommandActive(true);
             _view.ChangeSymbolBackCommandActive(true);
+            _view.EndStatusCursor();
             _backCommand = CommandType.CancelSymbolRecord;
+        }
+
+        private void CommandStatus(int startIndex = -1)
+        {
+            int actorId = -1;
+            if (startIndex != -1)
+            {
+                // actorIdに変換
+                var actor = _model.TacticsActor();
+                if (actor != null)
+                {
+                    actorId = actor.ActorId;
+                }
+            }
+
+            CommandStatusInfo(_model.PastActorInfos(),false,true,true,false,actorId,() => 
+            {
+                _view.SetHelpInputInfo("TACTICS");
+                _view.SetNuminous(_model.Currency);
+            });
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
@@ -456,7 +476,6 @@ namespace Ryneus
             _model.SetFirstBattleActorId();
             CommandRefresh();
             _view.ShowRecordList();
-            _view.HideSelectCharacter();
             _view.ShowSymbolRecord();
             _backCommand = CommandType.SelectTacticsCommand;
         }
@@ -742,8 +761,6 @@ namespace Ryneus
             _view.SetStageInfo(_model.CurrentStage);
             _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
             _view.SetTacticsCharaLayer(_model.StageMembers());
-            _view.SetEvaluate(_model.PartyEvaluate(),_model.TroopEvaluate());
-            _view.CommandRefresh();
             _view.SetPastMode(_model.CurrentStage.WorldType == WorldType.Brunch);
             _view.SetWorldMove(_model.BrunchMode,_model.CurrentStage.WorldType);
         }
@@ -816,7 +833,6 @@ namespace Ryneus
             CommandCallSideMenu(_model.SideMenu(),() => 
             {
                 _busy = false;
-                _view.SetBusyTrain(false);
             });
         }
 
@@ -864,7 +880,6 @@ namespace Ryneus
                 EndEvent = () =>
                 {
                     _busy = false;
-                    _view.SetBusyTrain(false);
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
             };
@@ -900,10 +915,21 @@ namespace Ryneus
 
         private void CommandSelectCharaLayer(int actorId)
         {
-            CommandStatusInfo(_model.StageMembers(),false,true,true,false,actorId,() => 
+            _busy = true;
+            _view.CommandSelectCharaLayer(actorId);
+            CommandTacticsStatusInfo(_model.StageMembers(),false,true,true,false,actorId,() => 
             {
+                _view.WaitFrame(12,() => 
+                {
+                    _busy = false;
+                });
+                _view.EndStatus();
                 _view.SetHelpText(DataSystem.GetText(20020));
                 _view.SetNuminous(_model.Currency);
+            },(a) => 
+            {
+                Debug.Log(a);
+                _view.CommandSelectCharaLayer(a);
             });
         }
 

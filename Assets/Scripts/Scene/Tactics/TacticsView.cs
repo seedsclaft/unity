@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using Tactics;
 using TMPro;
+using DG.Tweening;
 
 namespace Ryneus
 {
     public class TacticsView : BaseView ,IInputHandlerEvent
     {
-        [SerializeField] private TrainView trainView = null;
+        [SerializeField] private RectTransform BgRect = null;
+        //[SerializeField] private TrainView trainView = null;
         [SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
         [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
@@ -29,6 +31,8 @@ namespace Ryneus
         [SerializeField] private Button leftButton = null;
         [SerializeField] private Button rightButton = null;
         [SerializeField] private OnOffButton margeButton = null;
+        [SerializeField] private TextMeshProUGUI numinousText = null;
+
         
         [SerializeField] private GameObject backGround = null;
         [SerializeField] private Button symbolBackButton = null;
@@ -40,7 +44,6 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI pastText = null;
 
         public GetItemInfo SymbolGetItemInfo => tacticsSymbolList.GetItemInfo();
-        public int AlcanaListIndex => alcanaSelectList.Index;
         public SymbolResultInfo SymbolResultInfo() 
         {
             var listData = symbolRecordList.ListData;
@@ -100,14 +103,10 @@ namespace Ryneus
                 _commandData(eventData);
             });
 
-            trainView.Initialize(base._commandData);
-            trainView.SetParentInputKeyActive((a,b) => UpdateChildInputKeyActive(a,b));
-            trainView.SetHelpWindow(HelpWindow);
             alcanaSelectList.Initialize();
             leftButton.onClick.AddListener(() => OnClickLeft());
             rightButton.onClick.AddListener(() => OnClickRight());
             var presenter = new TacticsPresenter(this);
-            trainView.HideSelectCharacter();
             HideSymbolRecord();
             alcanaSelectList.Hide();
             presenter.CommandReturnStrategy();
@@ -119,16 +118,9 @@ namespace Ryneus
 
         private void CallSideMenu()
         {
-            SetBusyTrain(true);
             var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
             _commandData(eventData);
         }
-
-        public void SetBusyTrain(bool busy)
-        {
-            trainView.SetBusy(busy);
-        }
-
 
         public void SetTacticsCommand(List<ListData> menuCommands)
         {
@@ -153,11 +145,6 @@ namespace Ryneus
                 };
                 _commandData(eventData);
             }
-        }
-
-        public void CallTrainCommand(TacticsCommandType tacticsCommandType)
-        {
-            trainView.CallTrainCommand(tacticsCommandType);
         }
 
         private void UpdateHelpWindow()
@@ -249,42 +236,6 @@ namespace Ryneus
             tacticsSymbolList.SetData(symbolInfos);
             tacticsSymbolList.SetInfoHandler((a) => OnClickEnemyInfo());
             HideRecordList();
-        }
-
-        public void CommandRefresh()
-        {
-            trainView.CommandRefresh();
-        }
-
-        public void SetEvaluate(int partyEvaluate,int troopEvaluate)
-        {
-            trainView.SetEvaluate(partyEvaluate,troopEvaluate);
-        }
-
-
-        public void ShowSelectCharacter()
-        {
-            trainView.ShowTacticsCharacter();
-        }
-
-        public void HideSelectCharacter()
-        {
-            trainView.HideSelectCharacter();
-        }
-
-        public void ShowConfirmCommand()
-        {
-            trainView.ShowConfirmCommand();
-        }
-        
-        public void ShowBattleReplay(bool isActive)
-        {
-            trainView.ShowBattleReplay(isActive);
-        }
-
-        public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillInfos)
-        {
-            trainView.ShowCharacterDetail(actorInfo,party,skillInfos);
         }
 
         public void SetSymbolRecords(List<ListData> recordInfos)
@@ -523,13 +474,39 @@ namespace Ryneus
 
         public void SetNuminous(int numinous)
         {
-            trainView.SetNuminous(numinous);
+            numinousText?.SetText(numinous.ToString());
         }
 
         public void SetPastMode(bool pastMode)
         {
             pastText?.gameObject.SetActive(pastMode);
             _2DxFX_NoiseAnimated.enabled = pastMode;
+        }
+
+        public void CommandSelectCharaLayer(int actorId)
+        {
+            var find = tacticsCharaLayer.ZoomActor(actorId);
+            var duration = 0.25f;
+            var bgScale = 1.2f + (0.9f - find.BackScale) * 2;
+            var bgLocalX = (-80 - find.BackLocalX) / 2;
+            var bgLocalY = (320 - find.BackLocalY) / 2;
+            BgRect.transform.DOScale(bgScale,duration);
+            BgRect.transform.DOLocalMoveX(bgLocalX,duration);
+            BgRect.transform.DOLocalMoveY(bgLocalY,duration);
+        }
+
+        public void EndStatus()
+        {
+            var duration = 0.25f;
+            tacticsCharaLayer.EndZoomActor();
+            BgRect.transform.DOScale(1,duration);
+            BgRect.transform.DOLocalMoveX(0,duration);
+            BgRect.transform.DOLocalMoveY(0,duration);
+        }
+
+        public void EndStatusCursor()
+        {
+            tacticsCharaLayer.EndStatusCursor();
         }
 
         public void UpdateInputKeyActive(TacticsViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
@@ -546,8 +523,6 @@ namespace Ryneus
                             break;
                         case TacticsCommandType.Train:
                         case TacticsCommandType.Alchemy:
-                            tacticsCommandList.Deactivate();
-                            break;
                         case TacticsCommandType.Status:
                             break;
                     }
@@ -565,19 +540,6 @@ namespace Ryneus
                     symbolRecordList.Deactivate();
                     tacticsSymbolList.Deactivate();
                     break;
-            }
-        }
-        
-        public void UpdateChildInputKeyActive(TrainViewEvent viewEvent,TacticsCommandType tacticsCommandType)
-        {
-            switch (viewEvent.commandType)
-            {
-                case Train.CommandType.DecideTacticsCommand:
-                if (tacticsCommandType != TacticsCommandType.Paradigm)
-                {
-                    tacticsCommandList.Activate();
-                }
-                break;
             }
         }
 

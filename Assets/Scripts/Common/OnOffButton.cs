@@ -13,6 +13,7 @@ namespace Ryneus
         public void SetText(string text)
         {
             commandName.text = text;
+            SetIndex(0);
         }
 
         public void SetCallHandler(System.Action handler,System.Action exitHandler = null)
@@ -46,6 +47,7 @@ namespace Ryneus
 
         public void SetActiveCursor(bool isActive)
         {
+            Debug.Log(isActive);
             Cursor.SetActive(isActive);
             if (isActive)
             {
