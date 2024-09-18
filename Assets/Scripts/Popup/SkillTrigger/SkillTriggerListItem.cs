@@ -8,14 +8,14 @@ namespace Ryneus
 {
     public class SkillTriggerListItem : ListItem ,IListViewItem
     {
-        [SerializeField] private SideMenuButton skillButton;
+        [SerializeField] private OnOffButton skillButton;
         [SerializeField] private SkillInfoComponent skillInfoComponent;
-        [SerializeField] private SideMenuButton trigger1Button;
+        [SerializeField] private OnOffButton trigger1Button;
         [SerializeField] private TextMeshProUGUI trigger1Text;
-        [SerializeField] private SideMenuButton trigger2Button;
+        [SerializeField] private OnOffButton trigger2Button;
         [SerializeField] private TextMeshProUGUI trigger2Text;
-        [SerializeField] private SideMenuButton upButton;
-        [SerializeField] private SideMenuButton downButton;
+        [SerializeField] private OnOffButton upButton;
+        [SerializeField] private OnOffButton downButton;
 
         private bool _buttonInit = false;
 
@@ -34,8 +34,13 @@ namespace Ryneus
         public void SetSelectItemHandler(Action<int> skillEvent,Action<int> trigger1Event,Action<int> trigger2Event)
         {
             skillButton.SetSelectHandler((a) => skillEvent(Index));
+            skillButton.SetIndex(0);
             trigger1Button.SetSelectHandler((a) => trigger1Event(Index));
+            trigger1Button.SetIndex(0);
             trigger2Button.SetSelectHandler((a) => trigger2Event(Index));
+            trigger2Button.SetIndex(0);
+            upButton.SetIndex(0);
+            downButton.SetIndex(0);
         }
 
         public void UpdateItemIndex(int index)

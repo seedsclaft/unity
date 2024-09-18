@@ -308,6 +308,8 @@ namespace Ryneus
         OpponentLineLessTarget = 5100, // 人数が少ない列の敵
         FriendMoreTargetCount = 5110, // 〇人以上いる列の味方限定
         OpponentMoreTargetCount = 5120, // 〇人以上いる列の敵限定
+        FriendBattleIndex = 5130, // 〇番目の味方限定
+        OpponentBattleIndex = 5140, // 〇番目の敵限定
         IsState = 6010, // StateId状態になっている
         IsNotState = 6020, // StateId状態になっていない
         FriendIsState = 6030, // StateId状態になっている味方

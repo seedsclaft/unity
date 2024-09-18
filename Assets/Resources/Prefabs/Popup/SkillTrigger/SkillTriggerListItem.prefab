@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4023555430100692396}
   - component: {fileID: 8571672177267929958}
-  - component: {fileID: 4224581304786969381}
   - component: {fileID: 1250295787743729181}
   - component: {fileID: 7972102476096191758}
+  - component: {fileID: 9110843191370236330}
   m_Layer: 5
   m_Name: Trigger2
   m_TagString: Untagged
@@ -85,27 +85,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4224581304786969381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 715447843586075413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 8571672177267929958}
-  cursor: {fileID: 1126406897887294410}
-  changeCursorColor: 1
-  disable: {fileID: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
-  textUguiList: []
-  imageUguiList: []
-  commandName: {fileID: 0}
 --- !u!222 &1250295787743729181
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -144,6 +123,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9110843191370236330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715447843586075413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 8571672177267929958}
+  cursor: {fileID: 1126406897887294410}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  commandName: {fileID: 0}
 --- !u!1 &835409391567629560
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,9 +325,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7570418348978976803}
   - component: {fileID: 8895343637854116581}
-  - component: {fileID: 3238930530502731573}
   - component: {fileID: 5010839937519319673}
   - component: {fileID: 6743396253877235298}
+  - component: {fileID: 4740718022088573173}
   m_Layer: 5
   m_Name: UpButton
   m_TagString: Untagged
@@ -400,27 +400,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3238930530502731573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 888204826847567182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 8895343637854116581}
-  cursor: {fileID: 2427629659434218541}
-  changeCursorColor: 1
-  disable: {fileID: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
-  textUguiList: []
-  imageUguiList: []
-  commandName: {fileID: 0}
 --- !u!222 &5010839937519319673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -459,6 +438,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4740718022088573173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888204826847567182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 8895343637854116581}
+  cursor: {fileID: 2427629659434218541}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  commandName: {fileID: 0}
 --- !u!1 &912797822949377396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,9 +1443,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5895107481393182177}
   - component: {fileID: 5729794933056455301}
-  - component: {fileID: 7548741731589634904}
   - component: {fileID: 1486626721042905551}
   - component: {fileID: 8400522492387049927}
+  - component: {fileID: 3484801049974552418}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -1518,27 +1518,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7548741731589634904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591332122859270008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 5729794933056455301}
-  cursor: {fileID: 5289874319963203304}
-  changeCursorColor: 1
-  disable: {fileID: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
-  textUguiList: []
-  imageUguiList: []
-  commandName: {fileID: 0}
 --- !u!222 &1486626721042905551
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1577,6 +1556,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3484801049974552418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4591332122859270008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 5729794933056455301}
+  cursor: {fileID: 5289874319963203304}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  commandName: {fileID: 0}
 --- !u!1 &4726465707716327240
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,9 +2132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4358728594242652518}
   - component: {fileID: 2703169379720636506}
-  - component: {fileID: 4852931670736343632}
   - component: {fileID: 2636357877438458432}
   - component: {fileID: 3241400285108733002}
+  - component: {fileID: 7581833672603899444}
   m_Layer: 5
   m_Name: Trigger1
   m_TagString: Untagged
@@ -2207,27 +2207,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4852931670736343632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6232398682767759167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 2703169379720636506}
-  cursor: {fileID: 4103049753755958719}
-  changeCursorColor: 1
-  disable: {fileID: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
-  textUguiList: []
-  imageUguiList: []
-  commandName: {fileID: 0}
 --- !u!222 &2636357877438458432
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2266,6 +2245,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7581833672603899444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232398682767759167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 2703169379720636506}
+  cursor: {fileID: 4103049753755958719}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  commandName: {fileID: 0}
 --- !u!1 &6281937895358757153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,6 +2552,9 @@ MonoBehaviour:
   type: {fileID: 0}
   value: {fileID: 0}
   description: {fileID: 0}
+  descriptionListObj: {fileID: 0}
+  descriptionListTarget: {fileID: 0}
+  descriptionScrollRect: {fileID: 0}
   range: {fileID: 0}
   learningCost: {fileID: 0}
   countTurn: {fileID: 0}
@@ -2580,14 +2583,14 @@ MonoBehaviour:
   unSelectColor: {r: 0, g: 0, b: 0, a: 0}
   textUguiList: []
   imageUguiList: []
-  skillButton: {fileID: 7548741731589634904}
+  skillButton: {fileID: 3484801049974552418}
   skillInfoComponent: {fileID: 2883264398488622259}
-  trigger1Button: {fileID: 4852931670736343632}
+  trigger1Button: {fileID: 7581833672603899444}
   trigger1Text: {fileID: 1254694877876487419}
-  trigger2Button: {fileID: 4224581304786969381}
+  trigger2Button: {fileID: 9110843191370236330}
   trigger2Text: {fileID: 680172755944157063}
-  upButton: {fileID: 3238930530502731573}
-  downButton: {fileID: 3312161297267222599}
+  upButton: {fileID: 4740718022088573173}
+  downButton: {fileID: 2479700016804890126}
 --- !u!1 &6770304238890689477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,9 +3012,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5780173609085981715}
   - component: {fileID: 9049286939697482222}
-  - component: {fileID: 3312161297267222599}
   - component: {fileID: 7753202095067530206}
   - component: {fileID: 4069601957896899827}
+  - component: {fileID: 2479700016804890126}
   m_Layer: 5
   m_Name: DownButton
   m_TagString: Untagged
@@ -3084,27 +3087,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3312161297267222599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8771382587824428965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d391e336de458f49ba0505cdbcda82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickButton: {fileID: 9049286939697482222}
-  cursor: {fileID: 7590858149171434946}
-  changeCursorColor: 1
-  disable: {fileID: 0}
-  selectColor: {r: 0, g: 0, b: 0, a: 0}
-  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
-  textUguiList: []
-  imageUguiList: []
-  commandName: {fileID: 0}
 --- !u!222 &7753202095067530206
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3143,6 +3125,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2479700016804890126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8771382587824428965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c2e7ae1c9d147439d29de33ce077db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 9049286939697482222}
+  cursor: {fileID: 7590858149171434946}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  commandName: {fileID: 0}
 --- !u!1 &8802807251923605510
 GameObject:
   m_ObjectHideFlags: 0
