@@ -13,7 +13,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SkillInfo)ListData.Data;
+            var data = ListItemData<SkillInfo>();
             skillInfoComponent1.UpdateInfo(data);
         }
     }

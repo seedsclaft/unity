@@ -62,7 +62,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (TacticsActorInfo)ListData.Data;
+            var data = ListItemData<TacticsActorInfo>();
             tacticsComponent.UpdateInfo(data.ActorInfo,data.TacticsCommandType);
             Disable?.SetActive(!ListData.Enable);
             if (data.DisableText != null)

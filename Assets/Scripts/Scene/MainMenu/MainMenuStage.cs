@@ -27,7 +27,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (StageInfo)ListData.Data;
+            var data = ListItemData<StageInfo>();
             component.UpdateInfo(data);
             if (rankingButton != null)
             {

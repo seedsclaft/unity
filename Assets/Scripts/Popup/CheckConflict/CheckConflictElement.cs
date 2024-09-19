@@ -15,7 +15,7 @@ namespace Ryneus
             if (ListData == null) return;
             mainGetItemInfo.Initialize();
             brunchGetItemInfo.Initialize();
-            var data = (List<SymbolResultInfo>)ListData.Data;
+            var data = ListItemData<List<SymbolResultInfo>>();
             var mainResultInfo = data[0];
             var brunchResultInfo = data[1];
             mainSymbol.UpdateInfo(mainResultInfo.SymbolInfo,mainResultInfo.Selected,mainResultInfo.Seek);

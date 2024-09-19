@@ -34,14 +34,14 @@ namespace Ryneus
         public List<GetItemInfo> SelectRelicInfos()
         {
             if (ListData == null) return null;
-            var data = (SymbolResultInfo)ListData.Data;
+            var data = ListItemData<SymbolResultInfo>();
             return data.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
         }
         
         public GetItemInfo GetItemInfo()
         {
             if (ListData == null) return null;
-            var data = (SymbolResultInfo)ListData.Data;
+            var data = ListItemData<SymbolResultInfo>();
             var convert = MakeGetItemListData(data.SymbolInfo);
             var getItemInfo = convert[getItemList.Index];
             return (GetItemInfo)getItemInfo.Data;
@@ -82,7 +82,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SymbolResultInfo)ListData.Data;
+            var data = ListItemData<SymbolResultInfo>();
             symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
             if (_getItemInit == false)
             {

@@ -25,6 +25,11 @@ namespace Ryneus
             }
         }
 
+        public T ListItemData<T>()
+        {
+            return (T)ListData.Data;
+        }
+
         public void Initialize()
         {
             if (_isInit)

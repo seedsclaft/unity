@@ -144,18 +144,14 @@ namespace Ryneus
 
         private void OnClickCommand()
         {
-            var listData = commandList.ListData;
-            if (listData != null)
+            var data = commandList.ListItemData<SystemData.CommandData>();
+            if (data != null)
             {
-                var data = (SystemData.CommandData)listData.Data;
-                if (data != null)
+                var eventData = new StatusViewEvent(CommandType.SelectCommandList)
                 {
-                    var eventData = new StatusViewEvent(CommandType.SelectCommandList)
-                    {
-                        template = data
-                    };
-                    _commandData(eventData);
-                }
+                    template = data
+                };
+                _commandData(eventData);
             }
         }
 

@@ -9,7 +9,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (string)ListData.Data;
+            var data = ListItemData<string>();
             triggerText.SetText(data);
         }
     }

@@ -33,7 +33,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SkillInfo)ListData.Data;
+            var data = ListItemData<SkillInfo>();
             skillInfoComponent.UpdateInfo(data);
             AwakenObj?.SetActive(data.Master.SkillType == SkillType.Awaken);
             MessiahObj?.SetActive(data.Master.SkillType == SkillType.Messiah);

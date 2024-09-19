@@ -34,7 +34,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SystemData.CommandData)ListData.Data;
+            var data = ListItemData<SystemData.CommandData>();
             commandName.text = data.Name;
         }
     }

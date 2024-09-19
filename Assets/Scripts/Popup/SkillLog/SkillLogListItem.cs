@@ -12,7 +12,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SkillLogListInfo)ListData.Data;
+            var data = ListItemData<SkillLogListInfo>();
             battlerInfoComponent.UpdateInfo(data.battlerInfo);
             skillInfoComponent.UpdateInfo(data.skillInfo);
         }

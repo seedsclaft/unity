@@ -137,18 +137,14 @@ namespace Ryneus
 
         private void OnClickCommand()
         {
-            var listData = commandList.ListData;
-            if (listData != null)
+            var data = commandList.ListItemData<SystemData.CommandData>();
+            if (data != null)
             {
-                var data = (SystemData.CommandData)listData.Data;
-                if (data != null)
+                var eventData = new TacticsStatusViewEvent(CommandType.SelectCommandList)
                 {
-                    var eventData = new TacticsStatusViewEvent(CommandType.SelectCommandList)
-                    {
-                        template = data
-                    };
-                    _commandData(eventData);
-                }
+                    template = data
+                };
+                _commandData(eventData);
             }
         }
 
@@ -281,18 +277,14 @@ namespace Ryneus
             magicList.SetData(learnMagicList);
             magicList.SetInputHandler(InputKeyType.Decide,() => 
             {
-                var listData = magicList.ListData;
-                if (listData != null && listData.Enable)
+                var data = magicList.ListItemData<SkillInfo>();
+                if (data != null && data.Enable)
                 {
-                    var data = (SkillInfo)listData.Data;
-                    if (data.Enable)
+                    var eventData = new TacticsStatusViewEvent(CommandType.LearnMagic)
                     {
-                        var eventData = new TacticsStatusViewEvent(CommandType.LearnMagic)
-                        {
-                            template = data
-                        };
-                        _commandData(eventData);
-                    }
+                        template = data
+                    };
+                    _commandData(eventData);
                 }
             });
         }

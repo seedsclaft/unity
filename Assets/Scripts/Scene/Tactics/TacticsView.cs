@@ -46,14 +46,10 @@ namespace Ryneus
         public GetItemInfo SymbolGetItemInfo => tacticsSymbolList.GetItemInfo();
         public SymbolResultInfo SymbolResultInfo() 
         {
-            var listData = symbolRecordList.ListData;
-            if (listData != null)
+            var data = symbolRecordList.ListItemData<List<SymbolResultInfo>>();
+            if (data != null && data.Count > 0)
             {
-                var data = (List<SymbolResultInfo>)listData.Data;
-                if (data != null && data.Count > 0)
-                {
-                    return data[0];
-                }
+                return data[0];
             }
             return null;
         }
@@ -278,10 +274,9 @@ namespace Ryneus
         private void OnClickSymbol()
         {
             if (symbolRecordList.ScrollRect.enabled == false) return;
-            var listData = symbolRecordList.ListData;
-            if (listData != null)
+            var data = symbolRecordList.ListItemData<List<SymbolResultInfo>>();
+            if (data != null)
             {
-                var data = (List<SymbolResultInfo>)listData.Data;
                 if (data[0].SymbolType != SymbolType.None)
                 {
                     var eventData = new TacticsViewEvent(CommandType.SelectRecord)
@@ -307,10 +302,9 @@ namespace Ryneus
         {
             if (tacticsSymbolList.IsSelectSymbol())
             {
-                var listData = tacticsSymbolList.ListData;
-                if (listData != null)
+                var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
+                if (data != null)
                 {
-                    var data = (SymbolResultInfo)listData.Data;
                     if (data != null && data.SymbolType != SymbolType.None)
                     {
                         SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -344,10 +338,9 @@ namespace Ryneus
                     }
                     if (getItemInfo != null && getItemInfo.IsAddActor())
                     {
-                        var listData = tacticsSymbolList.ListData;
-                        if (listData != null)
+                        var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
+                        if (data != null)
                         {
-                            var data = (SymbolResultInfo)listData.Data;
                             var eventData = new TacticsViewEvent(CommandType.CallAddActorInfo)
                             {
                                 template = data
@@ -361,18 +354,14 @@ namespace Ryneus
 
         private void OnClickEnemyInfo()
         {
-            var listData = tacticsSymbolList.ListData;
-            if (listData != null)
+            var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
+            if (data != null && data.SymbolType != SymbolType.None)
             {
-                var data = (SymbolResultInfo)listData.Data;
-                if (data != null && data.SymbolType != SymbolType.None)
+                var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo)
                 {
-                    var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo)
-                    {
-                        template = data
-                    };
-                    _commandData(eventData);
-                }
+                    template = data
+                };
+                _commandData(eventData);
             }
         }
 
@@ -460,16 +449,7 @@ namespace Ryneus
 
         public SkillInfo AlcanaSelectSkillInfo() 
         {
-            var listData = alcanaSelectList.ListData;
-            if (listData != null)
-            {
-                var data = (SkillInfo)listData.Data;
-                if (data != null)
-                {
-                    return data;
-                }
-            }
-            return null;
+            return alcanaSelectList.ListItemData<SkillInfo>();
         }
 
         public void SetNuminous(int numinous)

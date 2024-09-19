@@ -18,7 +18,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var battlerInfo = (BattlerInfo)ListData.Data;
+            var battlerInfo = ListItemData<BattlerInfo>();
             //battlerInfoComponent.SetSelectable(ListData.Enable);
             battlerInfoComponent.UpdateInfo(battlerInfo);
             battlerInfoComponent.RefreshStatus();

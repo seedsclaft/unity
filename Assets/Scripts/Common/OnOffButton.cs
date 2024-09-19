@@ -13,7 +13,6 @@ namespace Ryneus
         public void SetText(string text)
         {
             commandName.text = text;
-            SetIndex(0);
         }
 
         public void SetCallHandler(System.Action handler,System.Action exitHandler = null)
@@ -38,6 +37,7 @@ namespace Ryneus
                 });
                 _handler = handler;
             }
+            SetIndex(0);
         }
 
         public void UpdateViewItem()

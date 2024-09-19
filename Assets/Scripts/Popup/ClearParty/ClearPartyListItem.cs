@@ -26,7 +26,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SaveBattleInfo)ListData.Data;
+            var data = ListItemData<SaveBattleInfo>();
             if (data != null)
             {
                 userName?.SetText(data.UserName);

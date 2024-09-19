@@ -13,7 +13,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (StateInfo)ListData.Data;
+            var data = ListItemData<StateInfo>();
             stateInfoComponent.UpdateInfo(data);
         }
     }

@@ -20,7 +20,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (RankingInfo)ListData.Data;
+            var data = ListItemData<RankingInfo>();
             playerName.text = data.Name;
             score.text = data.Score.ToString();
             rank.text = data.Rank.ToString() + DataSystem.GetText(16070);

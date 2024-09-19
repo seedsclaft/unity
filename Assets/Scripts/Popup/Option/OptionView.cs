@@ -14,7 +14,7 @@ namespace Ryneus
         [SerializeField] private BaseList optionCategoryList = null;
         [SerializeField] private BaseList optionList = null;
         [SerializeField] private PopupAnimation popupAnimation = null;
-        public ListData OptionCommand => optionList.ListData;
+        public OptionInfo OptionCommandInfo => optionList.ListItemData<OptionInfo>();
         public int OptionCategoryIndex => optionCategoryList.Index;
 
         public override void Initialize() 

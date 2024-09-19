@@ -18,7 +18,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var optionInfo = (OptionInfo)ListData.Data;
+            var optionInfo = ListItemData<OptionInfo>();
             var data = optionInfo.OptionCommand;
             optionName.text = data.Name;
             optionHelp.text = data.Help;

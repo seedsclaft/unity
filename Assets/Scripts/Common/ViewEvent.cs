@@ -27,7 +27,8 @@ namespace Ryneus
 
     public interface IListViewItem
     {
-        void UpdateViewItem();
+        void UpdateViewItem();  
+        public T ListItemData<T>();
     }
 
     public interface IInputHandlerEvent
@@ -70,6 +71,11 @@ namespace Ryneus
             {
                 SetCursorColor();
             }
+        }        
+        
+        public T ListItemData<T>()
+        {
+            return (T)ListData.Data;
         }
 
         public void SetSelect()

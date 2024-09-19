@@ -67,20 +67,21 @@ namespace Ryneus
         
         private void CallMainMenuStage()
         {
-            var listData = stageList.ListData;
-            if (listData != null)
+            var data = stageList.ListItemData<StageInfo>();
+            if (data != null)
             {
-                var eventData = new MainMenuViewEvent(CommandType.StageSelect);
-                var data = (StageInfo)listData.Data;
-                eventData.template = data.Id;
+                var eventData = new MainMenuViewEvent(CommandType.StageSelect)
+                {
+                    template = data.Id
+                };
                 _commandData(eventData);
             }
         }    
         
         private void CallStageRanking(int stageId = -1)
         {
-            var listData = stageList.ListData;
-            if (listData != null)
+            var data = stageList.ListItemData<StageInfo>();
+            if (data != null)
             {
                 var eventData = new MainMenuViewEvent(CommandType.Ranking);
                 if (stageId > 0)
@@ -88,7 +89,6 @@ namespace Ryneus
                     eventData.template = stageId;
                 } else
                 {
-                    var data = (StageInfo)listData.Data;
                     eventData.template = data.Id;
                 }
                 _commandData(eventData);
@@ -100,7 +100,7 @@ namespace Ryneus
             var listData = stageList.ListData;
             if (listData != null)
             {
-                var data = (StageInfo)listData.Data;
+                var data = stageList.ListItemData<StageInfo>();
                 //component.UpdateInfo(data);
             }
         }

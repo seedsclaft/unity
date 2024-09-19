@@ -15,7 +15,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (AttributeType)ListData.Data;
+            var data = ListItemData<AttributeType>();
             
             icon.gameObject.SetActive(true);
             var spriteAtlas = iconSprites[(int)data];

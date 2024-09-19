@@ -43,7 +43,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (ActorInfo)ListData.Data;
+            var data = ListItemData<ActorInfo>();
             actorInfoComponent.UpdateInfo(data,null);
             trainCost?.SetText(TacticsUtility.TrainCost(data).ToString() + DataSystem.GetText(1000));
             Disable?.SetActive(!ListData.Enable);

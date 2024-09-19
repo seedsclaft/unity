@@ -15,25 +15,25 @@ namespace Ryneus
             if (ListData == null) return;
             if (battlerInfoComponent != null)
             {
-                var battlerInfo = (BattlerInfo)ListData.Data;
+                var battlerInfo = ListItemData<BattlerInfo>();
                 battlerInfoComponent.UpdateInfo(battlerInfo);
                 return;
             }
             if (actorInfoComponent != null)
             {
-                var actorInfo = (ActorInfo)ListData.Data;
+                var actorInfo = ListItemData<ActorInfo>();
                 actorInfoComponent.UpdateInfo(actorInfo,null);
                 return;
             }
             if (enemyInfoComponent != null)
             {
-                var enemyInfo = (BattlerInfo)ListData.Data;
+                var enemyInfo = ListItemData<BattlerInfo>();
                 enemyInfoComponent.UpdateInfo(enemyInfo);
                 return;
             }
             if (skillInfoComponent != null)
             {
-                var skillInfo = (SkillInfo)ListData.Data;
+                var skillInfo = ListItemData<SkillInfo>();
                 skillInfoComponent.UpdateInfo(skillInfo);
                 return;
             }

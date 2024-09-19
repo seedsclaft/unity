@@ -130,10 +130,9 @@ namespace Ryneus
 
         private void CommandVolumeSlider(float volume)
         {
-            var ListData = _view.OptionCommand;
-            if (ListData != null)
+            var data = _view.OptionCommandInfo;
+            if (data != null)
             {
-                var data = (OptionInfo)ListData.Data;
                 if (data.OptionCommand.Key == "BGM_VOLUME")
                 {
                     ConfigUtility.ChangeBGMValue(volume);
@@ -148,10 +147,9 @@ namespace Ryneus
 
         private void CommandVolumeMute(bool isMute)
         {
-            var ListData = _view.OptionCommand;
-            if (ListData != null)
+            var data = _view.OptionCommandInfo;
+            if (data != null)
             {
-                var data = (OptionInfo)ListData.Data;
                 if (data.OptionCommand.Key == "BGM_VOLUME")
                 {
                     ConfigUtility.ChangeBGMMute(isMute);
@@ -166,10 +164,9 @@ namespace Ryneus
 
         private void CommandChangeToggle(int toggleIndex)
         {
-            var ListData = _view.OptionCommand;
-            if (ListData != null)
+            var data = _view.OptionCommandInfo;
+            if (data != null)
             {
-                var data = (OptionInfo)ListData.Data;
                 switch (data.OptionCommand.Key)
                 {
                     case "GRAPHIC_QUALITY":
@@ -231,17 +228,14 @@ namespace Ryneus
 
         private void CommandSelectOptionList()
         {
-            var ListData = _view.OptionCommand;
-            if (ListData != null)
+            var data = _view.OptionCommandInfo;
+            if (data != null)
             {
-                var data = (OptionInfo)ListData.Data;
                 if (data.OptionCommand.ButtonType == OptionButtonType.Button)
                 {
-                    Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
-
+                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 }
             }
         }
-
     }
 }

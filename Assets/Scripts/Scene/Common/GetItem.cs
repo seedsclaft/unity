@@ -16,7 +16,7 @@ namespace Ryneus
             {
                 return;
             }
-            var data = (GetItemInfo)ListData.Data;
+            var data = ListItemData<GetItemInfo>();
             if (data == null) return;
             if (skillInfoComponent != null)
             {

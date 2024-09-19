@@ -13,7 +13,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (KindType)ListData.Data;
+            var data = ListItemData<KindType>();
             var kindText = "";
             if (data != KindType.None)
             {

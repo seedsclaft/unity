@@ -13,7 +13,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (ScorePrizeInfo)ListData.Data;
+            var data = ListItemData<ScorePrizeInfo>();
             if (data != null)
             {
                 score?.SetText(DataSystem.GetReplaceDecimalText(data.Score) + DataSystem.GetText(113040));

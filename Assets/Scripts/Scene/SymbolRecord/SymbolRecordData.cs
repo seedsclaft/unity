@@ -20,7 +20,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var dates = (List<SymbolResultInfo>)ListData.Data;
+            var dates = ListItemData<List<SymbolResultInfo>>();
             foreach (var symbolComponent in symbolComponents)
             {
                 symbolComponent.gameObject.SetActive(false);

@@ -15,7 +15,7 @@ namespace Ryneus
             {
                 return;
             }
-            var data = (StrategyResultViewInfo)ListData.Data;
+            var data = ListItemData<StrategyResultViewInfo>();
             if (data == null) 
             {
                 return;

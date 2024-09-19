@@ -9,7 +9,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (ActorInfo)ListData.Data;
+            var data = ListItemData<ActorInfo>();
             component.UpdateInfo(data,null);
         }
     }

@@ -188,10 +188,9 @@ namespace Ryneus
 
         private void CallResultCommand()
         {
-            var listData = commandList.ListData;
-            if (listData != null)
+            var data = commandList.ListItemData<SystemData.CommandData>();
+            if (data != null)
             {
-                var data = (SystemData.CommandData)listData.Data;
                 var eventData = new StrategyViewEvent(CommandType.ResultClose)
                 {
                     template = data
@@ -267,10 +266,9 @@ namespace Ryneus
 
         public SkillInfo AlcanaSelectSkillInfo() 
         {
-            var listData = alcanaSelectList.ListData;
-            if (listData != null)
+            var data = alcanaSelectList.ListItemData<SkillInfo>();
+            if (data != null)
             {
-                var data = (SkillInfo)listData.Data;
                 if (data != null && data.Enable)
                 {
                     return data;

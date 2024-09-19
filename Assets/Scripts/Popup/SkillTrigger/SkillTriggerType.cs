@@ -11,7 +11,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = (SkillTriggerData)ListData.Data;
+            var data = ListItemData<SkillTriggerData>();
             triggerText.SetText(data.Name);
         }
     }

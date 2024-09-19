@@ -154,10 +154,9 @@ namespace Ryneus
 
         private void OnClickSkillSelect()
         {
-            var listData = skillList.ListData;
-            if (listData != null)
+            var data = skillList.ListItemData<SkillInfo>();
+            if (data != null)
             {
-                var data = (SkillInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.DecideSkillSelect)
                 {
                     template = data
@@ -168,10 +167,9 @@ namespace Ryneus
 
         private void OnClickTrigger1Select()
         {
-            var listData = trigger1List.ListData;
-            if (listData != null)
+            var data = trigger1List.ListItemData<SkillTriggerData>();
+            if (data != null)
             {
-                var data = (SkillTriggerData)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.DecideTrigger1Select)
                 {
                     template = data
@@ -182,10 +180,9 @@ namespace Ryneus
 
         private void OnClickTrigger2Select()
         {
-            var listData = trigger2List.ListData;
-            if (listData != null)
+            var data = trigger2List.ListItemData<SkillTriggerData>();
+            if (data != null)
             {
-                var data = (SkillTriggerData)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.DecideTrigger2Select)
                 {
                     template = data
@@ -220,10 +217,9 @@ namespace Ryneus
 
         private void CallSkillEvent()
         {
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
+            var data = skillTriggerList.ListItemData<SkillTriggerInfo>();
+            if (data != null)
             {
-                var data = (SkillTriggerInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.CallSkillSelect)
                 {
                     template = data
@@ -234,10 +230,9 @@ namespace Ryneus
 
         private void CallTrigger1Event()
         {   
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
+            var data = skillTriggerList.ListItemData<SkillTriggerInfo>();
+            if (data != null)
             {
-                var data = (SkillTriggerInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.CallTrigger1Select)
                 {
                     template = data
@@ -248,10 +243,9 @@ namespace Ryneus
 
         private void CallTrigger2Event()
         {
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
+            var data = skillTriggerList.ListItemData<SkillTriggerInfo>();
+            if (data != null)
             {
-                var data = (SkillTriggerInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.CallTrigger2Select)
                 {
                     template = data
@@ -262,10 +256,9 @@ namespace Ryneus
 
         private void CallTriggerUpEvent()
         {
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
+            var data = skillTriggerList.ListItemData<SkillTriggerInfo>();
+            if (data != null)
             {
-                var data = (SkillTriggerInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.CallTriggerUp)
                 {
                     template = data
@@ -276,10 +269,9 @@ namespace Ryneus
 
         private void CallTriggerDownEvent()
         {
-            var listData = skillTriggerList.ListData;
-            if (listData != null)
+            var data = skillTriggerList.ListItemData<SkillTriggerInfo>();
+            if (data != null)
             {
-                var data = (SkillTriggerInfo)listData.Data;
                 var eventData = new SkillTriggerViewEvent(CommandType.CallTriggerDown)
                 {
                     template = data

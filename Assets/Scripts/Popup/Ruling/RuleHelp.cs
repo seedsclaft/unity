@@ -12,7 +12,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            commandName.text = (string)ListData.Data;
+            commandName.text = ListItemData<string>();
         }
     }
 }
