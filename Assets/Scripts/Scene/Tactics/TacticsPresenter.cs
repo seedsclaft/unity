@@ -68,6 +68,7 @@ namespace Ryneus
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             _view.SetSymbolRecords(_model.SymbolRecords());
             _view.SetAlcanaInfo(_model.AlcanaSkillInfos());
+            _view.SetNuminous(_model.Currency);
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());

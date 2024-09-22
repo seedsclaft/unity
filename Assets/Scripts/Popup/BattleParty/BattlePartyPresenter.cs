@@ -98,6 +98,7 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
+            _view.RefreshTacticsMembers(GetListData(_model.StageMembers()));
             CommandRefresh();
         }
 

@@ -236,7 +236,7 @@ namespace Ryneus
                 _model.BattleResultTurn(),
                 _model.BattleResultScore(),
                 _model.BattleResultMaxDamage(),
-                _model.BattleResultAttackPer(),
+                _model.BattleResultRemainHpPercent(),
                 _model.BattleResultDefeatedCount());
         }
 

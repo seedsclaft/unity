@@ -340,7 +340,7 @@ namespace Ryneus
             var troopInfo = new TroopInfo(troopId);
             var lv = DataSystem.Stages.Find(a => a.Id == stageSymbolData.StageId).StageLv + plusLv;
             // ランダム生成
-            if (troopInfo.TroopMaster != null)
+            if (troopInfo.TroopMaster == null)
             {
                 troopInfo.MakeEnemyRandomTroopDates(stageSymbolData.Seek + lv);
                 var numinosGetItem = MakeEnemyRandomNuminos(stageSymbolData.StageId,stageSymbolData.Seek);

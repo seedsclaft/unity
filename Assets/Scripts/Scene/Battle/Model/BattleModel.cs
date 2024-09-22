@@ -2318,7 +2318,7 @@ namespace Ryneus
                 // 与ダメージ - 被ダメージの加算
                 //var attack = 0;
                 //var damaged = 0;
-                var attackPer = 0f;
+                var remainHpPercent = 0f;
                 var maxDamage = 0;
                 var defeated = 0;
                 var actorCount = 0;
@@ -2326,10 +2326,9 @@ namespace Ryneus
                 {
                     if (battleRecord.Key < 10)
                     {
-                        var actorHp = GetBattlerInfo(battleRecord.Key).MaxHp;
-                        attackPer += (float)(actorHp - battleRecord.Value.DamagedValue) / actorHp;
-                        //attack += battleRecord.Value.AttackValue;
-                        //damaged += battleRecord.Value.DamagedValue;
+                        var actorInfo = GetBattlerInfo(battleRecord.Key);
+                        var actorMaxHp = actorInfo.MaxHp;
+                        remainHpPercent += 1f - (float)(actorMaxHp - actorInfo.Hp) / actorMaxHp;
                         actorCount++;
                         if (battleRecord.Value.MaxDamage > maxDamage)
                         {
@@ -2342,9 +2341,9 @@ namespace Ryneus
                     }
                 }
                 // 被ダメージ率の加算
-                if (attackPer > 0)
+                if (remainHpPercent > 0)
                 {
-                    score += (attackPer/actorCount) * 100;
+                    score += (remainHpPercent/actorCount) * 100;
                 }
                 // 最大ダメージ値の加算
                 if (maxDamage > 0)
@@ -2356,7 +2355,7 @@ namespace Ryneus
                 {
                     score += 25;
                 }
-                strategySceneInfo.BattleAttackPer = (int)((attackPer/actorCount) * 100);
+                strategySceneInfo.BattleRemainHpPercent = (int)((remainHpPercent/actorCount) * 100);
                 strategySceneInfo.BattleMaxDamage = maxDamage;
                 strategySceneInfo.BattleDefeatedCount = defeated;
                 return (int)score;

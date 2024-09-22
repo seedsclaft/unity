@@ -294,16 +294,16 @@ namespace Ryneus
             return null;
         }
 
-        public string BattleResultAttackPer()
+        public string BattleResultRemainHpPercent()
         {
             if (!_inBattleResult)
             {
                 return null;
             }
-            var attackPer = SceneParam.BattleAttackPer;
-            if (attackPer > 0)
+            var remainHpPercent = SceneParam.BattleRemainHpPercent;
+            if (remainHpPercent > 0)
             {
-                return attackPer.ToString() + "%";
+                return remainHpPercent.ToString() + "%";
             }
             return null;
         }
@@ -446,7 +446,7 @@ namespace Ryneus
         public List<ActorInfo> ActorInfos;
         public bool InBattle;
         public int BattleResultScore;
-        public int BattleAttackPer;
+        public int BattleRemainHpPercent;
         public int BattleMaxDamage;
         public int BattleDefeatedCount;
         public bool BattleResultVictory;

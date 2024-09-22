@@ -14,6 +14,7 @@ namespace Ryneus
         [SerializeField] private OnOffButton skillTriggerButton;
         [SerializeField] private TextMeshProUGUI trainCost;
         [SerializeField] private TextMeshProUGUI disableText;
+        [SerializeField] private GameObject inBattle;
 
         private bool _levelUpHandler = false;
         private bool _learnMagicHandler = false;        
@@ -47,6 +48,7 @@ namespace Ryneus
             actorInfoComponent.UpdateInfo(data,null);
             trainCost?.SetText(TacticsUtility.TrainCost(data).ToString() + DataSystem.GetText(1000));
             Disable?.SetActive(!ListData.Enable);
+            inBattle?.SetActive(data.BattleIndex > 0);
         }
     }
 }

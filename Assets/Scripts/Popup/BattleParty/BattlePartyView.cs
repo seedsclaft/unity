@@ -250,8 +250,11 @@ namespace Ryneus
             var listData = battleSelectCharacter.ActionData;
             if (listData != null && listData.Enable)
             {
-                var eventData = new StatusViewEvent(Status.CommandType.LearnMagic);
-                eventData.template = listData;
+                var eventData = new StatusViewEvent(Status.CommandType.LearnMagic)
+                {
+                    template = listData
+                };
+                _statusCommandData(eventData);
             }
         }
 
