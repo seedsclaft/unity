@@ -288,13 +288,17 @@ namespace Ryneus
             }
         }
 
+        /// <summary>
+        /// 表示するステージデータ
+        /// </summary>
+        /// <returns></returns>
         public List<ListData> SymbolRecords()
         {
             var symbolInfos = new List<SymbolInfo>();
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.Seek == 0);
+            var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 && a.IsOpenedStageSymbol(CurrentData.PlayerInfo.ClearCount));
             selectRecords = selectRecords.FindAll(a => a.WorldType == CurrentStage.WorldType);
             // ブランチは始点と終点を作る
             if (CurrentStage.WorldType == WorldType.Brunch)

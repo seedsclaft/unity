@@ -23,7 +23,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetHelpInputInfo("CHARACTER_LIST");
-            _view.SetScorePrize(GetListData(_model.ScorePrize()));
+            //_view.SetScorePrize(GetListData(_model.ScorePrize()));
             _view.OpenAnimation();
         }
 

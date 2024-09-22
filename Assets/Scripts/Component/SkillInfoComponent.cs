@@ -57,7 +57,7 @@ namespace Ryneus
             if (learningCost != null)
             {
                 learningCost.gameObject.SetActive(skillInfo.LearningCost > 0);
-                learningCost.text = skillInfo.LearningCost.ToString();// + DataSystem.System.GetTextData(1000).Text;
+                learningCost.SetText(skillInfo.LearningCost.ToString());// + DataSystem.System.GetTextData(1000).Text;
             }
             if (learningText != null)
             {
@@ -77,11 +77,9 @@ namespace Ryneus
             }
             if (shinyReflect != null)
             {
-                shinyReflect.enabled = skillInfo.SelectedAlcana;
             }
             if (selectedAlcana != null)
             {
-                selectedAlcana.SetActive(skillInfo.SelectedAlcana);
             }
         }
 
@@ -107,7 +105,7 @@ namespace Ryneus
                 }
                 if (nameText != null)
                 {
-                    nameText.text = skillData.Name;
+                    nameText.SetText(skillData.Name);
                     if (nameAndMpCost)
                     {
                         nameText.rectTransform.sizeDelta = new Vector2(nameText.preferredWidth,nameText.preferredHeight);
@@ -132,7 +130,7 @@ namespace Ryneus
             {
                 range.gameObject.SetActive(true);
                 var rangeTextId = skillData.Range == RangeType.S ? 2210 : 2220;
-                range.text = DataSystem.GetText(rangeTextId);
+                range.SetText(DataSystem.GetText(rangeTextId));
             }
         }
 

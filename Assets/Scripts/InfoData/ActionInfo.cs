@@ -50,6 +50,7 @@ namespace Ryneus
         {
             return _repeatTime == 0;
         }
+        
         // 選択可能な対象情報
         private List<int> _candidateTargetIndexList;
         public List<int> CandidateTargetIndexList => _candidateTargetIndexList;

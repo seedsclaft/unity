@@ -29,8 +29,9 @@ namespace Ryneus
             var enemyInfos = _model.EnemyInfos();
             _view.SetEnemyMembers(GetListData(enemyInfos));
             _view.SetAttributeList(GetListData(_model.AttributeTabList()));
-            _view.SetTacticsMembers(GetListData(_model.StageMembers()));
             _view.SetStatusButtonEvent(() => CommandStatusInfo());
+            _view.SetTacticsMembers(GetListData(_model.StageMembers()));
+            _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
         }
@@ -60,6 +61,9 @@ namespace Ryneus
                     break;
                 case CommandType.CommandHelp:
                     CommandGuide();
+                    break;
+                case CommandType.ChangeLineIndex:
+                    CommandChangeLineIndex((ActorInfo)viewEvent.template);
                     break;
             }
         }
@@ -106,7 +110,7 @@ namespace Ryneus
         private void CommandStatusInfo()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            CommandStatusInfo(_model.StageMembers(),false,true,false,false,_model.CurrentActor.ActorId,() => 
+            CommandStatusInfo(_model.StageMembers(),false,true,true,false,_model.CurrentActor.ActorId,() => 
             {
             });
         }
@@ -120,17 +124,27 @@ namespace Ryneus
 
         private void CommandBattleReplay()
         {
-            _busy = true;
-            var popupInfo = new PopupInfo
+            if (_model.IsEnableBattleReplay())
             {
-                PopupType = PopupType.ClearParty,
-                EndEvent = () =>
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                _busy = true;
+                var popupInfo = new PopupInfo
                 {
-                    _busy = false;
-                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                }
-            };
-            _view.CommandCallPopup(popupInfo);
+                    PopupType = PopupType.ClearParty,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
+            } else
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Deny);
+                var cautionInfo = new CautionInfo();
+                cautionInfo.SetTitle(DataSystem.GetText(30040));
+                _view.CommandCallCaution(cautionInfo);
+            }
         }
 
         private void CommandBattleStart()
@@ -180,6 +194,18 @@ namespace Ryneus
             _view.ShowCharacterDetail(_model.CurrentActor,_model.StageMembers(),_model.SkillActionListData(_model.CurrentActor));  
         }
 
+        private void CommandChangeLineIndex(ActorInfo actorInfo)
+        {
+            if (actorInfo.LineIndex == LineType.Front)
+            {
+                actorInfo.SetLineIndex(LineType.Back);
+            } else
+            {
+                actorInfo.SetLineIndex(LineType.Front);
+            }
+            CommandRefresh();
+        }
+
         private void CommandGuide()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -206,6 +232,7 @@ namespace Ryneus
                 _busy = false;
                 _view.SetBusy(false);
                 CommandRefresh();
+                _view.RefreshTacticsMembers(GetListData(_model.StageMembers()));
             });
         }
 

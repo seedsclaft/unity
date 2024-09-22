@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 
 namespace Ryneus
 {
@@ -77,13 +76,6 @@ namespace Ryneus
             {
                 _countTurn--;
             }
-        }
-
-        private bool _selectedAlcana = false;
-        public bool SelectedAlcana => _selectedAlcana;
-        public void SetSelectedAlcana(bool selectedAlcana)
-        {
-            _selectedAlcana = selectedAlcana;
         }
 
         public SkillInfo(int id)

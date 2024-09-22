@@ -13,6 +13,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
+            /*
             var data = ListItemData<ScorePrizeInfo>();
             if (data != null)
             {
@@ -22,6 +23,7 @@ namespace Ryneus
                 var textId = data._getFlag ? 113000 : 113010;
                 getFlag?.SetText(DataSystem.GetText(textId));
             }
+            */
         }
     }
 }

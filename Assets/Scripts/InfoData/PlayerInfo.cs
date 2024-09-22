@@ -29,19 +29,11 @@ namespace Ryneus
             _playerName = name;
         }
 
-        // 倒したTroopID
-        private List<int> _clearedTroopIds = new ();
-        public bool EnableBattleSkip(int troopId)
+        private int _clearCount = 0;
+        public int ClearCount => _clearCount;
+        public void GainClearCount()
         {
-            return _clearedTroopIds != null && _clearedTroopIds.Contains(troopId);
-        }
-
-        public void AddClearedTroopId(int troopId)
-        {
-            if (!EnableBattleSkip(troopId))
-            {
-                _clearedTroopIds.Add(troopId);
-            }
+            _clearCount++;
         }
     }
 }

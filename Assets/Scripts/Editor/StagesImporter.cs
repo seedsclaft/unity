@@ -33,6 +33,7 @@ namespace Ryneus
 			SubordinateValue,
 			UseSlot,
 		}
+
 		enum BaseEventColumn
 		{
 			Id = 0,
@@ -55,8 +56,10 @@ namespace Ryneus
 			Rate,
 			Param1,
 			Param2,
-			PrizeSetId
+			PrizeSetId,
+			ClearCount,
 		}
+
 		enum BaseSymbolGroupColumn
 		{
 			GroupId = 0,
@@ -201,6 +204,7 @@ namespace Ryneus
 								SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
 								SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();
 								SymbolData.PrizeSetId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.PrizeSetId)?.SafeNumericCellValue();
+								SymbolData.ClearCount = (int)SymbolRow.GetCell((int)BaseSymbolColumn.ClearCount)?.SafeNumericCellValue();
 								
 								StageData.StageSymbols.Add(SymbolData);
 							}

@@ -169,7 +169,7 @@ namespace Ryneus
             {
                 return;
             }
-            clipThumb.sprite = ResourceSystem.LoadActorClipSprite(imagePath);;
+            clipThumb.sprite = ResourceSystem.LoadActorClipSprite(imagePath);
         }
 
         private void UpdateMainFaceThumb(string imagePath)

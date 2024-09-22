@@ -52,7 +52,7 @@ namespace Ryneus
         [SerializeField] private GameObject cursor;
         public GameObject Cursor => cursor;
         [SerializeField] private bool changeCursorColor = true;
-        [SerializeField] private GameObject disable;
+        [SerializeField] private GameObject disable = null;
         public GameObject Disable => disable;
 
         [SerializeField] private Color selectColor;

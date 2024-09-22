@@ -93,23 +93,10 @@ namespace Ryneus
             
             if (statusInfoComponent != null)
             {
-                /*
-                int RecoveryCost = 0;
-                if (actorInfo.TacticsCommandType == TacticsCommandType.Recovery)
-                {
-                    RecoveryCost = actorInfo.TacticsCost;
-                }
-                int Hp = Mathf.Min(actorInfo.CurrentHp + RecoveryCost * 10,actorInfo.MaxHp);
-                int Mp = Mathf.Min(actorInfo.CurrentMp + RecoveryCost * 10,actorInfo.MaxMp);
-                statusInfoComponent.UpdateHp(Hp,actorInfo.MaxHp);
-                statusInfoComponent.UpdateMp(Mp,actorInfo.MaxMp);
-                */
             }
 
             if (enemyInfoComponent != null)
             {
-                //var enemyData = DataSystem.Enemies.Find(a => a.Id == actorInfo.NextBattleEnemyId);
-                //enemyInfoComponent.UpdateData(enemyData);
             }
 
             if (battlePositionToggles.Count > 0)
@@ -120,10 +107,6 @@ namespace Ryneus
                     battlePositionToggles[i].SetIsOnWithoutNotify((int)lineIndex == i);            
                 }
             }
-
-
-
-            //checkToggle.gameObject.SetActive(tacticsCommandType == TacticsCommandType.Paradigm);
         }
 
         private void UpdateViewObjects(TacticsCommandType tacticsCommandType)

@@ -103,5 +103,10 @@ namespace Ryneus
         {
             return worldType == WorldType && (StageId == stageId && Seek < seek || StageId < stageId);
         }
+
+        public bool IsOpenedStageSymbol(int clearCount)
+        {
+            return _symbolInfo.Master.ClearCount >= clearCount;
+        }
     }
 }

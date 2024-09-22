@@ -196,6 +196,7 @@ namespace Ryneus
                 }
             }
             // スコア報酬を更新
+            /*
             PartyInfo.UpdateScorePrizeInfos(CurrentStage.WorldType);
             var nextScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
             foreach (var nextScorePrizeInfo in nextScorePrizeInfos)
@@ -223,6 +224,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
         }
 
         public void MakeSelectRelic(int skillId)

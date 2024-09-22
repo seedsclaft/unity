@@ -17,6 +17,10 @@ namespace Ryneus
 
         public void SetCallHandler(System.Action handler,System.Action exitHandler = null)
         {
+            if (Index == 0)
+            {
+                return;
+            }
             _exitHandler = exitHandler;
             SetSelectHandler(
                 (a) => 
@@ -42,13 +46,14 @@ namespace Ryneus
 
         public void UpdateViewItem()
         {
-            if (ListData == null) return;
         }
 
         public void SetActiveCursor(bool isActive)
         {
-            Debug.Log(isActive);
-            Cursor.SetActive(isActive);
+            if (Disable != null && Disable?.activeSelf == true)
+            {
+                Cursor.SetActive(isActive);
+            }
             if (isActive)
             {
                 SetSelect();

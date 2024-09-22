@@ -12,8 +12,8 @@ namespace Ryneus
             var recordList = new Dictionary<int,List<SymbolResultInfo>>();
             
             var stageSeekList = new List<int>();
-            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.StageId == 0);
-            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 || PartyInfo.EnableMultiverse() && a.StageId == 0);
+            var mainRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 && a.IsOpenedStageSymbol(CurrentData.PlayerInfo.ClearCount));
+            var brunchRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0 && a.IsOpenedStageSymbol(CurrentData.PlayerInfo.ClearCount));
             // 始点と終点を作る
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
             var returnSymbol = PartyInfo.ReturnSymbol;

@@ -21,29 +21,24 @@ namespace Ryneus
             if (nameText != null)
             {
                 var textData = DataSystem.GetText(2100 + (int)statusParamType);
-                nameText.text = textData;
+                nameText.SetText(textData);
             }
             if (currentStatus != null)
             {
                 var before = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()-1).GetParameter(statusParamType);
-                currentStatus.text = before.ToString();
+                currentStatus.SetText(before.ToString());
             }
             if (afterStatus != null)
             {
                 var before = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()-1).GetParameter(statusParamType);
                 var plus = _actorInfo.LevelUpStatus(_actorInfo.LinkedLevel()).GetParameter(statusParamType);
                 afterStatus.gameObject.SetActive(plus > before);
-                afterStatus.text = plus.ToString();
+                afterStatus.SetText(plus.ToString());
             }
             if (usePoint != null)
             {
                 int UseCost = _actorInfo.LevelGrowthRate(statusParamType,actorInfo.LinkedLevel());
-                //var _currentAlcana = GameSystem.CurrentStageData.CurrentAlcana;
-                //if (_currentAlcana != null && _currentAlcana.IsStatusCostDown((StatusParamType)statusParamType))
-                //{
-                //    UseCost -= 1;
-                //}
-                usePoint.text = UseCost.ToString();
+                usePoint.SetText(UseCost.ToString());
             }
         }
     }

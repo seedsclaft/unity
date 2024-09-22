@@ -9,7 +9,8 @@ namespace Ryneus
     {
         [SerializeField] private int id;
 
-        public void Awake(){
+        public void Awake()
+        {
             if (id != 0)
             {
                 var textData = DataSystem.GetText(id);

@@ -119,9 +119,28 @@ namespace Ryneus
             });
         }
 
+        public void RefreshTacticsMembers(List<ListData> tacticsMembers)
+        {
+            tacticsMemberList.RefreshListData(tacticsMembers);
+        }
+
         public void SetBattleMembers(List<ListData> battlerInfos)
         {
-            partyMemberList.SetData(battlerInfos);
+            partyMemberList.SetData(battlerInfos,false,() => 
+            {
+                for (int i = 0; i < partyMemberList.ItemPrefabList.Count;i++)
+                {
+                    var battlePartyMember = partyMemberList.ItemPrefabList[i].GetComponent<BattlePartyMemberItem>();
+                    battlePartyMember.SetLineIndexHandler((a) => 
+                    {
+                        var eventData = new BattlePartyViewEvent(CommandType.ChangeLineIndex)
+                        {
+                            template = a
+                        };
+                        _commandData(eventData);
+                    });
+                }
+            });
         }
 
         public void SetEnemyMembers(List<ListData> enemyInfos)
@@ -232,7 +251,6 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var eventData = new StatusViewEvent(Status.CommandType.LearnMagic);
-                var data = listData;
                 eventData.template = listData;
             }
         }
@@ -245,6 +263,11 @@ namespace Ryneus
         public void SetLearnMagicButtonActive(bool IsActive)
         {
             learnMagicBackButton.gameObject.SetActive(IsActive);
+        }
+
+        public void SetBattleReplayEnable(bool isEnable)
+        {
+            battleReplayButton.Disable?.SetActive(!isEnable);
         }
     }
 }
@@ -262,6 +285,7 @@ namespace BattleParty
         BattleStart,
         BattleReplay,
         CommandHelp,
+        ChangeLineIndex,
     }
 }
 

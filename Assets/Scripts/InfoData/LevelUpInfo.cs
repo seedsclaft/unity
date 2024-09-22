@@ -90,10 +90,5 @@ namespace Ryneus
         {
             return worldType == _worldType && (_stageId == stageId && _seek <= seek || _stageId < stageId);
         }
-
-        public bool HasSameStageSeekBattleResultData(int stageId,int seek,WorldType worldType)
-        {
-            return IsBattleResultData() && _stageId == stageId && _seek == seek && _worldType == worldType;
-        }
     }
 }

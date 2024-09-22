@@ -8,11 +8,11 @@ namespace Ryneus
         public PartyInfo()
         {
             ClearData();
-            InitScorePrizeInfos();
+            //InitScorePrizeInfos();
             ClearStageClearCount();
             InitStageClearCount();
         }
-
+/*
         public void InitScorePrizeInfos()
         {
             foreach (var scorePrizeData in DataSystem.ScorePrizes)
@@ -24,7 +24,7 @@ namespace Ryneus
                 }
             }
         }
-
+*/
         public int GetCurrency(int stageId,int seek,WorldType worldType)
         {
             var currency = 0;
@@ -59,6 +59,7 @@ namespace Ryneus
         private int _stageStockCount = 99;
         public int StageStockCount => _stageStockCount;
         // スコア報酬リスト
+        /*
         private List<ScorePrizeInfo> _scorePrizeInfos = new ();
         public List<ScorePrizeInfo> ScorePrizeInfos => _scorePrizeInfos;
         public void UpdateScorePrizeInfos(WorldType worldType)
@@ -71,14 +72,10 @@ namespace Ryneus
             return _scorePrizeInfos.FindAll(a => a.CheckFlag());
         }
 
-        public bool EnableMultiverse()
-        {
-            return _scorePrizeInfos.Find(a => a.EnableMultiverse()) != null; 
-        }
-
+        */
         public bool EnableLvLink()
         {
-            return _scorePrizeInfos.Find(a => a.EnableLvLink()) != null; 
+            return false; 
         }
 
         // 戻り先の1番目のシンボル
@@ -271,7 +268,7 @@ namespace Ryneus
         {
             _actorInfos.Clear();
             _symbolRecordList.Clear();
-            _scorePrizeInfos.Clear();
+            //_scorePrizeInfos.Clear();
         }
 
         // 所持アクターリスト

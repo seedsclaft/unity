@@ -201,7 +201,7 @@ namespace Ryneus
 			var playerInfo = LoadFile<SaveStageInfo>(PlayerStageDataKey(fileId),(a) => 
 			{
 				GameSystem.CurrentStageData = a;
-				GameSystem.CurrentStageData.Party.InitScorePrizeInfos();
+				//GameSystem.CurrentStageData.Party.InitScorePrizeInfos();
 			});
 			return playerInfo != null;
 		}

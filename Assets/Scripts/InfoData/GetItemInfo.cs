@@ -76,9 +76,9 @@ namespace Ryneus
                     return DataSystem.GetReplaceText(20290,Param1.ToString());
                 case GetItemType.SelectRelic:
                     return DataSystem.GetText(20250);
-                case GetItemType.RemakeHistory:
-                case GetItemType.ParallelHistory:
-                case GetItemType.Multiverse:
+                //case GetItemType.RemakeHistory:
+                //case GetItemType.ParallelHistory:
+                //case GetItemType.Multiverse:
                 case GetItemType.LvLink:
                     break;
             }

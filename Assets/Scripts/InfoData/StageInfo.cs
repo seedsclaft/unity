@@ -93,7 +93,7 @@ namespace Ryneus
         {
             var troopDate = DataSystem.Troops.Find(a => a.TroopId == troopId);
             
-            var troopInfo = new TroopInfo(troopDate.TroopId,false);
+            var troopInfo = new TroopInfo(troopDate.TroopId);
             for (int i = 0;i < troopDate.TroopEnemies.Count;i++)
             {
                 var enemyData = DataSystem.Enemies.Find(a => a.Id == troopDate.TroopEnemies[i].EnemyId);

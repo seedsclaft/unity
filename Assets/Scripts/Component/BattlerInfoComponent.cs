@@ -53,7 +53,7 @@ namespace Ryneus
             }
             if (evaluate != null)
             {
-                evaluate.text = battlerInfo.Evaluate().ToString();
+                evaluate.SetText(battlerInfo.Evaluate().ToString());
             }
             if (additiveFaceThumb != null)
             {
@@ -230,7 +230,8 @@ namespace Ryneus
             {
                 delayCount = 0;
             }
-            battleDamage.StartDamage(damageType,value,() => {
+            battleDamage.StartDamage(damageType,value,() => 
+            {
                 if (_battleDamages.Contains(battleDamage))
                 {
                     _battleDamages.Remove(battleDamage);
@@ -255,7 +256,7 @@ namespace Ryneus
         {
             var image = BattleImage();
             if (image == null) return;
-            var sequence = DOTween.Sequence()
+            DOTween.Sequence()
                 .Append(image.DOFade(0f, 0.05f))
                 .Append(image.DOFade(1f, 0.05f))
                 .SetLoops(3);
@@ -269,7 +270,8 @@ namespace Ryneus
             {
                 delayCount = 0;
             }
-            battleDamage.StartHeal(damageType,value,() => {
+            battleDamage.StartHeal(damageType,value,() => 
+            {
                 if (_battleDamages.Contains(battleDamage))
                 {
                     _battleDamages.Remove(battleDamage);
@@ -293,7 +295,8 @@ namespace Ryneus
         public void StartStatePopup(DamageType damageType,string stateName)
         {
             var battleDamage = CreatePrefab();
-            battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count,() => {
+            battleDamage.StartStatePopup(damageType,stateName,_battleDamages.Count,() => 
+            {
                 if (_battleDamages.Contains(battleDamage))
                 {
                     _battleDamages.Remove(battleDamage);
@@ -330,7 +333,7 @@ namespace Ryneus
                     //deathAnimation.Destroyed = 0;
                     gameObject.SetActive(true);
                     var image = BattleImage();
-                    var sequence = DOTween.Sequence()
+                    DOTween.Sequence()
                         .Append(image.DOFade(0f, 0))
                         .Append(image.DOFade(1f, 0.5f));
                 }
@@ -346,7 +349,8 @@ namespace Ryneus
             var image = BattleImage();
             if (image == null) return;
             var effectRect = effekseerEmitter.gameObject.GetComponent<RectTransform>();
-            if (animationPosition == 0){
+            if (animationPosition == 0)
+            {
                 effectRect.localPosition = new Vector2(0,0);
             } else
             if (animationPosition == 1)
@@ -411,7 +415,6 @@ namespace Ryneus
             enemyInfoComponent.SetGridKey(index);
         }
 
-
         private void Update() 
         {
             UpdateDeathAnimation();
@@ -446,7 +449,8 @@ namespace Ryneus
                 {
                     image = actorInfoComponent.FaceThumb;
                     //image = actorInfoComponent.AwakenFaceThumb;
-                } else{
+                } else
+                {
                     image = actorInfoComponent.FaceThumb;
                 }
             } else
@@ -471,11 +475,11 @@ namespace Ryneus
                 {
                     additiveFaceThumb.DOFade(1f, 0);
                     DOTween.Sequence()
-                    .Append(additiveFaceThumb.DOFade(0f, 0.4f))
-                    .OnComplete(() => 
-                    {
-                        additiveFaceThumb.gameObject.SetActive(false);
-                    });
+                        .Append(additiveFaceThumb.DOFade(0f, 0.4f))
+                        .OnComplete(() => 
+                        {
+                            additiveFaceThumb.gameObject.SetActive(false);
+                        });
                 }
             }
         }

@@ -28,14 +28,12 @@ namespace Ryneus
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
 
         // リプレイを保存するか
-        private bool _needReplayData = false;
-        public bool NeedReplayData => _needReplayData;
-        public TroopInfo(int troopId,bool needReplayData)
+        public bool NeedReplayData => _troopId != -1;
+        public TroopInfo(int troopId)
         {
             _troopId = troopId;
             _battlerInfos.Clear();
             _getItemInfos.Clear();
-            _needReplayData = needReplayData;
         }
 
         public void MakeEnemyTroopDates(int plusLevel)

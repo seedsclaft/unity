@@ -65,5 +65,10 @@ namespace Ryneus
                 battleMembers[i].SetBattleIndex(i + 1);
             }
         }
+
+        public bool IsEnableBattleReplay()
+        {
+            return CurrentTroopInfo().NeedReplayData;
+        }
     }
 }

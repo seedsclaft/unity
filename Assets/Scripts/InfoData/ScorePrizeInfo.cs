@@ -7,6 +7,7 @@ namespace Ryneus
     [Serializable]
     public class ScorePrizeInfo
     {
+        /*
         public ScorePrizeData Master => DataSystem.ScorePrizes.Find(a => a.Id == _scorePrizeId);
         public int _scorePrizeId;
         public int PrizeSetId => Master.PriseSetId;
@@ -49,14 +50,10 @@ namespace Ryneus
             return false;
         }
 
-        public bool EnableMultiverse()
-        {
-            return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.Multiverse) != null;
-        }
-
         public bool EnableLvLink()
         {
             return _getFlag && PrizeMaster.Find(a => a.GetItem.Type == GetItemType.LvLink) != null;
         }
+        */
     }
 }

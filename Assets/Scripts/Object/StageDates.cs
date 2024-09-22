@@ -63,6 +63,7 @@ namespace Ryneus
         public int Param1;
         public int Param2;
         public int PrizeSetId;
+        public int ClearCount;
 
         public void ConvertSymbolGroupData(SymbolGroupData symbolGroupData)
         {

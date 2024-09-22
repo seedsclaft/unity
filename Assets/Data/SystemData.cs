@@ -136,9 +136,9 @@ namespace Ryneus
 		BattleNuminosBonus = 62,
 		BattleEnemyLvUp = 63,
 		SelectRelic = 71,
-		RemakeHistory = 101,
-		ParallelHistory = 102,
-		Multiverse = 103,
+		//RemakeHistory = 101,
+		//ParallelHistory = 102,
+		//Multiverse = 103,
 		LvLink = 104,
 	}
 }
