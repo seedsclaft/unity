@@ -32,7 +32,7 @@ namespace Ryneus
                 {
                     if (checkTriggerInfo.ActionInfo.ActionResults.Count > 0)
                     {
-                        if (checkTriggerInfo.ActionInfo.ActionResults.Find(a => checkTriggerInfo.GetBattlerInfo(a.TargetIndex).GetStateInfo(StateType.Freeze) == null) != null)
+                        if (checkTriggerInfo.ActionInfo.ActionResults.Find(a => checkTriggerInfo.GetBattlerInfo(a.TargetIndex)?.GetStateInfo(StateType.Freeze) == null) != null)
                         {
                             isTrigger = true;
                         }

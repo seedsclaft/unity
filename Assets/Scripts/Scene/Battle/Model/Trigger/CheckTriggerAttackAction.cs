@@ -11,16 +11,19 @@ namespace Ryneus
             switch (triggerData.TriggerType)
             {
                 case TriggerType.SelfAttackActionInfo:
-                if (battlerInfo.IsAlive() && checkTriggerInfo.ActionInfo != null && checkTriggerInfo.ActionInfo.Master.IsHpDamageFeature())
-                {
-                    if (battlerInfo.Index == checkTriggerInfo.ActionInfo.SubjectIndex)
+                    if (battlerInfo.IsAlive() && checkTriggerInfo.ActionInfo != null && checkTriggerInfo.ActionInfo.Master.IsHpDamageFeature())
                     {
-                        isTrigger = true;
+                        if (battlerInfo.Index == checkTriggerInfo.ActionInfo.SubjectIndex)
+                        {
+                            isTrigger = true;
+                        }
                     }
-                }
-                break;
+                    break;
                 case TriggerType.FriendAttackActionInfo:
                     isTrigger = CheckFriendAttackActionInfo(triggerData,battlerInfo,checkTriggerInfo).Count > 0;
+                    break;
+                case TriggerType.OpponentBuffActionInfo:
+                    isTrigger = CheckOpponentBuffActionInfo(triggerData,battlerInfo,checkTriggerInfo).Count > 0;
                     break;
             }
             return isTrigger;
@@ -43,6 +46,9 @@ namespace Ryneus
                 case TriggerType.FriendAttackActionInfo:
                     targetIndexList.AddRange(CheckFriendAttackActionInfo(triggerData,battlerInfo,checkTriggerInfo));
                     break;
+                case TriggerType.OpponentBuffActionInfo:
+                    targetIndexList.AddRange(CheckOpponentBuffActionInfo(triggerData,battlerInfo,checkTriggerInfo));
+                    break;
             }
         }
 
@@ -50,7 +56,6 @@ namespace Ryneus
         {
             var list = new List<int>();
             var actionInfo = checkTriggerInfo.ActionInfo;
-            var actionResultInfos = checkTriggerInfo.ActionResultInfos;
             if (!battlerInfo.IsAlive())
             {
                 return list;
@@ -63,7 +68,35 @@ namespace Ryneus
             {
                 return list;
             }
-            if (battlerInfo.IsActor == checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
+            var subject = checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex);
+            if (subject != null && battlerInfo.IsActor == subject.IsActor)
+            {
+                if (battlerInfo.Index != actionInfo.SubjectIndex)
+                {
+                    list.Add(actionInfo.SubjectIndex);
+                }
+            }
+            return list;
+        }
+
+        private List<int> CheckOpponentBuffActionInfo(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+            var list = new List<int>();
+            var actionInfo = checkTriggerInfo.ActionInfo;
+            if (!battlerInfo.IsAlive())
+            {
+                return list;
+            }
+            if (actionInfo == null)
+            {
+                return list;
+            }
+            if (!actionInfo.Master.IsAddBuffFeature())
+            {
+                return list;
+            }
+            var subject = checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex);
+            if (subject != null && battlerInfo.IsActor != subject.IsActor)
             {
                 if (battlerInfo.Index != actionInfo.SubjectIndex)
                 {

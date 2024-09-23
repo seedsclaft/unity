@@ -53,6 +53,11 @@ namespace Ryneus
             return FeatureDates.Find(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn) && a.Param1 == (int)stateType) != null;
         }
 
+        public bool IsAddBuffFeature()
+        {
+            return FeatureDates.Find(a => (a.FeatureType == FeatureType.AddState || a.FeatureType == FeatureType.AddStateNextTurn) && DataSystem.FindState(a.Param1).Buff) != null;
+        }
+
         public bool IsRevengeHpDamageFeature()
         {
             return FeatureDates.Find(a => a.FeatureType == FeatureType.RevengeHpDamage) != null;
@@ -377,6 +382,7 @@ namespace Ryneus
         LvUpper = 14410, // Lvが〇以上
         SelfAttackActionInfo = 15010, // 自身が攻撃タイプの行動をしようとしている
         FriendAttackActionInfo = 15011, // 味方が攻撃タイプの行動をしようとしている
+        OpponentBuffActionInfo = 15022, // 相手がバフの行動をしようとしている
         SelfActionInfo = 16010, // 行動したのが自身
         SkillUsedCount = 17010, // 魔法を〇回使用する
         AttackedCount = 17020, // 攻撃を〇回受ける

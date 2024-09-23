@@ -137,6 +137,7 @@ namespace Ryneus
             _isAlcana = false;
             
             _actorInfo = actorInfo;
+            _isActorView = true;
             _hp = actorInfo.CurrentHp;
             _mp = actorInfo.CurrentMp;
             _lineIndex = actorInfo.LineIndex;

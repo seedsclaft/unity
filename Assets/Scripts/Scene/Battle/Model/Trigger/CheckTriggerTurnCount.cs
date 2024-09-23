@@ -41,7 +41,7 @@ namespace Ryneus
                     var actionBattlerInfo = checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex);
                     if (triggerData.Param1 == 0)
                     {
-                        if (actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
+                        if (actionBattlerInfo != null && actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
                         {
                             isTrigger = true;
                         }

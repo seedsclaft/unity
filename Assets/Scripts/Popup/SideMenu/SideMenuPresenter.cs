@@ -51,29 +51,29 @@ namespace Ryneus
                 switch (data.Key)
                 {
                     case "Option":
-                    CommandOption();
-                    break;
+                        CommandOption();
+                        break;
                     case "Retire":
-                    CommandDropout();
-                    break;
+                        CommandDropout();
+                        break;
                     case "Help":
-                    CommandRule();
-                    break;
+                        CommandRule();
+                        break;
                     case "Save":
-                    CommandSave(false);
-                    break;
+                        CommandSave(false);
+                        break;
                     case "License":
-                    CommandCredit();
-                    break;
+                        CommandCredit();
+                        break;
                     case "InitializeData":
-                    CommandInitializeData();
-                    break;
+                        CommandInitializeData();
+                        break;
                     case "Title":
-                    CommandTitle();
-                    break;
+                        CommandTitle();
+                        break;
                     case "EndGame":
-                    CommandEndGame();
-                    break;
+                        CommandEndGame();
+                        break;
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace Ryneus
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 _view.CommandGotoSceneChange(Scene.Title);
             }
             ClosePopup();

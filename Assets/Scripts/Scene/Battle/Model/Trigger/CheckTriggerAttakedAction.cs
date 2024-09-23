@@ -65,7 +65,7 @@ namespace Ryneus
                 return list;
             }
             var subject = checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex);
-            if (battlerInfo.IsActor != subject.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+            if (subject != null && battlerInfo.IsActor != subject.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
             {
                 var targetActionResultInfos = actionResultInfos.FindAll(a => a.TargetIndex == battlerInfo.Index);
                 if (targetActionResultInfos.Count > 0 && actionInfo.ScopeType == (ScopeType)triggerData.Param1)
@@ -98,7 +98,7 @@ namespace Ryneus
                 return list;
             }
             var subject = checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex);
-            if (battlerInfo.IsActor != subject.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+            if (subject != null && battlerInfo.IsActor != subject.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
             {
                 var targetActionResultInfos = actionResultInfos.FindAll(a => a.TargetIndex == battlerInfo.Index);
                 if (targetActionResultInfos.Count > 0 && subject.Kinds.Contains((KindType)triggerData.Param1))

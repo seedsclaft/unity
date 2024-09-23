@@ -49,12 +49,14 @@ namespace Ryneus
 
         private void CommandPageLeft()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.PageLeft();
             CommandRefresh();
         }
 
         private void CommandPageRight()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.PageRight();
             CommandRefresh();
         }

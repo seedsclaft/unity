@@ -21,7 +21,7 @@ namespace Ryneus
                 CommandEndAnimation();
                 return;
             }
-            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor;
+            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
             if (actionInfo.Master.SkillType == SkillType.Messiah)
             {
                 if (isActor)
@@ -47,8 +47,10 @@ namespace Ryneus
         private async void StartAnimationDemigod()
         {
             var actionInfo = _model.CurrentActionInfo;
-            var sprite = _model.AwakenSprite(_model.GetBattlerInfo(actionInfo.SubjectIndex).ActorInfo.ActorId);
-            await _view.StartAnimationAwaken(_model.GetBattlerInfo(actionInfo.SubjectIndex),sprite,true);
+            var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
+            var actorId = subject.ActorInfo != null ? subject.ActorInfo.ActorId : subject.EnemyData.Id - 1000;
+            var sprite = _model.AwakenSprite(actorId);
+            await _view.StartAnimationAwaken(subject,sprite);
             StartAnimationSkill();
         }
 
@@ -58,8 +60,9 @@ namespace Ryneus
         private async void StartAnimationDemigodEnemy()
         {
             var actionInfo = _model.CurrentActionInfo;
-            var sprite = _model.AwakenEnemySprite(_model.GetBattlerInfo(actionInfo.SubjectIndex).EnemyData.Id);
-            await _view.StartAnimationAwaken(_model.GetBattlerInfo(actionInfo.SubjectIndex),sprite,false);
+            var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
+            var sprite = _model.AwakenEnemySprite(subject.EnemyData.Id);
+            await _view.StartAnimationAwaken(subject,sprite);
             StartAnimationSkill();
         }
         
@@ -214,7 +217,7 @@ namespace Ryneus
                 CommandEndAnimation();
                 return;
             }
-            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor;
+            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
             if (actionInfo.FirstAttack() && (actionInfo.Master.SkillType == SkillType.Messiah && isActor || actionInfo.Master.SkillType == SkillType.Awaken))
             {
                 if (isActor)

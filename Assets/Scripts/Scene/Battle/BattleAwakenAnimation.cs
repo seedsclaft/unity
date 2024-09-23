@@ -16,19 +16,19 @@ namespace Ryneus
         [SerializeField] private GameObject enemyMainObject;
         [SerializeField] private EffekseerEmitter emitter;
         [SerializeField] private CanvasGroup canvasGroup;
-        public void StartAnimation(BattlerInfo battlerInfo,Sprite actorSprite,float speedRate,bool isActor)
+        public void StartAnimation(BattlerInfo battlerInfo,Sprite actorSprite,float speedRate)
         {
             canvasGroup.alpha = 0;
             emitter.transform.DOScaleY(2.0f,0);
-            if (isActor)
+            if (battlerInfo.IsActorView)
             {
                 actorMain.sprite = actorSprite;
             } else
             {
                 battlerInfoComponent.UpdateInfo(battlerInfo);
             }
-            actorMain.gameObject.SetActive(isActor);
-            enemyMainObject.SetActive(!isActor);
+            actorMain.gameObject.SetActive(battlerInfo.IsActorView);
+            enemyMainObject.SetActive(!battlerInfo.IsActorView);
             StartEmitterAnimation(speedRate);
         }
 
