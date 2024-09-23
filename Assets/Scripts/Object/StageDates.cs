@@ -71,6 +71,7 @@ namespace Ryneus
             Param1 = symbolGroupData.Param1;
             Param2 = symbolGroupData.Param2;
             PrizeSetId = symbolGroupData.PrizeSetId;
+            ClearCount = 0;
         }
 
         public void CopyData(StageSymbolData stageSymbolData)
@@ -87,6 +88,7 @@ namespace Ryneus
             Param1 = stageSymbolData.Param1;
             Param2 = stageSymbolData.Param2;
             PrizeSetId = stageSymbolData.PrizeSetId;
+            ClearCount = stageSymbolData.ClearCount;
         }
 
         public bool IsGroupSymbol()

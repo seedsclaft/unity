@@ -77,7 +77,7 @@ namespace Ryneus
         public StageInfo NextStage()
         {
             var list = new List<StageInfo>();
-            var find = DataSystem.Stages.Find(a => PartyInfo.ClearCount(a.Id) == 0 && a.Id > 0);
+            var find = DataSystem.Stages.Find(a => a.Id > CurrentStage.Id);
             if (find != null)
             {
                 return new StageInfo(find);

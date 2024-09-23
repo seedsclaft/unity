@@ -9,8 +9,6 @@ namespace Ryneus
         {
             ClearData();
             //InitScorePrizeInfos();
-            ClearStageClearCount();
-            InitStageClearCount();
         }
 /*
         public void InitScorePrizeInfos()
@@ -526,47 +524,6 @@ namespace Ryneus
                 }
             }
             return numinosBonus;
-        }
-
-        // クリア情報
-        private Dictionary<int,int> _stageClearDict = new ();
-        public Dictionary<int,int> StageClearDict => _stageClearDict;
-        public int ClearCount(int stageId)
-        {
-            if (_stageClearDict.ContainsKey(stageId))
-            {
-                return _stageClearDict[stageId];
-            }
-            return 0;
-        }
-
-        private void ClearStageClearCount()
-        {
-            _stageClearDict.Clear();
-        }
-
-        private void InitStageClearCount()
-        {
-            var stageDates = DataSystem.Stages;
-            foreach (var stageData in stageDates)
-            {
-                if (stageData.Selectable)
-                {
-                    if (!_stageClearDict.ContainsKey(stageData.Id))
-                    {
-                        _stageClearDict[stageData.Id] = 0;
-                    }
-                }
-            }
-        }
-
-        public void StageClear(int stageId)
-        {
-            if (!_stageClearDict.ContainsKey(stageId))
-            {
-                _stageClearDict[stageId] = 0;
-            }
-            _stageClearDict[stageId]++;
         }
     }
 }

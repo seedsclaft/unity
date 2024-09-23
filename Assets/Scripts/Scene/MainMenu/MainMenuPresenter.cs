@@ -30,10 +30,6 @@ namespace Ryneus
             _view.SetStagesData(GetListData(_model.Stages()));
             _view.SetBackGround(_model.NextStage().Master.BackGround);
             _view.SetStageData(_model.NextStage());
-            //_view.SetNuminous(_model.Currency);
-            //_view.SetTotalScore(_model.TotalScore);
-            //_view.SetTacticsCommand(_model.TacticsCommand());
-            //_model.InitStageData();
 
             var bgm = await _model.GetBgmData("MAINMENU");
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);

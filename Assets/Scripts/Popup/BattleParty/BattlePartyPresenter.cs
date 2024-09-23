@@ -30,7 +30,7 @@ namespace Ryneus
             _view.SetEnemyMembers(GetListData(enemyInfos));
             _view.SetAttributeList(GetListData(_model.AttributeTabList()));
             _view.SetStatusButtonEvent(() => CommandStatusInfo());
-            _view.SetTacticsMembers(GetListData(_model.StageMembers()));
+            _view.SetTacticsMembers(GetListData(_model.BattlePartyMembers()));
             _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
@@ -44,11 +44,17 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
+                case CommandType.SelectSideMenu:
+                    CommandSelectSideMenu();
+                    break;
                 case CommandType.DecideTacticsMember:
                     CommandDecideTacticsMember((ActorInfo)viewEvent.template);
                     break;
                 case CommandType.SelectTacticsMember:
                     CommandSelectTacticsMember((ActorInfo)viewEvent.template);
+                    break;
+                case CommandType.SelectAttribute:
+                    CommandSelectAttribute((AttributeType)viewEvent.template);
                     break;
                 case CommandType.EnemyInfo:
                     CommandEnemyInfo();
@@ -94,11 +100,20 @@ namespace Ryneus
             }
         }
 
+        private void CommandSelectSideMenu()
+        {
+            _busy = true;
+            CommandCallSideMenu(_model.SideMenu(),() => 
+            {
+                _busy = false;
+            });
+        }
+        
         private void CommandDecideTacticsMember(ActorInfo actorInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
-            _view.RefreshTacticsMembers(GetListData(_model.StageMembers()));
+            _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
             CommandRefresh();
         }
 
@@ -108,10 +123,21 @@ namespace Ryneus
             CommandRefresh();
         }
 
+        private void CommandSelectAttribute(AttributeType attributeType)
+        {
+            var lastSelectSkillId = -1;
+            var lastSelectSkill = _view.SelectMagic;
+            if (lastSelectSkill != null)
+            {
+                lastSelectSkillId = lastSelectSkill.Id;
+            }
+            _view.RefreshLeaningList(_model.SelectActorLearningMagicList((int)attributeType,lastSelectSkillId));
+        }
+
         private void CommandStatusInfo()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            CommandStatusInfo(_model.StageMembers(),false,true,true,false,_model.CurrentActor.ActorId,() => 
+            CommandStatusInfo(_model.BattlePartyMembers(),false,true,true,false,_model.CurrentActor.ActorId,() => 
             {
             });
         }
@@ -192,7 +218,7 @@ namespace Ryneus
 
         private void ShowCharacterDetail()
         {
-            _view.ShowCharacterDetail(_model.CurrentActor,_model.StageMembers(),_model.SkillActionListData(_model.CurrentActor));  
+            _view.ShowCharacterDetail(_model.CurrentActor,_model.BattlePartyMembers(),_model.SkillActionListData(_model.CurrentActor));  
         }
 
         private void CommandChangeLineIndex(ActorInfo actorInfo)
@@ -233,12 +259,13 @@ namespace Ryneus
                 _busy = false;
                 _view.SetBusy(false);
                 CommandRefresh();
-                _view.RefreshTacticsMembers(GetListData(_model.StageMembers()));
+                _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
             });
         }
 
         private void CommandShowLearnMagic()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _view.SetLearnMagicButtonActive(true);
             var lastSelectSkillId = -1;
             var lastSelectSkill = _view.SelectMagic;
@@ -246,7 +273,7 @@ namespace Ryneus
             {
                 lastSelectSkillId = lastSelectSkill.Id;
             }
-            _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));
+            _view.ShowLeaningList(_model.SelectActorLearningMagicList(-1,lastSelectSkillId));
         }
 
         private void CommandLearnMagic(SkillInfo skillInfo)
@@ -255,13 +282,14 @@ namespace Ryneus
             {
                 _view.SetNuminous(_model.Currency);
                 //_view.CommandRefresh();
-                CommandShowLearnMagic();
+                CommandSelectAttribute(_view.AttributeType);
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             });
         }
 
         private void CommandHideLearnMagic()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _view.SetLearnMagicButtonActive(false);
             CommandRefresh();
         }
@@ -272,6 +300,7 @@ namespace Ryneus
             _busy = true;
             var skillTriggerViewInfo = new SkillTriggerViewInfo(_model.CurrentActor.ActorId,() => 
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 _busy = false;
                 CommandRefresh();
             });

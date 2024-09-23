@@ -39,6 +39,18 @@ namespace Ryneus
             }
         }
 
+        public AttributeType AttributeType
+        {
+            get 
+            {
+                if (attributeList.ListData != null)
+                {
+                    return (AttributeType)attributeList.ListData.Data;
+                }
+                return AttributeType.None;
+            }
+        }
+
         public new void Initialize()
         {
             if (_isInit == true)

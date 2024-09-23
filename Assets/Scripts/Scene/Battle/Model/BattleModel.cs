@@ -134,7 +134,6 @@ namespace Ryneus
             foreach (var enemy in enemies)
             {
                 enemy.ResetData(enemy.Level);
-                //enemy.ResetSkillInfos();
                 enemy.InitParamInfos(enemy.EnemyData);
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
@@ -222,13 +221,9 @@ namespace Ryneus
             _currentBattler.SetLastSelectSkillId(skillId);
         }
 
-        public void WaitUnison()
+        public void WaitCommand(ActionInfo actionInfo)
         {
-            _currentTurnBattler.SetAp(1);
-            _currentTurnBattler.AddState(new StateInfo(StateType.Wait,999,0,_currentTurnBattler.Index,_currentTurnBattler.Index,10),true);
-            _currentTurnBattler.SetLastSelectSkillId(-1);
-            _currentTurnBattler = null;
-            _actionInfos.Clear();
+            actionInfo.ActionResults.Clear();
         }
 
         public void AssignWaitBattler()
@@ -400,6 +395,10 @@ namespace Ryneus
                 return false;
             }
             if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.CountTurn != 0)
+            {
+                return false;
+            }
+            if (battlerInfo.IsState(StateType.NoPassive))
             {
                 return false;
             }
@@ -826,6 +825,10 @@ namespace Ryneus
             }
             SetActorLastTarget(actionInfo,subject,indexList);
             if (subject.IsState(StateType.Silence))
+            {
+                return;
+            }
+            if (subject.IsState(StateType.NoPassive) && actionInfo.Master.SkillType == SkillType.Passive)
             {
                 return;
             }

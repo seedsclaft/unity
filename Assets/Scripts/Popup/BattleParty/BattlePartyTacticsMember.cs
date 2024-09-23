@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI trainCost;
         [SerializeField] private TextMeshProUGUI disableText;
         [SerializeField] private GameObject inBattle;
+        [SerializeField] private TextMeshProUGUI battleIndexText;
 
         private bool _levelUpHandler = false;
         private bool _learnMagicHandler = false;        
@@ -49,6 +50,15 @@ namespace Ryneus
             trainCost?.SetText(TacticsUtility.TrainCost(data).ToString() + DataSystem.GetText(1000));
             Disable?.SetActive(!ListData.Enable);
             inBattle?.SetActive(data.BattleIndex > 0);
+            if (data.BattleIndex >= 0)
+            {
+                battleIndexText?.SetText(BattleIndexText(data.BattleIndex));
+            }
+        }
+        
+        private string BattleIndexText(int battleIndex)
+        {
+            return DataSystem.System.GetTextData(battleIndex + 19600 - 1).Text;
         }
     }
 }

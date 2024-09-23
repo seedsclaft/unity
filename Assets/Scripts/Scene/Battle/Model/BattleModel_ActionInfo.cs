@@ -10,6 +10,8 @@ namespace Ryneus
         // 現在最優先の行動
         private ActionInfo _currentActionInfo = null;
         public ActionInfo CurrentActionInfo => _currentActionInfo;
+        // 現在最優先の行動
+        public BattlerInfo CurrentActionBattler => _currentActionInfo != null ? GetBattlerInfo(_currentActionInfo.SubjectIndex) : null;
 
         public void AddActionInfo(ActionInfo actionInfo,bool IsInterrupt)
         {

@@ -85,7 +85,7 @@ namespace Ryneus
             _view.CommandCallOption(() => 
             {
                 ClosePopup();
-                _view.CommandGameSystem(Base.CommandType.ClosePopup);
+                //_view.CommandGameSystem(Base.CommandType.ClosePopup);
             });
         }
 

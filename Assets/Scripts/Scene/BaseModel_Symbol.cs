@@ -10,7 +10,7 @@ namespace Ryneus
         public List<SymbolResultInfo> StageResultInfos(List<StageSymbolData> stageSymbolDates)
         {
             var resultInfos = new List<SymbolResultInfo>();
-            var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0);
+            var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
             foreach (var symbolMaster in symbolDates)
             {
                 var randFlag = false;

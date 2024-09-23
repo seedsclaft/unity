@@ -346,17 +346,17 @@ namespace Ryneus
 
         private void CommandSideMenu(SideMenuViewInfo sideMenuViewInfo)
         {
-            var prefab = statusAssign.CreatePopup(StatusType.SideMenu,helpWindow);
+            var prefab = popupAssign.CreatePopup(PopupType.SideMenu,helpWindow);
             var sideMenuView = prefab.GetComponent<SideMenuView>();
             sideMenuView.Initialize();
             sideMenuView.SetEvent((type) => UpdateCommand(type));
             sideMenuView.SetBackEvent(() => 
             {
-                UpdateCommand(new ViewEvent(Base.CommandType.CloseStatus));
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
                 sideMenuViewInfo.EndEvent?.Invoke();
             });
             sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
-            _currentScene.SetBusy(true);
         }
         
         private void CommandRankingView(RankingViewInfo rankingViewInfo)

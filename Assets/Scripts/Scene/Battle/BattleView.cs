@@ -436,7 +436,7 @@ namespace Ryneus
 
         public void ActivateEnemyList()
         {
-            battleEnemyLayer.Activate();
+            //battleEnemyLayer.Activate();
         }
 
         public void DeactivateEnemyList()
@@ -446,7 +446,7 @@ namespace Ryneus
 
         public void ActivateActorList()
         {
-            battleActorList.Activate();
+            //battleActorList.Activate();
         }
 
         public void DeactivateActorList()
@@ -536,7 +536,10 @@ namespace Ryneus
         {
             skillInfoComponent.gameObject.SetActive(true);
             skillInfoComponent.UpdateInfo(skillInfo);
-            currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,60 + ((skillInfo.Master.Help.Split("\n").Length-1) * 28));
+            var convertHelpText = skillInfo.ConvertHelpText();
+            var length = convertHelpText.Split("\n").Length;
+            var height = 32 + 28 * length;
+            currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,height);
         }
 
         public void ClearCurrentSkillData()

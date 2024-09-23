@@ -209,7 +209,7 @@ namespace Ryneus
 
         private async void RepeatAnimationSkill(ActionInfo actionInfo)
         {           
-            if (actionInfo.ActionResults.Count == 0)
+            if (actionInfo.ActionResults.Count == 0 || !_model.CurrentActionBattler.IsAlive())
             {
                 CommandEndAnimation();
                 return;

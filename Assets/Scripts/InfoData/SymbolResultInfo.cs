@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -102,11 +103,6 @@ namespace Ryneus
         public bool EnableStage(int stageId,int seek,WorldType worldType)
         {
             return worldType == WorldType && (StageId == stageId && Seek < seek || StageId < stageId);
-        }
-
-        public bool IsOpenedStageSymbol(int clearCount)
-        {
-            return _symbolInfo.Master.ClearCount >= clearCount;
         }
     }
 }

@@ -442,6 +442,7 @@ namespace Ryneus
                             _busy = false;
                             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                             CommandCancelSelectSymbol();
+                            _view.SetNuminous(_model.Currency);
                         }
                     };
                     _view.CommandCallPopup(popupInfo);

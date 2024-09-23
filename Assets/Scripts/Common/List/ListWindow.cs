@@ -543,7 +543,7 @@ namespace Ryneus
                 if (_objectList[i] == null) continue;
                 var listItem = _objectList[i].GetComponentInChildren<ListItem>();
                 if (listItem == null) continue;
-                if (index == listItem.Index || _selectIndexes.Contains(listItem.Index))
+                if (_active && (index == listItem.Index || _selectIndexes.Contains(listItem.Index)))
                 {
                     listItem.SetSelect();
                 } else

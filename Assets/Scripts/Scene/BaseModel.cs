@@ -255,7 +255,6 @@ namespace Ryneus
 
         public void StageClear()
         {
-            PartyInfo.StageClear(CurrentStage.Id);
         }
 
         public List<SymbolResultInfo> OpeningStageResultInfos()
@@ -263,7 +262,7 @@ namespace Ryneus
             var recordInfos = new List<SymbolResultInfo>();
             // 初期加入マス
             var symbols = DataSystem.FindStage(0).StageSymbols;
-            symbols = symbols.FindAll(a => a.Seek == 0);
+            symbols = symbols.FindAll(a => a.Seek == 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
             bool addActor = false;
             foreach (var symbol in symbols)
             {

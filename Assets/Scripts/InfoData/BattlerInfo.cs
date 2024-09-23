@@ -185,24 +185,30 @@ namespace Ryneus
             _mp = _status.Mp;
 
             _skills = new List<SkillInfo>();
+            var enhanceSkills = new List<SkillInfo>();
             for (int i = 0;i < enemyData.LearningSkills.Count;i++)
             {
                 if (_level >= enemyData.LearningSkills[i].Level)
                 {
                     var skillInfo = new SkillInfo(enemyData.LearningSkills[i].SkillId);
-                    skillInfo.SetTriggerDates(enemyData.LearningSkills[i].TriggerDates);
-                    skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
-                    _skills.Add(skillInfo);
+                    if (skillInfo.IsEnhanceSkill())
+                    {
+                        enhanceSkills.Add(skillInfo);
+                    } else
+                    {
+                        skillInfo.SetTriggerDates(enemyData.LearningSkills[i].TriggerDates);
+                        skillInfo.SetWeight(enemyData.LearningSkills[i].Weight);
+                        _skills.Add(skillInfo);
+                    }
                 }
             }
             InitKindTypes(enemyData.Kinds);
-            InitSkillCount();
-            var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
             foreach (var enhanceSkill in enhanceSkills)
             {
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
             _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
+            _skillTriggerInfos.Clear();
             foreach (var skillInfo in _skills)
             {
                 var skillTriggerData = DataSystem.Enemies.Find(a => a.Id == enemyData.Id).SkillTriggerDates.Find(a => a.SkillId == skillInfo.Id);
@@ -217,7 +223,8 @@ namespace Ryneus
                 _skillTriggerInfos.Add(skillTriggerInfo);
             }
             _skillTriggerInfos = _skillTriggerInfos.FindAll(a => _skills.Find(b => b.Id == a.SkillId) != null);
-            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? -1 : 1);
+            //_skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? -1 : 1);
+            InitSkillCount();
             ResetAp(true);
         }
 

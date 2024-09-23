@@ -446,7 +446,8 @@ namespace Ryneus
             actionInfo = _model.CurrentActionInfo;
             if (actionInfo != null)
             {
-                if (actionInfo.IsWait())
+                // 待機か戦闘不能なら何もしない
+                if (actionInfo.IsWait() || !_model.CurrentActionBattler.IsAlive())
                 {
                     StartWaitCommand(actionInfo);
                 } else
@@ -456,17 +457,10 @@ namespace Ryneus
             }
         }
 
-
         private void StartWaitCommand(ActionInfo actionInfo)
         {
-            _model.WaitUnison();
-            _view.StartStatePopup(actionInfo.SubjectIndex,DamageType.State,"+" + DataSystem.States.Find(a => a.StateType == StateType.Wait).Name);
-            _view.BattlerBattleClearSelect();
-            _view.ShowStateOverlay();
-            _view.RefreshStatus();
-            _view.SetBattlerThumbAlpha(true);
-            _model.SetCurrentTurnBattler(null);
-            _view.SetBattleBusy(false);
+            _model.WaitCommand(actionInfo);
+            CommandEndAnimation();
         }
 
         private void SetActionInfo(ActionInfo actionInfo)

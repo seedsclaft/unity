@@ -23,6 +23,7 @@ namespace Ryneus
         private new System.Action<BattlePartyViewEvent> _commandData = null;
         private System.Action<StatusViewEvent> _statusCommandData = null;
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
+        public AttributeType AttributeType => battleSelectCharacter.AttributeType;
         
         public override void Initialize() 
         {
@@ -45,6 +46,10 @@ namespace Ryneus
             SetInputHandler(partyMemberList.gameObject);
             SetInputHandler(tacticsMemberList.gameObject);
             SetInputHandler(enemyMemberList.gameObject);
+            SideMenuButton.SetCallHandler(() => 
+            {
+                CallSideMenu();
+            });
             learnMagicBackButton?.onClick.AddListener(() => 
             {
                 if (learnMagicBackButton.gameObject.activeSelf == false) return;
@@ -84,6 +89,12 @@ namespace Ryneus
         public void SetStatusEvent(System.Action<StatusViewEvent> commandData)
         {
             _statusCommandData = commandData;
+        }
+
+        private void CallSideMenu()
+        {
+            var eventData = new BattlePartyViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
         }
 
         private void OnClickBack()
@@ -237,12 +248,9 @@ namespace Ryneus
             trainAnimation.OpenAnimation(battleSelectCharacter.transform,null);
         }
         
-        public void CommandSelectActorAlchemy()
+        public void RefreshLeaningList(List<ListData> learnMagicList)
         {
-            if (battleSelectCharacter.MagicList.Index == -1)
-            {
-                battleSelectCharacter.MagicList.Refresh(0);
-            }
+            battleSelectCharacter.MagicList.SetData(learnMagicList);
         }
         
         private void CallSkillAlchemy()
@@ -281,6 +289,7 @@ namespace BattleParty
     {
         None = 0,
         Back,
+        SelectSideMenu,
         SelectAttribute,
         DecideTacticsMember,
         SelectTacticsMember,
