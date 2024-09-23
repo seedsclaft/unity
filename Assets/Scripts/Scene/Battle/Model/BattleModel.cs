@@ -844,7 +844,7 @@ namespace Ryneus
                     featureDates.Add(featureData);
                 }
 
-                var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.Master.Scope == ScopeType.One);
+                var actionResultInfo = new ActionResultInfo(subject,target,featureDates,actionInfo.Master.Id,actionInfo.ScopeType == ScopeType.One);
                 
                 // Hpダメージ分の回復計算
                 var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
@@ -947,7 +947,7 @@ namespace Ryneus
         private ScopeType CalcScopeType(BattlerInfo subject,ActionInfo actionInfo)
         {
             var scopeType = actionInfo.Master.Scope;
-            // パッシブで回数増加を計算
+            // パッシブで対象変更を計算
             var changeScopeFeature = subject.Skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillScope && actionInfo.Master.Id == b.Param1) != null);
             if (changeScopeFeature != null)
             {

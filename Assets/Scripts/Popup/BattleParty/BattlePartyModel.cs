@@ -107,6 +107,13 @@ namespace Ryneus
                 Key = "Help"
             };
             list.Add(menuCommand);
+            var dictionaryCommand = new SystemData.CommandData
+            {
+                Id = 11,
+                Name = DataSystem.GetText(19730),
+                Key = "Dictionary"
+            };
+            list.Add(dictionaryCommand);
             var saveCommand = new SystemData.CommandData
             {
                 Id = 3,

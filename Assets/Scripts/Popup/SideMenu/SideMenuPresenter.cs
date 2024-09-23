@@ -74,6 +74,10 @@ namespace Ryneus
                     case "EndGame":
                         CommandEndGame();
                         break;
+                    case "Dictionary":
+                        CommandDictionary();
+                        break;
+                    
                 }
             }
         }
@@ -217,6 +221,20 @@ namespace Ryneus
 #if !UNITY_EDITOR
             Application.Quit();
 #endif
+        }
+
+        private void CommandDictionary()
+        {
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Dictionary,
+                EndEvent = () =>
+                {
+                    ClosePopup();
+                }
+            };
+            _view.CommandCallPopup(popupInfo);
         }
 
         private void ClosePopup()

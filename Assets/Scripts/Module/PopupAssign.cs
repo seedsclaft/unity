@@ -24,6 +24,7 @@ namespace Ryneus
         [SerializeField] private GameObject guidePrefab = null;
         [SerializeField] private GameObject battlePartyPrefab = null;
         [SerializeField] private GameObject sideMenuPrefab = null;
+        [SerializeField] private GameObject dictionaryPrefab = null;
 
         private List<BaseView> _stackPopupView = new ();
         
@@ -60,6 +61,7 @@ namespace Ryneus
                 PopupType.Guide => guidePrefab,
                 PopupType.BattleParty => battlePartyPrefab,
                 PopupType.SideMenu => sideMenuPrefab,
+                PopupType.Dictionary => dictionaryPrefab,
                 _ => null,
             };
         }
@@ -101,5 +103,6 @@ namespace Ryneus
         Guide,
         BattleParty,
         SideMenu,
+        Dictionary,
     }
 }
