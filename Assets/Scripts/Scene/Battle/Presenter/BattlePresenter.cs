@@ -372,6 +372,7 @@ namespace Ryneus
             {
                 autoSkillId = 20010;
             }
+            LogOutput.Log(autoSkillId);
             MakeActionInfo(currentBattler,autoSkillId,targetIndex);
         }
 

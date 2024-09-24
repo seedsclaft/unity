@@ -26,15 +26,16 @@ namespace Ryneus
         {
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
+            if (_model.IsEnding())
+            {
+            } else
+            {
+                _view.SetBackGround(_model.NextStage().Master.BackGround);
+                _view.SetStageData(_model.NextStage());
 
-            _view.SetStagesData(GetListData(_model.Stages()));
-            _view.SetBackGround(_model.NextStage().Master.BackGround);
-            _view.SetStageData(_model.NextStage());
-
-            var bgm = await _model.GetBgmData("MAINMENU");
-            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-            //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
-            _view.UpdateMainMenuStage();
+                var bgm = await _model.GetBgmData("MAINMENU");
+                SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            }
             _busy = false;
         }
 
@@ -51,35 +52,7 @@ namespace Ryneus
                     _model.StartSelectStage(_model.NextStage().Id);
                     _view.CommandGotoSceneChange(Scene.Tactics);
                     break;
-                case CommandType.StageSelect:
-                    CommandStageSelect((int)viewEvent.template);
-                    break;
-                case CommandType.SelectSideMenu:
-                    CommandSelectSideMenu();
-                    break;
             }
         }
-        
-        private void CommandStageSelect(int stageId)
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            if (_model.NeedSlotData(stageId))
-            {
-                _view.CommandSceneChange(Scene.Slot);
-            } else
-            {
-                _model.StartSelectStage(stageId);
-                _view.CommandGotoSceneChange(Scene.Tactics);
-            }
-        }
-
-        private void CommandSelectSideMenu()
-        {
-            _busy = true;
-            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
-            {
-                _busy = false;
-            });
-        }    
     }
 }

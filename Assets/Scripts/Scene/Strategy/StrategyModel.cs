@@ -193,6 +193,9 @@ namespace Ryneus
                         getItemInfo.SetGetFlag(true);
                         getItemInfo.SetResultParam(getItemInfo.Param1);
                         break;
+                    case GetItemType.Ending:
+                        getItemInfo.SetGetFlag(true);
+                        break;
                 }
             }
             // スコア報酬を更新

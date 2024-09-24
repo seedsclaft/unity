@@ -525,5 +525,20 @@ namespace Ryneus
             }
             return numinosBonus;
         }
+
+        public bool HasEndingGetItem(int stageId,int seek,WorldType worldType)
+        {
+            var records = EnableResultInfos(stageId,seek,worldType);
+            records = records.FindAll(a => a.Selected);
+            foreach (var record in records)
+            {
+                var endingItem = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.Ending);
+                if (endingItem.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
