@@ -209,7 +209,6 @@ namespace Ryneus
             if (isBEndGameClear)
             {
                 CurrentStage.SetEndingType(EndingType.B);
-                StageClear();
                 return DataSystem.Adventures.Find(a => a.Id == 152);
             }
             return null;

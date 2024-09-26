@@ -408,7 +408,6 @@ namespace Ryneus
 
         public void EndStage()
         {
-            StageClear();
             var (stageId,currentTurn) = PartyInfo.LastStageIdTurns();
             if (currentTurn == DataSystem.FindStage(stageId).Turns)
             {

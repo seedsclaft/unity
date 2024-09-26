@@ -51,14 +51,15 @@ namespace Ryneus
         public static void UploadReplayFile(string key,string userId,SaveBattleInfo data)
         {
         }
-        public void ReadRankingData(int stageId,string rankingTypeText)
+
+        public void ReadRankingData()
         {
             if (!_isInit)
             {
                 return;
             }
-            FirebaseController.RankingInfos.Clear();
-            FirebaseController.IsBusy = true;
+            RankingInfos.Clear();
+            IsBusy = true;
             FirebaseReadRankingData(gameObject.GetInstanceID(),OnReadFirestore);
         }
         
@@ -78,19 +79,19 @@ namespace Ryneus
                     rank++;
                 }
                 Debug.Log("OnReadFirestore End");
-                FirebaseController.RankingInfos = data;
+                RankingInfos = data;
             }
-            FirebaseController.IsBusy = false;
+            IsBusy = false;
         }
 
-        public void CurrentRankingData(int stageId,string userId)
+        public void CurrentRankingData(string userId)
         {
             if (!_isInit)
             {
                 return;
             }
-            FirebaseController.CurrentScore = 0;
-            FirebaseController.IsBusy = true;
+            CurrentScore = 0;
+            IsBusy = true;
             FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
         }
 
@@ -101,9 +102,9 @@ namespace Ryneus
             if (jsonString != "-1")
             {
                 var ranking = JsonUtility.FromJson<RankingInfo>(jsonString);
-                FirebaseController.CurrentScore = ranking.Score;
+                CurrentScore = ranking.Score;
             }
-            FirebaseController.IsBusy = false;
+            IsBusy = false;
         }
 
         public void WriteRankingData(int stageId,string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
@@ -112,7 +113,7 @@ namespace Ryneus
             {
                 return;
             }
-            FirebaseController.IsBusy = true;
+            IsBusy = true;
             FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Count,selectRank.ToArray(),selectRank.Count,OnWriteFirestore);
         }
 
@@ -121,11 +122,11 @@ namespace Ryneus
         private static void OnWriteFirestore(int instanceId,string jsonString)
         {
             Debug.Log("OnWriteFirestore End");
-            FirebaseController.IsBusy = false;
+            IsBusy = false;
         }
         #endif
 
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         private Firebase.FirebaseApp _app;
         public void Initialize()
         {

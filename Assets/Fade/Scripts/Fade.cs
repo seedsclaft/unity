@@ -22,10 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Assertions;
 using System.Threading;
-using Cysharp.Threading;
-using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 
 public class Fade : MonoBehaviour
@@ -44,11 +41,12 @@ public class Fade : MonoBehaviour
 
 	IEnumerator FadeoutCoroutine (float time, System.Action action)
 	{
-		float endTime = Time.timeSinceLevelLoad + time * (cutoutRange);
+		float endTime = Time.timeSinceLevelLoad + time * cutoutRange;
 
 		var endFrame = new WaitForEndOfFrame ();
 
-		while (Time.timeSinceLevelLoad <= endTime) {
+		while (Time.timeSinceLevelLoad <= endTime) 
+		{
 			cutoutRange = (endTime - Time.timeSinceLevelLoad) / time;
 			fade.Range = cutoutRange;
 			yield return endFrame;
@@ -56,9 +54,7 @@ public class Fade : MonoBehaviour
 		cutoutRange = 0;
 		fade.Range = cutoutRange;
 
-		if (action != null) {
-			action ();
-		}
+		action?.Invoke();
 	}
 
 /*
@@ -116,7 +112,8 @@ public class Fade : MonoBehaviour
         while (true)
         {
             await FadeIn(time);
-			if (action != null) {
+			if (action != null) 
+			{
 				action ();
 				_cancellationTokenSource.Cancel();
 				break;

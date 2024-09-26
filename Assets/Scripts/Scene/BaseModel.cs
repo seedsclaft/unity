@@ -253,8 +253,9 @@ namespace Ryneus
             return DataSystem.Adventures.Find(a => a.Id == id).AdvName;
         }
 
-        public void StageClear()
+        public void ClearGame()
         {
+            CurrentData.PlayerInfo.GainClearCount();
         }
 
         public List<SymbolResultInfo> OpeningStageResultInfos()
@@ -407,18 +408,6 @@ namespace Ryneus
             SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
         }
 
-        public string RankingTypeText(RankingType rankingType)
-        {
-            switch (rankingType)
-            {
-                case RankingType.Evaluate:
-                return DataSystem.GetText(16120);
-                case RankingType.Turns:
-                return DataSystem.GetText(16121);
-            }
-            return "";
-        }
-
     #if UNITY_ANDROID
         public List<RankingActorData> RankingActorDates()
         {
@@ -448,40 +437,16 @@ namespace Ryneus
             return list;
         }
     #endif
-        public int TotalEvaluate()
-        {
-            var evaluate = 0;
-            if (CurrentStage.Master.RankingStage == RankingType.Evaluate)
-            {
-                foreach (var actorInfo in StageMembers())
-                {
-                    evaluate += actorInfo.Evaluate();
-                }
-                if (CurrentStage.EndingType == EndingType.A)
-                {
-                    evaluate += 1000;
-                }
-                if (CurrentStage.EndingType == EndingType.B)
-                {
-                    evaluate += 500;
-                }
-            } else
-            if (CurrentStage.Master.RankingStage == RankingType.Turns)
-            {
-                evaluate = CurrentStage.Seek - 1;
-            }
-            return evaluate;
-        }
 
         public async void CurrentRankingData(Action<string> endEvent)
         {
             var userId = CurrentData.PlayerInfo.UserId.ToString();
             var rankingText = "";
     #if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
-            FirebaseController.Instance.CurrentRankingData(CurrentStage.Id,userId);
+            FirebaseController.Instance.CurrentRankingData(userId);
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             var currentScore = FirebaseController.CurrentScore;
-            var evaluate = TotalEvaluate();
+            var evaluate = TotalScore;
 
             if (evaluate > currentScore)
             {
@@ -499,7 +464,7 @@ namespace Ryneus
                 FirebaseController.Instance.WriteRankingData(
                     CurrentStage.Id,
                     userId,
-                    evaluate,
+                    (int)(evaluate * 100),
                     CurrentData.PlayerInfo.PlayerName,
                     null,
                     null
@@ -507,7 +472,7 @@ namespace Ryneus
     #endif
                 await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
-                FirebaseController.Instance.ReadRankingData(CurrentStage.Id,RankingTypeText(CurrentStage.Master.RankingStage));
+                FirebaseController.Instance.ReadRankingData();
                 await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
                 var results = FirebaseController.RankingInfos;
                 var rank = 1;
@@ -527,16 +492,16 @@ namespace Ryneus
                 if (include == true)
                 {
                     // 〇位
-                    rankingText = rank.ToString() + DataSystem.GetText(16070);
+                    rankingText = rank.ToString() + DataSystem.GetText(23030);
                 } else
                 {
                     // 圏外
-                    rankingText = DataSystem.GetText(16071);
+                    rankingText = DataSystem.GetText(23031);
                 }
             } else
             {          
                 // 記録更新なし  
-                rankingText = DataSystem.GetText(16072);
+                rankingText = DataSystem.GetText(23032);
             }
     #endif
             endEvent(rankingText);

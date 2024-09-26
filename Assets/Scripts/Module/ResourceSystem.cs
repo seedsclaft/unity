@@ -218,11 +218,11 @@ namespace Ryneus
         NameEntry,
         MainMenu,
         Battle,
-        Map,
         Status,
         Tactics,
         Strategy,
         Slot,
         FastBattle,
+        Result,
     }
 }

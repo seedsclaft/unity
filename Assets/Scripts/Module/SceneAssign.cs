@@ -15,6 +15,7 @@ namespace Ryneus
         [SerializeField] private GameObject strategyScene = null;
         [SerializeField] private GameObject slotScene = null;
         [SerializeField] private GameObject fastBattleScene = null;
+        [SerializeField] private GameObject resultScene = null;
         public GameObject CreateScene(Scene scene,HelpWindow helpWindow)
         {
             var prefab = Instantiate(GetSceneObject(scene));
@@ -26,30 +27,21 @@ namespace Ryneus
 
         private GameObject GetSceneObject(Scene scene)
         {
-            switch (scene)
+            return scene switch
             {
-                case Scene.Boot:
-                return bootScene;
-                case Scene.Title:
-                return titleScene;
-                case Scene.NameEntry:
-                return nameEntryScene;
-                case Scene.MainMenu:
-                return mainMenuScene;
-                case Scene.Battle:
-                return battleScene;
-                case Scene.Status:
-                return statusScene;
-                case Scene.Tactics:
-                return tacticsScene;
-                case Scene.Strategy:
-                return strategyScene;
-                case Scene.Slot:
-                return slotScene;
-                case Scene.FastBattle:
-                return fastBattleScene;
-            }
-            return null;
+                Scene.Boot => bootScene,
+                Scene.Title => titleScene,
+                Scene.NameEntry => nameEntryScene,
+                Scene.MainMenu => mainMenuScene,
+                Scene.Battle => battleScene,
+                Scene.Status => statusScene,
+                Scene.Tactics => tacticsScene,
+                Scene.Strategy => strategyScene,
+                Scene.Slot => slotScene,
+                Scene.FastBattle => fastBattleScene,
+                Scene.Result => resultScene,
+                _ => null,
+            };
         }
 
         public void ShowUI()

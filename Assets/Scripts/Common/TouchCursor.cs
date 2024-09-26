@@ -8,7 +8,6 @@ namespace Ryneus
 {
     public class TouchCursor : MonoBehaviour
     {
-        [SerializeField] private RectTransform baseRect = null;
         [SerializeField] private RectTransform touchCursorRect = null;
         [SerializeField] private ParticleSystem particle = null;
         [SerializeField] private Image circle = null;
@@ -24,11 +23,12 @@ namespace Ryneus
         private void StartTouchAnimation()
         {
             var pos = Input.mousePosition;
-            pos.x -= baseRect.sizeDelta.x / 2;
-            pos.y -= baseRect.sizeDelta.y /2;
+            Vector3 target = Camera.main.ScreenToWorldPoint(pos);
+            pos.x = target.x;
+            pos.y = target.y;
             pos.z = 10f; 
                 
-            touchCursorRect.localPosition = pos;
+            touchCursorRect.transform.position = pos;
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             particle.Play();

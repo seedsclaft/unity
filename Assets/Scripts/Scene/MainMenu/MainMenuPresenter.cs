@@ -26,8 +26,11 @@ namespace Ryneus
         {
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
-            if (_model.IsEnding())
+            if (true)
             {
+                _busy = false;
+                _view.CommandGotoSceneChange(Scene.Result);
+                return;
             } else
             {
                 _view.SetBackGround(_model.NextStage().Master.BackGround);

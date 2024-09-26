@@ -21,10 +21,9 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
-public class FadeImage : UnityEngine.UI.Graphic , IFade
+public class FadeImage : Graphic , IFade
 {
 	[SerializeField]
 	private Texture maskTexture = null;
@@ -32,11 +31,14 @@ public class FadeImage : UnityEngine.UI.Graphic , IFade
 	[SerializeField, Range (0, 1)]
 	private float cutoutRange;
 
-	public float Range {
-		get {
+	public float Range 
+	{
+		get 
+		{
 			return cutoutRange;
 		}
-		set {
+		set 
+		{
 			cutoutRange = value;
 			UpdateMaskCutout (cutoutRange);
 		}
@@ -53,8 +55,9 @@ public class FadeImage : UnityEngine.UI.Graphic , IFade
 		enabled = true;
 		material.SetFloat ("_Range", 1 - range);
 
-		if (range <= 0) {
-			this.enabled = false;
+		if (range <= 0) 
+		{
+			enabled = false;
 		}
 	}
 

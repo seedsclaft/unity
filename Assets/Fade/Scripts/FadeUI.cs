@@ -12,12 +12,14 @@ public class FadeUI : UnityEngine.UI.Graphic, IFade
     [SerializeField, Range (0,1)]
 	private float cutoutRange;
 
-    protected override void Start() {
+    protected override void Start() 
+	{
         base.Start();
         UpdateMaskTexture(maskTexture);
     }
 
-    public void UpdateMaskTexture(Texture texture) {
+    public void UpdateMaskTexture(Texture texture) 
+	{
         material.SetTexture("_MaskTex",texture);
         material.SetColor("_Color",color);
     }
@@ -55,7 +57,8 @@ public class FadeUI : UnityEngine.UI.Graphic, IFade
 	}
 
 #if UNITY_EDITOR
-    protected override void OnValidate() {
+    protected override void OnValidate() 
+	{
         base.OnValidate();
         UpdateMaskCutout(Range);
         UpdateMaskTexture(maskTexture);

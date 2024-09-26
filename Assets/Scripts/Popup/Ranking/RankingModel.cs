@@ -15,7 +15,7 @@ namespace Ryneus
     #if (UNITY_WEBGL || UNITY_ANDROID) //&& !UNITY_EDITOR
             if (TempInfo.TempRankingData.ContainsKey(stageId) == false)
             {
-                FirebaseController.Instance.ReadRankingData(stageId,RankingTypeText(DataSystem.FindStage(stageId).RankingStage));
+                FirebaseController.Instance.ReadRankingData();
                 await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
                 
                 // 結果をそのまま参照渡しにしないこと

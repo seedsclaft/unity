@@ -7,7 +7,7 @@ namespace Ryneus
     {
         public bool IsEnding()
         {
-            return PartyInfo.HasEndingGetItem(CurrentStage.Id,CurrentStage.Seek,WorldType.Main);
+            return PartyInfo.HasEndingGetItem();
         }
 
         public void StartSelectStage(int stageId)

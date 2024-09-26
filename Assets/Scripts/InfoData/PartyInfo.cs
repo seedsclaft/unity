@@ -526,10 +526,9 @@ namespace Ryneus
             return numinosBonus;
         }
 
-        public bool HasEndingGetItem(int stageId,int seek,WorldType worldType)
+        public bool HasEndingGetItem()
         {
-            var records = EnableResultInfos(stageId,seek,worldType);
-            records = records.FindAll(a => a.Selected);
+            var records = _symbolRecordList.FindAll(a => a.Selected && a.WorldType == WorldType.Main);
             foreach (var record in records)
             {
                 var endingItem = record.SymbolInfo.GetItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.Ending);

@@ -53,7 +53,6 @@ namespace Ryneus
                     case StageEventType.ClearStage:
                         _eventBusy = true;
                         _model.AddEventReadFlag(stageEvent);
-                        _model.StageClear();
                         _view.CommandGotoSceneChange(Scene.MainMenu);
                         break;
                     case StageEventType.ChangeRouteSelectStage:
