@@ -142,7 +142,7 @@ namespace Ryneus
                 selectRelicInfo.SetGetFlag(false);
             }
             selectRelic.SetGetFlag(true);
-            AddPlayerInfoActorSkillId(skillId);
+            AddPlayerInfoSkillId(skillId);
         }
 
         public List<SkillInfo> ShopMagicSkillInfos(List<GetItemInfo> getItemInfos)

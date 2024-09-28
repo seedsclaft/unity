@@ -42,6 +42,7 @@ namespace Ryneus
             {
                 return;
             }
+            LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectSideMenu:
@@ -111,6 +112,7 @@ namespace Ryneus
         
         private void CommandDecideTacticsMember(ActorInfo actorInfo)
         {
+            _model.SetCurrentActorInfo(actorInfo);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
             _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
@@ -176,8 +178,46 @@ namespace Ryneus
 
         private void CommandBattleStart()
         {
-            if (_model.BattleMembers().Count > 0)
+            var battleMembers = _model.BattleMembers();
+            if (battleMembers.Count > 0)
             {
+                var stageMembers = _model.StageMembers();
+                // バトル人数が最大でないのでチェック
+                if (battleMembers.Count < 5 && battleMembers.Count < stageMembers.Count)
+                {
+                    CheckBattleLessMember();
+                } else
+                {
+                    BattleStart(); 
+                }
+            } else
+            {
+                CheckBattleMember();
+            }
+        }
+
+        private void CheckBattleMember()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            CommandCautionInfo(DataSystem.GetText(19400));
+        }
+
+        private void CheckBattleLessMember()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Deny);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(19401),(a) => 
+            {
+                if (a == ConfirmCommandType.Yes)
+                {
+                    BattleStart();
+                }
+            });
+            _view.CommandCallConfirm(confirmInfo);
+        }
+
+        private void BattleStart()
+        {
+
                 _model.SaveTempBattleMembers();
                 _view.CommandChangeViewToTransition(null);
                 _view.ChangeUIActive(false);
@@ -204,16 +244,6 @@ namespace Ryneus
                     EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
                 };
                 _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
-            } else
-            {
-                CheckBattleMember();
-            }
-        }
-
-        private void CheckBattleMember()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            CommandCautionInfo(DataSystem.GetText(19400));
         }
 
         private void ShowCharacterDetail()

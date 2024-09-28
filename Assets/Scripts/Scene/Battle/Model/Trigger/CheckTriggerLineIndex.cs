@@ -83,7 +83,7 @@ namespace Ryneus
                         {
                             isTrigger = true;
                         } else
-                        if (!opponent.IsActor && opponent.Index-100 == triggerData.Param1)
+                        if (!opponent.IsActor && opponent.Index-99 == triggerData.Param1)
                         {
                             isTrigger = true;
                         }
@@ -201,7 +201,7 @@ namespace Ryneus
                     {
                         targetIndexList.Add(targetIndex);
                     } else
-                    if (!targetBattler.IsActor && targetBattler.Index-100 == triggerData.Param1)
+                    if (!targetBattler.IsActor && targetBattler.Index-99 == triggerData.Param1)
                     {
                         targetIndexList.Add(targetIndex);
                     }

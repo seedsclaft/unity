@@ -38,8 +38,8 @@ namespace Ryneus
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectSideMenu:
-                CommandSelectSideMenu();
-                break;
+                    CommandSelectSideMenu();
+                    break;
             }
         }
 
@@ -153,19 +153,6 @@ namespace Ryneus
                 }
             };
             _view.CommandCallPopup(popupInfo);
-        }
-
-        public void CommandSave(bool returnScene)
-        {
-            /*
-            if (_model.BrunchMode)
-            {
-                CommandCautionInfo(DataSystem.GetText(19350));
-                ClosePopup();
-                return;
-            }
-            */
-            base.CommandSave(returnScene);
         }
 
         private void CommandInitializeData()

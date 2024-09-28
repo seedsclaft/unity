@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace Ryneus
 {
@@ -15,7 +16,8 @@ namespace Ryneus
         public void UpdateInfo(BattlerInfo battlerInfo,int turnWaitValue,int sortIndex)
         {
             battlerInfoComponent.UpdateInfo(battlerInfo);
-            turnWait.SetText(turnWaitValue.ToString());
+            var wait = Math.Max(turnWaitValue,0);
+            turnWait.SetText(wait.ToString());
         }
 
         public void UpdateAlpha(bool show)

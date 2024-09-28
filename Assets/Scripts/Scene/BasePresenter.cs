@@ -79,7 +79,7 @@ namespace Ryneus
         
         public void CommandSave(bool isReturnScene)
         {
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
             var savePopupTitle = _model.SavePopupTitle();
             var saveNeedAds = _model.NeedAdsSave();
             var popupInfo = new ConfirmInfo(savePopupTitle,(a) => UpdatePopupSaveCommand((ConfirmCommandType)a,isReturnScene));
@@ -94,9 +94,9 @@ namespace Ryneus
             }
             _view.CommandCallConfirm(popupInfo);
             _view.ChangeUIActive(false);
-    #else
+#else
             SuccessSave(isReturnScene);
-    #endif
+#endif
         }
 
         private void SuccessSave(bool isReturnScene)

@@ -105,8 +105,16 @@ namespace Ryneus
 
         private void OnClickDecideActor()
         {
-            var eventData = new BattlePartyViewEvent(CommandType.DecideTacticsMember);
-            _commandData(eventData);
+            var listData = tacticsMemberList.ListData;
+            if (listData != null)
+            {
+                var data = (ActorInfo)listData.Data;
+                var eventData = new BattlePartyViewEvent(CommandType.DecideTacticsMember)
+                {
+                    template = data
+                };
+                _commandData(eventData);
+            }
         }
 
         public void SetTacticsMembers(List<ListData> tacticsMembers)
