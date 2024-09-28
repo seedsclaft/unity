@@ -5,9 +5,28 @@ namespace Ryneus
 {
     public class DictionaryModel : BaseModel
     {
+        private int _completeRate = 0;
+        public int CompeteRate => _completeRate;
         public DictionaryModel()
         {
-
+            var max = 0;
+            var count = 0;
+            foreach (var skill in DataSystem.Skills)
+            {
+                if (skill.Key < 1000) continue;
+                if (skill.Key % 10 != 0) continue;
+                var skillInfo = new SkillInfo(skill.Key);
+                if (skillInfo.Master.Attribute == AttributeType.None)
+                {
+                    continue;
+                }
+                max++;
+                if (CurrentData.PlayerInfo.SkillIds.Contains(skillInfo.Id))
+                {
+                    count++;
+                }
+            }
+            _completeRate = count > 0 ? (int)((float)count*100 / max) : 0;
         }
 
         public List<SkillType> SkillCategory()

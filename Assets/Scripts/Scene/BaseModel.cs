@@ -289,6 +289,7 @@ namespace Ryneus
                         // 初期アクター
                         addActorGetItemInfo.SetResultParam(1);
                         addActorGetItemInfo.SetGetFlag(true);
+                        AddPlayerInfoActorSkillId(1);
                         //addActor = true;
                     }
                 }
@@ -320,6 +321,7 @@ namespace Ryneus
                         // 初期アクター
                         addActorGetItemInfo.SetResultParam(1);
                         addActorGetItemInfo.SetGetFlag(true);
+                        AddPlayerInfoActorSkillId(1);
                         //addActor = true;
                     }
                 }
@@ -406,6 +408,7 @@ namespace Ryneus
             TempInfo.ClearRankingInfo();
             SetResumeStage(isResumeStage);
             SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
+            SavePlayerData();
         }
 
     #if UNITY_ANDROID
@@ -762,6 +765,19 @@ namespace Ryneus
             CurrentStage.SetWorldType(WorldType.Main);
             PartyInfo.ClearBrunch();
             SetStageSeek();
+        }
+
+        public void AddPlayerInfoActorSkillId(int actorId)
+        {
+            foreach (var skillInfo in Actors().Find(a => a.ActorId == actorId).SkillInfos())
+            {
+                AddPlayerInfoSkillId(skillInfo.Id);
+            }
+        }
+
+        public void AddPlayerInfoSkillId(int skillId)
+        {
+            CurrentData.PlayerInfo.AddSkillId(skillId);
         }
     }
 }

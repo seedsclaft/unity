@@ -183,6 +183,11 @@ namespace Ryneus
             rank?.SetText(DataSystem.GetText(textId));
         }
 
+        public void SetName(string name)
+        {
+            nameText.SetText(name);
+        }
+
         public void Clear()
         {
             if (icon != null)

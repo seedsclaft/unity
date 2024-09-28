@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Ryneus
@@ -34,6 +35,16 @@ namespace Ryneus
         public void GainClearCount()
         {
             _clearCount++;
+        }        
+        
+        private List<int> _skillIds = new ();
+        public List<int> SkillIds => _skillIds;
+        public void AddSkillId(int skillId)
+        {
+            if (!_skillIds.Contains(skillId))
+            {
+                _skillIds.Add(skillId);
+            }
         }
     }
 }

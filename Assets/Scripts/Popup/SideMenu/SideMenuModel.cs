@@ -6,5 +6,10 @@ namespace Ryneus
         {
             SaveSystem.DeletePlayerData();
         }
+
+        public void DeleteStageData()
+        {
+            SaveSystem.DeleteStageData();
+        }
     }
 }

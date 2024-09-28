@@ -2414,6 +2414,20 @@ namespace Ryneus
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }
 
+        public void AddEnemyInfoSkillId()
+        {
+            foreach (var battlerInfo in _battlers)
+            {
+                if (!battlerInfo.IsActor)
+                {
+                    foreach (var skillInfo in battlerInfo.Skills)
+                    {
+                        AddPlayerInfoSkillId(skillInfo.Id);
+                    }
+                }
+            }
+        }
+
         public List<SystemData.CommandData> SideMenu()
         {
             var list = new List<SystemData.CommandData>();

@@ -187,29 +187,23 @@ namespace Ryneus
                     }
                     break;
                 case TriggerType.FriendBattleIndex:
-                    foreach (var friend in checkTriggerInfo.Friends)
+                    if (targetBattler.IsActor && targetBattler.Index == triggerData.Param1)
                     {
-                        if (friend.IsActor && friend.Index == triggerData.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        } else
-                        if (!friend.IsActor && friend.Index-100 == triggerData.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
+                        targetIndexList.Add(targetIndex);
+                    } else
+                    if (!targetBattler.IsActor && targetBattler.Index-100 == triggerData.Param1)
+                    {
+                        targetIndexList.Add(targetIndex);
                     }
                     break;
                 case TriggerType.OpponentBattleIndex:
-                    foreach (var opponent in checkTriggerInfo.Opponents)
+                    if (targetBattler.IsActor && targetBattler.Index == triggerData.Param1)
                     {
-                        if (opponent.IsActor && opponent.Index == triggerData.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        } else
-                        if (!opponent.IsActor && opponent.Index-100 == triggerData.Param1)
-                        {
-                            targetIndexList.Add(targetIndex);
-                        }
+                        targetIndexList.Add(targetIndex);
+                    } else
+                    if (!targetBattler.IsActor && targetBattler.Index-100 == triggerData.Param1)
+                    {
+                        targetIndexList.Add(targetIndex);
                     }
                     break;
             }

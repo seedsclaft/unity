@@ -94,6 +94,7 @@ namespace Ryneus
             } else
             {
                 _model.InitSaveStageInfo();
+                _model.StartOpeningStage();
             }
             _view.CommandGotoSceneChange(Scene.Tactics);
         }

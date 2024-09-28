@@ -240,6 +240,13 @@ namespace Ryneus
 			if (_useEasySave)
 			{
 				ES3.DeleteFile(_playerDataKey);
+			}
+		}
+
+		public static void DeleteStageData(int fileId = 0)
+		{
+			if (_useEasySave)
+			{
 				ES3.DeleteFile(PlayerStageDataKey(fileId));
 			}
 		}

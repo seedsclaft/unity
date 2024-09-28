@@ -23,6 +23,7 @@ namespace Ryneus
             _view.OpenAnimation();
             _view.SetCategoryList(ListData.MakeListData(_model.SkillCategory()));
             CommandDictionary(SkillType.Active);
+            _view.SetCompleteRateText(_model.CompeteRate);
             _busy = false;
         }
 
@@ -42,7 +43,10 @@ namespace Ryneus
 
         private void CommandDictionary(SkillType skillType)
         {
-            var skillList = ListData.MakeListData(_model.CategorySkillList(skillType),(a) => { return true;},0);
+            var skillList = ListData.MakeListData(_model.CategorySkillList(skillType),(a) => 
+            { 
+                return _model.CurrentData.PlayerInfo.SkillIds.Contains(a.Id);
+            },0);
             _view.SetMagicList(skillList);
         }
     }

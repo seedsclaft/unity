@@ -852,6 +852,8 @@ namespace Ryneus
                 strategySceneInfo.BattleTurn = _model.TurnCount;
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true,strategySceneInfo);
                 strategySceneInfo.BattleResultVictory = true;
+                _model.AddEnemyInfoSkillId();
+                        
             } else
             if (_model.CheckDefeat())
             {

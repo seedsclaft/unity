@@ -189,7 +189,7 @@ namespace Ryneus
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
-                _model.DeletePlayerData();
+                _model.DeleteStageData();
                 _view.CommandGameSystem(Base.CommandType.CloseConfirm);
                 var confirmInfo = new ConfirmInfo(DataSystem.GetText(13310),(a) => 
                 {

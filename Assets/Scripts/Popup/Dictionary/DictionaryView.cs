@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Ryneus
 {
@@ -8,6 +9,7 @@ namespace Ryneus
     {
         [SerializeField] private BaseList categoryList = null;
         [SerializeField] private MagicList magicList = null;
+        [SerializeField] private TextMeshProUGUI completeRateText = null;
         [SerializeField] private PopupAnimation popupAnimation = null;
         private new System.Action<DictionaryViewEvent> _commandData = null;
         
@@ -49,6 +51,11 @@ namespace Ryneus
         public void SetEvent(System.Action<DictionaryViewEvent> commandData)
         {
             _commandData = commandData;
+        }
+
+        public void SetCompleteRateText(int value)
+        {
+            completeRateText?.SetText(value.ToString());
         }
     }
 
