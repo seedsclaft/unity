@@ -10,27 +10,6 @@ namespace Ryneus
 {
 	public class StatesImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			NameId,
-			_NameId,
-			IconIndex,
-			RemovalTiming,
-			_RemovalTiming,
-			OverRight,
-			EffectPath,
-			EffectPosition,
-			EffectScale,
-			OverLap,
-			Removal,
-			Abnormal,
-			Buff,
-			DeBuff,
-			CheckHit,
-			RemoveByAttack,
-			RemoveByDeath,
-		}
 		static readonly string ExcelName = "States.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -61,8 +40,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<StateDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -78,6 +58,8 @@ namespace Ryneus
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+					var KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
@@ -85,23 +67,23 @@ namespace Ryneus
 
                         var StateData = new StateData
                         {
-                            StateType = (StateType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
-                            IconPath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.IconIndex),
-                            RemovalTiming = (RemovalTiming)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RemovalTiming),
-                            OverWrite = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.OverRight) == 1,
-                            EffectPath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.EffectPath),
-                            EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.EffectPosition),
-                            EffectScale = AssetPostImporter.ImportFloat(BaseRow, (int)BaseColumn.EffectScale),
-                            OverLap = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.OverLap),
-                            Removal = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Removal) == 1,
-                            Abnormal = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Abnormal) == 1,
-                            Buff = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Buff) == 1,
-                            DeBuff = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.DeBuff) == 1,
-                            CheckHit = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.CheckHit) == 1,
-                            RemoveByAttack = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RemoveByAttack) == 1,
-                            RemoveByDeath = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RemoveByDeath) == 1
+                            StateType = (StateType)AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
+                            IconPath = AssetPostImporter.ImportString(BaseRow, "IconIndex"),
+                            RemovalTiming = (RemovalTiming)AssetPostImporter.ImportNumeric(BaseRow, "RemovalTiming"),
+                            OverWrite = AssetPostImporter.ImportNumeric(BaseRow, "OverWrite") == 1,
+                            EffectPath = AssetPostImporter.ImportString(BaseRow, "EffectPath"),
+                            EffectPosition = (EffectPositionType)AssetPostImporter.ImportNumeric(BaseRow, "EffectPosition"),
+                            EffectScale = AssetPostImporter.ImportFloat(BaseRow, "EffectScale"),
+                            OverLap = AssetPostImporter.ImportNumeric(BaseRow, "OverLap"),
+                            Removal = AssetPostImporter.ImportNumeric(BaseRow, "Removal") == 1,
+                            Abnormal = AssetPostImporter.ImportNumeric(BaseRow, "Abnormal") == 1,
+                            Buff = AssetPostImporter.ImportNumeric(BaseRow, "Buff") == 1,
+                            DeBuff = AssetPostImporter.ImportNumeric(BaseRow, "DeBuff") == 1,
+                            CheckHit = AssetPostImporter.ImportNumeric(BaseRow, "HitCheck") == 1,
+                            RemoveByAttack = AssetPostImporter.ImportNumeric(BaseRow, "RemoveByAttack") == 1,
+                            RemoveByDeath = AssetPostImporter.ImportNumeric(BaseRow, "RemoveByDeath") == 1
                         };
 
                         Data.Data.Add(StateData);

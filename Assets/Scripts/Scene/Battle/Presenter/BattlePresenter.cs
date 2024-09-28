@@ -788,6 +788,7 @@ namespace Ryneus
 
             // 待機できなくなった場合は待機状態をはずす
             _model.RemoveOneMemberWaitBattlers();
+            _view.UpdateGridLayer();
             _view.RefreshStatus();
 
             // 次の行動があれば続ける

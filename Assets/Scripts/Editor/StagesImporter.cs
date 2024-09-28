@@ -9,79 +9,7 @@ using NPOI.SS.UserModel;
 namespace Ryneus
 {
 	public class StagesInfoImporter : AssetPostprocessor 
-	{
-		enum BaseColumn
-		{
-			Id = 0,
-			NameId,
-			AchieveTextId,
-			Selectable,
-			StageLv,
-			Turns,
-			InitMembers,
-			RandomTroopCount,
-			BGMId,
-			BossBGMId,
-			BackGround,
-			StageRect,
-			Reborn,
-			Alcana,
-			SaveLimit,
-			ContinueLimit,
-			RankingStage,
-			SlotSave,
-			SubordinateValue,
-			UseSlot,
-		}
-
-		enum BaseEventColumn
-		{
-			Id = 0,
-			Turns,
-			Timing,
-			_TIming,
-			Type,
-			_Type,
-			Param,
-			ReadFlag
-		}
-		
-		enum BaseSymbolColumn
-		{
-			Id = 0,
-			Seek,
-			SeekIndex,
-			SymbolType,
-			_SymbolType,
-			Rate,
-			Param1,
-			Param2,
-			PrizeSetId,
-			ClearCount,
-		}
-
-		enum BaseSymbolGroupColumn
-		{
-			GroupId = 0,
-			SymbolType,
-			_SymbolType,
-			Rate,
-			Param1,
-			Param2,
-			PrizeSetId
-		}
-		enum BaseTutorialColumn
-		{
-			Id = 0,
-			Turns,
-			Timing,
-			Type,
-			X,
-			Y,
-			Width,
-			Height,
-		}
-
+	{	
 		static readonly string ExcelName = "Stages.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -112,8 +40,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<StageDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -134,52 +63,57 @@ namespace Ryneus
 					ISheet TutorialSheet = Book.GetSheetAt(4);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
+						var KeyRow = BaseSheet.GetRow(0);
+						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						IRow BaseRow = BaseSheet.GetRow(i);
 
                         var StageData = new StageData
                         {
-                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
-                            AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AchieveTextId))?.Text,
-                            Selectable = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Selectable) == 1,
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
-                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.StageLv),
-                            Turns = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Turns),
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
+                            AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "AchieveTextId"))?.Text,
+                            Selectable = AssetPostImporter.ImportNumeric(BaseRow, "Selectable") == 1,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
+                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, "StageLv"),
+                            Turns = AssetPostImporter.ImportNumeric(BaseRow, "Turns"),
                             InitMembers = new List<int>()
                         };
-                        string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.InitMembers).Split(',');
+                        string[] list = AssetPostImporter.ImportString(BaseRow,"InitMembers").Split(',');
 						foreach (string item in list)
 						{
 							StageData.InitMembers.Add(int.Parse(item));
 						}
-						StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RandomTroopCount);
-						StageData.BackGround = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.BackGround);
-						StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BGMId);
-						StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.BossBGMId);
-						StageData.StageRect = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.StageRect);
-						StageData.Reborn = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Reborn) == 1;
-						StageData.Alcana = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Alcana) == 1;
-						StageData.SaveLimit = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SaveLimit);
-						StageData.ContinueLimit = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.ContinueLimit);
-						StageData.RankingStage = (RankingType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.RankingStage);
-						StageData.SlotSave = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SlotSave) == 1;
-						StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.SubordinateValue);
-						StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.UseSlot) == 1;
+						StageData.RandomTroopCount = AssetPostImporter.ImportNumeric(BaseRow,"RandomTroopCount");
+						StageData.BackGround = AssetPostImporter.ImportString(BaseRow,"BackGround");
+						StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,"BGMId");
+						StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,"BossBGMId");
+						StageData.StageRect = AssetPostImporter.ImportNumeric(BaseRow,"StageRect");
+						StageData.Reborn = AssetPostImporter.ImportNumeric(BaseRow,"Reborn") == 1;
+						StageData.Alcana = AssetPostImporter.ImportNumeric(BaseRow,"Alcana") == 1;
+						StageData.SaveLimit = AssetPostImporter.ImportNumeric(BaseRow,"SaveLimit");
+						StageData.ContinueLimit = AssetPostImporter.ImportNumeric(BaseRow,"ContinueLimit");
+						StageData.RankingStage = (RankingType)AssetPostImporter.ImportNumeric(BaseRow,"RankingStage");
+						StageData.SlotSave = AssetPostImporter.ImportNumeric(BaseRow,"SlotSave") == 1;
+						StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,"SubordinateValue");
+						StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,"UseSlot") == 1;
 						
 						StageData.StageEvents = new List<StageEventData>();
+						
+						KeyRow = EventSheet.GetRow(0);
+						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						for (int j = 1; j <= EventSheet.LastRowNum; j++)
 						{
 							IRow EventRow = EventSheet.GetRow(j);
 							var EventData = new StageEventData();
-							var StageId = (int)EventRow.GetCell((int)BaseEventColumn.Id)?.SafeNumericCellValue();
+							var StageId = AssetPostImporter.ImportNumeric(EventRow,"Id");
 							
 							if (StageId == StageData.Id)
 							{
-								EventData.Turns = (int)EventRow.GetCell((int)BaseEventColumn.Turns)?.SafeNumericCellValue();
-								EventData.Timing = (EventTiming)EventRow.GetCell((int)BaseEventColumn.Timing)?.SafeNumericCellValue();
-								EventData.Type = (StageEventType)EventRow.GetCell((int)BaseEventColumn.Type)?.SafeNumericCellValue();
-								EventData.Param = (int)EventRow.GetCell((int)BaseEventColumn.Param)?.SafeNumericCellValue();
-								EventData.ReadFlag = (bool)(EventRow.GetCell((int)BaseEventColumn.ReadFlag)?.SafeNumericCellValue() == 1);
+								EventData.Turns = AssetPostImporter.ImportNumeric(EventRow,"Turns");
+								EventData.Timing = (EventTiming)AssetPostImporter.ImportNumeric(EventRow,"Timing");
+								EventData.Type = (StageEventType)AssetPostImporter.ImportNumeric(EventRow,"Type");
+								EventData.Param = AssetPostImporter.ImportNumeric(EventRow,"Param");
+								EventData.ReadFlag = AssetPostImporter.ImportNumeric(EventRow,"ReadFlag") == 1;
 								
 								EventData.EventKey = EventData.Turns.ToString() + EventData.Timing.ToString() + EventData.Type.ToString() + EventData.Param.ToString();
 
@@ -188,44 +122,48 @@ namespace Ryneus
 						}
 						StageData.StageSymbols = new ();
 						
+						KeyRow = SymbolSheet.GetRow(0);
+						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						for (int j = 1; j <= SymbolSheet.LastRowNum; j++)
 						{
 							IRow SymbolRow = SymbolSheet.GetRow(j);
 							var SymbolData = new StageSymbolData();
-							var StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
+							var StageId = AssetPostImporter.ImportNumeric(SymbolRow,"Id");
 							
 							if (StageId == StageData.Id)
 							{
-								SymbolData.StageId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Id)?.SafeNumericCellValue();
-								SymbolData.Seek = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Seek)?.SafeNumericCellValue();
-								SymbolData.SeekIndex = (int)SymbolRow.GetCell((int)BaseSymbolColumn.SeekIndex)?.SafeNumericCellValue();
-								SymbolData.SymbolType = (SymbolType)SymbolRow.GetCell((int)BaseSymbolColumn.SymbolType)?.SafeNumericCellValue();
-								SymbolData.Rate = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Rate)?.SafeNumericCellValue();
-								SymbolData.Param1 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param1)?.SafeNumericCellValue();
-								SymbolData.Param2 = (int)SymbolRow.GetCell((int)BaseSymbolColumn.Param2)?.SafeNumericCellValue();
-								SymbolData.PrizeSetId = (int)SymbolRow.GetCell((int)BaseSymbolColumn.PrizeSetId)?.SafeNumericCellValue();
-								SymbolData.ClearCount = (int)SymbolRow.GetCell((int)BaseSymbolColumn.ClearCount)?.SafeNumericCellValue();
+								SymbolData.StageId = AssetPostImporter.ImportNumeric(SymbolRow, "Id");
+								SymbolData.Seek = AssetPostImporter.ImportNumeric(SymbolRow, "Seek");
+								SymbolData.SeekIndex = AssetPostImporter.ImportNumeric(SymbolRow, "SeekIndex");
+								SymbolData.SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(SymbolRow, "SymbolType");
+								SymbolData.Rate = AssetPostImporter.ImportNumeric(SymbolRow, "Rate");
+								SymbolData.Param1 = AssetPostImporter.ImportNumeric(SymbolRow, "Param1");
+								SymbolData.Param2 = AssetPostImporter.ImportNumeric(SymbolRow, "Param2");
+								SymbolData.PrizeSetId = AssetPostImporter.ImportNumeric(SymbolRow, "PrizeSetId");
+								SymbolData.ClearCount = AssetPostImporter.ImportNumeric(SymbolRow, "ClearCount");
 								
 								StageData.StageSymbols.Add(SymbolData);
 							}
 						}
 						
+						KeyRow = TutorialSheet.GetRow(0);
+						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						StageData.Tutorials = new List<StageTutorialData>();
 						for (int j = 1; j <= TutorialSheet.LastRowNum; j++)
 						{
 							IRow EventRow = TutorialSheet.GetRow(j);
 							var TutorialData = new StageTutorialData();
-							var StageId = (int)EventRow.GetCell((int)BaseTutorialColumn.Id)?.SafeNumericCellValue();
+							var StageId = AssetPostImporter.ImportNumeric(EventRow, "Id");
 							
 							if (StageId == StageData.Id)
 							{
-								TutorialData.Turns = (int)EventRow.GetCell((int)BaseTutorialColumn.Turns)?.SafeNumericCellValue();
-								TutorialData.Timing = (EventTiming)EventRow.GetCell((int)BaseTutorialColumn.Timing)?.SafeNumericCellValue();
-								TutorialData.Type = (TutorialType)EventRow.GetCell((int)BaseTutorialColumn.Type)?.SafeNumericCellValue();
-								TutorialData.X = (int)EventRow.GetCell((int)BaseTutorialColumn.X)?.SafeNumericCellValue();
-								TutorialData.Y = (int)EventRow.GetCell((int)BaseTutorialColumn.Y)?.SafeNumericCellValue();
-								TutorialData.Width = (int)EventRow.GetCell((int)BaseTutorialColumn.Width)?.SafeNumericCellValue();
-								TutorialData.Height = (int)EventRow.GetCell((int)BaseTutorialColumn.Height)?.SafeNumericCellValue();
+								TutorialData.Turns = AssetPostImporter.ImportNumeric(EventRow, "Turns");
+								TutorialData.Timing = (EventTiming)AssetPostImporter.ImportNumeric(EventRow, "Timing");
+								TutorialData.Type = (TutorialType)AssetPostImporter.ImportNumeric(EventRow, "Type");
+								TutorialData.X = AssetPostImporter.ImportNumeric(EventRow, "X");
+								TutorialData.Y = AssetPostImporter.ImportNumeric(EventRow, "Y");
+								TutorialData.Width = AssetPostImporter.ImportNumeric(EventRow, "Width");
+								TutorialData.Height = AssetPostImporter.ImportNumeric(EventRow, "Height");
 								
 								StageData.Tutorials.Add(TutorialData);
 							}
@@ -237,18 +175,20 @@ namespace Ryneus
 
 					Data.SymbolGroupData = new List<SymbolGroupData>();
 					ISheet SymbolGroupSheet = Book.GetSheetAt(3);
+					var KeyRow2 = SymbolGroupSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow2.Cells);
 					for (int i = 1; i <= SymbolGroupSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = SymbolGroupSheet.GetRow(i);
 
                         var SymbolGroupData = new SymbolGroupData
                         {
-                            GroupId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.GroupId),
-                            SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.SymbolType),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Param1),
-                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Param2),
-                            Rate = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.Rate),
-                            PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSymbolGroupColumn.PrizeSetId)
+                            GroupId = AssetPostImporter.ImportNumeric(BaseRow, "GroupId"),
+                            SymbolType = (SymbolType)AssetPostImporter.ImportNumeric(BaseRow, "SymbolType"),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, "Param1"),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, "Param2"),
+                            Rate = AssetPostImporter.ImportNumeric(BaseRow, "Rate"),
+                            PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, "PrizeSetId")
                         };
                         Data.SymbolGroupData.Add(SymbolGroupData);
 					}

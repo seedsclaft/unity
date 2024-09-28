@@ -10,26 +10,6 @@ namespace Ryneus
 {
 	public class TroopsImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			TroopId,
-			EnemyId,
-			_EnemyId,
-			Lv,
-			BossFlag,
-			Line,
-			StageLv,
-			PrizeSetId
-		}
-		enum BaseGetItemColumn
-		{		
-			Id,
-			TroopId,
-			Type,
-			Param1,
-			Param2,
-		}
 		static readonly string ExcelName = "Troops.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -60,8 +40,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<TroopDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -76,6 +57,8 @@ namespace Ryneus
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+					var KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 
 					var TroopEnemyDates = new List<TroopEnemyData>();
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
@@ -84,14 +67,14 @@ namespace Ryneus
 
                         var TroopEnemyData = new TroopEnemyData
                         {
-                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            TroopId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TroopId),
-                            EnemyId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.EnemyId),
-                            Lv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Lv),
-                            BossFlag = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.BossFlag) == 1,
-                            Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Line),
-                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.StageLv),
-                            //PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.PrizeSetId)
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            TroopId = AssetPostImporter.ImportNumeric(BaseRow, "TroopId"),
+                            EnemyId = AssetPostImporter.ImportNumeric(BaseRow, "EnemyId"),
+                            Lv = AssetPostImporter.ImportNumeric(BaseRow, "Lv"),
+                            BossFlag = AssetPostImporter.ImportNumeric(BaseRow, "BossFlag") == 1,
+                            Line = (LineType)AssetPostImporter.ImportNumeric(BaseRow, "Line"),
+                            StageLv = AssetPostImporter.ImportNumeric(BaseRow, "StageTurn"),
+                            //PrizeSetId = AssetPostImporter.ImportNumeric(BaseRow, "PrizeSetId)
                         };
                         //TroopData.GetItemDates = new List<GetItemData>();
                         TroopEnemyDates.Add(TroopEnemyData);
@@ -113,25 +96,6 @@ namespace Ryneus
 						FindTroop = Data.Data.Find(a => a.TroopId == TroopEnemyData.TroopId);
 						FindTroop.TroopEnemies.Add(TroopEnemyData);
 					}
-
-					/*
-					BaseSheet = Book.GetSheetAt(1);
-					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
-					{
-						IRow BaseRow = BaseSheet.GetRow(i);
-						int Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Id);
-						int TroopId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.TroopId);
-						var troopData = Data.Data.Find(a => a.TroopId == TroopId && a.Line == LineType.Back);
-						if (troopData != null)
-						{
-							var getItemData = new GetItemData();
-							getItemData.Type = (GetItemType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Type);
-							getItemData.Param1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Param1);
-							getItemData.Param2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseGetItemColumn.Param2);
-							troopData.GetItemDates.Add(getItemData);
-						}
-					}
-					*/
 				}
 			}
 			catch (Exception ex)

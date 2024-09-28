@@ -9,52 +9,6 @@ namespace Ryneus
 {
 	public class SkillsImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			NameId,
-			_Name,
-			IconIndex,
-			_IconIndex,
-			AnimationId,
-			AnimationType,
-			_AnimationType,
-			CountTurn,
-			Rank,
-			Attribute,
-			_Attribute,
-			SkillType,
-			_SkillType,
-			TargetType,
-			_TargetType,
-			Scope,
-			_Scope,
-			Range,
-			RepeatTime,
-			AliveOnly,
-			TimingOnlyCount,
-		}
-
-		enum BaseFeatureColumn
-		{
-			SkillId,
-			_SkillId,
-			FeatureType,
-			_FeatureType,
-			Param1,
-			Param2,
-			Param3,
-			Rate,
-		}
-		enum BaseTriggerColumn
-		{
-			SkillId,
-			TriggerType = 2,
-			TriggerTiming = 4,
-			Param1,
-			Param2,
-			Param3 
-		}
 		static readonly string ExcelName = "Skills.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -85,8 +39,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<SkillDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -102,28 +57,30 @@ namespace Ryneus
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
 
+					// KeyData生成
+					IRow KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
                         var SkillData = new SkillData
                         {
-                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
-                            IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.IconIndex),
-                            AnimationId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AnimationId),
-                            AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AnimationType),
-                            //SkillData.DamageTiming = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.DamageTiming);
-                            CountTurn = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.CountTurn),
-                            Rank = (RankType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Rank),
-                            Attribute = (AttributeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Attribute),
-                            SkillType = (SkillType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.SkillType),
-                            TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TargetType),
-                            Scope = (ScopeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Scope),
-                            Range = (RangeType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Range),
-                            RepeatTime = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.RepeatTime),
-                            AliveType = (AliveType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.AliveOnly),
-                            TimingOnlyCount = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TimingOnlyCount),
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
+                            IconIndex = (MagicIconType)AssetPostImporter.ImportNumeric(BaseRow, "IconIndex"),
+                            AnimationId = AssetPostImporter.ImportNumeric(BaseRow, "AnimationId"),
+                            AnimationType = (AnimationType)AssetPostImporter.ImportNumeric(BaseRow, "AnimationType"),
+                            CountTurn = AssetPostImporter.ImportNumeric(BaseRow, "CountTurn"),
+                            Rank = (RankType)AssetPostImporter.ImportNumeric(BaseRow, "Rank"),
+                            Attribute = (AttributeType)AssetPostImporter.ImportNumeric(BaseRow, "Attribute"),
+                            SkillType = (SkillType)AssetPostImporter.ImportNumeric(BaseRow, "SkillType"),
+                            TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, "TargetType"),
+                            Range = (RangeType)AssetPostImporter.ImportNumeric(BaseRow, "Range"),
+                            Scope = (ScopeType)AssetPostImporter.ImportNumeric(BaseRow, "ScopeType"),
+                            RepeatTime = AssetPostImporter.ImportNumeric(BaseRow, "RepeatTime"),
+                            AliveType = (AliveType)AssetPostImporter.ImportNumeric(BaseRow, "AliveOnly"),
+                            TimingOnlyCount = AssetPostImporter.ImportNumeric(BaseRow, "TimingOnlyCount"),
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
                         	//TurnCount = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TurnCount),
                         };
                         Data.Data.Add(SkillData);
@@ -131,6 +88,9 @@ namespace Ryneus
 
 
 					BaseSheet = Book.GetSheetAt(1);
+					// KeyData生成
+					KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
@@ -138,12 +98,12 @@ namespace Ryneus
 
                         var FeatureData = new SkillData.FeatureData
                         {
-                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.SkillId),
-                            FeatureType = (FeatureType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.FeatureType),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.Param1),
-                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.Param2),
-                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.Param3),
-                            Rate = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseFeatureColumn.Rate)
+                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, "SkillId"),
+                            FeatureType = (FeatureType)AssetPostImporter.ImportNumeric(BaseRow, "FeatureType"),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, "Param1"),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, "Param2"),
+                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, "Param3"),
+                            Rate = AssetPostImporter.ImportNumeric(BaseRow, "Rate")
                         };
 
                         var SkillData = Data.Data.Find(a => a.Id == FeatureData.SkillId);
@@ -155,18 +115,21 @@ namespace Ryneus
 					}
 					
 					BaseSheet = Book.GetSheetAt(2);
+					// KeyData生成
+					KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
                         var TriggerData = new SkillData.TriggerData
                         {
-                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.SkillId),
-                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.TriggerType),
-                            TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.TriggerTiming),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param1),
-                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param2),
-                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param3)
+                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, "SkillId"),
+                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, "TriggerType"),
+                            TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow, "TriggerTiming"),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, "Param1"),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, "Param2"),
+                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, "Param3")
                         };
 
                         var SkillData = Data.Data.Find(a => a.Id == TriggerData.SkillId);
@@ -176,18 +139,21 @@ namespace Ryneus
 						}
 					}
 					BaseSheet = Book.GetSheetAt(3);
+					// KeyData生成
+					KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
                         var ScopeTriggerData = new SkillData.TriggerData
                         {
-                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.SkillId),
-                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.TriggerType),
-                            TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.TriggerTiming),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param1),
-                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param2),
-                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseTriggerColumn.Param3)
+                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, "SkillId"),
+                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, "TriggerType"),
+                            TriggerTiming = (TriggerTiming)AssetPostImporter.ImportNumeric(BaseRow, "TriggerTiming"),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, "Param1"),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, "Param2"),
+                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, "Param3")
                         };
 
                         var SkillData = Data.Data.Find(a => a.Id == ScopeTriggerData.SkillId);

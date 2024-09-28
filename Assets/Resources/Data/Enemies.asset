@@ -1015,6 +1015,10 @@ MonoBehaviour:
       Level: 1
       Weight: 0
       TriggerDates: []
+    - SkillId: 403070
+      Level: 1
+      Weight: 0
+      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 3010
       Trigger1: 0
@@ -1029,6 +1033,9 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 200530
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 403070
       Trigger1: 0
       Trigger2: 0
   - Id: 106
@@ -1296,10 +1303,6 @@ MonoBehaviour:
       Level: 1
       Weight: 200
       TriggerDates: []
-    - SkillId: 100140
-      Level: 1
-      Weight: 0
-      TriggerDates: []
     - SkillId: 11060
       Level: 1
       Weight: 0
@@ -1327,9 +1330,6 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100120
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100140
       Trigger1: 0
       Trigger2: 0
     - SkillId: 11060

@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 8
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4392,29 +4392,29 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 0
     AnimationType: 1
-    CountTurn: 0
+    CountTurn: 99
     Rank: 0
     Attribute: 0
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u306E\u6709\u52B9\u56DE\u6570\u304C/f[f,0,3]\u56DE\u306B\u306A\u308B"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0B\n/n\u306ECT-\u5024\u304C/f[f,0,3]\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
     TimingOnlyCount: 0
     FeatureDates:
     - SkillId: 200530
-      FeatureType: 6020
+      FeatureType: 6080
       Param1: 3070
       Param2: 0
-      Param3: 3
+      Param3: 1
       Rate: 100
     TriggerDates:
     - SkillId: 200530
-      TriggerType: 0
-      TriggerTiming: 4
-      Param1: 0
+      TriggerType: 1010
+      TriggerTiming: 2
+      Param1: 25
       Param2: 0
       Param3: 0
     ScopeTriggers: []

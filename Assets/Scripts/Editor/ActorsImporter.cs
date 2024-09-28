@@ -9,54 +9,6 @@ namespace Ryneus
 {
 	public class ActorsImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			NameId,
-			ClassId = 4,
-			UnitType,
-			ImagePath,
-			InitLv,
-			MaxLv,
-			InitHp,
-			InitMp,
-			InitAtk,
-			InitDef,
-			InitSpd,
-			
-			GrowthHp,
-			GrowthMp,
-			GrowthAtk,
-			GrowthDef,
-			GrowthSpd,
-			Element1,
-			Element2,
-			Element3,
-			Element4,
-			Element5,
-			X,
-			Y,
-			Scale,
-			AwakenX,
-			AwakenY,
-			AwakenScale,
-			Kind1,
-			Kind2,
-			Kind3,
-		}
-		enum BaseLearningColumn
-		{
-			ActorId = 0,
-			SkillId,
-			Level,
-		}
-		enum BaseSkillTriggerColumn
-		{
-			ActorId = 0,
-			SkillId,
-			TriggerType1,
-			TriggerType2,
-		}
 		static readonly string ExcelName = "Actors.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -88,8 +40,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<ActorDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -105,6 +58,8 @@ namespace Ryneus
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+					var KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
@@ -112,38 +67,38 @@ namespace Ryneus
 
                         var ActorData = new ActorData
                         {
-                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
-                            SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
+                            SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
 
-                            ClassId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.ClassId),
-                            UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.UnitType),
-                            ImagePath = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.ImagePath),
-                            InitLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.InitLv),
-                            MaxLv = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.MaxLv)
+                            ClassId = AssetPostImporter.ImportNumeric(BaseRow, "ClassId"),
+                            UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, "UnitType"),
+                            ImagePath = AssetPostImporter.ImportString(BaseRow, "ImagePath"),
+                            InitLv = AssetPostImporter.ImportNumeric(BaseRow, "InitLv"),
+                            MaxLv = AssetPostImporter.ImportNumeric(BaseRow, "MaxLv")
                         };
 
-                        int InitHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitHp);
-						int InitMp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitMp);
-						int InitAtk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitAtk);
-						int InitSpd = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitSpd);
-						int InitDef = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.InitDef);
+                        int InitHp = AssetPostImporter.ImportNumeric(BaseRow,"InitHp");
+						int InitMp = AssetPostImporter.ImportNumeric(BaseRow,"InitMp");
+						int InitAtk = AssetPostImporter.ImportNumeric(BaseRow,"InitAtk");
+						int InitSpd = AssetPostImporter.ImportNumeric(BaseRow,"InitSpd");
+						int InitDef = AssetPostImporter.ImportNumeric(BaseRow,"InitDef");
 						ActorData.InitStatus = new StatusInfo();
 						ActorData.InitStatus.SetParameter(InitHp,InitMp,InitAtk,InitDef,InitSpd);
 
-						int NeedHp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthHp);
-						int NeedMp = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthMp);
-						int NeedAtk = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthAtk);
-						int NeedSpd = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthSpd);
-						int NeedDef = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.GrowthDef);
+						int NeedHp = AssetPostImporter.ImportNumeric(BaseRow,"GrowthHp");
+						int NeedMp = AssetPostImporter.ImportNumeric(BaseRow,"GrowthMp");
+						int NeedAtk = AssetPostImporter.ImportNumeric(BaseRow,"GrowthAtk");
+						int NeedSpd = AssetPostImporter.ImportNumeric(BaseRow,"GrowthSpd");
+						int NeedDef = AssetPostImporter.ImportNumeric(BaseRow,"GrowthDef");
 						ActorData.NeedStatus = new StatusInfo();
 						ActorData.NeedStatus.SetParameter(NeedHp,NeedMp,NeedAtk,NeedDef,NeedSpd);
 
-						int Element1 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element1);
-						int Element2 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element2);
-						int Element3 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element3);
-						int Element4 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element4);
-						int Element5 = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Element5);
+						int Element1 = AssetPostImporter.ImportNumeric(BaseRow,"Element1");
+						int Element2 = AssetPostImporter.ImportNumeric(BaseRow,"Element2");
+						int Element3 = AssetPostImporter.ImportNumeric(BaseRow,"Element3");
+						int Element4 = AssetPostImporter.ImportNumeric(BaseRow,"Element4");
+						int Element5 = AssetPostImporter.ImportNumeric(BaseRow,"Element5");
 						ActorData.Attribute = new List<AttributeRank>
                         {
                             (AttributeRank)Element1,
@@ -153,12 +108,12 @@ namespace Ryneus
                             (AttributeRank)Element5
                         };
 
-						int X = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.X);
-						int Y = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Y);
-						float Scale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.Scale);
-						int AwakenX = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AwakenX);
-						int AwakenY = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.AwakenY);
-						float AwakenScale = AssetPostImporter.ImportFloat(BaseRow,(int)BaseColumn.AwakenScale);
+						int X = AssetPostImporter.ImportNumeric(BaseRow,"X");
+						int Y = AssetPostImporter.ImportNumeric(BaseRow,"Y");
+						float Scale = AssetPostImporter.ImportFloat(BaseRow,"Scale");
+						int AwakenX = AssetPostImporter.ImportNumeric(BaseRow,"AwakenX");
+						int AwakenY = AssetPostImporter.ImportNumeric(BaseRow,"AwakenY");
+						float AwakenScale = AssetPostImporter.ImportFloat(BaseRow,"AwakenScale");
 						ActorData.X = X;
 						ActorData.Y = Y;
 						ActorData.Scale = Scale;
@@ -166,11 +121,11 @@ namespace Ryneus
 						ActorData.AwakenY = AwakenY;
 						ActorData.AwakenScale = AwakenScale;
 						ActorData.Kinds = new List<KindType>();
-						KindType Kind1 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind1);
+						KindType Kind1 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,"Kind1");
 						if (Kind1 != 0) ActorData.Kinds.Add(Kind1);
-						KindType Kind2 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind2);
+						KindType Kind2 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,"Kind2");
 						if (Kind2 != 0) ActorData.Kinds.Add(Kind2);
-						KindType Kind3 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Kind3);
+						KindType Kind3 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,"Kind3");
 						if (Kind3 != 0) ActorData.Kinds.Add(Kind3);
 
 						
@@ -178,39 +133,43 @@ namespace Ryneus
 					}
 					// 習得スキル情報設定
 					BaseSheet = Book.GetSheetAt(1);
+					KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
+						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,"ActorId");
 						ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
-						string[] list = AssetPostImporter.ImportString(BaseRow,(int)BaseLearningColumn.SkillId).Split(',');
+						string[] list = AssetPostImporter.ImportString(BaseRow,"SkillId").Split(',');
 						foreach (string item in list)
 						{
                             var LearningData = new LearningData
                             {
                                 SkillId = int.Parse(item),
-                                Level = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseLearningColumn.Level)
+                                Level = AssetPostImporter.ImportNumeric(BaseRow, "Level")
                             };
                             Actor.LearningSkills.Add(LearningData);
 						}
 					}
 					// トリガースキル情報設定
 					BaseSheet = Book.GetSheetAt(2);
+					KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseLearningColumn.ActorId);
+						int ActorId = AssetPostImporter.ImportNumeric(BaseRow,"ActorId");
 						ActorData Actor = Data.Data.Find(a => a.Id == ActorId);
 
                         var SkillTriggerData = new SkillTriggerActorData
                         {
-                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseSkillTriggerColumn.SkillId)
+                            SkillId = AssetPostImporter.ImportNumeric(BaseRow, "SkillId")
                         };
                         var skillTypes = new List<TriggerType>();
-						SkillTriggerData.Trigger1 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType1);
-						SkillTriggerData.Trigger2 = (int)AssetPostImporter.ImportNumeric(BaseRow,(int)BaseSkillTriggerColumn.TriggerType2);
+						SkillTriggerData.Trigger1 = AssetPostImporter.ImportNumeric(BaseRow,"TriggerType1");
+						SkillTriggerData.Trigger2 = AssetPostImporter.ImportNumeric(BaseRow,"TriggerType2");
 						Actor.SkillTriggerDates.Add(SkillTriggerData);
 					}
 				}

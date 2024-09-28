@@ -32,25 +32,49 @@ namespace Ryneus
 			if (fileName != ExcelName) return false;
 			return true;
 		}
+
 		public static int ImportNumeric(IRow BaseRow,int Column)
 		{
 			//Debug.Log(Column);
 			var value = BaseRow.GetCell(Column);
-			if (value != null){
+			if (value != null)
+			{
 				return (int)value?.SafeNumericCellValue();
 			}
 			return 0;
 		}
+
+		public static int ImportNumeric(IRow BaseRow,string key)
+		{
+			var value = BaseRow.GetCell(GetKeyNameIndex(key));
+			if (value != null)
+			{
+				return (int)value?.SafeNumericCellValue();
+			}
+			return 0;
+		}
+
 		public static float ImportFloat(IRow BaseRow,int Column)
 		{
 			//Debug.Log(Column);
 			return (float)BaseRow.GetCell(Column).SafeNumericCellValue();
 		}
+
+		public static float ImportFloat(IRow BaseRow,string key)
+		{
+			return (float)BaseRow.GetCell(GetKeyNameIndex(key)).SafeNumericCellValue();
+		}
+
 		public static string ImportString(IRow BaseRow,int Column)
 		{
-			//Debug.Log(Column);
 			return (string)BaseRow.GetCell(Column).SafeStringCellValue();
 		}
+
+		public static string ImportString(IRow BaseRow,string key)
+		{
+			return BaseRow.GetCell(GetKeyNameIndex(key)).SafeStringCellValue();
+		}
+
 		// エクセルワークブックを作成
 		public static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
 		{
@@ -65,6 +89,7 @@ namespace Ryneus
 				Workbook = new XSSFWorkbook(stream);
 			}
 		}
+
 		// テキストデータを作成
 		public static List<TextData> CreateText(ISheet BaseSheet)
 		{
@@ -84,6 +109,7 @@ namespace Ryneus
 
 			return textData;
 		}
+
 		// 文字列を分解
 		static string[] StringSplit(string str, int count)
 		{
@@ -114,11 +140,27 @@ namespace Ryneus
 
 			return List.ToArray();
 		}
+
+		private static List<string> _formatKeys = new List<string>();
+
+		public static void SetKeyNames(List<ICell> cells)
+		{
+			var keyNames = new List<string>();
+			foreach (var cell in cells)
+			{
+				keyNames.Add(cell.ToString());
+			}
+			_formatKeys = keyNames;
+		}
+
+		public static int GetKeyNameIndex(string keyName)
+		{
+			return _formatKeys.FindIndex(a => a == keyName);
+		}
 	}
 
 	public enum BaseTextColumn
 	{
-
 		Id = 0,
 		Text,
 		Help,

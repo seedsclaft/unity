@@ -155,6 +155,7 @@ namespace Ryneus
                         break;
                     case GetItemType.Skill:
                         getItemInfo.SetGetFlag(true);
+                        AddPlayerInfoActorSkillId(getItemInfo.Param1);
                         // 魔法取得
                         var skillData = DataSystem.FindSkill(getItemInfo.Param1);
                         resultInfo.SetSkillId(skillData.Id);
@@ -244,6 +245,7 @@ namespace Ryneus
                 _resultInfos.Remove(remove);
             }
             selectRelic.SetGetFlag(true);
+            AddPlayerInfoActorSkillId(skillId);
             var resultInfo = new StrategyResultViewInfo();
             resultInfo.SetSkillId(skillId);
             resultInfo.SetTitle(DataSystem.FindSkill(skillId).Name);

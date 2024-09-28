@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 8
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -866,10 +866,10 @@ MonoBehaviour:
       StageLv: 0
     - Id: 6021
       TroopId: 6021
-      EnemyId: 1006
+      EnemyId: 1004
       Lv: 0
       BossFlag: 0
-      Line: 0
+      Line: 1
       StageLv: 0
     - Id: 6021
       TroopId: 6021
@@ -891,7 +891,7 @@ MonoBehaviour:
     - Id: 6022
       TroopId: 6022
       EnemyId: 1011
-      Lv: 10
+      Lv: 0
       BossFlag: 1
       Line: 0
       StageLv: 0
@@ -929,20 +929,20 @@ MonoBehaviour:
     - Id: 6031
       TroopId: 6031
       EnemyId: 1001
-      Lv: 10
+      Lv: 0
       BossFlag: 1
       Line: 0
       StageLv: 0
     - Id: 6031
       TroopId: 6031
-      EnemyId: 1004
+      EnemyId: 1006
       Lv: 0
       BossFlag: 0
-      Line: 1
+      Line: 0
       StageLv: 0
     - Id: 6031
       TroopId: 6031
-      EnemyId: 1005
+      EnemyId: 1008
       Lv: 0
       BossFlag: 0
       Line: 0

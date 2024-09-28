@@ -36,7 +36,7 @@ namespace Ryneus
 
         public void SetVersion(string text)
         {
-            versionText.text = text;
+            versionText.SetText(text);
         }
 
         private void CallSideMenu()

@@ -10,19 +10,6 @@ namespace Ryneus
 {
 	public class SkillTriggerImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			NameId,
-			_NameId,
-			Category,
-			Priority,
-			TargetType,
-			TriggerType,
-			Param1,
-			Param2,
-			Param3
-		}
 		static readonly string ExcelName = "SkillTrigger.xlsx";
 
 		// アセット更新があると呼ばれる
@@ -52,8 +39,9 @@ namespace Ryneus
 				// データがなければ作成
 				Data = ScriptableObject.CreateInstance<SkillTriggerDates>();
 				AssetDatabase.CreateAsset(Data, ExportPath);
-				Data.hideFlags = HideFlags.NotEditable;
+				//Data.hideFlags = HideFlags.NotEditable;
 			}
+			Data.hideFlags = HideFlags.None;
 
 			try
 			{
@@ -69,6 +57,8 @@ namespace Ryneus
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+					var KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 
 					for (int i = 1; i <= BaseSheet.LastRowNum-1; i++)
 					{
@@ -76,16 +66,16 @@ namespace Ryneus
 
                         var SkillTriggerData = new SkillTriggerData
                         {
-                            Id = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Id),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Text,
-                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameId)).Help,
-                            Category = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Category),
-                            Priority = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Priority),
-                            TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TargetType),
-                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.TriggerType),
-                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param1),
-                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param2),
-                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Param3)
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
+                            Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
+                            Category = AssetPostImporter.ImportNumeric(BaseRow, "Category"),
+                            Priority = AssetPostImporter.ImportNumeric(BaseRow, "Priority"),
+                            TargetType = (TargetType)AssetPostImporter.ImportNumeric(BaseRow, "TargetType"),
+                            TriggerType = (TriggerType)AssetPostImporter.ImportNumeric(BaseRow, "TriggerType"),
+                            Param1 = AssetPostImporter.ImportNumeric(BaseRow, "Param1"),
+                            Param2 = AssetPostImporter.ImportNumeric(BaseRow, "Param2"),
+                            Param3 = AssetPostImporter.ImportNumeric(BaseRow, "Param3")
                         };
                         Data.Data.Add(SkillTriggerData);
 					}
