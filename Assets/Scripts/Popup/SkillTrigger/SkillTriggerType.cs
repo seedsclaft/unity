@@ -12,7 +12,13 @@ namespace Ryneus
         {
             if (ListData == null) return;
             var data = ListItemData<SkillTriggerData>();
-            triggerText.SetText(data.Name);
+            if (data.Name == "\"\"")
+            {
+                triggerText?.SetText("-");
+            } else
+            {
+                triggerText.SetText(data.Name);
+            }
         }
     }
 }

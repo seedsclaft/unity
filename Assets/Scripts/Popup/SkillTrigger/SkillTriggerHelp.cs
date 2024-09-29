@@ -21,14 +21,14 @@ namespace Ryneus
         {
             if (help1 == "\"\"")
             {
-                trigger1Help?.SetText("-");
+                trigger1Help?.SetText(" ");
             } else
             {
                 trigger1Help?.SetText(help1);
             }
             if (help2 == "\"\"")
             {
-                trigger2Help?.SetText("-");
+                trigger2Help?.SetText(" ");
             } else
             {
                 trigger2Help?.SetText(help2);
