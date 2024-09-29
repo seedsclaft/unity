@@ -63,23 +63,23 @@ namespace Ryneus
         }
 
         
-        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo,int targetBattlerIndex)
         {
             switch (triggerData.TriggerType)
             {
                 case TriggerType.LessHpFriend:
-                    return LessHpTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1);
+                    return LessHpTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.MostHpFriend:
-                    return MostHpTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1);
+                    return MostHpTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.LessHpTarget:
-                    return LessHpTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1);
+                    return LessHpTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.MostHpTarget:
-                    return MostHpTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1);
+                    return MostHpTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1,targetBattlerIndex);
             }
             return -1;
         }
 
-        private int LessHpTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1)
+        private int LessHpTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1,int targetBattlerIndex)
         {
             if (targetBattlers.Count > 0)
             {
@@ -95,12 +95,12 @@ namespace Ryneus
                     var hp = targetBattlers[0].Hp;
                     targetBattlers = targetBattlers.FindAll(a => a.Hp == hp);
                 }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetBattlers);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetBattlers,targetBattlerIndex);
             }
             return -1;
         }        
         
-        private int MostHpTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1)
+        private int MostHpTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1,int targetBattlerIndex)
         {
             if (targetBattlers.Count > 0)
             {
@@ -116,7 +116,7 @@ namespace Ryneus
                     var hp = targetBattlers[0].Hp;
                     targetBattlers = targetBattlers.FindAll(a => a.Hp == hp);
                 }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetBattlers);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetBattlers,targetBattlerIndex);
             }
             return -1;
         }

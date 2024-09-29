@@ -144,8 +144,13 @@ namespace Ryneus
                 var skillTriggerInfo = _skillTriggerInfos[i];
                 if (skillTriggerInfo.SkillId == 0)
                 {
-                    skillTriggerInfo.SetSkillInfo(new SkillInfo(skillId));
-                    break;
+                    var skillInfo = new SkillInfo(skillId);
+                    // アクティブか覚醒なら自動で加える
+                    if (skillInfo.IsBattleActiveSkill())
+                    {
+                        skillTriggerInfo.SetSkillInfo(new SkillInfo(skillId));
+                        break;
+                    }
                 }
             }
         }

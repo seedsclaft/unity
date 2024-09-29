@@ -93,23 +93,23 @@ namespace Ryneus
             return isTrigger;
         }
 
-        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo,int targetBattlerIndex)
         {
             switch (triggerData.TriggerType)
             {
                 case TriggerType.FriendLineMoreTarget:
-                    return LineMoreTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1);
+                    return LineMoreTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.FriendLineLessTarget:
-                    return LineLessTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1);
+                    return LineLessTargetIndex(checkTriggerInfo.Friends,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.OpponentLineMoreTarget:
-                    return LineMoreTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1);
+                    return LineMoreTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1,targetBattlerIndex);
                 case TriggerType.OpponentLineLessTarget:
-                    return LineLessTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1);
+                    return LineLessTargetIndex(checkTriggerInfo.Opponents,battlerInfo,triggerData.Param1,targetBattlerIndex);
             }
             return -1;
         }
 
-        private int LineMoreTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1)
+        private int LineMoreTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1,int targeBattlerIndex)
         {
             if (targetBattlers.Count > 0)
             {
@@ -117,16 +117,16 @@ namespace Ryneus
                 var back = targetBattlers.FindAll(a => a.LineIndex == LineType.Back);
                 if (back.Count > front.Count)
                 {
-                    return BattleUtility.NearTargetIndex(battlerInfo,back);
+                    return BattleUtility.NearTargetIndex(battlerInfo,back,targeBattlerIndex);
                 } else
                 {
-                    return BattleUtility.NearTargetIndex(battlerInfo,front);
+                    return BattleUtility.NearTargetIndex(battlerInfo,front,targeBattlerIndex);
                 }
             }
             return -1;
         }
 
-        private int LineLessTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1)
+        private int LineLessTargetIndex(List<BattlerInfo> targetBattlers,BattlerInfo battlerInfo,int param1,int targeBattlerIndex)
         {
             if (targetBattlers.Count > 0)
             {
@@ -134,10 +134,10 @@ namespace Ryneus
                 var back = targetBattlers.FindAll(a => a.LineIndex == LineType.Back);
                 if (back.Count < front.Count)
                 {
-                    return BattleUtility.NearTargetIndex(battlerInfo,back);
+                    return BattleUtility.NearTargetIndex(battlerInfo,back,targeBattlerIndex);
                 } else
                 {
-                    return BattleUtility.NearTargetIndex(battlerInfo,front);
+                    return BattleUtility.NearTargetIndex(battlerInfo,front,targeBattlerIndex);
                 }
             }
             return -1;

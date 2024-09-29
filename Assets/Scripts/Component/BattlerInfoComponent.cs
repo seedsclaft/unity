@@ -410,11 +410,6 @@ namespace Ryneus
             battleStateOverlay.HideStateOverlay();
         }
 
-        public void SetEnemyGridKey(int index)
-        {
-            enemyInfoComponent.SetGridKey(index);
-        }
-
         private void Update() 
         {
             UpdateDeathAnimation();

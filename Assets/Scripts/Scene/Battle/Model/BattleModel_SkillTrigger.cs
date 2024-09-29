@@ -113,10 +113,11 @@ namespace Ryneus
         
         private int CanUseSkillTriggerTarget(int skillId,List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo,List<int> targetIndexes)
         {
+            var targeBattlerIndex = _targetEnemy != null ?_targetEnemy.Index : -1;
             // 条件なし
             if (triggerDates.Count == 0)
             {
-                return BattleUtility.NearTargetIndex(battlerInfo,targetIndexes);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetIndexes,targeBattlerIndex);
             }
             var skillData = DataSystem.FindSkill(skillId);
             var targetIndexList1 = new List<int>();
@@ -199,7 +200,7 @@ namespace Ryneus
                 var key = (int)triggerDate.TriggerType / 1000;
                 if (_checkTriggerDict.ContainsKey(key))
                 {   
-                    int targetIndex = _checkTriggerDict[key].CheckTargetIndex(triggerDate,battlerInfo,checkTriggerInfo);
+                    int targetIndex = _checkTriggerDict[key].CheckTargetIndex(triggerDate,battlerInfo,checkTriggerInfo,targeBattlerIndex);
                     if (targetIndex > -1)
                     {
                         return targetIndex;
@@ -209,7 +210,7 @@ namespace Ryneus
             if (bindTargetIndexList.Count > 0)
             {
                 // 複数候補は列に近い方を選ぶ
-                return BattleUtility.NearTargetIndex(battlerInfo,bindTargetIndexList);
+                return BattleUtility.NearTargetIndex(battlerInfo,bindTargetIndexList,targeBattlerIndex);
             }
             return -1;
         }

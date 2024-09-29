@@ -35,6 +35,7 @@ namespace Ryneus
         [SerializeField] private GameObject battleBackGroundRoot = null;
         [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
+        [SerializeField] private BattlerInfoComponent battlerInfoComponent = null;
         
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
@@ -281,7 +282,7 @@ namespace Ryneus
                 _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetActorInfo(battlerInfos);
-            battleActorList.Deactivate();
+            //battleActorList.Deactivate();
             battleActorList.gameObject.SetActive(false);
         }
         
@@ -305,14 +306,14 @@ namespace Ryneus
 
         private void CallEnemyInfo()
         {
-            if (_animationBusy) return;
+            //if (_animationBusy) return;
             var listData = battleEnemyLayer.ListData;
-            if (listData != null && listData.Enable)
+            if (listData != null)
             {
                 var data = (BattlerInfo)listData.Data;
                 var eventData = new BattleViewEvent(CommandType.EnemyLayer)
                 {
-                    template = data.Index
+                    template = data
                 };
                 _commandData(eventData);
             }
@@ -441,7 +442,7 @@ namespace Ryneus
 
         public void DeactivateEnemyList()
         {
-            battleEnemyLayer.Deactivate();
+            //battleEnemyLayer.Deactivate();
         }
 
         public void ActivateActorList()
@@ -504,8 +505,8 @@ namespace Ryneus
 
         public void BattlerBattleClearSelect()
         {
-            battleActorList.ClearSelect();
-            battleEnemyLayer.ClearSelect();
+            //battleActorList.ClearSelect();
+            //battleEnemyLayer.ClearSelect();
         }
 
         public void HideEnemyStateOverlay()
@@ -603,7 +604,7 @@ namespace Ryneus
             //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
         }
 
-        public async UniTask StartAnimationAwaken(BattlerInfo battlerInfo,Sprite actorSprite)
+        public async UniTask StartAnimationMessiah(BattlerInfo battlerInfo,Sprite actorSprite)
         {
             var speed = GameSystem.ConfigData.BattleSpeed;
             if (GameSystem.ConfigData.BattleAnimationSkip == false)
@@ -760,6 +761,11 @@ namespace Ryneus
             {
                 StartAnimation(targetIndex,animation,0);
             }
+        }
+
+        public void SetTargetEnemy(BattlerInfo battlerInfo)
+        {
+            battlerInfoComponent.UpdateInfo(battlerInfo);
         }
     }
 }

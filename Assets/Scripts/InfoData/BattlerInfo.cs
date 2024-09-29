@@ -18,6 +18,9 @@ namespace Ryneus
         }
         private int _index = 0;
         public int Index => _index;
+        private int _enemyIndex = 0;
+        public int EnemyIndex => _enemyIndex;
+        public void SetEnemyIndex(int enemyIndex) => _enemyIndex = enemyIndex;
         private bool _isActor = false;
         public bool IsActor => _isActor;
         // 見た目上は味方か
@@ -42,7 +45,7 @@ namespace Ryneus
 
         public float Ap => _ap;
         
-        private List<SkillInfo> _skills;
+        private List<SkillInfo> _skills = new ();
         public List<SkillInfo> Skills => _skills;
         private ActorInfo _actorInfo;
         public ActorInfo ActorInfo => _actorInfo;
@@ -125,13 +128,30 @@ namespace Ryneus
             );
             _status = statusInfo;
             _index = index;
-            _skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
-            var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
+            var skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
+            var enhanceSkills = skills.FindAll(a => a.IsEnhanceSkill());
             foreach (var enhanceSkill in enhanceSkills)
             {
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
-            _skills = _skills.FindAll(a => _skillTriggerInfos != null && _skillTriggerInfos.Find(b => b.SkillId == a.Id) != null);
+            _skills.Clear();
+            var battleSkills = skills.FindAll(a => !a.IsEnhanceSkill());
+            foreach (var battleSkill in battleSkills)
+            {
+                if (battleSkill.IsBattleActiveSkill())
+                {
+                    // アクティブと覚醒は作戦にあれば加える
+                    if (_skillTriggerInfos.Find(a => a.SkillId == battleSkill.Id) != null)
+                    {
+                        _skills.Add(battleSkill);
+                    }
+                } else
+                if (battleSkill.IsBattlePassiveSkill())
+                {
+                    // パッシブは作戦になくても加える
+                    _skills.Add(battleSkill);
+                }
+            }
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;
@@ -185,7 +205,7 @@ namespace Ryneus
             _hp = _status.Hp;
             _mp = _status.Mp;
 
-            _skills = new List<SkillInfo>();
+            _skills.Clear();
             var enhanceSkills = new List<SkillInfo>();
             for (int i = 0;i < enemyData.LearningSkills.Count;i++)
             {

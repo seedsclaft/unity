@@ -1644,7 +1644,19 @@ namespace Ryneus
                             }
                         } else
                         {
-                            continue;
+                            // 制限なしトリガー
+                            var skillTriggerInfo = new SkillTriggerInfo(battlerInfo.Index,passiveInfo);
+                            skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>());
+                            // 作戦に縛りがなければ使える
+                            (selectSkill,selectTarget) = SelectSkillTargetBySkillTriggerDates(battlerInfo,new List<SkillTriggerInfo>(){skillTriggerInfo},actionInfo,actionResultInfos);
+                            if (selectSkill != passiveInfo.Id)
+                            {
+                                continue;
+                            }
+                            if (selectTarget == -1)
+                            {
+                                continue;
+                            }
                         }
                         var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.Interrupt || triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse;
                         var result = MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,selectTarget,actionInfo,actionResultInfos,triggerDates[0]);

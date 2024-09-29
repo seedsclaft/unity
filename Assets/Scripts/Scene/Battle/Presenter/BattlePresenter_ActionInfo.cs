@@ -21,18 +21,23 @@ namespace Ryneus
                 CommandEndAnimation();
                 return;
             }
+            StartAnimation(actionInfo);
+        }
+
+        private void StartAnimation(ActionInfo actionInfo)
+        {
             var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
-            if (actionInfo.Master.SkillType == SkillType.Messiah)
+            if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.Master.AnimationId > 0)
             {
                 if (isActor)
                 {
-                    StartAnimationDemigod();
+                    StartAnimationMessiah();
                 } else
                 {
-                    StartAnimationDemigodEnemy();
+                    StartAnimationMessiahEnemy();
                 }
             } else
-            if (actionInfo.Master.SkillType == SkillType.Awaken)
+            if (actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.Master.AnimationId > 0)
             {
                 StartAnimationAwaken();
             } else
@@ -44,25 +49,25 @@ namespace Ryneus
         /// <summary>
         /// 覚醒アニメーション再生してからアニメーション再生
         /// </summary>
-        private async void StartAnimationDemigod()
+        private async void StartAnimationMessiah()
         {
             var actionInfo = _model.CurrentActionInfo;
             var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
             var actorId = subject.ActorInfo != null ? subject.ActorInfo.ActorId : subject.EnemyData.Id - 1000;
             var sprite = _model.AwakenSprite(actorId);
-            await _view.StartAnimationAwaken(subject,sprite);
+            await _view.StartAnimationMessiah(subject,sprite);
             StartAnimationSkill();
         }
 
         /// <summary>
         /// 覚醒アニメーション再生してからアニメーション再生
         /// </summary>
-        private async void StartAnimationDemigodEnemy()
+        private async void StartAnimationMessiahEnemy()
         {
             var actionInfo = _model.CurrentActionInfo;
             var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
             var sprite = _model.AwakenEnemySprite(subject.EnemyData.Id);
-            await _view.StartAnimationAwaken(subject,sprite);
+            await _view.StartAnimationMessiah(subject,sprite);
             StartAnimationSkill();
         }
         
@@ -217,17 +222,9 @@ namespace Ryneus
                 CommandEndAnimation();
                 return;
             }
-            var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
-            if (actionInfo.FirstAttack() && (actionInfo.Master.SkillType == SkillType.Messiah && isActor || actionInfo.Master.SkillType == SkillType.Awaken))
+            if (actionInfo.FirstAttack())
             {
-                if (isActor)
-                {
-                    StartAnimationDemigod();
-                } else
-                {
-                    StartAnimationDemigodEnemy();
-                }
-                return;
+                StartAnimation(actionInfo);
             }
             
             if (actionInfo.Master.IsDisplayBattleSkill())

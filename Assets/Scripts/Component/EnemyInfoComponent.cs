@@ -38,6 +38,10 @@ namespace Ryneus
             {
                 UpdateNeedStatus(battlerInfo);
             }
+            if (gridKey != null)
+            {
+                UpdateGridKey(battlerInfo.EnemyIndex);
+            }
         }
 
         private void UpdateMainThumb(string imagePath,int x,int y,float scale)
@@ -68,7 +72,7 @@ namespace Ryneus
             nameText?.SetText(enemyData.Name);
         }
 
-        public void SetGridKey(int index)
+        public void UpdateGridKey(int index)
         {
             var textId = 16800 + index;
             gridKey.text = DataSystem.GetText(textId);

@@ -52,7 +52,7 @@ namespace Ryneus
         {
             return battlerInfo.MpRate < param1 * 0.01f;
         }
-        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo,int targetBattlerIndex)
         {
             return -1;
         }

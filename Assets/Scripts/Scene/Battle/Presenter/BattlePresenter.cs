@@ -155,8 +155,9 @@ namespace Ryneus
                     break;
                 case Battle.CommandType.ActorList:
                 case Battle.CommandType.EnemyLayer:
-                    var targetIndexes = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
-                    CommandSelectTargetIndexes(targetIndexes);
+                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
+                    // var targetIndexes = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
+                    //CommandSelectTargetIndexes(targetIndexes);
                     break;
                 case Battle.CommandType.SelectActorList:
                 case Battle.CommandType.SelectEnemyList:
@@ -886,6 +887,12 @@ namespace Ryneus
 
         private void CommandSelectEnemy()
         {
+        }
+
+        private void CommandTargetEnemy(BattlerInfo battlerInfo)
+        {
+            _model.SetTargetEnemy(battlerInfo);
+            _view.SetTargetEnemy(battlerInfo);
         }
 
         private void CommandSkillLog()

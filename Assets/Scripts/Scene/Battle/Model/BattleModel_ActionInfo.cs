@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 namespace Ryneus
 {
@@ -12,6 +13,10 @@ namespace Ryneus
         public ActionInfo CurrentActionInfo => _currentActionInfo;
         // 現在最優先の行動
         public BattlerInfo CurrentActionBattler => _currentActionInfo != null ? GetBattlerInfo(_currentActionInfo.SubjectIndex) : null;
+
+        // 優先敵対象
+        private BattlerInfo _targetEnemy = null;
+        public void SetTargetEnemy(BattlerInfo battlerInfo) => _targetEnemy = battlerInfo;
 
         public void AddActionInfo(ActionInfo actionInfo,bool IsInterrupt)
         {

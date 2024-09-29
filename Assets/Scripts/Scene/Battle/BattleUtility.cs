@@ -78,11 +78,15 @@ namespace Ryneus
         /// <param name="battlerInfo"></param>
         /// <param name="targetIndexList"></param>
         /// <returns></returns>
-        public static int NearTargetIndex(BattlerInfo battlerInfo,List<int> targetIndexList)
+        public static int NearTargetIndex(BattlerInfo battlerInfo,List<int> targetIndexList,int targetBattlerIndex)
         {
             if (targetIndexList.Count == 0)
             {
                 return -1;
+            }
+            if (targetIndexList.Contains(targetBattlerIndex))
+            {
+                return targetBattlerIndex;
             }
             // 複数候補は列が近い方を選ぶ
             var selfIndex = battlerInfo.Index % 100;
@@ -112,7 +116,7 @@ namespace Ryneus
             return targetIndexList[0];
         }
 
-        public static int NearTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetBattlerInfos)
+        public static int NearTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetBattlerInfos,int targetBattlerIndex)
         {
             if (targetBattlerInfos.Count == 1)
             {
@@ -123,7 +127,11 @@ namespace Ryneus
             {
                 targetIndexList.Add(targetBattlerInfo.Index);
             }
-            return NearTargetIndex(battlerInfo,targetIndexList);
+            if (targetBattlerIndex > -1 && targetBattlerInfos.Find(a => a.Index == targetBattlerIndex) != null)
+            {
+                return targetBattlerIndex;
+            }
+            return NearTargetIndex(battlerInfo,targetIndexList,targetBattlerIndex);
         }
 
     }

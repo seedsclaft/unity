@@ -21,27 +21,27 @@ namespace Ryneus
             return isTrigger;
         }
         
-        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        public int CheckTargetIndex(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo,int targetBattlerIndex)
         {
             switch (triggerData.TriggerType)
             {
                 case TriggerType.FriendStatusUpper:
-                    var friendStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,checkTriggerInfo.Friends,(StatusParamType)triggerData.Param1);
+                    var friendStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,checkTriggerInfo.Friends,(StatusParamType)triggerData.Param1,targetBattlerIndex);
                     return friendStatusUpperIndex;
                 case TriggerType.FriendStatusUnder:
-                    var friendStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,checkTriggerInfo.Friends,(StatusParamType)triggerData.Param1);
+                    var friendStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,checkTriggerInfo.Friends,(StatusParamType)triggerData.Param1,targetBattlerIndex);
                     return friendStatusUnderIndex;
                 case TriggerType.OpponentStatusUpper:
-                    var opponentStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,checkTriggerInfo.Opponents,(StatusParamType)triggerData.Param1);
+                    var opponentStatusUpperIndex = SortStatusUpperTargetIndex(battlerInfo,checkTriggerInfo.Opponents,(StatusParamType)triggerData.Param1,targetBattlerIndex);
                     return opponentStatusUpperIndex;
                 case TriggerType.OpponentStatusUnder:
-                    var opponentStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,checkTriggerInfo.Opponents,(StatusParamType)triggerData.Param1);
+                    var opponentStatusUnderIndex = SortStatusUnderTargetIndex(battlerInfo,checkTriggerInfo.Opponents,(StatusParamType)triggerData.Param1,targetBattlerIndex);
                     return opponentStatusUnderIndex;
             }
             return -1;
         }
         
-        private int SortStatusUpperTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        private int SortStatusUpperTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType,int targetBattlerIndex)
         {
             if (targetInfos.Count > 0)
             {
@@ -75,12 +75,12 @@ namespace Ryneus
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos,targetBattlerIndex);
             }
             return -1;
         }
 
-        private int SortStatusUnderTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType)
+        private int SortStatusUnderTargetIndex(BattlerInfo battlerInfo,List<BattlerInfo> targetInfos,StatusParamType statusParamType,int targetBattlerIndex)
         {
             if (targetInfos.Count > 0)
             {
@@ -114,7 +114,7 @@ namespace Ryneus
                     var spd = targetInfos[0].CurrentSpd();
                     targetInfos = targetInfos.FindAll(a => a.CurrentSpd() == spd);
                 }
-                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos);
+                return BattleUtility.NearTargetIndex(battlerInfo,targetInfos,targetBattlerIndex);
             }
             return -1;
         }

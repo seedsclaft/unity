@@ -38,6 +38,8 @@ namespace Ryneus
 
         public void MakeEnemyTroopDates(int plusLevel)
         {
+            // EnemyIndex割り振り
+            var enemyIndexKeys = new Dictionary<int,int>();
             foreach (var troopEnemies in TroopMaster.TroopEnemies)
             {
                 if (troopEnemies.StageLv <= plusLevel)
@@ -45,6 +47,12 @@ namespace Ryneus
                     var enemyData = DataSystem.Enemies.Find(a => a.Id == troopEnemies.EnemyId);
                     var battlerInfo = new BattlerInfo(enemyData,troopEnemies.Lv + plusLevel,_battlerInfos.Count,troopEnemies.Line,troopEnemies.BossFlag);
                     AddEnemy(battlerInfo);
+                    if (!enemyIndexKeys.ContainsKey(enemyData.Id))
+                    {
+                        enemyIndexKeys[enemyData.Id] = 0;
+                    }
+                    battlerInfo.SetEnemyIndex(enemyIndexKeys[enemyData.Id]);
+                    enemyIndexKeys[enemyData.Id]++;
                 }
             }
         }

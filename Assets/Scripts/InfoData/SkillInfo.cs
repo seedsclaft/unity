@@ -131,6 +131,17 @@ namespace Ryneus
             return Master.SkillType == SkillType.Enhance;
         }
 
+        public bool IsBattleActiveSkill()
+        {
+            return Master.SkillType == SkillType.Active || Master.SkillType == SkillType.Awaken;
+        }
+
+
+        public bool IsBattlePassiveSkill()
+        {
+            return Master.SkillType == SkillType.Passive || Master.SkillType == SkillType.Messiah;
+        }
+
         public string ConvertHelpText()
         {
             var help = Master.ConvertHelpText(Master.Help);

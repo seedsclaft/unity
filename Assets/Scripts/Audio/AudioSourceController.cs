@@ -14,6 +14,8 @@ namespace Ryneus
         private int _reserveTimeSample = -1;
         public int ReserveTimeSample => _reserveTimeSample;
 
+    
+        private DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> _fadeTween;
 
         private bool _isPlay = false;
         public void Initialize()
@@ -51,6 +53,11 @@ namespace Ryneus
         public void ChangeVolume(float volume)
         {
             if (_audioSource == null) return;
+            if (_fadeTween != null)
+            {
+                _fadeTween.Kill();
+                _fadeTween = null;
+            }
             _audioSource.volume = volume;
         }
 
@@ -99,7 +106,7 @@ namespace Ryneus
         public void FadeVolume(float targetVolume,int duration)
         {
             if (_audioSource == null) return;
-            _audioSource.DOFade(targetVolume, duration);
+            _fadeTween = _audioSource.DOFade(targetVolume, duration);
         }
     }
 }

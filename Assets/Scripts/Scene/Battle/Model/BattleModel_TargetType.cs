@@ -124,7 +124,6 @@ namespace Ryneus
         {
             var skillData = DataSystem.FindSkill(skillId);
             var subject = GetBattlerInfo(subjectIndex);
-            
             var rangeType = CalcRangeType(skillData,subject);
 
             var targetIndexList = new List<int>();
