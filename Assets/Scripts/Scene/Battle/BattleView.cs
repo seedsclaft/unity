@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Battle;
 using Effekseer;
 using System.Linq;
@@ -35,7 +34,10 @@ namespace Ryneus
         [SerializeField] private GameObject battleBackGroundRoot = null;
         [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
-        [SerializeField] private BattlerInfoComponent battlerInfoComponent = null;
+        [SerializeField] private BattlerInfoComponent targetEnemyComponent = null;
+        [SerializeField] private BattlerInfoComponent targetActorComponent = null;
+        [SerializeField] private OnOffButton targetEnemyButton = null;
+        [SerializeField] private OnOffButton targetActorButton = null;
         
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
@@ -71,6 +73,8 @@ namespace Ryneus
             battleGridLayer.Initialize();
             battleActorList.Initialize();
             battleEnemyLayer.Initialize();
+            targetActorComponent.HideStatus();
+            targetEnemyComponent.HideStatus();
             SideMenuButton.SetCallHandler(() => 
             {
                 CallSideMenu();
@@ -96,6 +100,16 @@ namespace Ryneus
             });
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
+            targetEnemyButton?.SetCallHandler(() => 
+            {
+                var eventData = new BattleViewEvent(CommandType.CancelSelectEnemy);
+                _commandData(eventData);
+            });
+            targetActorButton?.SetCallHandler(() => 
+            {
+                var eventData = new BattleViewEvent(CommandType.CancelSelectActor);
+                _commandData(eventData);
+            });
             if (GameSystem.TempData.InReplay)
             {
                 new BattleReplayPresenter(this);
@@ -157,7 +171,7 @@ namespace Ryneus
         public void SetBattleSkipActive(bool isActive)
         {
             battleSkipButton.gameObject.SetActive(isActive);
-            skillLogButton.gameObject.SetActive(isActive);
+            //skillLogButton.gameObject.SetActive(isActive);
         }
 
         public void SetBattleSpeedButton(string commandName)
@@ -198,7 +212,7 @@ namespace Ryneus
             battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
             battleActorList.SetSelectedHandler(() => CallSelectActorList());
             SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
-            battleActorList.Deactivate();
+            //battleActorList.Deactivate();
             
             GameObject prefab = Instantiate(animPrefab);
             prefab.transform.SetParent(animRoot.transform, false);
@@ -336,14 +350,13 @@ namespace Ryneus
 
         private void CallActorList()
         {
-            if (_animationBusy) return;
             var listData = battleActorList.ListData;
-            if (listData != null && listData.Enable)
+            if (listData != null)
             {
                 var data = (BattlerInfo)listData.Data;
                 var eventData = new BattleViewEvent(CommandType.ActorList)
                 {
-                    template = data.Index
+                    template = data
                 };
                 _commandData(eventData);
             }
@@ -452,7 +465,7 @@ namespace Ryneus
 
         public void DeactivateActorList()
         {
-            battleActorList.Deactivate();
+            //battleActorList.Deactivate();
         }
 
         private void OnClickSelectEnemy()
@@ -659,6 +672,8 @@ namespace Ryneus
         public void RefreshStatus()
         {
             battleGridLayer.RefreshStatus();
+            targetActorComponent.RefreshStatus();
+            targetEnemyComponent.RefreshStatus();
             foreach (var item in _battlerComps)
             {
                 item.Value.RefreshStatus();
@@ -765,7 +780,28 @@ namespace Ryneus
 
         public void SetTargetEnemy(BattlerInfo battlerInfo)
         {
-            battlerInfoComponent.UpdateInfo(battlerInfo);
+            if (battlerInfo == null)
+            {
+                targetEnemyComponent.HideStatus();
+                targetEnemyComponent.Clear();
+                return;
+            }
+            targetEnemyComponent.ShowStatus();
+            targetEnemyComponent.UpdateInfo(battlerInfo);
+            targetEnemyComponent.RefreshStatus();
+        }
+
+        public void SetTargetActor(BattlerInfo battlerInfo)
+        {
+            if (battlerInfo == null)
+            {
+                targetActorComponent.HideStatus();
+                targetActorComponent.Clear();
+                return;
+            }
+            targetActorComponent.ShowStatus();
+            targetActorComponent.UpdateInfo(battlerInfo);
+            targetActorComponent.RefreshStatus();
         }
     }
 }

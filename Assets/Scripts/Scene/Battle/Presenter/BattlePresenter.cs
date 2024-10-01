@@ -129,17 +129,29 @@ namespace Ryneus
 
         private void UpdateCommand(BattleViewEvent viewEvent)
         {
-            if (viewEvent.commandType == Battle.CommandType.ChangeBattleAuto)
+            switch (viewEvent.commandType)
             {
-                CommandChangeBattleAuto();
-            }
-            if (viewEvent.commandType == Battle.CommandType.ChangeBattleSpeed)
-            {
-                CommandChangeBattleSpeed();
-            }
-            if (viewEvent.commandType == Battle.CommandType.SkipBattle)
-            {
-                CommandSkipBattle();
+                case Battle.CommandType.ChangeBattleAuto:
+                    CommandChangeBattleAuto();
+                    break;
+                case Battle.CommandType.ChangeBattleSpeed:
+                    CommandChangeBattleSpeed();
+                    break;
+                case Battle.CommandType.SkipBattle:
+                    CommandSkipBattle();
+                    break;
+                case Battle.CommandType.EnemyLayer:
+                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
+                    break;
+                case Battle.CommandType.ActorList:
+                    CommandTargetActor((BattlerInfo)viewEvent.template);
+                    break;
+                case Battle.CommandType.CancelSelectActor:
+                    CancelSelectActor();
+                    break;
+                case Battle.CommandType.CancelSelectEnemy:
+                    CancelSelectEnemy();
+                    break;
             }
             if (_busy)
             {
@@ -154,8 +166,7 @@ namespace Ryneus
                     CommandSelectedSkill((SkillInfo)viewEvent.template);
                     break;
                 case Battle.CommandType.ActorList:
-                case Battle.CommandType.EnemyLayer:
-                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
+                    //CommandTargetEnemy((BattlerInfo)viewEvent.template);
                     // var targetIndexes = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
                     //CommandSelectTargetIndexes(targetIndexes);
                     break;
@@ -889,10 +900,38 @@ namespace Ryneus
         {
         }
 
+        private void CommandTargetActor(BattlerInfo battlerInfo)
+        {
+            if (_model.TargetActor != null && _model.TargetActor.Index == battlerInfo.Index)
+            {
+                CancelSelectActor();
+                return;
+            }
+            _model.SetTargetActor(battlerInfo);
+            _view.SetTargetActor(battlerInfo);
+        }
+
+        private void CancelSelectActor()
+        {
+            _model.SetTargetActor(null);
+            _view.SetTargetActor(null);
+        }
+
         private void CommandTargetEnemy(BattlerInfo battlerInfo)
         {
+            if (_model.TargetEnemy != null && _model.TargetEnemy.Index == battlerInfo.Index)
+            {
+                CancelSelectEnemy();
+                return;
+            }
             _model.SetTargetEnemy(battlerInfo);
             _view.SetTargetEnemy(battlerInfo);
+        }
+
+        private void CancelSelectEnemy()
+        {
+            _model.SetTargetEnemy(null);
+            _view.SetTargetEnemy(null);
         }
 
         private void CommandSkillLog()

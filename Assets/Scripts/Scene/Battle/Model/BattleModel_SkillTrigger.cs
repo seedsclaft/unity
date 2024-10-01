@@ -113,13 +113,21 @@ namespace Ryneus
         
         private int CanUseSkillTriggerTarget(int skillId,List<SkillData.TriggerData> triggerDates,BattlerInfo battlerInfo,List<int> targetIndexes)
         {
-            var targeBattlerIndex = _targetEnemy != null ?_targetEnemy.Index : -1;
+            var skillData = DataSystem.FindSkill(skillId);
+            var targeBattlerIndex = -1;
+            if (skillData.IsHpDamageFeature())
+            {
+                targeBattlerIndex = _targetEnemy != null ? _targetEnemy.Index : -1;
+            } else
+            if (skillData.IsHpHealFeature())
+            {
+                targeBattlerIndex = _targetActor != null ? _targetActor.Index : -1;
+            }
             // 条件なし
             if (triggerDates.Count == 0)
             {
                 return BattleUtility.NearTargetIndex(battlerInfo,targetIndexes,targeBattlerIndex);
             }
-            var skillData = DataSystem.FindSkill(skillId);
             var targetIndexList1 = new List<int>();
             var targetIndexList2 = new List<int>();
             // ～を優先判定用

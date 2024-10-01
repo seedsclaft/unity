@@ -31,10 +31,6 @@ namespace Ryneus
         private float _deathAnimation = 0.0f;
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
-            if (battlerInfo == null)
-            {
-                return;
-            }
             _battlerInfo = battlerInfo;
             if (battlerInfo.IsActor)
             {
@@ -159,6 +155,10 @@ namespace Ryneus
 
         public void RefreshStatus()
         {
+            if (_battlerInfo == null)
+            {
+                return;
+            }
             if (_battlerInfo.IsActor)
             {
                 actorInfoComponent.UpdateInfo(_battlerInfo.ActorInfo,null);
@@ -188,22 +188,22 @@ namespace Ryneus
             if (battleStateOverlay != null) battleStateOverlay.SetStates(_battlerInfo.IconStateInfos());
         }
         
-        public void ShowUI()
+        public void ShowStatus()
         {
             if (statusInfoComponent != null)
             {
                 statusInfoComponent.ShowStatus();
             }
-            battleStateOverlay.gameObject.SetActive(true);
+            battleStateOverlay?.gameObject.SetActive(true);
         }
 
-        public void HideUI()
+        public void HideStatus()
         {
             if (statusInfoComponent != null)
             {
                 statusInfoComponent.HideStatus();
             }
-            battleStateOverlay.gameObject.SetActive(false);
+            battleStateOverlay?.gameObject.SetActive(false);
         }
 
         private BattleDamage CreatePrefab()
@@ -317,7 +317,7 @@ namespace Ryneus
                 {
                     deathAnimation.enabled = true;
                     _deathAnimation = 0.01f;
-                    HideUI();
+                    HideStatus();
                 }
             }
         }
@@ -396,18 +396,18 @@ namespace Ryneus
         {
             if (!_battlerInfo.IsActor)
             {
-                battleStateOverlay.HideStateOverlay();
+                battleStateOverlay?.HideStateOverlay();
             }
         }
 
         public void ShowStateOverlay()
         {
-            battleStateOverlay.ShowStateOverlay();
+            battleStateOverlay?.ShowStateOverlay();
         }
 
         public void HideStateOverlay()
         {
-            battleStateOverlay.HideStateOverlay();
+            battleStateOverlay?.HideStateOverlay();
         }
 
         private void Update() 
@@ -477,6 +477,15 @@ namespace Ryneus
                         });
                 }
             }
+        }
+
+        public void Clear()
+        {
+            _battlerInfo = null;
+            enemyInfoComponent?.Clear();
+            actorInfoComponent?.Clear();
+            battlePosition?.SetText("");
+            
         }
     }
 }

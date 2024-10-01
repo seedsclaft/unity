@@ -1033,6 +1033,7 @@ GameObject:
   - component: {fileID: 493902976524792380}
   - component: {fileID: 5248722031855240961}
   - component: {fileID: 661038545888140622}
+  - component: {fileID: 1589305402219127995}
   m_Layer: 5
   m_Name: BattlerStatus
   m_TagString: Untagged
@@ -1091,7 +1092,7 @@ MonoBehaviour:
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   upperColor: {r: 0, g: 0, b: 0, a: 0}
   downColor: {r: 0, g: 0, b: 0, a: 0}
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 1589305402219127995}
 --- !u!114 &5248722031855240961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,6 +1123,18 @@ MonoBehaviour:
   gaugeBg: {fileID: 4846405566059146748}
   gauge: {fileID: 1571286843965025453}
   gaugeAnimation: {fileID: 464308631909348827}
+--- !u!225 &1589305402219127995
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7805102560647106509}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8032743037353647367
 GameObject:
   m_ObjectHideFlags: 0

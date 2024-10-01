@@ -33,6 +33,8 @@ namespace Battle
         ChangeBattleAuto,
         ChangeBattleSpeed,
         SkipBattle,
+        CancelSelectActor,
+        CancelSelectEnemy,
         EndBattle
     }
 }
