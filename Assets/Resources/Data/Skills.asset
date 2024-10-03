@@ -1140,7 +1140,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 1
     TargetType: 2
-    Help: "\\s\u306B/f[f,0,2]\u56DE\u6709\u52B9\u306E\u653B\u6483\u7121\u52B9\u3092\u4ED8\u4E0E"
+    Help: "1\u56DE\u3060\u3051\\s\u304C\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u3092/f[f,0,3]%\u30AB\u30C3\u30C8"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1148,9 +1148,9 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 4080
       FeatureType: 3010
-      Param1: 2050
+      Param1: 1100
       Param2: 1
-      Param3: 0
+      Param3: 50
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
@@ -1953,7 +1953,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 2
     TargetType: 2
-    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u56DE\u907F\u7387\u3092/f[f,0,3]%\u30A2\u30C3\u30D7(\u6C38\u7D9A)"
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u958B\u59CB\u6642\n\\s\u306E\u56DE\u907F\u7387\u3092/f[f,0,3]%\u30A2\u30C3\u30D7(\u6C38\u7D9A)\n\u6700\u59275\u56DE\u307E\u3067\u91CD\u306D\u639B\u3051\u53EF\u80FD"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1961,7 +1961,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 12040
       FeatureType: 3010
-      Param1: 1090
+      Param1: 1092
       Param2: 999
       Param3: 5
       Rate: 100
@@ -2050,7 +2050,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TimingOnlyCount: 0
+    TimingOnlyCount: 1
     FeatureDates:
     - SkillId: 12070
       FeatureType: 3010
@@ -2517,7 +2517,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 2
     TargetType: 2
-    Help: "\\s\u306E\u547D\u4E2D\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7"
+    Help: "\\s\u306E\u547D\u4E2D\u7387\u304C/f[f,0,3]%\u30A2\u30C3\u30D7\n\u6700\u59275\u56DE\u307E\u3067\u91CD\u306D\u639B\u3051\u53EF\u80FD"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -2525,7 +2525,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 14030
       FeatureType: 3010
-      Param1: 1080
+      Param1: 1081
       Param2: 999
       Param3: 5
       Rate: 100
@@ -3589,7 +3589,7 @@ MonoBehaviour:
   - Id: 100810
     Name: "\u30C6\u30F3\u30D1\u30E9\u30F3\u30B9"
     IconIndex: 10
-    AnimationId: 301
+    AnimationId: 51
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3678,8 +3678,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 3
     TargetType: 6
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
-      \u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -3722,8 +3721,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 2
     TargetType: 4
-    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
-      \u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
+    Help: "(\u6761\u4EF6)\u5473\u65B9\u304C\u6226\u95D8\u4E0D\u80FD\u306B\u306A\u308B\n\u6700\u5F8C\u306B\u653B\u6483\u3057\u305F\u5BFE\u8C61\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4367,7 +4365,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\\s\u306B\u6226\u95D8\u4E0D\u80FD\u3092\u4ED8\u4E0E\n\u899A\u9192\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\u5FC5\u4E2D\u3067\\s\u306B\u6226\u95D8\u4E0D\u80FD\u3092\u4ED8\u4E0E\n\u899A\u9192\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4376,6 +4374,12 @@ MonoBehaviour:
     - SkillId: 200520
       FeatureType: 3010
       Param1: 1
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 200520
+      FeatureType: 11010
+      Param1: 0
       Param2: 0
       Param3: 0
       Rate: 100
@@ -4472,7 +4476,7 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\\s\u306EHp\u30921\u306B\u3059\u308B\n\u899A\u9192\u89E3\u9664"
+    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\u5FC5\u4E2D\u3067\\s\u306EHp\u30921\u306B\u3059\u308B\n\u899A\u9192\u89E3\u9664"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -4480,6 +4484,12 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 201020
       FeatureType: 2030
+      Param1: 0
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 201020
+      FeatureType: 11010
       Param1: 0
       Param2: 0
       Param3: 0
@@ -5145,7 +5155,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 5
     TargetType: 7
-    Help: "(\u6761\u4EF6)7\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\u306B\u8FFD\u6483\u3067\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\n\\s\u306B/f[f,0,3]\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)7\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\u306B\u8FFD\u6483\u3067\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\n\\s\u306B/f[f,0,1]\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -5319,7 +5329,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 6
     TargetType: 4
-    Help: "/n\u4E0E\u30C0\u30E1\u30FC\u30B8\u7387\u3092\u30A2\u30C3\u30D7\u5024\u304C/f[f,0,3]\u306B\u306A\u308B"
+    Help: "/n\u306E\u4E0E\u30C0\u30E1\u30FC\u30B8\u7387\u3092\u30A2\u30C3\u30D7\u5024\u304C/f[f,0,3]\u306B\u306A\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -5894,7 +5904,7 @@ MonoBehaviour:
     Scope: 4
     SkillType: 6
     TargetType: 4
-    Help: "\\n\u306E\u5BFE\u8C61\u304C\u9078\u629E\u5BFE\u8C61\u306E\u4E21\u96A3\u307E\u3067\u62E1\u5F35\u3059\u308B"
+    Help: "/n\u306E\u5BFE\u8C61\u304C\u9078\u629E\u5BFE\u8C61\u306E\u4E21\u96A3\u307E\u3067\u62E1\u5F35\u3059\u308B"
     Range: 1
     RepeatTime: 1
     AliveType: 1

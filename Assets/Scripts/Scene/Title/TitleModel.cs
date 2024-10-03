@@ -38,6 +38,7 @@ namespace Ryneus
                 Key = "InitializeData"
             };
             list.Add(initCommand);
+#if !UNITY_WEBGL
             var endCommand = new SystemData.CommandData
             {
                 Id = 4,
@@ -45,6 +46,7 @@ namespace Ryneus
                 Key = "EndGame"
             };
             list.Add(endCommand);
+#endif
             return list;
         }
     }

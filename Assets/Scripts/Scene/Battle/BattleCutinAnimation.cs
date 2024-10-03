@@ -8,6 +8,7 @@ namespace Ryneus
 {
     public class BattleCutinAnimation : MonoBehaviour
     {
+        [SerializeField] private CanvasGroup baseCanvasGroup;
         [SerializeField] private GameObject backUnMask1;
         [SerializeField] private GameObject backUnMask2;
         [SerializeField] private GameObject backUnMask3;
@@ -28,6 +29,7 @@ namespace Ryneus
             skillCanvasGroup.gameObject.transform.DOLocalMove(new Vector3(0,-144,0),0);
             skillCanvasGroup.alpha = 0;
             skillNameCanvasGroup.alpha = 0;
+            baseCanvasGroup.alpha = 0;
         }
 
         public void StartAnimation(BattlerInfo battlerInfo,SkillData skillData,float speedRate)
@@ -93,7 +95,7 @@ namespace Ryneus
                 .OnComplete(() => 
                 {
                     mainBack.gameObject.SetActive(false);
-                    gameObject.SetActive(false);
+                    baseCanvasGroup.alpha = 0;
                 });
         
 
@@ -113,7 +115,7 @@ namespace Ryneus
                 .SetEase(Ease.InOutCubic);
 
             mainBack.gameObject.SetActive(true);
-            gameObject.SetActive(true);
+            baseCanvasGroup.alpha = 1;
         }
 
         private void Update() {

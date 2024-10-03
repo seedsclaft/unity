@@ -85,7 +85,7 @@ namespace Ryneus
                 mainThumb.gameObject.SetActive(false);
             }
             nameText?.SetText("");
-            lv?.SetText("");
+            //lv?.SetText("");
             gridKey?.SetText("");
         }
 

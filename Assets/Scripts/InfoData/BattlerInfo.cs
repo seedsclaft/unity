@@ -310,8 +310,11 @@ namespace Ryneus
             _chainSuccessCount = 0;
             _payBattleMp = 0;
             _attackedCount = 0;
+            _healCount = 0;
             _beCriticalCount = 0;
             _dodgeCount = 0;
+            _damagedValue = 0;
+            _turnCount = 0;
             ResetAp(true);
         }
 
@@ -944,7 +947,7 @@ namespace Ryneus
         public int CurrentHit()
         {
             int hit = 0;
-            hit += StateEffectAll(StateType.HitUp);
+            hit += StateEffectAll(StateType.HitUp) + StateEffectAll(StateType.HitUpOver);
             hit -= (int)DeBuffUpperParam(StateEffectAll(StateType.HitDown));
             return hit;
         }
@@ -952,7 +955,7 @@ namespace Ryneus
         public int CurrentEva()
         {
             int eva = 0;
-            eva += StateEffectAll(StateType.EvaUp);
+            eva += StateEffectAll(StateType.EvaUp) + StateEffectAll(StateType.EvaUpOver);
             eva -= (int)DeBuffUpperParam(StateEffectAll(StateType.EvaDown));
             return eva;
         }

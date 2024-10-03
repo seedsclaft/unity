@@ -80,6 +80,7 @@ namespace Ryneus
             if (loadSuccess == false)
             {
                 var confirmInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
+                SaveSystem.DeleteAllData();
                 confirmInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(confirmInfo);
                 return;

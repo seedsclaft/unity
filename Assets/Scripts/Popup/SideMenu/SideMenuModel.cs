@@ -9,7 +9,7 @@ namespace Ryneus
 
         public void DeleteStageData()
         {
-            SaveSystem.DeleteStageData();
+            SaveSystem.DeleteAllData();
         }
     }
 }

@@ -53,9 +53,11 @@ namespace Ryneus
         CriticalRateUp = 1070,
         CriticalDamageRateUp = 1074,
         HitUp = 1080,
+        HitUpOver = 1081,
         HitDown = 1082,
         EvaUp = 1090,
         EvaDown = 1091,
+        EvaUpOver = 1092,
         DamageCutRate = 1100,
         DamageCut = 1101,
         BurnDamage = 2010, // 火傷(ダメージ固定)

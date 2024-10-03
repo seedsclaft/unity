@@ -110,6 +110,8 @@ namespace Ryneus
                 var eventData = new BattleViewEvent(CommandType.CancelSelectActor);
                 _commandData(eventData);
             });
+            targetEnemyButton.transform.parent.gameObject.SetActive(false);
+            targetActorButton.transform.parent.gameObject.SetActive(false);
             if (GameSystem.TempData.InReplay)
             {
                 new BattleReplayPresenter(this);
@@ -229,6 +231,8 @@ namespace Ryneus
         {
             battleActorList.gameObject.SetActive(true);
             battleEnemyLayer.gameObject.SetActive(true);
+            targetEnemyButton.transform.parent.gameObject.SetActive(true);
+            targetActorButton.transform.parent.gameObject.SetActive(true);
             var duration = 0.8f;
             var actorListRect = battleActorList.GetComponent<RectTransform>();
             AnimationUtility.LocalMoveToTransform(battleActorList.gameObject,
@@ -244,6 +248,16 @@ namespace Ryneus
             AnimationUtility.LocalMoveToTransform(borderRect.gameObject,
                 new Vector3(borderRect.localPosition.x,borderRect.localPosition.y,0),
                 new Vector3(borderRect.localPosition.x,borderRect.localPosition.y-480,0),
+                duration);
+            var targetEnemyRect = targetEnemyButton.transform.parent.GetComponent<RectTransform>();
+            AnimationUtility.LocalMoveToTransform(targetEnemyButton.transform.parent.gameObject,
+                new Vector3(targetEnemyRect.localPosition.x,targetEnemyRect.localPosition.y-240,0),
+                new Vector3(targetEnemyRect.localPosition.x,targetEnemyRect.localPosition.y,0),
+                duration);
+            var targetActorRect = targetActorButton.transform.parent.GetComponent<RectTransform>();
+            AnimationUtility.LocalMoveToTransform(targetActorButton.transform.parent.gameObject,
+                new Vector3(targetActorRect.localPosition.x,targetActorRect.localPosition.y-240,0),
+                new Vector3(targetActorRect.localPosition.x,targetActorRect.localPosition.y,0),
                 duration);
         }
 
@@ -546,11 +560,11 @@ namespace Ryneus
             }
         }
 
-        public void SetCurrentSkillData(SkillInfo skillInfo)
+        public void SetCurrentSkillData(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
             skillInfoComponent.gameObject.SetActive(true);
             skillInfoComponent.UpdateInfo(skillInfo);
-            var convertHelpText = skillInfo.ConvertHelpText();
+            var convertHelpText = skillInfo.ConvertHelpText(battlerInfo);
             var length = convertHelpText.Split("\n").Length;
             var height = 32 + 28 * length;
             currentSkillBg.GetComponent<RectTransform>().sizeDelta = new Vector2(480,height);

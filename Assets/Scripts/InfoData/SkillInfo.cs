@@ -142,7 +142,7 @@ namespace Ryneus
             return Master.SkillType == SkillType.Passive || Master.SkillType == SkillType.Messiah;
         }
 
-        public string ConvertHelpText()
+        public string ConvertHelpText(BattlerInfo battlerInfo = null)
         {
             var help = Master.ConvertHelpText(Master.Help);
             var regex = new Regex(@"\[.+?\]");
@@ -187,8 +187,18 @@ namespace Ryneus
             var state = FeatureDates.Find(a => a.FeatureType == FeatureType.AddState);
             if (state != null)
             {
-                var stateMaster = DataSystem.States.Find(a => (int)a.StateType == state.Param1);        
-                help = help.Replace("/s","【" + stateMaster.Name + "】" + "\n" + stateMaster.Help);
+                var stateMaster = DataSystem.States.Find(a => (int)a.StateType == state.Param1);
+                string effectText = stateMaster.Help;
+                if (battlerInfo != null)
+                {
+                    var effect = battlerInfo.GetStateEffectAll(stateMaster.StateType);
+                    effectText = effectText.Replace("\\d",effect.ToString());
+                } else
+                {
+                    var effect = state.Param3;
+                    effectText = effectText.Replace("\\d",effect.ToString());
+                }
+                help = help.Replace("/s","【" + stateMaster.Name + "】" + "\n" + effectText);
             }
             return help;
         }

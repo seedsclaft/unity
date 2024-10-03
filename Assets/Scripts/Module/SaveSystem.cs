@@ -235,7 +235,17 @@ namespace Ryneus
 			return ExistsLoadFile(_optionDataKey);
 		}
 
-		public static void DeletePlayerData(int fileId = 0)
+		public static void DeleteAllData(int fileId = 0)
+		{
+			if (_useEasySave)
+			{
+				DeletePlayerData();
+				DeleteStageData(fileId);
+				DeleteConfigData();
+			}
+		}
+
+		public static void DeletePlayerData()
 		{
 			if (_useEasySave)
 			{
@@ -248,6 +258,14 @@ namespace Ryneus
 			if (_useEasySave)
 			{
 				ES3.DeleteFile(PlayerStageDataKey(fileId));
+			}
+		}
+
+		public static void DeleteConfigData()
+		{
+			if (_useEasySave)
+			{
+				ES3.DeleteFile(_optionDataKey);
 			}
 		}
 	}

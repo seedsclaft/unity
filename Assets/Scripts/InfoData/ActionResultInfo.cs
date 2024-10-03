@@ -357,7 +357,7 @@ namespace Ryneus
             var skillData = DataSystem.FindSkill(_skillId);
             if (skillData != null && (skillData.SkillType == SkillType.Messiah || skillData.SkillType == SkillType.Awaken))
             {
-                return true;
+                //return true;
             }
             if (skillData != null && skillData.IsAbsoluteHit())
             {

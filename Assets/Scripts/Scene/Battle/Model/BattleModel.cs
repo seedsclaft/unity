@@ -1617,7 +1617,7 @@ namespace Ryneus
                     }
                     if (passiveInfo.Master.TimingOnlyCount > 0)
                     {
-                        if (checkedSkillIds.FindAll(a => a == passiveInfo.Id).Count >= passiveInfo.Master.TimingOnlyCount)
+                        if (passiveInfo.Master.TimingOnlyCount <= UsedSameTurnActionInfo(passiveInfo))
                         {
                             continue;
                         }
