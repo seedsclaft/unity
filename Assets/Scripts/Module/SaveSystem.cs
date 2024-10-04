@@ -10,135 +10,77 @@ namespace Ryneus
 {
 	public class SaveSystem : MonoBehaviour
 	{
-		private static bool _useEasySave = true;
+		private static string _gameKey = "norm";
 
-	#if !UNITY_WEBGL
+#if !UNITY_WEBGL
 		private static FileStream TempFileStream = null;
-	#endif
+#endif
 		private static readonly string debugFilePath = Application.persistentDataPath;
 		private static string SaveFilePath(string saveKey,int fileId = 0)
 		{
 			return debugFilePath + "/" + saveKey + fileId.ToString() + ".dat";
 		}
 		
-		private static readonly string _playerDataKey = "PlayerData";
-		private static readonly string _playerStageDataKey = "PlayerStageData";
+		private static readonly string _playerDataKey = _gameKey + "PlayerData";
+		private static readonly string _playerStageDataKey = _gameKey + "PlayerStageData";
 		private static string PlayerStageDataKey(int fileId)
 		{
 			return _playerStageDataKey + fileId.ToString();
 		}
-		private static readonly string _optionDataKey = "OptionData";
-		private static readonly string _replayDataKey = "ReplayData_";
+		private static readonly string _optionDataKey = _gameKey + "OptionData";
+		private static readonly string _replayDataKey = _gameKey + "ReplayData_";
 		private static string ReplayDataKey(string stageKey)
 		{
 			return _replayDataKey + stageKey;
 		}
 
-		private static void SaveInfo<T>(string path,T userSaveInfo)
-		{
-			/*
-	#if UNITY_WEBGL 
-			//	バイナリ形式でシリアル化
-			var TempBinaryFormatter = new BinaryFormatter();
-			var memoryStream = new MemoryStream();
-			TempBinaryFormatter.Serialize (memoryStream,userSaveInfo);
-			var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
-			PlayerPrefs.SetString(path, saveData);
-	#elif UNITY_STANDALONE_WIN
-			var TempBinaryFormatter = new BinaryFormatter();
-			var memoryStream = new MemoryStream();
-			TempBinaryFormatter.Serialize (memoryStream,userSaveInfo);
-			var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
-			StreamWriter Stm_Writer = new StreamWriter(path,false);
-			Stm_Writer.Write(saveData);
-			Stm_Writer.Flush();
-			Stm_Writer.Close();
-	#else
-			try
-			{
-				//	バイナリ形式でシリアル化
-				var	TempBinaryFormatter = new BinaryFormatter();
-				//	指定したパスにファイルを作成
-				TempFileStream = File.Create(path);
-				//	指定したオブジェクトを上で作成したストリームにシリアル化する
-				TempBinaryFormatter.Serialize(TempFileStream, userSaveInfo);
-			}
-			finally
-			{
-				//	ファイル操作には明示的な破棄が必要です。Closeを忘れないように。
-				if( TempFileStream != null )
-				{
-					TempFileStream.Close();
-				}
-			}
-	#endif
-	*/
-		}
-
 		private static void SaveFile<T>(string key,T data)
 		{
-			if (_useEasySave)
-			{
-				var TempBinaryFormatter = new BinaryFormatter();
-				var memoryStream = new MemoryStream();
-				TempBinaryFormatter.Serialize (memoryStream,data);
-				var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
-				ES3.Save(key,saveData,key);
-			} else
-			{
-#if UNITY_ANDROID || UNITY_STANDALONE_WIN
-				SaveInfo(SaveFilePath(key),data);
-#elif UNITY_WEBGL 
-				SaveInfo(key,data);
-#endif
-			}
+			var TempBinaryFormatter = new BinaryFormatter();
+			var memoryStream = new MemoryStream();
+			TempBinaryFormatter.Serialize (memoryStream,data);
+			var saveData = Convert.ToBase64String (memoryStream.GetBuffer());
+			ES3.Save(key,saveData,key);
 		}
 
 		private static T LoadFile<T>(string key,Action<T> successAction)
 		{
-			if (_useEasySave)
+			try
 			{
-				try
-				{
-					var data = ES3.Load<string>(key,key);
-					var bytes = Convert.FromBase64String(data);
-					var	TempBinaryFormatter = new BinaryFormatter();
-					var memoryStream = new MemoryStream(bytes);
-					var saveData = (T)TempBinaryFormatter.Deserialize(memoryStream);
-					successAction(saveData);
-					return saveData;
-				} catch(Exception e)
-				{
-					Debug.LogException(e);
-				} finally 
-				{
-				}
+				var data = ES3.Load<string>(key,key);
+				var bytes = Convert.FromBase64String(data);
+				var	TempBinaryFormatter = new BinaryFormatter();
+				var memoryStream = new MemoryStream(bytes);
+				var saveData = (T)TempBinaryFormatter.Deserialize(memoryStream);
+				successAction(saveData);
+				return saveData;
+			} catch(Exception e)
+			{
+				Debug.LogException(e);
+			} finally 
+			{
 			}
 			return default;
 		}
 
 		private static async UniTask<SaveBattleInfo> LoadFileAsync(string key)
 		{
-			if (_useEasySave)
+			try
 			{
-				try
-				{
-					var data = ES3.Load<string>(key,key);
-					var bytes = Convert.FromBase64String(data);
-					var	TempBinaryFormatter = new BinaryFormatter();
-					var memoryStream = new MemoryStream(bytes);
-					var saveData = (SaveBattleInfo)TempBinaryFormatter.Deserialize(memoryStream);
-					await UniTask.WaitUntil(() => saveData != null);
-					return saveData;
-				} catch(Exception e)
-				{
-					Debug.LogException(e);
-					return null;
-				} finally 
-				{
-				}
+				var data = ES3.Load<string>(key,key);
+				var bytes = Convert.FromBase64String(data);
+				var	TempBinaryFormatter = new BinaryFormatter();
+				var memoryStream = new MemoryStream(bytes);
+				var saveData = (SaveBattleInfo)TempBinaryFormatter.Deserialize(memoryStream);
+				await UniTask.WaitUntil(() => saveData != null);
+				return saveData;
+			} catch(Exception e)
+			{
+				Debug.LogException(e);
+				return null;
+			} finally 
+			{
 			}
-			return default;
 		}
 
 		public static void SavePlayerInfo(SaveInfo userSaveInfo = null)
@@ -179,11 +121,7 @@ namespace Ryneus
 
 		private static bool ExistsLoadFile(string key)
 		{
-			if (_useEasySave)
-			{
-				return ES3.FileExists(key);
-			}
-			return false;
+			return ES3.FileExists(key);
 		}
 
 		public static bool ExistsLoadPlayerFile()
@@ -211,16 +149,10 @@ namespace Ryneus
 			return ExistsLoadFile(PlayerStageDataKey(fileId));
 		}
 
-		public static void SaveConfigStart(SaveConfigInfo userSaveInfo = null)
+		public static void SaveConfigStart(SaveConfigInfo userSaveInfo)
 		{
-			//	保存情報
-			if( userSaveInfo == null )
-			{
-				userSaveInfo = new SaveConfigInfo();
-			}
 			SaveFile(_optionDataKey,userSaveInfo);
 		}
-
 
 		public static void LoadConfigStart()
 		{
@@ -237,36 +169,24 @@ namespace Ryneus
 
 		public static void DeleteAllData(int fileId = 0)
 		{
-			if (_useEasySave)
-			{
-				DeletePlayerData();
-				DeleteStageData(fileId);
-				DeleteConfigData();
-			}
-		}
+			DeletePlayerData();
+			DeleteStageData(fileId);
+			DeleteConfigData();
+	}
 
 		public static void DeletePlayerData()
 		{
-			if (_useEasySave)
-			{
-				ES3.DeleteFile(_playerDataKey);
-			}
+			ES3.DeleteFile(_playerDataKey);
 		}
 
 		public static void DeleteStageData(int fileId = 0)
 		{
-			if (_useEasySave)
-			{
-				ES3.DeleteFile(PlayerStageDataKey(fileId));
-			}
+			ES3.DeleteFile(PlayerStageDataKey(fileId));
 		}
 
 		public static void DeleteConfigData()
 		{
-			if (_useEasySave)
-			{
-				ES3.DeleteFile(_optionDataKey);
-			}
+			ES3.DeleteFile(_optionDataKey);
 		}
 	}
 }

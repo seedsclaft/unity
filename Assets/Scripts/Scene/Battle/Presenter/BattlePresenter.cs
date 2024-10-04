@@ -384,7 +384,7 @@ namespace Ryneus
             {
                 autoSkillId = 20010;
             }
-            LogOutput.Log(autoSkillId);
+            //LogOutput.Log(autoSkillId);
             MakeActionInfo(currentBattler,autoSkillId,targetIndex);
         }
 
@@ -457,6 +457,7 @@ namespace Ryneus
             MakeActionResultInfo(indexList);
             // 行動変化対応のため再取得
             actionInfo = _model.CurrentActionInfo;
+            //LogOutput.Log(actionInfo.Master.Id + "行動");
             if (actionInfo != null)
             {
                 // 待機か戦闘不能なら何もしない

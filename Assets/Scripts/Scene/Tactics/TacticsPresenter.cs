@@ -137,7 +137,7 @@ namespace Ryneus
                 return;
             }
             _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
-            Debug.Log(viewEvent.commandType);
+            //Debug.Log(viewEvent.commandType);
             if (_model.CheckTutorial(viewEvent))
             {
                 _model.SeekTutorial();

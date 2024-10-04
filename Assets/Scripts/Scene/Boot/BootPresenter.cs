@@ -47,7 +47,8 @@ namespace Ryneus
             {
                 _model.InitSaveInfo();
                 _view.CommandGotoSceneChange(Scene.Battle);
-            } else{
+            } else
+            {
                 _view.SetEvent((type) => UpdateCommand(type));
             }
             _busy = false;

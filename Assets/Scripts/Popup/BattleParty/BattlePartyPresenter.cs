@@ -42,7 +42,7 @@ namespace Ryneus
             {
                 return;
             }
-            LogOutput.Log(viewEvent.commandType);
+            //LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectSideMenu:

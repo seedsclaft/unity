@@ -42,7 +42,7 @@ namespace Ryneus
         public static void ChangeBGMMute(bool bgmMute)
         {
             SoundManager.Instance.BGMMute = bgmMute;
-            SoundManager.Instance.UpdateBgmMute();
+            SoundManager.Instance.UpdateBgmVolume();
         }
         
         public static void ChangeSEValue(float seVolume)

@@ -18,11 +18,11 @@ namespace Ryneus
         private List<AudioSource> _staticSe;
         private List<SEData> _seMaster;
         
-        [SerializeField] private List<IntroLoopAudio> _bgmTracks;
-        public IntroLoopAudio BgmTrack => _bgmTracks[_mainTrack];
-        private int _mainTrack = 0;
-        public IntroLoopAudio BgmSubTrack => _bgmTracks[_subTrack];
-        private int _subTrack = 1;
+        [SerializeField] private List<SoundIntroLoop> _bgmTracks;
+        public SoundIntroLoop BgmTrack => _bgmTracks[(int)_mainTrack];
+        public SoundIntroLoop BgmSubTrack => _bgmTracks[(int)_subTrack];
+        private AudioTrackType _mainTrack = AudioTrackType.Main;
+        private AudioTrackType _subTrack = AudioTrackType.Sub;
         
         private bool _crossFadeMode = false;
         public bool CrossFadeMode => _crossFadeMode;
@@ -42,7 +42,7 @@ namespace Ryneus
                 var audioSource = gameObject.AddComponent<AudioSource>();
                 _se.Add(audioSource);
             }
-            _mainTrack = 0;
+            _mainTrack = AudioTrackType.Main;
         }
 
         void LoadDefaultSound()
@@ -89,20 +89,15 @@ namespace Ryneus
 
         public void UpdateBgmVolume()
         {
-            var volume = BGMVolume * _lastBgmVolume;
-            var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
-            playingTrack.ChangeVolume(volume);
-        }
-
-        public void UpdateBgmMute()
-        {
             if (BGMMute)
             {
                 var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
                 playingTrack.ChangeVolume(0);
             } else
             {
-                UpdateBgmVolume();
+                var volume = BGMVolume * _lastBgmVolume;
+                var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
+                playingTrack.ChangeVolume(volume);
             }
         }
 
@@ -137,7 +132,7 @@ namespace Ryneus
             
             var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
             playingTrack.FadeVolume(0,1);
-            UpdateBgmMute();
+            UpdateBgmVolume();
             playTrack.Play();
             playTrack.FadeVolume(1,1);
             _crossFadeMode = false;
@@ -153,7 +148,7 @@ namespace Ryneus
             _lastBgmVolume = volume;
             _lastPlayAudio = clip[0].name;
 
-            UpdateBgmMute();
+            UpdateBgmVolume();
             BgmTrack.Play();
             BgmSubTrack.Stop();
             BgmSubTrack.SetSoloClip(clip[1]);
@@ -173,7 +168,7 @@ namespace Ryneus
 
             _crossFadeTrackNo = _crossFadeTrackNo == 0 ? 1 : 0 ;
             playingTrack.FadeVolume(0,1);
-            UpdateBgmMute();
+            UpdateBgmVolume();
             playTrack.Play(timeStamp);
             var playVolume = BGMVolume * _lastBgmVolume;
             if (BGMMute)
@@ -235,7 +230,6 @@ namespace Ryneus
 
         public void AllPause()
         {
-
             foreach (var data in _staticSe)
             {
                 if (data.isPlaying)
@@ -247,7 +241,6 @@ namespace Ryneus
 
         public void AllUnPause()
         {
-
             foreach (var data in _staticSe)
             {
                 if (data.isPlaying)
@@ -256,5 +249,11 @@ namespace Ryneus
                 }
             }
         }
+    }
+
+    public enum AudioTrackType
+    {
+        Main = 0,
+        Sub = 1
     }
 }

@@ -173,9 +173,27 @@ namespace Ryneus
                     _model.ResetTargetIndexList(actionInfo);
                     MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
                     // 再取得
-                    actionInfo = _model.CurrentActionInfo;
-                    RepeatAnimationSkill(actionInfo);
-                    return;
+                    if (actionInfo == _model.CurrentActionInfo)
+                    {
+                        actionInfo = _model.CurrentActionInfo;
+                        //LogOutput.Log(actionInfo.Master.Id + "再行動");
+                        RepeatAnimationSkill(actionInfo);
+                        return;
+                    } else
+                    {
+                        // 割り込みでアクションが変わった場合
+                        actionInfo = _model.CurrentActionInfo;
+                        //LogOutput.Log(actionInfo.Master.Id + "割り込み行動");
+                        // 待機か戦闘不能なら何もしない
+                        if (actionInfo.IsWait() || !_model.CurrentActionBattler.IsAlive())
+                        {
+                            StartWaitCommand(actionInfo);
+                        } else
+                        {
+                            StartActionInfoAnimation(actionInfo);
+                        }
+                        return;
+                    }
                 }
             }
             _view.ClearCurrentSkillData();

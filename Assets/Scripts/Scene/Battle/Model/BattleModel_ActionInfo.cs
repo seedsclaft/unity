@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine.EventSystems;
 
 namespace Ryneus
@@ -27,9 +28,11 @@ namespace Ryneus
         {
             if (IsInterrupt)
             {
+                //LogOutput.Log(actionInfo.Master.Id + "を割り込み");
                 _actionInfos.Insert(0,actionInfo);
             } else
             {
+                //LogOutput.Log(actionInfo.Master.Id + "を後に追加");
                 _actionInfos.Add(actionInfo);
             }
             _currentActionInfo = _actionInfos[0];
