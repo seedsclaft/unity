@@ -6,6 +6,31 @@ namespace Ryneus
 {
     public partial class BattleModel : BaseModel
     {
+        private Dictionary<int,ICheckTrigger> _checkTriggerDict = new ();
+        public void InitializeCheckTrigger()
+        {
+            _checkTriggerDict[1] = new CheckTriggerHp();
+            _checkTriggerDict[2] = new CheckTriggerUnitHp();
+            _checkTriggerDict[3] = new CheckTriggerMp();
+            _checkTriggerDict[4] = new CheckTriggerExistAlive();
+            _checkTriggerDict[5] = new CheckTriggerLineIndex();
+            _checkTriggerDict[6] = new CheckTriggerState();
+            _checkTriggerDict[7] = new CheckTriggerAwaken();
+            _checkTriggerDict[8] = new CheckTriggerMemberCount();
+            _checkTriggerDict[9] = new CheckTriggerTurnCount();
+            _checkTriggerDict[10] = new CheckTriggerPercent();
+            _checkTriggerDict[11] = new CheckTriggerUseCount();
+            _checkTriggerDict[12] = new CheckTriggerActionInfo();
+            
+            _checkTriggerDict[13] = new CheckTriggerKind();
+            _checkTriggerDict[14] = new CheckTriggerStatus();
+            _checkTriggerDict[15] = new CheckTriggerAttackAction();
+
+            _checkTriggerDict[17] = new CheckTriggerBattleCount();
+
+            _checkTriggerDict[19] = new CheckTriggerAttackedAction();
+        }
+        
         private List<SkillData.TriggerData> ConvertTriggerDates(List<SkillTriggerData> skillTriggerDates)
         {
             var triggerDates = new List<SkillData.TriggerData>();

@@ -168,13 +168,20 @@ namespace Ryneus
                     case GetItemType.StatusUp:
                         break;
                     case GetItemType.AddActor:
-                    case GetItemType.SelectAddActor:
                         getItemInfo.SetGetFlag(true);
                         getItemInfo.SetResultParam(getItemInfo.Param1);
                         AddPlayerInfoActorSkillId(getItemInfo.Param1);
                         // キャラ加入
                         var actorData = DataSystem.FindActor(getItemInfo.Param1);
                         resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData.Name));
+                        _resultInfos.Add(resultInfo);
+                        break;
+                    case GetItemType.SelectAddActor:
+                        getItemInfo.SetGetFlag(true);
+                        AddPlayerInfoActorSkillId(getItemInfo.ResultParam);
+                        // キャラ加入
+                        var actorData2 = DataSystem.FindActor(getItemInfo.ResultParam);
+                        resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData2.Name));
                         _resultInfos.Add(resultInfo);
                         break;
                     case GetItemType.BattleScoreBonus:

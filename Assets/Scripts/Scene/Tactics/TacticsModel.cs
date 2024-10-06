@@ -147,12 +147,13 @@ namespace Ryneus
 
         public List<SkillInfo> ShopMagicSkillInfos(List<GetItemInfo> getItemInfos)
         {
+            var alcanaIdList = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             var skillInfos = new List<SkillInfo>();
             foreach (var getItemInfo in getItemInfos)
             {
                 var skillInfo = new SkillInfo(getItemInfo.Param1);
                 var cost = ShopLearningCost(skillInfo);
-                skillInfo.SetEnable(cost <= (Currency - LearningShopMagicCost()) && !_shopSelectIndexes.Contains(skillInfo.Id));
+                skillInfo.SetEnable(cost <= (Currency - LearningShopMagicCost()) && !_shopSelectIndexes.Contains(skillInfo.Id) && !alcanaIdList.Contains(skillInfo.Id));
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);
             }

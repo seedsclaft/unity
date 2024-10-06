@@ -139,7 +139,7 @@ namespace Ryneus
                 statusViewInfo.SetStartIndex(startIndex);
             }
             statusViewInfo.SetDisplayDecideButton(addActor);
-            statusViewInfo.SetDisplayCharacterList(!addActor);
+            statusViewInfo.SetDisplayCharacterList(true);
             statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
             statusViewInfo.SetDisplayBackButton(backButton);
             _view.CommandCallStatus(statusViewInfo);

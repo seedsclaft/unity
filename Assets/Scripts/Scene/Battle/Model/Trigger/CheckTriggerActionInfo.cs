@@ -49,7 +49,7 @@ namespace Ryneus
                 case TriggerType.SelfAbnormalAction:
                     if (battlerInfo.IsAlive())
                     {
-                        if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsHpDamageFeature())
+                        if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsAddAbnormalFeature())
                         {
                             var results = actionInfo.ActionResults.FindAll(a => a.AddedStates.Find(b => b.Master.Abnormal) != null && a.TargetIndex == battlerInfo.Index);
                             if (results.Count > 0)
@@ -62,7 +62,7 @@ namespace Ryneus
                 case TriggerType.SelfPassiveAction:
                     if (battlerInfo.IsAlive())
                     {
-                        if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.TriggeredSkill)
+                        if (actionInfo != null && actionInfo.Master.SkillType == SkillType.Passive && actionInfo.ActionResults != null && actionInfo.TriggeredSkill)
                         {
                             // 自分で発動したパッシブは除く
                             var results = actionInfo.ActionResults.FindAll(a => a.TargetIndex == battlerInfo.Index && a.SubjectIndex != battlerInfo.Index);

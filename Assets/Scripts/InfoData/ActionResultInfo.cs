@@ -1332,7 +1332,8 @@ namespace Ryneus
                     if ((count-1) <= 0)
                     {
                         _removedStates.Add(battlerInfo.GetStateInfo(stateType));
-                    } else{
+                    } else
+                    {
                         _displayStates.Add(battlerInfo.GetStateInfo(stateType));
                     }
                 }

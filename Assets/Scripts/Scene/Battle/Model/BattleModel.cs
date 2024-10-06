@@ -13,7 +13,6 @@ namespace Ryneus
             InitializeCheckTrigger();
         }
         private BattleSceneInfo _sceneParam;
-        public BattleSceneInfo SceneParam => _sceneParam;
         private int _actionIndex = 0;
         private int _turnCount = 1;
         public int TurnCount => _turnCount;
@@ -29,19 +28,10 @@ namespace Ryneus
         private Dictionary<int,BattleRecord> _battleRecords = new ();
         public Dictionary<int,BattleRecord> BattleRecords => _battleRecords;
 
-        private UnitInfo _party;
-        private UnitInfo _troop;
+        private UnitInfo _party = null;
+        private UnitInfo _troop = null;
 
 
-        // 行動したバトラー
-        private BattlerInfo _currentTurnBattler = null;
-        public BattlerInfo CurrentTurnBattler => _currentTurnBattler;
-        public void SetCurrentTurnBattler(BattlerInfo currentTurnBattler)
-        {
-            _currentTurnBattler = currentTurnBattler;
-        }
-        private BattlerInfo _currentBattler = null;
-        public BattlerInfo CurrentBattler => _currentBattler;
         private Dictionary<int,List<ActionInfo>> _turnActionInfos = new ();
 
         public void AddTurnActionInfos(ActionInfo actionInfo,bool Interrupt)
@@ -58,10 +48,12 @@ namespace Ryneus
                 _turnActionInfos[_turnCount].Add(actionInfo);
             }
         }
+
         private bool UsedTurnSameActionInfo(SkillInfo skillInfo,int subjectIndex)
         {
             return _turnActionInfos.ContainsKey(_turnCount) && _turnActionInfos[_turnCount].Find(a => a.Master.Id == skillInfo.Id && a.SubjectIndex == subjectIndex) != null;
         }
+
         private int UsedSameTurnActionInfo(SkillInfo skillInfo)
         {
             if (_turnActionInfos.ContainsKey(_turnCount))
@@ -74,31 +66,8 @@ namespace Ryneus
             }
             return 0; 
         }
+
         private Dictionary<int,List<int>> _passiveSkillInfos = new ();
-        private Dictionary<int,ICheckTrigger> _checkTriggerDict = new ();
-        public void InitializeCheckTrigger()
-        {
-            _checkTriggerDict[1] = new CheckTriggerHp();
-            _checkTriggerDict[2] = new CheckTriggerUnitHp();
-            _checkTriggerDict[3] = new CheckTriggerMp();
-            _checkTriggerDict[4] = new CheckTriggerExistAlive();
-            _checkTriggerDict[5] = new CheckTriggerLineIndex();
-            _checkTriggerDict[6] = new CheckTriggerState();
-            _checkTriggerDict[7] = new CheckTriggerAwaken();
-            _checkTriggerDict[8] = new CheckTriggerMemberCount();
-            _checkTriggerDict[9] = new CheckTriggerTurnCount();
-            _checkTriggerDict[10] = new CheckTriggerPercent();
-            _checkTriggerDict[11] = new CheckTriggerUseCount();
-            _checkTriggerDict[12] = new CheckTriggerActionInfo();
-            
-            _checkTriggerDict[13] = new CheckTriggerKind();
-            _checkTriggerDict[14] = new CheckTriggerStatus();
-            _checkTriggerDict[15] = new CheckTriggerAttackAction();
-
-            _checkTriggerDict[17] = new CheckTriggerBattleCount();
-
-            _checkTriggerDict[19] = new CheckTriggerAttackedAction();
-        }
 
         public UniTask<List<AudioClip>> GetBattleBgm()
         {
@@ -123,8 +92,8 @@ namespace Ryneus
             _actionIndex = 0;
             _battlers.Clear();
             _battleRecords.Clear();
-            var battleMembers = _sceneParam.ActorInfos;
-            foreach (var actorInfo in battleMembers)
+            var actorInfos = _sceneParam.ActorInfos;
+            foreach (var actorInfo in actorInfos)
             {
                 var battlerInfo = new BattlerInfo(actorInfo,actorInfo.BattleIndex);
                 _battlers.Add(battlerInfo);
@@ -196,7 +165,7 @@ namespace Ryneus
                     }
                 }
             }
-            MakeActionBattler();
+            CheckApCurrentBattler();
             return removeStateList;
         }
 
@@ -228,7 +197,8 @@ namespace Ryneus
 
         public void AssignWaitBattler()
         {
-            if (_currentTurnBattler != null && _currentTurnBattler.IsActor)
+            /*
+            if (_firstActionBattler != null && _firstActionBattler.IsActor)
             {
                 var waitBattlerIndex = _party.AliveBattlerInfos.FindIndex(a => a.IsState(StateType.Wait));
                 if (waitBattlerIndex > -1)
@@ -237,6 +207,7 @@ namespace Ryneus
                     _party.AliveBattlerInfos[waitBattlerIndex].EraseStateInfo(StateType.Wait);
                 }
             }
+            */
         }
 
         public void RemoveOneMemberWaitBattlers()
@@ -259,11 +230,6 @@ namespace Ryneus
             }
         }
 
-        public void MakeActionBattler()
-        {
-            FieldBattlerInfos().Sort((a,b) => (int)a.Ap - (int)b.Ap);
-            _currentBattler = FieldBattlerInfos().Find(a => a.Ap <= 0);
-        }
 
         public void SetActionBattler(int targetIndex)
         {
@@ -793,20 +759,6 @@ namespace Ryneus
             }
         }
 
-        public void SetActionInfo(ActionInfo actionInfo)
-        {
-            var subject = GetBattlerInfo(actionInfo.SubjectIndex);
-            //int MpCost = CalcMpCost(subject,actionInfo.Master.CountTurn);
-            //actionInfo.SetMpCost(MpCost);
-            int HpCost = CalcHpCost(actionInfo);
-            actionInfo.SetHpCost(HpCost);
-
-            //var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
-            var repeatTime = CalcRepeatTime(subject,actionInfo);
-            //repeatTime += PrismRepeatTime(subject,actionInfo);
-            actionInfo.SetRepeatTime(repeatTime);
-            actionInfo.SetBaseRepeatTime(repeatTime);
-        }
 
         // indexListにActionを使ったときのリザルトを生成
         public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
@@ -815,6 +767,7 @@ namespace Ryneus
             {
                 return;
             }
+            actionInfo.SetCandidateTargetIndexList(indexList);
             actionInfo.SetRepeatTime(actionInfo.RepeatTime - 1);
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             // ターゲットの生死判定
@@ -954,23 +907,6 @@ namespace Ryneus
                 scopeType = (ScopeType)changeScopeFeature.FeatureDates[0].Param3;
             }
             return scopeType;
-        }
-
-        public void MakeCurseActionResults(ActionInfo actionInfo,List<int> indexList)
-        {
-            var actionResultInfos = actionInfo.ActionResults;
-            var beforeCurseIndex = 0;
-            for (int i = 0;i < actionResultInfos.Count;i++)
-            {
-                if (actionResultInfos[i].CursedDamage == true)
-                {
-                    beforeCurseIndex = i;
-                }
-            }
-            
-            for (int i = 0; i < indexList.Count;i++)
-            {
-            }
         }
 
         public List<MakerEffectData.SoundTimings> SkillActionSoundTimings(string animationName)
@@ -1271,8 +1207,8 @@ namespace Ryneus
 
         public List<StateInfo> UpdateTurn()
         {
-            var result = _currentTurnBattler.UpdateState(RemovalTiming.UpdateTurn);
-            _currentTurnBattler.TurnEnd();
+            var result = _firstActionBattler.UpdateState(RemovalTiming.UpdateTurn);
+            _firstActionBattler.TurnEnd();
             return result;
         }
 
@@ -1397,16 +1333,17 @@ namespace Ryneus
 
         public List<ActionResultInfo> CheckRegenerate(ActionInfo actionInfo)
         {
+            var firstActionBattler = _firstActionBattler;
             var actionResultInfos = new List<ActionResultInfo>();
-            var RegenerateHpValue = _currentTurnBattler.RegenerateHpValue();
-            if (RegenerateHpValue > 0)
+            var regenerateHp = firstActionBattler.RegenerateHpValue();
+            if (regenerateHp > 0)
             {
                 var featureData = new SkillData.FeatureData
                 {
                     FeatureType = FeatureType.HpHeal,
-                    Param1 = RegenerateHpValue
+                    Param1 = regenerateHp
                 };
-                var actionResultInfo = new ActionResultInfo(GetBattlerInfo(_currentTurnBattler.Index),GetBattlerInfo(_currentTurnBattler.Index),new List<SkillData.FeatureData>(){featureData},-1);
+                var actionResultInfo = new ActionResultInfo(firstActionBattler,firstActionBattler,new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);
             }
             actionResultInfos.AddRange(AfterHealActionResults());
@@ -1419,21 +1356,22 @@ namespace Ryneus
 
         private List<ActionResultInfo> AfterHealActionResults()
         {
+            var firstActionBattler = _firstActionBattler;
             var afterHealResults = new List<ActionResultInfo>();
-            var afterSkillInfo = _currentTurnBattler.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
-            if (_currentTurnBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
+            var afterSkillInfo = firstActionBattler.Skills.Find(a => a.FeatureDates.Find(b => b.FeatureType == FeatureType.AddState && (StateType)b.Param1 == StateType.AfterHeal) != null);
+            if (firstActionBattler.IsState(StateType.AfterHeal) && afterSkillInfo != null)
             {
-                var stateInfo = _currentTurnBattler.GetStateInfo(StateType.AfterHeal);
+                var stateInfo = firstActionBattler.GetStateInfo(StateType.AfterHeal);
                 var skillInfo = new SkillInfo(afterSkillInfo.Id);
-                var actionInfo = MakeActionInfo(_currentTurnBattler,skillInfo,false,false);
+                var actionInfo = MakeActionInfo(firstActionBattler,skillInfo,false,false);
                 
                 if (actionInfo != null)
                 {
-                    var party = _currentTurnBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var party = firstActionBattler.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
                     var targetIndexes = new List<int>();
                     foreach (var member in party)
                     {
-                        if (_currentTurnBattler.Index != member.Index)
+                        if (firstActionBattler.Index != member.Index)
                         {
                             targetIndexes.Add(member.Index);
                         }   
@@ -1496,8 +1434,9 @@ namespace Ryneus
 
         public List<ActionResultInfo> CheckSlipDamage()
         {
+            var firstActionBattler = _firstActionBattler;
             var actionResultInfos = new List<ActionResultInfo>();
-            var slipDamage = _currentTurnBattler.SlipDamage();
+            var slipDamage = firstActionBattler.SlipDamage();
             if (slipDamage > 0)
             {
                 var featureData = new SkillData.FeatureData
@@ -1505,7 +1444,7 @@ namespace Ryneus
                     FeatureType = FeatureType.HpSlipDamage,
                     Param1 = slipDamage
                 };
-                var actionResultInfo = new ActionResultInfo(GetBattlerInfo(_currentTurnBattler.Index),GetBattlerInfo(_currentTurnBattler.Index),new List<SkillData.FeatureData>(){featureData},-1);
+                var actionResultInfo = new ActionResultInfo(firstActionBattler,firstActionBattler,new List<SkillData.FeatureData>(){featureData},-1);
                 actionResultInfos.Add(actionResultInfo);
             }
             return actionResultInfos;
@@ -1562,7 +1501,7 @@ namespace Ryneus
                             {
                                 continue;
                             }
-                            SetActionInfo(makeActionInfo);
+                            SetActionInfoParameter(makeActionInfo);
                             MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0],counterSubjectIndex,actionInfo,actionResultInfos));
                             AddActionInfo(makeActionInfo,IsInterrupt);
                         }
@@ -1713,7 +1652,7 @@ namespace Ryneus
                 }
                 selectIndex = selectIndexList[0];
             }
-            SetActionInfo(makeActionInfo);
+            SetActionInfoParameter(makeActionInfo);
             MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndex,counterSubjectIndex,actionInfo,actionResultInfos));
             AddActionInfo(makeActionInfo,IsInterrupt);
             passiveInfo.GainUseCount();

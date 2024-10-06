@@ -101,7 +101,7 @@ namespace Ryneus
             GameSystem.ConfigData.BattleAuto = battleAuto;
         }
 
-        public static List<float> SpeedList = new List<float>(){0,0.75f,1,2};
+        public static List<float> SpeedList = new List<float>(){0,1f,2f,3f};
         public static void SetBattleSpeed(float battleSpeed)
         {
             GameSystem.ConfigData.BattleSpeed = battleSpeed;
@@ -110,7 +110,8 @@ namespace Ryneus
         {
             var current = SpeedList.FindIndex(a => a == GameSystem.ConfigData.BattleSpeed);
             var next = current + plus;
-            if (next < 0){
+            if (next < 0)
+            {
                 GameSystem.ConfigData.BattleSpeed = SpeedList[SpeedList.Count-1];
             } else
             if (next > SpeedList.Count-1)

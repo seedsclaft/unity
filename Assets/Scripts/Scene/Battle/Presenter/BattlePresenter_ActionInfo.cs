@@ -98,7 +98,7 @@ namespace Ryneus
             var selfAnimation = ResourceSystem.LoadResourceEffect("MAGICALxSPIRAL/WHead1");
             _view.StartAnimationBeforeSkill(actionInfo.SubjectIndex,selfAnimation);
             var speed = GameSystem.ConfigData.BattleSpeed;
-            await UniTask.DelayFrame((int)(16/speed));
+            await UniTask.DelayFrame((int)(24/speed));
             if (actionInfo.TriggeredSkill && actionInfo.Master.SkillType != SkillType.Messiah && actionInfo.Master.SkillType != SkillType.Awaken)
             {
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
@@ -151,87 +151,6 @@ namespace Ryneus
             CommandEndAnimation();
         }
         
-        /// <summary>
-        /// ActionInfoのアニメーション終了処理
-        /// </summary>
-        /// <param name="actionInfo"></param>
-        private void CommandEndAnimation()
-        {
-            var actionInfo = _model.CurrentActionInfo;
-            if (actionInfo != null)
-            {
-                // ダメージなどを適用
-                _model.ExecCurrentAction(actionInfo,true);
-                _model.CheckTriggerActiveInfos(TriggerTiming.HpDamaged,actionInfo,actionInfo.ActionResults,true);
-                _model.CheckTriggerPassiveInfos(BattleUtility.HpDamagedTriggerTimings(),actionInfo,actionInfo.ActionResults);
-            
-                StartDeathAnimation(actionInfo.ActionResults);
-                StartAliveAnimation(actionInfo.ActionResults);
-                // 繰り返しがある場合
-                if (actionInfo.RepeatTime > 0)
-                {
-                    _model.ResetTargetIndexList(actionInfo);
-                    MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
-                    // 再取得
-                    if (actionInfo == _model.CurrentActionInfo)
-                    {
-                        actionInfo = _model.CurrentActionInfo;
-                        //LogOutput.Log(actionInfo.Master.Id + "再行動");
-                        RepeatAnimationSkill(actionInfo);
-                        return;
-                    } else
-                    {
-                        // 割り込みでアクションが変わった場合
-                        actionInfo = _model.CurrentActionInfo;
-                        //LogOutput.Log(actionInfo.Master.Id + "割り込み行動");
-                        // 待機か戦闘不能なら何もしない
-                        if (actionInfo.IsWait() || !_model.CurrentActionBattler.IsAlive())
-                        {
-                            StartWaitCommand(actionInfo);
-                        } else
-                        {
-                            StartActionInfoAnimation(actionInfo);
-                        }
-                        return;
-                    }
-                }
-            }
-            _view.ClearCurrentSkillData();
-            // スリップダメージ
-            bool isTriggeredSkill = actionInfo.TriggeredSkill;
-            if (_triggerAfterChecked == false && _slipDamageChecked == false && isTriggeredSkill == false)
-            {
-                if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
-                {
-                    _slipDamageChecked = true;
-                    var slipResult = _model.CheckSlipDamage();
-                    if (slipResult.Count > 0)
-                    {
-                        StartAnimationSlipDamage(slipResult);
-                        return;
-                    }
-                }
-            }
-            
-            // regenerate
-            if (_triggerAfterChecked == false && _regenerateChecked == false && isTriggeredSkill == false)
-            {
-                if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
-                {
-                    _regenerateChecked = true;
-                    if (_model.CurrentTurnBattler.IsAlive())
-                    {
-                        var regenerateResult = _model.CheckRegenerate(actionInfo);
-                        if (regenerateResult.Count > 0)
-                        {
-                            StartAnimationRegenerate(regenerateResult);
-                            return;
-                        }
-                    }
-                }
-            }
-            EndTurn();
-        }
 
         private async void RepeatAnimationSkill(ActionInfo actionInfo)
         {           
@@ -274,10 +193,10 @@ namespace Ryneus
             bool isTriggeredSkill = actionInfo.TriggeredSkill;
             if (_triggerAfterChecked == false && _regenerateChecked == false && isTriggeredSkill == false)
             {
-                if (_model.CurrentTurnBattler != null && actionInfo.SubjectIndex == _model.CurrentTurnBattler.Index)
+                if (_model.FirstActionBattler != null && actionInfo.SubjectIndex == _model.FirstActionBattler.Index)
                 {
                     _regenerateChecked = true;
-                    if (_model.CurrentTurnBattler.IsAlive())
+                    if (_model.FirstActionBattler.IsAlive())
                     {
                         var regenerateResult = _model.CheckRegenerate(actionInfo);
                         if (regenerateResult.Count > 0)

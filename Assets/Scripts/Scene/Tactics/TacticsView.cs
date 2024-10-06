@@ -435,11 +435,12 @@ namespace Ryneus
             alcanaSelectList.SetData(skillInfos);
             alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => 
             {
-                if (AlcanaSelectSkillInfo() != null)
+                var skillInfo = AlcanaSelectSkillInfo();
+                if (skillInfo != null && skillInfo.Enable)
                 {
                     var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList)
                     {
-                        template = AlcanaSelectSkillInfo()
+                        template = skillInfo
                     };
                     _commandData(eventData);
                 }

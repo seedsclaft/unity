@@ -34,8 +34,8 @@ namespace Ryneus
 
         private async void StartEmitterAnimation(float speedRate)
         {
-            emitter.Play();
-
+            var emit = emitter.Play();
+            emit.speed = 0.8f;
             var time1 = 0.3f / speedRate;
             var time2 = 0.5f / speedRate;
             gameObject.SetActive(true);
@@ -45,7 +45,9 @@ namespace Ryneus
             DOTween.Sequence()
                 .Append(canvasGroup.DOFade(1,time2))
                 .SetEase(Ease.InOutCubic);
-            await UniTask.DelayFrame((int)(52 / speedRate));
+            await UniTask.DelayFrame((int)(48f / speedRate));
+            //await UniTask.WaitUntil(() => !emit.exists);
+            
             gameObject.SetActive(false);
         }
     }

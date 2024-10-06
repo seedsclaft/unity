@@ -15,45 +15,55 @@ namespace Ryneus
                 case TriggerType.TurnNum:
                     return battlerInfo.TurnCount == triggerData.Param1;
                 case TriggerType.TurnNumPer:
-                if (triggerData.Param1 == 0)
-                {
-                    return battlerInfo.TurnCount - triggerData.Param2 == 0;
-                } else
-                {
-                    return (battlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0;
-                }
+                    if (triggerData.Param1 == 0)
+                    {
+                        return battlerInfo.TurnCount - triggerData.Param2 == 0;
+                    } else
+                    {
+                        return (battlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0;
+                    }
                 case TriggerType.ActionCountPer:
-                var turns = checkTriggerInfo.Turns;
-                if (triggerData.Param1 > 0)
-                {
-                    return (turns % triggerData.Param1) - triggerData.Param2 == 0;
-                } else
-                {
-                    return turns - triggerData.Param2 == 0;
-                }
+                    var turns = checkTriggerInfo.Turns;
+                    if (triggerData.Param1 > 0)
+                    {
+                        return (turns % triggerData.Param1) - triggerData.Param2 == 0;
+                    } else
+                    {
+                        return turns - triggerData.Param2 == 0;
+                    }
                 case TriggerType.SelfTargetOnly:
                     return battlerInfo.IsAlive();
                 case TriggerType.SelfTargetNotOnly:
-                    return checkTriggerInfo.Friends.Count > 1;
-                case TriggerType.ActionInfoTurnNumPer:
-                if (checkTriggerInfo.ActionInfo != null)
-                {
-                    var actionBattlerInfo = checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex);
-                    if (triggerData.Param1 == 0)
+                /*
+                    if (checkTriggerInfo.ActionInfo != null)
                     {
-                        if (actionBattlerInfo != null && actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
+                        if (checkTriggerInfo.ActionResultInfos != null)
                         {
-                            isTrigger = true;
-                        }
-                    } else
-                    {
-                        if ((actionBattlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0)
-                        {
-                            isTrigger = true;
+                            return checkTriggerInfo.ActionResultInfos.Find(a => a.TargetIndex != battlerInfo.Index) != null;
                         }
                     }
-                }
-                break;
+                    return false;
+                    */
+                    return checkTriggerInfo.Friends.Count > 1;
+                case TriggerType.ActionInfoTurnNumPer:
+                    if (checkTriggerInfo.ActionInfo != null)
+                    {
+                        var actionBattlerInfo = checkTriggerInfo.GetBattlerInfo(checkTriggerInfo.ActionInfo.SubjectIndex);
+                        if (triggerData.Param1 == 0)
+                        {
+                            if (actionBattlerInfo != null && actionBattlerInfo.TurnCount - triggerData.Param2 == 0)
+                            {
+                                isTrigger = true;
+                            }
+                        } else
+                        {
+                            if ((actionBattlerInfo.TurnCount % triggerData.Param1) - triggerData.Param2 == 0)
+                            {
+                                isTrigger = true;
+                            }
+                        }
+                    }
+                    break;
             }
             return isTrigger;
         }

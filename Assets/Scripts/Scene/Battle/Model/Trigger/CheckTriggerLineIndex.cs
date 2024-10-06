@@ -60,9 +60,9 @@ namespace Ryneus
                     }
                     break;
                 case TriggerType.FriendMoreTargetCount:
-                    return checkTriggerInfo.FriendFrontBattlerInfos.Count >= triggerData.Param1 || checkTriggerInfo.FriendBackBattlerInfos.Count >= triggerData.Param1;
+                    return checkTriggerInfo.FriendFrontBattlerInfos.FindAll(a => a.IsAlive()).Count >= triggerData.Param1 || checkTriggerInfo.FriendBackBattlerInfos.Count >= triggerData.Param1;
                 case TriggerType.OpponentMoreTargetCount:
-                    return checkTriggerInfo.OpponentsFrontBattlerInfos.Count >= triggerData.Param1 || checkTriggerInfo.OpponentsBackBattlerInfos.Count >= triggerData.Param1;
+                    return checkTriggerInfo.OpponentsFrontBattlerInfos.FindAll(a => a.IsAlive()).Count >= triggerData.Param1 || checkTriggerInfo.OpponentsBackBattlerInfos.Count >= triggerData.Param1;
                 case TriggerType.FriendBattleIndex:
                     foreach (var friend in checkTriggerInfo.Friends)
                     {

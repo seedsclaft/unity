@@ -129,11 +129,7 @@ namespace Ryneus
             _status = statusInfo;
             _index = index;
             var skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
-            var enhanceSkills = skills.FindAll(a => a.IsEnhanceSkill());
-            foreach (var enhanceSkill in enhanceSkills)
-            {
-                var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
-            }
+
             _skills.Clear();
             var battleSkills = skills.FindAll(a => !a.IsEnhanceSkill());
             foreach (var battleSkill in battleSkills)
@@ -151,6 +147,13 @@ namespace Ryneus
                     // パッシブは作戦になくても加える
                     _skills.Add(battleSkill);
                 }
+            }
+            
+            // _skills確定後に強化する
+            var enhanceSkills = skills.FindAll(a => a.IsEnhanceSkill());
+            foreach (var enhanceSkill in enhanceSkills)
+            {
+                var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;

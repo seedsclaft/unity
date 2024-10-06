@@ -114,11 +114,17 @@ namespace Ryneus
                 .Join(skillCanvasGroup.DOFade(0,time4))
                 .SetEase(Ease.InOutCubic);
 
-            mainBack.gameObject.SetActive(true);
-            baseCanvasGroup.alpha = 1;
+            var mainBackTween = DOTween.Sequence()
+                .SetDelay(delay)
+                .OnComplete(() => 
+                {
+                    mainBack.gameObject.SetActive(true);
+                    baseCanvasGroup.alpha = 1;
+                });
         }
 
-        private void Update() {
+        private void Update() 
+        {
             if (mainBack.gameObject.activeSelf)
             {
                 var x = mainBack.uvRect.x;
