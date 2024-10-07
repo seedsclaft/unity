@@ -14,6 +14,7 @@ namespace Ryneus
         [SerializeField] private SkillTriggerDataList trigger2List = null;
         [SerializeField] private BaseList triggerCategory1List = null;
         [SerializeField] private BaseList triggerCategory2List = null;
+        [SerializeField] private OnOffButton recommendButton = null;
         [SerializeField] private Button listBlock = null;
         [SerializeField] private PopupAnimation popupAnimation = null;
         private new Action<SkillTriggerViewEvent> _commandData = null;
@@ -55,6 +56,11 @@ namespace Ryneus
             listBlock.onClick.AddListener(() => 
             {
                 CancelSelect();
+            });
+            recommendButton.OnClickAddListener(() => 
+            {
+                var eventData = new SkillTriggerViewEvent(CommandType.Recommend);
+                _commandData(eventData);
             });
             SetBaseAnimation(popupAnimation);
             new SkillTriggerPresenter(this);
@@ -310,6 +316,7 @@ namespace SkillTrigger
         DecideCategory2Select,
         CancelSelect,
         CancelCategory,
+        Recommend,
         None = 0,
     }
 }

@@ -75,24 +75,24 @@ namespace Ryneus
             battleEnemyLayer.Initialize();
             targetActorComponent.HideStatus();
             targetEnemyComponent.HideStatus();
-            SideMenuButton.SetCallHandler(() => 
+            SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
             });
-            battleSpeedButton.SetCallHandler(() => 
+            battleSpeedButton.OnClickAddListener(() => 
             {
                 if (battleSpeedButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed);
                 _commandData(eventData);
             });
-            battleSkipButton.SetCallHandler(() => 
+            battleSkipButton.OnClickAddListener(() => 
             {
                 if (battleSkipButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.SkipBattle);
                 _skipBattle = true;
                 _commandData(eventData);
             });
-            skillLogButton.SetCallHandler(() => 
+            skillLogButton.OnClickAddListener(() => 
             {
                 if (skillLogButton.gameObject.activeSelf == false) return;
                 var eventData = new BattleViewEvent(CommandType.SkillLog);
@@ -100,12 +100,12 @@ namespace Ryneus
             });
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
-            targetEnemyButton?.SetCallHandler(() => 
+            targetEnemyButton?.OnClickAddListener(() => 
             {
                 var eventData = new BattleViewEvent(CommandType.CancelSelectEnemy);
                 _commandData(eventData);
             });
-            targetActorButton?.SetCallHandler(() => 
+            targetActorButton?.OnClickAddListener(() => 
             {
                 var eventData = new BattleViewEvent(CommandType.CancelSelectActor);
                 _commandData(eventData);

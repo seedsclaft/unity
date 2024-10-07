@@ -76,7 +76,7 @@ namespace Ryneus
             rightButton.onClick.AddListener(() => OnClickRight());
             decideButton.onClick.AddListener(() => OnClickDecide());
             helpButton.onClick.AddListener(() => OnClickHelp());
-            characterListButton.SetCallHandler(() => OnClickCharacterList());
+            characterListButton.OnClickAddListener(() => OnClickCharacterList());
             commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
             commandList.SetData(commandListData);
         }

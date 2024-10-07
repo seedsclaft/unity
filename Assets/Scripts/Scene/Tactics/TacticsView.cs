@@ -65,7 +65,7 @@ namespace Ryneus
             tacticsAlcana.gameObject.SetActive(false);
             alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
 
-            SideMenuButton.SetCallHandler(() => 
+            SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
             });
@@ -93,7 +93,7 @@ namespace Ryneus
                 _commandData(eventData);
             });
             margeButton.SetText(DataSystem.GetText(19810));
-            margeButton.SetCallHandler(() => 
+            margeButton.OnClickAddListener(() => 
             {
                 var eventData = new TacticsViewEvent(CommandType.MargeRequest);
                 _commandData(eventData);

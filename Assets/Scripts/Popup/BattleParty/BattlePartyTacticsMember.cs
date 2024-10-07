@@ -25,21 +25,21 @@ namespace Ryneus
         {
             if (_levelUpHandler) return;
             _levelUpHandler = true;
-            levelUpButton.SetCallHandler(() => handler());
+            levelUpButton.OnClickAddListener(() => handler());
         }
 
         public void SetLearnMagicHandler(System.Action handler)
         {
             if (_learnMagicHandler) return;
             _learnMagicHandler = true;
-            learnMagicButton.SetCallHandler(() => handler());
+            learnMagicButton.OnClickAddListener(() => handler());
         }
 
         public void SetSkillTriggerHandler(System.Action handler)
         {
             if (_skillTriggerHandler) return;
             _skillTriggerHandler = true;
-            skillTriggerButton.SetCallHandler(() => handler());
+            skillTriggerButton.OnClickAddListener(() => handler());
         }
 
         public void UpdateViewItem()

@@ -34,7 +34,7 @@ namespace Ryneus
             characterList.Activate();
             characterList.SetInputCallHandler((a) => CallCharacterInputHandler(a));
             replayButton?.SetText("クリア編成");
-            replayButton?.SetCallHandler(() => replayEvent?.Invoke());
+            replayButton?.OnClickAddListener(() => replayEvent?.Invoke());
             decideButton?.SetText("バトル開始");
 
         }
@@ -140,7 +140,7 @@ namespace Ryneus
 
         public void SetInputHandlerCommand(System.Action callEvent)
         {
-            decideButton?.SetCallHandler(() =>
+            decideButton?.OnClickAddListener(() =>
             { 
                 callEvent?.Invoke();
             });

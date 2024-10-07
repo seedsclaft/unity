@@ -15,7 +15,7 @@ namespace Ryneus
             commandName.text = text;
         }
 
-        public void SetCallHandler(System.Action handler,System.Action exitHandler = null)
+        public void OnClickAddListener(System.Action handler,System.Action exitHandler = null)
         {
             if (Index == 0)
             {

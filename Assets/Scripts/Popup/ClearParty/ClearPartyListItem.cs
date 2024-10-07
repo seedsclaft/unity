@@ -15,7 +15,7 @@ namespace Ryneus
         public void SetBattleReplayHandler(System.Action<SaveBattleInfo> callEvent)
         {
             if (_eventInit) return;
-            replayButton.SetCallHandler(() => 
+            replayButton.OnClickAddListener(() => 
             {
                 if (replayButton.gameObject.activeSelf == false) return;
                 callEvent((SaveBattleInfo)ListData.Data);

@@ -39,41 +39,44 @@ namespace Ryneus
             switch (viewEvent.commandType)
             {
                 case SkillTrigger.CommandType.CallSkillSelect:
-                CommandCallSkillSelect();
-                break;
+                    CommandCallSkillSelect();
+                    break;
                 case SkillTrigger.CommandType.CallTrigger1Select:
-                CommandCallTrigger1Select();
-                break;
+                    CommandCallTrigger1Select();
+                    break;
                 case SkillTrigger.CommandType.CallTrigger2Select:
-                CommandCallTrigger2Select();
-                break;
+                    CommandCallTrigger2Select();
+                    break;
                 case SkillTrigger.CommandType.CallTriggerUp:
-                CommandCallTriggerUp();
-                break;
+                    CommandCallTriggerUp();
+                    break;
                 case SkillTrigger.CommandType.CallTriggerDown:
-                CommandCallTriggerDown();
-                break;
+                    CommandCallTriggerDown();
+                    break;
                 case SkillTrigger.CommandType.DecideSkillSelect:
-                CommandDecideSkillSelect((SkillInfo)viewEvent.template);
-                break;
+                    CommandDecideSkillSelect((SkillInfo)viewEvent.template);
+                    break;
                 case SkillTrigger.CommandType.DecideTrigger1Select:
-                CommandDecideTrigger1Select((SkillTriggerData)viewEvent.template);
-                break;
+                    CommandDecideTrigger1Select((SkillTriggerData)viewEvent.template);
+                    break;
                 case SkillTrigger.CommandType.DecideTrigger2Select:
-                CommandDecideTrigger2Select((SkillTriggerData)viewEvent.template);
-                break;
+                    CommandDecideTrigger2Select((SkillTriggerData)viewEvent.template);
+                    break;
                 case SkillTrigger.CommandType.DecideCategory1Select:
-                CommandDecideCategory1Select();
-                break;
+                    CommandDecideCategory1Select();
+                    break;
                 case SkillTrigger.CommandType.DecideCategory2Select:
-                CommandDecideCategory2Select();
-                break;
+                    CommandDecideCategory2Select();
+                    break;
                 case SkillTrigger.CommandType.CancelSelect:
-                CommandCancelSelect();
-                break;
+                    CommandCancelSelect();
+                    break;
                 case SkillTrigger.CommandType.CancelCategory:
-                CommandCancelCategory();
-                break;
+                    CommandCancelCategory();
+                    break;
+                case SkillTrigger.CommandType.Recommend:
+                    CommandRecommend();
+                    break;
             }
         }
 
@@ -140,6 +143,12 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.HideSelectList();
             _view.HideSelectCategoryList();
+        }
+
+        private void CommandRecommend()
+        {
+            _model.RecommendActiveSkill();
+            CommandRefresh();
         }
 
         private void CommandCallSkillSelect()

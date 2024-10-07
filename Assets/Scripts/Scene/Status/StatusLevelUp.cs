@@ -20,13 +20,13 @@ namespace Ryneus
         // Start is called before the first frame update
         public void Initialize()
         {
-            levelUpButton?.SetCallHandler(() => 
+            levelUpButton?.OnClickAddListener(() => 
             {
                 if (levelUpButton.gameObject.activeSelf == false) return;
                 var eventData = new StatusViewEvent(CommandType.LevelUp);
                 _commandData(eventData);
             });
-            learnMagicButton?.SetCallHandler(() => 
+            learnMagicButton?.OnClickAddListener(() => 
             {
                 if (learnMagicButton.gameObject.activeSelf == false) return;
                 var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);

@@ -12,7 +12,7 @@ namespace Ryneus
         [SerializeField] private OnOffButton lineIndexButton = null;
         public void SetLineIndexHandler(System.Action<ActorInfo> handler)
         {
-            lineIndexButton.SetCallHandler(() => handler(GetActorInfo()));
+            lineIndexButton.OnClickAddListener(() => handler(GetActorInfo()));
         }
 
         public ActorInfo GetActorInfo()

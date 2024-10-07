@@ -22,11 +22,11 @@ namespace Ryneus
         public void SetInputListHandler(Action skillEvent,Action trigger1Event,Action trigger2Event,Action upButtonEvent,Action downButtonEvent)
         {
             if (_buttonInit) return;
-            skillButton.SetCallHandler(() => skillEvent());
-            trigger1Button.SetCallHandler(() => trigger1Event());
-            trigger2Button.SetCallHandler(() => trigger2Event());
-            upButton.SetCallHandler(() => upButtonEvent());
-            downButton.SetCallHandler(() => downButtonEvent());
+            skillButton.OnClickAddListener(() => skillEvent());
+            trigger1Button.OnClickAddListener(() => trigger1Event());
+            trigger2Button.OnClickAddListener(() => trigger2Event());
+            upButton.OnClickAddListener(() => upButtonEvent());
+            downButton.OnClickAddListener(() => downButtonEvent());
             _buttonInit = true;
             UpdateItemIndex(-1);
         }

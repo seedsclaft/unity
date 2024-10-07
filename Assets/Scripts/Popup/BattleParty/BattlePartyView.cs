@@ -46,7 +46,7 @@ namespace Ryneus
             SetInputHandler(partyMemberList.gameObject);
             SetInputHandler(tacticsMemberList.gameObject);
             SetInputHandler(enemyMemberList.gameObject);
-            SideMenuButton.SetCallHandler(() => 
+            SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
             });
@@ -61,13 +61,13 @@ namespace Ryneus
                 var eventData = new BattlePartyViewEvent(CommandType.EnemyInfo);
                 _commandData(eventData);
             });
-            battleStartButton.SetCallHandler(() =>
+            battleStartButton.OnClickAddListener(() =>
             {
                 var eventData = new BattlePartyViewEvent(CommandType.BattleStart);
                 _commandData(eventData);
             });
             battleStartButton.SetText(DataSystem.GetText(30020));
-            battleReplayButton.SetCallHandler(() =>
+            battleReplayButton.OnClickAddListener(() =>
             {
                 var eventData = new BattlePartyViewEvent(CommandType.BattleReplay);
                 _commandData(eventData);

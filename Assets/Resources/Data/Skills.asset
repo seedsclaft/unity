@@ -3410,19 +3410,12 @@ MonoBehaviour:
     Scope: 3
     SkillType: 4
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n/f[f,1,2]\u30BF\u30FC\u30F3/f[f,1,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E\nATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
-      \u899A\u9192\u89E3\u9664\n/s"
+    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E\n\u899A\u9192\u89E3\u9664\n/s"
     Range: 2
     RepeatTime: 1
     AliveType: 1
     TimingOnlyCount: 0
     FeatureDates:
-    - SkillId: 100520
-      FeatureType: 1010
-      Param1: 300
-      Param2: 0
-      Param3: 0
-      Rate: 100
     - SkillId: 100520
       FeatureType: 3010
       Param1: 2010
@@ -4451,7 +4444,7 @@ MonoBehaviour:
     Scope: 2
     SkillType: 3
     TargetType: 1
-    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C25%\u4EE5\u4E0B\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C\n/s"
+    Help: "(\u6761\u4EF6)\u81EA\u8EAB\u306EHp\u304C50%\u4EE5\u4E0B\n/f[f,0,2]\u30BF\u30FC\u30F3/f[f,0,3]\u30C0\u30E1\u30FC\u30B8\u306E\u6BD2\u4ED8\u4E0E\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C\n/s"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -4479,7 +4472,7 @@ MonoBehaviour:
     - SkillId: 201010
       TriggerType: 1010
       TriggerTiming: 2
-      Param1: 25
+      Param1: 50
       Param2: 0
       Param3: 0
     ScopeTriggers: []

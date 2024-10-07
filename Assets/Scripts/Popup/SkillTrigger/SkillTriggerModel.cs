@@ -140,5 +140,10 @@ namespace Ryneus
         {
             CurrentActor.SetTriggerIndexDown(index);
         }
+
+        public void RecommendActiveSkill()
+        {
+            CurrentActor.RecommendActiveSkill();
+        }
     }
 }

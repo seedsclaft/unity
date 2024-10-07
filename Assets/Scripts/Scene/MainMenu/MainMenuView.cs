@@ -17,7 +17,7 @@ namespace Ryneus
         {
             base.Initialize();
             nextStageButton?.SetText(DataSystem.GetText(17010));
-            nextStageButton?.SetCallHandler(() => 
+            nextStageButton?.OnClickAddListener(() => 
             {
                 var eventData = new MainMenuViewEvent(CommandType.NextStage);
                 _commandData(eventData);

@@ -96,7 +96,7 @@ namespace Ryneus
         public void InitializeLvReset(System.Action lvResetEvent)
         {
             lvResetButton?.gameObject.SetActive(true);
-            lvResetButton?.SetCallHandler(() => 
+            lvResetButton?.OnClickAddListener(() => 
             {
                 lvResetEvent?.Invoke();
             });

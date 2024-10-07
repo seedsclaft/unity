@@ -232,6 +232,44 @@ namespace Ryneus
             }
             return list;
         }
+
+        public void RecommendActiveSkill()
+        {
+            _skillTriggerInfos.Clear();
+            // 初期設定に戻す
+            InitSkillTriggerInfos();
+            var learnSkills = LearningSkillInfos().FindAll(a => a.Master.SkillType == SkillType.Active && a.Id > 1000 && a.LearningState == LearningState.Learned);
+            // 新たに追加したアクティブをアクティブの下に入れる
+            foreach (var learnSkill in learnSkills)
+            {
+                if (_skillTriggerInfos.Find(a => a.SkillId == learnSkill.Id) == null)
+                {
+                    var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(learnSkill.Id));
+                    // 敵データに同じスキルがあればコピーする
+                    var enemyDates = DataSystem.Enemies.FindAll(a => a.SkillTriggerDates.Find(b => b.SkillId == learnSkill.Id) != null);
+                    var enemyData = enemyDates[enemyDates.Count-1];
+                    
+                    var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                    var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                    if (enemyData != null)
+                    {
+                        var skillTriggerData = enemyData.SkillTriggerDates.Find(a => a.SkillId == learnSkill.Id);
+                        skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                        skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                    }
+                    skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
+            
+                    var findIndex = _skillTriggerInfos.FindIndex(a => DataSystem.Skills[a.SkillId].SkillType == SkillType.Active);
+                    if (findIndex == -1)
+                    {
+                        findIndex = 1;
+                    }
+                    findIndex++;
+                    _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
+                    skillTriggerInfo.SetPriority(findIndex);
+                }
+            }
+        }
     
         private List<int> LearnSkillIds()
         {

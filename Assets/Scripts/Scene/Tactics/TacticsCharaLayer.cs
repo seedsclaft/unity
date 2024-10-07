@@ -38,7 +38,7 @@ namespace Ryneus
                 _tacticsCharacters[i].Show();
                 _tacticsCharacters[i].Initialize(gameObject,rectTransform.localPosition.x,rectTransform.localPosition.y,rectTransform.localScale.x);
                 _tacticsCharacters[i].SetData(actorInfos[i]);
-                _tacticsCharacters[i].SetCallHandler(clickEvent);
+                _tacticsCharacters[i].OnClickAddListener(clickEvent);
                 _tacticsCharacters[i].SetIndex(actorInfos[i].ActorId);
                 _tacticsCharacters[i].SetSelectHandler((a) => 
                 {
