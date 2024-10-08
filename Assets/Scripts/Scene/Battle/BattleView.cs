@@ -224,7 +224,7 @@ namespace Ryneus
         public void StartBattleStartAnim(string text)
         {
             _battleStartAnim.SetText(text);
-            _battleStartAnim.StartAnim();
+            _battleStartAnim.StartAnim(true);
         }
 
         public void StartUIAnimation()

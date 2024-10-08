@@ -159,7 +159,7 @@ namespace Ryneus
                 return;
             }
             var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor;
-            if (actionInfo.Master.SkillType == SkillType.Messiah && isActor || actionInfo.Master.SkillType == SkillType.Awaken && isActor)
+            if (actionInfo.Master.SkillType == SkillType.Unique && isActor || actionInfo.Master.SkillType == SkillType.Awaken && isActor)
             {
                 StartAnimationDemigod();
             } else

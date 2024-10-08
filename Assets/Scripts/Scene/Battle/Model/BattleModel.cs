@@ -315,7 +315,7 @@ namespace Ryneus
             {
                 return false;
             }
-            if (skillInfo.Master.SkillType == SkillType.Messiah)
+            if (skillInfo.Master.SkillType == SkillType.Unique)
             {
                 return false;
             }
@@ -356,7 +356,7 @@ namespace Ryneus
             {
                 //return false;
             }
-            if (skillInfo.Master.SkillType == SkillType.Messiah)
+            if (skillInfo.Master.SkillType == SkillType.Unique)
             {
                 return false;
             }
@@ -711,7 +711,7 @@ namespace Ryneus
                 {
                     if (scopeTrigger.TriggerType == TriggerType.DemigodMagicAttribute)
                     {
-                        if (target.Skills.Find(a => a.Master.SkillType == SkillType.Messiah && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
+                        if (target.Skills.Find(a => a.Master.SkillType == SkillType.Unique && a.Attribute == (AttributeType)scopeTrigger.Param1) == null)
                         {
                             remove = true;
                         }
@@ -1483,7 +1483,7 @@ namespace Ryneus
                     foreach (var triggeredSkill in triggeredSkills)
                     {
                         var IsInterrupt = triggerTiming == TriggerTiming.Interrupt || triggerTiming == TriggerTiming.BeforeSelfUse || triggerTiming == TriggerTiming.BeforeOpponentUse || triggerTiming == TriggerTiming.BeforeFriendUse;
-                        if (triggeredSkill.Master.SkillType == SkillType.Messiah && checkBattler.IsAwaken == false)
+                        if (triggeredSkill.Master.SkillType == SkillType.Unique && checkBattler.IsAwaken == false)
                         {
                             checkBattler.SetAwaken();
                         }
@@ -1926,7 +1926,7 @@ namespace Ryneus
                             break;
                             case TriggerType.AwakenDemigodAttribute:
                             var DemigodAttributes = friends.AliveBattlerInfos.FindAll(a => a.IsAwaken);
-                            if (battlerInfo.IsAlive() && DemigodAttributes.Count > 0 && DemigodAttributes.Find(a => a.Skills.Find(b => b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Messiah) != null) != null)
+                            if (battlerInfo.IsAlive() && DemigodAttributes.Count > 0 && DemigodAttributes.Find(a => a.Skills.Find(b => b.Attribute == (AttributeType)triggerData.Param1 && b.Master.SkillType == SkillType.Unique) != null) != null)
                             {
                                 IsTriggered = true;
                             }

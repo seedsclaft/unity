@@ -70,6 +70,7 @@ namespace Ryneus
                             Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
                             Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
                             SubName = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
+							Profile = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Feature,
 
                             ClassId = AssetPostImporter.ImportNumeric(BaseRow, "ClassId"),
                             UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, "UnitType"),

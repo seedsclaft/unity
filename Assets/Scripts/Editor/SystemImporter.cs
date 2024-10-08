@@ -159,7 +159,7 @@ namespace Ryneus
                         {
                             Key = AssetPostImporter.ImportString(BaseRow, (int)BaseColumn.Id),
                             KeyId = AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.Key),
-                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId)).Text
+                            Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, (int)BaseColumn.NameTextId))?.Text
                         };
 
                         Data.InputDataList.Add(inputData);

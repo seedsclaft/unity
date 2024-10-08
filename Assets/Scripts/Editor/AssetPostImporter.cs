@@ -35,44 +35,62 @@ namespace Ryneus
 
 		public static int ImportNumeric(IRow BaseRow,int Column)
 		{
-			//Debug.Log(Column);
-			var value = BaseRow.GetCell(Column);
-			if (value != null)
+			var cell = BaseRow.GetCell(Column);
+			if (cell != null)
 			{
-				return (int)value?.SafeNumericCellValue();
+				return (int)cell?.SafeNumericCellValue();
 			}
 			return 0;
 		}
 
 		public static int ImportNumeric(IRow BaseRow,string key)
 		{
-			var value = BaseRow.GetCell(GetKeyNameIndex(key));
-			if (value != null)
+			var cell = BaseRow.GetCell(GetKeyNameIndex(key));
+			if (cell != null)
 			{
-				return (int)value?.SafeNumericCellValue();
+				return (int)cell?.SafeNumericCellValue();
 			}
 			return 0;
 		}
 
 		public static float ImportFloat(IRow BaseRow,int Column)
 		{
-			//Debug.Log(Column);
-			return (float)BaseRow.GetCell(Column).SafeNumericCellValue();
+			var cell = BaseRow.GetCell(Column);
+			if (cell != null)
+			{
+				return (float)cell.SafeNumericCellValue();
+			}
+			return 0;
 		}
 
 		public static float ImportFloat(IRow BaseRow,string key)
 		{
-			return (float)BaseRow.GetCell(GetKeyNameIndex(key)).SafeNumericCellValue();
+			var cell = BaseRow.GetCell(GetKeyNameIndex(key));
+			if (cell != null)
+			{
+				return (float)cell.SafeNumericCellValue();
+			}
+			return 0;
 		}
 
 		public static string ImportString(IRow BaseRow,int Column)
 		{
-			return (string)BaseRow.GetCell(Column).SafeStringCellValue();
+			var cell = BaseRow.GetCell(Column);
+			if (cell != null)
+			{
+				return cell.SafeStringCellValue();
+			}
+			return "";
 		}
 
 		public static string ImportString(IRow BaseRow,string key)
 		{
-			return BaseRow.GetCell(GetKeyNameIndex(key)).SafeStringCellValue();
+			var cell = BaseRow.GetCell(GetKeyNameIndex(key));
+			if (cell != null)
+			{
+				return cell.SafeStringCellValue();
+			}
+			return "";
 		}
 
 		// エクセルワークブックを作成
@@ -98,13 +116,15 @@ namespace Ryneus
 			for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 			{
 				IRow BaseRow = BaseSheet.GetRow(i);
-				var TextData = new TextData();
+                var TextData = new TextData
+                {
+                    Id = ImportNumeric(BaseRow, (int)BaseTextColumn.Id),
+                    Text = ImportString(BaseRow, (int)BaseTextColumn.Text),
+                    Help = ImportString(BaseRow, (int)BaseTextColumn.Help),
+                    Feature = ImportString(BaseRow, (int)BaseTextColumn.Feature),
+                };
 
-				TextData.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseTextColumn.Id);
-				TextData.Text = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Text);
-				TextData.Help = AssetPostImporter.ImportString(BaseRow,(int)BaseTextColumn.Help);
-				
-				textData.Add(TextData);
+                textData.Add(TextData);
 			}
 
 			return textData;
@@ -164,5 +184,6 @@ namespace Ryneus
 		Id = 0,
 		Text,
 		Help,
+		Feature,
 	}
 }

@@ -27,7 +27,7 @@ namespace Ryneus
         private void StartAnimation(ActionInfo actionInfo)
         {
             var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
-            if (actionInfo.Master.SkillType == SkillType.Messiah && actionInfo.Master.AnimationId > 0)
+            if (actionInfo.Master.SkillType == SkillType.Unique && actionInfo.Master.AnimationId > 0)
             {
                 if (isActor)
                 {
@@ -99,7 +99,7 @@ namespace Ryneus
             _view.StartAnimationBeforeSkill(actionInfo.SubjectIndex,selfAnimation);
             var speed = GameSystem.ConfigData.BattleSpeed;
             await UniTask.DelayFrame((int)(24/speed));
-            if (actionInfo.TriggeredSkill && actionInfo.Master.SkillType != SkillType.Messiah && actionInfo.Master.SkillType != SkillType.Awaken)
+            if (actionInfo.TriggeredSkill && actionInfo.Master.SkillType != SkillType.Unique && actionInfo.Master.SkillType != SkillType.Awaken)
             {
                 if (actionInfo.Master.IsDisplayBattleSkill() && _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor)
                 {

@@ -181,9 +181,11 @@ namespace Ryneus
     }
 
     [Serializable]
-    public class TextData {
+    public class TextData 
+    {
         public int Id;
         public string Text;
         public string Help;
+        public string Feature;
     }
 }

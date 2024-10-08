@@ -355,7 +355,7 @@ namespace Ryneus
         private bool CheckIsHit(BattlerInfo subject,BattlerInfo target,bool isOneTarget,int range)
         {
             var skillData = DataSystem.FindSkill(_skillId);
-            if (skillData != null && (skillData.SkillType == SkillType.Messiah || skillData.SkillType == SkillType.Awaken))
+            if (skillData != null && skillData.IsBattleSpecialSkill())
             {
                 //return true;
             }

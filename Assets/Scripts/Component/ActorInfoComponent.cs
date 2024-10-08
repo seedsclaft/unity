@@ -20,6 +20,7 @@ namespace Ryneus
         [SerializeField] private Image clipThumb;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI subNameText;
+        [SerializeField] private TextMeshProUGUI profileText;
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private TextMeshProUGUI demigod;
         [SerializeField] private TextMeshProUGUI lv;
@@ -131,6 +132,7 @@ namespace Ryneus
             UpdateAwakenFaceThumb(actorData.ImagePath);
             nameText?.SetText(actorData.Name);
             subNameText?.SetText(actorData.SubName);
+            profileText?.SetText(actorData.Profile);
             UpdateUnitType(actorData.UnitType);
             UpdateUnitTypeBack(actorData.UnitType);
         }

@@ -33,7 +33,7 @@ MonoBehaviour:
   OptionCommandData:
   - Id: 1
     Key: BGM_VOLUME
-    Name: BGM Volume
+    Name: "BGM\u97F3\u91CF"
     Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
     Category: 1
     ButtonType: 1
@@ -43,7 +43,7 @@ MonoBehaviour:
     ExistAndroid: 1
   - Id: 2
     Key: SE_VOLUME
-    Name: SE Volume
+    Name: "SE\u97F3\u91CF"
     Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
     Category: 1
     ButtonType: 1
@@ -63,7 +63,7 @@ MonoBehaviour:
     ExistAndroid: 0
   - Id: 4
     Key: EVENT_SKIP
-    Name: Event Skip
+    Name: "\u30A4\u30D9\u30F3\u30C8\u30B9\u30AD\u30C3\u30D7"
     Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
     Category: 2
     ButtonType: 2
@@ -123,7 +123,7 @@ MonoBehaviour:
     ExistAndroid: 0
   - Id: 10
     Key: BATTLE_SPEED
-    Name: Battle Speed
+    Name: "\u30D0\u30C8\u30EB\u30B9\u30D4\u30FC\u30C9"
     Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
     Category: 2
     ButtonType: 2
@@ -152,981 +152,1307 @@ MonoBehaviour:
   - Id: 51
     Text: "\u6226\u529B\u5024"
     Help: '""'
+    Feature: 
   - Id: 312
     Text: "\u6B8B\u308ASP"
     Help: '""'
+    Feature: 
   - Id: 313
     Text: "\u6B8B\u308A"
     Help: '""'
+    Feature: 
   - Id: 314
     Text: Magics
     Help: '""'
+    Feature: 
   - Id: 315
     Text: "\u52DD\u5229\u6570"
     Help: '""'
+    Feature: 
   - Id: 341
     Text: "\u5168\u56DE\u5FA9\u307E\u3067"
     Help: '""'
+    Feature: 
   - Id: 342
     Text: "\u7372\u5F97(Nu)"
     Help: '""'
+    Feature: 
   - Id: 371
     Text: vs
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6E96\u5099"
   - Id: 380
     Text: "Lv.\\d\u3067\u7FD2\u5F97"
     Help: '""'
+    Feature: "\u9B54\u6CD5\u7FD2\u5F97\u5236\u9650"
   - Id: 381
     Text: "\u73FE\u5728\u672A\u6240\u6301\u306E\u9B54\u6CD5\u3067\u3059"
     Help: '""'
+    Feature: "\u9B54\u6CD5\u7FD2\u5F97\u5236\u9650"
   - Id: 390
     Text: "\u521D\u671F\u52A0\u5165"
     Help: '""'
+    Feature: "\u52A0\u5165\u6642\u671F\u6B04"
   - Id: 391
     Text: "\u672A\u52A0\u5165"
     Help: '""'
+    Feature: "\u52A0\u5165\u6642\u671F\u6B04"
   - Id: 400
     Text: "\u6B8B\u308A"
     Help: '""'
+    Feature: "State\u7528"
   - Id: 401
     Text: "\u6B8B\u308A\\d\u30BF\u30FC\u30F3"
     Help: '""'
+    Feature: 
   - Id: 402
     Text: Conditions
     Help: '""'
+    Feature: 
   - Id: 403
     Text: "\u6C38\u7D9A"
     Help: '""'
+    Feature: 
   - Id: 404
     Text: "\u6B8B\u308A\\d\u56DE"
     Help: '""'
+    Feature: 
   - Id: 405
     Text: "\u6B8B\u308A\\d\u30D5\u30EC\u30FC\u30E0"
     Help: '""'
+    Feature: 
   - Id: 420
     Text: Learning
     Help: '""'
+    Feature: 
   - Id: 421
     Text: Detail
     Help: '""'
+    Feature: 
   - Id: 422
     Text: Magic
     Help: '""'
+    Feature: 
   - Id: 600
     Text: "\u5473\u65B9"
     Help: '""'
+    Feature: 
   - Id: 601
     Text: "\u6575"
     Help: '""'
+    Feature: 
   - Id: 602
     Text: "\u81EA\u8EAB"
     Help: '""'
+    Feature: 
   - Id: 603
     Text: "\u6575\u5473\u65B9"
     Help: '""'
+    Feature: 
   - Id: 606
     Text: "\u53CD\u6483"
     Help: '""'
+    Feature: 
   - Id: 611
     Text: "\u5BFE\u8C61"
     Help: '""'
+    Feature: 
   - Id: 620
     Text: "\u5168\u4F53"
     Help: '""'
+    Feature: 
   - Id: 621
     Text: "\u5168\u54E1"
     Help: '""'
+    Feature: 
   - Id: 622
     Text: "\u4E00\u5217"
     Help: '""'
+    Feature: 
   - Id: 623
     Text: "\u5358\u4F53"
     Help: '""'
+    Feature: 
   - Id: 624
     Text: "\u4E00\u4EBA"
     Help: '""'
+    Feature: 
   - Id: 625
     Text: "\u524D\u5217"
     Help: '""'
+    Feature: 
   - Id: 651
     Text: "\u4E21\u96A3"
     Help: '""'
+    Feature: 
   - Id: 652
     Text: "\u3092\u9664\u304D\u4E21\u96A3"
     Help: '""'
+    Feature: 
   - Id: 702
     Text: "\u5168\u4F53\u9806\u4F4D"
     Help: '""'
+    Feature: 
   - Id: 706
     Text: "\u81EA\u52D5\u6226\u95D8"
     Help: '""'
+    Feature: 
   - Id: 800
     Text: '""'
     Help: '""'
+    Feature: 
   - Id: 801
     Text: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
     Help: '""'
+    Feature: 
   - Id: 802
     Text: "\u6C7A\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 803
     Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
     Help: '""'
+    Feature: 
   - Id: 804
     Text: "\u623B\u308B"
     Help: '""'
+    Feature: 
   - Id: 805
     Text: "\u5024\u5909\u66F4"
     Help: '""'
+    Feature: 
   - Id: 806
     Text: "\u5C5E\u6027\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 807
     Text: "\u64A4\u9000\u3059\u308B"
     Help: '""'
+    Feature: 
   - Id: 808
     Text: "\u5217\u5909\u66F4"
     Help: '""'
+    Feature: 
   - Id: 810
     Text: "\u8853\u8005\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 811
     Text: "\u9B54\u6CD5\u78BA\u8A8D"
     Help: '""'
+    Feature: 
   - Id: 812
     Text: "\u9B54\u6CD5\u6709\u52B9\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 813
     Text: "\u6575\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 814
     Text: "\u9805\u76EE\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 815
     Text: "\u6575\u5473\u65B9\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 816
     Text: "\u9078\u629E\u80A2\u4E0A\u3092\u9078\u629E"
     Help: '""'
+    Feature: 
   - Id: 817
     Text: "\u9078\u629E\u80A2\u4E0B\u3092\u9078\u629E"
     Help: '""'
+    Feature: 
   - Id: 818
     Text: "\u6587\u5B57\u9001\u308A"
     Help: '""'
+    Feature: 
   - Id: 819
     Text: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 820
     Text: "\u601D\u5FF5\u9078\u629E\u79FB\u52D5"
     Help: '""'
+    Feature: 
   - Id: 821
     Text: "\u4FDD\u6301\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 822
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
     Help: '""'
+    Feature: 
   - Id: 823
     Text: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 824
     Text: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 825
     Text: "\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 826
     Text: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
     Help: '""'
+    Feature: 
   - Id: 827
     Text: "\u9B54\u6CD5\u5207\u66FF"
     Help: '""'
+    Feature: 
   - Id: 1000
     Text: (Nu)
     Help: '""'
+    Feature: 
   - Id: 1001
     Text: Turn(s)
     Help: '""'
+    Feature: 
   - Id: 1010
     Text: "\u7FD2\u5F97Cost"
     Help: '""'
+    Feature: 
   - Id: 1020
     Text: "\u4E88\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 1060
     Text: "\u5831\u916C\u5019\u88DC"
     Help: '""'
+    Feature: 
   - Id: 1110
     Text: "\u7FD2\u5F97\u30B3\u30B9\u30C8"
     Help: '""'
+    Feature: 
   - Id: 1120
     Text: "\u672A\u7FD2\u5F97\u6570 "
     Help: '""'
+    Feature: 
   - Id: 2000
     Text: S
     Help: '""'
+    Feature: "\u5C5E\u6027\u9069\u6B63\u5024\u7528"
   - Id: 2001
     Text: A
     Help: '""'
+    Feature: 
   - Id: 2002
     Text: B
     Help: '""'
+    Feature: 
   - Id: 2003
     Text: C
     Help: '""'
+    Feature: 
   - Id: 2004
     Text: D
     Help: '""'
+    Feature: 
   - Id: 2005
     Text: E
     Help: '""'
+    Feature: 
   - Id: 2006
     Text: F
     Help: '""'
+    Feature: 
   - Id: 2007
     Text: G
     Help: '""'
+    Feature: 
   - Id: 2010
     Text: Front
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u968A\u5217\u7528"
   - Id: 2011
     Text: Back
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u968A\u5217\u7528"
   - Id: 2012
     Text: F
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u968A\u5217\u7528"
   - Id: 2013
     Text: B
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u968A\u5217\u7528"
   - Id: 2100
     Text: HP
     Help: '""'
+    Feature: "\u30B9\u30C6\u30FC\u30BF\u30B9"
   - Id: 2101
     Text: MP
     Help: '""'
+    Feature: 
   - Id: 2102
     Text: ATK
     Help: '""'
+    Feature: 
   - Id: 2103
     Text: DEF
     Help: '""'
+    Feature: 
   - Id: 2104
     Text: SPD
     Help: '""'
+    Feature: 
   - Id: 2200
     Text: Range.
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2210
     Text: S
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2220
     Text: L
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2300
     Text: Rank
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2310
     Text: N
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2320
     Text: R
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2330
     Text: SR
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2340
     Text: SSR
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 2400
     Text: "\u30BF\u30FC\u30F3"
     Help: '""'
+    Feature: "DisplaySkill\u7528"
   - Id: 3000
     Text: "\\d\u306F"
     Help: '""'
+    Feature: 
   - Id: 3010
     Text: "\\d\u306E"
     Help: '""'
+    Feature: 
   - Id: 3011
     Text: "HP\u3068MP\u304C\u56DE\u5FA9\u3057\u305F\uFF01"
     Help: '""'
+    Feature: 
   - Id: 3040
     Text: "\u6B21\u3078"
     Help: '""'
+    Feature: 
   - Id: 3050
     Text: "\u6C7A\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 3051
     Text: "\u4E2D\u6B62"
     Help: '""'
+    Feature: 
   - Id: 3052
     Text: "\u78BA\u8A8D"
     Help: '""'
+    Feature: 
   - Id: 3053
     Text: "\u8A18\u61B6\u3092\u8997\u304F"
     Help: '""'
+    Feature: 
   - Id: 3054
     Text: "\u518D\u6226"
     Help: '""'
+    Feature: 
   - Id: 3070
     Text: "\\d\u306E"
     Help: '""'
+    Feature: 
   - Id: 3071
     Text: "\\d\u304C"
     Help: '""'
+    Feature: 
   - Id: 3072
     Text: "\\d\u30A2\u30C3\u30D7\uFF01"
     Help: '""'
+    Feature: 
   - Id: 3073
     Text: "\u6700\u5927Hp\u3068Mp\u304C\\d\u30A2\u30C3\u30D7\uFF01"
     Help: '""'
+    Feature: 
   - Id: 3090
     Text: " \u21D2 "
     Help: '""'
+    Feature: 
   - Id: 3211
     Text: " \u21D2 \\d\u30BF\u30FC\u30F3"
     Help: '""'
+    Feature: 
   - Id: 3230
     Text: "\u3092\u7FD2\u5F97\uFF01"
     Help: '""'
+    Feature: 
   - Id: 5000
     Text: "\u3042\u306A\u305F\u306E\u540D\u524D\u3092\u6559\u3048\u3066\u304F\u3060\u3055\u3044"
     Help: '""'
+    Feature: 
   - Id: 5001
     Text: '""'
     Help: '""'
+    Feature: 
   - Id: 5002
     Text: "1\u6587\u5B57\u4EE5\u4E0A\u306E\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044"
     Help: '""'
+    Feature: 
   - Id: 6001
     Text: "\u97F3\u91CF\u8A2D\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 6002
     Text: "\u30B7\u30B9\u30C6\u30E0"
     Help: '""'
+    Feature: 
   - Id: 6100
     Text: '""'
     Help: "\u30B2\u30FC\u30E0\u306E\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6101
-    Text: BGM Volume
+    Text: "BGM\u97F3\u91CF"
     Help: " - BGM\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6102
-    Text: SE Volume
+    Text: "SE\u97F3\u91CF"
     Help: " - SE\u306E\u97F3\u91CF\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6103
     Text: Graphic Quality
     Help: " - \u753B\u8CEA\u306E\u30AF\u30AA\u30EA\u30C6\u30A3\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6104
-    Text: Event Skip
+    Text: "\u30A4\u30D9\u30F3\u30C8\u30B9\u30AD\u30C3\u30D7"
     Help: " - \u9078\u629E\u80A2\u3092\u9664\u304D\u30A4\u30D9\u30F3\u30C8\u3092\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6105
     Text: Command Check
     Help: " - \u5168\u3066\u306E\u30A2\u30EB\u30B1\u30DF\u30B9\u30C8\u306B\u547D\u4EE4\u3092\u7D42\u3048\u305F\u6642\u306B\u547D\u4EE4\u7D42\u4E86\u30B3\u30DE\u30F3\u30C9\u3092\u547C\u3076\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6106
     Text: Battle Wait
     Help: " - \u30D0\u30C8\u30EB\u3067\u884C\u52D5\u9806\u756A\u5F85\u3061\u6642\u9593\u3092\u8868\u793A\u3059\u308B\u304B\u30B9\u30AD\u30C3\u30D7\u3059\u308B\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6107
     Text: Battle Animation
     Help: " - \u30D0\u30C8\u30EB\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3\u6F14\u51FA\u8868\u793A\u306E\u6709\u7121\u3092\u5207\u308A\u66FF\u3048\u307E\u3059"
+    Feature: 
   - Id: 6108
     Text: Enable InputKey
     Help: " - \u30AD\u30FC\u30DC\u30FC\u30C9\u30FB\u30B2\u30FC\u30E0\u30D1\u30C3\u30C9\u64CD\u4F5C\u3092\u6709\u52B9\u306B\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6109
     Text: Battle Auto
     Help: " - \u30D0\u30C8\u30EB\u306E\u64CD\u4F5C\u65B9\u6CD5\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6110
-    Text: Battle Speed
+    Text: "\u30D0\u30C8\u30EB\u30B9\u30D4\u30FC\u30C9"
     Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6201
     Text: Normal
     Help: '""'
+    Feature: 
   - Id: 6202
     Text: Low
     Help: '""'
+    Feature: 
   - Id: 6211
     Text: "\u30B9\u30AD\u30C3\u30D7\u3057\u306A\u3044"
     Help: '""'
+    Feature: 
   - Id: 6212
     Text: "\u30B9\u30AD\u30C3\u30D7\u3059\u308B"
     Help: '""'
+    Feature: 
   - Id: 6221
     Text: "\u547C\u3073\u51FA\u3059"
     Help: '""'
+    Feature: 
   - Id: 6222
     Text: "\u547C\u3070\u306A\u3044"
     Help: '""'
+    Feature: 
   - Id: 6223
     Text: "\u8868\u793A\u3059\u308B"
     Help: '""'
+    Feature: 
   - Id: 6231
     Text: "\u30DE\u30A6\u30B9\u306E\u307F"
     Help: '""'
+    Feature: 
   - Id: 6232
     Text: "\u6709\u52B9\u306B\u3059\u308B"
     Help: '""'
+    Feature: 
   - Id: 12010
     Text: "\u3053\u306E\u30B2\u30FC\u30E0\u306F\u97F3\u58F0\u304C\u6D41\u308C\u307E\u3059\u3002\n\u30B9\u30D4\u30FC\u30AB\u30FC\u3001\u30A4\u30E4\u30DB\u30F3\u306E\u97F3\u91CF\u306A\u3069\u306B\u3054\u6CE8\u610F\u304F\u3060\u3055\u3044\u3002\n\n\u753B\u9762\u3092\u30BF\u30C3\u30C1\u3059\u308B\u3068\u30BF\u30A4\u30C8\u30EB\u753B\u9762\u306B\u79FB\u308A\u307E\u3059\u3002"
     Help: '""'
+    Feature: Boot
   - Id: 13010
     Text: Norm
     Help: '""'
+    Feature: Title
   - Id: 13020
     Text: Project.
     Help: '""'
+    Feature: 
   - Id: 13110
     Text: Version
     Help: '""'
+    Feature: 
   - Id: 13120
     Text: Tap To Start
     Help: '""'
+    Feature: 
   - Id: 13300
     Text: "\u4E2D\u65AD\u30C7\u30FC\u30BF\u3092\u521D\u671F\u5316\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 13310
     Text: "\u30B2\u30FC\u30E0\u3092\u518D\u8D77\u52D5\u3057\u307E\u3059"
     Help: '""'
+    Feature: 
   - Id: 13320
     Text: "\u30BF\u30A4\u30C8\u30EB\u753B\u9762\u306B\u623B\u308A\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 13400
     Text: "\u30E9\u30A4\u30BB\u30F3\u30B9"
     Help: '""'
+    Feature: 
   - Id: 13410
     Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
     Help: "\u30AA\u30D7\u30B7\u30E7\u30F3\u3084\u305D\u306E\u4ED6\u306E\u9805\u76EE\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Feature: 
   - Id: 13420
     Text: "\u4E2D\u65AD\u30C7\u30FC\u30BF\u521D\u671F\u5316"
     Help: '""'
+    Feature: 
   - Id: 13430
     Text: "\u30B2\u30FC\u30E0\u7D42\u4E86"
     Help: '""'
+    Feature: 
   - Id: 14090
     Text: "(\u521D\u56DE\u306E\u307F)"
     Help: '""'
+    Feature: 
   - Id: 14110
     Text: "\\d\u3092\u5165\u624B\uFF01"
     Help: '""'
+    Feature: 
   - Id: 16010
     Text: Skip
     Help: '""'
+    Feature: Battle
   - Id: 16020
     Text: Log
     Help: '""'
+    Feature: 
   - Id: 16100
     Text: "\u72B6\u6CC1\u7D42\u4E86"
     Help: '""'
+    Feature: 
   - Id: 16110
     Text: "\u4F5C\u6226\u5931\u6557"
     Help: '""'
+    Feature: 
   - Id: 16200
     Text: "\u884C\u52D5\u77ED\u7E2E+\\d"
     Help: '""'
+    Feature: 
   - Id: 16210
     Text: "\u884C\u52D5\u9045\u5EF6+\\d"
     Help: '""'
+    Feature: 
   - Id: 16220
     Text: "\u5148\u5236\u653B\u6483"
     Help: '""'
+    Feature: 
   - Id: 16300
     Text: x1
     Help: '""'
+    Feature: 
   - Id: 16310
     Text: x2
     Help: '""'
+    Feature: 
   - Id: 16320
     Text: x4
     Help: '""'
+    Feature: 
   - Id: 16400
     Text: "\u30DE\u30CB\u30E5\u30A2\u30EB"
     Help: '""'
+    Feature: 
   - Id: 16410
     Text: "\u30AA\u30FC\u30C8"
     Help: '""'
+    Feature: 
   - Id: 16800
     Text: A
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16801
     Text: B
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16802
     Text: C
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16803
     Text: D
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16804
     Text: E
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16805
     Text: F
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 16806
     Text: G
     Help: '""'
+    Feature: "\u30D0\u30C8\u30EB\u6575\u756A\u53F7\u7528"
   - Id: 17010
     Text: "\u6B21\u306E\u7AE0\u3078"
     Help: '""'
+    Feature: 
   - Id: 18010
     Text: "\u4EF2\u9593\u306B\u3059\u308B\u30AD\u30E3\u30E9\u3092\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
     Help: '""'
+    Feature: Status
   - Id: 18020
     Text: "\u8853\u8005\u9078\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 18100
     Text: "\u30EA\u30BB\u30C3\u30C8"
     Help: '""'
+    Feature: 
   - Id: 18110
     Text: "\u4F5C\u6226\u8A2D\u5B9A"
     Help: '""'
+    Feature: 
   - Id: 18120
     Text: "\u8853\u8005\u4E00\u89A7"
     Help: '""'
+    Feature: 
   - Id: 18200
     Text: "Lv\u30A2\u30C3\u30D7"
     Help: '""'
+    Feature: 
   - Id: 18210
     Text: "\u9B54\u6CD5\u7FD2\u5F97"
     Help: '""'
+    Feature: 
   - Id: 18220
     Text: "\u5FC5\u8981"
     Help: '""'
+    Feature: 
   - Id: 18300
     Text: "\\d\u306ELv\u3068\u9B54\u6CD5\u53D6\u5F97\u72B6\u614B\u3092\u30EA\u30BB\u30C3\u30C8\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 18310
     Text: "Lv\u3068\u9B54\u6CD5\u53D6\u5F97\u72B6\u614B\u3092\u30EA\u30BB\u30C3\u30C8\u3057\\d(Nu)\u304C\u9084\u5143\u3055\u308C\u307E\u3057\u305F"
     Help: '""'
+    Feature: 
   - Id: 18320
     Text: "\\d\u3092\u4EF2\u9593\u306B\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 18340
     Text: "\u3053\u306E\u30AD\u30E3\u30E9\u306F\u30EA\u30BB\u30C3\u30C8\u3067\u304D\u307E\u305B\u3093"
     Help: '""'
+    Feature: 
   - Id: 18400
     Text: "\u6210\u9577\u7387"
     Help: '""'
+    Feature: 
   - Id: 18410
     Text: "\u30D1\u30E9\u30E1\u30FC\u30BF"
     Help: '""'
+    Feature: 
   - Id: 18420
     Text: "\u5C5E\u6027\u9069\u6B63\u5024\uFF08\u30B3\u30B9\u30C8\uFF09"
     Help: '""'
+    Feature: 
   - Id: 18430
     Text: 
     Help: '""'
+    Feature: 
   - Id: 18440
     Text: "\u6226\u529B\u5024"
     Help: '""'
+    Feature: 
   - Id: 18450
     Text: "\u52A0\u5165"
     Help: '""'
+    Feature: 
   - Id: 18500
     Text: Lv.
     Help: '""'
+    Feature: 
   - Id: 18800
     Text: "\u7279\u6027"
     Help: '""'
+    Feature: 
   - Id: 18801
     Text: "\u30A2\u30F3\u30C7\u30C3\u30C9"
     Help: '""'
+    Feature: 
   - Id: 18802
     Text: "\u98DB\u884C"
     Help: '""'
+    Feature: 
   - Id: 18803
     Text: "\u60AA\u9B54"
     Help: '""'
+    Feature: 
   - Id: 18804
     Text: "\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC"
     Help: '""'
+    Feature: 
   - Id: 18805
     Text: "\u91CE\u751F\u52D5\u7269"
     Help: '""'
+    Feature: 
   - Id: 18806
     Text: "\u5909\u7570\u751F\u7269"
     Help: '""'
+    Feature: 
   - Id: 18811
     Text: "\u6C4E\u7528\u6575"
     Help: '""'
+    Feature: 
   - Id: 18812
     Text: "\u30DC\u30B9"
     Help: '""'
+    Feature: 
   - Id: 19010
     Text: "\u63A2\u7D22"
     Help: "\u30B9\u30C6\u30FC\u30B8\u3092\u63A2\u7D22\u3057\u307E\u3059"
+    Feature: Tactics
   - Id: 19011
     Text: "\u7DE8\u6210"
     Help: "\u30B9\u30C6\u30FC\u30B8\u3092\u63A2\u7D22\u3057\u307E\u3059"
+    Feature: 
   - Id: 19020
     Text: "Lv\u30A2\u30C3\u30D7"
     Help: "Numinos\u3092\u4F7F\u7528\u3057\u3066\u30AD\u30E3\u30E9\u306ELv\u3092\u30A2\u30C3\u30D7\u3057\u307E\u3059"
+    Feature: 
   - Id: 19030
     Text: "\u9B54\u6CD5\u7FD2\u5F97"
     Help: "\u30AD\u30E3\u30E9\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3055\u305B\u307E\u3059"
+    Feature: 
   - Id: 19040
     Text: "\u30AD\u30E3\u30E9"
     Help: "\u30AD\u30E3\u30E9\u306E\u30B9\u30C6\u30FC\u30BF\u30B9\u3084\u9B54\u6CD5\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Feature: 
   - Id: 19050
     Text: "\u56DE\u5FA9"
     Help: "Numinos\u3092\u4F7F\u7528\u3057\u3066\u30AD\u30E3\u30E9\u3092\u56DE\u5FA9\u3057\u307E\u3059"
+    Feature: 
   - Id: 19060
     Text: "\u30B9\u30C6\u30FC\u30B8"
     Help: "\u30B9\u30C6\u30FC\u30B8\u306E\u69CB\u6210\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Feature: 
   - Id: 19100
     Text: "\u30D0\u30C8\u30EB\u8A55\u4FA1\u5024"
     Help: '""'
+    Feature: 
   - Id: 19110
     Text: '%'
     Help: '""'
+    Feature: 
   - Id: 19200
     Text: "\u9B54\u6CD5\u30921\u3064\u9078\u3093\u3067\u5165\u624B\u3067\u304D\u307E\u3059"
     Help: '""'
+    Feature: 
   - Id: 19210
     Text: "\u4EF2\u9593\u3092\u9078\u3093\u3067\u52A0\u5165\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19220
     Text: "\u30B7\u30E7\u30C3\u30D7\u306B\u5165\u308A\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19230
     Text: "\u30B7\u30E7\u30C3\u30D7\u3092\u51FA\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19240
     Text: "Rank.N\u306F10(Nu)\u3001Rank.R\u306F20(Nu)\u3067\u5165\u624B\u3067\u304D\u307E\u3059"
     Help: '""'
+    Feature: 
   - Id: 19250
     Text: "\\d\u3092\u5165\u624B\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19260
     Text: "\\d(Nu)\u3092\u6D88\u8CBB\u3057\u3066"
     Help: '""'
+    Feature: 
   - Id: 19270
     Text: "\\d\u3092\u53EC\u559A\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19280
     Text: "\\d(Nu)\u3092\u5165\u624B\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19300
     Text: "\u9078\u629E\u3057\u305F\u30B9\u30C6\u30FC\u30B8\u304B\u3089\u30D6\u30E9\u30F3\u30C1\u3092\u4F5C\u308A\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19310
     Text: "\u9078\u629E\u3057\u305F\u904E\u53BB\u3092\u4E26\u884C\u4E16\u754C\u306B\u3057\u307E\u3059\u304B\uFF1F\n(\u6B8B\u308A\u56DE\u6570\\d\u56DE)"
     Help: '""'
+    Feature: 
   - Id: 19320
     Text: "\u4E26\u884C\u4E16\u754C\u3067\u304D\u308B\u6B8B\u308A\u56DE\u6570\u304C\u4E0D\u8DB3\u3057\u3066\u3044\u307E\u3059"
     Help: '""'
+    Feature: 
   - Id: 19330
     Text: "\uFF01\u6A5F\u80FD\u304C\u672A\u89E3\u653E\uFF01"
     Help: '""'
+    Feature: 
   - Id: 19340
     Text: "\u672A\u6765\u306E\u30DE\u30B9\u306E\u305F\u3081\u9078\u629E\u3067\u304D\u307E\u305B\u3093"
     Help: '""'
+    Feature: 
   - Id: 19350
     Text: "\uFF01\u904E\u53BB\u6539\u7DE8\u4E2D\u306F\u30BB\u30FC\u30D6\u3067\u304D\u307E\u305B\u3093\uFF01"
     Help: '""'
+    Feature: 
   - Id: 19360
     Text: "\uFF01\u904E\u53BB\u6539\u7DE8\u4E2D\u306F\u30B9\u30C6\u30FC\u30B8\u9078\u629E\u3067\u304D\u307E\u305B\u3093\uFF01"
     Help: '""'
+    Feature: 
   - Id: 19400
     Text: "\u30D0\u30C8\u30EB\u306B\u53C2\u52A0\u3059\u308B\u30E1\u30F3\u30D0\u30FC\u30921\u4EBA\u4EE5\u4E0A\u9078\u3093\u3067\u304F\u3060\u3055\u3044"
     Help: '""'
+    Feature: 
   - Id: 19401
     Text: "\u30D0\u30C8\u30EB\u4E0D\u53C2\u52A0\u306E\u30E1\u30F3\u30D0\u30FC\u304C\u3044\u307E\u3059\u304C\u3092\u958B\u59CB\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19410
     Text: "(Nu)\u304C\u4E0D\u8DB3\u3057\u3066\u3044\u307E\u3059"
     Help: '""'
+    Feature: 
   - Id: 19420
     Text: "\u30EC\u30D9\u30EB\u30EA\u30F3\u30AF\u5BFE\u8C61\u30AD\u30E3\u30E9\u306FLv\u30A2\u30C3\u30D7\u3067\u304D\u307E\u305B\u3093"
     Help: '""'
+    Feature: 
   - Id: 19500
     Text: "\u30BB\u30FC\u30D6\u3057\u307E\u3057\u305F\uFF01"
     Help: '""'
+    Feature: 
   - Id: 19510
     Text: "\\d(Nu)\u3092\u6D88\u8CBB\u3057\u3066"
     Help: '""'
+    Feature: 
   - Id: 19520
     Text: "\\d\u3092\u7FD2\u5F97\u3057\u307E\u3059\u304B\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 19600
     Text: 1st
     Help: '""'
+    Feature: 
   - Id: 19601
     Text: 2nd
     Help: '""'
+    Feature: 
   - Id: 19602
     Text: 3rd
     Help: '""'
+    Feature: 
   - Id: 19603
     Text: 4th
     Help: '""'
+    Feature: 
   - Id: 19604
     Text: 5th
     Help: '""'
+    Feature: 
   - Id: 19611
     Text: "\u9B54\u7269\u6BB2\u6EC5"
     Help: '""'
+    Feature: "\u30B7\u30F3\u30DC\u30EB\u30BF\u30A4\u30C8\u30EB"
   - Id: 19612
     Text: "\u4F7F\u5F92\u6BB2\u6EC5"
     Help: '""'
+    Feature: 
   - Id: 19613
     Text: "\u56DE\u5FA9"
     Help: '""'
+    Feature: 
   - Id: 19614
     Text: "\u9B54\u6CD5\u9078\u629E"
     Help: '""'
+    Feature: 
   - Id: 19615
     Text: "\u4EF2\u9593\u52A0\u5165"
     Help: '""'
+    Feature: 
   - Id: 19616
     Text: "\u30C8\u30EC\u30B8\u30E3\u30FC"
     Help: '""'
+    Feature: 
   - Id: 19617
     Text: "\u5FA9\u6D3B"
     Help: '""'
+    Feature: 
   - Id: 19618
     Text: "\u4EF2\u9593\u53EC\u559A"
     Help: '""'
+    Feature: 
   - Id: 19619
     Text: "\u30B7\u30E7\u30C3\u30D7"
     Help: '""'
+    Feature: 
   - Id: 19631
     Text: Past
     Help: '""'
+    Feature: "\u30B7\u30F3\u30DC\u30EB\u30EA\u30B9\u30C8"
   - Id: 19632
     Text: Next
     Help: '""'
+    Feature: 
   - Id: 19633
     Text: Future
     Help: '""'
+    Feature: 
   - Id: 19634
     Text: Current
     Help: '""'
+    Feature: 
   - Id: 19700
     Text: "\u30D8\u30EB\u30D7"
     Help: '""'
+    Feature: 
   - Id: 19710
     Text: "\u30BB\u30FC\u30D6"
     Help: '""'
+    Feature: 
   - Id: 19720
     Text: "\u30BF\u30A4\u30C8\u30EB\u3078"
     Help: '""'
+    Feature: 
   - Id: 19730
     Text: "\u9B54\u6CD5\u8F9E\u5178"
     Help: '""'
+    Feature: 
   - Id: 19800
     Text: "\u6575\u8A73\u7D30"
     Help: "\u6575\u306E\u9B54\u6CD5\u3084\u30B9\u30C6\u30FC\u30BF\u30B9\u3092\u78BA\u8A8D\u3057\u307E\u3059"
+    Feature: 
   - Id: 19810
     Text: "\u7D71\u5408\u3059\u308B"
     Help: '""'
+    Feature: 
   - Id: 20010
     Text: "\u6226\u679C\u5831\u544A"
     Help: '""'
+    Feature: Strategy
   - Id: 20020
     Text: "\u4F5C\u6226\u9042\u884C\u4E2D\u2026"
     Help: '""'
+    Feature: 
   - Id: 20030
     Text: LevelUp!
     Help: '""'
+    Feature: 
   - Id: 20040
     Text: "\u7D4C\u904E\u5831\u544A"
     Help: '""'
+    Feature: 
   - Id: 20050
     Text: "\u30DC\u30FC\u30CA\u30B9: +\\d"
     Help: '""'
+    Feature: 
   - Id: 20100
     Text: "\u300C\u904E\u53BB\u6539\u7DE8\u300D\u6A5F\u80FD\u304C\u89E3\u653E\uFF01"
     Help: '""'
+    Feature: 
   - Id: 20110
     Text: "\u300C\u4E26\u884C\u4E16\u754C\u5316\u300D\u6A5F\u80FD\u304C\u89E3\u653E\uFF01"
     Help: '""'
+    Feature: 
   - Id: 20120
     Text: "\u300C\u591A\u5143\u5B87\u5B99\u751F\u6210\u300D\u6A5F\u80FD\u304C\u89E3\u653E\uFF01"
     Help: '""'
+    Feature: 
   - Id: 20200
     Text: "\\d\u304C\u52A0\u5165\u3057\u307E\u3057\u305F\uFF01"
     Help: '""'
+    Feature: 
   - Id: 20210
     Text: "\u795E\u683C\u7B49\u7D1A\u304C\u30A2\u30C3\u30D7"
     Help: '""'
+    Feature: 
   - Id: 20220
     Text: "\u5168\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\\d\u30A2\u30C3\u30D7"
     Help: '""'
+    Feature: 
   - Id: 20230
     Text: "HP\u3068MP\u3092\\d\u56DE\u5FA9"
     Help: '""'
+    Feature: 
   - Id: 20240
     Text: "\u4EF2\u9593\u30921\u4EBA\u9078\u3093\u3067\u52A0\u5165"
     Help: '""'
+    Feature: 
   - Id: 20250
     Text: "\u9B54\u6CD5\u30921\u3064\u9078\u3093\u3067\u5165\u624B"
     Help: '""'
+    Feature: 
   - Id: 20260
     Text: "\u30D0\u30C8\u30EB\u8A55\u4FA1\u5024:+\\d%"
     Help: '""'
+    Feature: 
   - Id: 20270
     Text: "\u5149\u306E\u6A4B\u3092\u6E21\u308B"
     Help: '""'
+    Feature: 
   - Id: 20280
     Text: "\u30D0\u30C8\u30EB\u52DD\u5229\u6642Nu\u5165\u624B\u91CF+\\d"
     Help: '""'
+    Feature: 
   - Id: 20290
     Text: "\u6575Lv+\\d"
     Help: '""'
+    Feature: 
   - Id: 20300
     Text: "\u30D0\u30C8\u30EB\u30BF\u30FC\u30F3\u6570"
     Help: '""'
+    Feature: 
   - Id: 20310
     Text: "\u7372\u5F97\u5831\u916C"
     Help: '""'
+    Feature: 
   - Id: 20320
     Text: "\u30D0\u30C8\u30EB\u8A55\u4FA1"
     Help: '""'
+    Feature: 
   - Id: 20330
     Text: "\u6700\u5927\u30C0\u30E1\u30FC\u30B8"
     Help: '""'
+    Feature: 
   - Id: 20340
     Text: "\u6B8B\u308AHp\u7387"
     Help: '""'
+    Feature: 
   - Id: 20350
     Text: "\u6226\u95D8\u4E0D\u80FD\u8005\u6570"
     Help: '""'
+    Feature: 
   - Id: 23010
     Text: "\u7DCF\u5408\u7D50\u679C"
     Help: '""'
+    Feature: 
   - Id: 23020
     Text: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
     Help: '""'
+    Feature: 
   - Id: 23030
     Text: "\\d\u4F4D"
     Help: '""'
+    Feature: 
   - Id: 23031
     Text: "\u570F\u5916"
     Help: '""'
+    Feature: 
   - Id: 23032
     Text: "\u8A18\u9332\u66F4\u65B0\u306A\u3057  "
     Help: '""'
+    Feature: 
   - Id: 24010
     Text: "\u512A\u5148\u9806\u4F4D"
     Help: '""'
+    Feature: 
   - Id: 24020
     Text: "\u884C\u52D5"
     Help: '""'
+    Feature: 
   - Id: 24030
     Text: "\u6761\u4EF61"
     Help: '""'
+    Feature: 
   - Id: 24040
     Text: "\u6761\u4EF62"
     Help: '""'
+    Feature: 
   - Id: 24110
     Text: "\u968A\u5217\u30FB\u72B6\u6CC1"
     Help: '""'
+    Feature: 
   - Id: 24111
     Text: "\u7A2E\u65CF"
     Help: '""'
+    Feature: 
   - Id: 24112
     Text: Hp
     Help: '""'
+    Feature: 
   - Id: 24113
     Text: Mp
     Help: '""'
+    Feature: 
   - Id: 24114
     Text: "\u72B6\u614B"
     Help: '""'
+    Feature: 
   - Id: 24115
     Text: "\u899A\u9192\u72B6\u614B"
     Help: '""'
+    Feature: 
   - Id: 24116
     Text: "\u653B\u6483\u5C5E\u6027"
     Help: '""'
+    Feature: 
   - Id: 24117
     Text: "\u7DE8\u6210\u4EBA\u6570"
     Help: '""'
+    Feature: 
   - Id: 24118
     Text: "\u81EA\u8EAB\u306E\u72B6\u614B"
     Help: '""'
+    Feature: 
   - Id: 24119
     Text: "\u81EA\u8EAB\u306EHp"
     Help: '""'
+    Feature: 
   - Id: 24120
     Text: "\u81EA\u8EAB\u306EMp"
     Help: '""'
+    Feature: 
   - Id: 24121
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u6607\u9806"
     Help: '""'
+    Feature: 
   - Id: 24122
     Text: "\u30B9\u30C6\u30FC\u30BF\u30B9\u964D\u9806"
     Help: '""'
+    Feature: 
   - Id: 30010
     Text: "\u30AF\u30EA\u30A2\u7DE8\u6210"
     Help: '""'
+    Feature: 
   - Id: 30020
     Text: "\u30D0\u30C8\u30EB\u958B\u59CB"
     Help: '""'
+    Feature: 
   - Id: 30030
     Text: vs
     Help: '""'
+    Feature: 
   - Id: 30040
     Text: "\u3053\u306E\u30D0\u30C8\u30EB\u306B\u30EA\u30D7\u30EC\u30A4\u4FDD\u5B58\u30C7\u30FC\u30BF\u306F\u3042\u308A\u307E\u305B\u3093"
     Help: '""'
+    Feature: 
   - Id: 102000
     Text: "\u3059\u3079\u3066"
     Help: '""'
+    Feature: Rule
   - Id: 102010
     Text: "\u30B9\u30C6\u30FC\u30B8"
     Help: '""'
+    Feature: 
   - Id: 102020
     Text: "\u30D0\u30C8\u30EB"
     Help: '""'
+    Feature: 
   - Id: 113000
     Text: "\u7372\u5F97\u6E08\u307F"
     Help: '""'
+    Feature: ScorePrize
   - Id: 113010
     Text: "\u672A\u7372\u5F97"
     Help: '""'
+    Feature: 
   - Id: 113020
     Text: "\u6551\u547D\u4EBA\u6570"
     Help: '""'
+    Feature: 
   - Id: 113030
     Text: "\u7372\u5F97\u72B6\u6CC1"
     Help: '""'
+    Feature: 
   - Id: 113040
     Text: "\u4EBA"
     Help: '""'
+    Feature: 
   - Id: 121010
     Text: "\uFF1F"
     Help: '""'
+    Feature: Dictionary
   - Id: 121011
     Text: "\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121012
     Text: "\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121013
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121014
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121015
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121016
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121017
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121018
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121019
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121020
     Text: "\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F\uFF1F"
     Help: '""'
+    Feature: 
   - Id: 121030
     Text: "\u53CE\u96C6\u7387"
     Help: '""'
+    Feature: 
   InputDataList:
   - Key: TITLE
     KeyId: 4
@@ -1272,3 +1598,360 @@ MonoBehaviour:
   - Key: ENEMY_SELECT
     KeyId: 5
     Name: "\u623B\u308B"
+  - Key: ENEMY_SELECT
+    KeyId: 6
+    Name: 
+  - Key: ENEMY_SELECT
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_SELECT
+    KeyId: 2
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 1
+    Name: '""'
+  - Key: ENEMY_SELECT
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: ENEMY_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMY_BATTLE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 1
+    Name: '""'
+  - Key: ENEMY_BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RESOURCE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RESOURCE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RESOURCE
+    KeyId: 2
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 1
+    Name: '""'
+  - Key: RESOURCE
+    KeyId: 0
+    Name: '""'
+  - Key: NAMEENTRY
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: MAINMENU
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: MAINMENU
+    KeyId: 7
+    Name: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
+  - Key: MAINMENU
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: MAINMENU
+    KeyId: 0
+    Name: '""'
+  - Key: STRATEGY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY
+    KeyId: 2
+    Name: '""'
+  - Key: STRATEGY
+    KeyId: 1
+    Name: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
+  - Key: STRATEGY
+    KeyId: 0
+    Name: '""'
+  - Key: LEVELUP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE
+    KeyId: 6
+    Name: 
+  - Key: STRATEGY_BATTLE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE
+    KeyId: 2
+    Name: '""'
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 6
+    Name: 
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 7
+    Name: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: STRATEGY_BATTLE_SKIP
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
+  - Key: BATTLE
+    KeyId: 7
+    Name: "\u64A4\u9000\u3059\u308B"
+  - Key: BATTLE
+    KeyId: 6
+    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+  - Key: BATTLE
+    KeyId: 9
+    Name: "\u5C5E\u6027\u5207\u66FF"
+  - Key: BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_ENEMY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_ENEMY
+    KeyId: 6
+    Name: 
+  - Key: BATTLE_ENEMY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_ENEMY
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 1
+    Name: "\u5217\u5909\u66F4"
+  - Key: BATTLE_ENEMY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_ENEMY
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_ENEMY
+    KeyId: 2
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: BATTLE_PARTY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: BATTLE_PARTY
+    KeyId: 9
+    Name: "\u6575\u5473\u65B9\u5207\u66FF"
+  - Key: BATTLE_PARTY
+    KeyId: 8
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: BATTLE_PARTY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_AUTO
+    KeyId: 5
+    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: STATUS
+    KeyId: 6
+    Name: 
+  - Key: STATUS
+    KeyId: 11
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 10
+    Name: '""'
+  - Key: STATUS
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 2
+    Name: '""'
+  - Key: STATUS
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: STATUS
+    KeyId: 8
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 12
+    Name: "\u6C7A\u5B9A"
+  - Key: SELECT_HEROINE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SELECT_HEROINE
+    KeyId: 6
+    Name: 
+  - Key: SELECT_HEROINE
+    KeyId: 11
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 10
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 2
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 9
+    Name: "\u8853\u8005\u5207\u66FF"
+  - Key: SELECT_HEROINE
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO
+    KeyId: 9
+    Name: "\u6575\u5207\u66FF"
+  - Key: ENEMYINFO
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO
+    KeyId: 0
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 9
+    Name: "\u9805\u76EE\u5207\u66FF"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 8
+    Name: '""'
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: ENEMYINFO_BATTLE
+    KeyId: 0
+    Name: '""'
+  - Key: RULING
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RULING
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RULING
+    KeyId: 0
+    Name: '""'
+  - Key: ADV_READING
+    KeyId: 5
+    Name: "\u6587\u5B57\u9001\u308A"
+  - Key: ADV_READING
+    KeyId: 4
+    Name: '""'
+  - Key: ADV_READING
+    KeyId: 6
+    Name: "\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
+  - Key: ADV_SELECTING
+    KeyId: 9
+    Name: "\u9078\u629E\u80A2\u4E0B\u3092\u9078\u629E"
+  - Key: ADV_SELECTING
+    KeyId: 8
+    Name: "\u9078\u629E\u80A2\u4E0A\u3092\u9078\u629E"
+  - Key: ADV_SELECTING_ONE
+    KeyId: 8
+    Name: "\u9078\u629E\u80A2\u4E0B\u3092\u9078\u629E"
+  - Key: RESULT
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: RESULT
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RESULT
+    KeyId: 2
+    Name: '""'
+  - Key: RANKING
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: RANKING
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: RANKING
+    KeyId: 0
+    Name: '""'
+  - Key: REBORN
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: REBORN
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: REBORN
+    KeyId: 3
+    Name: "\u9B54\u6CD5\u5207\u66FF"
+  - Key: REBORN
+    KeyId: 2
+    Name: '""'
+  - Key: REBORN
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: REBORN
+    KeyId: 0
+    Name: '""'
+  - Key: SLOT
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: SLOT
+    KeyId: 6
+    Name: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
+  - Key: SLOT
+    KeyId: 4
+    Name: "\u4FDD\u6301\u5207\u66FF"
+  - Key: SLOT
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: SLOT
+    KeyId: 0
+    Name: '""'
+  - Key: CHARACTER_LIST
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: CHARACTER_LIST
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: CHARACTER_LIST
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: CHARACTER_LIST
+    KeyId: 0
+    Name: '""'

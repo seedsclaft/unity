@@ -36,50 +36,52 @@ namespace Ryneus
 
         public void SetText(string text) 
         {
-            mainText.text = text;
-            subText.text = text;
+            mainText.SetText(text);
+            subText.SetText(text);
         }
 
-        public void StartAnim()
+        public void StartAnim(bool inBattle)
         {
             _busy = true;
             Reset();
+            var speedRate = inBattle ? GameSystem.ConfigData.BattleSpeed : 1;
+            var duration = 0.1f / speedRate;
             mainText.transform.DOScaleY(0.95f,0);
             var main = DOTween.Sequence()
-                .SetDelay(0.1f)
+                .SetDelay(duration)
                 .Append(mainText.DOFade(1f,0f))
-                .Append(mainText.transform.DOScale(0.95f,0.4f))
-                .AppendInterval(1.2f)
-                .Append(mainText.DOFade(0f, 0.1f))
-                .Join(mainText.transform.DOLocalMoveX(-480, 0.1f));
+                .Append(mainText.transform.DOScale(0.95f,duration * 4))
+                .AppendInterval(duration * 12)
+                .Append(mainText.DOFade(0f, duration))
+                .Join(mainText.transform.DOLocalMoveX(-480, duration));
             
         
             subText.transform.DOScaleY(0.95f,0);
             var sub = DOTween.Sequence()
-                .SetDelay(0.1f)
+                .SetDelay(duration)
                 .Append(subText.DOFade(1f,0f))
-                .Append(subText.transform.DOScale(1.25f,0.8f))
-                .Join(subText.DOFade(0, 0.8f))
-                .AppendInterval(0.8f)
+                .Append(subText.transform.DOScale(1.25f,duration * 8))
+                .Join(subText.DOFade(0, duration * 8))
+                .AppendInterval(duration * 8)
                 .Append(subText.transform.DOScale(1f,0f))
                 .Join(subText.DOFade(1, 0f))
-                .Append(subText.DOFade(0f, 0.1f))
-                .Join(subText.transform.DOLocalMoveX(480, 0.1f));
+                .Append(subText.DOFade(0f, duration))
+                .Join(subText.transform.DOLocalMoveX(480, duration));
 
             lineWhite.transform.DOScaleY(0.95f,0);
             var white = DOTween.Sequence()
-                .Append(lineWhite.transform.DOScaleY(1f,0.02f))
-                .Append(lineWhite.transform.DOScaleY(0.08f,0.1f))
-                .Join(lineWhite.DOFade(0f, 1.6f))
+                .Append(lineWhite.transform.DOScaleY(1f,duration / 5))
+                .Append(lineWhite.transform.DOScaleY(0.08f,duration))
+                .Join(lineWhite.DOFade(0f, duration * 16))
                 .SetEase(Ease.InOutQuad);
 
             var black = DOTween.Sequence()
-                .SetDelay(0.1f)
-                .Append(backBlack.DOFade(1f, 0.1f))
-                .Join(backBlack.transform.DOScaleY(1f, 0.1f))
-                .AppendInterval(1.6f)
-                .Append(backBlack.DOFade(0f, 0.1f))
-                .Join(backBlack.transform.DOScaleY(0f, 0.1f))
+                .SetDelay(duration)
+                .Append(backBlack.DOFade(1f, duration))
+                .Join(backBlack.transform.DOScaleY(1f,duration))
+                .AppendInterval(duration * 16)
+                .Append(backBlack.DOFade(0f, duration))
+                .Join(backBlack.transform.DOScaleY(0f, duration))
                 .OnComplete(() => 
                 {
                     _busy = false;

@@ -81,6 +81,11 @@ namespace Ryneus
             return TriggerDates.Find(a => a.TriggerTiming == TriggerTiming.StartBattle) != null;
         }
 
+        public bool IsBattleSpecialSkill()
+        {
+            return SkillType == SkillType.Unique || SkillType == SkillType.Awaken;
+        }
+
         [Serializable]
         public class SkillAttributeInfo
         {   
@@ -211,7 +216,7 @@ namespace Ryneus
         None = 0,
         Active = 1, // アクティブ
         Passive = 2, // パッシブ
-        Messiah = 3, // 神化
+        Unique = 3, // ユニーク
         Awaken = 4, // 覚醒
         Relic = 5, // レリック
         Enhance = 6, // 強化
