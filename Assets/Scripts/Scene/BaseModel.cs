@@ -26,8 +26,6 @@ namespace Ryneus
         public bool BrunchMode => PartyInfo.ReturnSymbol != null;
         public bool NeedEndBrunch => PartyInfo.NeedEndBrunch();
         public CancellationTokenSource _cancellationTokenSource;
-        private List<StageTutorialData> _currentStageTutorialDates = new ();
-        public List<StageTutorialData> CurrentStageTutorialDates => _currentStageTutorialDates;
         public void InitSaveInfo()
         {
             GameSystem.CurrentData = new SaveInfo();
@@ -91,8 +89,6 @@ namespace Ryneus
 
         public List<StageEventData> StageEventDates => CurrentStage.Master.StageEvents;
 
-        public List<StageTutorialData> StageTutorialDates => CurrentStage.Master.Tutorials;
-
         public List<StageEventData> StageEvents(EventTiming eventTiming)
         {
             int CurrentTurn = CurrentStage.Seek;
@@ -100,18 +96,6 @@ namespace Ryneus
             return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
         }
         
-        public bool SetStageTutorials(EventTiming eventTiming)
-        {
-            int CurrentTurn = CurrentStage.Seek;
-            _currentStageTutorialDates = StageTutorialDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn);
-            return _currentStageTutorialDates.Count > 0;
-        }
-
-        public void SeekTutorial()
-        {
-            if (_currentStageTutorialDates.Count == 0) return;
-            _currentStageTutorialDates.RemoveAt(0);
-        }
 
         public void AddEventsReadFlag(List<StageEventData> stageEventDates)
         {
@@ -451,28 +435,16 @@ namespace Ryneus
             var currentScore = FirebaseController.CurrentScore;
             var evaluate = TotalScore;
 
+
             if (evaluate > currentScore)
             {
-    #if UNITY_ANDROID
-                FirebaseController.Instance.WriteRankingData(
-                    CurrentStage.Id,
-                    userId,
-                    evaluate,
-                    CurrentData.PlayerInfo.PlayerName,
-                    SelectIdxList(),
-                    SelectRankList(),
-                    RankingActorDates()
-                );
-    #elif UNITY_WEBGL
                 FirebaseController.Instance.WriteRankingData(
                     CurrentStage.Id,
                     userId,
                     (int)(evaluate * 100),
                     CurrentData.PlayerInfo.PlayerName,
-                    null,
-                    null
+                    StageMembers()
                 );
-    #endif
                 await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
 
                 FirebaseController.Instance.ReadRankingData();
@@ -778,6 +750,16 @@ namespace Ryneus
         public void AddPlayerInfoSkillId(int skillId)
         {
             CurrentData.PlayerInfo.AddSkillId(skillId);
+        }
+
+        public List<TutorialData> SceneTutorialDates(Scene scene)
+        {
+            return DataSystem.TutorialDates.FindAll(a => a.SceneType == scene && !CurrentData.PlayerInfo.ReadTutorials.Contains(a.Id));
+        }
+
+        public void ReadTutorialData(TutorialData tutorialData)
+        {
+            CurrentData.PlayerInfo.AddReadTutorials(tutorialData.Id);
         }
     }
 }

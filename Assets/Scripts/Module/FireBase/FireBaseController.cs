@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 #if UNITY_WEBGL
 using System.Runtime.InteropServices;
 #elif UNITY_ANDROID
@@ -29,7 +31,7 @@ namespace Ryneus
         private static extern void FirebaseCurrentRankingData(int instanceId,string userId,Action<int,string> result);
     
         [DllImport("__Internal")]
-        private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,int[] selectIndex,int selectIndexSize,int[] selectRank,int selectRankSize,Action<int,string> result);
+        private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,string actorData,Action<int,string> result);
     
         public void Initialize()
         {
@@ -75,6 +77,12 @@ namespace Ryneus
                 {
                     var ranking = JsonUtility.FromJson<RankingInfo>(arrayStr);
                     ranking.Rank = rank;
+
+				    var bytes = Convert.FromBase64String(ranking.ActorData);
+				    var	TempBinaryFormatter = new BinaryFormatter();
+				    var memoryStream = new MemoryStream(bytes);
+				    ranking.SetActorInfos((List<ActorInfo>)TempBinaryFormatter.Deserialize(memoryStream));
+                    
                     data.Add(ranking);
                     rank++;
                 }
@@ -107,14 +115,19 @@ namespace Ryneus
             IsBusy = false;
         }
 
-        public void WriteRankingData(int stageId,string userId,int score,string name, List<int> selectIdx,List<int> selectRank)
+        public void WriteRankingData(int stageId,string userId,int score,string name,List<ActorInfo> actorInfos)
         {
             if (!_isInit)
             {
                 return;
             }
+			var TempBinaryFormatter = new BinaryFormatter();
+			var memoryStream = new MemoryStream();
+			TempBinaryFormatter.Serialize (memoryStream,actorInfos);
+			var actorData = Convert.ToBase64String(memoryStream.GetBuffer());
+
             IsBusy = true;
-            FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,selectIdx.ToArray(),selectIdx.Count,selectRank.ToArray(),selectRank.Count,OnWriteFirestore);
+            FirebaseWriteRankingData(gameObject.GetInstanceID(),userId,score,name,actorData,OnWriteFirestore);
         }
 
         

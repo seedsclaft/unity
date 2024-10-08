@@ -47,7 +47,27 @@ namespace Ryneus
                 case CommandType.SelectTitle:
                     CommandSelectTitle();
                     break;
+                case CommandType.Ranking:
+                    CommandRanking();
+                    break;
             }
+        }
+
+        private void CommandRanking()
+        {
+            _busy = true;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.Ranking,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
+            var rankingViewInfo = new RankingViewInfo();
+            rankingViewInfo.StageId = 1;
+            _view.CommandCallRanking(rankingViewInfo);
         }
 
         private void CommandSelectTitle()

@@ -36,7 +36,6 @@ namespace Ryneus
         public bool UseSlot;
         public List<StageEventData> StageEvents;
         public List<StageSymbolData> StageSymbols;
-        public List<StageTutorialData> Tutorials;
     }
 
 
@@ -96,19 +95,6 @@ namespace Ryneus
             return SymbolType > SymbolType.Group;
         }
     }
-
-    [Serializable]
-    public class StageTutorialData
-    {
-        public int Turns;
-        public EventTiming Timing;
-        public TutorialType Type;
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
-    }
-
 
     [Serializable]
     public class SymbolGroupData

@@ -483,33 +483,6 @@ namespace Ryneus
             SetStageSeek();
         }
 
-        public bool CheckTutorial(TacticsViewEvent viewEvent)
-        {
-            if (CurrentStageTutorialDates.Count == 0)
-            {
-                return false;
-            }
-            var tutorial = CurrentStageTutorialDates[0];
-            switch (tutorial.Type)
-            {
-                case TutorialType.TacticsCommandTrain:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Train);
-                case TutorialType.TacticsCommandAlchemy:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Alchemy);
-                /*
-                case TutorialType.TacticsCommandRecover:
-                    return (viewEvent.commandType == Tactics.CommandType.TacticsCommand && (TacticsCommandType)viewEvent.template == TacticsCommandType.Recovery);
-                */
-                //case TutorialType.TacticsSelectTacticsActor:
-                //    return (viewEvent.commandType == Tactics.CommandType.SelectTacticsActor);
-                case TutorialType.TacticsSelectEnemy:
-                    return (viewEvent.commandType == Tactics.CommandType.SelectSymbol);
-                //case TutorialType.TacticsSelectAlchemyMagic:
-                //    return (viewEvent.commandType == Tactics.CommandType.SkillAlchemy && (SkillInfo)viewEvent.template != null);
-                
-            }
-            return false;
-        }
     }
 
     public class TacticsSceneInfo

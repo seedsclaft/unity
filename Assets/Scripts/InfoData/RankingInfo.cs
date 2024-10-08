@@ -10,11 +10,11 @@ namespace Ryneus
         public int Score;
         public string Name;
         public int Rank;
-        public string RankingTypeText = "";
+        public string ActorData;
 
-        public List<int> SelectIdx = new ();
-        public List<int> SelectRank = new ();
-        public List<ActorInfo> ActorInfos = new ();
+        private List<ActorInfo> _actorInfos = new ();
+        public List<ActorInfo> ActorInfos => _actorInfos;
+        public void SetActorInfos(List<ActorInfo> actorInfos) => _actorInfos = actorInfos;
         public System.Action<int> DetailEvent;
         public RankingInfo()
         {
@@ -26,10 +26,7 @@ namespace Ryneus
             Score = baseRankingInfo.Score;
             Name = baseRankingInfo.Name;
             Rank = baseRankingInfo.Rank;
-            RankingTypeText = baseRankingInfo.RankingTypeText;
-            SelectIdx = baseRankingInfo.SelectIdx;
-            SelectRank = baseRankingInfo.SelectRank;
-            ActorInfos = baseRankingInfo.ActorInfos;
+            _actorInfos = baseRankingInfo.ActorInfos;
             DetailEvent = baseRankingInfo.DetailEvent;
         }
     }

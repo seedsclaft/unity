@@ -324,14 +324,6 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallTutorialFocus(StageTutorialData stageTutorialDate)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallTutorialFocus)
-            {
-                template = stageTutorialDate
-            };
-            CallSceneChangeCommand(eventData);
-        }
 
         public void CommandCloseTutorialFocus()
         {

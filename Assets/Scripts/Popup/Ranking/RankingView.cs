@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Ranking;
 
 namespace Ryneus
@@ -14,12 +13,11 @@ namespace Ryneus
         public override void Initialize() 
         {
             base.Initialize();
-            new RankingPresenter(this);
             rankingInfoList.Initialize();
+            new RankingPresenter(this);
             rankingInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             SetInputHandler(rankingInfoList.GetComponent<IInputHandlerEvent>());
         }
-
 
         public void SetEvent(System.Action<RankingViewEvent> commandData)
         {
@@ -28,8 +26,10 @@ namespace Ryneus
 
         public void SetRankingViewInfo(RankingViewInfo rankingViewInfo)
         {
-            var eventData = new RankingViewEvent(CommandType.RankingOpen);
-            eventData.template = rankingViewInfo.StageId;
+            var eventData = new RankingViewEvent(CommandType.RankingOpen)
+            {
+                template = rankingViewInfo.StageId
+            };
             _commandData(eventData);
         }
 
@@ -66,16 +66,17 @@ namespace Ranking
 }
 public class RankingViewEvent
 {
-    public Ranking.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public RankingViewEvent(Ranking.CommandType type)
+    public RankingViewEvent(CommandType type)
     {
         commandType = type;
     }
 }
 
-public class RankingViewInfo{
+public class RankingViewInfo
+{
     public int StageId;
     public System.Action EndEvent;
 }

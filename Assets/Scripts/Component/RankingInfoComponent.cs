@@ -11,8 +11,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI playerName;
         [SerializeField] private TextMeshProUGUI rank;
         [SerializeField] private TextMeshProUGUI score;
-        [SerializeField] private List<Image> actorImages;
-        [SerializeField] private List<TextMeshProUGUI> actorEvaluates;
+        [SerializeField] private List<BattlePartyMemberItem> memberItems;
         [SerializeField] private Button detailButton;
         [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
 
@@ -22,21 +21,18 @@ namespace Ryneus
             if (ListData == null) return;
             var data = ListItemData<RankingInfo>();
             playerName.text = data.Name;
-            score.text = data.Score.ToString();
-            rank.text = data.Rank.ToString() + DataSystem.GetText(16070);
-            rankingTypeText.text = data.RankingTypeText;
-            for (int i = 0;i < actorImages.Count;i++)
+            score.SetText(data.Score.ToString());
+            rank.SetText(data.Rank.ToString() + DataSystem.GetText(23030));
+            //rankingTypeText.text = data.RankingTypeText;
+            for (int i = 0;i < memberItems.Count;i++)
             {
-                if (data.SelectIdx.Count > i)
+                if (data.ActorInfos.Count > i)
                 {
-                    actorImages[i].gameObject.SetActive(true);
-                    actorEvaluates[i].gameObject.SetActive(true);
-                    actorEvaluates[i].text = data.SelectRank[i].ToString();
-                    UpdateAwakenFaceThumb(actorImages[i],data.SelectIdx[i]);
+                    memberItems[i].gameObject.SetActive(true);
+                    UpdateMemberItem(memberItems[i],data.ActorInfos[i]);
                 } else
                 {
-                    actorEvaluates[i].gameObject.SetActive(false);
-                    actorImages[i].gameObject.SetActive(false);
+                    memberItems[i].gameObject.SetActive(false);
                 }
             }
             if (_isInit == false)
@@ -49,11 +45,11 @@ namespace Ryneus
             _isInit = true;
         }
         
-        private void UpdateAwakenFaceThumb(Image image, int actorId)
+        private void UpdateMemberItem(BattlePartyMemberItem memberItem, ActorInfo actorInfo)
         {
-            if (image != null) 
+            if (memberItem != null) 
             {
-                image.sprite = ResourceSystem.LoadActorAwakenFaceSprite(actorId.ToString("D4"));
+                memberItem.SetListData(new ListData(actorInfo),0);
             }
         }
     }

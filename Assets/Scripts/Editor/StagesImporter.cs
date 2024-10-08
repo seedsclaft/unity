@@ -146,29 +146,6 @@ namespace Ryneus
 							}
 						}
 						
-						KeyRow = TutorialSheet.GetRow(0);
-						AssetPostImporter.SetKeyNames(KeyRow.Cells);
-						StageData.Tutorials = new List<StageTutorialData>();
-						for (int j = 1; j <= TutorialSheet.LastRowNum; j++)
-						{
-							IRow EventRow = TutorialSheet.GetRow(j);
-							var TutorialData = new StageTutorialData();
-							var StageId = AssetPostImporter.ImportNumeric(EventRow, "Id");
-							
-							if (StageId == StageData.Id)
-							{
-								TutorialData.Turns = AssetPostImporter.ImportNumeric(EventRow, "Turns");
-								TutorialData.Timing = (EventTiming)AssetPostImporter.ImportNumeric(EventRow, "Timing");
-								TutorialData.Type = (TutorialType)AssetPostImporter.ImportNumeric(EventRow, "Type");
-								TutorialData.X = AssetPostImporter.ImportNumeric(EventRow, "X");
-								TutorialData.Y = AssetPostImporter.ImportNumeric(EventRow, "Y");
-								TutorialData.Width = AssetPostImporter.ImportNumeric(EventRow, "Width");
-								TutorialData.Height = AssetPostImporter.ImportNumeric(EventRow, "Height");
-								
-								StageData.Tutorials.Add(TutorialData);
-							}
-						}
-
 
 						Data.Data.Add(StageData);
 					}

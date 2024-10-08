@@ -72,12 +72,25 @@ namespace Ryneus
             CommandRefresh();
             PlayTacticsBgm();
             //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
-            if (_model.SetStageTutorials(EventTiming.StartTactics))
-            {
-                _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
-            }
             _view.ChangeUIActive(true);
             _view.StartAnimation();
+            // チュートリアル確認
+            var TutorialDates = _model.SceneTutorialDates(Scene.Tactics);
+            if (TutorialDates.Count > 0)
+            {
+                _busy = true;
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.Tutorial,
+                    template = TutorialDates[0],
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        _model.ReadTutorialData(TutorialDates[0]);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
+            }
         }
 
         public void CommandReturnStrategy()
@@ -138,17 +151,6 @@ namespace Ryneus
             }
             _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
             //Debug.Log(viewEvent.commandType);
-            if (_model.CheckTutorial(viewEvent))
-            {
-                _model.SeekTutorial();
-                if (_model.CurrentStageTutorialDates.Count == 0)
-                {
-                    _view.CommandCloseTutorialFocus();
-                } else
-                {            
-                    _view.CommandCallTutorialFocus(_model.CurrentStageTutorialDates[0]);
-                }
-            }
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectTacticsCommand:
@@ -158,7 +160,7 @@ namespace Ryneus
                     CommandSelectRecord((SymbolResultInfo)viewEvent.template);
                     break;
                 case CommandType.CallEnemyInfo:
-                    if (_model.CurrentStageTutorialDates.Count > 0) return;
+                    //if (_model.CurrentStageTutorialDates.Count > 0) return;
                     CommandCallEnemyInfo((SymbolResultInfo)viewEvent.template);
                     break;
                 case CommandType.CallAddActorInfo:

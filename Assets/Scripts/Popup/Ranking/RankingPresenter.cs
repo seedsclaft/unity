@@ -32,13 +32,14 @@ namespace Ryneus
             {
                 return;
             }
-            if (viewEvent.commandType == CommandType.RankingOpen)
+            switch (viewEvent.commandType)
             {
-                CommandRankingOpen((int)viewEvent.template);
-            }
-            if (viewEvent.commandType == CommandType.Detail)
-            {
-                CommandDetail((int)viewEvent.template);
+                case CommandType.RankingOpen:
+                    CommandRankingOpen((int)viewEvent.template);
+                    break;
+                case CommandType.Detail:
+                    CommandDetail((int)viewEvent.template);
+                    break;
             }
         }
 
@@ -46,7 +47,8 @@ namespace Ryneus
         {
             _busy = true;
             _view.CommandGameSystem(Base.CommandType.CallLoading);
-            _model.RankingInfos(stageId,(res) => {
+            _model.RankingInfos(stageId,(res) => 
+            {
                 _view.CommandGameSystem(Base.CommandType.CloseLoading);
                 _view.SetRankingInfo(res);
                 _busy = false;

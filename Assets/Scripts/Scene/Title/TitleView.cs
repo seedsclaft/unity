@@ -12,12 +12,18 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI versionText = null;
         private new System.Action<TitleViewEvent> _commandData = null;
         [SerializeField] private Button tapTitle = null;
+        [SerializeField] private OnOffButton rankingButton = null;
         public override void Initialize() 
         {
             base.Initialize();
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
+            });
+            rankingButton?.OnClickAddListener(() => 
+            {
+                var eventData = new TitleViewEvent(CommandType.Ranking);
+                _commandData(eventData);
             });
             new TitlePresenter(this);
             tapTitle.onClick.AddListener(() => OnClickTitle());
@@ -79,5 +85,6 @@ namespace Title
         None = 0,
         SelectTitle,
         SelectSideMenu,
+        Ranking,
     }
 }

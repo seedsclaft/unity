@@ -55,8 +55,8 @@ namespace Ryneus
             transitionRoot.SetActive(false);
             loadingView.Initialize();
             loadingView.gameObject.SetActive(false);
-            tutorialView.Initialize();
-            tutorialView.HideFocusImage();
+            //tutorialView.Initialize();
+            //tutorialView.HideFocusImage();
             transitionFade.Init();
             statusAssign.CloseStatus();
             TempData = new TempInfo();
@@ -224,11 +224,11 @@ namespace Ryneus
                     });
                     break;
                 case Base.CommandType.CallTutorialFocus:
-                    var stageTutorialData = (StageTutorialData)viewEvent.template;
-                    tutorialView.SeekFocusImage(stageTutorialData);
+                    //var stageTutorialData = (StageTutorialData)viewEvent.template;
+                    //tutorialView.SeekFocusImage(stageTutorialData);
                     break;
                 case Base.CommandType.CloseTutorialFocus:
-                    tutorialView.HideFocusImage();
+                    //tutorialView.HideFocusImage();
                     break;
                 case Base.CommandType.SceneHideUI:
                     SceneHideUI();
@@ -289,6 +289,11 @@ namespace Ryneus
             {
                 var guide = prefab.GetComponent<GuideView>();
                 guide.SetGuide((string)popupInfo.template);
+            } else
+            if (popupInfo.PopupType == PopupType.Tutorial)
+            {
+                var tutorial = prefab.GetComponent<TutorialView>();
+                tutorial.SetTutorialData((TutorialData)popupInfo.template);
             }
             SetIsBusyMainAndStatus();
         }
@@ -450,7 +455,7 @@ namespace Ryneus
             _currentScene.SetEvent((type) => UpdateCommand(type));
             _sceneStackManager.PushSceneInfo(sceneInfo);
             _currentScene.Initialize();
-            tutorialView.HideFocusImage();
+            //tutorialView.HideFocusImage();
         }
 
         private void SetIsBusyMainAndStatus()

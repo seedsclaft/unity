@@ -34,7 +34,7 @@ namespace Ryneus
         public int ClearCount => _clearCount;
         public void GainClearCount()
         {
-            _clearCount++;
+            //_clearCount++;
         }        
         
         private List<int> _skillIds = new ();
@@ -46,5 +46,9 @@ namespace Ryneus
                 _skillIds.Add(skillId);
             }
         }
+
+        private List<int> _readTutorials = new ();
+        public List<int> ReadTutorials => _readTutorials;
+        public void AddReadTutorials(int id) => _readTutorials.Add(id);
     }
 }
