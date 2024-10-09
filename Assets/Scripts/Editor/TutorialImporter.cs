@@ -80,7 +80,12 @@ namespace Ryneus
                             Y = AssetPostImporter.ImportNumeric(BaseRow, "Y"),
                             Width = AssetPostImporter.ImportNumeric(BaseRow, "Width"),
                             Height = AssetPostImporter.ImportNumeric(BaseRow, "Height"),
-                        };
+	
+                            FocusX = AssetPostImporter.ImportNumeric(BaseRow, "FocusX"),
+                            FocusY = AssetPostImporter.ImportNumeric(BaseRow, "FocusY"),
+                            FocusWidth = AssetPostImporter.ImportNumeric(BaseRow, "FocusWidth"),
+                            FocusHeight = AssetPostImporter.ImportNumeric(BaseRow, "FocusHeight"),
+						};
 
 						
 						Data.Data.Add(TutorialData);

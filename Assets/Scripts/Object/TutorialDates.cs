@@ -23,6 +23,10 @@ namespace Ryneus
         public int Y;
         public int Width;
         public int Height;
+        public int FocusX;
+        public int FocusY;
+        public int FocusWidth;
+        public int FocusHeight;
         public string Name;
         public string Help;
     }

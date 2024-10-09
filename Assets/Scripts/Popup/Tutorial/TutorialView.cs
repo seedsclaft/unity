@@ -16,6 +16,8 @@ namespace Ryneus
         [SerializeField] private Image arrowImage = null;
         [SerializeField] private GameObject frameObj = null;
         [SerializeField] private TextMeshProUGUI tutorialText = null;
+        [SerializeField] private GameObject focusFrameObj = null;
+        [SerializeField] private TextMeshProUGUI focusText = null;
 
 
         private System.Action _backEvent = null;
@@ -29,10 +31,48 @@ namespace Ryneus
         public void SetTutorialData(TutorialData tutorialData)
         {
             frameObj.SetActive(tutorialData.Type == 1);
+            if (tutorialData.Type == 1)
+            {
+            var rect = frameObj.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(tutorialData.X,tutorialData.Y,0);
+                rect.sizeDelta = new Vector3(tutorialData.Width,tutorialData.Height);
+            }
             tutorialText.SetText(tutorialData.Help);
             focusImage.gameObject.SetActive(tutorialData.Type == 2);
+            focusFrameObj.SetActive(tutorialData.Type == 2);
+            if (tutorialData.Type == 2)
+            {
+                ShowFocusImage(tutorialData);
+            } else
+            {
+                HideFocusImage();
+            }
         }
 
+        public void ShowFocusImage(TutorialData tutorialData)
+        {
+            //gameObject.SetActive(true);
+            if (focusImage == null) return;
+            var rect = focusImage.GetComponent<RectTransform>();
+            rect.localPosition = new Vector3(tutorialData.X,tutorialData.Y,0);
+            rect.sizeDelta = new Vector3(tutorialData.Width,tutorialData.Height);
+            //var bgRect = focusBgImage.GetComponent<RectTransform>();
+            //bgRect.localPosition = new Vector3(stageTutorialData.X * -1,stageTutorialData.Y * -1,0);
+            //if (tutorialData.Param1 == 1)
+            //{
+                var focusRect = focusFrameObj.GetComponent<RectTransform>();
+                focusRect.localPosition = new Vector3(tutorialData.FocusX,tutorialData.FocusY,0);            
+                focusRect.sizeDelta = new Vector3(tutorialData.FocusWidth,tutorialData.FocusHeight);
+                focusText.SetText(tutorialData.Help);
+            //}
+            //focusFrameObj.SetActive(tutorialData.Param1 == 1);
+        }
+
+        public void HideFocusImage()
+        {
+            //gameObject.SetActive(false);
+        }
+        
         public void SetUIButton()
         {
             helpButton.onClick.AddListener(() => OnClickHelp());
@@ -66,21 +106,6 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        public void ShowFocusImage(TutorialData stageTutorialData)
-        {
-            gameObject.SetActive(true);
-            if (focusImage == null) return;
-            var rect = focusImage.GetComponent<RectTransform>();
-            rect.localPosition = new Vector3(stageTutorialData.X,stageTutorialData.Y,0);
-            rect.sizeDelta = new Vector3(stageTutorialData.Width,stageTutorialData.Height);
-            //var bgRect = focusBgImage.GetComponent<RectTransform>();
-            //bgRect.localPosition = new Vector3(stageTutorialData.X * -1,stageTutorialData.Y * -1,0);
-        }
-
-        public void HideFocusImage()
-        {
-            gameObject.SetActive(false);
-        }
 
 
         public void InputHandler(InputKeyType keyType,bool pressed)

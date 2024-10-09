@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Battle;
 
 namespace Ryneus
 {
@@ -127,6 +128,35 @@ namespace Ryneus
             _busy = false;
         }
 
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
+            var TutorialDates = _model.SceneTutorialDates(Scene.Battle);
+            if (TutorialDates.Count > 0)
+            {
+                var checkFlag = true;
+                var tutorialData = TutorialDates[0];
+                if (!checkFlag)
+                {
+                    return;
+                }
+                _busy = true;
+                _view.SetBusy(true);
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.Tutorial,
+                    template = tutorialData,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        _view.SetBusy(false);
+                        _model.ReadTutorialData(tutorialData);
+                        CheckTutorialState(commandType);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
+            }
+        }
+
         private void UpdateCommand(BattleViewEvent viewEvent)
         {
             switch (viewEvent.commandType)
@@ -205,6 +235,7 @@ namespace Ryneus
                     CommandSkillLog();
                     break;
             }
+            CheckTutorialState(viewEvent.commandType);
         }
 
         private void UpdatePopupEscape(ConfirmCommandType confirmCommandType)

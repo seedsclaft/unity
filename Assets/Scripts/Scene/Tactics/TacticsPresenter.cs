@@ -75,18 +75,40 @@ namespace Ryneus
             _view.ChangeUIActive(true);
             _view.StartAnimation();
             // チュートリアル確認
+            CheckTutorialState();
+        }
+
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
             var TutorialDates = _model.SceneTutorialDates(Scene.Tactics);
             if (TutorialDates.Count > 0)
             {
+                var checkFlag = true;
+                var tutorialData = TutorialDates[0];
+                if (tutorialData.Param1 == 100)
+                {
+                    // マス一覧を初めて開く
+                    checkFlag = _view.SymbolRecordListActive;
+                }
+                if (tutorialData.Param1 == 200)
+                {
+                    // 編成を初めて開く
+                    checkFlag = commandType == CommandType.SelectSymbol;
+                }
+                if (!checkFlag)
+                {
+                    return;
+                }
                 _busy = true;
                 var popupInfo = new PopupInfo
                 {
                     PopupType = PopupType.Tutorial,
-                    template = TutorialDates[0],
+                    template = tutorialData,
                     EndEvent = () =>
                     {
                         _busy = false;
-                        _model.ReadTutorialData(TutorialDates[0]);
+                        _model.ReadTutorialData(tutorialData);
+                        CheckTutorialState(commandType);
                     }
                 };
                 _view.CommandCallPopup(popupInfo);
@@ -228,6 +250,8 @@ namespace Ryneus
                     CommandMargeRequest();
                     break;
             }
+            // チュートリアル確認
+            CheckTutorialState(viewEvent.commandType);
         }
 
         private void UpdatePopupSelectAddActor(ConfirmCommandType confirmCommandType)

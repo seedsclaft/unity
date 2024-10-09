@@ -18,6 +18,7 @@ namespace Ryneus
         [SerializeField] private StageInfoComponent stageInfoComponent = null;
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
         [SerializeField] private BaseList symbolRecordList = null;
+        public bool SymbolRecordListActive => symbolRecordList.gameObject.activeSelf;
         [SerializeField] private MagicList alcanaSelectList = null;
 
         [SerializeField] private TextMeshProUGUI saveScoreText = null;

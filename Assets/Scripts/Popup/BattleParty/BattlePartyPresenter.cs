@@ -36,6 +36,38 @@ namespace Ryneus
             _busy = false;
         }
 
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
+            var TutorialDates = _model.SceneTutorialDates(PopupType.BattleParty);
+            if (TutorialDates.Count > 0)
+            {
+                var checkFlag = true;
+                var tutorialData = TutorialDates[0];
+                if (tutorialData.Param1 == 100)
+                {
+                    // バトルメンバーがいる
+                    checkFlag = _model.BattleMembers().Count > 0;
+                }
+                if (!checkFlag)
+                {
+                    return;
+                }
+                _busy = true;
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.Tutorial,
+                    template = tutorialData,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        _model.ReadTutorialData(tutorialData);
+                        CheckTutorialState(commandType);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
+            }
+        }
+
         private void UpdateCommand(BattlePartyViewEvent viewEvent)
         {
             if (_busy || _view.AnimationBusy)
@@ -73,6 +105,7 @@ namespace Ryneus
                     CommandChangeLineIndex((ActorInfo)viewEvent.template);
                     break;
             }
+            CheckTutorialState(viewEvent.commandType);
         }
 
         private void UpdateStatusCommand(StatusViewEvent statusViewEvent)

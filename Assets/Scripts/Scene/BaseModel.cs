@@ -757,6 +757,11 @@ namespace Ryneus
             return DataSystem.TutorialDates.FindAll(a => a.SceneType == scene && !CurrentData.PlayerInfo.ReadTutorials.Contains(a.Id));
         }
 
+        public List<TutorialData> SceneTutorialDates(PopupType popupType)
+        {
+            return DataSystem.TutorialDates.FindAll(a => (int)a.SceneType == ((int)popupType + 100) && !CurrentData.PlayerInfo.ReadTutorials.Contains(a.Id));
+        }
+
         public void ReadTutorialData(TutorialData tutorialData)
         {
             CurrentData.PlayerInfo.AddReadTutorials(tutorialData.Id);
