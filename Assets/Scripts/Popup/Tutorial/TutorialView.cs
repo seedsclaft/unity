@@ -12,24 +12,29 @@ namespace Ryneus
         private new System.Action<TutorialViewEvent> _commandData = null;
         [SerializeField] private Button helpButton = null;
         [SerializeField] private Image focusImage = null;
-        //[SerializeField] private Image focusBgImage = null;
+        [SerializeField] private Image focusBgImage = null;
         [SerializeField] private Image arrowImage = null;
         [SerializeField] private GameObject frameObj = null;
         [SerializeField] private TextMeshProUGUI tutorialText = null;
         [SerializeField] private GameObject focusFrameObj = null;
         [SerializeField] private TextMeshProUGUI focusText = null;
+        [SerializeField] private GameObject toggleObj = null;
+        [SerializeField] private Toggle checkToggle = null;
+        public bool CheckToggle => checkToggle.isOn;
 
 
         private System.Action _backEvent = null;
         public new void Initialize() 
         {
             base.Initialize();
-            
+            SetBackCommand(() => OnClickBack());
             new TutorialPresenter(this);
         }
 
         public void SetTutorialData(TutorialData tutorialData)
         {
+            // 最初だけ
+            toggleObj.SetActive(tutorialData.Id == 1000);
             frameObj.SetActive(tutorialData.Type == 1);
             if (tutorialData.Type == 1)
             {
@@ -56,8 +61,8 @@ namespace Ryneus
             var rect = focusImage.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(tutorialData.X,tutorialData.Y,0);
             rect.sizeDelta = new Vector3(tutorialData.Width,tutorialData.Height);
-            //var bgRect = focusBgImage.GetComponent<RectTransform>();
-            //bgRect.localPosition = new Vector3(stageTutorialData.X * -1,stageTutorialData.Y * -1,0);
+            var bgRect = focusBgImage.GetComponent<RectTransform>();
+            bgRect.localPosition = new Vector3(tutorialData.X * -1,tutorialData.Y * -1,0);
             //if (tutorialData.Param1 == 1)
             //{
                 var focusRect = focusFrameObj.GetComponent<RectTransform>();

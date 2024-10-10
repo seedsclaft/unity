@@ -13,6 +13,7 @@ namespace Ryneus
         [SerializeField] private BattleSelectCharacter selectCharacter = null;
         [SerializeField] private ActorInfoComponent actorInfoComponent = null;
         [SerializeField] private Button decideButton = null;
+        public bool DecideButtonActive => decideButton.gameObject.activeSelf;
         [SerializeField] private OnOffButton characterListButton = null;
         private new System.Action<StatusViewEvent> _commandData = null;
         [SerializeField] private Button leftButton = null;

@@ -95,6 +95,21 @@ namespace Ryneus
                     // 編成を初めて開く
                     checkFlag = commandType == CommandType.SelectSymbol;
                 }
+                if (tutorialData.Param1 == 300)
+                {
+                    // トレジャーのマスを初めて開く
+                    checkFlag = _view.SymbolRecordListActive && _model.CurrentStage.Seek == 2;
+                }
+                if (tutorialData.Param1 == 900)
+                {
+                    // 仲間加入のマスを初めて開く
+                    checkFlag = _view.SymbolRecordListActive && _model.CurrentStage.Seek == 7;
+                }
+                if (tutorialData.Param1 == 1100)
+                {
+                    // ステージ2の最初
+                    checkFlag = _model.CurrentStage.Id == 2;
+                }
                 if (!checkFlag)
                 {
                     return;

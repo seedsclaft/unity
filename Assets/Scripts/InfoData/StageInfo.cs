@@ -80,6 +80,10 @@ namespace Ryneus
         public EndingType EndingType => _endingType;
         public void SetEndingType(EndingType endingType) {_endingType = endingType;}
 
+        private int _loseCount = 0;
+        public int LoseCount => _loseCount;
+        public void GainLoseCount(){ _loseCount++;}
+
         public StageInfo(StageData stageData)
         {
             _id = stageData.Id;

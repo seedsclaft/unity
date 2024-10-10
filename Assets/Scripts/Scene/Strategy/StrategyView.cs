@@ -13,6 +13,7 @@ namespace Ryneus
         [SerializeField] private StrategyActorList strategyActorList = null; 
         [SerializeField] private CanvasGroup strategyResultCanvasGroup = null;
         [SerializeField] private BaseList strategyResultList = null; 
+        public bool StrategyResultListActive => strategyResultList.gameObject.activeSelf; 
         [SerializeField] private BaseList commandList = null; 
         [SerializeField] private BaseList statusList = null; 
         [SerializeField] private MagicList alcanaSelectList = null;

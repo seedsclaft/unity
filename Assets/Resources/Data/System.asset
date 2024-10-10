@@ -131,6 +131,16 @@ MonoBehaviour:
     ToggleText2: 16310
     ToggleText3: 16320
     ExistAndroid: 1
+  - Id: 11
+    Key: TUTORIAL_CHECK
+    Name: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u78BA\u8A8D"
+    Help: " - \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u78BA\u8A8D\u3092\u8868\u793A\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Category: 2
+    ButtonType: 2
+    ToggleText1: 6221
+    ToggleText2: 6222
+    ToggleText3: 0
+    ExistAndroid: 0
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -665,6 +675,10 @@ MonoBehaviour:
     Text: "\u30D0\u30C8\u30EB\u30B9\u30D4\u30FC\u30C9"
     Help: " - \u30D0\u30C8\u30EB\u306E\u901F\u5EA6\u3092\u5909\u66F4\u3057\u307E\u3059"
     Feature: 
+  - Id: 6111
+    Text: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u78BA\u8A8D"
+    Help: " - \u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u78BA\u8A8D\u3092\u8868\u793A\u3059\u308B\u304B\u5909\u66F4\u3057\u307E\u3059"
+    Feature: 
   - Id: 6201
     Text: Normal
     Help: '""'
@@ -842,7 +856,7 @@ MonoBehaviour:
     Help: '""'
     Feature: Status
   - Id: 18020
-    Text: "\u8853\u8005\u9078\u5B9A"
+    Text: "\u4EF2\u9593\u6C7A\u5B9A\uFF01"
     Help: '""'
     Feature: 
   - Id: 18100

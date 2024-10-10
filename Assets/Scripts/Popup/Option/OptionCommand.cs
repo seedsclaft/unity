@@ -132,6 +132,12 @@ namespace Ryneus
                         optionToggles[i].SetIsOnWithoutNotify(ConfigUtility.SpeedList[i+1] == GameSystem.ConfigData.BattleSpeed);
                     }
                     return;
+                case "TUTORIAL_CHECK":
+                    for (int i = 0;i < optionToggles.Count;i++)
+                    {
+                        optionToggles[i].SetIsOnWithoutNotify(i == (GameSystem.ConfigData.TutorialCheck == true ? 0 : 1));
+                    }
+                    return;
             }
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Status;
 
 namespace Ryneus
 {
@@ -6,7 +7,7 @@ namespace Ryneus
     {
         private StatusModel _model = null;
         private StatusView _view = null;
-        private Status.CommandType _popupCommandType = Status.CommandType.None;
+        private CommandType _popupCommandType = CommandType.None;
         private bool _busy = false;
         public StatusPresenter(StatusView view,List<ActorInfo> actorInfos)
         {
@@ -26,6 +27,7 @@ namespace Ryneus
             CommandRefresh();
             if (_model.ActorInfos.Count == 1) _view.HideArrows();
             _view.OpenAnimation();
+            CheckTutorialState();
         }
 
         private void UpdateCommand(StatusViewEvent viewEvent)
@@ -37,45 +39,78 @@ namespace Ryneus
             UnityEngine.Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
-                case Status.CommandType.DecideActor:
+                case CommandType.DecideActor:
                     CommandDecideActor();
                     return;
-                case Status.CommandType.LeftActor:
+                case CommandType.LeftActor:
                     CommandLeftActor();
                     return;
-                case Status.CommandType.RightActor:
+                case CommandType.RightActor:
                     CommandRightActor();
                     return;
-                case Status.CommandType.Back:
+                case CommandType.Back:
                     CommandBack();
                     return;
-                case Status.CommandType.CharacterList:
+                case CommandType.CharacterList:
                     CommandCharacterList();
                     return;
-                case Status.CommandType.SelectCharacter:
+                case CommandType.SelectCharacter:
                     CommandSelectCharacter((int)viewEvent.template);
                     return;
-                case Status.CommandType.LvReset:
+                case CommandType.LvReset:
                     CommandLvReset();
                     return;
-                case Status.CommandType.LevelUp:
+                case CommandType.LevelUp:
                     CommandLevelUp();
                     return;
-                case Status.CommandType.ShowLearnMagic:
+                case CommandType.ShowLearnMagic:
                     CommandShowLearnMagic();
                     return;
-                case Status.CommandType.LearnMagic:
+                case CommandType.LearnMagic:
                     CommandLearnMagic((SkillInfo)viewEvent.template);
                     return;
-                case Status.CommandType.HideLearnMagic:
+                case CommandType.HideLearnMagic:
                     CommandHideLearnMagic();
                     return;
-                case Status.CommandType.SelectCommandList:
+                case CommandType.SelectCommandList:
                     CommandSelectCommandList((SystemData.CommandData)viewEvent.template);
                     return;
-                case Status.CommandType.CallHelp:
+                case CommandType.CallHelp:
                     CommandCallHelp();
                     return;
+            }
+            CheckTutorialState(viewEvent.commandType);
+        }
+
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
+            var TutorialDates = _model.SceneTutorialDates(StatusType.Status);
+            if (TutorialDates.Count > 0)
+            {
+                var checkFlag = true;
+                var tutorialData = TutorialDates[0];
+                if (tutorialData.Param1 == 1000)
+                {
+                    // 初めて仲間加入画面を開く
+                    checkFlag = _view.DecideButtonActive;
+                }
+                if (!checkFlag)
+                {
+                    return;
+                }
+                _busy = true;
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.Tutorial,
+                    template = tutorialData,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        _model.ReadTutorialData(tutorialData);
+                        CheckTutorialState(commandType);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
             }
         }
 
@@ -120,7 +155,7 @@ namespace Ryneus
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(18300,_model.CurrentActor.Master.Name),(a) => UpdatePopupActorLvReset(a));
                 _view.CommandCallConfirm(confirmInfo);
-                _popupCommandType = Status.CommandType.DecideStage;
+                _popupCommandType = CommandType.DecideStage;
             } else
             {
                 SoundManager.Instance.PlayStaticSe(SEType.Deny);
@@ -221,13 +256,13 @@ namespace Ryneus
             var text = DataSystem.GetReplaceText(18320,actorInfo.Master.Name);
             var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup(menuCommandInfo));
             _view.CommandCallConfirm(confirmInfo);
-            _popupCommandType = Status.CommandType.DecideStage;
+            _popupCommandType = CommandType.DecideStage;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            if (_popupCommandType == Status.CommandType.SelectSkillAction)
+            if (_popupCommandType == CommandType.SelectSkillAction)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)
                 {
@@ -237,7 +272,7 @@ namespace Ryneus
             }
 
 
-            if (_popupCommandType == Status.CommandType.DecideStage)
+            if (_popupCommandType == CommandType.DecideStage)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)
                 {

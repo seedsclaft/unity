@@ -18,11 +18,11 @@ namespace Ryneus
                 ChangeEventSkipIndex(saveConfigInfo.EventSkipIndex);
                 ChangeCommandEndCheck(saveConfigInfo.CommandEndCheck);
                 ChangeBattleWait(saveConfigInfo.BattleWait);
-                ChangeBattleWait(saveConfigInfo.BattleWait);
                 ChangeBattleAnimation(saveConfigInfo.BattleAnimationSkip);
                 ChangeInputType(saveConfigInfo.InputType);
                 ChangeBattleAuto(saveConfigInfo.BattleAuto);
                 SetBattleSpeed(saveConfigInfo.BattleSpeed);
+                ChangeTutorialCheck(saveConfigInfo.TutorialCheck);
             }
         }
         public static void ChangeBGMValue(float bgmVolume)
@@ -137,6 +137,11 @@ namespace Ryneus
                 return DataSystem.GetText(option.ToggleText3);
             }
             return "";
+        }
+
+        public static void ChangeTutorialCheck(bool tutorialCheck)
+        {
+            GameSystem.ConfigData.TutorialCheck = tutorialCheck;
         }
     }
 }

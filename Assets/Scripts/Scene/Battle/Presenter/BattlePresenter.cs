@@ -135,6 +135,11 @@ namespace Ryneus
             {
                 var checkFlag = true;
                 var tutorialData = TutorialDates[0];
+                if (tutorialData.Param1 == 600)
+                {
+                    // 初めてボスバトル
+                    checkFlag = _model.CurrentSelectRecord().SymbolType == SymbolType.Boss;
+                }
                 if (!checkFlag)
                 {
                     return;
@@ -610,6 +615,7 @@ namespace Ryneus
                 strategySceneInfo.BattleTurn = -1; 
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false,strategySceneInfo);
                 strategySceneInfo.BattleResultVictory = false;
+                _model.CurrentStage.GainLoseCount();
             }
             _model.EndBattle();
             _battleEnded = true;

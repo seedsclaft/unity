@@ -72,6 +72,50 @@ namespace Ryneus
                     CommandSelectAlcanaList((SkillInfo)viewEvent.template);
                     break;
             }
+            // チュートリアル確認
+            CheckTutorialState(viewEvent.commandType);
+        }
+
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
+            var TutorialDates = _model.SceneTutorialDates(Scene.Strategy);
+            if (TutorialDates.Count > 0)
+            {
+                var checkFlag = true;
+                var tutorialData = TutorialDates[0];
+                if (tutorialData.Param1 == 100)
+                {
+                    // Lvアップ後にいリザルトを初めて開く
+                    checkFlag = _view.StrategyResultListActive;
+                }
+                if (tutorialData.Param1 == 700)
+                {
+                    // 初めて敗北する
+                    checkFlag = _model.InBattleResult && _model.BattleResultVictory == false;
+                }
+                if (tutorialData.Param1 == 800)
+                {
+                    // 2回目の敗北する
+                    checkFlag = _model.InBattleResult && _model.BattleResultVictory == false && _model.CurrentStage.LoseCount == 2;
+                }
+                if (!checkFlag)
+                {
+                    return;
+                }
+                _busy = true;
+                var popupInfo = new PopupInfo
+                {
+                    PopupType = PopupType.Tutorial,
+                    template = tutorialData,
+                    EndEvent = () =>
+                    {
+                        _busy = false;
+                        _model.ReadTutorialData(tutorialData);
+                        CheckTutorialState(commandType);
+                    }
+                };
+                _view.CommandCallPopup(popupInfo);
+            }
         }
 
         private void CommandStartStrategy()

@@ -18,6 +18,7 @@ namespace Ryneus
 		public bool InputType;
 		public bool BattleAuto;
 		public float BattleSpeed = 1f;
+		public bool TutorialCheck;
 		public SaveConfigInfo()
 		{
 			InitParameter();
@@ -37,6 +38,7 @@ namespace Ryneus
 			InputType = true;
 			BattleAuto = false;
 			BattleSpeed = 1f;
+			TutorialCheck = true;
 		}
 
 		public void UpdateSoundParameter(float bgmVolume,bool bgmMute,float seVolume,bool seMute)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using BattleParty;
 
 namespace Ryneus
@@ -48,6 +49,17 @@ namespace Ryneus
                     // バトルメンバーがいる
                     checkFlag = _model.BattleMembers().Count > 0;
                 }
+                if (tutorialData.Param1 == 400)
+                {
+                    // Nuが1以上,Actor1のLvが2
+                    checkFlag = _model.Currency > 0 && _model.StageMembers()[0].Level == 2;
+                }
+                if (tutorialData.Param1 == 500)
+                {
+                    // Actor1のLvが3以上,ウルフソウルを未習得
+                    checkFlag = _model.StageMembers()[0].Level > 2 && !_model.StageMembers()[0].IsLearnedSkill(11010);
+                }
+                LogOutput.Log(checkFlag);
                 if (!checkFlag)
                 {
                     return;
@@ -132,6 +144,7 @@ namespace Ryneus
                     CommandSelectSkillTrigger();
                     return;
             }
+            CheckTutorialState();
         }
 
         private void CommandSelectSideMenu()
@@ -375,6 +388,7 @@ namespace Ryneus
             ShowCharacterDetail();
             _view.SetBattleMembers(GetListData(_model.BattleMembers()));
             _view.SetNuminous(_model.Currency);
+            CheckTutorialState();
         }
     }
 

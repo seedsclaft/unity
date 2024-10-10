@@ -48,6 +48,11 @@ namespace Ryneus
 
         private void CommandBack()
         {
+            if (_view.CheckToggle)
+            {
+                // チュートリアル省略
+                ConfigUtility.ChangeTutorialCheck(false);
+            }
             _view.CommandBack();
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }

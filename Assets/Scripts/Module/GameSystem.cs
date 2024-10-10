@@ -77,13 +77,16 @@ namespace Ryneus
             var prefab = statusAssign.CreatePopup(statusType,helpWindow);
             if (statusType == StatusType.Status)
             {
+                prefab.GetComponent<StatusView>().SetEvent((type) => UpdateCommand(type));
                 prefab.GetComponent<StatusView>().Initialize(statusViewInfo.ActorInfos);
             } else
             if (statusType == StatusType.EnemyDetail)
             {
+                prefab.GetComponent<EnemyInfoView>().SetEvent((type) => UpdateCommand(type));
                 prefab.GetComponent<EnemyInfoView>().Initialize(statusViewInfo.EnemyInfos,statusViewInfo.IsBattle);
             } else
             {
+                prefab.GetComponent<TacticsStatusView>().SetEvent((type) => UpdateCommand(type));
                 prefab.GetComponent<TacticsStatusView>().Initialize(statusViewInfo.ActorInfos);
             }
             return prefab.GetComponent<BaseView>();
