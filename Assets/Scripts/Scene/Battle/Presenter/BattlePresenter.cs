@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Battle;
+using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -129,37 +130,42 @@ namespace Ryneus
         }
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
-        {
-            var TutorialDates = _model.SceneTutorialDates(Scene.Battle);
-            if (TutorialDates.Count > 0)
+        {            
+            Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
-                var tutorialData = TutorialDates[0];
                 if (tutorialData.Param1 == 600)
                 {
                     // 初めてボスバトル
                     checkFlag = _model.CurrentSelectRecord().SymbolType == SymbolType.Boss;
                 }
-                if (!checkFlag)
+                return checkFlag;
+            };
+            Func<TutorialData,bool> checkEnd = (tutorialData) => 
+            {
+                var checkFlag = true;
+                if (tutorialData.Param3 == 610)
                 {
-                    return;
+                    checkFlag = false;
                 }
-                _busy = true;
-                _view.SetBusy(true);
-                var popupInfo = new PopupInfo
+                if (tutorialData.Param3 == 620)
                 {
-                    PopupType = PopupType.Tutorial,
-                    template = tutorialData,
-                    EndEvent = () =>
+                    checkFlag = _model.TargetEnemy != null && _model.TargetEnemy.Index > 100;
+                    if (checkFlag)
                     {
                         _busy = false;
-                        _view.SetBusy(false);
-                        _model.ReadTutorialData(tutorialData);
-                        CheckTutorialState(commandType);
                     }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                }
+                return checkFlag;
+            };
+            BaseCheckTutorialState((int)Scene.Battle,enable,() => 
+            {
+                _busy = false;
+                CheckTutorialState(commandType);
+            },checkEnd,() => 
+            {
+                _busy = true;
+            });
         }
 
         private void UpdateCommand(BattleViewEvent viewEvent)
@@ -672,6 +678,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             _model.SetTargetEnemy(battlerInfo);
             _view.SetTargetEnemy(battlerInfo);
+            CheckTutorialState();
         }
 
         private void CancelSelectEnemy()

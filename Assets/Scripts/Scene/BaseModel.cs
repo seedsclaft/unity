@@ -752,9 +752,9 @@ namespace Ryneus
             CurrentData.PlayerInfo.AddSkillId(skillId);
         }
 
-        public List<TutorialData> SceneTutorialDates(Scene scene)
+        public List<TutorialData> SceneTutorialDates(int scene)
         {
-            return DataSystem.TutorialDates.FindAll(a => a.SceneType == scene && !CurrentData.PlayerInfo.ReadTutorials.Contains(a.Id));
+            return DataSystem.TutorialDates.FindAll(a => (int)a.SceneType == scene && !CurrentData.PlayerInfo.ReadTutorials.Contains(a.Id));
         }
 
         public List<TutorialData> SceneTutorialDates(PopupType popupType)

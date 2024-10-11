@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Utage;
 
 namespace Ryneus
@@ -23,7 +25,7 @@ namespace Ryneus
         [SerializeField] private DebugBattleData debugBattleData = null;
         [SerializeField] private HelpWindow helpWindow = null;
         [SerializeField] private HelpWindow advHelpWindow = null;
-        [SerializeField] private TutorialView tutorialView = null;
+        [SerializeField] private EventSystem eventSystem = null;
         
         private BaseView _currentScene = null;
 
@@ -231,7 +233,13 @@ namespace Ryneus
                     //tutorialView.SeekFocusImage(stageTutorialData);
                     break;
                 case Base.CommandType.CloseTutorialFocus:
-                    //tutorialView.HideFocusImage();
+                    if (popupAssign.StackPopupView != null)
+                    {
+                        if (popupAssign.StackPopupView.Find(a => a.GetType() == typeof(TutorialView)) != null) 
+                        {                
+                            popupAssign.CloseTutorialPopup();
+                        }
+                    }
                     break;
                 case Base.CommandType.SceneHideUI:
                     SceneHideUI();
@@ -272,7 +280,7 @@ namespace Ryneus
             //SetIsBusyMainAndStatus();
         }
 
-        private void CommandPopupView(PopupInfo popupInfo)
+        private async void CommandPopupView(PopupInfo popupInfo)
         {
             var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
             var baseView = prefab.GetComponent<BaseView>();
@@ -295,8 +303,11 @@ namespace Ryneus
             } else
             if (popupInfo.PopupType == PopupType.Tutorial)
             {
+                eventSystem.enabled = false;
                 var tutorial = prefab.GetComponent<TutorialView>();
                 tutorial.SetTutorialData((TutorialData)popupInfo.template);
+                await UniTask.DelayFrame(1);
+                eventSystem.enabled = true;
             }
             SetIsBusyMainAndStatus();
         }

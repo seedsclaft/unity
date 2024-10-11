@@ -28,6 +28,8 @@ namespace Ryneus
         [SerializeField] private GameObject tutorialPrefab = null;
 
         private List<BaseView> _stackPopupView = new ();
+        public List<BaseView> StackPopupView => _stackPopupView;
+        public BaseView LastPopupView => _stackPopupView.Count > 0 ? _stackPopupView[_stackPopupView.Count-1] : null;
         
         public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
         {
@@ -81,7 +83,23 @@ namespace Ryneus
                 confirmRoot.SetActive(false);
             }
         }
-
+        public void CloseTutorialPopup()
+        {
+            if (_stackPopupView.Count > 0)
+            {
+                var findIndex = _stackPopupView.FindIndex(a => a.GetType() == typeof(TutorialView));
+                if (findIndex != -1)
+                {
+                    var lastPopupView = _stackPopupView[findIndex];
+                    _stackPopupView.Remove(lastPopupView);
+                    Destroy(lastPopupView.gameObject);
+                }
+            }
+            if (_stackPopupView.Count == 0)
+            {
+                confirmRoot.SetActive(false);
+            }
+        }
     }
 
     public enum PopupType

@@ -52,9 +52,9 @@ MonoBehaviour:
     Param2: 0
     Param3: 0
     X: 0
-    Y: 56
-    Width: 400
-    Height: 200
+    Y: 48
+    Width: 320
+    Height: 144
     FocusX: 0
     FocusY: -108
     FocusWidth: 552
@@ -67,9 +67,9 @@ MonoBehaviour:
     Param1: 200
     Param2: 0
     Param3: 0
-    X: -240
+    X: -520
     Y: 80
-    Width: 760
+    Width: 224
     Height: 112
     FocusX: -240
     FocusY: -32
@@ -129,7 +129,7 @@ MonoBehaviour:
     SceneType: 9
     Type: 2
     Param1: 100
-    Param2: 0
+    Param2: 1
     Param3: 0
     X: 400
     Y: 128
@@ -145,7 +145,7 @@ MonoBehaviour:
     SceneType: 9
     Type: 2
     Param1: 100
-    Param2: 0
+    Param2: 1
     Param3: 0
     X: 400
     Y: -24
@@ -154,19 +154,19 @@ MonoBehaviour:
     FocusX: 344
     FocusY: -136
     FocusWidth: 416
-    FocusHeight: 88
+    FocusHeight: 92
     Name: "\u30EA\u30B6\u30EB\u30C8"
     Help: "\u25A0\u30EA\u30B6\u30EB\u30C8\n\u305D\u306E\u4ED6\u306B\u5831\u916C\u304C\u3042\u308B\u5834\u5408\u306F\u7372\u5F97\u3057\u307E\u3059\u3002"
   - Id: 4000
     SceneType: 8
     Type: 2
     Param1: 300
-    Param2: 0
+    Param2: 1
     Param3: 0
     X: 0
     Y: 176
-    Width: 400
-    Height: 200
+    Width: 320
+    Height: 144
     FocusX: 0
     FocusY: 16
     FocusWidth: 568
@@ -181,8 +181,8 @@ MonoBehaviour:
     Param3: 0
     X: 0
     Y: 176
-    Width: 400
-    Height: 200
+    Width: 320
+    Height: 144
     FocusX: 0
     FocusY: 16
     FocusWidth: 600
@@ -190,7 +190,7 @@ MonoBehaviour:
     Name: "\u624B\u5F15\u304D\uFF12"
     Help: "\u25A0\u30C8\u30EC\u30B8\u30E3\u30FC\n(Nu)\u3092\u7372\u5F97\u3057\u307E\u3059\u3002\n(Nu)\u306F\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306ELv\u3092\u4E0A\u3052\u305F\u308A\u9B54\u6CD5\u7FD2\u5F97\u306B\u4F7F\u7528\u3057\u307E\u3059\u3002"
   - Id: 5000
-    SceneType: 117
+    SceneType: 8
     Type: 1
     Param1: 400
     Param2: 0
@@ -206,11 +206,11 @@ MonoBehaviour:
     Name: "\u5F37\u5316"
     Help: "(Nu)\u3092\u5165\u624B\u3057\u307E\u3057\u305F\uFF01\n(Nu)\u3092\u4F7F\u7528\u3057\u3066\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306ELv\u30A2\u30C3\u30D7\u3084\u9B54\u6CD5\u7FD2\u5F97\u3067\u304D\u307E\u3059\u3002"
   - Id: 5010
-    SceneType: 117
+    SceneType: 8
     Type: 2
     Param1: 400
     Param2: 0
-    Param3: 0
+    Param3: 410
     X: -272
     Y: 80
     Width: 320
@@ -218,7 +218,7 @@ MonoBehaviour:
     FocusX: -160
     FocusY: 0
     FocusWidth: 572
-    FocusHeight: 88
+    FocusHeight: 92
     Name: "Lv\u30A2\u30C3\u30D7"
     Help: "\u25A0Lv\u30A2\u30C3\u30D7\n(Nu)\u3092\u6D88\u8CBB\u3057\u3066\u30E1\u30F3\u30D0\u30FC\u306ELv\u3092\u4E0A\u3052\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
   - Id: 5020
@@ -234,15 +234,15 @@ MonoBehaviour:
     FocusX: -160
     FocusY: 0
     FocusWidth: 624
-    FocusHeight: 88
+    FocusHeight: 92
     Name: "\u9B54\u6CD5\u7FD2\u5F97"
     Help: "\u25A0\u9B54\u6CD5\u7FD2\u5F97\n(Nu)\u3092\u6D88\u8CBB\u3057\u3066\u30E1\u30F3\u30D0\u30FC\u306B\u9B54\u6CD5\u3092\u7FD2\u5F97\u3055\u305B\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
   - Id: 6000
     SceneType: 6
     Type: 2
     Param1: 600
-    Param2: 0
-    Param3: 0
+    Param2: 1
+    Param3: 610
     X: 0
     Y: 240
     Width: 1280
@@ -250,7 +250,7 @@ MonoBehaviour:
     FocusX: 0
     FocusY: 104
     FocusWidth: 568
-    FocusHeight: 88
+    FocusHeight: 92
     Name: "\u30D0\u30C8\u30EB\u30BF\u30FC\u30B2\u30C3\u30C8"
     Help: "\u25A0\u30D0\u30C8\u30EB\u30BF\u30FC\u30B2\u30C3\u30C8\n\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u57FA\u672C\u7684\u306B\u6B63\u9762\u306E\u76F8\u624B\u3092\u653B\u6483\u5BFE\u8C61\u306B\u3057\u307E\u3059\u3002"
   - Id: 6010
@@ -258,7 +258,7 @@ MonoBehaviour:
     Type: 2
     Param1: 600
     Param2: 0
-    Param3: 0
+    Param3: 620
     X: 500
     Y: 72
     Width: 280
@@ -268,7 +268,7 @@ MonoBehaviour:
     FocusWidth: 424
     FocusHeight: 144
     Name: "\u30D0\u30C8\u30EB\u30BF\u30FC\u30B2\u30C3\u30C8"
-    Help: "\u25A0\u30D0\u30C8\u30EB\u30BF\u30FC\u30B2\u30C3\u30C8\n\u5148\u306B\u5012\u3057\u305F\u3044\u6575\u304C\u6B63\u9762\u306B\u3044\u306A\u3044\u6642\u306F\n\u653B\u6483\u3057\u305F\u3044\u5BFE\u8C61\u3092\u9078\u3093\u3067\n\u653B\u6483\u512A\u5148\u5BFE\u8C61\u3092\u5909\u3048\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
+    Help: "\u25A0\u30D0\u30C8\u30EB\u30BF\u30FC\u30B2\u30C3\u30C8\n\u512A\u5148\u3057\u3066\u5012\u3057\u305F\u3044\u6575\u304C\u6B63\u9762\u306B\u3044\u306A\u3044\u6642\u306F\n\u653B\u6483\u3057\u305F\u3044\u5BFE\u8C61\u3092\u9078\u3093\u3067\n\u512A\u5148\u5BFE\u8C61\u3092\u5909\u3048\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002"
   - Id: 7000
     SceneType: 9
     Type: 1
@@ -308,11 +308,11 @@ MonoBehaviour:
     Param2: 0
     Param3: 0
     X: 0
-    Y: 176
-    Width: 400
-    Height: 200
+    Y: 216
+    Width: 320
+    Height: 144
     FocusX: 0
-    FocusY: 16
+    FocusY: 80
     FocusWidth: 480
     FocusHeight: 92
     Name: "\u4EF2\u9593\u52A0\u5165"
@@ -344,7 +344,7 @@ MonoBehaviour:
     Width: 160
     Height: 64
     FocusX: 320
-    FocusY: 240
+    FocusY: 224
     FocusWidth: 540
     FocusHeight: 96
     Name: "\u4EF2\u9593\u52A0\u5165"
@@ -353,7 +353,7 @@ MonoBehaviour:
     SceneType: 8
     Type: 2
     Param1: 1100
-    Param2: 0
+    Param2: 1
     Param3: 0
     X: 160
     Y: 320

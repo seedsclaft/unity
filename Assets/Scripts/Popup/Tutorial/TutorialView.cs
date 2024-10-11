@@ -10,10 +10,10 @@ namespace Ryneus
     public class TutorialView : BaseView ,IInputHandlerEvent
     {
         private new System.Action<TutorialViewEvent> _commandData = null;
+        [SerializeField] private Button backImage = null;
         [SerializeField] private Button helpButton = null;
         [SerializeField] private Image focusImage = null;
         [SerializeField] private Image focusBgImage = null;
-        [SerializeField] private Image arrowImage = null;
         [SerializeField] private GameObject frameObj = null;
         [SerializeField] private TextMeshProUGUI tutorialText = null;
         [SerializeField] private GameObject focusFrameObj = null;
@@ -33,12 +33,13 @@ namespace Ryneus
 
         public void SetTutorialData(TutorialData tutorialData)
         {
+            ChangeBackCommandActive(tutorialData.Type == 1 || tutorialData.Param2 == 1);
             // 最初だけ
             toggleObj.SetActive(tutorialData.Id == 1000);
             frameObj.SetActive(tutorialData.Type == 1);
             if (tutorialData.Type == 1)
             {
-            var rect = frameObj.GetComponent<RectTransform>();
+                var rect = frameObj.GetComponent<RectTransform>();
                 rect.localPosition = new Vector3(tutorialData.X,tutorialData.Y,0);
                 rect.sizeDelta = new Vector3(tutorialData.Width,tutorialData.Height);
             }
@@ -61,16 +62,14 @@ namespace Ryneus
             var rect = focusImage.GetComponent<RectTransform>();
             rect.localPosition = new Vector3(tutorialData.X,tutorialData.Y,0);
             rect.sizeDelta = new Vector3(tutorialData.Width,tutorialData.Height);
+            
+            
+            var focusRect = focusFrameObj.GetComponent<RectTransform>();
+            focusRect.localPosition = new Vector3(tutorialData.FocusX,tutorialData.FocusY,0);            
+            focusRect.sizeDelta = new Vector3(tutorialData.FocusWidth,tutorialData.FocusHeight);
+            focusText.SetText(tutorialData.Help);
             var bgRect = focusBgImage.GetComponent<RectTransform>();
             bgRect.localPosition = new Vector3(tutorialData.X * -1,tutorialData.Y * -1,0);
-            //if (tutorialData.Param1 == 1)
-            //{
-                var focusRect = focusFrameObj.GetComponent<RectTransform>();
-                focusRect.localPosition = new Vector3(tutorialData.FocusX,tutorialData.FocusY,0);            
-                focusRect.sizeDelta = new Vector3(tutorialData.FocusWidth,tutorialData.FocusHeight);
-                focusText.SetText(tutorialData.Help);
-            //}
-            //focusFrameObj.SetActive(tutorialData.Param1 == 1);
         }
 
         public void HideFocusImage()
@@ -86,7 +85,6 @@ namespace Ryneus
         public void SetEvent(System.Action<TutorialViewEvent> commandData)
         {
             _commandData = commandData;
-            //statusLevelUp.SetEvent(commandData);
         }
 
         public void CommandBack()
@@ -110,8 +108,6 @@ namespace Ryneus
             var eventData = new TutorialViewEvent(CommandType.CallTutorialData);
             _commandData(eventData);
         }
-
-
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Status;
 
@@ -84,34 +85,26 @@ namespace Ryneus
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
-            var TutorialDates = _model.SceneTutorialDates(StatusType.Status);
-            if (TutorialDates.Count > 0)
+            Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
-                var tutorialData = TutorialDates[0];
                 if (tutorialData.Param1 == 1000)
                 {
                     // 初めて仲間加入画面を開く
                     checkFlag = _view.DecideButtonActive;
                 }
-                if (!checkFlag)
-                {
-                    return;
-                }
-                _busy = true;
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.Tutorial,
-                    template = tutorialData,
-                    EndEvent = () =>
-                    {
-                        _busy = false;
-                        _model.ReadTutorialData(tutorialData);
-                        CheckTutorialState(commandType);
-                    }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                return checkFlag;
+            };
+            Func<TutorialData,bool> checkEnd = (tutorialData) => 
+            {
+                var checkFlag = true;
+                return checkFlag;
+            };
+            BaseCheckTutorialState((int)StatusType.Status + 200,enable,() => 
+            {
+                _busy = false;
+                CheckTutorialState(commandType);
+            },checkEnd);
         }
 
         private void CommandBack()
@@ -138,6 +131,7 @@ namespace Ryneus
             });
             characterListInfo.SetActorInfos(_model.ActorInfos);
             _view.CommandCallCharacterList(characterListInfo);
+            CheckTutorialState();
         }
 
         public void CommandSelectCharacter(int actorId)

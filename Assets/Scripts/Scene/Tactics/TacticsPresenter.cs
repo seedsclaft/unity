@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Tactics;
@@ -75,16 +75,14 @@ namespace Ryneus
             _view.ChangeUIActive(true);
             _view.StartAnimation();
             // チュートリアル確認
-            CheckTutorialState();
+            //CheckTutorialState();
         }
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
-            var TutorialDates = _model.SceneTutorialDates(Scene.Tactics);
-            if (TutorialDates.Count > 0)
+            Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
-                var tutorialData = TutorialDates[0];
                 if (tutorialData.Param1 == 100)
                 {
                     // マス一覧を初めて開く
@@ -98,7 +96,12 @@ namespace Ryneus
                 if (tutorialData.Param1 == 300)
                 {
                     // トレジャーのマスを初めて開く
-                    checkFlag = _view.SymbolRecordListActive && _model.CurrentStage.Seek == 2;
+                    checkFlag = _model.CurrentStage.Seek == 2;
+                }
+                if (tutorialData.Param1 == 400)
+                {
+                    // Seek３の編成を初めて開く
+                    checkFlag = _model.CurrentStage.Seek == 3 && commandType == CommandType.SelectSymbol;
                 }
                 if (tutorialData.Param1 == 900)
                 {
@@ -110,24 +113,18 @@ namespace Ryneus
                     // ステージ2の最初
                     checkFlag = _model.CurrentStage.Id == 2;
                 }
-                if (!checkFlag)
-                {
-                    return;
-                }
-                _busy = true;
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.Tutorial,
-                    template = tutorialData,
-                    EndEvent = () =>
-                    {
-                        _busy = false;
-                        _model.ReadTutorialData(tutorialData);
-                        CheckTutorialState(commandType);
-                    }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                return checkFlag;
+            };
+            Func<TutorialData,bool> checkEnd = (tutorialData) => 
+            {
+                var checkFlag = true;
+                return checkFlag;
+            };
+            BaseCheckTutorialState((int)Scene.Tactics,enable,() => 
+            {
+                _busy = false;
+                CheckTutorialState(commandType);
+            },checkEnd);
         }
 
         public void CommandReturnStrategy()
@@ -161,6 +158,7 @@ namespace Ryneus
                     CommandSelectTacticsCommand(TacticsCommandType.Paradigm);
                 }
             }
+            CheckTutorialState();
         }
 
         private void CommandNeedEndBrunch()

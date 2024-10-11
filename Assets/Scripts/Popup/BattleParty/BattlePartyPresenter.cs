@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using BattleParty;
@@ -35,15 +35,18 @@ namespace Ryneus
             _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
+            CheckTutorialState();
         }
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
-            var TutorialDates = _model.SceneTutorialDates(PopupType.BattleParty);
-            if (TutorialDates.Count > 0)
+            if (commandType == CommandType.SelectTacticsMember)
+            {
+                return;
+            }
+            Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
-                var tutorialData = TutorialDates[0];
                 if (tutorialData.Param1 == 100)
                 {
                     // バトルメンバーがいる
@@ -59,25 +62,23 @@ namespace Ryneus
                     // Actor1のLvが3以上,ウルフソウルを未習得
                     checkFlag = _model.StageMembers()[0].Level > 2 && !_model.StageMembers()[0].IsLearnedSkill(11010);
                 }
-                LogOutput.Log(checkFlag);
-                if (!checkFlag)
+                return checkFlag;
+            };
+            Func<TutorialData,bool> checkEnd = (tutorialData) => 
+            {
+                var checkFlag = true;
+                if (tutorialData.Param3 == 410)
                 {
-                    return;
+                    // トレジャーのマスを初めて開く
+                    checkFlag = _model.StageMembers()[0].Level > 2;
                 }
-                _busy = true;
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.Tutorial,
-                    template = tutorialData,
-                    EndEvent = () =>
-                    {
-                        _busy = false;
-                        _model.ReadTutorialData(tutorialData);
-                        CheckTutorialState(commandType);
-                    }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                return checkFlag;
+            };
+            BaseCheckTutorialState((int)PopupType.BattleParty + 100,enable,() => 
+            {
+                _busy = false;
+                CheckTutorialState(commandType);
+            },checkEnd);
         }
 
         private void UpdateCommand(BattlePartyViewEvent viewEvent)
@@ -336,6 +337,7 @@ namespace Ryneus
                 _view.SetBusy(false);
                 CommandRefresh();
                 _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
+                CheckTutorialState();
             });
         }
 
@@ -388,7 +390,7 @@ namespace Ryneus
             ShowCharacterDetail();
             _view.SetBattleMembers(GetListData(_model.BattleMembers()));
             _view.SetNuminous(_model.Currency);
-            CheckTutorialState();
+            //CheckTutorialState();
         }
     }
 

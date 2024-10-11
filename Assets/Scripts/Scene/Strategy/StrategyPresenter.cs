@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Strategy;
-using Ryneus;
+using System;
 
 namespace Ryneus
 {
@@ -78,11 +78,13 @@ namespace Ryneus
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
-            var TutorialDates = _model.SceneTutorialDates(Scene.Strategy);
-            if (TutorialDates.Count > 0)
+            if (commandType == CommandType.ResultClose)
+            {
+                return;
+            }
+            Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
-                var tutorialData = TutorialDates[0];
                 if (tutorialData.Param1 == 100)
                 {
                     // Lvアップ後にいリザルトを初めて開く
@@ -98,24 +100,13 @@ namespace Ryneus
                     // 2回目の敗北する
                     checkFlag = _model.InBattleResult && _model.BattleResultVictory == false && _model.CurrentStage.LoseCount == 2;
                 }
-                if (!checkFlag)
-                {
-                    return;
-                }
-                _busy = true;
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.Tutorial,
-                    template = tutorialData,
-                    EndEvent = () =>
-                    {
-                        _busy = false;
-                        _model.ReadTutorialData(tutorialData);
-                        CheckTutorialState(commandType);
-                    }
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
+                return checkFlag;
+            };
+            BaseCheckTutorialState((int)Scene.Strategy ,enable,() => 
+            {
+                _busy = false;
+                CheckTutorialState(commandType);
+            });
         }
 
         private void CommandStartStrategy()
