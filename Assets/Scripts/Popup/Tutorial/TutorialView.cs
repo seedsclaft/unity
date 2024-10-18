@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Tutorial;
 using TMPro;
+using System;
 
 namespace Ryneus
 {
@@ -24,7 +25,7 @@ namespace Ryneus
 
 
         private System.Action _backEvent = null;
-        public new void Initialize() 
+        public override void Initialize() 
         {
             base.Initialize();
             SetBackCommand(() => OnClickBack());
@@ -79,7 +80,7 @@ namespace Ryneus
         
         public void SetUIButton()
         {
-            helpButton.onClick.AddListener(() => OnClickHelp());
+            //helpButton.onClick.AddListener(() => OnClickHelp());
         }
 
         public void SetEvent(System.Action<TutorialViewEvent> commandData)
@@ -146,6 +147,15 @@ namespace Ryneus
         {
             commandType = type;
         }
+    }
+
+    public class TutorialViewInfo
+    {
+        public int SceneType;
+        public Func<TutorialData,bool> CheckEndMethod;
+        public Func<TutorialData, bool> CheckMethod;
+        public Action CheckTrueAction;
+        public Action EndEvent;
     }
 }
 

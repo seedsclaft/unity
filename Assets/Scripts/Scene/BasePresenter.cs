@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 
 namespace Ryneus
 {
@@ -19,7 +18,6 @@ namespace Ryneus
             _model = model;
         }
 
-        private static TutorialData _lastTutorialData = null;
 
         public List<ListData> GetListData<T>(List<T> dataList,int selectIndex = 0)
         {
@@ -307,48 +305,6 @@ namespace Ryneus
                     template = learnSkillInfo
                 };
                 _view.CommandCallPopup(popupInfo);
-            }
-        }
-    
-        public void BaseCheckTutorialState(int sceneType,Func<TutorialData,bool> checkMethod,Action endEvent,Func<TutorialData,bool> checkEndMethod = null,Action checkTrueAction = null)
-        {
-            var TutorialDates = _model.SceneTutorialDates(sceneType);
-            var tutorialData = TutorialDates.Count > 0 ? TutorialDates[0] : null;
-            var checkEndFlag = _lastTutorialData != null && checkEndMethod != null ? checkEndMethod(_lastTutorialData) : false;
-            if (checkEndFlag)
-            {
-                _view.CommandCloseTutorialFocus();
-            }
-            if (tutorialData != null)
-            {
-                var checkFlag = checkMethod(tutorialData);
-                if (!checkFlag)
-                {
-                    return;
-                }
-                if (_lastTutorialData?.Id == tutorialData.Id)
-                {
-                    return;
-                }
-            }
-            if (tutorialData != null)
-            {
-                checkTrueAction?.Invoke();
-                _lastTutorialData = tutorialData;
-                if (tutorialData.Param1 != 3)
-                {
-                    var popupInfo = new PopupInfo
-                    {
-                        PopupType = PopupType.Tutorial,
-                        template = tutorialData,
-                        EndEvent = () =>
-                        {
-                            endEvent?.Invoke();
-                        }
-                    };
-                    _view.CommandCallPopup(popupInfo);
-                }
-                _model.ReadTutorialData(tutorialData);
             }
         }
     }

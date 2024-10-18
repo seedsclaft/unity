@@ -13,7 +13,6 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI score;
         [SerializeField] private List<BattlePartyMemberItem> memberItems;
         [SerializeField] private Button detailButton;
-        [SerializeField] private TextMeshProUGUI rankingTypeText = null; 
 
         private bool _isInit = false;
         public void UpdateViewItem()
@@ -22,8 +21,7 @@ namespace Ryneus
             var data = ListItemData<RankingInfo>();
             playerName.text = data.Name;
             score.SetText(data.Score.ToString());
-            rank.SetText(data.Rank.ToString() + DataSystem.GetText(23030));
-            //rankingTypeText.text = data.RankingTypeText;
+            rank.SetText(DataSystem.GetReplaceText(23030, data.Rank.ToString()));
             for (int i = 0;i < memberItems.Count;i++)
             {
                 if (data.ActorInfos.Count > i)
@@ -50,6 +48,7 @@ namespace Ryneus
             if (memberItem != null) 
             {
                 memberItem.SetListData(new ListData(actorInfo),0);
+                memberItem.UpdateViewItem();
             }
         }
     }

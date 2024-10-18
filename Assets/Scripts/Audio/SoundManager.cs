@@ -8,7 +8,9 @@ namespace Ryneus
 {
     public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
-        public float BGMVolume = 1.0f;
+        private float _bgmVolume = 1.0f;
+        public float BgmVolume => _bgmVolume;
+        public void SetBgmVolume(float volume) => _bgmVolume = volume;
         public float SeVolume = 1.0f;
         public bool BGMMute = false;
         public bool SeMute = false;
@@ -89,14 +91,13 @@ namespace Ryneus
 
         public void UpdateBgmVolume()
         {
+            var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
             if (BGMMute)
             {
-                var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
                 playingTrack.ChangeVolume(0);
             } else
             {
-                var volume = BGMVolume * _lastBgmVolume;
-                var playingTrack = _crossFadeTrackNo == 0 ? BgmTrack : BgmSubTrack;
+                var volume = _bgmVolume * _lastBgmVolume;
                 playingTrack.ChangeVolume(volume);
             }
         }
@@ -134,7 +135,7 @@ namespace Ryneus
             playingTrack.FadeVolume(0,1);
             UpdateBgmVolume();
             playTrack.Play();
-            playTrack.FadeVolume(1,1);
+            playTrack.FadeVolume(1 * _bgmVolume,1);
             _crossFadeMode = false;
             _crossFadeTrackNo = 0;
         }
@@ -170,7 +171,7 @@ namespace Ryneus
             playingTrack.FadeVolume(0,1);
             UpdateBgmVolume();
             playTrack.Play(timeStamp);
-            var playVolume = BGMVolume * _lastBgmVolume;
+            var playVolume = _bgmVolume * _lastBgmVolume;
             if (BGMMute)
             {
                 playVolume = 0;

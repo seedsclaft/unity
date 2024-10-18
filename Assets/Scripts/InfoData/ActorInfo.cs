@@ -266,7 +266,11 @@ namespace Ryneus
                     }
                     findIndex++;
                     _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
-                    skillTriggerInfo.SetPriority(findIndex);
+                    //skillTriggerInfo.SetPriority(findIndex);
+                }
+                for (int i = 0;i < _skillTriggerInfos.Count;i++)
+                {
+                    _skillTriggerInfos[i].SetPriority(i);
                 }
             }
         }

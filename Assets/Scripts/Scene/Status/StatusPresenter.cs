@@ -97,14 +97,20 @@ namespace Ryneus
             };
             Func<TutorialData,bool> checkEnd = (tutorialData) => 
             {
-                var checkFlag = true;
-                return checkFlag;
+                return true;
             };
-            BaseCheckTutorialState((int)StatusType.Status + 200,enable,() => 
+            var tutorialViewInfo = new TutorialViewInfo
             {
-                _busy = false;
-                CheckTutorialState(commandType);
-            },checkEnd);
+                SceneType = (int)StatusType.Status + 200,
+                CheckEndMethod = checkEnd,
+                CheckMethod = enable,
+                EndEvent = () => 
+                {
+                    _busy = false;
+                    CheckTutorialState(commandType);
+                }
+            };
+            _view.CommandCheckTutorialState(tutorialViewInfo);
         }
 
         private void CommandBack()

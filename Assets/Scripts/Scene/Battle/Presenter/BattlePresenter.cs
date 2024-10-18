@@ -158,14 +158,22 @@ namespace Ryneus
                 }
                 return checkFlag;
             };
-            BaseCheckTutorialState((int)Scene.Battle,enable,() => 
+            var tutorialViewInfo = new TutorialViewInfo
             {
-                _busy = false;
-                CheckTutorialState(commandType);
-            },checkEnd,() => 
-            {
-                _busy = true;
-            });
+                SceneType = (int)Scene.Battle,
+                CheckEndMethod = checkEnd,
+                CheckMethod = enable,
+                CheckTrueAction = () => 
+                {
+                    _busy = true;
+                },
+                EndEvent = () => 
+                {
+                    _busy = false;
+                    CheckTutorialState(commandType);
+                }
+            };
+            _view.CommandCheckTutorialState(tutorialViewInfo);
         }
 
         private void UpdateCommand(BattleViewEvent viewEvent)

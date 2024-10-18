@@ -5,7 +5,7 @@ using Ranking;
 
 namespace Ryneus
 {
-    public class RankingPresenter 
+    public class RankingPresenter : BasePresenter
     {
         RankingModel _model = null;
         RankingView _view = null;
@@ -57,17 +57,11 @@ namespace Ryneus
 
         private void CommandDetail(int listIndex)
         {
-            _model.MakeDetailPartyInfo(listIndex);
-            var statusViewInfo = new StatusViewInfo(() => {
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
-                _view.CommandSceneShowUI();
+            CommandStatusInfo(_model.RankingActorInfos(listIndex),false,true,false,false,-1,() => 
+            {
             });
-            statusViewInfo.SetDisplayDecideButton(false);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-            _view.CommandSceneHideUI();
-            Ryneus.SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.RankingActorInfos(listIndex);
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }
 }

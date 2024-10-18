@@ -77,10 +77,10 @@ namespace Ryneus
             switch (optionCommand.Key)
             {
                 case "BGM_VOLUME":
-                    optionVolume.UpdateValue(Ryneus.SoundManager.Instance.BGMVolume,Ryneus.SoundManager.Instance.BGMMute);
+                    optionVolume.UpdateValue(SoundManager.Instance.BgmVolume,SoundManager.Instance.BGMMute);
                     return;
                 case "SE_VOLUME":
-                    optionVolume.UpdateValue(Ryneus.SoundManager.Instance.SeVolume,Ryneus.SoundManager.Instance.SeMute);
+                    optionVolume.UpdateValue(SoundManager.Instance.SeVolume,SoundManager.Instance.SeMute);
                     return;
                 case "GRAPHIC_QUALITY":
                     for (int i = 0;i < optionToggles.Count;i++)

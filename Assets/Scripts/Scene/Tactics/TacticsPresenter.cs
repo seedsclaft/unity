@@ -117,14 +117,20 @@ namespace Ryneus
             };
             Func<TutorialData,bool> checkEnd = (tutorialData) => 
             {
-                var checkFlag = true;
-                return checkFlag;
+                return true;
             };
-            BaseCheckTutorialState((int)Scene.Tactics,enable,() => 
+            var tutorialViewInfo = new TutorialViewInfo
             {
-                _busy = false;
-                CheckTutorialState(commandType);
-            },checkEnd);
+                SceneType = (int)Scene.Tactics,
+                CheckEndMethod = checkEnd,
+                CheckMethod = enable,
+                EndEvent = () => 
+                {
+                    _busy = false;
+                    CheckTutorialState(commandType);
+                }
+            };
+            _view.CommandCheckTutorialState(tutorialViewInfo);
         }
 
         public void CommandReturnStrategy()

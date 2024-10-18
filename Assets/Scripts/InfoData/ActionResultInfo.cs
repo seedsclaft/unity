@@ -113,6 +113,7 @@ namespace Ryneus
                             _curseDamage += (int)curseDamage;
                             target.SetDamagedValue(0);
                             _deadIndexList.RemoveAt(i);
+                            SeekStateCount(target,StateType.Curse);
                         }
                     }
                 }

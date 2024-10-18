@@ -26250,6 +26250,7 @@ MonoBehaviour:
   transitionRoot: {fileID: 1439981395}
   transitionFade: {fileID: 1439981402}
   loadingView: {fileID: 418308402}
+  tutorialView: {fileID: 2106403970}
   advEngine: {fileID: 456724002}
   advController: {fileID: 1315103154}
   debugBattleData: {fileID: 1631066105}
@@ -30201,6 +30202,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2106403968}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2106403970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1785971820811666790, guid: 00f9596394c1abc49a384dd2205058dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2106403968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3d7dd38e65fec44bc1c232a00d5548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2107595534
 GameObject:
   m_ObjectHideFlags: 0

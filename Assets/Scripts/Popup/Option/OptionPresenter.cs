@@ -61,11 +61,11 @@ namespace Ryneus
                 case "BGM_VOLUME":
                     if (inputKeyType == InputKeyType.Right)
                     {
-                        ConfigUtility.ChangeBGMValue(Mathf.Min(1, SoundManager.Instance.BGMVolume + 0.05f));
+                        ConfigUtility.ChangeBGMValue(Mathf.Min(1, SoundManager.Instance.BgmVolume + 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Left)
                     {
-                        ConfigUtility.ChangeBGMValue(Mathf.Max(0, SoundManager.Instance.BGMVolume - 0.05f));
+                        ConfigUtility.ChangeBGMValue(Mathf.Max(0, SoundManager.Instance.BgmVolume - 0.05f));
                     }
                     if (inputKeyType == InputKeyType.Option1)
                     {

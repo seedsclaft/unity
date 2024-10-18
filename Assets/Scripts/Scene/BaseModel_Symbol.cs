@@ -104,7 +104,7 @@ namespace Ryneus
                         } else
                         if (prizeSet.GetItem.Type == GetItemType.SelectAddActor)
                         {
-                            getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
+                            //getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
                         } else
                         if (prizeSet.GetItem.Type == GetItemType.Numinous)
                         {

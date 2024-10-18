@@ -39,14 +39,9 @@ namespace Ryneus
             }
         }
 
-        public void MakeDetailPartyInfo(int listIndex)
+        public List<ActorInfo> RankingActorInfos(int listIndex)
         {
-            var rankingInfo = TempInfo.TempRankingData[_stageId][listIndex];
-            PartyInfo.InitActorInfos();
-            foreach (var actorInfo in rankingInfo.ActorInfos)
-            {
-                PartyInfo.UpdateActorInfo(actorInfo);
-            }
+            return TempInfo.TempRankingData[_stageId][listIndex].ActorInfos;
         }
     }
 }

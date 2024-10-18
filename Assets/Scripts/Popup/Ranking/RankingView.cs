@@ -46,15 +46,18 @@ namespace Ryneus
         private void CallDetail(int index)
         {
             var listData = rankingInfoList.ListData;
-            if (listData != null && listData.Enable)
+            if (listData != null)
             {
-                var eventData = new RankingViewEvent(CommandType.Detail);
-                eventData.template = index;
+                var eventData = new RankingViewEvent(CommandType.Detail)
+                {
+                    template = index
+                };
                 _commandData(eventData);
             }
         }
     }
 }
+
 namespace Ranking
 {
     public enum CommandType
@@ -64,6 +67,7 @@ namespace Ranking
         Detail = 2,
     }
 }
+
 public class RankingViewEvent
 {
     public CommandType commandType;

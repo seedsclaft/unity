@@ -11,6 +11,7 @@ var FirebasePlugin = {
       appId: "1:426265705279:web:819d8d95887bc24ae8718a",
       measurementId: "G-JWHMEGC4VZ"
     };
+    window.firebase = firebase;
     window.firebase.initializeApp(FirebaseConfig);
   },
 
@@ -75,7 +76,7 @@ var FirebasePlugin = {
       {
         Name: UTF8ToString(name),
         Score: score,
-        ActorData: actorData
+        ActorData: UTF8ToString(actorData)
     })
     .then(() => 
     {

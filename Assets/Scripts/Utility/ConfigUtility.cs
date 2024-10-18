@@ -27,7 +27,7 @@ namespace Ryneus
         }
         public static void ChangeBGMValue(float bgmVolume)
         {
-            SoundManager.Instance.BGMVolume = bgmVolume;
+            SoundManager.Instance.SetBgmVolume(bgmVolume);
             SoundManager.Instance.UpdateBgmVolume();
             if (bgmVolume > 0 && SoundManager.Instance.BGMMute == false)
             {

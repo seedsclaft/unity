@@ -324,6 +324,14 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
+        public void CommandCheckTutorialState(TutorialViewInfo tutorialViewInfo)
+        {
+            var eventData = new ViewEvent(Base.CommandType.CheckTutorialState)
+            {
+                template = tutorialViewInfo
+            };
+            CallSceneChangeCommand(eventData);
+        }
 
         public void CommandCloseTutorialFocus()
         {
@@ -441,6 +449,7 @@ namespace Ryneus
             StartTransition,
             CallTutorialFocus,
             CloseTutorialFocus,
+            CheckTutorialState,
             SceneShowUI,
             SceneHideUI,
         }

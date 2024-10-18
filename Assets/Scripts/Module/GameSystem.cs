@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Ryneus
         [SerializeField] private GameObject transitionRoot = null;
         [SerializeField] private Fade transitionFade = null;
         [SerializeField] private LoadingView loadingView = null;
+        [SerializeField] private TutorialView tutorialView = null;
         [SerializeField] private AdvEngine advEngine = null;
         [SerializeField] private AdvController advController = null;
 
@@ -35,6 +37,7 @@ namespace Ryneus
         public static SaveStageInfo CurrentStageData = null;
         public static SaveConfigInfo ConfigData = null;
         public static TempInfo TempData = null;
+        private static TutorialData _lastTutorialData = null;
 
         private bool _busy = false;
         public bool Busy => _busy;
@@ -241,6 +244,9 @@ namespace Ryneus
                         }
                     }
                     break;
+                case Base.CommandType.CheckTutorialState:
+                    CheckTutorialState((TutorialViewInfo)viewEvent.template);
+                    break;
                 case Base.CommandType.SceneHideUI:
                     SceneHideUI();
                     break;
@@ -320,7 +326,7 @@ namespace Ryneus
             optionView.SetBackEvent(() => 
             {
                 ConfigData.UpdateSoundParameter(
-                    SoundManager.Instance.BGMVolume,
+                    SoundManager.Instance.BgmVolume,
                     SoundManager.Instance.BGMMute,
                     SoundManager.Instance.SeVolume,
                     SoundManager.Instance.SeMute
@@ -492,6 +498,50 @@ namespace Ryneus
         private void SceneHideUI()
         {
             sceneAssign.HideUI();
+        }
+
+        private void CheckTutorialState(TutorialViewInfo tutorialViewInfo)
+        {
+            if (ConfigData.TutorialCheck == false)
+            {
+                return;
+            }
+            var TutorialDates = _model.SceneTutorialDates(tutorialViewInfo.SceneType);
+            var tutorialData = TutorialDates.Count > 0 ? TutorialDates[0] : null;
+            var checkEndFlag = _lastTutorialData != null && tutorialViewInfo.CheckEndMethod != null ? tutorialViewInfo.CheckEndMethod(_lastTutorialData) : false;
+            if (checkEndFlag)
+            {
+                tutorialView.gameObject.SetActive(false);
+            }
+            if (tutorialData != null)
+            {
+                var checkFlag = tutorialViewInfo.CheckMethod(tutorialData);
+                if (!checkFlag)
+                {
+                    return;
+                }
+                if (_lastTutorialData?.Id == tutorialData.Id)
+                {
+                    return;
+                }
+            }
+            if (tutorialData != null)
+            {
+                tutorialViewInfo.CheckTrueAction?.Invoke();
+                _lastTutorialData = tutorialData;
+                if (tutorialData.Param1 != 3)
+                {
+                    tutorialView.gameObject.SetActive(true);
+                    tutorialView.Initialize();
+                    tutorialView.SetTutorialData(tutorialData);
+                    tutorialView.SetBackEvent(() => 
+                    {
+                        tutorialView.gameObject.SetActive(false);
+                        tutorialViewInfo.EndEvent?.Invoke();
+                    });
+                }
+                _model.ReadTutorialData(tutorialData);
+            }
         }
     }
 

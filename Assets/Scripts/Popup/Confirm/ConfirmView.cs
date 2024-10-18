@@ -144,12 +144,13 @@ namespace Confirm
         DisableIds = 102,
     }
 }
+
 public class ConfirmViewEvent
 {
-    public Confirm.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public ConfirmViewEvent(Confirm.CommandType type)
+    public ConfirmViewEvent(CommandType type)
     {
         commandType = type;
     }

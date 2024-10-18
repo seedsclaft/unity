@@ -40,7 +40,14 @@ namespace Ryneus
                 return;
             }
             _isInit = true;
-#if !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
+            JsReader.Initialize();
+#endif
+        }
+
+        public void FirebaseInit()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
             InitializeWebGL();
 #endif
         }
@@ -60,6 +67,7 @@ namespace Ryneus
             {
                 return;
             }
+            FirebaseInit();
             RankingInfos.Clear();
             IsBusy = true;
             FirebaseReadRankingData(gameObject.GetInstanceID(),OnReadFirestore);
@@ -78,10 +86,13 @@ namespace Ryneus
                     var ranking = JsonUtility.FromJson<RankingInfo>(arrayStr);
                     ranking.Rank = rank;
 
-				    var bytes = Convert.FromBase64String(ranking.ActorData);
-				    var	TempBinaryFormatter = new BinaryFormatter();
-				    var memoryStream = new MemoryStream(bytes);
-				    ranking.SetActorInfos((List<ActorInfo>)TempBinaryFormatter.Deserialize(memoryStream));
+                    if (ranking.ActorData != null)
+                    {
+                        var bytes = Convert.FromBase64String(ranking.ActorData);
+                        var	TempBinaryFormatter = new BinaryFormatter();
+                        var memoryStream = new MemoryStream(bytes);
+                        ranking.SetActorInfos((List<ActorInfo>)TempBinaryFormatter.Deserialize(memoryStream));
+                    }
                     
                     data.Add(ranking);
                     rank++;
@@ -98,6 +109,7 @@ namespace Ryneus
             {
                 return;
             }
+            FirebaseInit();
             CurrentScore = 0;
             IsBusy = true;
             FirebaseCurrentRankingData(gameObject.GetInstanceID(),userId,OnCurrentFirestore);
@@ -121,9 +133,10 @@ namespace Ryneus
             {
                 return;
             }
+            FirebaseInit();
 			var TempBinaryFormatter = new BinaryFormatter();
 			var memoryStream = new MemoryStream();
-			TempBinaryFormatter.Serialize (memoryStream,actorInfos);
+			TempBinaryFormatter.Serialize(memoryStream,actorInfos);
 			var actorData = Convert.ToBase64String(memoryStream.GetBuffer());
 
             IsBusy = true;

@@ -78,17 +78,13 @@ namespace Ryneus
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
-            if (commandType == CommandType.ResultClose)
-            {
-                return;
-            }
             Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
                 if (tutorialData.Param1 == 100)
                 {
                     // Lvアップ後にいリザルトを初めて開く
-                    checkFlag = _view.StrategyResultListActive;
+                    checkFlag = _model.InBattleResult && _model.BattleResultVictory && _view.StrategyResultListActive;
                 }
                 if (tutorialData.Param1 == 700)
                 {
@@ -102,11 +98,18 @@ namespace Ryneus
                 }
                 return checkFlag;
             };
-            BaseCheckTutorialState((int)Scene.Strategy ,enable,() => 
+            var tutorialViewInfo = new TutorialViewInfo
             {
-                _busy = false;
-                CheckTutorialState(commandType);
-            });
+                SceneType = (int)Scene.Strategy,
+                CheckEndMethod = null,
+                CheckMethod = enable,
+                EndEvent = () => 
+                {
+                    _busy = false;
+                    CheckTutorialState(commandType);
+                }
+            };
+            _view.CommandCheckTutorialState(tutorialViewInfo);
         }
 
         private void CommandStartStrategy()
