@@ -25,7 +25,6 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetStatusEvent((type) => UpdateStatusCommand(type));
-            _view.SetHelpInputInfo("CHARACTER_LIST");
             CommandRefresh();
             var enemyInfos = _model.EnemyInfos();
             _view.SetEnemyMembers(GetListData(enemyInfos));
@@ -94,7 +93,7 @@ namespace Ryneus
             {
                 return;
             }
-            //LogOutput.Log(viewEvent.commandType);
+            LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectSideMenu:
@@ -108,6 +107,12 @@ namespace Ryneus
                     break;
                 case CommandType.SelectAttribute:
                     CommandSelectAttribute((AttributeType)viewEvent.template);
+                    break;
+                case CommandType.LeftAttribute:
+                    CommandLeftAttribute();
+                    break;
+                case CommandType.RightAttribute:
+                    CommandRightAttribute();
                     break;
                 case CommandType.EnemyInfo:
                     CommandEnemyInfo();
@@ -188,6 +193,35 @@ namespace Ryneus
                 lastSelectSkillId = lastSelectSkill.Id;
             }
             _view.RefreshLeaningList(_model.SelectActorLearningMagicList((int)attributeType,lastSelectSkillId));
+            _view.CommandRefresh();
+        }
+
+        private void CommandLeftAttribute()
+        {
+            var current = _view.AttributeType;
+            var list = _model.AttributeTabList();
+            var index = list.FindIndex(a => a == current);
+            var selectIndex = index - 1;
+            if (selectIndex <= -1)
+            {
+                selectIndex = list.Count-1;
+            }
+            //CommandSelectAttribute(list[selectIndex]);
+            _view.SelectAttribute(selectIndex);
+        }
+
+        private void CommandRightAttribute()
+        {
+            var current = _view.AttributeType;
+            var list = _model.AttributeTabList();
+            var index = list.FindIndex(a => a == current);
+            var selectIndex = index + 1;
+            if (selectIndex > list.Count-1)
+            {
+                selectIndex = 0;
+            }
+            //CommandSelectAttribute(list[selectIndex]);
+            _view.SelectAttribute(selectIndex);
         }
 
         private void CommandStatusInfo()
@@ -195,6 +229,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandStatusInfo(_model.BattlePartyMembers(),false,true,true,false,_model.CurrentActor.ActorId,() => 
             {
+                _view.CommandRefresh();
             });
         }
 
@@ -202,7 +237,11 @@ namespace Ryneus
         {
             _busy = true;
             var enemyInfos = _model.EnemyInfos();
-            CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
+            CommandEnemyInfo(enemyInfos,false,() => 
+            {
+                _busy = false;
+                _view.CommandRefresh();
+            });
         }
 
         private void CommandBattleReplay()
@@ -271,33 +310,32 @@ namespace Ryneus
 
         private void BattleStart()
         {
-
-                _model.SaveTempBattleMembers();
-                _view.CommandChangeViewToTransition(null);
-                _view.ChangeUIActive(false);
-                // ボス戦なら
-                if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            _model.SaveTempBattleMembers();
+            _view.CommandChangeViewToTransition(null);
+            _view.ChangeUIActive(false);
+            // ボス戦なら
+            if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            {
+                PlayBossBgm();
+            } else
+            {
+                var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
                 {
-                    PlayBossBgm();
+                    SoundManager.Instance.ChangeCrossFade();
                 } else
                 {
-                    var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
-                    if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
-                    {
-                        SoundManager.Instance.ChangeCrossFade();
-                    } else
-                    {
-                        PlayTacticsBgm();
-                    }
+                    PlayTacticsBgm();
                 }
-                _model.SetPartyBattlerIdList();
-                SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
-                var battleSceneInfo = new BattleSceneInfo
-                {
-                    ActorInfos = _model.BattleMembers(),
-                    EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
-                };
-                _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
+            }
+            _model.SetPartyBattlerIdList();
+            SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
+            var battleSceneInfo = new BattleSceneInfo
+            {
+                ActorInfos = _model.BattleMembers(),
+                EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
+            };
+            _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
         }
 
         private void ShowCharacterDetail()
@@ -351,7 +389,6 @@ namespace Ryneus
         private void CommandShowLearnMagic()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _view.SetLearnMagicButtonActive(true);
             var lastSelectSkillId = -1;
             var lastSelectSkill = _view.SelectMagic;
             if (lastSelectSkill != null)
@@ -359,6 +396,9 @@ namespace Ryneus
                 lastSelectSkillId = lastSelectSkill.Id;
             }
             _view.ShowLeaningList(_model.SelectActorLearningMagicList(-1,lastSelectSkillId));
+            _view.SetLearnMagicButtonActive(true);
+            _view.CommandRefresh();
+            CommandSelectAttribute(AttributeType.None);
         }
 
         private void CommandLearnMagic(SkillInfo skillInfo)
@@ -397,21 +437,22 @@ namespace Ryneus
             ShowCharacterDetail();
             _view.SetBattleMembers(GetListData(_model.BattleMembers()));
             _view.SetNuminous(_model.Currency);
+            _view.CommandRefresh();
             //CheckTutorialState();
         }
     }
 
     public class BattlePartyInfo
     {
-        private System.Action<int> _callEvent;
-        public System.Action<int> CallEvent => _callEvent;
+        private Action<int> _callEvent;
+        public Action<int> CallEvent => _callEvent;
         public BattlePartyInfo(System.Action<int> callEvent,System.Action backEvent)
         {
             _callEvent = callEvent;
             _backEvent = backEvent;
         }
-        private System.Action _backEvent;
-        public System.Action BackEvent => _backEvent;
+        private Action _backEvent;
+        public Action BackEvent => _backEvent;
         
         private List<ActorInfo> _actorInfos;
         public List<ActorInfo> ActorInfos => _actorInfos;

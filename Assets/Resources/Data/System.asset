@@ -171,6 +171,10 @@ MonoBehaviour:
     Text: "\u6C7A\u5B9A"
     Help: '""'
     Feature: 
+  - Id: 101
+    Text: "\u30D0\u30C8\u30EB\u958B\u59CB"
+    Help: '""'
+    Feature: 
   - Id: 110
     Text: "\u30AD\u30E3\u30F3\u30BB\u30EB"
     Help: '""'
@@ -213,6 +217,26 @@ MonoBehaviour:
     Feature: 
   - Id: 190
     Text: "\u8A73\u7D30\u78BA\u8A8D"
+    Help: '""'
+    Feature: 
+  - Id: 200
+    Text: "\u30D0\u30C8\u30EB\u53C2\u52A0\u5909\u66F4"
+    Help: '""'
+    Feature: 
+  - Id: 210
+    Text: "\u914D\u7F6E\u5909\u66F4"
+    Help: '""'
+    Feature: 
+  - Id: 220
+    Text: "\u9805\u76EE\u5207\u66FF"
+    Help: '""'
+    Feature: 
+  - Id: 230
+    Text: "\u30AD\u30E3\u30E9\u8A73\u7D30"
+    Help: '""'
+    Feature: 
+  - Id: 240
+    Text: "\u6575\u8A73\u7D30"
     Help: '""'
     Feature: 
   - Id: 312
@@ -1520,7 +1544,7 @@ MonoBehaviour:
     Help: '""'
     Feature: 
   InputDataList:
-  - Key: TITLE
+  - Key: _TITLE
     KeyId: 4
     Name: "\u6C7A\u5B9A"
   - Key: TITLE
@@ -1529,31 +1553,31 @@ MonoBehaviour:
   - Key: TITLE
     KeyId: 7
     Name: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
-  - Key: SIDEMENU
+  - Key: _SIDEMENU
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: SIDEMENU
+  - Key: _SIDEMENU
     KeyId: 5
     Name: "\u30AD\u30E3\u30F3\u30BB\u30EB"
-  - Key: SIDEMENU
+  - Key: _SIDEMENU
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: SIDEMENU
+  - Key: _SIDEMENU
     KeyId: 0
     Name: '""'
-  - Key: OPTION_CATEGORY
+  - Key: _OPTION_CATEGORY
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: OPTION_CATEGORY
+  - Key: _OPTION_CATEGORY
     KeyId: 5
     Name: "\u623B\u308B"
-  - Key: OPTION_CATEGORY
+  - Key: _OPTION_CATEGORY
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: OPTION_CATEGORY
+  - Key: _OPTION_CATEGORY
     KeyId: 0
     Name: '""'
-  - Key: OPTION
+  - Key: _OPTION
     KeyId: 5
     Name: "\u623B\u308B"
   - Key: OPTION
@@ -1562,63 +1586,93 @@ MonoBehaviour:
   - Key: OPTION
     KeyId: 2
     Name: '""'
-  - Key: OPTION
+  - Key: _OPTION
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: OPTION
+  - Key: _OPTION
     KeyId: 0
     Name: '""'
-  - Key: CREDIT
+  - Key: _CREDIT
     KeyId: 5
     Name: "\u623B\u308B"
-  - Key: CONFIRM
+  - Key: _CONFIRM
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: CONFIRM
+  - Key: _CONFIRM
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: CONFIRM
+  - Key: _CONFIRM
     KeyId: 2
     Name: '""'
-  - Key: TACTICS
+  - Key: _TACTICS
     KeyId: 4
     Name: "\u6C7A\u5B9A"
   - Key: TACTICS
     KeyId: 6
     Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
-  - Key: TACTICS
+  - Key: _TACTICS
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: TACTICS
+  - Key: _TACTICS
     KeyId: 2
     Name: '""'
-  - Key: RECORD_LIST
+  - Key: _RECORD_LIST
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: RECORD_LIST
+  - Key: _RECORD_LIST
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: RECORD_LIST
+  - Key: _RECORD_LIST
     KeyId: 0
     Name: '""'
-  - Key: RECORD_LIST
+  - Key: _RECORD_LIST
     KeyId: 5
     Name: "\u623B\u308B"
-  - Key: SYMBOL_LIST
+  - Key: _SYMBOL_LIST
     KeyId: 4
     Name: "\u6C7A\u5B9A"
   - Key: SYMBOL_LIST
     KeyId: 6
     Name: "\u8A73\u7D30\u78BA\u8A8D"
-  - Key: SYMBOL_LIST
+  - Key: _SYMBOL_LIST
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: SYMBOL_LIST
+  - Key: _SYMBOL_LIST
     KeyId: 2
     Name: '""'
-  - Key: SYMBOL_LIST
+  - Key: _SYMBOL_LIST
     KeyId: 5
     Name: "\u623B\u308B"
+  - Key: _BATTLE_PARTY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: _BATTLE_PARTY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: _BATTLE_PARTY
+    KeyId: 0
+    Name: '""'
+  - Key: BATTLE_PARTY
+    KeyId: 12
+    Name: "\u30D0\u30C8\u30EB\u958B\u59CB"
+  - Key: BATTLE_PARTY
+    KeyId: 4
+    Name: "\u30D0\u30C8\u30EB\u53C2\u52A0\u5909\u66F4"
+  - Key: BATTLE_PARTY
+    KeyId: 9
+    Name: "\u30AD\u30E3\u30E9\u8A73\u7D30"
+  - Key: BATTLE_PARTY
+    KeyId: 8
+    Name: "\u6575\u8A73\u7D30"
+  - Key: BATTLE_PARTY
+    KeyId: 11
+    Name: "\u914D\u7F6E\u5909\u66F4"
+  - Key: BATTLE_PARTY
+    KeyId: 7
+    Name: "\u9B54\u6CD5\u7FD2\u5F97"
+  - Key: BATTLE_PARTY
+    KeyId: 6
+    Name: "Lv\u30A2\u30C3\u30D7"
   - Key: NAMEENTRY
     KeyId: 12
     Name: "\u6C7A\u5B9A"
@@ -1732,24 +1786,6 @@ MonoBehaviour:
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: BATTLE_ENEMY
     KeyId: 2
-    Name: '""'
-  - Key: BATTLE_PARTY
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: BATTLE_PARTY
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: BATTLE_PARTY
-    KeyId: 9
-    Name: "\u6575\u5473\u65B9\u5207\u66FF"
-  - Key: BATTLE_PARTY
-    KeyId: 8
-    Name: '""'
-  - Key: BATTLE_PARTY
-    KeyId: 1
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: BATTLE_PARTY
-    KeyId: 0
     Name: '""'
   - Key: BATTLE_AUTO
     KeyId: 5

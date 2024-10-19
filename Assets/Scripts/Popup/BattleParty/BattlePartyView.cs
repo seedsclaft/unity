@@ -41,11 +41,32 @@ namespace Ryneus
             InitializeSelectCharacter();
             tacticsMemberList.SetInputHandler(InputKeyType.Decide,() => OnClickDecideActor());
             tacticsMemberList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-            //characterList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
-            //characterList.SetInputHandler(InputKeyType.Decide,() => CallDecideActor());
-            SetInputHandler(partyMemberList.gameObject);
+            tacticsMemberList.SetInputHandler(InputKeyType.SideLeft2,() => 
+            {
+                var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
+                CallChangeLineIndex(actorInfo);
+            });
+            tacticsMemberList.SetInputHandler(InputKeyType.SideLeft1,() => 
+            {
+                var eventData = new BattlePartyViewEvent(CommandType.EnemyInfo);
+                _commandData(eventData);
+            });
+            tacticsMemberList.SetInputHandler(InputKeyType.Option1,() => 
+            {
+                var eventData = new StatusViewEvent(Status.CommandType.LevelUp);
+                _statusCommandData(eventData);
+            });
+            tacticsMemberList.SetInputHandler(InputKeyType.Option2,() => 
+            {
+                var eventData = new StatusViewEvent(Status.CommandType.ShowLearnMagic);
+                _statusCommandData(eventData);
+            });
+            tacticsMemberList.SetInputHandler(InputKeyType.Start,() => 
+            {
+                CallBattleStart();
+            });
             SetInputHandler(tacticsMemberList.gameObject);
-            SetInputHandler(enemyMemberList.gameObject);
+            SetInputHandler(battleSelectCharacter.MagicList);
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
@@ -63,8 +84,7 @@ namespace Ryneus
             });
             battleStartButton.OnClickAddListener(() =>
             {
-                var eventData = new BattlePartyViewEvent(CommandType.BattleStart);
-                _commandData(eventData);
+                CallBattleStart();
             });
             battleStartButton.SetText(DataSystem.GetText(30020));
             battleReplayButton.OnClickAddListener(() =>
@@ -94,6 +114,12 @@ namespace Ryneus
         private void CallSideMenu()
         {
             var eventData = new BattlePartyViewEvent(CommandType.SelectSideMenu);
+            _commandData(eventData);
+        }
+
+        private void CallBattleStart()
+        {
+            var eventData = new BattlePartyViewEvent(CommandType.BattleStart);
             _commandData(eventData);
         }
 
@@ -152,14 +178,19 @@ namespace Ryneus
                     var battlePartyMember = partyMemberList.ItemPrefabList[i].GetComponent<BattlePartyMemberItem>();
                     battlePartyMember.SetLineIndexHandler((a) => 
                     {
-                        var eventData = new BattlePartyViewEvent(CommandType.ChangeLineIndex)
-                        {
-                            template = a
-                        };
-                        _commandData(eventData);
+                        CallChangeLineIndex(a);
                     });
                 }
             });
+        }
+
+        private void CallChangeLineIndex(ActorInfo actorInfo)
+        {
+            var eventData = new BattlePartyViewEvent(CommandType.ChangeLineIndex)
+            {
+                template = actorInfo
+            };
+            _commandData(eventData);
         }
 
         public void SetEnemyMembers(List<ListData> enemyInfos)
@@ -170,6 +201,10 @@ namespace Ryneus
         public void SetStatusButtonEvent(System.Action statusEvent)
         {
             battleSelectCharacter.SetStatusButtonEvent(statusEvent);
+            tacticsMemberList.SetInputHandler(InputKeyType.SideRight1,() => 
+            {
+                statusEvent.Invoke();
+            });
         }
 
         public void SetAttributeList(List<ListData> list)
@@ -194,8 +229,6 @@ namespace Ryneus
 
         private void InitializeSelectCharacter()
         {
-            battleSelectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAlchemy());
-            battleSelectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
             battleSelectCharacter.HideActionList();
         }
 
@@ -226,7 +259,7 @@ namespace Ryneus
         {
             battleSelectCharacter.AttributeList.gameObject.SetActive(false);
             battleSelectCharacter.gameObject.SetActive(true);
-            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,true);
+            battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Detail,true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
@@ -237,7 +270,6 @@ namespace Ryneus
             battleSelectCharacter.SetActorInfo(actorInfo,party);
             battleSelectCharacter.SetSkillInfos(skillInfos);
             battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail);
-            SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
             trainAnimation.OpenAnimation(battleSelectCharacter.transform,null);
         }
 
@@ -252,13 +284,28 @@ namespace Ryneus
             battleSelectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Magic);
             battleSelectCharacter.SetSkillInfos(learnMagicList);
             battleSelectCharacter.ShowActionList();
-            SetHelpInputInfo("ALCHEMY_ATTRIBUTE");
             trainAnimation.OpenAnimation(battleSelectCharacter.transform,null);
         }
         
         public void RefreshLeaningList(List<ListData> learnMagicList)
         {
             battleSelectCharacter.MagicList.SetData(learnMagicList);
+            battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.Decide,() => CallSkillAlchemy());
+            battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.Cancel,() => 
+            {
+                var eventData = new StatusViewEvent(Status.CommandType.HideLearnMagic);
+                _statusCommandData(eventData);
+            });
+            battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.SideLeft1,() => 
+            {
+                var eventData = new BattlePartyViewEvent(CommandType.LeftAttribute);
+                _commandData(eventData);
+            });
+            battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.SideRight1,() => 
+            {
+                var eventData = new BattlePartyViewEvent(CommandType.RightAttribute);
+                _commandData(eventData);
+            });
         }
         
         private void CallSkillAlchemy()
@@ -282,11 +329,36 @@ namespace Ryneus
         public void SetLearnMagicButtonActive(bool IsActive)
         {
             learnMagicBackButton.gameObject.SetActive(IsActive);
+            if (IsActive)
+            {
+                battleSelectCharacter.MagicList.Activate();
+                tacticsMemberList.Deactivate();
+            } else
+            {
+                battleSelectCharacter.MagicList.Deactivate();
+                tacticsMemberList.Activate();
+            }
         }
 
         public void SetBattleReplayEnable(bool isEnable)
         {
             battleReplayButton.Disable?.SetActive(!isEnable);
+        }
+
+        public void SelectAttribute(int index)
+        {
+            battleSelectCharacter.AttributeList.UpdateSelectIndex(index);
+        }
+
+        public void CommandRefresh()
+        {
+            if (learnMagicBackButton.gameObject.activeSelf)
+            {
+                SetHelpInputInfo("LEARN_MAGIC");
+            } else
+            {
+                SetHelpInputInfo("BATTLE_PARTY");
+            }
         }
     }
 }
@@ -299,6 +371,8 @@ namespace BattleParty
         Back,
         SelectSideMenu,
         SelectAttribute,
+        LeftAttribute,
+        RightAttribute,
         DecideTacticsMember,
         SelectTacticsMember,
         EnemyInfo,
@@ -311,10 +385,10 @@ namespace BattleParty
 
 public class BattlePartyViewEvent
 {
-    public BattleParty.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public BattlePartyViewEvent(BattleParty.CommandType type)
+    public BattlePartyViewEvent(CommandType type)
     {
         commandType = type;
     }
