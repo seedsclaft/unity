@@ -22,23 +22,38 @@ namespace Ryneus
         {
             levelUpButton?.OnClickAddListener(() => 
             {
-                if (levelUpButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.LevelUp);
-                _commandData(eventData);
+                CallLevelUp();
             });
             learnMagicButton?.OnClickAddListener(() => 
             {
-                if (learnMagicButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
-                _commandData(eventData);
+                CallLearnMagic();
             });
             learnMagicBackButton?.onClick.AddListener(() => 
             {
-                if (learnMagicBackButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
-                _commandData(eventData);
+                CallHideLearnMagic();
             });
             SetLearnMagicButtonActive(false);
+        }
+
+        public void CallLevelUp()
+        {
+            if (levelUpButton.gameObject.activeSelf == false) return;
+            var eventData = new StatusViewEvent(CommandType.LevelUp);
+            _commandData(eventData);
+        }
+
+        public void CallLearnMagic()
+        {
+            if (learnMagicButton.gameObject.activeSelf == false) return;
+            var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
+            _commandData(eventData);
+        }
+
+        public void CallHideLearnMagic()
+        {
+            if (learnMagicBackButton.gameObject.activeSelf == false) return;
+            var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
+            _commandData(eventData);
         }
 
         public void SetEvent(System.Action<StatusViewEvent> commandData)

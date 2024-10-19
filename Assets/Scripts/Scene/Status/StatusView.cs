@@ -79,6 +79,25 @@ namespace Ryneus
             helpButton.onClick.AddListener(() => OnClickHelp());
             characterListButton.OnClickAddListener(() => OnClickCharacterList());
             commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
+            commandList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            commandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
+            commandList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
+            commandList.SetInputHandler(InputKeyType.SideLeft2,() => OnClickCharacterList());
+            commandList.SetInputHandler(InputKeyType.Option1,() => 
+            {
+                if (_isDisplayLevelObj)
+                {
+                    statusLevelUp.CallLevelUp();
+                }
+            });
+            commandList.SetInputHandler(InputKeyType.Option2,() => 
+            {
+                if (_isDisplayLevelObj)
+                {
+                    commandList.Deactivate();
+                    statusLevelUp.CallLearnMagic();
+                }
+            });
             commandList.SetData(commandListData);
         }
 
@@ -167,6 +186,10 @@ namespace Ryneus
             statusLevelUp.SetActive(_isDisplayLevelObj);
             decideButton.gameObject.SetActive(_isDisplayDecide);
             commandList.gameObject.SetActive(_isDisplayLevelObj);
+            if (_isDisplayLevelObj)
+            {
+                commandList.Activate();
+            }
             ChangeBackCommandActive(!_isDisplayDecide);
             if (_isDisplayDecide)
             {
@@ -324,6 +347,13 @@ namespace Ryneus
                     }
                 }
             });
+            magicList.SetInputHandler(InputKeyType.Cancel,() => 
+            {
+                magicList.SetInputHandler(InputKeyType.Decide,() => {});
+                magicList.SetInputHandler(InputKeyType.Cancel,() => {});
+                commandList.Activate();
+                statusLevelUp.CallHideLearnMagic();
+            });
         }
 
         public void SetLearnMagicButtonActive(bool IsActive)
@@ -340,13 +370,20 @@ namespace Ryneus
                 SetHelpInputInfo("SELECT_HEROINE");
             } else
             {
-                SetHelpText(DataSystem.GetHelp(202));
-                SetHelpInputInfo("STATUS");
+                if (commandList.Active == false)
+                {
+                    SetHelpInputInfo("LEARN_MAGIC");
+                } else
+                {
+                    SetHelpText(DataSystem.GetHelp(202));
+                    SetHelpInputInfo("STATUS");
+                }
             }
         }
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
+            return;
             switch (keyType)
             {
                 case InputKeyType.Cancel:

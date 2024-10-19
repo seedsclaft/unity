@@ -186,6 +186,7 @@ namespace Ryneus
                 lastSelectSkillId = lastSelectSkill.Id;
             }
             _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));
+            CommandRefresh();
         }
 
         private void CommandLearnMagic(SkillInfo skillInfo)

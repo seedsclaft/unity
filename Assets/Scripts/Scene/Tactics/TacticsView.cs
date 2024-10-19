@@ -103,9 +103,9 @@ namespace Ryneus
             alcanaSelectList.Initialize();
             leftButton.onClick.AddListener(() => OnClickLeft());
             rightButton.onClick.AddListener(() => OnClickRight());
-            var presenter = new TacticsPresenter(this);
             HideSymbolRecord();
             alcanaSelectList.Hide();
+            var presenter = new TacticsPresenter(this);
             presenter.CommandReturnStrategy();
         }
 
@@ -123,9 +123,9 @@ namespace Ryneus
         {
             tacticsCommandList.SetData(menuCommands);
             tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSelectTacticsCommand());
-            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CommandOpenSideMenu());
+            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallSideMenu());
             tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
-            SetInputHandler(tacticsCommandList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(tacticsCommandList.gameObject);
             UpdateHelpWindow();
         }
         
@@ -398,14 +398,12 @@ namespace Ryneus
             tacticsSymbolList.gameObject.SetActive(true);
             tacticsSymbolList.ResetInputFrame(1);
             tacticsSymbolList.OpenAnimation();
-            SetHelpInputInfo("ENEMY_SELECT");
             symbolRecordList.ScrollRect.enabled = false;
         }
 
         public void HideRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(false);
-            SetHelpInputInfo("TACTICS");
             symbolRecordList.ScrollRect.enabled = true;
         }
 
@@ -527,9 +525,20 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
-            if (keyType == InputKeyType.Option1)
+        }
+
+        public void CommandRefresh()
+        {
+            if (tacticsSymbolList.gameObject.activeSelf && tacticsSymbolList.Active)
             {
-                CallSideMenu();
+                SetHelpInputInfo("SYMBOL_LIST");
+            } else
+            if (symbolRecordList.gameObject.activeSelf && symbolRecordList.Active)
+            {
+                SetHelpInputInfo("RECORD_LIST");
+            } else
+            {
+                SetHelpInputInfo("TACTICS");
             }
         }
     }

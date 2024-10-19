@@ -265,22 +265,6 @@ namespace Ryneus
             return MakeListData(list,enable);
         }
 
-        public string TacticsCommandInputInfo()
-        {
-            switch (_TacticsCommandType)
-            {
-                case TacticsCommandType.Train:
-                    return "TRAIN";
-                case TacticsCommandType.Alchemy:
-                    return "ALCHEMY";
-                    /*
-                case TacticsCommandType.Recovery:
-                    return "RECOVERY";
-                    */
-            }
-            return "";
-        }
-
         public void AssignBattlerIndex()
         {
             var idList = PartyInfo.LastBattlerIdList;

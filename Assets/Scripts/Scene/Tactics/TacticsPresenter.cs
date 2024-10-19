@@ -71,7 +71,6 @@ namespace Ryneus
             _view.SetNuminous(_model.Currency);
             CommandRefresh();
             PlayTacticsBgm();
-            //_view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
             _view.ChangeUIActive(true);
             _view.StartAnimation();
             // チュートリアル確認
@@ -191,7 +190,7 @@ namespace Ryneus
                 return;
             }
             _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
-            //Debug.Log(viewEvent.commandType);
+            Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectTacticsCommand:
@@ -347,6 +346,7 @@ namespace Ryneus
             _view.ShowRecordList();
             _view.ShowSymbolRecord();
             _view.ChangeSymbolBackCommandActive(true);
+            _view.CommandRefresh();
         }
 
         private void CommandCancelSymbolRecord()
@@ -355,6 +355,7 @@ namespace Ryneus
             _view.HideSymbolRecord();
             _view.ChangeBackCommandActive(false);
             _view.ChangeSymbolBackCommandActive(false);
+            _view.CommandRefresh();
             _backCommand = CommandType.None;
         }
 
@@ -379,7 +380,6 @@ namespace Ryneus
         private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
         {
             _model.SetTacticsCommandType(tacticsCommandType);
-            _view.SetHelpInputInfo(_model.TacticsCommandInputInfo());
             switch (tacticsCommandType)
             {
                 case TacticsCommandType.Paradigm:
@@ -401,6 +401,7 @@ namespace Ryneus
             _view.ChangeBackCommandActive(true);
             _view.ChangeSymbolBackCommandActive(true);
             _view.EndStatusCursor();
+            _view.CommandRefresh();
             _backCommand = CommandType.CancelSymbolRecord;
         }
 
@@ -419,7 +420,6 @@ namespace Ryneus
 
             CommandStatusInfo(_model.PastActorInfos(),false,true,true,false,actorId,() => 
             {
-                _view.SetHelpInputInfo("TACTICS");
                 _view.SetNuminous(_model.Currency);
             });
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -810,6 +810,7 @@ namespace Ryneus
             _view.SetTacticsCharaLayer(_model.StageMembers());
             _view.SetPastMode(_model.CurrentStage.WorldType == WorldType.Brunch);
             _view.SetWorldMove(_model.BrunchMode,_model.CurrentStage.WorldType);
+            _view.CommandRefresh();
         }
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolResultInfo)
@@ -820,7 +821,11 @@ namespace Ryneus
                 case SymbolType.Boss:
                     var enemyInfos = symbolResultInfo.SymbolInfo.BattlerInfos();
                     _busy = true;
-                    CommandEnemyInfo(enemyInfos,false,() => {_busy = false;});
+                    CommandEnemyInfo(enemyInfos,false,() => 
+                    {
+                        _busy = false;
+                        _view.CommandRefresh();
+                    });
                     break;
                 case SymbolType.Alcana:
                     CallPopupSkillDetail(DataSystem.GetText(19200),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
@@ -828,7 +833,7 @@ namespace Ryneus
                 case SymbolType.Actor:
                     CommandStatusInfo(_model.AddActorInfos(symbolResultInfo.SymbolInfo.GetItemInfos[0].Param1),false,true,false,false,-1,() => 
                     {
-
+                        _view.CommandRefresh();
                     });
                     break;
                 case SymbolType.SelectActor:
@@ -885,7 +890,11 @@ namespace Ryneus
 
         private void CallPopupSkillDetail(string title,List<SkillInfo> skillInfos)
         {
-            var confirmInfo = new ConfirmInfo(title,(a) => CloseConfirm(),ConfirmType.SkillDetail);
+            var confirmInfo = new ConfirmInfo(title,(a) => 
+            {
+                CloseConfirm();
+                _view.CommandRefresh();
+            },ConfirmType.SkillDetail);
             confirmInfo.SetSkillInfo(skillInfos);
             confirmInfo.SetIsNoChoice(true);
             _view.CommandCallSkillDetail(confirmInfo);
@@ -915,6 +924,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _view.HideRecordList();
             _view.ChangeSymbolBackCommandActive(false);
+            _view.CommandRefresh();
             _backCommand = CommandType.CancelSymbolRecord;
         }
 

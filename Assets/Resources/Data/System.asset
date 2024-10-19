@@ -195,6 +195,26 @@ MonoBehaviour:
     Text: "\u5024\u5909\u66F4"
     Help: '""'
     Feature: 
+  - Id: 150
+    Text: "\u4EF2\u9593\u5207\u66FF"
+    Help: '""'
+    Feature: 
+  - Id: 160
+    Text: "Lv\u30A2\u30C3\u30D7"
+    Help: '""'
+    Feature: 
+  - Id: 170
+    Text: "\u9B54\u6CD5\u7FD2\u5F97"
+    Help: '""'
+    Feature: 
+  - Id: 180
+    Text: "\u4EF2\u9593\u4E00\u89A7"
+    Help: '""'
+    Feature: 
+  - Id: 190
+    Text: "\u8A73\u7D30\u78BA\u8A8D"
+    Help: '""'
+    Feature: 
   - Id: 312
     Text: "\u6B8B\u308ASP"
     Help: '""'
@@ -1572,147 +1592,33 @@ MonoBehaviour:
   - Key: TACTICS
     KeyId: 2
     Name: '""'
-  - Key: TRAIN
+  - Key: RECORD_LIST
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: TRAIN
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: TRAIN
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: TRAIN
-    KeyId: 2
-    Name: '""'
-  - Key: TRAIN
-    KeyId: 1
-    Name: '""'
-  - Key: TRAIN
-    KeyId: 0
-    Name: '""'
-  - Key: ALCHEMY
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: ALCHEMY
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: ALCHEMY
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: ALCHEMY
-    KeyId: 2
-    Name: '""'
-  - Key: ALCHEMY
-    KeyId: 1
-    Name: '""'
-  - Key: ALCHEMY
-    KeyId: 0
-    Name: '""'
-  - Key: ALCHEMY_ATTRIBUTE
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: ALCHEMY_ATTRIBUTE
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: ALCHEMY_ATTRIBUTE
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: ALCHEMY_ATTRIBUTE
-    KeyId: 2
-    Name: '""'
-  - Key: ALCHEMY_SKILL
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: ALCHEMY_SKILL
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: ALCHEMY_SKILL
+  - Key: RECORD_LIST
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: ALCHEMY_SKILL
+  - Key: RECORD_LIST
     KeyId: 0
     Name: '""'
-  - Key: RECOVERY
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: RECOVERY
+  - Key: RECORD_LIST
     KeyId: 5
     Name: "\u623B\u308B"
-  - Key: RECOVERY
-    KeyId: 3
-    Name: "\u5024\u5909\u66F4"
-  - Key: RECOVERY
-    KeyId: 2
-    Name: '""'
-  - Key: RECOVERY
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: RECOVERY
-    KeyId: 2
-    Name: '""'
-  - Key: RECOVERY
-    KeyId: 1
-    Name: '""'
-  - Key: RECOVERY
-    KeyId: 0
-    Name: '""'
-  - Key: ENEMY_SELECT
+  - Key: SYMBOL_LIST
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: ENEMY_SELECT
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: ENEMY_SELECT
+  - Key: SYMBOL_LIST
     KeyId: 6
-    Name: 
-  - Key: ENEMY_SELECT
+    Name: "\u8A73\u7D30\u78BA\u8A8D"
+  - Key: SYMBOL_LIST
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: ENEMY_SELECT
+  - Key: SYMBOL_LIST
     KeyId: 2
     Name: '""'
-  - Key: ENEMY_SELECT
-    KeyId: 1
-    Name: '""'
-  - Key: ENEMY_SELECT
-    KeyId: 0
-    Name: '""'
-  - Key: ENEMY_BATTLE
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: ENEMY_BATTLE
+  - Key: SYMBOL_LIST
     KeyId: 5
     Name: "\u623B\u308B"
-  - Key: ENEMY_BATTLE
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: ENEMY_BATTLE
-    KeyId: 2
-    Name: '""'
-  - Key: ENEMY_BATTLE
-    KeyId: 1
-    Name: '""'
-  - Key: ENEMY_BATTLE
-    KeyId: 0
-    Name: '""'
-  - Key: RESOURCE
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: RESOURCE
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: RESOURCE
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: RESOURCE
-    KeyId: 2
-    Name: '""'
-  - Key: RESOURCE
-    KeyId: 1
-    Name: '""'
-  - Key: RESOURCE
-    KeyId: 0
-    Name: '""'
   - Key: NAMEENTRY
     KeyId: 12
     Name: "\u6C7A\u5B9A"
@@ -1852,26 +1758,38 @@ MonoBehaviour:
     KeyId: 5
     Name: "\u623B\u308B"
   - Key: STATUS
-    KeyId: 6
-    Name: 
+    KeyId: 9
+    Name: "\u4EF2\u9593\u5207\u66FF"
   - Key: STATUS
-    KeyId: 11
-    Name: "\u9805\u76EE\u5207\u66FF"
-  - Key: STATUS
-    KeyId: 10
+    KeyId: 8
     Name: '""'
   - Key: STATUS
     KeyId: 3
-    Name: "\u9B54\u6CD5\u5207\u66FF"
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: STATUS
     KeyId: 2
     Name: '""'
   - Key: STATUS
-    KeyId: 9
-    Name: "\u8853\u8005\u5207\u66FF"
+    KeyId: 11
+    Name: "\u4EF2\u9593\u4E00\u89A7"
   - Key: STATUS
-    KeyId: 8
+    KeyId: 7
+    Name: "\u9B54\u6CD5\u7FD2\u5F97"
+  - Key: STATUS
+    KeyId: 6
+    Name: "Lv\u30A2\u30C3\u30D7"
+  - Key: LEARN_MAGIC
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: LEARN_MAGIC
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: LEARN_MAGIC
+    KeyId: 0
     Name: '""'
+  - Key: LEARN_MAGIC
+    KeyId: 4
+    Name: "\u9B54\u6CD5\u7FD2\u5F97"
   - Key: SELECT_HEROINE
     KeyId: 12
     Name: "\u6C7A\u5B9A"
