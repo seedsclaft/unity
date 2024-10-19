@@ -122,12 +122,17 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
+            _view.SetHelpInputInfo("TITLE");
         }
 
         private void CommandSelectSideMenu()
         {
             _busy = true;
-            CommandCallSideMenu(GetListData(_model.SideMenu()),() => {_busy = false;});
+            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
+            {            
+                CommandRefresh();
+                _busy = false;
+            });
         }
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)

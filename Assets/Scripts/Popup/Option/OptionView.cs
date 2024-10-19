@@ -22,8 +22,10 @@ namespace Ryneus
             base.Initialize();
             optionCategoryList.Initialize();
             optionList.Initialize();
-            SetInputHandler(optionList.GetComponent<IInputHandlerEvent>());
-            SetInputHandler(optionCategoryList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(optionList.gameObject);
+            SetInputHandler(optionCategoryList.gameObject);
+            optionList.Deactivate();
+            optionCategoryList.Activate();
             SetBaseAnimation(popupAnimation);
             new OptionPresenter(this);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -41,7 +43,9 @@ namespace Ryneus
             {
                 var eventData = new OptionViewEvent(CommandType.SelectCategory);
                 _commandData(eventData);
-            });   
+            });
+            optionCategoryList.SetInputHandler(InputKeyType.Decide,() => CallDecideCategory());
+            optionCategoryList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
         }
 
         public void SetOptionList(List<ListData> optionData)
@@ -51,8 +55,8 @@ namespace Ryneus
             optionList.SetInputHandler(InputKeyType.Right,() => CallChangeOptionValue(InputKeyType.Right));
             optionList.SetInputHandler(InputKeyType.Left,() => CallChangeOptionValue(InputKeyType.Left));
             optionList.SetInputHandler(InputKeyType.Option1,() => CallChangeOptionValue(InputKeyType.Option1));
-            optionList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             optionList.SetInputHandler(InputKeyType.Decide,() => OnClickOptionList());
+            optionList.SetInputHandler(InputKeyType.Cancel,() => CallCancelOptionList());
         }
 
         private void OnClickOptionList()
@@ -63,13 +67,19 @@ namespace Ryneus
 
         public void CommandRefresh()
         {
+            if (optionCategoryList.Active)
+            {
+                SetHelpInputInfo("OPTION_CATEGORY");
+            } else
+            {
+                SetHelpInputInfo("OPTION");
+            }
             optionList.UpdateAllItems();
         }
 
         public void SetHelpWindow()
         {
             SetHelpText(DataSystem.GetHelp(500));
-            SetHelpInputInfo("OPTION");
         }
 
         public void SetEvent(System.Action<OptionViewEvent> commandData)
@@ -99,13 +109,44 @@ namespace Ryneus
             {
                 return;
             }
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             var optionResultInfo = (OptionInfo)listData.Data;
             var eventData = new OptionViewEvent(CommandType.ChangeOptionValue);
-            var optionInfo = new OptionInfo();
-            optionInfo.OptionCommand = optionResultInfo.OptionCommand;
-            optionInfo.keyType = inputKeyType;
+            var optionInfo = new OptionInfo
+            {
+                OptionCommand = optionResultInfo.OptionCommand,
+                keyType = inputKeyType
+            };
             eventData.template = optionInfo;
             _commandData(eventData);
+        }
+
+        private void CallDecideCategory()
+        {
+            var eventData = new OptionViewEvent(CommandType.DecideCategory);
+            _commandData(eventData);  
+        }
+        
+        public void DecideCategory()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            optionCategoryList.Deactivate();
+            optionList.Activate();
+            optionList.UpdateSelectIndex(0);
+        }
+
+        private void CallCancelOptionList()
+        {
+            var eventData = new OptionViewEvent(CommandType.CancelOptionList);
+            _commandData(eventData);   
+        }
+
+        public void CancelOptionList()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            optionCategoryList.Activate();
+            optionList.Deactivate();
+            optionList.UpdateSelectIndex(-1);
         }
     }
 }
@@ -117,15 +158,18 @@ namespace Option
         None = 0,
         SelectCategory = 101,
         SelectOptionList = 102,
+        CancelOptionList = 103,
+        DecideCategory = 104,
         ChangeOptionValue = 2000,
     }
 }
+
 public class OptionViewEvent
 {
-    public Option.CommandType commandType;
+    public CommandType commandType;
     public object template;
 
-    public OptionViewEvent(Option.CommandType type)
+    public OptionViewEvent(CommandType type)
     {
         commandType = type;
     }

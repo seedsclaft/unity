@@ -22,8 +22,7 @@ namespace Ryneus
             });
             rankingButton?.OnClickAddListener(() => 
             {
-                var eventData = new TitleViewEvent(CommandType.Ranking);
-                _commandData(eventData);
+                CallRanking();
             });
             new TitlePresenter(this);
             tapTitle.onClick.AddListener(() => OnClickTitle());
@@ -51,19 +50,29 @@ namespace Ryneus
             _commandData(eventData);
         }
 
+        private void CallRanking()
+        {
+            var eventData = new TitleViewEvent(CommandType.Ranking);
+            _commandData(eventData);
+        }
+
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
-            if (keyType == InputKeyType.Decide || keyType == InputKeyType.Start)
+            switch (keyType)
             {
-                OnClickTitle();
-            } else
-            if (keyType == InputKeyType.Option1)
-            {
-                CallSideMenu();
+                case InputKeyType.Decide:
+                case InputKeyType.Start:
+                    OnClickTitle();
+                    return;
+                case InputKeyType.Option1:
+                    CallSideMenu();
+                    return;
+                case InputKeyType.Option2:
+                    CallRanking();
+                    return;
             }
         }
     }
-
 
     public class TitleViewEvent
     {

@@ -25,7 +25,7 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             ClosePopup();
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetHelpInputInfo("SideMenu");
+            CommandRefresh();
             _view.OpenAnimation();
         }
 
@@ -127,14 +127,12 @@ namespace Ryneus
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            //_view.SetHelpInputInfo("RULING");
             var popupInfo = new PopupInfo
             {
                 PopupType = PopupType.Ruling,
                 EndEvent = () =>
                 {
                     ClosePopup();
-                    //_view.SetHelpInputInfo("OPTION");
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
             };
@@ -228,6 +226,12 @@ namespace Ryneus
         {
             _busy = false;
             _view.ActivateSideMenu();
+            CommandRefresh();
+        }
+
+        private void CommandRefresh()
+        {
+            _view.SetHelpInputInfo("SIDEMENU");
         }
     }
 }

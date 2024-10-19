@@ -159,8 +159,40 @@ MonoBehaviour:
   AlcanaSelectCount: 4
   BattleBonusValue: 4
   SystemTextData:
+  - Id: 0
+    Text: '""'
+    Help: '""'
+    Feature: 
   - Id: 51
     Text: "\u6226\u529B\u5024"
+    Help: '""'
+    Feature: 
+  - Id: 100
+    Text: "\u6C7A\u5B9A"
+    Help: '""'
+    Feature: 
+  - Id: 110
+    Text: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+    Help: '""'
+    Feature: 
+  - Id: 111
+    Text: "\u623B\u308B"
+    Help: '""'
+    Feature: 
+  - Id: 120
+    Text: "\u30AA\u30D7\u30B7\u30E7\u30F3"
+    Help: '""'
+    Feature: 
+  - Id: 130
+    Text: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
+    Help: '""'
+    Feature: 
+  - Id: 140
+    Text: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+    Help: '""'
+    Feature: 
+  - Id: 141
+    Text: "\u5024\u5909\u66F4"
     Help: '""'
     Feature: 
   - Id: 312
@@ -1475,22 +1507,31 @@ MonoBehaviour:
     KeyId: 6
     Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
   - Key: TITLE
-    KeyId: 1
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: TITLE
-    KeyId: 0
-    Name: '""'
+    KeyId: 7
+    Name: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
   - Key: SIDEMENU
     KeyId: 4
     Name: "\u6C7A\u5B9A"
   - Key: SIDEMENU
     KeyId: 5
-    Name: "\u623B\u308B"
+    Name: "\u30AD\u30E3\u30F3\u30BB\u30EB"
   - Key: SIDEMENU
-    KeyId: 3
+    KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
   - Key: SIDEMENU
-    KeyId: 2
+    KeyId: 0
+    Name: '""'
+  - Key: OPTION_CATEGORY
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: OPTION_CATEGORY
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: OPTION_CATEGORY
+    KeyId: 1
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: OPTION_CATEGORY
+    KeyId: 0
     Name: '""'
   - Key: OPTION
     KeyId: 5
@@ -1500,7 +1541,7 @@ MonoBehaviour:
     Name: "\u5024\u5909\u66F4"
   - Key: OPTION
     KeyId: 2
-    Name: "\u5024\u5909\u66F4"
+    Name: '""'
   - Key: OPTION
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
@@ -1510,6 +1551,15 @@ MonoBehaviour:
   - Key: CREDIT
     KeyId: 5
     Name: "\u623B\u308B"
+  - Key: CONFIRM
+    KeyId: 4
+    Name: "\u6C7A\u5B9A"
+  - Key: CONFIRM
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: CONFIRM
+    KeyId: 2
+    Name: '""'
   - Key: TACTICS
     KeyId: 4
     Name: "\u6C7A\u5B9A"

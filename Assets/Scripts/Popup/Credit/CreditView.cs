@@ -15,6 +15,7 @@ namespace Ryneus
             base.Initialize();
             
             SetBaseAnimation(popupAnimation);
+            SetHelpInputInfo("CREDIT");
             new CreditPresenter(this);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
@@ -33,11 +34,12 @@ namespace Ryneus
         {
             if (keyType == InputKeyType.Cancel)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 BackEvent();
             }
             if (keyType == InputKeyType.Down)
             {
-                var value = scrollRect.normalizedPosition.y - 0.025f;
+                var value = scrollRect.normalizedPosition.y - 0.1f;
                 scrollRect.normalizedPosition = new Vector2(0,value);
                 if (scrollRect.normalizedPosition.y < 0)
                 {
@@ -46,7 +48,7 @@ namespace Ryneus
             }
             if (keyType == InputKeyType.Up)
             {
-                var value = scrollRect.normalizedPosition.y + 0.025f;
+                var value = scrollRect.normalizedPosition.y + 0.1f;
                 scrollRect.normalizedPosition = new Vector2(0,value);
                 if (scrollRect.normalizedPosition.y > 1)
                 {

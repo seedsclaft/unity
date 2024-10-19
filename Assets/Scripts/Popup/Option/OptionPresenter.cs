@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Option;
+using System;
 
 namespace Ryneus
 {
@@ -31,7 +32,6 @@ namespace Ryneus
             _view.OpenAnimation();
             _busy = false;
         }
-
         
         private void UpdateCommand(OptionViewEvent viewEvent)
         {
@@ -41,15 +41,23 @@ namespace Ryneus
             }
             if (viewEvent.commandType == CommandType.ChangeOptionValue)
             {
-            CommandOptionValue((OptionInfo)viewEvent.template);
+                CommandOptionValue((OptionInfo)viewEvent.template);
             }
             if (viewEvent.commandType == CommandType.SelectCategory)
             {
-            CommandSelectCategory();
+                CommandSelectCategory();
             }
             if (viewEvent.commandType == CommandType.SelectOptionList)
             {
-            CommandSelectOptionList();
+                CommandSelectOptionList();
+            }
+            if (viewEvent.commandType == CommandType.CancelOptionList)
+            {
+                CommandCancelOptionList();
+            }
+            if (viewEvent.commandType == CommandType.DecideCategory)
+            {
+                CommandDecideCategory();
             }
         }
 
@@ -203,7 +211,6 @@ namespace Ryneus
                 }
                 CommandRefresh();
             }
-            
         }
 
         private void CommandRefresh()
@@ -236,6 +243,18 @@ namespace Ryneus
                     SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 }
             }
+        }
+
+        private void CommandDecideCategory()
+        {
+            _view.DecideCategory();
+            CommandRefresh();
+        }
+
+        private void CommandCancelOptionList()
+        {
+            _view.CancelOptionList();
+            CommandRefresh();
         }
     }
 }

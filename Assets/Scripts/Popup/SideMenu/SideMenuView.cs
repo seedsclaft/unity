@@ -59,7 +59,7 @@ namespace Ryneus
             sideMenuInfoList.SetData(sideMenuViewInfo.CommandLists);
             sideMenuInfoList.SetInputHandler(InputKeyType.Decide,() =>
             {
-                //sideMenuInfoList.Deactivate();
+                sideMenuInfoList.Deactivate();
                 OnClickSideMenu();
             });
             sideMenuInfoList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());

@@ -23,6 +23,7 @@ namespace Ryneus
             skillInfoList.Initialize();
             SetBaseAnimation(confirmAnimation);
             new ConfirmPresenter(this);
+            SetHelpInputInfo("CONFIRM");
         }
 
         public void OpenAnimation()

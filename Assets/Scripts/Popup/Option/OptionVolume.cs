@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace Ryneus
 {
@@ -37,7 +38,7 @@ namespace Ryneus
 
         private void UpdateValue()
         {
-            volumeValue.text = ((int)(_sliderValue * 100)).ToString("D");
+            volumeValue.text = ((int)Math.Round(_sliderValue * 100)).ToString("D");
         }
 
         private void UpdateMute()
