@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Status;
 using TMPro;
+using System;
 
 namespace Ryneus
 {
@@ -34,6 +35,7 @@ namespace Ryneus
 
         private System.Action _backEvent = null;
         private bool _isDisplayDecide => _statusViewInfo != null && _statusViewInfo.DisplayDecideButton;
+        public bool DisplayDecide => _isDisplayDecide;
         private string _helpText;
         private bool _isDisplayLevelObj => _statusViewInfo != null && _statusViewInfo.DisplayLvResetButton;
         private bool _isDisplayBack => _statusViewInfo != null && _statusViewInfo.DisplayBackButton;
@@ -56,11 +58,11 @@ namespace Ryneus
             selectCharacter.SetBusy(false);
         }
 
-        public void OpenAnimation()
+        public void OpenAnimation(Action endEvent)
         {
             //statusAnimation.OpenAnimation(UiRoot.transform,null);
             statusAnimation.LeftAnimation(leftRoot.transform,null);
-            statusAnimation.RightAnimation(rightRoot.transform,null);
+            statusAnimation.RightAnimation(rightRoot.transform,() => endEvent?.Invoke());
         }
 
         private void InitializeSelectCharacter()

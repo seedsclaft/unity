@@ -60,9 +60,8 @@ namespace Ryneus
             transitionRoot.SetActive(false);
             loadingView.Initialize();
             loadingView.gameObject.SetActive(false);
-            //tutorialView.Initialize();
-            //tutorialView.HideFocusImage();
             transitionFade.Init();
+            tutorialView.Initialize();
             statusAssign.CloseStatus();
             TempData = new TempInfo();
             _model = new BaseModel();
@@ -232,8 +231,6 @@ namespace Ryneus
                     });
                     break;
                 case Base.CommandType.CallTutorialFocus:
-                    //var stageTutorialData = (StageTutorialData)viewEvent.template;
-                    //tutorialView.SeekFocusImage(stageTutorialData);
                     break;
                 case Base.CommandType.CloseTutorialFocus:
                     if (popupAssign.StackPopupView != null)
@@ -529,17 +526,13 @@ namespace Ryneus
             {
                 tutorialViewInfo.CheckTrueAction?.Invoke();
                 _lastTutorialData = tutorialData;
-                if (tutorialData.Param1 != 3)
+                tutorialView.gameObject.SetActive(true);
+                tutorialView.SetTutorialData(tutorialData);
+                tutorialView.SetBackEvent(() => 
                 {
-                    tutorialView.gameObject.SetActive(true);
-                    tutorialView.Initialize();
-                    tutorialView.SetTutorialData(tutorialData);
-                    tutorialView.SetBackEvent(() => 
-                    {
-                        tutorialView.gameObject.SetActive(false);
-                        tutorialViewInfo.EndEvent?.Invoke();
-                    });
-                }
+                    tutorialView.gameObject.SetActive(false);
+                    tutorialViewInfo.EndEvent?.Invoke();
+                });
                 _model.ReadTutorialData(tutorialData);
             }
         }

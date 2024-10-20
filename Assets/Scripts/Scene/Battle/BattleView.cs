@@ -193,9 +193,12 @@ namespace Ryneus
 
         public void UpdateStartActivate()
         {
-            battleEnemyLayer.Activate();
-            battleEnemyLayer.UpdateSelectIndex(0);
-            battleActorList.Deactivate();
+            if (GameSystem.ConfigData.InputType)
+            {
+                battleEnemyLayer.Activate();
+                battleEnemyLayer.UpdateSelectIndex(0);
+                battleActorList.Deactivate();
+            }
         }
 
         private void CallBattleSkip()
@@ -416,14 +419,6 @@ namespace Ryneus
                 };
                 _commandData(eventData);
             }
-        }
-
-        public void UpdateSelectIndexList(List<int> targetIndexes)
-        {
-            var map1 = targetIndexes.Select(a => a - 1);
-            battleActorList.UpdateSelectIndexList(map1.ToList());
-            var map = targetIndexes.Select(a => a - 100);
-            battleEnemyLayer.UpdateSelectIndexList(map.ToList());
         }
 
         public void SelectedCharacter(BattlerInfo battlerInfo)
@@ -704,6 +699,10 @@ namespace Ryneus
         
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
+            if (GameSystem.ConfigData.InputType == false)
+            {
+                return;
+            }
             var selectIndex = 0;
             switch (keyType)
             {
@@ -739,46 +738,6 @@ namespace Ryneus
                     battleEnemyLayer.Activate();
                     battleEnemyLayer.UpdateSelectIndex(0);
                     break;
-                    /*
-                case InputKeyType.Up:
-                    if (battleActorList.Active)
-                    {
-                        selectIndex = battleActorList.Index - 1;
-                        if (selectIndex < 0)
-                        {
-                            selectIndex = battleActorList.DataCount;
-                        }
-                        battleActorList.UpdateSelectIndex(selectIndex);
-                    } else
-                    {
-                        selectIndex = battleEnemyLayer.Index - 1;
-                        if (selectIndex < 0)
-                        {
-                            selectIndex = battleEnemyLayer.DataCount;
-                        }
-                        battleEnemyLayer.UpdateSelectIndex(selectIndex);
-                    }
-                    break;
-                case InputKeyType.Down:
-                    if (battleActorList.Active)
-                    {
-                        selectIndex = battleActorList.Index + 1;
-                        if (selectIndex >= battleActorList.DataCount)
-                        {
-                            selectIndex = 0;
-                        }
-                        battleActorList.UpdateSelectIndex(selectIndex);
-                    } else
-                    {
-                        selectIndex = battleEnemyLayer.Index + 1;
-                        if (selectIndex >= battleEnemyLayer.DataCount)
-                        {
-                            selectIndex = 0;
-                        }
-                        battleEnemyLayer.UpdateSelectIndex(selectIndex);
-                    }
-                    break;
-                    */
                 case InputKeyType.SideLeft1:
                     CallChangeBattleSpeed(-1);
                     break;

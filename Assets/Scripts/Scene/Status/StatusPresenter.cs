@@ -27,8 +27,10 @@ namespace Ryneus
 
             CommandRefresh();
             if (_model.ActorInfos.Count == 1) _view.HideArrows();
-            _view.OpenAnimation();
-            CheckTutorialState();
+            _view.OpenAnimation(() => 
+            {
+                CheckTutorialState();
+            });
         }
 
         private void UpdateCommand(StatusViewEvent viewEvent)
@@ -91,7 +93,7 @@ namespace Ryneus
                 if (tutorialData.Param1 == 1000)
                 {
                     // 初めて仲間加入画面を開く
-                    checkFlag = _view.DecideButtonActive;
+                    checkFlag = _view.DisplayDecide;
                 }
                 return checkFlag;
             };

@@ -67,7 +67,10 @@ namespace Ryneus
                 var eventData = new StatusViewEvent(Status.CommandType.SelectCommandList);
                 _statusCommandData(eventData);
             });
-            tacticsMemberList.Deactivate();
+            if (GameSystem.ConfigData.InputType) 
+            {
+                tacticsMemberList.Deactivate();
+            }
             SetInputHandler(tacticsMemberList.gameObject);
             SetInputHandler(battleSelectCharacter.MagicList);
             SideMenuButton.OnClickAddListener(() => 
@@ -134,9 +137,13 @@ namespace Ryneus
 
         public void SetCommandList(List<ListData> commandDates)
         {
-            commandList.SetData(commandDates);
+            commandList.SetData(commandDates,true,() => 
+            {
+                commandList.UpdateSelectIndex(commandDates.Count-1);
+            });
             commandList.SetInputHandler(InputKeyType.Decide,() => CallCommandList());
             commandList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            
         }
 
         private void CallCommandList()
@@ -370,20 +377,34 @@ namespace Ryneus
                 if (learnMagicBackButton.gameObject.activeSelf)
                 {
                     SetHelpInputInfo("LEARN_MAGIC");
-                    battleSelectCharacter.MagicList.Activate();
-                    tacticsMemberList.Deactivate();
                 } else
                 {
-                    battleSelectCharacter.MagicList.Deactivate();
-                    tacticsMemberList.Activate();
                     SetHelpInputInfo("EDIT_PARTY");
                 }
-                commandList.Deactivate();
             } else
             {
                 SetHelpInputInfo("BATTLE_PARTY");
-                commandList.Activate();
-                tacticsMemberList.Deactivate();
+            }
+
+            if (GameSystem.ConfigData.InputType)
+            {
+                if (_isEditMode)
+                {
+                    if (learnMagicBackButton.gameObject.activeSelf)
+                    {
+                        battleSelectCharacter.MagicList.Activate();
+                        tacticsMemberList.Deactivate();
+                    } else
+                    {
+                        battleSelectCharacter.MagicList.Deactivate();
+                        tacticsMemberList.Activate();
+                    }
+                    commandList.Deactivate();
+                } else
+                {
+                    commandList.Activate();
+                    tacticsMemberList.Deactivate();
+                }
             }
         }
     }
