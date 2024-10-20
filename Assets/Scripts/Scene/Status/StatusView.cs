@@ -444,8 +444,8 @@ namespace Ryneus
 
     public class StatusViewInfo
     {
-        private System.Action _backEvent = null;
-        public System.Action BackEvent => _backEvent;
+        private Action _backEvent = null;
+        public Action BackEvent => _backEvent;
         private bool _displayDecideButton = false;
         public bool DisplayDecideButton => _displayDecideButton;
         private bool _displayBackButton = true;
@@ -462,10 +462,10 @@ namespace Ryneus
         public bool IsBattle => _isBattle;
         private int _startIndex = -1;
         public int StartIndex => _startIndex;
-        private System.Action<int> _charaLayerEvent = null;
-        public System.Action<int> CharaLayerEvent => _charaLayerEvent;
+        private Action<int> _charaLayerEvent = null;
+        public Action<int> CharaLayerEvent => _charaLayerEvent;
         
-        public StatusViewInfo(System.Action backEvent)
+        public StatusViewInfo(Action backEvent)
         {
             _backEvent = backEvent;
         }

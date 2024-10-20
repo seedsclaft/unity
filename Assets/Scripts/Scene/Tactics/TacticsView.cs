@@ -11,7 +11,6 @@ namespace Ryneus
     public class TacticsView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private RectTransform BgRect = null;
-        //[SerializeField] private TrainView trainView = null;
         [SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private TacticsCharaLayer tacticsCharaLayer = null;
         [SerializeField] private TacticsSymbolList tacticsSymbolList = null;
@@ -430,7 +429,7 @@ namespace Ryneus
 
         public void SetAlcanaSelectInfos(List<ListData> skillInfos)
         {
-            SetBackEvent(() => {});
+            SetBackEvent(() => OnClickBack());
             alcanaSelectList.SetData(skillInfos);
             alcanaSelectList.SetInputHandler(InputKeyType.Decide,() => 
             {

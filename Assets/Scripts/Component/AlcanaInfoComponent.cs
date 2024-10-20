@@ -12,16 +12,8 @@ namespace Ryneus
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
         public void UpdateInfo(List<SkillInfo> skillInfos)
         {
-            if (alcana != null){
-                alcana.gameObject.SetActive(skillInfos.Count > 0);
-            }
-            if (alcanaCount != null){
-                alcanaCount.text = skillInfos.Count.ToString();
-            }
-            if (shinyReflect != null)
-            {
-                //shinyReflect.enabled = alcanaInfo.EnableOwnAlcanaList.Count > 0;
-            }
+            alcana?.gameObject.SetActive(skillInfos.Count > 0);
+            alcanaCount?.SetText(skillInfos.Count.ToString());
         }
     }
 }

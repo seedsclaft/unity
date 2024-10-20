@@ -190,7 +190,7 @@ namespace Ryneus
                 return;
             }
             _view.UpdateInputKeyActive(viewEvent,_model.TacticsCommandType);
-            Debug.Log(viewEvent.commandType);
+            //Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.SelectTacticsCommand:
@@ -987,7 +987,6 @@ namespace Ryneus
                 CommandRefresh();
             },(a) => 
             {
-                Debug.Log(a);
                 _view.CommandSelectCharaLayer(a);
             });
         }

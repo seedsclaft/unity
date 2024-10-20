@@ -34,7 +34,7 @@ namespace Ryneus
             {
                 return;
             }
-            UnityEngine.Debug.Log(viewEvent.commandType);
+            //UnityEngine.Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case TacticsStatus.CommandType.DecideActor:

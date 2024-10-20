@@ -27,7 +27,6 @@ namespace Ryneus
         public float BackScale => _backScale;
         public void Initialize(GameObject parent,float x,float y,float scale)
         {
-            _isInit = true;
             _sequence = new List<Sequence>();
             _sequence2 = new List<Sequence>();
         }
@@ -37,11 +36,15 @@ namespace Ryneus
             actorInfoComponent.UpdateInfo(actorInfo,null);
             _actorInfo = actorInfo;
             HideCursor();
-            var parent = gameObject.transform.parent;
-            var parentRect = parent.GetComponent<RectTransform>();
-            _backLocalX = parentRect.localPosition.x;
-            _backLocalY = parentRect.localPosition.y;
-            _backScale = parentRect.localScale.x;
+            if (_isInit == false)
+            {
+                var parent = gameObject.transform.parent;
+                var parentRect = parent.GetComponent<RectTransform>();
+                _backLocalX = parentRect.localPosition.x;
+                _backLocalY = parentRect.localPosition.y;
+                _backScale = parentRect.localScale.x;
+                _isInit = true;
+            }
         }
 
         public void HideCursor()
