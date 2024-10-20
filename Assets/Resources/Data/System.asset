@@ -140,7 +140,7 @@ MonoBehaviour:
     ToggleText1: 6221
     ToggleText2: 6222
     ToggleText3: 0
-    ExistAndroid: 0
+    ExistAndroid: 1
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
@@ -173,6 +173,10 @@ MonoBehaviour:
     Feature: 
   - Id: 101
     Text: "\u30D0\u30C8\u30EB\u958B\u59CB"
+    Help: '""'
+    Feature: 
+  - Id: 102
+    Text: "\u30B9\u30C6\u30FC\u30B8\u958B\u59CB"
     Help: '""'
     Feature: 
   - Id: 110
@@ -1712,64 +1716,37 @@ MonoBehaviour:
     Name: "\u6C7A\u5B9A"
   - Key: MAINMENU
     KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: MAINMENU
+    Name: "\u30B9\u30C6\u30FC\u30B8\u958B\u59CB"
+  - Key: _MAINMENU
     KeyId: 6
-    Name: "\u30AA\u30D7\u30B7\u30E7\u30F3"
-  - Key: MAINMENU
+    Name: '""'
+  - Key: _MAINMENU
     KeyId: 7
-    Name: "\u30E9\u30F3\u30AD\u30F3\u30B0\u78BA\u8A8D"
-  - Key: MAINMENU
+    Name: '""'
+  - Key: _MAINMENU
     KeyId: 1
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: MAINMENU
+    Name: '""'
+  - Key: _MAINMENU
     KeyId: 0
     Name: '""'
-  - Key: STRATEGY
+  - Key: _STRATEGY
     KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: STRATEGY
+    Name: '""'
+  - Key: _STRATEGY
     KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: STRATEGY
+    Name: '""'
+  - Key: _STRATEGY
     KeyId: 2
     Name: '""'
-  - Key: STRATEGY
+  - Key: _STRATEGY
     KeyId: 1
-    Name: "\u7D50\u679C\u8868\u793A\u5207\u66FF"
-  - Key: STRATEGY
+    Name: '""'
+  - Key: _STRATEGY
     KeyId: 0
     Name: '""'
   - Key: LEVELUP
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: STRATEGY_BATTLE
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: STRATEGY_BATTLE
-    KeyId: 6
-    Name: 
-  - Key: STRATEGY_BATTLE
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: STRATEGY_BATTLE
-    KeyId: 2
-    Name: '""'
-  - Key: STRATEGY_BATTLE_SKIP
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: STRATEGY_BATTLE_SKIP
-    KeyId: 6
-    Name: 
-  - Key: STRATEGY_BATTLE_SKIP
-    KeyId: 7
-    Name: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7\u5207\u66FF"
-  - Key: STRATEGY_BATTLE_SKIP
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: STRATEGY_BATTLE_SKIP
-    KeyId: 2
-    Name: '""'
   - Key: BATTLE
     KeyId: 4
     Name: "\u512A\u5148\u5BFE\u8C61\u9078\u629E"
@@ -1794,37 +1771,7 @@ MonoBehaviour:
   - Key: BATTLE
     KeyId: 12
     Name: "\u30D0\u30C8\u30EB\u30B9\u30AD\u30C3\u30D7"
-  - Key: BATTLE_ENEMY
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: BATTLE_ENEMY
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: BATTLE_ENEMY
-    KeyId: 6
-    Name: 
-  - Key: BATTLE_ENEMY
-    KeyId: 9
-    Name: "\u6575\u5473\u65B9\u5207\u66FF"
-  - Key: BATTLE_ENEMY
-    KeyId: 8
-    Name: '""'
-  - Key: BATTLE_ENEMY
-    KeyId: 1
-    Name: "\u5217\u5909\u66F4"
-  - Key: BATTLE_ENEMY
-    KeyId: 0
-    Name: '""'
-  - Key: BATTLE_ENEMY
-    KeyId: 3
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: BATTLE_ENEMY
-    KeyId: 2
-    Name: '""'
-  - Key: BATTLE_AUTO
-    KeyId: 5
-    Name: "\u81EA\u52D5\u6226\u95D8\u5207\u66FF"
-  - Key: STATUS
+  - Key: _STATUS
     KeyId: 5
     Name: "\u623B\u308B"
   - Key: STATUS
@@ -1833,10 +1780,10 @@ MonoBehaviour:
   - Key: STATUS
     KeyId: 8
     Name: '""'
-  - Key: STATUS
+  - Key: _STATUS
     KeyId: 3
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: STATUS
+  - Key: _STATUS
     KeyId: 2
     Name: '""'
   - Key: STATUS
@@ -1864,29 +1811,20 @@ MonoBehaviour:
     KeyId: 12
     Name: "\u6C7A\u5B9A"
   - Key: SELECT_HEROINE
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: SELECT_HEROINE
-    KeyId: 6
-    Name: 
-  - Key: SELECT_HEROINE
-    KeyId: 11
-    Name: "\u9805\u76EE\u5207\u66FF"
-  - Key: SELECT_HEROINE
-    KeyId: 10
-    Name: '""'
-  - Key: SELECT_HEROINE
-    KeyId: 3
-    Name: "\u9B54\u6CD5\u5207\u66FF"
-  - Key: SELECT_HEROINE
-    KeyId: 2
-    Name: '""'
-  - Key: SELECT_HEROINE
     KeyId: 9
-    Name: "\u8853\u8005\u5207\u66FF"
+    Name: "\u4EF2\u9593\u5207\u66FF"
   - Key: SELECT_HEROINE
     KeyId: 8
     Name: '""'
+  - Key: _SELECT_HEROINE
+    KeyId: 3
+    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
+  - Key: _SELECT_HEROINE
+    KeyId: 2
+    Name: '""'
+  - Key: SELECT_HEROINE
+    KeyId: 11
+    Name: "\u4EF2\u9593\u4E00\u89A7"
   - Key: ENEMYINFO
     KeyId: 5
     Name: "\u623B\u308B"
@@ -1962,48 +1900,15 @@ MonoBehaviour:
   - Key: RANKING
     KeyId: 0
     Name: '""'
-  - Key: REBORN
+  - Key: _CHARACTER_LIST
+    KeyId: 5
+    Name: "\u623B\u308B"
+  - Key: _CHARACTER_LIST
     KeyId: 4
     Name: "\u6C7A\u5B9A"
-  - Key: REBORN
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: REBORN
-    KeyId: 3
-    Name: "\u9B54\u6CD5\u5207\u66FF"
-  - Key: REBORN
-    KeyId: 2
-    Name: '""'
-  - Key: REBORN
+  - Key: _CHARACTER_LIST
     KeyId: 1
     Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: REBORN
-    KeyId: 0
-    Name: '""'
-  - Key: SLOT
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: SLOT
-    KeyId: 6
-    Name: "\u30B9\u30C6\u30FC\u30BF\u30B9\u78BA\u8A8D"
-  - Key: SLOT
-    KeyId: 4
-    Name: "\u4FDD\u6301\u5207\u66FF"
-  - Key: SLOT
-    KeyId: 1
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: SLOT
-    KeyId: 0
-    Name: '""'
-  - Key: CHARACTER_LIST
-    KeyId: 5
-    Name: "\u623B\u308B"
-  - Key: CHARACTER_LIST
-    KeyId: 4
-    Name: "\u6C7A\u5B9A"
-  - Key: CHARACTER_LIST
-    KeyId: 1
-    Name: "\u30AB\u30FC\u30BD\u30EB\u79FB\u52D5"
-  - Key: CHARACTER_LIST
+  - Key: _CHARACTER_LIST
     KeyId: 0
     Name: '""'

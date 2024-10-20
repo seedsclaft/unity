@@ -6,7 +6,7 @@ using MainMenu;
 
 namespace Ryneus
 {
-    public class MainMenuView : BaseView
+    public class MainMenuView : BaseView, IInputHandlerEvent
     {
         [SerializeField] private StageInfoComponent component;
         [SerializeField] private OnOffButton nextStageButton;
@@ -19,10 +19,16 @@ namespace Ryneus
             nextStageButton?.SetText(DataSystem.GetText(17010));
             nextStageButton?.OnClickAddListener(() => 
             {
-                var eventData = new MainMenuViewEvent(CommandType.NextStage);
-                _commandData(eventData);
+                CallNextStage();
             });
+            SetInputHandler(gameObject);
             new MainMenuPresenter(this);
+        }
+
+        private void CallNextStage()
+        {
+            var eventData = new MainMenuViewEvent(CommandType.NextStage);
+            _commandData(eventData);
         }
 
         public void SetInitHelpText()
@@ -46,6 +52,16 @@ namespace Ryneus
             if (stageInfo != null)
             {
                 component.UpdateInfo(stageInfo);
+            }
+        }
+
+        public void InputHandler(InputKeyType keyType,bool pressed)
+        {
+            switch (keyType)
+            {
+                case InputKeyType.Decide:
+                    CallNextStage();
+                    break;
             }
         }
     }

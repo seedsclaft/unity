@@ -80,9 +80,9 @@ namespace Ryneus
             characterListButton.OnClickAddListener(() => OnClickCharacterList());
             commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
             commandList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            commandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
-            commandList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
-            commandList.SetInputHandler(InputKeyType.SideLeft2,() => OnClickCharacterList());
+            //commandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
+            //commandList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
+            //commandList.SetInputHandler(InputKeyType.SideLeft2,() => OnClickCharacterList());
             commandList.SetInputHandler(InputKeyType.Option1,() => 
             {
                 if (_isDisplayLevelObj)
@@ -383,23 +383,22 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            return;
             switch (keyType)
             {
                 case InputKeyType.Cancel:
-                    OnClickBack();
                     break;
                 case InputKeyType.Option1:
-                    OnClickCharacterList();
                     break;
                 case InputKeyType.Option2:
-                    OnClickLvReset();
                     break;
                 case InputKeyType.Start:
                     OnClickDecide();
                     break;
                 case InputKeyType.SideLeft1:
                     OnClickLeft();
+                    break;
+                case InputKeyType.SideLeft2:
+                    OnClickCharacterList();
                     break;
                 case InputKeyType.SideRight1:
                     OnClickRight();

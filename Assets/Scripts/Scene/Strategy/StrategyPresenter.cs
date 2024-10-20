@@ -363,6 +363,7 @@ namespace Ryneus
             {
                 SetHelpInputSkipEnable();
                 _view.SetHelpText(DataSystem.GetText(20020));
+                _view.SetHelpInputInfo("STRATEGY");
             });
         }
 
@@ -391,13 +392,6 @@ namespace Ryneus
 
         private void SetHelpInputSkipEnable()
         {
-            if (_model.EnableBattleSkip())
-            {
-                _view.SetHelpInputInfo("STRATEGY_BATTLE_SKIP");
-            } else
-            {
-                _view.SetHelpInputInfo("STRATEGY_BATTLE");
-            }
         }
 
         private void EndStrategy()
