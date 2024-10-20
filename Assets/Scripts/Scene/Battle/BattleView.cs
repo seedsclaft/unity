@@ -67,7 +67,7 @@ namespace Ryneus
             base.Initialize();
             ClearCurrentSkillData();
             selectCharacter.Initialize();
-            SetInputHandler(selectCharacter.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(selectCharacter.gameObject);
 
             InitializeSelectCharacter();
             battleGridLayer.Initialize();
@@ -81,16 +81,11 @@ namespace Ryneus
             });
             battleSpeedButton.OnClickAddListener(() => 
             {
-                if (battleSpeedButton.gameObject.activeSelf == false) return;
-                var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed);
-                _commandData(eventData);
+                CallChangeBattleSpeed(1);
             });
             battleSkipButton.OnClickAddListener(() => 
             {
-                if (battleSkipButton.gameObject.activeSelf == false) return;
-                var eventData = new BattleViewEvent(CommandType.SkipBattle);
-                _skipBattle = true;
-                _commandData(eventData);
+                CallBattleSkip();
             });
             skillLogButton.OnClickAddListener(() => 
             {
@@ -130,6 +125,7 @@ namespace Ryneus
 
         private void InitializeSelectCharacter()
         {
+            /*
             selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
             selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
             selectCharacter.SetInputHandlerAction(InputKeyType.Option1,() => CommandOpenSideMenu());
@@ -143,6 +139,7 @@ namespace Ryneus
                 selectCharacter.SelectCharacterTabSmooth(1);
             });
             SetInputHandler(selectCharacter.MagicList.GetComponent<IInputHandlerEvent>());
+            */
             selectCharacter.HideActionList();
         }
 
@@ -194,6 +191,31 @@ namespace Ryneus
             skillLogButton.UpdateViewItem();
         }
 
+        public void UpdateStartActivate()
+        {
+            battleEnemyLayer.Activate();
+            battleEnemyLayer.UpdateSelectIndex(0);
+            battleActorList.Deactivate();
+        }
+
+        private void CallBattleSkip()
+        {
+            if (battleSkipButton.gameObject.activeSelf == false) return;
+            var eventData = new BattleViewEvent(CommandType.SkipBattle);
+            _skipBattle = true;
+            _commandData(eventData);
+        }
+
+        private void CallChangeBattleSpeed(int plus)
+        {
+            if (battleSpeedButton.gameObject.activeSelf == false) return;
+            var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed)
+            {
+                template = plus
+            };
+            _commandData(eventData);
+        }
+
         private void CallSkillAction()
         {
             var data = selectCharacter.ActionData;
@@ -210,11 +232,10 @@ namespace Ryneus
         public void CreateObject()
         {
             battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
-            battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
+            //battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
             battleActorList.SetSelectedHandler(() => CallSelectActorList());
             SetInputHandler(battleActorList.GetComponent<IInputHandlerEvent>());
-            //battleActorList.Deactivate();
             
             GameObject prefab = Instantiate(animPrefab);
             prefab.transform.SetParent(animRoot.transform, false);
@@ -288,13 +309,6 @@ namespace Ryneus
         public new void SetHelpText(string text)
         {
             HelpWindow.SetHelpText(text);
-            if (text != "")
-            {        
-                HelpWindow.SetInputInfo("BATTLE");
-            } else
-            {
-                HelpWindow.SetInputInfo("BATTLE_AUTO");
-            }
         }
 
         public void SetEvent(System.Action<BattleViewEvent> commandData)
@@ -310,7 +324,6 @@ namespace Ryneus
                 _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetActorInfo(battlerInfos);
-            //battleActorList.Deactivate();
             battleActorList.gameObject.SetActive(false);
         }
         
@@ -318,17 +331,16 @@ namespace Ryneus
         {
             battleEnemyLayer.SetData(ListData.MakeListData(battlerInfos,false));
             battleEnemyLayer.SetInputHandler(InputKeyType.Decide,() => CallEnemyInfo());
-            battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
-            battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
+            //battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            //battleEnemyLayer.SetInputHandler(InputKeyType.SideRight1,() => OnClickSelectParty());
+            //battleEnemyLayer.SetInputHandler(InputKeyType.Option1,() => CallEnemyDetailInfo(battlerInfos));
             battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
-            SetInputHandler(battleEnemyLayer.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(battleEnemyLayer.gameObject);
             foreach (var battlerInfo in battlerInfos)
             {
                 _battlerComps[battlerInfo.Index] = battleEnemyLayer.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetEnemyInfo(battlerInfos);
-            DeactivateEnemyList();
             battleEnemyLayer.gameObject.SetActive(false);
         }
 
@@ -449,8 +461,6 @@ namespace Ryneus
         public void RefreshMagicList(List<ListData> skillInfos,int selectIndex)
         {
             //selectCharacter.SetActiveTab(SelectCharacterTabType.Detail,false);
-            DeactivateActorList();
-            DeactivateEnemyList();
             selectCharacter.ShowActionList();
             selectCharacter.SetSkillInfos(skillInfos);
             selectCharacter.RefreshAction(selectIndex);
@@ -460,26 +470,6 @@ namespace Ryneus
         public void SetCondition(List<ListData> stateInfos)
         {
             selectCharacter.SetConditionList(stateInfos);
-        }
-
-        public void ActivateEnemyList()
-        {
-            //battleEnemyLayer.Activate();
-        }
-
-        public void DeactivateEnemyList()
-        {
-            //battleEnemyLayer.Deactivate();
-        }
-
-        public void ActivateActorList()
-        {
-            //battleActorList.Activate();
-        }
-
-        public void DeactivateActorList()
-        {
-            //battleActorList.Deactivate();
         }
 
         private void OnClickSelectEnemy()
@@ -496,10 +486,6 @@ namespace Ryneus
 
         public void RefreshPartyBattlerList(List<ListData> battlerInfos)
         {
-            if (battlerInfos.Count > 0)
-            {
-                ActivateActorList();
-            }
             battleActorList.SetTargetListData(battlerInfos);
             foreach (var item in _battlerComps)
             {
@@ -514,10 +500,6 @@ namespace Ryneus
 
         public void RefreshEnemyBattlerList(List<ListData> battlerInfos)
         {
-            if (battlerInfos.Count > 0)
-            {
-                ActivateEnemyList();
-            }
             battleEnemyLayer.SetTargetListData(battlerInfos);
             foreach (var item in _battlerComps)
             {
@@ -578,8 +560,6 @@ namespace Ryneus
 
         public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition,float animationScale = 1.0f,float animationSpeed = 1.0f)
         {
-            DeactivateActorList();
-            DeactivateEnemyList();
             if (GameSystem.ConfigData.BattleAnimationSkip == true) 
             {
                 return;
@@ -593,8 +573,6 @@ namespace Ryneus
 
         public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
         {
-            DeactivateActorList();
-            DeactivateEnemyList();
             if (GameSystem.ConfigData.BattleAnimationSkip == true) 
             {
                 return;
@@ -625,8 +603,6 @@ namespace Ryneus
 
         public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData,float speedRate)
         {
-            DeactivateActorList();
-            DeactivateEnemyList();
             battleCutinAnimation.StartAnimation(battlerInfo,skillData,speedRate);
             //var handle = EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
         }
@@ -728,11 +704,87 @@ namespace Ryneus
         
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            if (keyType == InputKeyType.Cancel)
+            var selectIndex = 0;
+            switch (keyType)
             {
-                if (battleAutoButton.gameObject.activeSelf == false) return;
-                var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
-                _commandData(eventData);
+                case InputKeyType.Start:
+                    CallBattleSkip();
+                    break;
+                case InputKeyType.Decide:
+                    if (battleActorList.Active)
+                    {
+                        selectIndex = battleActorList.Index;
+                        if (selectIndex >= 0)
+                        {
+                            CallSelectActorList();
+                        }
+                    } else
+                    {
+                        selectIndex = battleEnemyLayer.Index;
+                        if (selectIndex >= 0)
+                        {
+                            CallSelectEnemyList();
+                        }
+                    }
+                    break;
+                case InputKeyType.Left:
+                    battleActorList.Activate();
+                    battleActorList.UpdateSelectIndex(0);
+                    battleEnemyLayer.Deactivate();
+                    battleEnemyLayer.UpdateSelectIndex(-1);
+                    break;
+                case InputKeyType.Right:
+                    battleActorList.Deactivate();
+                    battleActorList.UpdateSelectIndex(-1);
+                    battleEnemyLayer.Activate();
+                    battleEnemyLayer.UpdateSelectIndex(0);
+                    break;
+                    /*
+                case InputKeyType.Up:
+                    if (battleActorList.Active)
+                    {
+                        selectIndex = battleActorList.Index - 1;
+                        if (selectIndex < 0)
+                        {
+                            selectIndex = battleActorList.DataCount;
+                        }
+                        battleActorList.UpdateSelectIndex(selectIndex);
+                    } else
+                    {
+                        selectIndex = battleEnemyLayer.Index - 1;
+                        if (selectIndex < 0)
+                        {
+                            selectIndex = battleEnemyLayer.DataCount;
+                        }
+                        battleEnemyLayer.UpdateSelectIndex(selectIndex);
+                    }
+                    break;
+                case InputKeyType.Down:
+                    if (battleActorList.Active)
+                    {
+                        selectIndex = battleActorList.Index + 1;
+                        if (selectIndex >= battleActorList.DataCount)
+                        {
+                            selectIndex = 0;
+                        }
+                        battleActorList.UpdateSelectIndex(selectIndex);
+                    } else
+                    {
+                        selectIndex = battleEnemyLayer.Index + 1;
+                        if (selectIndex >= battleEnemyLayer.DataCount)
+                        {
+                            selectIndex = 0;
+                        }
+                        battleEnemyLayer.UpdateSelectIndex(selectIndex);
+                    }
+                    break;
+                    */
+                case InputKeyType.SideLeft1:
+                    CallChangeBattleSpeed(-1);
+                    break;
+                case InputKeyType.SideRight1:
+                    CallChangeBattleSpeed(1);
+                    break;
             }
         }
 

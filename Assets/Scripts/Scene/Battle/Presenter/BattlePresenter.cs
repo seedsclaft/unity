@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Battle;
-using System.Diagnostics;
 
 namespace Ryneus
 {
@@ -103,12 +102,14 @@ namespace Ryneus
 
         private async void StartBattle()
         {
+            _view.SetHelpInputInfo("BATTLE");
             _view.SetEvent((type) => UpdateCommand(type));
             _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartUIAnimation();
             _view.SetBattleAutoButton(true);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);
+            _view.UpdateStartActivate();
 
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => 
             {
@@ -180,25 +181,25 @@ namespace Ryneus
         {
             switch (viewEvent.commandType)
             {
-                case Battle.CommandType.ChangeBattleAuto:
+                case CommandType.ChangeBattleAuto:
                     //CommandChangeBattleAuto();
                     break;
-                case Battle.CommandType.ChangeBattleSpeed:
-                    CommandChangeBattleSpeed();
+                case CommandType.ChangeBattleSpeed:
+                    CommandChangeBattleSpeed((int)viewEvent.template);
                     break;
-                case Battle.CommandType.SkipBattle:
+                case CommandType.SkipBattle:
                     CommandSkipBattle();
                     break;
-                case Battle.CommandType.EnemyLayer:
+                case CommandType.EnemyLayer:
                     CommandTargetEnemy((BattlerInfo)viewEvent.template);
                     break;
-                case Battle.CommandType.ActorList:
+                case CommandType.ActorList:
                     CommandTargetActor((BattlerInfo)viewEvent.template);
                     break;
-                case Battle.CommandType.CancelSelectActor:
+                case CommandType.CancelSelectActor:
                     CancelSelectActor();
                     break;
-                case Battle.CommandType.CancelSelectEnemy:
+                case CommandType.CancelSelectEnemy:
                     CancelSelectEnemy();
                     break;
             }
@@ -311,7 +312,6 @@ namespace Ryneus
                 return;
             }
 #endif
-            _view.SetHelpInputInfo("BATTLE_AUTO");
             var currentActionInfo = _model.CurrentActionInfo;
             if (currentActionInfo != null)
             {
@@ -734,10 +734,10 @@ namespace Ryneus
         }
         */
 
-        private void CommandChangeBattleSpeed()
+        private void CommandChangeBattleSpeed(int plus)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            ConfigUtility.ChangeBattleSpeed(1);
+            ConfigUtility.ChangeBattleSpeed(plus);
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
         }
 

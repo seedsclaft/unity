@@ -43,6 +43,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI recoveryCost;
         [SerializeField] private TextMeshProUGUI resourceGain;
         [SerializeField] private TextMeshProUGUI addTiming;
+        [SerializeField] private TextMeshProUGUI battlePosition;
         [SerializeField] private Image unitTypeImage;
         [SerializeField] private Image unitTypeImageBack;
 
@@ -110,6 +111,11 @@ namespace Ryneus
             resourceGain?.SetText(TacticsUtility.ResourceGain(actorInfo).ToString());
             evaluate?.SetText(actorInfo.Evaluate().ToString());
             addTiming?.SetText(actorInfo.AddTiming.ToString());
+            if (battlePosition != null)
+            {
+                var textId = actorInfo.LineIndex == LineType.Front ? 2012 : 2013;
+                battlePosition.text = DataSystem.GetText(textId);
+            }
         }
 
         private void UpdateAttributeRank(TextMeshProUGUI text,ActorInfo actorInfo,AttributeType attributeType,List<ActorInfo> actorInfos)

@@ -31,6 +31,7 @@ namespace Ryneus
             _view.SetAttributeList(GetListData(_model.AttributeTabList()));
             _view.SetStatusButtonEvent(() => CommandStatusInfo());
             _view.SetTacticsMembers(GetListData(_model.BattlePartyMembers()));
+            _view.SetCommandList(GetListData(_model.BattlePartyCommand()));
             _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
@@ -96,6 +97,12 @@ namespace Ryneus
             LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
+                case CommandType.CallCommandList:
+                    CommandCallCommandList((SystemData.CommandData)viewEvent.template);
+                    break;
+                case CommandType.CommandEndEdit:
+                    CommandEndEdit();
+                    break;
                 case CommandType.SelectSideMenu:
                     CommandSelectSideMenu();
                     break;
@@ -160,12 +167,44 @@ namespace Ryneus
             CheckTutorialState();
         }
 
+        private void CommandCallCommandList(SystemData.CommandData commandData)
+        {
+            switch (commandData.Key)
+            {
+                case "Edit":
+                    CommandEdit();
+                    return;
+                case "EnemyInfo":
+                    CommandEnemyInfo();
+                    return;
+                case "Replay":
+                    CommandBattleReplay();
+                    return;
+                case "Battle":
+                    CommandBattleStart();
+                    return;
+            }
+        }
+
+        private void CommandEdit()
+        {
+            _view.SetEditMode(true);
+            _view.CommandRefresh();
+        }
+
+        private void CommandEndEdit()
+        {
+            _view.SetEditMode(false);
+            _view.CommandRefresh();
+        }
+
         private void CommandSelectSideMenu()
         {
             _busy = true;
             CommandCallSideMenu(_model.SideMenu(),() => 
             {
                 _busy = false;
+                _view.CommandRefresh();
             });
         }
         
@@ -256,6 +295,7 @@ namespace Ryneus
                     EndEvent = () =>
                     {
                         _busy = false;
+                        _view.CommandRefresh();
                         SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                     }
                 };
@@ -352,6 +392,7 @@ namespace Ryneus
             {
                 actorInfo.SetLineIndex(LineType.Front);
             }
+            _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
             CommandRefresh();
         }
 
@@ -366,6 +407,7 @@ namespace Ryneus
                 EndEvent = () =>
                 {
                     _busy = false;
+                    _view.CommandRefresh();
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
             };
@@ -446,7 +488,7 @@ namespace Ryneus
     {
         private Action<int> _callEvent;
         public Action<int> CallEvent => _callEvent;
-        public BattlePartyInfo(System.Action<int> callEvent,System.Action backEvent)
+        public BattlePartyInfo(Action<int> callEvent,Action backEvent)
         {
             _callEvent = callEvent;
             _backEvent = backEvent;

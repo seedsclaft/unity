@@ -15,6 +15,40 @@ namespace Ryneus
             _currentActor = StageMembers()[0];
         }
 
+        public List<SystemData.CommandData> BattlePartyCommand()
+        {
+            var list = new List<SystemData.CommandData>();
+            var edit = new SystemData.CommandData
+            {
+                Id = 0,
+                Name = DataSystem.GetText(30000),
+                Key = "Edit"
+            };
+            list.Add(edit);
+            var enemyInfo = new SystemData.CommandData
+            {
+                Id = 1,
+                Name = DataSystem.GetText(19800),
+                Key = "EnemyInfo"
+            };
+            list.Add(enemyInfo);
+            var replay = new SystemData.CommandData
+            {
+                Id = 2,
+                Name = DataSystem.GetText(30010),
+                Key = "Replay"
+            };
+            list.Add(replay);
+            var battle = new SystemData.CommandData
+            {
+                Id = 3,
+                Name = DataSystem.GetText(30020),
+                Key = "Battle"
+            };
+            list.Add(battle);
+            return list;
+        }
+
         public List<ActorInfo> BattlePartyMembers()
         {
             var list = new List<ActorInfo>();

@@ -421,6 +421,7 @@ namespace Ryneus
             CommandStatusInfo(_model.PastActorInfos(),false,true,true,false,actorId,() => 
             {
                 _view.SetNuminous(_model.Currency);
+                CommandRefresh();
             });
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
@@ -983,6 +984,7 @@ namespace Ryneus
                 _view.EndStatus();
                 _view.SetHelpText(DataSystem.GetText(20020));
                 _view.SetNuminous(_model.Currency);
+                CommandRefresh();
             },(a) => 
             {
                 Debug.Log(a);
