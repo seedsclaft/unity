@@ -47,7 +47,6 @@ namespace Ryneus
             {
                 return;
             }
-            Debug.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.StartResult:
@@ -103,7 +102,7 @@ namespace Ryneus
 
         private void CheckRanking()
         {
-            var confirmInfo = new ConfirmInfo("ランキングに登録しますか？",(a) => 
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(23040),(a) => 
             {
                 if (a == ConfirmCommandType.Yes)
                 {
@@ -116,10 +115,12 @@ namespace Ryneus
                         _view.CommandGameSystem(Base.CommandType.CloseLoading);
                         _busy = false;
                         _isRankingEnd = true;
+                        SaveSystem.DeleteStageData();
                     });
                 } else
                 {
                     _isRankingEnd = true;
+                    SaveSystem.DeleteStageData();
                 }
             });
             _view.CommandCallConfirm(confirmInfo);
@@ -130,7 +131,7 @@ namespace Ryneus
             _isClearPrizeEnd = true;
             _model.ClearGame();
             _model.SavePlayerData();
-            _model.SavePlayerStageData(false);
+            //_model.SavePlayerStageData(false);
             EndStage();
         }
 

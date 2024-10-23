@@ -612,16 +612,6 @@ namespace Ryneus
                 ActorInfos = _model.BattleMembers(),
                 InBattle = true
             };
-            if (_model.CheckVictory())
-            {
-                _view.StartBattleStartAnim(DataSystem.GetText(16100));
-                strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
-                strategySceneInfo.BattleTurn = _model.TurnCount;
-                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true,strategySceneInfo);
-                strategySceneInfo.BattleResultVictory = true;
-                _model.AddEnemyInfoSkillId();
-                        
-            } else
             if (_model.CheckDefeat())
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(16110)); 
@@ -630,7 +620,17 @@ namespace Ryneus
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(false,strategySceneInfo);
                 strategySceneInfo.BattleResultVictory = false;
                 _model.CurrentStage.GainLoseCount();
+            } else
+            if (_model.CheckVictory())
+            {
+                _view.StartBattleStartAnim(DataSystem.GetText(16100));
+                strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
+                strategySceneInfo.BattleTurn = _model.TurnCount;
+                strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true,strategySceneInfo);
+                strategySceneInfo.BattleResultVictory = true;
+                _model.AddEnemyInfoSkillId();
             }
+            
             _model.EndBattle();
             _battleEnded = true;
             _view.HideStateOverlay();
@@ -638,7 +638,7 @@ namespace Ryneus
             {
                 _view.CommandGameSystem(Base.CommandType.CallLoading);
             }
-            await UniTask.DelayFrame(150);
+            await UniTask.DelayFrame((int)(150f / GameSystem.ConfigData.BattleSpeed));
             _view.SetBattleBusy(false);
             if (SoundManager.Instance.CrossFadeMode)
             {

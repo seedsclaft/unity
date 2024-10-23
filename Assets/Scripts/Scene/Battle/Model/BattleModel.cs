@@ -1204,7 +1204,12 @@ namespace Ryneus
         {
             var result = _firstActionBattler.UpdateState(RemovalTiming.UpdateTurn);
             _firstActionBattler.TurnEnd();
-            _firstActionBattler.TurnEndSkillSeekCountTurn();
+            var skillInfos = new List<SkillInfo>();
+            foreach (var actionInfo in _turnActionInfos[_turnCount])
+            {
+                skillInfos.Add(actionInfo.SkillInfo);
+            }
+            _firstActionBattler.TurnEndSkillSeekCountTurn(skillInfos);
             return result;
         }
 

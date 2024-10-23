@@ -1048,12 +1048,12 @@ namespace Ryneus
             }
         }
 
-        public void TurnEndSkillSeekCountTurn()
+        public void TurnEndSkillSeekCountTurn(List<SkillInfo> skillInfos)
         {
             // 使用しなかった魔法のカウントを進める
             foreach (var skillInfo in _skills)
             {
-                if (_lastSelectSkillId != skillInfo.Id)
+                if (skillInfos.Find(a => a.Id == skillInfo.Id) == null)
                 {
                     skillInfo.SeekCountTurn();
                 }
