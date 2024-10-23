@@ -65,8 +65,15 @@ namespace Ryneus
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 }
             };
-            var rankingViewInfo = new RankingViewInfo();
-            rankingViewInfo.StageId = 1;
+            var rankingViewInfo = new RankingViewInfo
+            {
+                StageId = 1,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                }
+            };
             _view.CommandCallRanking(rankingViewInfo);
         }
 

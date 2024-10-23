@@ -228,7 +228,7 @@ namespace Ryneus
 
             // スリップダメージ
             var slipDamageActionResult = SlipDamageActionResult(actionInfo);
-            if (slipDamageActionResult != null &&slipDamageActionResult.Count > 0)
+            if (slipDamageActionResult != null && slipDamageActionResult.Count > 0)
             {
                 StartAnimationSlipDamage(slipDamageActionResult);
                 return;
@@ -333,7 +333,8 @@ namespace Ryneus
             var result2 = _model.CheckTriggerActiveInfos(TriggerTiming.AfterAndStartBattle,actionInfo,actionInfo.ActionResults,true);
             result.AddRange(result2);
 
-            if (result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)
+            var checkNoResetAp = _model.CheckNoResetAp(actionInfo);
+            if (checkNoResetAp == false && result.Count == 0 && _triggerAfterChecked == false && isTriggeredSkill == false)
             {
                 // 行動者のターンを進める
                 var removed =_model.UpdateTurn();

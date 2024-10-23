@@ -35,7 +35,7 @@ namespace Ryneus
 			CommandEndCheck = true;
 			BattleWait = true;
 			BattleAnimationSkip = false;
-			InputType = true;
+			InputType = false;
 			BattleAuto = false;
 			BattleSpeed = 1f;
 			TutorialCheck = true;

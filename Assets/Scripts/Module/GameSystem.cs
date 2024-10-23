@@ -391,7 +391,7 @@ namespace Ryneus
             rankingView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (rankingViewInfo.EndEvent != null) rankingViewInfo.EndEvent();
+                rankingViewInfo.EndEvent?.Invoke();
             });
             SetIsBusyMainAndStatus();
         }

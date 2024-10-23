@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Ryneus
@@ -1042,9 +1043,14 @@ namespace Ryneus
             // アクセル
             if (IsState(StateType.Accel))
             {
-                StateInfo stateInfo = GetStateInfo(StateType.Accel);
+                var stateInfo = GetStateInfo(StateType.Accel);
                 stateInfo.SetTurn(stateInfo.Turns + 1);
             }
+        }
+
+        public void TurnEndSkillSeekCountTurn()
+        {
+            // 使用しなかった魔法のカウントを進める
             foreach (var skillInfo in _skills)
             {
                 if (_lastSelectSkillId != skillInfo.Id)

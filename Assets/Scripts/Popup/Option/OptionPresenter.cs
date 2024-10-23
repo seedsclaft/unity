@@ -132,6 +132,9 @@ namespace Ryneus
                         ConfigUtility.ChangeBattleSpeed(-1);
                     }
                     break;
+                case "TUTORIAL_CHECK":
+                    ConfigUtility.ChangeTutorialCheck(inputKeyType == InputKeyType.Left);
+                    break;
             }
             CommandRefresh();
         }
@@ -207,6 +210,9 @@ namespace Ryneus
                         break;
                     case "BATTLE_SPEED":
                         ConfigUtility.SetBattleSpeed(ConfigUtility.SpeedList[toggleIndex+1]);
+                        break;
+                    case "TUTORIAL_CHECK":
+                        ConfigUtility.ChangeTutorialCheck(toggleIndex == 0);
                         break;
                 }
                 CommandRefresh();

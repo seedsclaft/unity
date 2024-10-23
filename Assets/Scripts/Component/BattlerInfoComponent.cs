@@ -17,13 +17,13 @@ namespace Ryneus
         [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
         private GameObject _battleDamageRoot;
         public GameObject BattleDamageRoot => _battleDamageRoot;
-        private GameObject _battleStatusRoot;
         [SerializeField] private GameObject battleDamagePrefab;
         [SerializeField] private BattleStateOverlay battleStateOverlay;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TextMeshProUGUI battlePosition;
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private Image additiveFaceThumb;
+        [SerializeField] private Material grayScale;
         
         private BattlerInfo _battlerInfo = null;
 
@@ -92,7 +92,6 @@ namespace Ryneus
 
         public void SetStatusRoot(GameObject statusRoot)
         {
-            _battleStatusRoot = statusRoot;
             if (statusInfoComponent == null)
             {
                 return;
@@ -311,31 +310,28 @@ namespace Ryneus
 
         public void StartDeathAnimation()
         {
-            if (!_battlerInfo.IsActor)
+            if (grayScale != null)
             {
-                if (deathAnimation)
+                if (_battlerInfo.IsActorView)
                 {
-                    deathAnimation.enabled = true;
-                    _deathAnimation = 0.01f;
-                    HideStatus();
+                    actorInfoComponent.FaceThumb.material = new Material(grayScale);
+                } else
+                {
+                    enemyInfoComponent.MainThumb.material = new Material(grayScale);
                 }
             }
         }
 
         public void StartAliveAnimation()
         {
-            if (!_battlerInfo.IsActor)
+            if (grayScale != null)
             {
-                if (deathAnimation)
+                if (_battlerInfo.IsActorView)
                 {
-                    _deathAnimation = 0;
-                    //deathAnimation.enabled = false;
-                    //deathAnimation.Destroyed = 0;
-                    gameObject.SetActive(true);
-                    var image = BattleImage();
-                    DOTween.Sequence()
-                        .Append(image.DOFade(0f, 0))
-                        .Append(image.DOFade(1f, 0.5f));
+                    actorInfoComponent.MainThumb.material = null;
+                } else
+                {
+                    enemyInfoComponent.MainThumb.material = null;
                 }
             }
         }

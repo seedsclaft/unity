@@ -281,6 +281,11 @@ namespace Ryneus
                     var eventData = new StatusViewEvent(Status.CommandType.ShowLearnMagic);
                     _statusCommandData(eventData);
                 });
+                battlePartyTacticsMember.SetLineIndexHandler(() => 
+                {
+                    var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
+                    CallChangeLineIndex(actorInfo);
+                });
             }
         }
 
@@ -305,6 +310,7 @@ namespace Ryneus
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
             battleSelectCharacter.AttributeList.gameObject.SetActive(true);
+            battleSelectCharacter.AttributeList.UpdateSelectIndex(0);
             battleSelectCharacter.gameObject.SetActive(true);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Magic,false);
             battleSelectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);

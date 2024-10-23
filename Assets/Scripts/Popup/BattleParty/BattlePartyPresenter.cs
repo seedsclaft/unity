@@ -385,6 +385,7 @@ namespace Ryneus
 
         private void CommandChangeLineIndex(ActorInfo actorInfo)
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
             if (actorInfo.LineIndex == LineType.Front)
             {
                 actorInfo.SetLineIndex(LineType.Back);
@@ -431,6 +432,7 @@ namespace Ryneus
         private void CommandShowLearnMagic()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cursor);
+            CommandSelectAttribute(AttributeType.None);
             var lastSelectSkillId = -1;
             var lastSelectSkill = _view.SelectMagic;
             if (lastSelectSkill != null)
@@ -440,7 +442,6 @@ namespace Ryneus
             _view.ShowLeaningList(_model.SelectActorLearningMagicList(-1,lastSelectSkillId));
             _view.SetLearnMagicButtonActive(true);
             _view.CommandRefresh();
-            CommandSelectAttribute(AttributeType.None);
         }
 
         private void CommandLearnMagic(SkillInfo skillInfo)

@@ -137,7 +137,10 @@ namespace Ryneus
             strategyResultList.Deactivate();
             strategyResultCanvasGroup.alpha = 0;
             
-            commandList.SetData(confirmCommands);
+            commandList.SetData(confirmCommands,true,() =>
+            {
+                commandList.UpdateSelectIndex(1);
+            });
             commandList.SetInputHandler(InputKeyType.Decide,() => CallResultCommand());
         }
 

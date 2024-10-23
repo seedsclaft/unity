@@ -184,11 +184,6 @@ namespace Ryneus
                 }
             }
         }
-        
-        public void SetLastSkill(int skillId)
-        {
-            _currentBattler.SetLastSelectSkillId(skillId);
-        }
 
         public void WaitCommand(ActionInfo actionInfo)
         {
@@ -692,9 +687,9 @@ namespace Ryneus
                     }
                     break;
                     case FeatureType.NoResetAp:
-                    break;
+                        break;
                     default:
-                    IsEnable = true;
+                        IsEnable = true;
                     break;
                 }
             }
@@ -1209,6 +1204,7 @@ namespace Ryneus
         {
             var result = _firstActionBattler.UpdateState(RemovalTiming.UpdateTurn);
             _firstActionBattler.TurnEnd();
+            _firstActionBattler.TurnEndSkillSeekCountTurn();
             return result;
         }
 
@@ -1227,6 +1223,17 @@ namespace Ryneus
         {
             var result = _currentBattler.UpdateState(RemovalTiming.NextSelfTurn);
             return result;
+        }
+
+        public bool CheckNoResetAp(ActionInfo actionInfo)
+        {
+            if (actionInfo.TriggeredSkill == false)
+            {
+                var subject = GetBattlerInfo(actionInfo.SubjectIndex);
+                var noResetAp = actionInfo.SkillInfo.FeatureDates.Find(a => a.FeatureType == FeatureType.NoResetAp);
+                return subject.IsAlive() && noResetAp != null;
+            }
+            return false;
         }
 
         public bool CheckReaction(ActionInfo actionInfo)

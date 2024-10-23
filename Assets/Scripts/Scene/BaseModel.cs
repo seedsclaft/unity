@@ -429,19 +429,20 @@ namespace Ryneus
         {
             var userId = CurrentData.PlayerInfo.UserId.ToString();
             var rankingText = "";
-    #if (UNITY_WEBGL || UNITY_ANDROID)// && !UNITY_EDITOR
+#if UNITY_WEBGL || UNITY_ANDROID && !UNITY_EDITOR
             FirebaseController.Instance.CurrentRankingData(userId);
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             var currentScore = FirebaseController.CurrentScore;
             var evaluate = TotalScore;
 
-
+            // 更新あり
             if (evaluate > currentScore)
             {
+                var playerScore = (int)(evaluate * 100);
                 FirebaseController.Instance.WriteRankingData(
                     CurrentStage.Id,
                     userId,
-                    (int)(evaluate * 100),
+                    playerScore,
                     CurrentData.PlayerInfo.PlayerName,
                     StageMembers()
                 );
@@ -454,11 +455,11 @@ namespace Ryneus
                 var include = false;
                 foreach (var result in results)
                 {
-                    if (result.Score == evaluate)
+                    if (result.Score == playerScore)
                     {
                         include = true;
                     }
-                    if (result.Score > evaluate)
+                    if (result.Score > playerScore)
                     {
                         rank++;
                     }
@@ -478,7 +479,7 @@ namespace Ryneus
                 // 記録更新なし  
                 rankingText = DataSystem.GetText(23032);
             }
-    #endif
+#endif
             endEvent(rankingText);
         }
 
@@ -496,9 +497,9 @@ namespace Ryneus
         public bool NeedAdsSave()
         {
             var needAds = false;
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
             needAds = (CurrentStage.SavedCount + 1) >= CurrentStage.Master.SaveLimit;
-    #endif
+#endif
             return needAds;
         }
 
@@ -521,20 +522,20 @@ namespace Ryneus
         public string ContinuePopupTitle()
         {
             var baseText = DataSystem.GetText(3061);
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
             var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
-    #else
+#else
             var subText = DataSystem.GetReplaceText(3064,CurrentStage.Master.ContinueLimit.ToString());
-    #endif
+#endif
             return baseText + "\n" + subText;
         }
 
         public bool NeedAdsContinue()
         {
             var needAds = false;
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
             needAds = (CurrentStage.ContinueCount + 1) >= CurrentStage.Master.ContinueLimit;
-    #endif
+#endif
             return needAds;
         }
 

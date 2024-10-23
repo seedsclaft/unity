@@ -18,13 +18,16 @@ namespace Ryneus
         public List<SystemData.CommandData> BattlePartyCommand()
         {
             var list = new List<SystemData.CommandData>();
-            var edit = new SystemData.CommandData
+            if (GameSystem.ConfigData.InputType == true)
             {
-                Id = 0,
-                Name = DataSystem.GetText(30000),
-                Key = "Edit"
-            };
-            list.Add(edit);
+                var edit = new SystemData.CommandData
+                {
+                    Id = 0,
+                    Name = DataSystem.GetText(30000),
+                    Key = "Edit"
+                };
+                list.Add(edit);
+            }
             var enemyInfo = new SystemData.CommandData
             {
                 Id = 1,

@@ -12,6 +12,7 @@ namespace Ryneus
         [SerializeField] private OnOffButton levelUpButton;
         [SerializeField] private OnOffButton learnMagicButton;
         [SerializeField] private OnOffButton skillTriggerButton;
+        [SerializeField] private OnOffButton lineIndexButton;
         [SerializeField] private TextMeshProUGUI trainCost;
         [SerializeField] private TextMeshProUGUI disableText;
         [SerializeField] private GameObject inBattle;
@@ -20,6 +21,7 @@ namespace Ryneus
         private bool _levelUpHandler = false;
         private bool _learnMagicHandler = false;        
         private bool _skillTriggerHandler = false;
+        private bool _lineIndexHandler = false;    
 
         public void SetLevelUpHandler(System.Action handler)
         {
@@ -40,6 +42,13 @@ namespace Ryneus
             if (_skillTriggerHandler) return;
             _skillTriggerHandler = true;
             skillTriggerButton.OnClickAddListener(() => handler());
+        }
+
+        public void SetLineIndexHandler(System.Action handler)
+        {
+            if (_lineIndexHandler) return;
+            _lineIndexHandler = true;
+            lineIndexButton.OnClickAddListener(() => handler());
         }
 
         public void UpdateViewItem()
