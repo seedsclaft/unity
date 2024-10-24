@@ -51,7 +51,8 @@ namespace Ryneus
                     {
                         if (actionInfo != null && actionInfo.ActionResults != null && actionInfo.Master.IsAddAbnormalFeature())
                         {
-                            var results = actionInfo.ActionResults.FindAll(a => a.AddedStates.Find(b => b.Master.Abnormal) != null && a.TargetIndex == battlerInfo.Index);
+                            // 自分から自分には含まない
+                            var results = actionInfo.ActionResults.FindAll(a => a.AddedStates.Find(b => b.Master.Abnormal) != null && a.TargetIndex == battlerInfo.Index && a.SubjectIndex != battlerInfo.Index);
                             if (results.Count > 0)
                             {
                                 isTrigger = true;

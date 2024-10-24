@@ -64,11 +64,30 @@ namespace Ryneus
             _useCount++;
         }
 
+        private int _minusCountTurn = 0;
+        public void SetMinusCountTurn(int countTurn)
+        {
+            _minusCountTurn = countTurn;
+        }
+
+        public void InitCountTurn()
+        {
+            _countTurn = Master.CountTurn - _minusCountTurn;
+            if (_countTurn < 0)
+            {
+                _countTurn = 0;
+            }
+        }
+
         private int _countTurn = 0;
         public int CountTurn => _countTurn;
         public void SetCountTurn(int countTurn)
         {
             _countTurn = countTurn;
+            if (_countTurn < 0)
+            {
+                _countTurn = 0;
+            }
         }
         public void SeekCountTurn()
         {

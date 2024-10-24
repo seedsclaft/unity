@@ -351,6 +351,7 @@ namespace Ryneus
         FriendIsAwaken = 7040, // 神化発動後の味方
         OpponentIsNotAwaken = 7050, // 神化発動前の敵
         OpponentIsAwaken = 7060, // 神化発動後の敵
+        AwakenCountOver = 7070, // 覚醒魔法の発動回数以上
         LessTroopMembers = 8010, // 味方より敵が多い
         MoreTroopMembers = 8020, // 味方より敵が少ない
         FriendMembersMoreCount = 8030, // 味方の数が〇以上
@@ -456,6 +457,7 @@ namespace Ryneus
         HpDivide = 2040,
         DamageHpHealParty = 2110,
         DamageMpHealParty = 2120,
+        AttackHpHealParty = 2130,
         AddState = 3010,
         RemoveState = 3020,
         RemoveAbnormalState = 3030,

@@ -84,7 +84,12 @@ namespace Ryneus
 
         public string PlayerName()
         {
-            return CurrentData.PlayerInfo.PlayerName;
+            return CurrentData.PlayerInfo?.PlayerName;
+        }
+
+        public string PlayerId()
+        {
+            return CurrentData.PlayerInfo?.UserId.ToString();
         }
 
         public List<StageEventData> StageEventDates => CurrentStage.Master.StageEvents;

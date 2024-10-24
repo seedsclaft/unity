@@ -68,6 +68,9 @@ namespace Ryneus
                     case "InitializeData":
                         CommandInitializeData();
                         break;
+                    case "DeleteStage":
+                        CommandDeleteStage();
+                        break;
                     case "Title":
                         CommandTitle();
                         break;
@@ -157,7 +160,15 @@ namespace Ryneus
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            var confirmInfo = new ConfirmInfo(DataSystem.GetText(13300),(a) => UpdatePopupDeletePlayerData((ConfirmCommandType)a));
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(13300),(a) => UpdatePopupDeletePlayerData(a));
+            _view.CommandCallConfirm(confirmInfo);
+        }
+
+        private void CommandDeleteStage()
+        {
+            _busy = true;
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var confirmInfo = new ConfirmInfo(DataSystem.GetText(13301),(a) => UpdatePopupDeleteStageData(a));
             _view.CommandCallConfirm(confirmInfo);
         }
 
@@ -170,6 +181,27 @@ namespace Ryneus
         }
 
         private void UpdatePopupDeletePlayerData(ConfirmCommandType confirmCommandType)
+        {
+            if (confirmCommandType == ConfirmCommandType.Yes)
+            {
+                _view.CommandGameSystem(Base.CommandType.ClosePopup);
+                _model.DeletePlayerData();
+                _view.CommandGameSystem(Base.CommandType.CloseConfirm);
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(13310),(a) => 
+                {
+                    SoundManager.Instance.StopBgm();
+                    _view.CommandGameSystem(Base.CommandType.CloseStatus);
+                    _view.CommandGotoSceneChange(Scene.Boot);
+                });
+                confirmInfo.SetIsNoChoice(true);
+                _view.CommandCallConfirm(confirmInfo);
+            } else
+            {            
+                ClosePopup();
+            }
+        }
+
+        private void UpdatePopupDeleteStageData(ConfirmCommandType confirmCommandType)
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {

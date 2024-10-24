@@ -110,6 +110,7 @@ namespace Ryneus
             }
             // アルカナ
             var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
+            _battleRecords[alcana.Index] = new BattleRecord(alcana.Index);
             _battlers.Add(alcana);
 
             foreach (var battlerInfo1 in _battlers)
@@ -469,10 +470,10 @@ namespace Ryneus
                     targetIndexList.Clear();
                     targetIndexList.Add(selectIndex);
                     // 両隣を追加
-                    var targetUnit = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                    var targetUnit = subject.IsActor ? _party.BattlerInfos : _troop.BattlerInfos;
                     if (actionInfo.TargetType == TargetType.Opponent)
                     {
-                        targetUnit = subject.IsActor ? _troop.AliveBattlerInfos : _party.AliveBattlerInfos;
+                        targetUnit = subject.IsActor ? _troop.BattlerInfos : _party.BattlerInfos;
                     }
                     var before = targetUnit.FindAll(a => a.Index < selectIndex);
                     if (before.Count > 0)
@@ -797,6 +798,9 @@ namespace Ryneus
                 // Hpダメージ分の回復計算
                 var DamageHealPartyResultInfos = CalcDamageHealParty(subject,featureDates,actionResultInfo.HpDamage);
                 actionResultInfos.AddRange(DamageHealPartyResultInfos);
+                // 攻撃成功回数分の回復計算
+                var AttackCountHealPartyResultInfos = CalcAttackCountHealParty(subject,featureDates,actionInfo.RepeatTime);
+                actionResultInfos.AddRange(AttackCountHealPartyResultInfos);
                 var DamageMpHealPartyResultInfos = CalcDamageCtHealParty(subject,featureDates,actionResultInfo.HpDamage);
                 actionResultInfos.AddRange(DamageMpHealPartyResultInfos);
 
@@ -824,6 +828,28 @@ namespace Ryneus
                     {
                         FeatureType = FeatureType.HpHeal,
                         Param1 = (int)hpHeal
+                    };
+                    var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
+                    actionResultInfos.Add(actionResultInfo);
+                }
+            }
+            return actionResultInfos;
+        }
+
+        private List<ActionResultInfo> CalcAttackCountHealParty(BattlerInfo subject,List<SkillData.FeatureData> featureDates,int attackCount)
+        {
+            var actionResultInfos = new List<ActionResultInfo>();
+            var attackCountHealParty = featureDates.Find(a => a.FeatureType == FeatureType.AttackHpHealParty);
+            if (attackCountHealParty != null)
+            {
+                var friends = subject.IsActor ? _party.AliveBattlerInfos : _troop.AliveBattlerInfos;
+                var hpHeal = attackCount * attackCountHealParty.Param3;
+                foreach (var friend in friends)
+                {
+                    var featureData = new SkillData.FeatureData
+                    {
+                        FeatureType = FeatureType.HpHeal,
+                        Param1 = hpHeal
                     };
                     var actionResultInfo = new ActionResultInfo(subject,GetBattlerInfo(friend.Index),new List<SkillData.FeatureData>(){featureData},-1);
                     actionResultInfos.Add(actionResultInfo);
@@ -881,7 +907,7 @@ namespace Ryneus
         {
             var repeatTime = actionInfo.Master.RepeatTime;
             // パッシブで回数増加を計算
-            var addFeatures = subject.Skills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillRepeatTime && actionInfo.Master.Id == b.Param1) != null);
+            var addFeatures = subject.EnhanceSkills.FindAll(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillRepeatTime && actionInfo.Master.Id == b.Param1) != null);
             foreach (var addFeature in addFeatures)
             {
                 foreach (var featureData in addFeature.FeatureDates)
@@ -896,7 +922,7 @@ namespace Ryneus
         {
             var scopeType = actionInfo.Master.Scope;
             // パッシブで対象変更を計算
-            var changeScopeFeature = subject.Skills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillScope && actionInfo.Master.Id == b.Param1) != null);
+            var changeScopeFeature = subject.EnhanceSkills.Find(a => a.Master.FeatureDates.Find(b => b.FeatureType == FeatureType.ChangeSkillScope && actionInfo.Master.Id == b.Param1) != null);
             if (changeScopeFeature != null)
             {
                 scopeType = (ScopeType)changeScopeFeature.FeatureDates[0].Param3;
@@ -1668,7 +1694,7 @@ namespace Ryneus
             MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndex,counterSubjectIndex,actionInfo,actionResultInfos));
             AddActionInfo(makeActionInfo,IsInterrupt);
             passiveInfo.GainUseCount();
-            passiveInfo.SetCountTurn(passiveInfo.Master.CountTurn);
+            passiveInfo.InitCountTurn();
             return makeActionInfo;
         }
         

@@ -108,7 +108,7 @@ namespace Ryneus
                     await UniTask.DelayFrame((int)(16/speed));
                 }
             }
-            if (actionInfo.Master.IsDisplayBattleSkill() || _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActor == false)
+            if (actionInfo.Master.IsDisplayBattleSkill())
             {
                 _view.SetCurrentSkillData(actionInfo.SkillInfo,_model.GetBattlerInfo(actionInfo.SubjectIndex));
             }

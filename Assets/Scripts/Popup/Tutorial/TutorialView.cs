@@ -10,7 +10,7 @@ namespace Ryneus
 {
     public class TutorialView : BaseView ,IInputHandlerEvent
     {
-        private new System.Action<TutorialViewEvent> _commandData = null;
+        private new Action<TutorialViewEvent> _commandData = null;
         [SerializeField] private Button backImage = null;
         [SerializeField] private Button helpButton = null;
         [SerializeField] private Image focusImage = null;
@@ -24,7 +24,7 @@ namespace Ryneus
         public bool CheckToggle => checkToggle.isOn;
 
 
-        private System.Action _backEvent = null;
+        private Action _backEvent = null;
         public override void Initialize() 
         {
             base.Initialize();
@@ -98,7 +98,7 @@ namespace Ryneus
             base.SetBusy(busy);
         }
 
-        private void OnClickBack()
+        public void OnClickBack()
         {
             var eventData = new TutorialViewEvent(CommandType.Back);
             _commandData(eventData);

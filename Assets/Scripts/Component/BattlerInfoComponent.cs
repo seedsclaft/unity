@@ -328,7 +328,7 @@ namespace Ryneus
             {
                 if (_battlerInfo.IsActorView)
                 {
-                    actorInfoComponent.MainThumb.material = null;
+                    actorInfoComponent.FaceThumb.material = null;
                 } else
                 {
                     enemyInfoComponent.MainThumb.material = null;

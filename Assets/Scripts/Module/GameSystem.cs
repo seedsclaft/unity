@@ -303,14 +303,6 @@ namespace Ryneus
             {
                 var guide = prefab.GetComponent<GuideView>();
                 guide.SetGuide((string)popupInfo.template);
-            } else
-            if (popupInfo.PopupType == PopupType.Tutorial)
-            {
-                eventSystem.enabled = false;
-                var tutorial = prefab.GetComponent<TutorialView>();
-                tutorial.SetTutorialData((TutorialData)popupInfo.template);
-                await UniTask.DelayFrame(1);
-                eventSystem.enabled = true;
             }
             SetIsBusyMainAndStatus();
         }
@@ -530,6 +522,7 @@ namespace Ryneus
                 tutorialView.SetTutorialData(tutorialData);
                 tutorialView.SetBackEvent(() => 
                 {
+                    tutorialView.OnClickBack();
                     tutorialView.gameObject.SetActive(false);
                     tutorialViewInfo.EndEvent?.Invoke();
                 });

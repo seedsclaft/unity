@@ -31,6 +31,20 @@ namespace Ryneus
             var bgm = await _model.GetBgmData("TITLE");
             SoundManager.Instance.PlayBgm(bgm,1.0f,false);
             _busy = false;
+            var existPlayerData = SaveSystem.ExistsLoadPlayerFile();
+            if (existPlayerData)
+            {
+                var loadSuccess = SaveSystem.LoadPlayerInfo();
+                if (loadSuccess == false)
+                {
+                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(13330),(a) => UpdatePopup(a));
+                    //SaveSystem.DeletePlayerData();
+                    confirmInfo.SetIsNoChoice(true);
+                    _view.CommandCallConfirm(confirmInfo);
+                    return;
+                }
+                _view.SetPlayerData(_model.PlayerName(),_model.PlayerId());
+            }
         }
 
         private void UpdateCommand(TitleViewEvent viewEvent)
@@ -106,8 +120,8 @@ namespace Ryneus
             var loadSuccess = SaveSystem.LoadPlayerInfo();
             if (loadSuccess == false)
             {
-                var confirmInfo = new ConfirmInfo("セーブデータを読み込めませんでした。\n誠に申し訳ないですがNewGameから開始をお願いします。",(menuCommandInfo) => UpdatePopup((ConfirmCommandType)menuCommandInfo));
-                SaveSystem.DeleteAllData();
+                var confirmInfo = new ConfirmInfo(DataSystem.GetText(13330),(a) => UpdatePopup(a));
+                //SaveSystem.DeletePlayerData();
                 confirmInfo.SetIsNoChoice(true);
                 _view.CommandCallConfirm(confirmInfo);
                 return;

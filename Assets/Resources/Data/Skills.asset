@@ -636,7 +636,7 @@ MonoBehaviour:
     IconIndex: 3
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 1
     Rank: 2
     Attribute: 2
     Scope: 4
@@ -1016,7 +1016,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 1
     TargetType: 1
-    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u5473\u65B9\u5168\u54E1\u306B\u4E0E\u30C0\u30E1\u30FC\u30B8\u306E/f[f,0,1]%\u5206\u306EHp\u56DE\u5FA9"
+    Help: "\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8\n\u5473\u65B9\u5168\u54E1\u306B\u653B\u6483\u6210\u529F\u56DE\u6570x/f[f,1,3]\u306EHp\u56DE\u5FA9"
     Range: 1
     RepeatTime: 1
     AliveType: 1
@@ -1029,10 +1029,10 @@ MonoBehaviour:
       Param3: 0
       Rate: 100
     - SkillId: 4040
-      FeatureType: 2110
+      FeatureType: 2130
       Param1: 0
       Param2: 0
-      Param3: 20
+      Param3: 5
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
@@ -1672,7 +1672,7 @@ MonoBehaviour:
     Range: 1
     RepeatTime: 1
     AliveType: 1
-    TimingOnlyCount: 0
+    TimingOnlyCount: 1
     FeatureDates:
     - SkillId: 11040
       FeatureType: 4020
@@ -2714,6 +2714,12 @@ MonoBehaviour:
       TriggerTiming: 11
       Param1: 100
       Param2: 0
+      Param3: 1
+    - SkillId: 14080
+      TriggerType: 18010
+      TriggerTiming: 11
+      Param1: 0
+      Param2: 0
       Param3: 0
     ScopeTriggers: []
   - Id: 14090
@@ -2938,7 +2944,7 @@ MonoBehaviour:
     IconIndex: 6
     AnimationId: 51
     AnimationType: 1
-    CountTurn: 2
+    CountTurn: 3
     Rank: 20
     Attribute: 5
     Scope: 1
@@ -3177,7 +3183,7 @@ MonoBehaviour:
     CountTurn: 0
     Rank: 1000
     Attribute: 2
-    Scope: 1
+    Scope: 3
     SkillType: 4
     TargetType: 1
     Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\\s\u306BATKx/f[f,0,1]%\u306E7\u9023\u30C0\u30E1\u30FC\u30B8
@@ -3438,10 +3444,10 @@ MonoBehaviour:
     CountTurn: 0
     Rank: 1000
     Attribute: 1
-    Scope: 3
+    Scope: 31
     SkillType: 3
-    TargetType: 2
-    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\u306E\u5473\u65B9\u304C2\u4EBA\u4EE5\u4E0A\u3044\u308B\u6642\n\u81EA\u8EAB\u3068\u899A\u9192\u72B6\u614B\u306E\u5473\u65B9\u306ECT-5\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
+    TargetType: 4
+    Help: "(\u6761\u4EF6)\u30D0\u30C8\u30EB\u4E2D2\u56DE\u899A\u9192\u9B54\u6CD5\u304C\u767A\u52D5\u3057\u305F\u5F8C\n\u81EA\u8EAB\u3068\u4E21\u96A3\u306E\u5473\u65B9\u306ECT-5\n\u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -3467,11 +3473,11 @@ MonoBehaviour:
       Param2: 0
       Param3: 1
     - SkillId: 100610
-      TriggerType: 7040
+      TriggerType: 7070
       TriggerTiming: 2
       Param1: 0
       Param2: 2
-      Param3: 1
+      Param3: 0
     ScopeTriggers:
     - SkillId: 100610
       TriggerType: 7020
@@ -4300,7 +4306,7 @@ MonoBehaviour:
     Rank: 0
     Attribute: 0
     Scope: 4
-    SkillType: 2
+    SkillType: 6
     TargetType: 4
     Help: "\u30C7\u30A3\u30B9\u30C1\u30E3\u30FC\u30B8\u306E\u653B\u6483\u56DE\u6570\u304C/f[f,0,3]\u56DE\u306B\u306A\u308B"
     Range: 1
@@ -5166,7 +5172,7 @@ MonoBehaviour:
     Scope: 1
     SkillType: 5
     TargetType: 7
-    Help: "(\u6761\u4EF6)7\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\u306B\u8FFD\u6483\u3067\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\n\\s\u306B/f[f,0,1]\u30C0\u30E1\u30FC\u30B8"
+    Help: "(\u6761\u4EF6)7\u56DE\u76EE\u306E\u884C\u52D5\u5F8C\n(\u5236\u9650)\u30D0\u30C8\u30EB\u4E2D1\u56DE\n\u8FFD\u6483\u3067\\s\u306B/f[f,0,1]\u30C0\u30E1\u30FC\u30B8"
     Range: 2
     RepeatTime: 1
     AliveType: 1

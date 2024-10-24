@@ -13,6 +13,8 @@ namespace Ryneus
         private new System.Action<TitleViewEvent> _commandData = null;
         [SerializeField] private Button tapTitle = null;
         [SerializeField] private OnOffButton rankingButton = null;
+        [SerializeField] private TextMeshProUGUI playerName = null;
+        [SerializeField] private TextMeshProUGUI playerId = null;
         public override void Initialize() 
         {
             base.Initialize();
@@ -42,6 +44,12 @@ namespace Ryneus
         public void SetVersion(string text)
         {
             versionText.SetText(text);
+        }
+
+        public void SetPlayerData(string name,string id)
+        {
+            playerName?.SetText(name);
+            playerId?.SetText(id);
         }
 
         private void CallSideMenu()

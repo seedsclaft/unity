@@ -48,6 +48,8 @@ namespace Ryneus
         
         private List<SkillInfo> _skills = new ();
         public List<SkillInfo> Skills => _skills;
+        private List<SkillInfo> _enhanceSkills = new ();
+        public List<SkillInfo> EnhanceSkills => _enhanceSkills;
         private ActorInfo _actorInfo;
         public ActorInfo ActorInfo => _actorInfo;
         private int _enemyId;
@@ -156,6 +158,7 @@ namespace Ryneus
             {
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
+            _enhanceSkills = enhanceSkills;
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;
@@ -232,6 +235,7 @@ namespace Ryneus
             {
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
+            _enhanceSkills = enhanceSkills;
             _skills.Sort((a,b) => a.Weight > b.Weight ? -1:1);
             _skillTriggerInfos.Clear();
             foreach (var skillInfo in _skills)
@@ -605,7 +609,7 @@ namespace Ryneus
         public void InitCountTurn(int skillId)
         {
             var skill = _skills.Find(a => a.Id == skillId);
-            skill?.SetCountTurn(skill.Master.CountTurn);
+            skill?.InitCountTurn();
         }
         
         public void SeekCountTurn(int seekCount,int skillId = -1)

@@ -1037,7 +1037,7 @@ namespace Ryneus
             var skillInfo = subject.Skills.Find(a => a.Id == featureData.Param1);
             if (skillInfo != null)
             {
-                skillInfo.SetCountTurn(featureData.Param3);
+                skillInfo.SetMinusCountTurn(featureData.Param3);
             }
         }
 

@@ -35,6 +35,7 @@ namespace Ryneus
                 Key = "EnemyInfo"
             };
             list.Add(enemyInfo);
+            /*
             var replay = new SystemData.CommandData
             {
                 Id = 2,
@@ -42,6 +43,7 @@ namespace Ryneus
                 Key = "Replay"
             };
             list.Add(replay);
+            */
             var battle = new SystemData.CommandData
             {
                 Id = 3,

@@ -31,17 +31,24 @@ namespace Ryneus
                 Key = "License"
             };
             list.Add(menuCommand);
-            var initCommand = new SystemData.CommandData
+            var deleteStage = new SystemData.CommandData
             {
                 Id = 3,
                 Name = DataSystem.GetText(13420),
+                Key = "DeleteStage"
+            };
+            list.Add(deleteStage);
+            var initCommand = new SystemData.CommandData
+            {
+                Id = 4,
+                Name = DataSystem.GetText(13421),
                 Key = "InitializeData"
             };
             list.Add(initCommand);
 #if !UNITY_WEBGL
             var endCommand = new SystemData.CommandData
             {
-                Id = 4,
+                Id = 5,
                 Name = DataSystem.GetText(13430),
                 Key = "EndGame"
             };

@@ -19,45 +19,59 @@ namespace Ryneus
                 case TriggerType.IsAwaken:
                     return battlerInfo.IsAwaken;
                 case TriggerType.FriendIsNotAwaken:
-                if (checkTriggerInfo.Friends.Find(a => !a.IsAwaken) != null)
-                {
-                    isTrigger = true;
-                }
-                if (triggerData.Param2 == 1)
-                {
-                    isTrigger = checkTriggerInfo.Friends.Count > 0;
-                }
-                break;
+                    if (checkTriggerInfo.Friends.Find(a => !a.IsAwaken) != null)
+                    {
+                        isTrigger = true;
+                    }
+                    if (triggerData.Param2 == 1)
+                    {
+                        isTrigger = checkTriggerInfo.Friends.Count > 0;
+                    }
+                    break;
                 case TriggerType.FriendIsAwaken:
-                if (checkTriggerInfo.Friends.Find(a => a.IsAwaken) != null)
-                {
-                    isTrigger = true;
-                }
-                if (triggerData.Param2 == 1)
-                {
-                    isTrigger = checkTriggerInfo.Friends.Count > 0;
-                }
-                break;
+                    if (checkTriggerInfo.Friends.Find(a => a.IsAwaken) != null)
+                    {
+                        isTrigger = true;
+                    }
+                    if (triggerData.Param2 == 1)
+                    {
+                        isTrigger = checkTriggerInfo.Friends.Count > 0;
+                    }
+                    break;
                 case TriggerType.OpponentIsNotAwaken:
-                if (checkTriggerInfo.Opponents.Find(a => !a.IsAwaken) != null)
-                {
-                    isTrigger = true;
-                }
-                if (triggerData.Param2 == 1)
-                {
-                    isTrigger = checkTriggerInfo.Friends.Count > 0;
-                }
-                break;
+                    if (checkTriggerInfo.Opponents.Find(a => !a.IsAwaken) != null)
+                    {
+                        isTrigger = true;
+                    }
+                    if (triggerData.Param2 == 1)
+                    {
+                        isTrigger = checkTriggerInfo.Friends.Count > 0;
+                    }
+                    break;
                 case TriggerType.OpponentIsAwaken:
-                if (checkTriggerInfo.Opponents.Find(a => a.IsAwaken) != null)
-                {
-                    isTrigger = true;
-                }
-                if (triggerData.Param2 == 1)
-                {
-                    isTrigger = checkTriggerInfo.Friends.Count > 0;
-                }
-                break;
+                    if (checkTriggerInfo.Opponents.Find(a => a.IsAwaken) != null)
+                    {
+                        isTrigger = true;
+                    }
+                    if (triggerData.Param2 == 1)
+                    {
+                        isTrigger = checkTriggerInfo.Friends.Count > 0;
+                    }
+                    break;
+                case TriggerType.AwakenCountOver:
+                    var count = 0;
+                    foreach (var opponent in checkTriggerInfo.AliveBattlerInfos(false))
+                    {
+                        var over = opponent.Skills.FindAll(a => a.Master.SkillType == SkillType.Awaken && a.UseCount > 0);
+                        count += over.Count;
+                    }
+                    foreach (var opponent in checkTriggerInfo.AliveBattlerInfos(true))
+                    {
+                        var over = opponent.Skills.FindAll(a => a.Master.SkillType == SkillType.Awaken && a.UseCount > 0);
+                        count += over.Count;
+                    }
+                    isTrigger = count >= triggerData.Param2;
+                    break;
             }
             return isTrigger;
         }
@@ -75,41 +89,44 @@ namespace Ryneus
             switch (triggerData.TriggerType)
             {
                 case TriggerType.IsNotAwaken:
-                if (checkTriggerInfo.BattlerInfo.Index == targetIndex && !targetBattler.IsAwaken)
-                {
-                    targetIndexList.Add(targetIndex);
-                }
-                break;
+                    if (checkTriggerInfo.BattlerInfo.Index == targetIndex && !targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 case TriggerType.IsAwaken:
-                if (checkTriggerInfo.BattlerInfo.Index == targetIndex && targetBattler.IsAwaken)
-                {
-                    targetIndexList.Add(targetIndex);
-                }
-                break;
+                    if (checkTriggerInfo.BattlerInfo.Index == targetIndex && targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 case TriggerType.FriendIsNotAwaken:
-                if (IsFriend && !targetBattler.IsAwaken)
-                {
-                    targetIndexList.Add(targetIndex);
-                }
-                break;
+                    if (IsFriend && !targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 case TriggerType.FriendIsAwaken:
-                if (IsFriend && targetBattler.IsAwaken)
-                {
-                    targetIndexList.Add(targetIndex);
-                }
-                break;
+                    if (IsFriend && targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 case TriggerType.OpponentIsNotAwaken:
-                if (!IsFriend && !targetBattler.IsAwaken)
-                {
-                    targetIndexList.Add(targetIndex);
-                }
-                break;
+                    if (!IsFriend && !targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
                 case TriggerType.OpponentIsAwaken:
-                if (!IsFriend && targetBattler.IsAwaken)
-                {
+                    if (!IsFriend && targetBattler.IsAwaken)
+                    {
+                        targetIndexList.Add(targetIndex);
+                    }
+                    break;
+                case TriggerType.AwakenCountOver:
                     targetIndexList.Add(targetIndex);
-                }
-                break;
+                    break;
             }
         }
 
