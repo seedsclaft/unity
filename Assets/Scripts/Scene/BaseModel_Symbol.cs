@@ -149,7 +149,7 @@ namespace Ryneus
         {
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
-            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && a.Value.Id % 10 == 0 && !alcanaIds.Contains(a.Value.Id)).ToList();
             while (getItemInfos.Count <= count)
             {
                 var rand = Random.Range(0,alcanaSkills.Count);
@@ -215,7 +215,7 @@ namespace Ryneus
             };
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
-            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && !alcanaIds.Contains(a.Value.Id)).ToList();
+            var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && a.Value.Id % 10 == 0 && !alcanaIds.Contains(a.Value.Id)).ToList();
             var count = 3;
             if (alcanaSkills.Count < count)
             {
