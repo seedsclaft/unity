@@ -15,7 +15,7 @@ namespace Ryneus
         private List<ActorInfo> _actorInfos = new ();
         public List<ActorInfo> ActorInfos => _actorInfos;
         public void SetActorInfos(List<ActorInfo> actorInfos) => _actorInfos = actorInfos;
-        public System.Action<int> DetailEvent;
+        public System.Action<List<ActorInfo>> DetailEvent;
         public RankingInfo()
         {
     

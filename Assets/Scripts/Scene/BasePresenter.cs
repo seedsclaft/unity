@@ -18,7 +18,6 @@ namespace Ryneus
             _model = model;
         }
 
-
         public List<ListData> GetListData<T>(List<T> dataList,int selectIndex = 0)
         {
             return _model.MakeListData(dataList,selectIndex);
@@ -126,7 +125,7 @@ namespace Ryneus
         /// ステータス詳細を表示
         /// </summary>
         /// <param name="actorInfos"></param>
-        public void CommandStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,System.Action closeEvent = null)
+        public void CommandStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,Action closeEvent = null,bool isRanking = false)
         {
             var statusViewInfo = new StatusViewInfo(() => 
             {
@@ -144,6 +143,7 @@ namespace Ryneus
             statusViewInfo.SetDisplayCharacterList(true);
             statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
             statusViewInfo.SetDisplayBackButton(backButton);
+            statusViewInfo.SetIsRanking(isRanking);
             _view.CommandCallStatus(statusViewInfo);
             _view.ChangeUIActive(false);
         }

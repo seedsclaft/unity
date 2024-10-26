@@ -414,6 +414,7 @@ namespace Ryneus
                 PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
             }
             SetStageSeek();
+            SavePlayerStageData(true);
         }
 
         public void EndStage()
@@ -426,6 +427,7 @@ namespace Ryneus
             CurrentSaveData.MakeStageData(stageId);
             CurrentStage.SetCurrentTurn(currentTurn);
             SetStageSeek();
+            SavePlayerStageData(true);
         }
 
         public void SetSelectSymbol()

@@ -33,14 +33,6 @@ namespace Ryneus
                     memberItems[i].gameObject.SetActive(false);
                 }
             }
-            if (_isInit == false)
-            {
-                if (detailButton != null)
-                {
-                    detailButton.onClick.AddListener(() => data.DetailEvent(Index));
-                }
-            }
-            _isInit = true;
         }
         
         private void UpdateMemberItem(BattlePartyMemberItem memberItem, ActorInfo actorInfo)
@@ -49,6 +41,23 @@ namespace Ryneus
             {
                 memberItem.SetListData(new ListData(actorInfo),0);
                 memberItem.UpdateViewItem();
+            }
+        }
+
+        public void SetDetailActor(System.Action<List<ActorInfo>> detail)
+        {
+            if (_isInit == false)
+            {
+                _isInit = true;
+                if (detailButton != null)
+                {
+                    detailButton.onClick.AddListener(() => 
+                    {
+                        if (ListData == null) return;
+                        var data = ListItemData<RankingInfo>();
+                        detail(data.ActorInfos);
+                    });
+                }
             }
         }
     }

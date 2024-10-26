@@ -15,6 +15,8 @@ namespace Ryneus
         {
             _view = view;
             _model = new RankingModel();
+            SetView(_view);
+            SetModel(_model);
 
             Initialize();
         }
@@ -38,7 +40,7 @@ namespace Ryneus
                     CommandRankingOpen((int)viewEvent.template);
                     break;
                 case CommandType.Detail:
-                    CommandDetail((int)viewEvent.template);
+                    CommandDetail((List<ActorInfo>)viewEvent.template);
                     break;
             }
         }
@@ -55,12 +57,13 @@ namespace Ryneus
             });
         }
 
-        private void CommandDetail(int listIndex)
+        private void CommandDetail(List<ActorInfo> actorInfos)
         {
-            CommandStatusInfo(_model.RankingActorInfos(listIndex),false,true,false,false,-1,() => 
+            _busy = true;
+            CommandStatusInfo(actorInfos,false,true,false,false,actorInfos[0].ActorId,() => 
             {
-            });
-            _model.RankingActorInfos(listIndex);
+                _busy = false;
+            },true);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
     }

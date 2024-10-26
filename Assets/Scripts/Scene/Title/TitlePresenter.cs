@@ -29,7 +29,7 @@ namespace Ryneus
             _view.SetVersion(_model.VersionText());
             CommandRefresh();
             var bgm = await _model.GetBgmData("TITLE");
-            SoundManager.Instance.PlayBgm(bgm,1.0f,false);
+            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             _busy = false;
             var existPlayerData = SaveSystem.ExistsLoadPlayerFile();
             if (existPlayerData)

@@ -99,14 +99,14 @@ namespace Ryneus
             }
             for (int i = 0;i < 5;i++)
             {
-                var same = targetIndexList.FindIndex(a => a%100 == selfIndex+i);
+                var same = targetIndexList.FindIndex(a => a%100 == (selfIndex + (i*-1)));
                 if (same > -1)
                 {
                     return targetIndexList[same];
                 }
                 if (i > 0)
                 {
-                    var reBound = targetIndexList.FindIndex(a => a%100 == selfIndex + (i*-1));
+                    var reBound = targetIndexList.FindIndex(a => a%100 == (selfIndex + i));
                     if (reBound > -1)
                     {
                         return targetIndexList[reBound];

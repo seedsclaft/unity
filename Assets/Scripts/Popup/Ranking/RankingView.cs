@@ -35,25 +35,26 @@ namespace Ryneus
 
         public void SetRankingInfo(List<ListData> rankingInfo) 
         {
-            foreach (var listDate in rankingInfo)
+            rankingInfoList.SetData(rankingInfo,true,() => 
             {
-                var data = (RankingInfo)listDate.Data;
-                data.DetailEvent = CallDetail;
-            }
-            rankingInfoList.SetData(rankingInfo);
+                for (int i = 0; i < rankingInfoList.ItemPrefabList.Count;i++)
+                {
+                    var rankingInfoComponent = rankingInfoList.ItemPrefabList[i].GetComponent<RankingInfoComponent>();
+                    rankingInfoComponent.SetDetailActor((a) => 
+                    {
+                        CallDetail(a);
+                    });
+                }
+            });
         }
 
-        private void CallDetail(int index)
+        private void CallDetail(List<ActorInfo> actorInfos)
         {
-            var listData = rankingInfoList.ListData;
-            if (listData != null)
+            var eventData = new RankingViewEvent(CommandType.Detail)
             {
-                var eventData = new RankingViewEvent(CommandType.Detail)
-                {
-                    template = index
-                };
-                _commandData(eventData);
-            }
+                template = actorInfos
+            };
+            _commandData(eventData);
         }
     }
 }

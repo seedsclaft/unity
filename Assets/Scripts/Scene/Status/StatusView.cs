@@ -39,6 +39,7 @@ namespace Ryneus
         private string _helpText;
         private bool _isDisplayLevelObj => _statusViewInfo != null && _statusViewInfo.DisplayLvResetButton;
         private bool _isDisplayBack => _statusViewInfo != null && _statusViewInfo.DisplayBackButton;
+        public bool IsRanking => _statusViewInfo != null && _statusViewInfo.IsRanking;
         public void Initialize(List<ActorInfo> actorInfos) 
         {
             base.Initialize();
@@ -135,7 +136,7 @@ namespace Ryneus
             _helpText = helpText;
         }
 
-        public void SetEvent(System.Action<StatusViewEvent> commandData)
+        public void SetEvent(Action<StatusViewEvent> commandData)
         {
             _commandData = commandData;
             statusLevelUp.SetEvent(commandData);
@@ -291,7 +292,6 @@ namespace Ryneus
                 _commandData(eventData);
             }
         }
-
 
         public void ShowSkillActionList()
         {
@@ -460,6 +460,8 @@ namespace Ryneus
         public List<BattlerInfo> EnemyInfos => _enemyInfos;
         private bool _isBattle = false;
         public bool IsBattle => _isBattle;
+        private bool _isRanking = false;
+        public bool IsRanking => _isRanking;
         private int _startIndex = -1;
         public int StartIndex => _startIndex;
         private Action<int> _charaLayerEvent = null;
@@ -511,6 +513,11 @@ namespace Ryneus
         {
             _charaLayerEvent = charaLayerEvent;
         }
+
+        public void SetIsRanking(bool isRanking)
+        {
+            _isRanking = isRanking;
+        }        
     }
 }
 

@@ -320,7 +320,14 @@ namespace Ryneus
             _view.SetLvUpCost(_model.LevelUpCost());
             _view.SetToLvText(_model.CurrentActor.LinkedLevel());
             _view.CommandRefresh();
-            var skillListData = _model.SkillActionListData(_model.CurrentActor);
+            List<ListData> skillListData;
+            if (_view.IsRanking)
+            {
+                skillListData = GetListData(_model.CurrentActor.SkillInfos());
+            } else
+            {
+                skillListData = _model.SkillActionListData(_model.CurrentActor);
+            }
             if (skillListData.Count > 0)
             {
                 skillListData[0].SetSelected(true);

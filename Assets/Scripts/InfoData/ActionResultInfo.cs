@@ -175,6 +175,8 @@ namespace Ryneus
         public List<StateInfo> RemovedStates => _removedStates;
         private List<StateInfo> _displayStates = new ();
         public List<StateInfo> DisplayStates => _displayStates;
+        private List<StateInfo> _displayUpperStates = new ();
+        public List<StateInfo> DisplayUpperStates => _displayUpperStates;
         private Dictionary<int,List<StateInfo>> _execStateInfos = new ();
         public  Dictionary<int,List<StateInfo>> ExecStateInfos => _execStateInfos;
         private bool _cursedDamage = false;
@@ -922,7 +924,7 @@ namespace Ryneus
             }
             if (stateInfos.Count > 0)
             {
-                _displayStates.Add(stateInfos[0]);
+                _displayUpperStates.Add(stateInfos[0]);
             }
         }
 

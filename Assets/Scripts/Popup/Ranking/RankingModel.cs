@@ -38,10 +38,5 @@ namespace Ryneus
                 endEvent(rankingDataList);
             }
         }
-
-        public List<ActorInfo> RankingActorInfos(int listIndex)
-        {
-            return TempInfo.TempRankingData[_stageId][listIndex].ActorInfos;
-        }
     }
 }

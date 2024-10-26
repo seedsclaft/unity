@@ -516,6 +516,10 @@ namespace Ryneus
             {
                 _view.StartStatePopup(displayState.TargetIndex,DamageType.State,displayState.Master.Name);
             }
+            foreach (var displayUpperState in actionResultInfo.DisplayUpperStates)
+            {
+                _view.StartStatePopup(displayUpperState.TargetIndex,DamageType.State,displayUpperState.Master.Name + DataSystem.GetText(16230));
+            }
             if (actionResultInfo.StartDash)
             {        
                 //先制攻撃

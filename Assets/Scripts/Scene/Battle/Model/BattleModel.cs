@@ -1062,6 +1062,7 @@ namespace Ryneus
             var addStates = new List<StateInfo>();
             var removeStates = new List<StateInfo>();
             var displayStates = new List<StateInfo>();
+            var displayUpperStates = new List<StateInfo>();
             foreach (var actionResultInfo in actionResultInfos)
             {
                 for (var i = actionResultInfo.AddedStates.Count-1;i >= 0;i--)
@@ -1092,6 +1093,16 @@ namespace Ryneus
                     } else
                     {
                         actionResultInfo.DisplayStates.RemoveAt(i);
+                    }
+                }
+                for (var i = actionResultInfo.DisplayUpperStates.Count-1;i >= 0;i--)
+                {
+                    if (displayUpperStates.Find(a => a.CheckSameStateType(actionResultInfo.DisplayUpperStates[i]) == true) == null)
+                    {
+                        displayUpperStates.Add(actionResultInfo.DisplayUpperStates[i]);
+                    } else
+                    {
+                        actionResultInfo.DisplayUpperStates.RemoveAt(i);
                     }
                 }
             }
