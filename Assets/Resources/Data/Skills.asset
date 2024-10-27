@@ -1047,7 +1047,7 @@ MonoBehaviour:
     Scope: 13
     SkillType: 1
     TargetType: 2
-    Help: "\u81EA\u8EAB\u4EE5\u5916\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9\n\u5BFE\u8C61\u306ECT-/f[f,1,1]"
+    Help: "\u81EA\u8EAB\u4EE5\u5916\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9"
     Range: 2
     RepeatTime: 1
     AliveType: 1
@@ -1055,13 +1055,7 @@ MonoBehaviour:
     FeatureDates:
     - SkillId: 4050
       FeatureType: 2010
-      Param1: 15
-      Param2: 0
-      Param3: 0
-      Rate: 100
-    - SkillId: 4050
-      FeatureType: 4020
-      Param1: 1
+      Param1: 10
       Param2: 0
       Param3: 0
       Rate: 100
@@ -5978,7 +5972,7 @@ MonoBehaviour:
     TimingOnlyCount: 0
     FeatureDates:
     - SkillId: 404050
-      FeatureType: 6030
+      FeatureType: 6080
       Param1: 4050
       Param2: 0
       Param3: 2

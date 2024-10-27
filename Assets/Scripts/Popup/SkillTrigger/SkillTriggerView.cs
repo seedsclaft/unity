@@ -43,7 +43,7 @@ namespace Ryneus
             triggerCategory1List.Initialize();
             triggerCategory1List.SetSelectedHandler(() => OnClickTriggerCategory1Select());
             triggerCategory1List.SetInputHandler(InputKeyType.Cancel,() => CancelCategory());
-            
+
             triggerCategory2List.Initialize();
             triggerCategory2List.SetSelectedHandler(() => OnClickTriggerCategory2Select());
             triggerCategory2List.SetInputHandler(InputKeyType.Cancel,() => CancelCategory());

@@ -27,7 +27,8 @@ namespace Ryneus
             {
                 DataSystem.GetText(102000),
                 DataSystem.GetText(102010),
-                DataSystem.GetText(102020)
+                DataSystem.GetText(102020),
+                DataSystem.GetText(102030)
             });
             toggleSelect.SetSelectTabHandler(() => 
             {
@@ -36,6 +37,7 @@ namespace Ryneus
                 eventData.template = data;
                 _commandData(eventData);
             });
+            toggleSelect.SetSelectTabIndex(0);
             SetBaseAnimation(popupAnimation);
             new RulingPresenter(this);
         }
@@ -45,21 +47,9 @@ namespace Ryneus
             popupAnimation.OpenAnimation(UiRoot.transform,null);
         }
 
-        public void SetTitle(string title)
-        {
-            titleText.text = title;
-        }
-
         public void SetEvent(System.Action<RulingViewEvent> commandData)
         {
             _commandData = commandData;
-        }
-
-        
-        public void SetRuleCategory(List<ListData> ruleList)
-        {
-            //categoryList.SetSelectedHandler(() => CallRulingCommand());
-            SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
         }
 
         public void SetRuleCommand(List<ListData> ruleList)
@@ -69,7 +59,7 @@ namespace Ryneus
             commandList.SetInputHandler(InputKeyType.Up,() => CallRulingCommand());
             commandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent());
             commandList.SetSelectedHandler(() => CallRulingCommand());
-            SetInputHandler(commandList.GetComponent<IInputHandlerEvent>());
+            SetInputHandler(commandList.gameObject);
         }
 
         private void CallRulingCommand()

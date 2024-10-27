@@ -9,6 +9,7 @@ namespace Ryneus
     public class StageInfoComponent : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private TextMeshProUGUI stageNoText;
         [SerializeField] private GameObject achieve;
         [SerializeField] private TextMeshProUGUI achieveText;
         [SerializeField] private TextMeshProUGUI help;
@@ -48,6 +49,7 @@ namespace Ryneus
             score?.SetText(DataSystem.GetReplaceDecimalText(stageInfo.Score));
             scoreMax?.SetText(DataSystem.GetReplaceDecimalText(stageInfo.ScoreMax));
             stageLv?.SetText(stageData.StageLv.ToString());
+            stageNoText?.SetText(DataSystem.GetReplaceText(15010,stageData.Id.ToString()));
         }
     }
 }

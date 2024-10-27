@@ -24,7 +24,7 @@ namespace Ryneus
         public string LastKey => _lastKey;
         public void SetHelpText(string text)
         {
-            //helpText.text = text;
+            helpText?.SetText(text);
         }
 
         public async void SetInputInfo(string key)

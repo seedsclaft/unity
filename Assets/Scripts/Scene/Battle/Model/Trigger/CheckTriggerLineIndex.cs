@@ -181,7 +181,7 @@ namespace Ryneus
                     }
                     break;
                 case TriggerType.OpponentMoreTargetCount:
-                    if (!IsFriend && checkTriggerInfo.AliveBattlerInfos(!IsFriend).FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerData.Param1)
+                    if (!IsFriend && checkTriggerInfo.AliveBattlerInfos(IsFriend).FindAll(a => a.LineIndex == targetBattler.LineIndex).Count >= triggerData.Param1)
                     {
                         targetIndexList.Add(targetIndex);
                     }
