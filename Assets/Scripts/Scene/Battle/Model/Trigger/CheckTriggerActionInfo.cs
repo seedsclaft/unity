@@ -178,7 +178,8 @@ namespace Ryneus
                     targetIndexList.AddRange(CheckTargetBuff(triggerData,battlerInfo,checkTriggerInfo));
                     break;
                 case TriggerType.FriendAttackedAction:
-                    targetIndexList.AddRange(CheckFriendAttackedAction(triggerData,battlerInfo,checkTriggerInfo));
+                    var selectIndex = CheckFriendAttackedAction(triggerData,battlerInfo,checkTriggerInfo);
+                    targetIndexList.AddRange(selectIndex);
                     break;
             }
         }

@@ -561,10 +561,10 @@ namespace Ryneus
         private async UniTask RemovePassiveInfos()
         {
             var RemovePassiveResults = _model.CheckRemovePassiveInfos();
-            await ExecActionResultInfos(RemovePassiveResults);
+            await ExecActionResultInfos(RemovePassiveResults,true);
         }
 
-        public async UniTask<bool> ExecActionResultInfos(List<ActionResultInfo> resultInfos,bool needPopupDelay = true)
+        public async UniTask<bool> ExecActionResultInfos(List<ActionResultInfo> resultInfos,bool removePassive = false)
         {
             _model.AdjustActionResultInfo(resultInfos);
             if (_skipBattle == false)
@@ -575,6 +575,11 @@ namespace Ryneus
                     if (skillData != null)
                     {
                         var animationData = BattleUtility.AnimationData(skillData.AnimationId);
+                        // パッシブが消えるアニメーションは固定
+                        if (removePassive)
+                        {
+                            animationData = BattleUtility.AnimationData(61);
+                        }
                         if (animationData != null && animationData.AnimationPath != "" && GameSystem.ConfigData.BattleAnimationSkip == false)
                         {
                             PlayAnimation(animationData,skillData.AnimationType,new List<int>(){resultInfo.TargetIndex});

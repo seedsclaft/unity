@@ -31,15 +31,6 @@ namespace Ryneus
             }
             if (subject != null && target != null)
             {
-                // 攻撃を受けたら外れるステートを解除
-                var allStateInfos = target.StateInfos;
-                foreach (var stateInfo in allStateInfos)
-                {
-                    if (stateInfo.Master.RemoveByAttack)
-                    {                
-                        _removedStates.Add(stateInfo);
-                    }
-                }
 
                 if (_hpDamage >= (target.Hp + _hpHeal) && target.IsAlive())
                 {
@@ -114,6 +105,18 @@ namespace Ryneus
                             target.SetDamagedValue(0);
                             _deadIndexList.RemoveAt(i);
                             SeekStateCount(target,StateType.Curse);
+                        }
+                    }
+                }
+                // 攻撃を受けたら外れるステートを解除
+                if (_hpDamage > 0)
+                {
+                    var allStateInfos = target.StateInfos;
+                    foreach (var stateInfo in allStateInfos)
+                    {
+                        if (stateInfo.Master.RemoveByAttack)
+                        {                
+                            _removedStates.Add(stateInfo);
                         }
                     }
                 }

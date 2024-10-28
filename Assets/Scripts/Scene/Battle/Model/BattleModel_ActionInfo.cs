@@ -38,6 +38,35 @@ namespace Ryneus
             _currentActionInfo = _actionInfos[0];
         }
 
+        public List<ActionInfo> BeforeActionInfo(ActionInfo targetActionInfo)
+        {
+            var list = new List<ActionInfo>();
+            var findIndex = _actionInfos.FindIndex(a => a == targetActionInfo);
+            var idx = 0;
+            foreach (var actionInfo in _actionInfos)
+            {
+                if (idx < findIndex)
+                {
+                    list.Add(actionInfo);
+                }
+                idx++;
+            }
+            return list;
+        }
+
+        public void RemoveActionInfo(ActionInfo targetActionInfo)
+        {
+            var findIndex = _actionInfos.FindIndex(a => a == targetActionInfo);
+            if (findIndex > -1)
+            {
+                _actionInfos.RemoveAt(findIndex);
+            }
+            if (_actionInfos.Count > 0)
+            {
+                _currentActionInfo = _actionInfos[0];
+            }
+        }
+
         private void PopActionInfo()
         {
             _actionInfos.RemoveAt(0);

@@ -302,7 +302,7 @@ namespace Ryneus
             }
         }
     
-        private List<int> LearnSkillIds()
+        public List<int> LearnSkillIds()
         {
             var list = new List<int>();
             var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.IsEnableStage(_stageId,_seek,_worldType));

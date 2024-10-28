@@ -333,13 +333,13 @@ namespace Ryneus
             var prefab = popupAssign.CreatePopup(PopupType.SkillTrigger,helpWindow);
             var skillTriggerView = prefab.GetComponent<SkillTriggerView>();
             skillTriggerView.SetSkillTriggerViewInfo(skillTriggerViewInfo);
+            skillTriggerView.SetEvent((type) => UpdateCommand(type));
             skillTriggerView.Initialize();
             skillTriggerView.SetBackEvent(() => 
             {
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
                 if (skillTriggerViewInfo.EndEvent != null) skillTriggerViewInfo.EndEvent();
             });
-            skillTriggerView.SetEvent((type) => UpdateCommand(type));
             SetIsBusyMainAndStatus();
         }
 

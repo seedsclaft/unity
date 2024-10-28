@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System;
+using SkillTrigger;
 
 namespace Ryneus
 {
@@ -27,6 +29,7 @@ namespace Ryneus
             _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,0));
             _view.SetTriggerCategoryList(GetListData(_model.SkillTriggerCategoryList()));
             _view.OpenAnimation();
+            CheckTutorialState();
         }
 
         private void UpdateCommand(SkillTriggerViewEvent viewEvent)
@@ -38,46 +41,76 @@ namespace Ryneus
             //LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
-                case SkillTrigger.CommandType.CallSkillSelect:
+                case CommandType.CallSkillSelect:
                     CommandCallSkillSelect();
                     break;
-                case SkillTrigger.CommandType.CallTrigger1Select:
+                case CommandType.CallTrigger1Select:
                     CommandCallTrigger1Select();
                     break;
-                case SkillTrigger.CommandType.CallTrigger2Select:
+                case CommandType.CallTrigger2Select:
                     CommandCallTrigger2Select();
                     break;
-                case SkillTrigger.CommandType.CallTriggerUp:
+                case CommandType.CallTriggerUp:
                     CommandCallTriggerUp();
                     break;
-                case SkillTrigger.CommandType.CallTriggerDown:
+                case CommandType.CallTriggerDown:
                     CommandCallTriggerDown();
                     break;
-                case SkillTrigger.CommandType.DecideSkillSelect:
+                case CommandType.DecideSkillSelect:
                     CommandDecideSkillSelect((SkillInfo)viewEvent.template);
                     break;
-                case SkillTrigger.CommandType.DecideTrigger1Select:
+                case CommandType.DecideTrigger1Select:
                     CommandDecideTrigger1Select((SkillTriggerData)viewEvent.template);
                     break;
-                case SkillTrigger.CommandType.DecideTrigger2Select:
+                case CommandType.DecideTrigger2Select:
                     CommandDecideTrigger2Select((SkillTriggerData)viewEvent.template);
                     break;
-                case SkillTrigger.CommandType.DecideCategory1Select:
+                case CommandType.DecideCategory1Select:
                     CommandDecideCategory1Select();
                     break;
-                case SkillTrigger.CommandType.DecideCategory2Select:
+                case CommandType.DecideCategory2Select:
                     CommandDecideCategory2Select();
                     break;
-                case SkillTrigger.CommandType.CancelSelect:
+                case CommandType.CancelSelect:
                     CommandCancelSelect();
                     break;
-                case SkillTrigger.CommandType.CancelCategory:
+                case CommandType.CancelCategory:
                     CommandCancelCategory();
                     break;
-                case SkillTrigger.CommandType.Recommend:
+                case CommandType.Recommend:
                     CommandRecommend();
                     break;
             }
+        }
+
+        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        {
+            Func<TutorialData,bool> enable = (tutorialData) => 
+            {
+                var checkFlag = true;
+                if (tutorialData.Param1 == 1200)
+                {
+                    // Activeの魔法を初めて入手するかステージ3の最初
+                    checkFlag = _model.StageMembers().Find(a => a.LearnSkillIds().FindAll(b => DataSystem.FindSkill(b).SkillType == SkillType.Active).Count > 0) != null || _model.CurrentStage.Id == 3;
+                }
+                return checkFlag;
+            };
+            Func<TutorialData,bool> checkEnd = (tutorialData) => 
+            {
+                return true;
+            };
+            var tutorialViewInfo = new TutorialViewInfo
+            {
+                SceneType = (int)PopupType.SkillTrigger + 100,
+                CheckEndMethod = checkEnd,
+                CheckMethod = enable,
+                EndEvent = () => 
+                {
+                    _busy = false;
+                    CheckTutorialState(commandType);
+                }
+            };
+            _view.CommandCheckTutorialState(tutorialViewInfo);
         }
 
         private void CommandDecideSkillSelect(SkillInfo skillInfo)

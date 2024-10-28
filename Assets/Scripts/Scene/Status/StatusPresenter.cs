@@ -95,6 +95,11 @@ namespace Ryneus
                     // 初めて仲間加入画面を開く
                     checkFlag = _view.DisplayDecide;
                 }
+                if (tutorialData.Param1 == 1200)
+                {
+                    // Activeの魔法を初めて入手するかステージ3の最初
+                    checkFlag = _model.StageMembers().Find(a => a.LearnSkillIds().FindAll(b => DataSystem.FindSkill(b).SkillType == SkillType.Active).Count > 0) != null || _model.CurrentStage.Id == 3;
+                }
                 return checkFlag;
             };
             Func<TutorialData,bool> checkEnd = (tutorialData) => 

@@ -520,6 +520,7 @@ namespace Ryneus
 
         public void CalcCoverTargetIndexes(List<int> targetIndexList,bool subjectIsActor)
         {
+            /*
             var coverBattlerId = -1;
             var coveredBattlerId = -1;
             foreach (var coverTargetIndex in targetIndexList)
@@ -543,6 +544,7 @@ namespace Ryneus
                 }
                 targetIndexList.Remove(coveredBattlerId);
             }
+            */
         }
 
         public bool CanUseCondition(int skillId,BattlerInfo subject,int targetIndex)
@@ -757,9 +759,9 @@ namespace Ryneus
 
 
         // indexListにActionを使ったときのリザルトを生成
-        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
+        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList,bool checkRepeatTimeZero = true)
         {
-            if (actionInfo.RepeatTime == 0)
+            if (checkRepeatTimeZero && actionInfo.RepeatTime == 0)
             {
                 return;
             }
@@ -782,9 +784,27 @@ namespace Ryneus
                 return;
             }
 
+            // かばう判定
+            var coverBattlerIds = new List<int>();
+            var newIndexList = new List<int>();
+            foreach (var targetIndex in indexList)
+            {
+                var target = GetBattlerInfo(targetIndex);
+                var friends = target.IsActor ? _party : _troop;
+                var coverBattlerInfo = friends.AliveBattlerInfos.Find(a => a.IsState(StateType.Cover) && !coverBattlerIds.Contains(a.Index));
+                if (coverBattlerInfo != null && coverBattlerInfo.IsActor != subject.IsActor && coverBattlerInfo.Index != targetIndex)
+                {
+                    // かばう成立
+                    coverBattlerIds.Add(coverBattlerInfo.Index);
+                    newIndexList.Add(coverBattlerInfo.Index);
+                } else
+                {
+                    newIndexList.Add(targetIndex);
+                }
+            }
             var actionResultInfos = new List<ActionResultInfo>();
 
-            foreach (var targetIndex in indexList)
+            foreach (var targetIndex in newIndexList)
             {
                 var target = GetBattlerInfo(targetIndex);
                 var featureDates = new List<SkillData.FeatureData>();
@@ -1531,7 +1551,7 @@ namespace Ryneus
                 {
                     foreach (var triggeredSkill in triggeredSkills)
                     {
-                        var IsInterrupt = triggerTiming == TriggerTiming.Interrupt || triggerTiming == TriggerTiming.BeforeSelfUse || triggerTiming == TriggerTiming.BeforeOpponentUse || triggerTiming == TriggerTiming.BeforeFriendUse;
+                        var IsInterrupt = triggerTiming == TriggerTiming.Interrupt || triggerTiming == TriggerTiming.BeforeSelfUse || triggerTiming == TriggerTiming.BeforeOpponentUse || triggerTiming == TriggerTiming.BeforeFriendUse || triggerTiming == TriggerTiming.PrimaryInterrupt;
                         if (triggeredSkill.Master.SkillType == SkillType.Unique && checkBattler.IsAwaken == false)
                         {
                             checkBattler.SetAwaken();
@@ -1646,7 +1666,7 @@ namespace Ryneus
                                 continue;
                             }
                         }
-                        var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.Interrupt || triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse;
+                        var IsInterrupt = triggerDates[0].TriggerTiming == TriggerTiming.Interrupt || triggerDates[0].TriggerTiming == TriggerTiming.BeforeSelfUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeOpponentUse || triggerDates[0].TriggerTiming == TriggerTiming.BeforeFriendUse || triggerDates[0].TriggerTiming == TriggerTiming.PrimaryInterrupt;
                         var result = MakePassiveSkillActionResults(battlerInfo,passiveInfo,IsInterrupt,selectTarget,actionInfo,actionResultInfos,triggerDates[0]);
                         if (result != null && result.ActionResults.Count > 0)
                         {

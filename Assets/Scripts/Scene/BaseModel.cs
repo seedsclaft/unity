@@ -473,7 +473,7 @@ namespace Ryneus
                 if (include == true)
                 {
                     // 〇位
-                    rankingText = rank.ToString() + DataSystem.GetText(23030);
+                    rankingText = DataSystem.GetReplaceText(23030, rank.ToString());
                 } else
                 {
                     // 圏外

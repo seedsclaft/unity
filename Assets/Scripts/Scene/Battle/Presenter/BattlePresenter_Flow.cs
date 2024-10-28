@@ -122,14 +122,14 @@ namespace Ryneus
         /// 行動結果を生成する
         /// </summary>
         /// <param name="indexList"></param>
-        public void MakeActionResultInfoTargetIndexes(List<int> indexList)
+        public async void MakeActionResultInfoTargetIndexes(List<int> indexList)
         {
             _view.SetHelpText("");
             _view.ChangeBackCommandActive(false);
 
             var actionInfo = _model.CurrentActionInfo;
             _model.SetActionInfoParameter(actionInfo);
-            MakeActionResultInfo(indexList);
+            await MakeActionResultInfo(indexList);
             StartActionInfo();
         }
 
@@ -137,7 +137,7 @@ namespace Ryneus
         /// 行動結果を生成する
         /// </summary>
         /// <param name="indexList"></param>
-        private void MakeActionResultInfo(List<int> indexList)
+        private async UniTask MakeActionResultInfo(List<int> indexList)
         {
             var actionInfo = _model.CurrentActionInfo;
             if (actionInfo != null)
@@ -150,8 +150,31 @@ namespace Ryneus
                 // 開始行動のアクションの結果を生成
                 _model.MakeActionResultInfo(actionInfo,indexList);
 
+                var current = _model.CurrentActionInfo;
+                // かばう専用割り込み判定
+                CheckPrimaryInterruptActionInfoTriggerTimings();
+
+                // かばうが成立する場合
+                if (current != _model.CurrentActionInfo)
+                {
+                    // 先にかばう結果を設定する
+                    var beforeActionInfos = _model.BeforeActionInfo(current);
+                    foreach (var beforeActionInfo in beforeActionInfos)
+                    {
+                        await ExecActionResultInfos(beforeActionInfo.ActionResults);
+                    }
+                    beforeActionInfos.Reverse();
+                    
+                    foreach (var beforeActionInfo in beforeActionInfos)
+                    {
+                        _model.RemoveActionInfo(beforeActionInfo);
+                    }
+                    // 強制的に再生成
+                    _model.MakeActionResultInfo(current,indexList,false);
+                }
+
                 // 行動決定後の割り込みスキル判定
-                CheckInterruptActionInfoTriggerTimings();
+                CheckInterruptActionInfoTriggerTimings(current);
             }
         }
 
@@ -171,11 +194,20 @@ namespace Ryneus
         }
         
         /// <summary>
-        /// 行動割り込みトリガー確認
+        /// かばう割り込みトリガー確認
         /// </summary>
-        private void CheckInterruptActionInfoTriggerTimings()
+        private void CheckPrimaryInterruptActionInfoTriggerTimings()
         {
             var actionInfo = _model.CurrentActionInfo;
+            _model.CheckTriggerActiveInfos(TriggerTiming.PrimaryInterrupt,actionInfo,actionInfo.ActionResults,true);
+            _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.PrimaryInterrupt},actionInfo,actionInfo.ActionResults);
+        }
+
+        /// <summary>
+        /// 行動割り込みトリガー確認
+        /// </summary>
+        private void CheckInterruptActionInfoTriggerTimings(ActionInfo actionInfo)
+        {    
             _model.CheckTriggerActiveInfos(TriggerTiming.Interrupt,actionInfo,actionInfo.ActionResults,true);
             _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Interrupt},actionInfo,actionInfo.ActionResults);
             _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
@@ -249,10 +281,10 @@ namespace Ryneus
         /// 連続行動するActionInfo
         /// </summary>
         /// <param name="actionInfo"></param>
-        private void RepeatActionInfo(ActionInfo actionInfo)
+        private async void RepeatActionInfo(ActionInfo actionInfo)
         {
             _model.ResetTargetIndexList(actionInfo);
-            MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
+            await MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
             // 再取得
             if (actionInfo == _model.CurrentActionInfo)
             {

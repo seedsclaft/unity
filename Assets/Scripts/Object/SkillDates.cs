@@ -433,6 +433,7 @@ namespace Ryneus
         BeforeSelfUse = 31,
         BeforeOpponentUse = 32,
         BeforeFriendUse = 33,
+        PrimaryInterrupt = 41,
         BeforeTacticsTurn = 51,
         CurrentTacticsTurn = 52
     }
