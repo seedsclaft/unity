@@ -478,10 +478,10 @@ namespace Ryneus
             if (actionResultInfo.ReDamage > 0 || actionResultInfo.CurseDamage > 0)
             {
                 var reDamage = 0;
-                if (!actionResultInfo.DeadIndexList.Contains(targetIndex) && _model.GetBattlerInfo(targetIndex).IsAlive())
-                {
+                //if (!actionResultInfo.DeadIndexList.Contains(targetIndex) && _model.GetBattlerInfo(targetIndex).IsAlive())
+                //{
                     reDamage += actionResultInfo.ReDamage;
-                }
+                //}
                 reDamage += actionResultInfo.CurseDamage;
                 if (reDamage > 0)
                 {

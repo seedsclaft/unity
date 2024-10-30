@@ -15,15 +15,7 @@ MonoBehaviour:
   chapterName: Boot
   dataList:
   - {fileID: 11400000, guid: 175a71ca6a664cd498bc10ff2b098d26, type: 2}
-  - {fileID: 11400000, guid: 8505c01b7b2608d42b96a78b15f8f310, type: 2}
-  - {fileID: 11400000, guid: 1f139db368104ed46bb92ba45656fc95, type: 2}
-  - {fileID: 11400000, guid: 887e80b79a9724448b6653c7cedfa0a8, type: 2}
-  - {fileID: 11400000, guid: bbd33f9f6fb78dd41a1698bac75528d7, type: 2}
-  - {fileID: 11400000, guid: 35753160c11837b4c913befb055feb50, type: 2}
-  - {fileID: 11400000, guid: 7021e91a90738ca43b419577e6bede09, type: 2}
-  - {fileID: 11400000, guid: c917c0a1725a9aa42a517954f99124b6, type: 2}
   - {fileID: 11400000, guid: 14acd677ec5d91e41be73b3c7ff7d560, type: 2}
-  - {fileID: 11400000, guid: 54a2a94d96cb64048b7d97514eb0eebc, type: 2}
   settingList:
   - rows:
     - rowIndex: 0
@@ -196,6 +188,21 @@ MonoBehaviour:
     - rowIndex: 1
       debugIndex: 1
       strings:
+      - Title
+      - Bg
+      - 
+      - 24
+      - 
+      - 
+      - 1
+      - 
+      - NA_background image_3D like_656
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
       - Event1
       - Bg
       - 
@@ -204,12 +211,12 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - NA_Background image_Simple_034
+      - NA_background image_3D like_656
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 2
-      debugIndex: 2
+    - rowIndex: 3
+      debugIndex: 3
       strings:
       - Event2
       - Bg
@@ -219,22 +226,7 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - NA_background image_3D like_404
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 3
-      debugIndex: 3
-      strings:
-      - Tactics
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - 274
+      - NA_background image_3D like_656
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -249,88 +241,13 @@ MonoBehaviour:
       - 
       - 1
       - 
-      - NA_background image_3D like_404
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 5
-      debugIndex: 5
-      strings:
-      - Event4
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - purple_110
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 6
-      debugIndex: 6
-      strings:
-      - Event5
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - red_229
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 7
-      debugIndex: 7
-      strings:
-      - Event6
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - purple_18
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 8
-      debugIndex: 8
-      strings:
-      - Event7
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - blue_205
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 9
-      debugIndex: 9
-      strings:
-      - Event8
-      - Bg
-      - 
-      - 24
-      - 
-      - 
-      - 1
-      - 
-      - menu_2
+      - NA_background image_3D like_656
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Texture
     type: 1
-    textLength: 347
+    textLength: 279
     headerRow: 0
     sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
       type: 3}

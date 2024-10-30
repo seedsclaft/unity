@@ -33,8 +33,8 @@ namespace Ryneus
             _view.InitActors();
             _view.InitResultList(GetListData(_model.ResultCommand()));
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
-            var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
-            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            //var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
+            //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandStartResult();

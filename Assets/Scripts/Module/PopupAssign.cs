@@ -83,6 +83,17 @@ namespace Ryneus
                 confirmRoot.SetActive(false);
             }
         }
+
+        public void ClosePopupAll()
+        {
+            if (_stackPopupView.Count > 0)
+            {
+                confirmRoot.transform.DetachChildren();
+                _stackPopupView.Clear();
+            }
+            confirmRoot.SetActive(false);
+        }
+
         public void CloseTutorialPopup()
         {
             if (_stackPopupView.Count > 0)

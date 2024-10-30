@@ -226,7 +226,7 @@ namespace Ryneus
         {
             if (confirmCommandType == ConfirmCommandType.Yes)
             {
-                _view.CommandGameSystem(Base.CommandType.ClosePopup);
+                _view.CommandGameSystem(Base.CommandType.ClosePopupAll);
                 _view.CommandGotoSceneChange(Scene.Title);
             }
             ClosePopup();

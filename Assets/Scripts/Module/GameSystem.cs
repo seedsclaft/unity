@@ -132,6 +132,10 @@ namespace Ryneus
                     popupAssign.ClosePopup();
                     SetIsNotBusyMainAndStatus();
                     break;
+                case Base.CommandType.ClosePopupAll:
+                    popupAssign.ClosePopupAll();
+                    SetIsNotBusyMainAndStatus();
+                    break;
                 case Base.CommandType.CloseConfirm:
                     confirmAssign.CloseConfirm();
                     SetIsNotBusyMainAndStatus();
@@ -532,16 +536,17 @@ namespace Ryneus
     }
 
 
-    public class AdvCallInfo{
+    public class AdvCallInfo
+    {
         private string _label;
-        public string Label { get {return _label;}}
+        public string Label => _label;
         public void SetLabel(string label)
         {
             _label = label;
         }
-        private System.Action _callEvent;
-        public System.Action CallEvent { get {return _callEvent;}}
-        public void SetCallEvent(System.Action callEvent)
+        private Action _callEvent;
+        public Action CallEvent => _callEvent;
+        public void SetCallEvent(Action callEvent)
         {
             _callEvent = callEvent;
         }

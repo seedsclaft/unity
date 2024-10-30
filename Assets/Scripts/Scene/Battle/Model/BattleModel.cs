@@ -448,6 +448,17 @@ namespace Ryneus
             {
                 scopeType = ScopeType.All;
             }
+            // 挑発でselectIndexを変化
+            if (subject != null && subject.IsState(StateType.Substitute))
+            {
+                // 対象と挑発した対象が同じパーティなら有効
+                var substituteState = subject.GetStateInfo(StateType.Substitute);
+                var substituteTarget = GetBattlerInfo(substituteState.BattlerId);
+                if (substituteTarget.IsAlive() && targetIndexList.FindIndex(a => GetBattlerInfo(a).IsActor == substituteTarget.IsActor) > -1)
+                {
+                    selectIndex = substituteState.BattlerId;
+                }
+            }
             var TargetBattler = GetBattlerInfo(selectIndex);
             switch (scopeType)
             {
@@ -492,6 +503,7 @@ namespace Ryneus
                     break;
             }
             // 挑発
+            /*
             if (subject != null && subject.IsState(StateType.Substitute))
             {
                 // 対象と挑発した対象が同じパーティなら有効
@@ -513,6 +525,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
             // かばう
             CalcCoverTargetIndexes(targetIndexList,GetBattlerInfo(actionInfo.SubjectIndex).IsActor);
             return targetIndexList;

@@ -427,6 +427,7 @@ namespace Ryneus
             CallCautionView,
             CallPopupView,
             ClosePopup,
+            ClosePopupAll,
             CloseConfirm,
             CallOptionView,
             CallSideMenu,

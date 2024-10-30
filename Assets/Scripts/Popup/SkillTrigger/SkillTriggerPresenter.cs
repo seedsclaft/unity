@@ -180,6 +180,7 @@ namespace Ryneus
 
         private void CommandRecommend()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.RecommendActiveSkill();
             CommandRefresh();
         }

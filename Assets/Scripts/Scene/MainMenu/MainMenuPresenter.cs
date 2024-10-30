@@ -28,8 +28,17 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             if (_model.IsEnding())
             {
-                _busy = false;
-                _view.CommandGotoSceneChange(Scene.Result);
+                // エンディング再生
+                var advInfo = new AdvCallInfo();
+                advInfo.SetLabel(_model.GetAdvFile(101));
+                advInfo.SetCallEvent(() => 
+                {
+                    _busy = false;
+                    _view.ChangeUIActive(true);
+                    _view.CommandGotoSceneChange(Scene.Result);
+                });
+                _view.CommandCallAdv(advInfo);
+                _view.ChangeUIActive(false);
             } else
             {
                 _view.SetBackGround(_model.NextStage().Master.BackGround);
