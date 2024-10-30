@@ -772,14 +772,14 @@ namespace Ryneus
 
 
         // indexListにActionを使ったときのリザルトを生成
-        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList,bool checkRepeatTimeZero = true)
+        public void MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList,bool checkRepeatTimeZero = true,bool needCheckCover = false)
         {
             if (checkRepeatTimeZero && actionInfo.RepeatTime == 0)
             {
                 return;
             }
             actionInfo.SetCandidateTargetIndexList(indexList);
-            actionInfo.SetRepeatTime(actionInfo.RepeatTime - 1);
+            actionInfo.SeekRepeatTime();
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             // ターゲットの生死判定
             var aliveType = actionInfo.Master.AliveType;
@@ -798,22 +798,34 @@ namespace Ryneus
             }
 
             // かばう判定
-            var coverBattlerIds = new List<int>();
             var newIndexList = new List<int>();
-            foreach (var targetIndex in indexList)
+            if (needCheckCover)
             {
-                var target = GetBattlerInfo(targetIndex);
-                var friends = target.IsActor ? _party : _troop;
-                var coverBattlerInfo = friends.AliveBattlerInfos.Find(a => a.IsState(StateType.Cover) && !coverBattlerIds.Contains(a.Index));
-                if (coverBattlerInfo != null && coverBattlerInfo.IsActor != subject.IsActor && coverBattlerInfo.Index != targetIndex)
+                var coverBattlerIds = new List<int>();
+                foreach (var targetIndex in indexList)
                 {
-                    // かばう成立
-                    coverBattlerIds.Add(coverBattlerInfo.Index);
-                    newIndexList.Add(coverBattlerInfo.Index);
-                } else
-                {
-                    newIndexList.Add(targetIndex);
+                    var target = GetBattlerInfo(targetIndex);
+                    var friends = target.IsActor ? _party : _troop;
+                    var coverBattlerInfo = friends.AliveBattlerInfos.Find(a => a.IsState(StateType.Cover) && !coverBattlerIds.Contains(a.Index));
+                    if (coverBattlerInfo != null && coverBattlerInfo.IsActor != subject.IsActor && coverBattlerInfo.Index != targetIndex)
+                    {
+                        // かばう成立
+                        coverBattlerIds.Add(coverBattlerInfo.Index);
+                        if (!newIndexList.Contains(coverBattlerInfo.Index))
+                        {
+                            newIndexList.Add(coverBattlerInfo.Index);
+                        }
+                    } else
+                    {
+                        if (!newIndexList.Contains(targetIndex))
+                        {
+                            newIndexList.Add(targetIndex);
+                        }
+                    }
                 }
+            } else
+            {
+                newIndexList = indexList;
             }
             var actionResultInfos = new List<ActionResultInfo>();
 

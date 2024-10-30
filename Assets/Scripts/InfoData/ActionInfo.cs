@@ -32,6 +32,7 @@ namespace Ryneus
         private int _hpCost;
         public int HpCost => _hpCost;
         private int _baseRepeatTime;
+        public int BaseRepeatTime;
         public void SetBaseRepeatTime(int repeatTime)
         {
             _baseRepeatTime = repeatTime;
@@ -40,7 +41,16 @@ namespace Ryneus
         public int RepeatTime => _repeatTime;
         public void SetRepeatTime(int repeatTime)
         {
+            if (_baseRepeatTime > 0)
+            {
+                return;
+            }
             _repeatTime = repeatTime;
+        }
+
+        public void SeekRepeatTime()
+        {
+            _repeatTime--;
         }
         public bool FirstAttack()
         {
