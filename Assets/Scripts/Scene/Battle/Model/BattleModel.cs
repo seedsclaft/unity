@@ -401,35 +401,6 @@ namespace Ryneus
             return true;
         }
 
-
-        // 選択可能なBattlerInfoを取得
-        public List<ListData> TargetBattlerPartyInfos(ActionInfo actionInfo)
-        {
-            var targetBattlerInfos = new List<ListData>();
-            foreach (var battlerInfo in _party.BattlerInfos)
-            {
-                var listData = new ListData(battlerInfo);
-                listData.SetEnable(actionInfo.CandidateTargetIndexList.Contains(battlerInfo.Index));
-                listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
-                targetBattlerInfos.Add(listData);
-            }
-            return targetBattlerInfos;
-        }
-
-        // 選択可能なBattlerInfoを取得
-        public List<ListData> TargetBattlerEnemyInfos(ActionInfo actionInfo)
-        {
-            var targetBattlerInfos = new List<ListData>();
-            foreach (var battlerInfo in _troop.BattlerInfos)
-            {
-                var listData = new ListData(battlerInfo);
-                listData.SetEnable(actionInfo.CandidateTargetIndexList.Contains(battlerInfo.Index));
-                listData.SetSelected(actionInfo.LastTargetIndex == battlerInfo.Index);
-                targetBattlerInfos.Add(listData);
-            }
-            return targetBattlerInfos;
-        }
-
         // selectIndexを対象にした時の効果範囲を取得
         public List<int> ActionInfoTargetIndexes(ActionInfo actionInfo,int selectIndex,int counterSubjectIndex = -1,ActionInfo baseActionInfo = null,List<ActionResultInfo> baseActionResultInfos = null)
         {
@@ -1043,6 +1014,7 @@ namespace Ryneus
                     _saveBattleInfo.AddActionData(actionInfo);
                 }
                 ExecActionResultInfos(actionInfo.ActionResults,false);
+                actionInfo.AddActionedRepeatTimes(actionInfo.RepeatTime);
                 if (actionInfo.Master.IsRevengeHpDamageFeature())
                 {
                     // 受けたダメージをリセット

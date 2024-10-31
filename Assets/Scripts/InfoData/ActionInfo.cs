@@ -32,7 +32,6 @@ namespace Ryneus
         private int _hpCost;
         public int HpCost => _hpCost;
         private int _baseRepeatTime;
-        public int BaseRepeatTime;
         public void SetBaseRepeatTime(int repeatTime)
         {
             _baseRepeatTime = repeatTime;
@@ -41,8 +40,10 @@ namespace Ryneus
         public int RepeatTime => _repeatTime;
         public void SetRepeatTime(int repeatTime)
         {
-            if (_baseRepeatTime > 0)
+            if (_actionedRepeatTimes.Count > 0 && !_actionedRepeatTimes.Contains(_repeatTime))
             {
+                // 実際に行動した回数分減らす
+                _repeatTime = repeatTime - _actionedRepeatTimes.Count;
                 return;
             }
             _repeatTime = repeatTime;
@@ -52,13 +53,21 @@ namespace Ryneus
         {
             _repeatTime--;
         }
+
         public bool FirstAttack()
         {
             return (_baseRepeatTime-1) == _repeatTime;
         }
+
         public bool LastAttack()
         {
             return _repeatTime == 0;
+        }
+
+        private List<int> _actionedRepeatTimes = new ();
+        public void AddActionedRepeatTimes(int repeatTime)
+        {
+            _actionedRepeatTimes.Add(repeatTime);
         }
         
         // 選択可能な対象情報

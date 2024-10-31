@@ -31,7 +31,6 @@ namespace Ryneus
             }
             if (subject != null && target != null)
             {
-
                 if (_hpDamage >= (target.Hp + _hpHeal) && target.IsAlive())
                 {
                     if (target.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
@@ -57,39 +56,6 @@ namespace Ryneus
                         }
                     }
                 }
-                int reduceHp = subject.MaxHp - subject.Hp;
-                int recoveryHp = Mathf.Min(_reHeal,reduceHp);
-                if ((_reDamage - recoveryHp) >= subject.Hp && subject.IsAlive())
-                {
-                    if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
-                    {
-                        var undeadFeature = new SkillData.FeatureData
-                        {
-                            FeatureType = FeatureType.RemoveState,
-                            Param1 = (int)StateType.Undead
-                        };
-                        MakeRemoveState(subject,subject,undeadFeature);
-                        _reDamage = subject.Hp - 1;
-                    } else
-                    {
-                        if (target.IsState(StateType.Reraise))
-                        {
-                            SeekStateCount(target,StateType.Reraise);
-                            _overkillHpDamage = _hpDamage;
-                            _hpDamage = target.Hp - 1;
-                        } else
-                        {
-                            _deadIndexList.Add(target.Index);
-                        }
-                    }
-                }
-                foreach (var removeState in _removedStates)
-                {
-                    if (removeState.StateType == StateType.Death)
-                    {
-                        _aliveIndexList.Add(removeState.TargetIndex);
-                    }
-                }
                 // 呪詛判定
                 for (int i = _deadIndexList.Count-1;i >= 0;i--)
                 {
@@ -106,6 +72,40 @@ namespace Ryneus
                             _deadIndexList.RemoveAt(i);
                             SeekStateCount(target,StateType.Curse);
                         }
+                    }
+                }
+                int reduceHp = subject.MaxHp - subject.Hp;
+                int recoveryHp = Mathf.Min(_reHeal,reduceHp);
+                if ((_reDamage+_curseDamage - recoveryHp) >= subject.Hp && subject.IsAlive())
+                {
+                    if (subject.IsState(StateType.Undead) && featureDates.Find(a => a.FeatureType == FeatureType.BreakUndead) == null)
+                    {
+                        var undeadFeature = new SkillData.FeatureData
+                        {
+                            FeatureType = FeatureType.RemoveState,
+                            Param1 = (int)StateType.Undead
+                        };
+                        MakeRemoveState(subject,subject,undeadFeature);
+                        _reDamage = subject.Hp - 1;
+                        _curseDamage = 0;
+                    } else
+                    {
+                        if (target.IsState(StateType.Reraise))
+                        {
+                            SeekStateCount(target,StateType.Reraise);
+                            _overkillHpDamage = _hpDamage;
+                            _hpDamage = target.Hp - 1;
+                        } else
+                        {
+                            _deadIndexList.Add(subject.Index);
+                        }
+                    }
+                }
+                foreach (var removeState in _removedStates)
+                {
+                    if (removeState.StateType == StateType.Death)
+                    {
+                        _aliveIndexList.Add(removeState.TargetIndex);
                     }
                 }
                 // 攻撃を受けたら外れるステートを解除

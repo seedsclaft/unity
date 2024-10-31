@@ -27,7 +27,7 @@ namespace Ryneus
         private void StartAnimation(ActionInfo actionInfo)
         {
             var isActor = _model.GetBattlerInfo(actionInfo.SubjectIndex).IsActorView;
-            if (actionInfo.Master.SkillType == SkillType.Unique && actionInfo.Master.AnimationId > 0)
+            if (actionInfo.FirstAttack() && actionInfo.Master.SkillType == SkillType.Unique && actionInfo.Master.AnimationId > 0)
             {
                 if (isActor)
                 {
@@ -37,7 +37,7 @@ namespace Ryneus
                     StartAnimationMessiahEnemy();
                 }
             } else
-            if (actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.Master.AnimationId > 0)
+            if (actionInfo.FirstAttack() && actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.Master.AnimationId > 0)
             {
                 StartAnimationAwaken();
             } else

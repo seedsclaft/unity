@@ -170,7 +170,7 @@ namespace Ryneus
                         _model.RemoveActionInfo(beforeActionInfo);
                     }
                     // 強制的に再生成
-                    _model.MakeActionResultInfo(current,indexList,false);
+                    _model.MakeActionResultInfo(current,indexList,false,true);
                 }
 
                 // 行動決定後の割り込みスキル判定
