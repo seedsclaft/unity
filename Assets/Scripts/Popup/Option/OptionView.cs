@@ -17,6 +17,7 @@ namespace Ryneus
         public OptionInfo OptionCommandInfo => optionList.ListItemData<OptionInfo>();
         public int OptionCategoryIndex => optionCategoryList.Index;
 
+        [SerializeField] private Button saveButton = null;
         public override void Initialize() 
         {
             base.Initialize();
@@ -29,6 +30,10 @@ namespace Ryneus
             SetBaseAnimation(popupAnimation);
             new OptionPresenter(this);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            saveButton?.onClick.AddListener(() => 
+            {
+                FirebaseController.Instance.UploadSaveFile();
+            });
         }
         
         public void OpenAnimation()

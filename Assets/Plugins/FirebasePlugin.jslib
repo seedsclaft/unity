@@ -90,6 +90,28 @@ var FirebasePlugin = {
     });
   },
 
+
+  FirebaseUploadSaveFile: function (instanceId,actorData,callback) 
+  {
+    console.log("FirebaseUploadSaveFile");
+    const db = window.firebase.firestore();
+    let res = "";
+    db.collection("save").doc("userName").set(
+      {
+        Data: UTF8ToString(actorData)
+    })
+    .then(() => 
+    {
+        console.log("Document successfully written!");
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
+    })
+    .catch((error) => 
+    {
+        console.error("Error writing document: ", error);
+        Module.dynCall_vii(callback,instanceId,utils.StringReturnValueFunction(res));
+    });
+  },
+
   FirebaseWriteRankingData_Legacy: function (instanceId,userId,score,name,selectIndex,selectIndexSize,selectRank,selectRankSize,callback) 
   {
     console.log("FirebaseWriteRankingData");

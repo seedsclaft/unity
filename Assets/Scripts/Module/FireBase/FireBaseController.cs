@@ -33,6 +33,9 @@ namespace Ryneus
         [DllImport("__Internal")]
         private static extern void FirebaseWriteRankingData(int instanceId,string userId,int score,string name,string actorData,Action<int,string> result);
     
+        [DllImport("__Internal")]
+        private static extern void FirebaseUploadSaveFile(int instanceId,string data,Action<int,string> result);
+    
         public void Initialize()
         {
             if (_isInit)
@@ -61,6 +64,23 @@ namespace Ryneus
         {
         }
 
+        public void UploadSaveFile()
+        {
+            FirebaseInit();
+			var TempBinaryFormatter = new BinaryFormatter();
+			var memoryStream = new MemoryStream();
+			TempBinaryFormatter.Serialize(memoryStream,GameSystem.CurrentStageData);
+			var data = Convert.ToBase64String(memoryStream.GetBuffer());
+
+            IsBusy = true;
+            FirebaseUploadSaveFile(gameObject.GetInstanceID(),data,OnUploadSaveFile);
+        }
+
+        [AOT.MonoPInvokeCallback(typeof(Action<int,string>))]
+        private static void OnUploadSaveFile(int instanceId,string jsonString)
+        {
+
+        }
         public void ReadRankingData()
         {
             if (!_isInit)
