@@ -170,6 +170,7 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void ResetActorLevelUpInfos(SymbolResultInfo symbolResultInfo)
         {
+            /*
             var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo,WorldType.Main));
             if (findIndex > -1)
             {
@@ -185,6 +186,7 @@ namespace Ryneus
                     actorInfo.MargeLevelUpInfo(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 }
             }
+            */
         }
 
         /// <summary>
@@ -193,6 +195,7 @@ namespace Ryneus
         /// <param name="symbolResultInfo"></param>
         public void ReverseBrunch(SymbolResultInfo symbolResultInfo)
         {
+            /*
             var findIndex = _symbolRecordList.FindIndex(a => a.IsSameSymbol(symbolResultInfo,WorldType.Main));
             if (findIndex > -1)
             {
@@ -204,15 +207,18 @@ namespace Ryneus
                     actorInfo.RemoveParamData(symbolResultInfo.StageId,symbolResultInfo.Seek,WorldType.Brunch);
                 }
             }
+            */
         }
 
         public void ResetBrunchData()
         {
+            /*
             var resultInfos = SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             foreach (var resultInfo in resultInfos)
             {
                 resultInfo.ResetParamData();
             }
+            */
         }
 
         /// <summary>

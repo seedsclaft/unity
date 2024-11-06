@@ -126,11 +126,13 @@ namespace Ryneus
                 var record = new SymbolResultInfo(symbolInfo);
                 resultInfos.Add(record);
                 // ブランチ用データ作成
+                /*
                 var brunchSymbol = new SymbolInfo(stageSymbolData);
                 brunchSymbol.CopyData(symbolInfo);
                 var brunchRecord = new SymbolResultInfo(brunchSymbol);
                 brunchRecord.SetWorldType(WorldType.Brunch);
                 resultInfos.Add(brunchRecord);
+                */
             }
             return resultInfos;
         }

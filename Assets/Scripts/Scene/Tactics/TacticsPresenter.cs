@@ -447,6 +447,7 @@ namespace Ryneus
             } else
             if (recordInfo.StageId < currentStage || recordInfo.Seek < currentTurn && recordInfo.StageId == currentStage)
             {
+                /*
                 // ブランチを作成
                 if (_model.CurrentStage.WorldType == WorldType.Main)
                 {
@@ -461,6 +462,7 @@ namespace Ryneus
                     });
                     _view.CommandCallConfirm(confirmInfo);
                 }
+                */
             }
         }
 

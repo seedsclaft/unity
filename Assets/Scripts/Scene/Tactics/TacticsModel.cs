@@ -293,12 +293,14 @@ namespace Ryneus
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.StageId > 0);
             selectRecords = selectRecords.FindAll(a => a.WorldType == CurrentStage.WorldType);
             // ブランチは始点と終点を作る
+            /*
             if (CurrentStage.WorldType == WorldType.Brunch)
             {
                 var brunchSymbol = PartyInfo.BrunchBaseSymbol;
                 var returnSymbol = PartyInfo.ReturnSymbol;
                 selectRecords = selectRecords.FindAll(a => a.IsBeforeStageSeek(returnSymbol.StageId,returnSymbol.Seek,WorldType.Brunch) && a.IsAfterStageSeek(brunchSymbol.StageId,brunchSymbol.Seek,WorldType.Brunch));
             }
+            */
             // 現在を挿入
             var currentSeek = CurrentStage.Seek;
             // ストック数

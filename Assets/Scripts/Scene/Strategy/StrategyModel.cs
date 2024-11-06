@@ -404,6 +404,7 @@ namespace Ryneus
             {
                 CurrentStage.SeekStage();
             }
+            /*
             if (CurrentStage.WorldType == WorldType.Brunch)
             {
                 if (seekStage)
@@ -413,6 +414,7 @@ namespace Ryneus
                 }
                 PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
             }
+            */
             SetStageSeek();
             SavePlayerStageData(true);
         }

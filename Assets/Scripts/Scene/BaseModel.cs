@@ -285,6 +285,7 @@ namespace Ryneus
                 recordInfos.Add(record);
             }
             // アナザー世界のレコードを作る
+            /*
             foreach (var symbol in symbols)
             {
                 var symbolInfo = new SymbolInfo(symbol);
@@ -316,6 +317,7 @@ namespace Ryneus
                 }
                 recordInfos.Add(record);
             }
+            */
             return recordInfos;
         }
 
@@ -636,13 +638,13 @@ namespace Ryneus
             // 作戦項目に追加
             actorInfo.AddSkillTriggerSkill(skillId);
         }
-
         /// <summary>
         /// ブランチを作る
         /// </summary>
         /// <param name="symbolResultInfo"></param>
         public void MakeBrunch(SymbolResultInfo symbolResultInfo)
         {
+            /*
             // 今のターン中の成長データを削除
             PartyInfo.ResetCurrentLevelUpInfo(CurrentStage.Id,CurrentStage.Seek,WorldType.Main);
             PartyInfo.SetBrunchStageIdSeek(symbolResultInfo.StageId,symbolResultInfo.Seek,true);
@@ -683,6 +685,7 @@ namespace Ryneus
             }
                         
             SetReturnRecordStage(symbolResultInfo);
+            */
         }
 
         /// <summary>
@@ -690,6 +693,7 @@ namespace Ryneus
         /// </summary>
         public void MergeBrunch()
         {            
+            /*
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             
             var brunchBaseSymbol = PartyInfo.BrunchBaseSymbol;
@@ -718,6 +722,7 @@ namespace Ryneus
             CurrentStage.SetWorldType(WorldType.Main);
             PartyInfo.ClearBrunch();
             SetStageSeek();
+            */
         }
 
         /// <summary>
@@ -725,6 +730,7 @@ namespace Ryneus
         /// </summary>
         public void ReverseBrunch()
         {            
+            /*
             var selectRecords = PartyInfo.SymbolRecordList.FindAll(a => a.WorldType == WorldType.Brunch);
             
             var brunchSymbol = PartyInfo.BrunchBaseSymbol;
@@ -743,8 +749,8 @@ namespace Ryneus
             CurrentStage.SetWorldType(WorldType.Main);
             PartyInfo.ClearBrunch();
             SetStageSeek();
+            */
         }
-
         public void AddPlayerInfoActorSkillId(int actorId)
         {
             foreach (var skillInfo in Actors().Find(a => a.ActorId == actorId).SkillInfos())
