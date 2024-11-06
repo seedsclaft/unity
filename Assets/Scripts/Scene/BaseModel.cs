@@ -441,7 +441,7 @@ namespace Ryneus
             var evaluate = TotalScore;
 
             // 更新あり
-            if (evaluate > currentScore)
+            if ((int)(evaluate * 100) > currentScore)
             {
                 var playerScore = (int)(evaluate * 100);
                 FirebaseController.Instance.WriteRankingData(
