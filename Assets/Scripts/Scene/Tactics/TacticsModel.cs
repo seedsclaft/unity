@@ -15,6 +15,11 @@ namespace Ryneus
             SetFirstBattleActorId();
         }
 
+        public bool IsEnding()
+        {
+            return PartyInfo.HasEndingGetItem();
+        }
+        
         public void SetFirstBattleActorId()
         {
             var stageMembers = StageMembers();

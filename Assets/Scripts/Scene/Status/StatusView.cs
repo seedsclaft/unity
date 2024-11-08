@@ -53,6 +53,8 @@ namespace Ryneus
             SetInputHandler(commandList.gameObject);
 
             statusLevelUp.Initialize();
+            // 0.1.4 不安定のため非表示化
+            statusLevelUp.SetActive(false);
             
             SetBaseAnimation(statusAnimation);
             new StatusPresenter(this,actorInfos);
@@ -186,7 +188,7 @@ namespace Ryneus
 
         private void DisplayDecideButton()
         {
-            statusLevelUp.SetActive(_isDisplayLevelObj);
+            //statusLevelUp.SetActive(_isDisplayLevelObj);
             decideButton.gameObject.SetActive(_isDisplayDecide);
             commandList.gameObject.SetActive(_isDisplayLevelObj);
             if (_isDisplayLevelObj)

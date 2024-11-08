@@ -32,6 +32,23 @@ namespace Ryneus
                 return;
             }
             CheckStageEvent();
+            // 0.1.4ending調査して再生
+            if (_model.IsEnding())
+            {
+                // エンディング再生
+                var advInfo = new AdvCallInfo();
+                advInfo.SetLabel(_model.GetAdvFile(101));
+                advInfo.SetCallEvent(() => 
+                {
+                    _busy = false;
+                    _view.ChangeUIActive(true);
+                    _view.CommandGotoSceneChange(Scene.Result);
+                });
+                _view.CommandCallAdv(advInfo);
+                _view.ChangeUIActive(false);
+                _view.SetActiveBackGround(false);
+                return;
+            }
             if (_eventBusy)
             {
                 return;
