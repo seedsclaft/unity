@@ -2425,7 +2425,7 @@ namespace Ryneus
                     _saveBattleInfo.SetUserName(CurrentData.PlayerInfo.PlayerName);
                     _saveBattleInfo.SetVersion(GameSystem.Version);
                     SaveSystem.SaveReplay(stageKey,_saveBattleInfo);
-                    FirebaseController.UploadReplayFile(stageKey,userId.ToString(),_saveBattleInfo);
+                    //FirebaseController.UploadReplayFile(stageKey,userId.ToString(),_saveBattleInfo);
                 }
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);

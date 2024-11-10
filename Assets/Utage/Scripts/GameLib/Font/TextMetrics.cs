@@ -34,7 +34,7 @@ namespace Utage
 
         public TextMetrics(FaceInfo faceInfo)
         {
-            pointSize = faceInfo.pointSize;
+            pointSize = (int)faceInfo.pointSize;
             lineHeight = faceInfo.lineHeight;
             ascentLine = faceInfo.ascentLine;
             capLine = faceInfo.capLine;

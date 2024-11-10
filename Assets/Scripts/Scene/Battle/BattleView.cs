@@ -38,6 +38,7 @@ namespace Ryneus
         [SerializeField] private BattlerInfoComponent targetActorComponent = null;
         [SerializeField] private OnOffButton targetEnemyButton = null;
         [SerializeField] private OnOffButton targetActorButton = null;
+        [SerializeField] private Battle3DView battle3DView = null;
         
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
@@ -249,6 +250,10 @@ namespace Ryneus
         {
             _battleStartAnim.SetText(text);
             _battleStartAnim.StartAnim(true);
+            foreach (var item in _battlerComps)
+            {
+                battle3DView.SetIdle(item.Key);
+            }
         }
 
         public void StartUIAnimation()
@@ -328,6 +333,11 @@ namespace Ryneus
             }
             battleGridLayer.SetActorInfo(battlerInfos);
             battleActorList.gameObject.SetActive(false);
+            battle3DView.Initialize(battlerInfos);
+            foreach (var battlerInfo in battlerInfos)
+            {
+                battle3DView.RunForward(battlerInfo.Index);
+            }
         }
         
         public void SetEnemies(List<BattlerInfo> battlerInfos)
@@ -345,6 +355,7 @@ namespace Ryneus
             }
             battleGridLayer.SetEnemyInfo(battlerInfos);
             battleEnemyLayer.gameObject.SetActive(false);
+            battle3DView.Initialize(battlerInfos);
         }
 
         private void CallEnemyInfo()
@@ -620,6 +631,7 @@ namespace Ryneus
             foreach (var item in _battlerComps)
             {
                 item.Value.ClearDamagePopup();
+                battle3DView.SetIdle(item.Key);
             }
         }
 
@@ -627,6 +639,8 @@ namespace Ryneus
         {
             _battlerComps[targetIndex].StartDamage(damageType,value,needPopupDelay);
             _backGroundAnimation?.SeekAnimation();
+
+            battle3DView?.StartDamage(targetIndex);
         }
 
         public void StartBlink(int targetIndex)
@@ -647,6 +661,7 @@ namespace Ryneus
         public void StartDeathAnimation(int targetIndex)
         {
             _battlerComps[targetIndex].StartDeathAnimation();
+            battle3DView.Death(targetIndex);
         }
 
         public void StartAliveAnimation(int targetIndex)
@@ -783,6 +798,7 @@ namespace Ryneus
             {
                 _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
             }
+            battle3DView.Attack(subjectIndex);
         }
 
         public void StartAnimationSlipDamage(List<int> targetIndexes)

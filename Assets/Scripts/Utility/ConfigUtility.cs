@@ -93,7 +93,7 @@ namespace Ryneus
 
         public static void ChangeInputType(bool inputType)
         {
-            GameSystem.ConfigData.InputType = inputType;
+            GameSystem.ConfigData.InputType = true;// inputType;
         }
         
         public static void ChangeBattleAuto(bool battleAuto)

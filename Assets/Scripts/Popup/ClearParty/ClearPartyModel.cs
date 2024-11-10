@@ -18,6 +18,7 @@ namespace Ryneus
                     list.Add(saveRecord);
                 }  
             }
+            /*
             FirebaseController.LoadReplayFile(stageKey);
             await UniTask.WaitUntil(() => FirebaseController.IsBusy == false);
             if (FirebaseController.ReplayData.Count > 0)
@@ -27,6 +28,7 @@ namespace Ryneus
                     list.Add(item);
                 }
             }
+            */
             return MakeListData(list);
         }
         

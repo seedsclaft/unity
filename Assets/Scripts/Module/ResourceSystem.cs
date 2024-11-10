@@ -131,6 +131,16 @@ namespace Ryneus
             return LoadResourceSprite(ActorTexturePath + path + "/Clip");
         }
 
+        public static GameObject LoadActor3DModel(string path)
+        {
+            return LoadResourcePrefab("3DModels/" + path + "/" + path);
+        }
+
+        public static GameObject LoadEnemy3DModel(string path)
+        {
+            return LoadResourcePrefab("3DModels/Enemy/" + path);
+        }
+
         public static Sprite LoadEnemySprite(string enemyImage)
         {
             return LoadResourceSprite("Texture/Character/Enemies/" + enemyImage);
@@ -213,6 +223,7 @@ namespace Ryneus
     {
         None,
         Base,
+        Map,
         Boot,
         Title,
         NameEntry,

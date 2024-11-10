@@ -12,6 +12,7 @@ namespace Ryneus
         public async void RankingInfos(int stageId,Action<List<ListData>> endEvent)
         {
             _stageId = stageId;
+            /*
             if (TempInfo.TempRankingData.ContainsKey(stageId) == false)
             {
                 FirebaseController.Instance.ReadRankingData();
@@ -37,6 +38,7 @@ namespace Ryneus
                 }
                 endEvent(rankingDataList);
             }
+            */
         }
     }
 }

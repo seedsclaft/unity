@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Ryneus
@@ -6,11 +8,30 @@ namespace Ryneus
     public class InputSystem
     {
         public static bool IsGamePad = false;
+
+        public static List<InputData> _inputDates = new();
+        public static void Initialize()
+        {
+            _inputDates.Clear();
+            var enums = System.Enum.GetValues(typeof(InputKeyType));
+            foreach (var e in enums)
+            {
+                var keyData = new InputData((InputKeyType)e);
+                _inputDates.Add(keyData);
+            }
+        }
+
+        public static InputData GetInputDate(InputKeyType inputKeyType)
+        {
+            var data = _inputDates.Find(a => a.InputKeyType == inputKeyType);
+            return data;
+        }
+
         public InputKeyType Update()
         {
             if (GameSystem.ConfigData.InputType == false)
             {
-                return InputKeyType.None;
+                //return InputKeyType.None;
             }
             var gamePadKey = UpdateGamePad();
             if (gamePadKey != InputKeyType.None)
@@ -18,91 +39,112 @@ namespace Ryneus
                 IsGamePad = true;
                 return gamePadKey;
             }
+            UpdateKeyBoardData();
+            return UpdateKeyBoard();
+        }
+
+        private void UpdateInputKeyData(InputKeyType inputKeyType,UnityEngine.InputSystem.Controls.KeyControl keyControl,Key key)
+        {
+            var keyData = GetInputDate(inputKeyType);
+            if((keyControl != null && keyControl.wasPressedThisFrame) || Keyboard.current[key].wasPressedThisFrame) 
+            {
+                keyData.OnDown();
+            } else
+            if((keyControl != null && keyControl.isPressed) || Keyboard.current[key].isPressed) 
+            {
+                keyData.OnPress();
+            } else
+            if((keyControl != null && keyControl.wasReleasedThisFrame) || Keyboard.current[key].wasReleasedThisFrame) 
+            {
+                keyData.OnLeft();
+            } else
+            {
+                keyData.OnLeftEnd();
+            }
+        }
+
+        private void UpdateKeyBoardData()
+        {
+            UpdateInputKeyData(InputKeyType.Up,Keyboard.current.upArrowKey,Key.W);
+            UpdateInputKeyData(InputKeyType.Down,Keyboard.current.downArrowKey,Key.S);
+            UpdateInputKeyData(InputKeyType.Left,Keyboard.current.leftArrowKey,Key.A);
+            UpdateInputKeyData(InputKeyType.Right,Keyboard.current.rightArrowKey,Key.D);
+            UpdateInputKeyData(InputKeyType.Decide,null,Key.Space);
+            UpdateInputKeyData(InputKeyType.Cancel,null,Key.LeftShift);
+            UpdateInputKeyData(InputKeyType.Option1,null,Key.R);
+            UpdateInputKeyData(InputKeyType.Option2,null,Key.T);
+            UpdateInputKeyData(InputKeyType.SideLeft1,null,Key.Q);
+            UpdateInputKeyData(InputKeyType.SideRight1,null,Key.E);
+            UpdateInputKeyData(InputKeyType.SideLeft2,null,Key.PageDown);
+            UpdateInputKeyData(InputKeyType.SideRight2,null,Key.PageUp);
+            UpdateInputKeyData(InputKeyType.Start,null,Key.Enter);
+            UpdateInputKeyData(InputKeyType.Select,null,Key.RightShift);
+        }
+
+        private InputKeyType UpdateKeyBoard()
+        {
+            InputKeyType keyType = InputKeyType.None;
             if(Keyboard.current.upArrowKey.isPressed || Keyboard.current[Key.W].isPressed) 
             {
-                //Debug.Log("up");
-                IsGamePad = false;
-                return InputKeyType.Up;
+                keyType = InputKeyType.Up;
             } else
             if(Keyboard.current.downArrowKey.isPressed || Keyboard.current[Key.S].isPressed) 
             {
-                //Debug.Log("down");
-                IsGamePad = false;
-                return InputKeyType.Down;
+                keyType = InputKeyType.Down;
             } else
             if(Keyboard.current.leftArrowKey.isPressed || Keyboard.current[Key.A].isPressed) 
             {
-                //Debug.Log("left");
-                IsGamePad = false;
-                return InputKeyType.Left;
+                keyType = InputKeyType.Left;
             } else
             if(Keyboard.current.rightArrowKey.isPressed || Keyboard.current[Key.D].isPressed) 
             {
-                //Debug.Log("right");
-                IsGamePad = false;
-                return InputKeyType.Right;
+                keyType = InputKeyType.Right;
             } else
             if(Keyboard.current[Key.Space].wasPressedThisFrame) 
             {
-                //Debug.Log("decide");
-                IsGamePad = false;
-                return InputKeyType.Decide;
+                keyType = InputKeyType.Decide;
             } else
             if(Keyboard.current[Key.LeftShift].wasPressedThisFrame || Keyboard.current[Key.Escape].wasPressedThisFrame) 
             {
-                //Debug.Log("cancel");
-                IsGamePad = false;
-                return InputKeyType.Cancel;
+                keyType = InputKeyType.Cancel;
             } else
             if(Keyboard.current[Key.R].wasPressedThisFrame) 
             {
-                Debug.Log("option1");
-                IsGamePad = false;
-                return InputKeyType.Option1;
+                keyType = InputKeyType.Option1;
             } else
             if(Keyboard.current[Key.T].wasPressedThisFrame) 
             {
-                Debug.Log("option2");
-                IsGamePad = false;
-                return InputKeyType.Option2;
+                keyType = InputKeyType.Option2;
             } else
-            if(Keyboard.current[Key.Q].wasPressedThisFrame) 
+            if(Keyboard.current[Key.Q].isPressed) 
             {
-                Debug.Log("sideLeft1");
-                IsGamePad = false;
-                return InputKeyType.SideLeft1;
+                keyType = InputKeyType.SideLeft1;
             } else
-            if(Keyboard.current[Key.E].wasPressedThisFrame) 
+            if(Keyboard.current[Key.E].isPressed) 
             {
-                Debug.Log("sideRight1");
-                IsGamePad = false;
-                return InputKeyType.SideRight1;
+                keyType = InputKeyType.SideRight1;
             }  else
-            if(Keyboard.current[Key.PageDown].wasPressedThisFrame) 
+            if(Keyboard.current[Key.PageDown].isPressed) 
             {
-                Debug.Log("sideLeft2");
-                IsGamePad = false;
-                return InputKeyType.SideLeft2;
+                keyType = InputKeyType.SideLeft2;
             } else
-            if(Keyboard.current[Key.PageUp].wasPressedThisFrame) 
+            if(Keyboard.current[Key.PageUp].isPressed) 
             {
-                Debug.Log("sideRight2");
-                IsGamePad = false;
-                return InputKeyType.SideRight2;
+                keyType = InputKeyType.SideRight2;
             } else
             if(Keyboard.current[Key.Enter].wasPressedThisFrame) 
             {
-                Debug.Log("start");
-                IsGamePad = false;
-                return InputKeyType.Start;
+                keyType = InputKeyType.Start;
             } else
             if(Keyboard.current[Key.RightShift].wasPressedThisFrame) 
             {
-                Debug.Log("select");
-                IsGamePad = false;
-                return InputKeyType.Select;
+                keyType = InputKeyType.Select;
             }
-            return InputKeyType.None;
+            if (keyType != InputKeyType.None)
+            {
+                IsGamePad = false;
+            }
+            return keyType;
         }
 
         private InputKeyType UpdateGamePad()
@@ -221,12 +263,27 @@ namespace Ryneus
             { 
                 return Input.GetMouseButtonDown(1);
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         
+        public static Vector3 MouseMovePosition()
+        {
+            if (IsPlatformStandAloneOrEditor() || EnableWebGLInput())
+            { 
+                return Input.mousePosition;
+            }
+            return new Vector3(0,0,0);
+        }
+
+        public static Vector2 MouseWheelPosition()
+        {
+            if (IsPlatformStandAloneOrEditor() || EnableWebGLInput())
+            { 
+                return Input.mouseScrollDelta;
+            }
+            return new Vector2(0,0);
+        }
+
         public static bool EnableWebGLInput()
         {
             return Application.platform == RuntimePlatform.WebGLPlayer;
@@ -264,5 +321,9 @@ namespace Ryneus
         SideRight2, // R2
         Start,
         Select,
+        UpLeft,
+        UpRight,
+        DownLeft,
+        DownRight,
     }
 }

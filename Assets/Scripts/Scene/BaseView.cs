@@ -140,6 +140,20 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
+        public void CommandMapChange(MapType mapType)
+        {
+            var eventData = new ViewEvent(Base.CommandType.MapChange);
+            eventData.template = mapType;
+            CallSceneChangeCommand(eventData);
+        }
+
+        public void CommandCreateMapObject(GameObject mapObject)
+        {
+            var eventData = new ViewEvent(Base.CommandType.CreateMapObject);
+            eventData.template = mapObject;
+            CallSceneChangeCommand(eventData);
+        }
+
         public void CommandPopSceneChange(object sceneParam = null)
         {
             var eventData = new ViewEvent(Base.CommandType.SceneChange);
@@ -399,6 +413,16 @@ namespace Ryneus
 
         }
 
+        public void MouseMoveHandler(Vector3 position)
+        {
+
+        }
+
+        public void MouseWheelHandler(Vector2 position)
+        {
+
+        }
+
         public void WaitFrame(int frame,System.Action waitEndEvent)
         {
             _wait = frame;
@@ -422,6 +446,8 @@ namespace Ryneus
         {
             None = 0,
             SceneChange,
+            MapChange,
+            CreateMapObject,
             CallConfirmView,
             CallSkillDetailView,
             CallCautionView,

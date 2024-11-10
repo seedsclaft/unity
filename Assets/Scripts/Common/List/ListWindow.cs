@@ -602,6 +602,16 @@ namespace Ryneus
             }
         }
 
+        public void MouseMoveHandler(Vector3 position)
+        {
+
+        }
+
+        public void MouseWheelHandler(Vector2 position)
+        {
+
+        }
+
         public virtual void UpdateHelpWindow()
         {
         }

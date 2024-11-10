@@ -69,7 +69,7 @@ namespace Ryneus
 
         private void CommandLogoClick()
         {
-            _view.CommandGotoSceneChange(Scene.Title);
+            _view.CommandGotoSceneChange(Scene.Map);
         }
     }
 }

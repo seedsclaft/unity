@@ -13,6 +13,7 @@ namespace Ryneus
         [SerializeField] private string version = "";
         [SerializeField] private bool testMode = false;
         [SerializeField] private SceneAssign sceneAssign = null;
+        [SerializeField] private MapAssign mapAssign = null;
         [SerializeField] private PopupAssign popupAssign = null;
         [SerializeField] private StatusAssign statusAssign = null;
         [SerializeField] private ConfirmAssign confirmAssign = null;
@@ -52,7 +53,7 @@ namespace Ryneus
         private void Awake() 
         {
     #if UNITY_WEBGL || UNITY_ANDROID || UNITY_STANDALONE_WIN// && !UNITY_EDITOR
-            FirebaseController.Instance.Initialize();
+            //FirebaseController.Instance.Initialize();
     #endif
             Application.targetFrameRate = 60;
             advController.Initialize();
@@ -63,6 +64,7 @@ namespace Ryneus
             transitionFade.Init();
             tutorialView.Initialize();
             statusAssign.CloseStatus();
+            InputSystem.Initialize();
             TempData = new TempInfo();
             _model = new BaseModel();
             Version = version;
@@ -120,6 +122,14 @@ namespace Ryneus
                     {
                         CommandSceneChange(sceneInfo);
                     }
+                    break;
+                case Base.CommandType.MapChange:
+                    var mapType = (MapType)viewEvent.template; 
+                    CommandMapChange(mapType);
+                    break;
+                case Base.CommandType.CreateMapObject:
+                    var mapObject = (GameObject)viewEvent.template; 
+                    CommandCreateMapObject(mapObject);
                     break;
                 case Base.CommandType.CallConfirmView:
                 case Base.CommandType.CallSkillDetailView:
@@ -470,6 +480,26 @@ namespace Ryneus
             _currentScene.Initialize();
             //tutorialView.HideFocusImage();
         }
+
+        public void CommandMapChange(MapType mapType)
+        {
+            var prefab = mapAssign.CreateMap(mapType);
+            /*
+            _currentScene = prefab.GetComponent<BaseView>();
+            _currentScene.SetTestMode(testMode);
+            _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
+            _currentScene.SetEvent((type) => UpdateCommand(type));
+            _sceneStackManager.PushSceneInfo(mapType);
+            _currentScene.Initialize();
+            */
+            //tutorialView.HideFocusImage();
+        }
+
+        private void CommandCreateMapObject(GameObject mapObject)
+        {
+            mapAssign.CreateMapObject(mapObject);
+        }
+
 
         private void SetIsBusyMainAndStatus()
         {

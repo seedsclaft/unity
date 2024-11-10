@@ -35,6 +35,8 @@ namespace Ryneus
     {
         void InputHandler(InputKeyType keyType,bool pressed);
         void MouseCancelHandler();
+        void MouseMoveHandler(Vector3 position);
+        void MouseWheelHandler(Vector2 position);
     }
 
     abstract public class ListItem : MonoBehaviour

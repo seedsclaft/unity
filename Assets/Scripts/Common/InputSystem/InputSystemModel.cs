@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace Ryneus
 {
@@ -28,6 +29,7 @@ namespace Ryneus
             if (_inputBusyFrame >= 0) return;
             foreach (var handler in _inputHandler)
             {
+                //LogOutput.Log(keyType);
                 handler?.InputHandler(keyType,pressed);
             }
         }
@@ -38,6 +40,24 @@ namespace Ryneus
             foreach (var handler in _inputHandler)
             {
                 handler?.MouseCancelHandler();
+            }
+        }
+
+        public void CallMouseMove(UnityEngine.Vector3 position)
+        {
+            if (_busy) return;
+            foreach (var handler in _inputHandler)
+            {
+                handler?.MouseMoveHandler(position);
+            }
+        }
+
+        public void CallMouseWheel(UnityEngine.Vector2 position)
+        {
+            if (_busy) return;
+            foreach (var handler in _inputHandler)
+            {
+                handler?.MouseWheelHandler(position);
             }
         }
 
@@ -59,6 +79,8 @@ namespace Ryneus
             {
                 CallMouseCancel();
             }
+            CallMouseMove(InputSystem.MouseMovePosition());
+            CallMouseWheel(InputSystem.MouseWheelPosition());
             if (_inputBusyFrame >= 0)
             {
                 _inputBusyFrame--;

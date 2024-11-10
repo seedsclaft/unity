@@ -43,7 +43,7 @@ namespace Ryneus
                     {
                         StageId = 1,
                         Seek = 0,
-                        SeekIndex = 0
+                        SeekIndex = i+1
                     };
                     stageSymbol.SymbolType = SymbolType.Actor;
                     stageSymbol.Param1 = i;
@@ -52,6 +52,8 @@ namespace Ryneus
                     getItemData.Type = GetItemType.AddActor;
                     getItemData.Param1 = i;
                     symbolInfo.SetGetItemInfos(new List<GetItemInfo>(){new GetItemInfo(getItemData)});
+                    symbolInfo.GetItemInfos[0].SetGetFlag(true);
+                    symbolInfo.GetItemInfos[0].SetResultParam(i);
                     var record = new SymbolResultInfo(symbolInfo);
                     
                     record.SetSelected(true);

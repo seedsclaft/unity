@@ -6,6 +6,7 @@ namespace Ryneus
     {
         [SerializeField] private GameObject uiRoot = null;
         [SerializeField] private GameObject bootScene = null;
+        [SerializeField] private GameObject mapScene = null;
         [SerializeField] private GameObject titleScene = null;
         [SerializeField] private GameObject nameEntryScene = null;
         [SerializeField] private GameObject mainMenuScene = null;
@@ -30,6 +31,7 @@ namespace Ryneus
             return scene switch
             {
                 Scene.Boot => bootScene,
+                Scene.Map => mapScene,
                 Scene.Title => titleScene,
                 Scene.NameEntry => nameEntryScene,
                 Scene.MainMenu => mainMenuScene,
