@@ -447,6 +447,7 @@ namespace Ryneus
             None = 0,
             SceneChange,
             MapChange,
+            MapClear,
             CreateMapObject,
             CallConfirmView,
             CallSkillDetailView,

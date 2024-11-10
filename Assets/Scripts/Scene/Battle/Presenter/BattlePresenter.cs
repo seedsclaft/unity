@@ -29,10 +29,9 @@ namespace Ryneus
         private bool _slipDamageChecked = false;
         private bool _regenerateChecked = false;
         private bool _battleEnded = false;
-        private Battle.CommandType _backCommandType = Battle.CommandType.None;
+        private CommandType _backCommandType = CommandType.None;
         public BattlePresenter(BattleView view)
         {
-            if (view == null) return;
             _view = view;
             SetView(_view);
             _model = new BattleModel();
@@ -45,7 +44,7 @@ namespace Ryneus
             debugger.consoleInputField = GameSystem.DebugBattleData.consoleInputField;
     #endif
             _view.SetHelpText("");
-            _view.CreateBattleBackGround(_model.BattleBackGroundObject());
+            _view.CommandMapChange(MapType.Battle);
             Initialize();
         }
 
@@ -65,11 +64,14 @@ namespace Ryneus
 
             ViewInitialize();
             
+            StartBattle();
+            /*
             _view.CommandStartTransition(() => 
             {
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 StartBattle();
             });
+            */
         }
 
         public void ViewInitialize()
@@ -89,6 +91,7 @@ namespace Ryneus
             _view.SetEnemies(_model.BattlerEnemies());
             _view.BattlerBattleClearSelect();
 
+            _view.RefreshStatus();
     #if UNITY_EDITOR
             if (_view.TestMode == true && _view.TestBattleMode)
             {
@@ -110,7 +113,7 @@ namespace Ryneus
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);
             _view.UpdateStartActivate();
-
+            /*
             var isAbort = CheckAdvStageEvent(EventTiming.StartBattle,() => 
             {
                 _view.SetBattleBusy(false);
@@ -124,8 +127,9 @@ namespace Ryneus
                 _view.SetBattleBusy(true);
                 return;
             }
+            */
 
-            _view.SetBattleBusy(false);
+            //_view.SetBattleBusy(false);
             CommandStartBattleAction();
             _busy = false;
         }

@@ -9,16 +9,16 @@ namespace Ryneus
     {
         [SerializeField] private GameObject partyRoot = null;
         [SerializeField] private GameObject troopRoot = null;
+        [SerializeField] private List<GameObject> partyPositions = null;
         [SerializeField] private List<GameObject> troopPositions = null;
+        [SerializeField] private GameObject statusPrefab = null;
+        [SerializeField] private Camera battleCamera = null;
 
-        private Dictionary<int,VirtualModelController> _actorStateControls = new ();
+        private Dictionary<int,VirtualModelController> _virtualModelControls = new ();
+        private Dictionary<BattlerInfo,BattlerInfoComponent> _battlers = new ();
 
         public void Initialize(List<BattlerInfo> battlerInfos) 
         {
-            troopRoot.AddComponent<CanvasGroup>();
-            var CanvasGroup = troopRoot.GetComponent<CanvasGroup>();
-            CanvasGroup.alpha = 0;
-
             var idx = 0;
             foreach (var battlerInfo in battlerInfos)
             {
@@ -27,29 +27,43 @@ namespace Ryneus
                     var prefab = Instantiate(ResourceSystem.LoadActor3DModel(battlerInfo.ActorInfo.Master.ImagePath));
                     if (prefab != null)
                     {
-                        prefab.transform.SetParent(partyRoot.transform,false);
-                        _actorStateControls[battlerInfo.Index] = prefab.GetComponent<VirtualModelController>();
-                        _actorStateControls[battlerInfo.Index].Initialize();
+                        prefab.transform.SetParent(partyPositions[idx].transform,false);
+                        _virtualModelControls[battlerInfo.Index] = prefab.GetComponent<VirtualModelController>();
                     }
+                    _virtualModelControls[battlerInfo.Index].StartAnimation(AnimationState.Ready);
                 } else
                 {
                     var prefab = Instantiate(ResourceSystem.LoadEnemy3DModel(battlerInfo.EnemyData.ImagePath));
                     if (prefab != null)
                     {
                         prefab.transform.SetParent(troopPositions[idx].transform,false);
-                        _actorStateControls[battlerInfo.Index] = prefab.GetComponent<VirtualModelController>();
-                        _actorStateControls[battlerInfo.Index].Initialize();
+                        _virtualModelControls[battlerInfo.Index] = prefab.GetComponent<VirtualModelController>();
+                        var statusObject = Instantiate(statusPrefab);
+                        _virtualModelControls[battlerInfo.Index].SetStatusPrefab(statusObject);
+                        var battlerInfoComponent = statusObject.GetComponent<BattlerInfoComponent>();
+                        _battlers[battlerInfo] = battlerInfoComponent;
                     }
-                }
+                }                        
+                _virtualModelControls[battlerInfo.Index].Initialize();
+                _virtualModelControls[battlerInfo.Index].CameraOff();
                 idx++;
             }    
         }
 
+        public void RefreshStatus()
+        {
+            foreach (var item in _battlers)
+            {
+                item.Value.UpdateInfo(item.Key);
+                item.Value.RefreshStatus();
+            }
+        }
+
         private void StartAnimation(int index,AnimationState animationState)
         {
-            if (_actorStateControls.ContainsKey(index))
+            if (_virtualModelControls.ContainsKey(index))
             {
-                _actorStateControls[index].StartAnimation(animationState);
+                _virtualModelControls[index].StartAnimation(animationState);
             }
         }
 
@@ -70,9 +84,9 @@ namespace Ryneus
         public void RunForward(int index)
         {
             StartAnimation(index,AnimationState.RunForward);
-            if (_actorStateControls.ContainsKey(index) && index < 100)
+            if (_virtualModelControls.ContainsKey(index) && index < 100)
             {
-                _actorStateControls[index].RunForward();
+                _virtualModelControls[index].RunForward();
             }
             DisplayTroop();
         }

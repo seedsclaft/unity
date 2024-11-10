@@ -49,6 +49,9 @@ namespace Ryneus
                 case CommandType.Ranking:
                     CommandRanking();
                     break;
+                case CommandType.BattleStart:
+                    CommandBattleStart();
+                    break;
             }
         }
 
@@ -124,6 +127,22 @@ namespace Ryneus
                 _model.StartOpeningStage();
             }
             _view.CommandGotoSceneChange(Scene.Tactics);
+        }
+
+        private void CommandBattleStart()
+        {
+            _view.ClearMap();
+            var actorInfos = new List<ActorInfo>();
+            actorInfos.Add(new ActorInfo(DataSystem.FindActor(1)));
+            var enemyInfos = new List<BattlerInfo>();
+            var enemyData = DataSystem.Enemies[3];
+            enemyInfos.Add( new BattlerInfo(enemyData,1,0,LineType.Front,false));
+            var battleSceneInfo = new BattleSceneInfo
+            {
+                ActorInfos = actorInfos,
+                EnemyInfos = enemyInfos
+            };
+            _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
         }
 
         private void CommandRefresh()

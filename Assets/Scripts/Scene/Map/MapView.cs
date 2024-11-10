@@ -10,6 +10,8 @@ namespace Ryneus
         private new System.Action<MapViewEvent> _commandData = null;
 
         private VirtualModelController virtualModelController = null;
+
+        private GameObject _mapPrefab = null;
         public override void Initialize() 
         {
             base.Initialize();
@@ -27,6 +29,7 @@ namespace Ryneus
             virtualModelController = prefab.GetComponent<VirtualModelController>();
             virtualModelController.Initialize();
             CommandCreateMapObject(prefab);
+            _mapPrefab = prefab;
         }
 
         public void SetEvent(System.Action<MapViewEvent> commandData)
@@ -42,9 +45,11 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
+
             if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
             {
                 virtualModelController?.Jump();
+                _commandData(new MapViewEvent(CommandType.BattleStart));
             }
 
             if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
@@ -100,6 +105,11 @@ namespace Ryneus
         {
             virtualModelController?.MouseWheel(position);
         }
+
+        public void ClearMap()
+        {
+            CommandGameSystem(Base.CommandType.MapClear);   
+        }
     }
 
     public class MapViewEvent
@@ -123,5 +133,6 @@ namespace Map
         SelectMap,
         SelectSideMenu,
         Ranking,
+        BattleStart,
     }
 }

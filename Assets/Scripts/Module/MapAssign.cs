@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UtageExtensions;
 
 namespace Ryneus
 {
     public class MapAssign : MonoBehaviour
     {
         [SerializeField] private GameObject mapRoot = null;
-        [SerializeField] private GameObject defaultScene = null;
+        [SerializeField] private GameObject defaultMap = null;
+        [SerializeField] private GameObject battleMap = null;
 
         public GameObject CreateMap(MapType map)
         {
@@ -23,14 +26,21 @@ namespace Ryneus
         {
             return scene switch
             {
-                MapType.Default => defaultScene,
+                MapType.Default => defaultMap,
+                MapType.Battle => battleMap,
                 _ => null,
             };
+        }
+        
+        public void ClearMap()
+        {
+            transform.DestroyChildren();
         }
     }
 
     public enum MapType
     {
         Default = 0,
+        Battle,
     }
 }

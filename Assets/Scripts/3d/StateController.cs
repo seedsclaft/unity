@@ -49,15 +49,3 @@ namespace Ryneus
         }
     }
 }
-
-public enum AnimationState
-{
-    None = -1,
-    Idle = 0,
-    RunForward = 1,
-    Attack = 2,
-    Jump = 3,
-    Damaged = 4,
-    Death = 5
-
-}

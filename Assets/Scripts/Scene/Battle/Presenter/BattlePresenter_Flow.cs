@@ -465,6 +465,7 @@ namespace Ryneus
 
             if (isDemigodActor == true)
             {
+                /*
                 var isAbort = CheckAdvStageEvent(EventTiming.AfterDemigod,() => 
                 { 
                     _view.SetBattleBusy(false);
@@ -475,6 +476,7 @@ namespace Ryneus
                     _busy = true;
                     return;
                 }
+                */
             }
             // 行動を全て終了する
             _model.SeekTurnCount();

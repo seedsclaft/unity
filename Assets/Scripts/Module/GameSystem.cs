@@ -127,6 +127,9 @@ namespace Ryneus
                     var mapType = (MapType)viewEvent.template; 
                     CommandMapChange(mapType);
                     break;
+                case Base.CommandType.MapClear:
+                    CommandMapClear();
+                    break;
                 case Base.CommandType.CreateMapObject:
                     var mapObject = (GameObject)viewEvent.template; 
                     CommandCreateMapObject(mapObject);
@@ -493,6 +496,11 @@ namespace Ryneus
             _currentScene.Initialize();
             */
             //tutorialView.HideFocusImage();
+        }
+
+        private void CommandMapClear()
+        {
+            mapAssign.ClearMap();
         }
 
         private void CommandCreateMapObject(GameObject mapObject)

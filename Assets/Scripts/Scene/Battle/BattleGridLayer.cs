@@ -54,20 +54,18 @@ namespace Ryneus
         public void UpdatePosition()
         {
             var waitFrameList = new List<float>();
-            var turnWait = new Dictionary<BattlerInfo,List<float>>();
+            var turnWait = new Dictionary<BattlerInfo,float>();
+            var addCount = 0;
             foreach (var battler in _battlerInfos)
             {
                 if (battler.IsAlive())
                 {
-                    turnWait[battler] = new List<float>();
-                    for (int i = 0;i < 7;i++)
+                    turnWait[battler] = battler.WaitFrame(0);
+                    for (int i = 0;i < 1;i++)
                     {
                         var waitFrame = battler.WaitFrame(i);
-                        if (!waitFrameList.Contains(waitFrame))
-                        {
-                            waitFrameList.Add(waitFrame);
-                        }
-                        turnWait[battler].Add(waitFrame);
+                        waitFrameList.Add(waitFrame);
+                        addCount++;
                     }
                 }
             }
@@ -75,24 +73,20 @@ namespace Ryneus
             var sortedBattlerList = new List<BattlerInfo>();
             var sortedBattlerApList = new List<float>();
             var targetIndex = 0;
-            while (sortedBattlerList.Count < 7)
+            while (sortedBattlerList.Count < addCount)
             {
                 var ap = waitFrameList[targetIndex];
                 targetIndex++;
                 foreach (var turnW in turnWait)
                 {
-                    var findIndex = turnWait[turnW.Key].FindIndex(a => a == ap);
-                    if (findIndex > -1)
-                    {
-                        sortedBattlerList.Add(turnW.Key);
-                        sortedBattlerApList.Add(ap);
-                    }
+                    sortedBattlerList.Add(turnW.Key);
+                    sortedBattlerApList.Add(ap);
                 }
             }
 
             for (int i = 0;i < sortedBattlerList.Count;i++)
             {
-                if (i > 6) continue;
+                //if (i > 6) continue;
                 var battler = sortedBattlerList[i];
                 _actorBattlers[i].UpdateAlpha(battler.IsActor);
                 _enemyBattlers[i].UpdateAlpha(!battler.IsActor);

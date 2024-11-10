@@ -109,9 +109,11 @@ namespace Ryneus
                 _battleRecords[enemy.Index] = new BattleRecord(enemy.Index);
             }
             // アルカナ
+            /*
             var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
             _battleRecords[alcana.Index] = new BattleRecord(alcana.Index);
             _battlers.Add(alcana);
+            */
 
             foreach (var battlerInfo1 in _battlers)
             {
@@ -2488,10 +2490,10 @@ namespace Ryneus
         public string BattleStartText()
         {
             var textId = 19611;
-            if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
-            {
-                textId = 19612;
-            }
+            //if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
+            //{
+            //    textId = 19612;
+            //}
             return DataSystem.GetText(textId);
         }
         

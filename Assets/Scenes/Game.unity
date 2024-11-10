@@ -7786,10 +7786,10 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1975
+    m_Bits: 1974
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -8096,7 +8096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapRoot: {fileID: 847154981}
-  defaultScene: {fileID: 7214063365459668855, guid: 2fa39f9b774650b42bd4110b1c8fa84e,
+  defaultMap: {fileID: 7214063365459668855, guid: 2fa39f9b774650b42bd4110b1c8fa84e,
+    type: 3}
+  battleMap: {fileID: 2840592759801243782, guid: 6b84193ef59d26346ba6a52124a6969e,
     type: 3}
 --- !u!1 &847318504
 GameObject:

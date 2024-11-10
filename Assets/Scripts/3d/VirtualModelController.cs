@@ -11,6 +11,7 @@ namespace Ryneus
         [SerializeField] private float scaleSize = 1f;
         [SerializeField] private CharacterController characterController = null;
         [SerializeField] private Camera selfCamera = null;
+        [SerializeField] private GameObject statusRoot = null;
         [SerializeField] float gravity = 20.0f;
         [SerializeField] float jumpSpeed = 8.0f;
         private float _speed = 10f;
@@ -34,6 +35,16 @@ namespace Ryneus
             _initCameraPosition = selfCamera.transform.localPosition;
             _zoomPosition = selfCamera.transform.localPosition.z;
             UpdateCameraZoom();
+        }
+
+        public void CameraOff()
+        {
+            selfCamera.enabled = false;
+        }
+
+        public void SetStatusPrefab(GameObject gameObject)
+        {
+            gameObject.transform.SetParent(statusRoot.transform,false);
         }
 
         public void Stop()
@@ -282,4 +293,18 @@ namespace Ryneus
             selfCamera.transform.position = selfCamera.transform.parent.transform.position + (selfCamera.transform.forward * _zoomPosition);
         }
     }
+}
+
+public enum AnimationState
+{
+    None = -1,
+    Idle = 0,
+    RunForward = 1,
+    Attack = 2,
+    Jump = 3,
+    Damaged = 4,
+    Death = 5,
+
+    Ready = 6
+
 }
