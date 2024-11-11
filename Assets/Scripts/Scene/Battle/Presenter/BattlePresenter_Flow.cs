@@ -42,32 +42,35 @@ namespace Ryneus
             }
         }
 
+        /// <summary>
+        /// Ap更新で行動するキャラがいる
+        /// </summary>
         private void CommandStartSelect()
         {
-            // Ap更新で行動するキャラがいる
             var currentBattler = _model.CurrentBattler;
             if (currentBattler != null)
             {
+                _view.SetBattleBusy(true);
                 _model.UpdateApModify(currentBattler);
                 _view.UpdateGridLayer();
-                _view.SetBattleBusy(true);
                 CheckFirstActionBattler();
                 // 行動不可の場合は行動しない
+                /*
                 if (!_model.EnableCurrentBattler())
                 {
                     MakeActionInfoTargetIndexes(_model.CurrentBattler,0);
                     return;
                 }
-#if UNITY_EDITOR
-                if (_testBattle && _model.TestSkillId() != 0)
-                {    
-                    int testSkillId = _model.TestSkillId();
-                    MakeActionInfoTargetIndexes(_model.CurrentBattler,testSkillId);
-                    _model.SeekActionIndex();
-                    return;
+                */
+                if (currentBattler.IsActor)
+                {
+                    // マニュアルなら魔法選択
+                    _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(currentBattler)));
+                } else
+                {
+                    // Autoなら
+                    MakeActionInfoSkillTrigger();
                 }
-#endif
-                MakeActionInfoSkillTrigger();
             }
         }
 

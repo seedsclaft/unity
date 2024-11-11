@@ -33,6 +33,7 @@ namespace Ryneus
             {
                 //return InputKeyType.None;
             }
+            UpdateGamePadData();
             var gamePadKey = UpdateGamePad();
             if (gamePadKey != InputKeyType.None)
             {
@@ -79,6 +80,33 @@ namespace Ryneus
             UpdateInputKeyData(InputKeyType.SideRight2,null,Key.PageUp);
             UpdateInputKeyData(InputKeyType.Start,null,Key.Enter);
             UpdateInputKeyData(InputKeyType.Select,null,Key.RightShift);
+        }
+
+        private void UpdateGamePadData()
+        {
+            var gamePad = Gamepad.current;
+            UpdateInputGamePadData(InputKeyType.Up,gamePad.dpad.up,null);
+            UpdateInputGamePadData(InputKeyType.Down,gamePad.dpad.down,null);
+            UpdateInputGamePadData(InputKeyType.Left,gamePad.dpad.left,null);
+            UpdateInputGamePadData(InputKeyType.Right,gamePad.dpad.right,null);
+            UpdateInputGamePadData(InputKeyType.Decide,gamePad.bButton,null);
+            UpdateInputGamePadData(InputKeyType.Cancel,gamePad.aButton,null);
+            UpdateInputGamePadData(InputKeyType.Option1,gamePad.yButton,null);
+            UpdateInputGamePadData(InputKeyType.Option2,gamePad.xButton,null);
+            UpdateInputGamePadData(InputKeyType.SideLeft1,gamePad.leftTrigger,null);
+            UpdateInputGamePadData(InputKeyType.SideRight1,gamePad.rightTrigger,null);
+            UpdateInputGamePadData(InputKeyType.SideLeft2,gamePad.leftShoulder,null);
+            UpdateInputGamePadData(InputKeyType.SideRight2,gamePad.rightShoulder,null);
+            UpdateInputGamePadData(InputKeyType.Start,gamePad.startButton,null);
+            UpdateInputGamePadData(InputKeyType.Select,gamePad.selectButton,null);
+            UpdateInputStickGamePadData(InputKeyType.LeftStickUp,gamePad.leftStick);
+            UpdateInputStickGamePadData(InputKeyType.LeftStickDown,gamePad.leftStick);
+            UpdateInputStickGamePadData(InputKeyType.LeftStickLeft,gamePad.leftStick);
+            UpdateInputStickGamePadData(InputKeyType.LeftStickRight,gamePad.leftStick);
+            UpdateInputStickGamePadData(InputKeyType.RightStickUp,gamePad.rightStick);
+            UpdateInputStickGamePadData(InputKeyType.RightStickDown,gamePad.rightStick);
+            UpdateInputStickGamePadData(InputKeyType.RightStickLeft,gamePad.rightStick);
+            UpdateInputStickGamePadData(InputKeyType.RightStickRight,gamePad.rightStick);
         }
 
         private InputKeyType UpdateKeyBoard()
@@ -145,6 +173,74 @@ namespace Ryneus
                 IsGamePad = false;
             }
             return keyType;
+        }
+
+        private void UpdateInputGamePadData(InputKeyType inputKeyType,UnityEngine.InputSystem.Controls.ButtonControl keyControl,UnityEngine.InputSystem.Controls.ButtonControl stick)
+        {
+            var keyData = GetInputDate(inputKeyType);
+            if((keyControl != null && keyControl.wasPressedThisFrame) || (stick != null && stick.wasPressedThisFrame)) 
+            {
+                keyData.OnDown();
+            } else
+            if((keyControl != null && keyControl.isPressed) || (stick != null && stick.isPressed)) 
+            {
+                keyData.OnPress();
+            } else
+            if((keyControl != null && keyControl.wasReleasedThisFrame) || (stick != null && stick.wasReleasedThisFrame)) 
+            {
+                keyData.OnLeft();
+            } else
+            {
+                keyData.OnLeftEnd();
+            }
+        }
+        
+        private void UpdateInputStickGamePadData(InputKeyType inputKeyType,UnityEngine.InputSystem.Controls.StickControl stickControl)
+        {
+            var keyData = GetInputDate(inputKeyType);
+            switch (inputKeyType)
+            {
+                case InputKeyType.LeftStickUp:
+                case InputKeyType.RightStickUp:
+                    if (stickControl.y.value > 0)
+                    {
+                        keyData.SetValue(stickControl.y.value);
+                    } else
+                    {
+                        keyData.SetValue(0);
+                    }
+                    break;
+                case InputKeyType.LeftStickDown:
+                case InputKeyType.RightStickDown:
+                    if (stickControl.y.value < 0)
+                    {
+                        keyData.SetValue(stickControl.y.value * -1);
+                    } else
+                    {
+                        keyData.SetValue(0);
+                    }
+                    break;
+                case InputKeyType.LeftStickLeft:
+                case InputKeyType.RightStickLeft:
+                    if (stickControl.x.value < 0)
+                    {
+                        keyData.SetValue(stickControl.x.value * -1);
+                    } else
+                    {
+                        keyData.SetValue(0);
+                    }
+                    break;
+                case InputKeyType.LeftStickRight:
+                case InputKeyType.RightStickRight:
+                    if (stickControl.x.value > 0)
+                    {
+                        keyData.SetValue(stickControl.x.value);
+                    } else
+                    {
+                        keyData.SetValue(0);
+                    }
+                    break;
+            }
         }
 
         private InputKeyType UpdateGamePad()
@@ -253,7 +349,23 @@ namespace Ryneus
             {
                 return InputKeyType.SideRight2;
             }
+            if (gamePad.leftStick.value.y > 0)
+            {
+                return InputKeyType.LeftStickUp;
+            }
+            if (gamePad.leftStick.value.y < 0)
+            {
+                return InputKeyType.LeftStickDown;
+            }
 
+            if (gamePad.leftStick.value.x < 0)
+            {
+                return InputKeyType.LeftStickLeft;
+            }
+            if (gamePad.leftStick.value.x > 0)
+            {
+                return InputKeyType.LeftStickRight;
+            }
             return InputKeyType.None;
         }
 
@@ -320,6 +432,14 @@ namespace Ryneus
         SideLeft2, // L2
         SideRight2, // R2
         Start,
+        LeftStickUp,
+        LeftStickDown,
+        LeftStickLeft,
+        LeftStickRight,
+        RightStickUp,
+        RightStickDown,
+        RightStickLeft,
+        RightStickRight,
         Select,
         UpLeft,
         UpRight,

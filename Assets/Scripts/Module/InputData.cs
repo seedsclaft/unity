@@ -11,6 +11,8 @@ namespace Ryneus
         private InputKeyType _inputKeyType; // 担当しているキー
         public InputKeyType InputKeyType => _inputKeyType;
 
+        private float _value = 0;
+
         public InputData(InputKeyType inputKeyType)
         {
             _inputKeyType = inputKeyType;
@@ -18,7 +20,7 @@ namespace Ryneus
 
         public bool IsTrigger()
         {
-            return _onDown || _onPress;
+            return _onDown || _onPress ||_value > 0;
         }
 
         public bool IsPress()
@@ -57,6 +59,11 @@ namespace Ryneus
             _onDown = false;
             _onPress = false;
             _onLeft = false;
+        }        
+        
+        public void SetValue(float value)
+        {
+            _value = value;
         }
     }
 }

@@ -40,6 +40,10 @@ namespace Ryneus
             _learningLv = learningLv;
         }
 
+        private SkillSlotType _skillSlotType = SkillSlotType.None;
+        public SkillSlotType SkillSlotType => _skillSlotType;
+        public void SetSkillSlotType(SkillSlotType skillSlotType) => _skillSlotType = skillSlotType;
+
         private List<SkillData.FeatureData> _featureDates = new();
         public List<SkillData.FeatureData> FeatureDates => _featureDates;
 

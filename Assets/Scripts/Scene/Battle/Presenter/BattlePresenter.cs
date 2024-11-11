@@ -129,7 +129,7 @@ namespace Ryneus
             }
             */
 
-            //_view.SetBattleBusy(false);
+            _view.SetBattleBusy(false);
             CommandStartBattleAction();
             _busy = false;
         }
@@ -213,11 +213,14 @@ namespace Ryneus
             }
             switch (viewEvent.commandType)
             {
-                case Battle.CommandType.UpdateAp:
+                case CommandType.UpdateAp:
                     CommandUpdateAp();
                     break;
-                case Battle.CommandType.SelectedSkill:
-                    //CommandSelectedSkill((SkillInfo)viewEvent.template);
+                case CommandType.OnSelectSkill:
+                    CommandOnSelectSkill((SkillInfo)viewEvent.template);
+                    break;
+                case CommandType.OnSelectEnemy:
+                    CommandOnSelectEnemy((BattlerInfo)viewEvent.template);
                     break;
                 case Battle.CommandType.ActorList:
                     //CommandTargetEnemy((BattlerInfo)viewEvent.template);
@@ -316,6 +319,7 @@ namespace Ryneus
                 return;
             }
 #endif
+            /*
             var currentActionInfo = _model.CurrentActionInfo;
             if (currentActionInfo != null)
             {
@@ -325,6 +329,7 @@ namespace Ryneus
                 MakeActionResultInfoTargetIndexes(targetIndexes);
                 return;
             }
+            */
             var currentBattler = CheckApCurrentBattler();
             if (currentBattler == null)
             {
@@ -335,73 +340,35 @@ namespace Ryneus
             }
         }
 
-
-
-        // マニュアル行動選択開始
-        /*
-        private void CommandDecideActor()
+        private void CommandOnSelectSkill(SkillInfo skillInfo)
         {
-            _view.SetAnimationBusy(false);
-            _view.SelectedCharacter(_model.CurrentBattler);
-            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
-            _view.ChangeSideMenuButtonActive(true);
-            RefreshSkillInfos();
-            _view.BattlerBattleClearSelect();
-            _view.ChangeBackCommandActive(false);
-            _view.SetBattlerThumbAlpha(true);
-            var isAbort = CheckAdvStageEvent(EventTiming.TurnedBattle,() => 
-            {  
-                _view.SetBattleBusy(false);
-                _busy = false;
-                CommandDecideActor();
-            });
-            if (isAbort)
+            if (skillInfo != null)
             {
-                _view.SetBattleBusy(true);
-                _busy = true;
-                return;
+                // ActionInfoを生成
+                //var actionInfo = _model.MakeActionInfo(_model.CurrentActionBattler,skillInfo,false,false);
+                // 味方を選択
+                if (skillInfo.Master.TargetType == TargetType.Friend)
+                {
+
+                } else
+                {
+                    // 敵側を選択
+                    // 選択対象を決定
+                    var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,_model.CurrentBattler.Index,false);
+                    _view.SelectEnemy(targetIndexes);
+                }
             }
         }
-        */
 
-        /*
-        private void CommandDecideEnemy()
+        private void CommandOnSelectEnemy(BattlerInfo battlerInfo)
         {
-            _view.SetAnimationBusy(false);
-            //_view.SelectedCharacter(_model.CurrentBattler);
-            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
-            //_view.ChangeSideMenuButtonActive(true);
-            RefreshSkillInfos();
-            _view.BattlerBattleClearSelect();
-            _view.ChangeBackCommandActive(false);
-            _view.SetBattlerThumbAlpha(true);
-        }
-        */
-
-        // スキルを選択
-        /*
-        private void CommandSelectedSkill(SkillInfo skillInfo)
-        {
-            if (skillInfo.Enable == false)
+            // 対象を決定
+            if (battlerInfo != null)
             {
-                return;
+                _view.StartAction();
+                MakeActionInfoTargetIndexes(_model.CurrentBattler,_view.SelectSkill.Id,battlerInfo.Index);
             }
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _model.ClearActionInfo();
-            _model.SetLastSkill(skillInfo.Id);
-            var actionInfo = _model.MakeActionInfo(_model.CurrentBattler,skillInfo,false,false);
-            _model.AddActionInfo(actionInfo,false);
-
-            // 対象選択開始
-            _view.HideSkillActionList();
-            _view.HideBattleThumb();
-            _view.RefreshPartyBattlerList(_model.TargetBattlerPartyInfos(actionInfo));
-            _view.RefreshEnemyBattlerList(_model.TargetBattlerEnemyInfos(actionInfo));
-            _backCommandType = Battle.CommandType.StartSelect;
-            _view.ChangeBackCommandActive(true);
         }
-        */
-
 
         private void StartWaitCommand(ActionInfo actionInfo)
         {

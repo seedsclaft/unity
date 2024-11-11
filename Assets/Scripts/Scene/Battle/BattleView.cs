@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Battle;
 using Effekseer;
-using System.Linq;
 using TMPro;
 using Cysharp.Threading.Tasks;
 
@@ -35,6 +34,24 @@ namespace Ryneus
         [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
         [SerializeField] private GameObject battle3DViewPrefab = null;
+        [SerializeField] private MagicList magicList = null;
+        public SkillInfo SelectSkill => magicList.ListItemData<SkillInfo>();
+
+        private List<BaseList> _viewActives = new ();
+        private void SetActivate(BaseList baseView)
+        {
+            var find = _viewActives.Find(a => a == baseView);
+            foreach (var viewActives in _viewActives)
+            {
+                if (viewActives == find)
+                {
+                    find.Activate();
+                } else
+                {
+                    find.Deactivate();
+                }
+            }
+        }
         
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
@@ -71,7 +88,7 @@ namespace Ryneus
             InitializeSelectCharacter();
             battleGridLayer.Initialize();
             battleActorList.Initialize();
-            battleEnemyLayer.Initialize();
+            InitializeEnemyLayer();
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
@@ -92,6 +109,7 @@ namespace Ryneus
             });
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
+            InitializeMagicList();
             var prefab = Instantiate(battle3DViewPrefab);
             CommandCreateMapObject(prefab);
             _battle3dView = prefab.GetComponent<Battle3DView>();
@@ -109,6 +127,64 @@ namespace Ryneus
             var prefab = Instantiate(gameObject);
             prefab.transform.SetParent(battleBackGroundRoot.transform,false);
             _backGroundAnimation = prefab.GetComponent<BattleBackGroundAnimation>();
+        }
+        
+        private void InitializeEnemyLayer()
+        {
+            battleEnemyLayer.Initialize();
+            battleEnemyLayer.SetInputHandler(InputKeyType.Decide,OnSelectEnemy);
+            battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
+            battleEnemyLayer.gameObject.SetActive(false);
+            SetInputHandler(battleEnemyLayer.gameObject);
+            _viewActives.Add(battleEnemyLayer);
+        }
+
+        private void InitializeMagicList()
+        {
+            magicList.Initialize();
+            magicList.SetInputHandler(InputKeyType.Decide,OnSelectMagic);
+            magicList.gameObject.SetActive(false);
+            SetInputHandler(magicList.gameObject);
+            _viewActives.Add(magicList);
+        }
+
+        private void OnSelectMagic()
+        {
+            var listData = magicList.ListItemData<SkillInfo>();
+            if (listData != null)
+            {
+                var eventData = new BattleViewEvent(CommandType.OnSelectSkill)
+                {
+                    template = listData
+                };
+                _commandData(eventData);
+            }
+        }
+
+        private void OnSelectEnemy()
+        {
+            var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
+            if (listData != null)
+            {
+                var eventData = new BattleViewEvent(CommandType.OnSelectEnemy)
+                {
+                    template = listData
+                };
+                _commandData(eventData);
+            }
+        }
+
+        private void OnCancelEnemy()
+        {
+            var eventData = new BattleViewEvent(CommandType.OnCancelEnemy);
+            _commandData(eventData);
+        }
+
+        public void StartAction()
+        {
+            SetActivate(null);
+            magicList.Hide();
+            battleEnemyLayer.gameObject.SetActive(false);
         }
 
         private void InitializeSelectCharacter()
@@ -207,19 +283,6 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        private void CallSkillAction()
-        {
-            var data = selectCharacter.ActionData;
-            if (data != null)
-            {
-                var eventData = new BattleViewEvent(CommandType.SelectedSkill)
-                {
-                    template = data
-                };
-                _commandData(eventData);
-            }
-        }
-
         public void CreateObject()
         {
             battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
@@ -285,10 +348,17 @@ namespace Ryneus
             SetInputFrame(1);
         }
 
-        private void OnClickEscape()
+        public void ShowMagicList(List<ListData> skillInfos)
         {
-            var eventData = new BattleViewEvent(CommandType.Escape);
-            _commandData(eventData);
+            magicList.gameObject.SetActive(true);
+            magicList.SetData(skillInfos);
+            SetActivate(magicList);
+        }
+
+        public void SelectEnemy(List<int> targetIndexes)
+        {
+            battleEnemyLayer.gameObject.SetActive(true);
+            SetActivate(battleEnemyLayer);
         }
 
         public new void SetHelpText(string text)

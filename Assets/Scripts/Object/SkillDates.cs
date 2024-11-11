@@ -550,8 +550,22 @@ namespace Ryneus
         
     }
 
-    public enum HpHealType{
+    public enum HpHealType
+    {
         EffectValue = 0,
         RateValue = 1, //割合回復
+    }
+
+    public enum SkillSlotType
+    {
+        None = 0,
+        ActionA = 1, // Aアクション
+        ActionB = 2, // Bアクション
+        ActionX = 3, // Xアクション
+        ActionY = 4, // Yアクション
+        Passive = 5, // 4つまでパッシブ
+        Liberation  = 6, // 解放
+        Awaken = 7, // 覚醒
+        
     }
 }

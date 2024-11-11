@@ -45,31 +45,76 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
+            if (InputSystem.IsGamePad)
+            {
+                if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
+                {
+                    virtualModelController?.Jump();
+                    _commandData(new MapViewEvent(CommandType.BattleStart));
+                }
 
-            if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
-            {
-                virtualModelController?.Jump();
-                _commandData(new MapViewEvent(CommandType.BattleStart));
-            }
+                if (InputSystem.GetInputDate(InputKeyType.LeftStickUp).IsTrigger())
+                {
+                    virtualModelController?.Forward();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.LeftStickDown).IsTrigger())
+                {
+                    virtualModelController?.BackForward();
+                }
+                
+                if (InputSystem.GetInputDate(InputKeyType.LeftStickRight).IsTrigger())
+                {
+                    virtualModelController?.RightForward();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.LeftStickLeft).IsTrigger())
+                {
+                    virtualModelController?.LeftForward();
+                }
+                
+                if (InputSystem.GetInputDate(InputKeyType.RightStickUp).IsTrigger())
+                {
+                    virtualModelController?.DownCamera();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.RightStickDown).IsTrigger())
+                {
+                    virtualModelController?.UpCamera();
+                }
 
-            if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
-            {
-                virtualModelController?.Forward();
+                if (InputSystem.GetInputDate(InputKeyType.RightStickLeft).IsTrigger())
+                {
+                    virtualModelController?.LeftCamera();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.RightStickRight).IsTrigger())
+                {
+                    virtualModelController?.RightCamera();
+                }
             } else
-            if (InputSystem.GetInputDate(InputKeyType.Down).IsTrigger())
             {
-                virtualModelController?.BackForward();
+                if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
+                {
+                    virtualModelController?.Jump();
+                    _commandData(new MapViewEvent(CommandType.BattleStart));
+                }
+
+                if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
+                {
+                    virtualModelController?.Forward();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.Down).IsTrigger())
+                {
+                    virtualModelController?.BackForward();
+                }
+                
+                if (InputSystem.GetInputDate(InputKeyType.Right).IsTrigger())
+                {
+                    virtualModelController?.RightForward();
+                } else
+                if (InputSystem.GetInputDate(InputKeyType.Left).IsTrigger())
+                {
+                    virtualModelController?.LeftForward();
+                }
+
             }
-            
-            if (InputSystem.GetInputDate(InputKeyType.Right).IsTrigger())
-            {
-                virtualModelController?.RightForward();
-            } else
-            if (InputSystem.GetInputDate(InputKeyType.Left).IsTrigger())
-            {
-                virtualModelController?.LeftForward();
-            }
-            
             if (InputSystem.GetInputDate(InputKeyType.SideRight1).IsTrigger())
             {
                 virtualModelController?.RightRotation();
@@ -87,7 +132,6 @@ namespace Ryneus
             {
                 virtualModelController?.LeftCamera();
             }
-
             switch (keyType)
             {
                 case InputKeyType.None:

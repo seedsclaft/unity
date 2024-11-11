@@ -253,9 +253,9 @@ namespace Ryneus
             return _battlers.Find(a => a.Index == index);
         }
 
-        public List<SkillInfo> SkillActionList()
+        public List<SkillInfo> SkillActionList(BattlerInfo battlerInfo)
         {
-            var skillInfos = _currentBattler.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsEnhanceSkill() == false);
+            var skillInfos = battlerInfo.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsEnhanceSkill() == false);
             for (int i = 0; i < skillInfos.Count;i++)
             {
                 skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],_currentBattler));

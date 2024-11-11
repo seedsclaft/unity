@@ -25,7 +25,9 @@ namespace Battle
         SelectEnemyList,
         SkillLog,
         UpdateAp,
-        SelectedSkill,
+        OnSelectSkill,  // 魔法を選択
+        OnSelectEnemy,  // 敵を選択
+        OnCancelEnemy,  // 敵を選択から戻る
         EnemyLayer,
         SelectEnemy,
         SelectParty,
