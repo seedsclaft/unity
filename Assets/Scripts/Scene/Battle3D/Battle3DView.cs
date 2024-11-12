@@ -50,6 +50,27 @@ namespace Ryneus
             }    
         }
 
+        public void UpdateSelectCursor(List<int> selectIndexes)
+        {
+            foreach (var item in _battlers)
+            {
+                item.Value.UpdateSelectCursor(selectIndexes.Contains(item.Key.Index));
+            }
+        }
+
+        public void HideSelectCursor()
+        {
+            foreach (var item in _battlers)
+            {
+                item.Value.UpdateSelectCursor(false);
+            }
+        }
+
+        public void PlayEffect(int targetIndex,Effekseer.EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)
+        {
+            _virtualModelControls[targetIndex].PlayEffect(effectAsset,animationPosition,animationScale,animationSpeed);
+        }
+
         public void RefreshStatus()
         {
             foreach (var item in _battlers)

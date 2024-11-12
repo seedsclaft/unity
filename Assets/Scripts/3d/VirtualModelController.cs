@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-using ES3Types;
+using Effekseer;
 using System;
 
 namespace Ryneus
@@ -12,6 +12,7 @@ namespace Ryneus
         [SerializeField] private CharacterController characterController = null;
         [SerializeField] private Camera selfCamera = null;
         [SerializeField] private GameObject statusRoot = null;
+        [SerializeField] private EffekseerEmitter effectEmitter = null;
         [SerializeField] float gravity = 20.0f;
         [SerializeField] float jumpSpeed = 8.0f;
         private float _speed = 10f;
@@ -291,6 +292,29 @@ namespace Ryneus
         private void UpdateCameraZoom()
         {
             selfCamera.transform.position = selfCamera.transform.parent.transform.position + (selfCamera.transform.forward * _zoomPosition);
+        }
+
+        public void PlayEffect(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)
+        {
+            if (effectAsset == null)
+            {
+                effectEmitter.Stop();
+                return;
+            } 
+            var effectRect = effectEmitter.gameObject.GetComponent<Transform>();
+            if (animationPosition == 0)
+            {
+                effectRect.localPosition = new Vector2(0,0);
+            } else
+            if (animationPosition == 1)
+            {
+                effectRect.localPosition = new Vector2(0,-48);
+            }
+            effectRect.localScale = new Vector3(animationScale,animationScale,animationScale);
+            effectEmitter.enabled = true;
+            effectEmitter.Stop();
+            effectEmitter.speed = animationSpeed;
+            effectEmitter.Play(effectAsset);
         }
     }
 }

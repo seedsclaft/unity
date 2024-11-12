@@ -24,6 +24,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private Image additiveFaceThumb;
         [SerializeField] private Material grayScale;
+        [SerializeField] private GameObject selectCursor;
         
         private BattlerInfo _battlerInfo = null;
 
@@ -473,6 +474,11 @@ namespace Ryneus
                         });
                 }
             }
+        }
+
+        public void UpdateSelectCursor(bool select)
+        {
+            selectCursor?.SetActive(select);
         }
 
         public void Clear()

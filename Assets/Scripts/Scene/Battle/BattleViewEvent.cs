@@ -28,6 +28,7 @@ namespace Battle
         OnSelectSkill,  // 魔法を選択
         OnSelectEnemy,  // 敵を選択
         OnCancelEnemy,  // 敵を選択から戻る
+        TargetSelectCursor,  // 対象にカーソル選択
         EnemyLayer,
         SelectEnemy,
         SelectParty,

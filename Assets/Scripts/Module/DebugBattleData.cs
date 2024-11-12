@@ -166,7 +166,7 @@ namespace Ryneus
                 _presenter.SetDebug(false);
             }
             if (consoleInputField.text.Contains("AC"))
-            {
+            {/*
                 var replace = consoleInputField.text.Replace("AC","");
                 var command = replace.Split(",");
                 if (command.Length != 2) return;
@@ -178,6 +178,7 @@ namespace Ryneus
                 ActionInfo actionInfo = _model.MakeActionInfo(battlerInfo,skillInfo,false,false);
                 _model.AddActionInfo(actionInfo,false);
                 _presenter.MakeActionResultInfoTargetIndexes(_model.MakeAutoSelectIndex(actionInfo));
+                */
             }
         }
 

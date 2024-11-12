@@ -448,6 +448,10 @@ namespace Ryneus
         public int UpdateApValue()
         {
             var apValue = 0;
+            if (!IsActor)
+            {
+                return apValue;
+            }
             if (IsState(StateType.Death))
             {
                 return apValue;
@@ -460,49 +464,6 @@ namespace Ryneus
             {
                 return apValue;
             }
-            /*
-            if (IsState(StateType.Chain))
-            {
-                apValue = 6;
-                return apValue;
-            }
-            */
-            /*
-            if (IsState(StateType.Benediction))
-            {
-                _ap = 1;
-                apValue = 0;
-                return apValue;
-            }
-            */
-            /*
-            if (IsState(StateType.RevengeAct))
-            {
-                apValue = 2;
-                return apValue;
-            }
-            */
-            /*
-            if (IsState(StateType.Heist) && IsState(StateType.Slow))
-            {
-                apValue = -8;
-                return apValue;
-            }
-            */
-            /*
-            if (IsState(StateType.Heist))
-            {
-                apValue = -12;
-                return apValue;
-            }
-            */
-            /*
-            if (IsState(StateType.Slow))
-            {
-                apValue = -4;
-                return apValue;
-            }
-            */
             apValue = -8;
             return apValue;
         }

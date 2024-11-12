@@ -44,6 +44,7 @@ namespace Ryneus
 
         public async void SetData(List<ListData> listData,bool resetScrollRect = true,Action initializeAfterEvent = null)
         {
+            int beforeIndex = Index;
             if (resetScrollRect && listData != ListDates)
             {
                 ResetScrollRect();
@@ -60,7 +61,7 @@ namespace Ryneus
             var selectIndex = -1;
             if (resetScrollRect == false)
             {
-                selectIndex = _beforeSelectIndex;
+                selectIndex = beforeIndex;
             }
             if (resetScrollRect)
             {

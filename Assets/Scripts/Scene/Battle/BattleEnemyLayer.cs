@@ -7,6 +7,7 @@ namespace Ryneus
 {
     public class BattleEnemyLayer : ListWindow , IInputHandlerEvent
     {
+        /*
         [SerializeField] private List<GameObject> frontEnemyRoots;
         [SerializeField] private List<GameObject> backEnemyRoots;
         [SerializeField] private GameObject battleEnemyPrefab;
@@ -337,5 +338,6 @@ namespace Ryneus
             _targetScopeType = ScopeType.None;
             _targetIndexList = new ();
         }
+        */
     }
 }

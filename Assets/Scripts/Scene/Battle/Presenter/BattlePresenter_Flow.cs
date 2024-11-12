@@ -65,7 +65,8 @@ namespace Ryneus
                 if (currentBattler.IsActor)
                 {
                     // マニュアルなら魔法選択
-                    _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(currentBattler)));
+                    _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(currentBattler)),true);
+                    _view.SetAnimationBusy(false);
                 } else
                 {
                     // Autoなら
@@ -73,6 +74,74 @@ namespace Ryneus
                 }
             }
         }
+
+        /// <summary>
+        /// 手動で魔法を選択
+        /// </summary>
+        /// <param name="skillInfo"></param> <summary>
+        private void CommandOnSelectSkill(SkillInfo skillInfo)
+        {
+            if (skillInfo != null)
+            {
+                var currentBattler = _model.CurrentBattler;
+                // 選択中のActionInfoを生成
+                var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
+                _model.SetSelectActionInfo(actionInfo);
+                // 選択対象を決定
+                var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,currentBattler.Index,false);
+                var list = new List<BattlerInfo>();
+                foreach (var targetIndex in targetIndexes)
+                {
+                    list.Add(_model.GetBattlerInfo(targetIndex));
+                }
+                _view.SelectEnemy(ListData.MakeListData(list));
+                CommandTargetSelectCursor(list[0]);
+            }
+        }
+
+        /// <summary>
+        /// 対象選択をキャンセル
+        /// </summary>
+        private void CommandOnCancelEnemy()
+        {
+            _view.EndActionSelect();
+            _model.SetSelectActionInfo(null);   
+            _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(_model.CurrentBattler)),false);
+        }
+
+        /// <summary>
+        /// 対象に選択カーソルを表示する
+        /// </summary>
+        /// <param name="battlerInfo"></param>
+        private void CommandTargetSelectCursor(BattlerInfo battlerInfo)
+        {
+            // battlerInfoを選択した時の範囲対象を表示
+            if (battlerInfo != null)
+            {
+                var targetIndexes = _model.MakeAutoSelectIndex(_model.SelectActionInfo,battlerInfo.Index);
+                _view.UpdateSelectCursor(targetIndexes);
+            }
+        }
+
+        /// <summary>
+        /// 手動で対象を決定
+        /// </summary>
+        /// <param name="battlerInfo"></param>
+        private void CommandOnSelectEnemy(BattlerInfo battlerInfo)
+        {
+            // 対象を決定
+            if (battlerInfo != null)
+            {
+                // ActionInfoを設定する
+                var actionInfo = _model.SelectActionInfo;
+                var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,battlerInfo.Index);
+                _model.AddActionInfo(actionInfo,false);
+                MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
+
+                _view.EndActionSelect();
+            }
+        }
+
 
         public async void CheckFirstActionBattler()
         {
@@ -109,7 +178,6 @@ namespace Ryneus
                     // 何もしない
                     autoSkillId = 20010;
                 }
-                //LogOutput.Log(autoSkillId);
                 MakeActionInfoTargetIndexes(currentBattler,autoSkillId,targetIndex);
             }
         }
@@ -117,20 +185,19 @@ namespace Ryneus
         private void MakeActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
         {
             // 対象を自動決定
-            var targetIndexes = _model.MakeActionInfoTargetIndexes(battlerInfo,skillId,oneTargetIndex);
-            MakeActionResultInfoTargetIndexes(targetIndexes);
+            var targetIndexes = _model.GetActionInfoTargetIndexes(battlerInfo,skillId,oneTargetIndex);
+            MakeActionResultInfoTargetIndexes(_model.CurrentActionInfo,targetIndexes);
         }
 
         /// <summary>
         /// 行動結果を生成する
         /// </summary>
         /// <param name="indexList"></param>
-        public async void MakeActionResultInfoTargetIndexes(List<int> indexList)
+        public async void MakeActionResultInfoTargetIndexes(ActionInfo actionInfo,List<int> indexList)
         {
             _view.SetHelpText("");
             _view.ChangeBackCommandActive(false);
 
-            var actionInfo = _model.CurrentActionInfo;
             _model.SetActionInfoParameter(actionInfo);
             await MakeActionResultInfo(indexList);
             StartActionInfo();
@@ -462,7 +529,7 @@ namespace Ryneus
             {
                 _battleEnded = false;
                 var targetIndexes = _model.MakeAutoSelectIndex(currentActionInfo);
-                MakeActionResultInfoTargetIndexes(targetIndexes);
+                MakeActionResultInfoTargetIndexes(currentActionInfo,targetIndexes);
                 return;
             }
 

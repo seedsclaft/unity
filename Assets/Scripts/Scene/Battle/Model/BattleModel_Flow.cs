@@ -9,6 +9,10 @@ namespace Ryneus
         private BattlerInfo _currentBattler = null;
         public BattlerInfo CurrentBattler => _currentBattler;
 
+        private ActionInfo _selectActionInfo = null;
+        public ActionInfo SelectActionInfo => _selectActionInfo;
+        public void SetSelectActionInfo(ActionInfo actionInfo) => _selectActionInfo = actionInfo;
+
         // ターンの最初の行動開始者
         private BattlerInfo _firstActionBattler = null;
         public BattlerInfo FirstActionBattler => _firstActionBattler;
@@ -25,7 +29,14 @@ namespace Ryneus
             return _currentBattler;
         }
 
-        public List<int> MakeActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
+        /// <summary>
+        /// battlerInfoが魔法をoneTargetIndexに使用した時の対象を取得
+        /// </summary>
+        /// <param name="battlerInfo"></param>
+        /// <param name="skillId"></param>
+        /// <param name="oneTargetIndex"></param>
+        /// <returns></returns>
+        public List<int> GetActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
         {
             var skillInfo = battlerInfo.Skills.Find(a => a.Id == skillId);
             if (skillInfo == null)
@@ -33,10 +44,11 @@ namespace Ryneus
                 skillInfo = new SkillInfo(skillId);
             }
             var actionInfo = MakeActionInfo(battlerInfo,skillInfo,false,false);
-            AddActionInfo(actionInfo,false);
+            //AddActionInfo(actionInfo,false);
             // 対象を自動決定
             return MakeAutoSelectIndex(actionInfo,oneTargetIndex);
         }
+        
 
         /// <summary>
         /// ActionInfoの要素を決定する

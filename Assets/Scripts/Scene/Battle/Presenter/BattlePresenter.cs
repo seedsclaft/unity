@@ -183,6 +183,7 @@ namespace Ryneus
 
         private void UpdateCommand(BattleViewEvent viewEvent)
         {
+            LogOutput.Log(viewEvent.commandType);
             switch (viewEvent.commandType)
             {
                 case CommandType.ChangeBattleAuto:
@@ -221,6 +222,12 @@ namespace Ryneus
                     break;
                 case CommandType.OnSelectEnemy:
                     CommandOnSelectEnemy((BattlerInfo)viewEvent.template);
+                    break;
+                case CommandType.TargetSelectCursor:
+                    CommandTargetSelectCursor((BattlerInfo)viewEvent.template);
+                    break;
+                case CommandType.OnCancelEnemy:
+                    CommandOnCancelEnemy();
                     break;
                 case Battle.CommandType.ActorList:
                     //CommandTargetEnemy((BattlerInfo)viewEvent.template);
@@ -337,36 +344,6 @@ namespace Ryneus
             } else
             {
                 CommandStartSelect();
-            }
-        }
-
-        private void CommandOnSelectSkill(SkillInfo skillInfo)
-        {
-            if (skillInfo != null)
-            {
-                // ActionInfoを生成
-                //var actionInfo = _model.MakeActionInfo(_model.CurrentActionBattler,skillInfo,false,false);
-                // 味方を選択
-                if (skillInfo.Master.TargetType == TargetType.Friend)
-                {
-
-                } else
-                {
-                    // 敵側を選択
-                    // 選択対象を決定
-                    var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,_model.CurrentBattler.Index,false);
-                    _view.SelectEnemy(targetIndexes);
-                }
-            }
-        }
-
-        private void CommandOnSelectEnemy(BattlerInfo battlerInfo)
-        {
-            // 対象を決定
-            if (battlerInfo != null)
-            {
-                _view.StartAction();
-                MakeActionInfoTargetIndexes(_model.CurrentBattler,_view.SelectSkill.Id,battlerInfo.Index);
             }
         }
 
