@@ -17,16 +17,11 @@ namespace Ryneus
         private Dictionary<int,VirtualModelController> _virtualModelControls = new ();
         public Dictionary<int,VirtualModelController> VirtualModelControls => _virtualModelControls;
         private Dictionary<int,BattlerInfoComponent> _battlers = new ();
-        float _zoomPosition = -1;
-        private Quaternion _initCameraRotation;
-        private Vector3 _initCameraPosition;
-        private Vector3 currentLookAt;
+        private VirtualCamera _virtualCamera;
 
         public void Initialize(List<BattlerInfo> battlerInfos) 
         {
-            _initCameraRotation = battleCamera.transform.localRotation;
-            _initCameraPosition = battleCamera.transform.parent.localPosition;
-            _zoomPosition = battleCamera.transform.localPosition.z;
+            _virtualCamera = new VirtualCamera(battleCamera);
             var idx = 0;
             foreach (var battlerInfo in battlerInfos)
             {
@@ -61,15 +56,8 @@ namespace Ryneus
 
         public void ResetCameraPosition()
         {
-            _zoomPosition = 0f;
-            battleCamera.transform.localRotation = _initCameraRotation;
-            battleCamera.transform.localPosition = _initCameraPosition;
-            UpdateCameraZoom();
-            return;
-            var plusY = Mathf.Abs(battleCamera.transform.localEulerAngles.y) + Mathf.Abs(transform.localEulerAngles.y);
-            transform.localRotation = Quaternion.Euler(0,plusY,0);
-            battleCamera.transform.localRotation = _initCameraRotation;
-            battleCamera.transform.localPosition = _initCameraPosition;
+            _virtualCamera.SetZoomPosition(0);
+            _virtualCamera.ResetInitialize();
             UpdateCameraZoom();
         }
 
@@ -191,15 +179,14 @@ namespace Ryneus
             battleCamera.transform.RotateAround(target.transform.position, Vector3.up, angle.x);
             battleCamera.transform.RotateAround(target.transform.position, battleCamera.transform.right, angle.y);
             //selfCamera.transform.parent.transform.localPosition = new Vector3(0,1,0); 
-            
-            _zoomPosition = 2.5f;
+            _virtualCamera.SetZoomPosition(2.5f);
             UpdateCameraZoom();
             battleCamera.transform.position += new Vector3(1.5f,0,0);
         }        
         
         private void UpdateCameraZoom()
         {
-            battleCamera.transform.position = battleCamera.transform.parent.transform.position + (battleCamera.transform.forward * _zoomPosition);
+            _virtualCamera.UpdateCameraZoom();
         }
     }
 }

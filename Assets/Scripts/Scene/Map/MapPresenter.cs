@@ -137,6 +137,7 @@ namespace Ryneus
             var enemyInfos = new List<BattlerInfo>();
             var enemyData = DataSystem.Enemies[3];
             enemyInfos.Add( new BattlerInfo(enemyData,1,0,LineType.Front,false));
+            enemyInfos.Add( new BattlerInfo(enemyData,1,1,LineType.Front,false));
             var battleSceneInfo = new BattleSceneInfo
             {
                 ActorInfos = actorInfos,

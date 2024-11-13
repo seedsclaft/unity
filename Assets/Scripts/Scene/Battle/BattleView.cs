@@ -136,7 +136,7 @@ namespace Ryneus
             battleEnemyLayer.Initialize();
             battleEnemyLayer.SetInputHandler(InputKeyType.Decide,OnSelectEnemy);
             battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
-            battleEnemyLayer.SetInputHandler(InputKeyType.Select,TargetSelectCursor);
+            battleEnemyLayer.SetSelectedHandler(TargetSelectCursor);
             battleEnemyLayer.gameObject.SetActive(false);
             SetInputHandler(battleEnemyLayer.gameObject);
             _viewActives.Add(battleEnemyLayer);
@@ -423,7 +423,7 @@ namespace Ryneus
         public void SetEnemies(List<BattlerInfo> battlerInfos)
         {
             battleEnemyLayer.SetData(ListData.MakeListData(battlerInfos,false));
-            battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
+            //battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
             foreach (var battlerInfo in battlerInfos)
             {
                 _battlerComps[battlerInfo.Index] = battleEnemyLayer.GetBattlerInfoComp(battlerInfo.Index);

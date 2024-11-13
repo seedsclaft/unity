@@ -23,18 +23,13 @@ namespace Ryneus
         private float _rotationSpeed = 4f;
         private Vector2 _cameraRotation = Vector2.zero;
         private Vector3 _lastMousePosition = Vector3.zero;
-        private Quaternion  _initCameraRotation;
-        private Vector3 _initCameraPosition;
-        float _zoomPosition = -1;
-
+        private VirtualCamera _virtualCamera;
         private AnimationState _lastState = AnimationState.None;
 
         public void Initialize() 
         { 
             transform.localScale = new Vector3(scaleSize,scaleSize,scaleSize);
-            _initCameraRotation = selfCamera.transform.localRotation;
-            _initCameraPosition = selfCamera.transform.localPosition;
-            _zoomPosition = selfCamera.transform.localPosition.z;
+            _virtualCamera = new VirtualCamera(selfCamera);
             UpdateCameraZoom();
         }
 
@@ -74,12 +69,11 @@ namespace Ryneus
             StartAnimation(AnimationState.RunForward);
             var moveZ = Math.Min(1,_moveDirection.z+1);
             _moveDirection.Set(_moveDirection.x,_moveDirection.y,moveZ);
-            if (selfCamera.transform.localRotation != _initCameraRotation)
+            if (_virtualCamera.IsChanged())
             {
                 var plusY = Mathf.Abs(selfCamera.transform.localEulerAngles.y) + Mathf.Abs(transform.localEulerAngles.y);
                 transform.localRotation = Quaternion.Euler(0,plusY,0);
-                selfCamera.transform.localRotation = _initCameraRotation;
-                selfCamera.transform.localPosition = _initCameraPosition;
+                _virtualCamera.ResetInitialize();
                 UpdateCameraZoom();
             }
             _cameraRotation = Vector2.zero;
@@ -160,13 +154,13 @@ namespace Ryneus
 
         public void ZoomIn()
         {
-            _zoomPosition = Mathf.MoveTowards(_zoomPosition, 10, _rotationSpeed * Time.deltaTime);
+            _virtualCamera.SetZoomPosition(10,_rotationSpeed);
             UpdateCameraZoom();
         }
 
         public void ZoomOut()
         {    
-            _zoomPosition = Mathf.MoveTowards(_zoomPosition, -10, _rotationSpeed * Time.deltaTime);
+            _virtualCamera.SetZoomPosition(-10,_rotationSpeed);
             UpdateCameraZoom();
         }
 
@@ -298,7 +292,7 @@ namespace Ryneus
         {
             //Vector3でX,Y方向の回転の度合いを定義
             Vector3 angle = new Vector3(180,10, 0);
-            _zoomPosition = -1.25f;
+            _virtualCamera.SetZoomPosition(-1.25f);
             
             //transform.RotateAround()をしようしてメインカメラを回転させる
             selfCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
@@ -309,7 +303,7 @@ namespace Ryneus
 
         private void UpdateCameraZoom()
         {
-            selfCamera.transform.position = selfCamera.transform.parent.transform.position + (selfCamera.transform.forward * _zoomPosition);
+            _virtualCamera.UpdateCameraZoom();
         }
 
         public void PlayEffect(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)
