@@ -43,6 +43,11 @@ namespace Ryneus
             selfCamera.enabled = false;
         }
 
+        public void CameraOn()
+        {
+            selfCamera.enabled = true;
+        }
+
         public void SetStatusPrefab(GameObject gameObject)
         {
             gameObject.transform.SetParent(statusRoot.transform,false);
@@ -289,6 +294,19 @@ namespace Ryneus
             UpdateCameraZoom();
         }
 
+        public void SetVictoryCamera()
+        {
+            //Vector3でX,Y方向の回転の度合いを定義
+            Vector3 angle = new Vector3(180,10, 0);
+            _zoomPosition = -1.25f;
+            
+            //transform.RotateAround()をしようしてメインカメラを回転させる
+            selfCamera.transform.RotateAround(transform.position, Vector3.up, angle.x);
+            selfCamera.transform.RotateAround(transform.position, selfCamera.transform.right, angle.y);
+            selfCamera.transform.parent.transform.localPosition = new Vector3(0,1,0); 
+            UpdateCameraZoom();
+        }
+
         private void UpdateCameraZoom()
         {
             selfCamera.transform.position = selfCamera.transform.parent.transform.position + (selfCamera.transform.forward * _zoomPosition);
@@ -329,6 +347,7 @@ public enum AnimationState
     Damaged = 4,
     Death = 5,
 
-    Ready = 6
+    Ready = 6,
+    Victory = 7,
 
 }

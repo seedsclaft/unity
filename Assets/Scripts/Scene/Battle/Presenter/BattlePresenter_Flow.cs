@@ -51,6 +51,7 @@ namespace Ryneus
             if (currentBattler != null)
             {
                 _view.SetBattleBusy(true);
+                _view.SetBattleReady();
                 _model.UpdateApModify(currentBattler);
                 _view.UpdateGridLayer();
                 CheckFirstActionBattler();

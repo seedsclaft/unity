@@ -13,6 +13,7 @@ namespace Ryneus
             InitializeCheckTrigger();
         }
         private BattleSceneInfo _sceneParam;
+        public BattleSceneInfo SceneParam => _sceneParam;
         private int _actionIndex = 0;
         private int _turnCount = 1;
         public int TurnCount => _turnCount;
@@ -2388,7 +2389,12 @@ namespace Ryneus
         public List<GetItemInfo> MakeBattlerResult()
         {
             var list = new List<GetItemInfo>();
-            list.AddRange(CurrentSelectRecord().SymbolInfo.GetItemInfos);
+            /*
+            if (CurrentSelectRecord() != null)
+            {
+                list.AddRange(CurrentSelectRecord().SymbolInfo.GetItemInfos);
+            }
+            */
             return list;
         }
 
@@ -2412,7 +2418,7 @@ namespace Ryneus
             {
                 foreach (var battler in _party.BattlerInfos)
                 {
-                    var actorInfo = Actors().Find(a => a.ActorId == battler.CharaId);
+                    var actorInfo = _sceneParam.ActorInfos.Find(a => a.ActorId == battler.CharaId);
                     actorInfo.ChangeHp(battler.MaxHp);
                     actorInfo.ChangeMp(battler.MaxMp);
                 }
@@ -2420,6 +2426,7 @@ namespace Ryneus
                 {
                     battlerInfo.ResetData(battlerInfo.Level);
                 }
+                /*
                 if (CurrentSelectRecord().SaveBattleReplayStage())
                 {
                     var stageKey = CurrentStageKey();
@@ -2429,6 +2436,7 @@ namespace Ryneus
                     SaveSystem.SaveReplay(stageKey,_saveBattleInfo);
                     //FirebaseController.UploadReplayFile(stageKey,userId.ToString(),_saveBattleInfo);
                 }
+                */
             }
             SaveSystem.SaveConfigStart(GameSystem.ConfigData);
         }
@@ -2441,7 +2449,7 @@ namespace Ryneus
                 {
                     foreach (var skillInfo in battlerInfo.Skills)
                     {
-                        AddPlayerInfoSkillId(skillInfo.Id);
+                        //AddPlayerInfoSkillId(skillInfo.Id);
                     }
                 }
             }

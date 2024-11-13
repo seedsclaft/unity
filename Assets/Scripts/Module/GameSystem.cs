@@ -18,6 +18,8 @@ namespace Ryneus
         [SerializeField] private StatusAssign statusAssign = null;
         [SerializeField] private ConfirmAssign confirmAssign = null;
 
+        [SerializeField] private Canvas uiCanvas = null;
+        public static Canvas UiCanvas;
         [SerializeField] private GameObject transitionRoot = null;
         [SerializeField] private Fade transitionFade = null;
         [SerializeField] private LoadingView loadingView = null;
@@ -65,6 +67,7 @@ namespace Ryneus
             tutorialView.Initialize();
             statusAssign.CloseStatus();
             InputSystem.Initialize();
+            UiCanvas = uiCanvas;
             TempData = new TempInfo();
             _model = new BaseModel();
             Version = version;

@@ -355,6 +355,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6519999790750457292}
   - {fileID: 2388609733202499203}
   - {fileID: 6000533704789208806}
   - {fileID: 6470443485398498260}
@@ -832,6 +833,7 @@ MonoBehaviour:
   evaluate: {fileID: 0}
   additiveFaceThumb: {fileID: 0}
   grayScale: {fileID: 0}
+  selectCursor: {fileID: 0}
 --- !u!114 &1399851107438585608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2461,6 +2463,57 @@ MonoBehaviour:
   selectable: {fileID: 0}
   selectedAlcana: {fileID: 0}
   shinyReflect: {fileID: 0}
+--- !u!1 &5518660055695969501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6519999790750457292}
+  - component: {fileID: 1938394649661057932}
+  m_Layer: 5
+  m_Name: DamageView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6519999790750457292
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5518660055695969501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3348599161725573905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1938394649661057932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5518660055695969501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b51e4783d1b1d44a8eaa8b3d8d9f3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePrefab: {fileID: 1787456025739594925, guid: 39a4f8424bdfa3c469946a6405fb012c,
+    type: 3}
+  damageRoot: {fileID: 5518660055695969501}
 --- !u!1 &5541916150705229057
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2664,7 @@ MonoBehaviour:
   battleAwakenAnimation: {fileID: 1765655510917034780}
   battle3DViewPrefab: {fileID: 4354662897515585056, guid: 1638cdb482741c543bea2f9407e9f1ac,
     type: 3}
+  battle3DDamageView: {fileID: 1938394649661057932}
   magicList: {fileID: 6296845091119552131}
 --- !u!114 &5014649924481948106
 MonoBehaviour:

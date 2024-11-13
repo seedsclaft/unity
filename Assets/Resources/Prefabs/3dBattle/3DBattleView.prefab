@@ -288,7 +288,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5417200359985397728}
-  - {fileID: 6237944356538392120}
+  - {fileID: 906928456691621904}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3090159554079406769
@@ -384,6 +384,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1932260408952058453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5569261804262755491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906928456691621904}
+  m_Layer: 5
+  m_Name: CameraPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906928456691621904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5569261804262755491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.008650903, y: -0.13138632, z: 0.001146594, w: 0.99129283}
+  m_LocalPosition: {x: 1.289978, y: -0.39001465, z: -1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6237944356538392120}
+  m_Father: {fileID: 3128287944105171388}
+  m_LocalEulerAnglesHint: {x: 1, y: -15.1, z: 0}
 --- !u!1 &6079982797318106699
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,12 +474,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7356945100865405815}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.008650903, y: -0.13138632, z: 0.001146594, w: 0.99129283}
-  m_LocalPosition: {x: 1.289978, y: -0.39001465, z: -1.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3128287944105171388}
+  m_Father: {fileID: 906928456691621904}
   m_LocalEulerAnglesHint: {x: 1, y: -15.1, z: 0}
 --- !u!20 &3665022495126999581
 Camera:
