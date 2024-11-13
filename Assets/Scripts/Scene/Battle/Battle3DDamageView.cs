@@ -8,13 +8,15 @@ namespace Ryneus
         [SerializeField] private GameObject damagePrefab = null;
         [SerializeField] private GameObject damageRoot = null;
         private Canvas _canvas = null;
+        private Camera _worldCamera = null;
 
         private Dictionary<int,GameObject> _3dModels = new ();
         private List<BattleDamage> _battleDamages = new ();
 
-        public void Initialize()
+        public void Initialize(Camera worldCamera)
         {
             _canvas = GameSystem.UiCanvas;
+            _worldCamera = worldCamera;
         }
 
         public void Set3DGameObjects(int index,GameObject gameObject)
@@ -27,7 +29,7 @@ namespace Ryneus
             var target = _3dModels[targetIndex];
             var pos = Vector2.zero;
             var uiCamera = Camera.main;
-            var worldCamera = Camera.main;
+            var worldCamera = _worldCamera;
             var canvasRect = _canvas.GetComponent<RectTransform> ();
 
             var screenPos = RectTransformUtility.WorldToScreenPoint (worldCamera, target.transform.position);

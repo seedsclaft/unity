@@ -303,7 +303,7 @@ namespace Ryneus
 
         private void UpdateCameraZoom()
         {
-            _virtualCamera.UpdateCameraZoom();
+            _virtualCamera?.UpdateCameraZoom();
         }
 
         public void PlayEffect(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)

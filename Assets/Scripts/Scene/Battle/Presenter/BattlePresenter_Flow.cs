@@ -66,7 +66,7 @@ namespace Ryneus
                 if (currentBattler.IsActor)
                 {
                     // マニュアルなら魔法選択
-                    _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(currentBattler)),true);
+                    ShowMagicList(currentBattler,true);
                     _view.SetAnimationBusy(false);
                 } else
                 {
@@ -74,6 +74,15 @@ namespace Ryneus
                     MakeActionInfoSkillTrigger();
                 }
             }
+        }
+
+        private void ShowMagicList(BattlerInfo currentBattler,bool resetScrollRect)
+        {
+            _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(currentBattler),(a) => {return true;},(b) => 
+            {
+                var data = (SkillInfo)b.Data;
+                return data.Id == currentBattler.LastSelectSkillId;
+            }),resetScrollRect);
         }
 
         /// <summary>
@@ -87,6 +96,7 @@ namespace Ryneus
                 var currentBattler = _model.CurrentBattler;
                 // 選択中のActionInfoを生成
                 var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
+                // 選択中のActionInfoを上書き
                 _model.SetSelectActionInfo(actionInfo);
                 // 選択対象を決定
                 var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,currentBattler.Index,false);
@@ -96,7 +106,6 @@ namespace Ryneus
                     list.Add(_model.GetBattlerInfo(targetIndex));
                 }
                 _view.SelectEnemy(ListData.MakeListData(list));
-                CommandTargetSelectCursor(list[0]);
             }
         }
 
@@ -106,8 +115,8 @@ namespace Ryneus
         private void CommandOnCancelEnemy()
         {
             _view.EndActionSelect();
-            _model.SetSelectActionInfo(null);   
-            _view.ShowMagicList(ListData.MakeListData(_model.SkillActionList(_model.CurrentBattler)),false);
+            _model.SetSelectActionInfo(null);
+            ShowMagicList(_model.CurrentBattler,false);
         }
 
         /// <summary>

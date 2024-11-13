@@ -272,20 +272,12 @@ namespace Ryneus
             CheckTutorialState(viewEvent.commandType);
         }
 
-        private void UpdatePopupEscape(ConfirmCommandType confirmCommandType)
-        {
-        }
-
-        private void UpdatePopupNoEscape(ConfirmCommandType confirmCommandType)
-        {
-        }
-
         private void CommandBack()
         {
-            if (_backCommandType != Battle.CommandType.None)
+            if (_backCommandType != CommandType.None)
             {
                 var eventData = new BattleViewEvent(_backCommandType);
-                _backCommandType = Battle.CommandType.None;
+                _backCommandType = CommandType.None;
                 UpdateCommand(eventData);
             }
         }

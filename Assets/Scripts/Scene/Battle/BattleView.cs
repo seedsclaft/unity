@@ -35,6 +35,8 @@ namespace Ryneus
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
         [SerializeField] private GameObject battle3DViewPrefab = null;
         [SerializeField] private Battle3DDamageView battle3DDamageView = null;
+        [SerializeField] private Battle3DStatusView battle3DStatusView = null;
+        
         [SerializeField] private MagicList magicList = null;
         public SkillInfo SelectSkill => magicList.ListItemData<SkillInfo>();
 
@@ -114,7 +116,8 @@ namespace Ryneus
             var prefab = Instantiate(battle3DViewPrefab);
             CommandCreateMapObject(prefab);
             _battle3dView = prefab.GetComponent<Battle3DView>();
-            battle3DDamageView.Initialize();
+            battle3DDamageView.Initialize(_battle3dView.BattleCamera);
+            battle3DStatusView.Initialize(_battle3dView.BattleCamera);
             if (GameSystem.TempData.InReplay)
             {
                 new BattleReplayPresenter(this);
@@ -185,7 +188,6 @@ namespace Ryneus
 
         private void TargetSelectCursor()
         {
-            
             var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
             if (listData != null)
             {
@@ -434,7 +436,13 @@ namespace Ryneus
             foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
             {
                 battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
+                battle3DStatusView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
             }
+            foreach (var battlerInfo in battlerInfos)
+            {
+                battle3DStatusView.UpdateBattlerInfo(battlerInfo);
+            }
+            
         }
 
         private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
@@ -714,6 +722,7 @@ namespace Ryneus
             //_backGroundAnimation?.SeekAnimation();
 
             _battle3dView?.StartDamage(targetIndex,damageType,value);
+            battle3DStatusView?.StartDamage(targetIndex,damageType,value);
         }
 
         public void StartBlink(int targetIndex)
@@ -725,7 +734,8 @@ namespace Ryneus
         {
             _battlerComps[targetIndex].StartHeal(damageType,value,needPopupDelay);
             battle3DDamageView.StartHeal(targetIndex,damageType,value,needPopupDelay);
-            _battle3dView.StartHeal(targetIndex,damageType,value);
+            _battle3dView?.StartHeal(targetIndex,damageType,value);
+            battle3DStatusView?.StartHeal(targetIndex,damageType,value);
         }
 
         public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)
@@ -757,7 +767,7 @@ namespace Ryneus
             {
                 item.Value.RefreshStatus();
             }
-            _battle3dView.RefreshStatus();
+            battle3DStatusView.RefreshStatus();
         }
 
         public void RefreshTurn(int turn)

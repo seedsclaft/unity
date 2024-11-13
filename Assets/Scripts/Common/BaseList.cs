@@ -27,7 +27,7 @@ namespace Ryneus
 
         public T ListItemData<T>()
         {
-            return (T)ListData.Data;
+            return (T)ListData?.Data;
         }
 
         public void Initialize()
@@ -228,6 +228,17 @@ namespace Ryneus
             if (selectIndex != -1 && listData.Count > selectIndex)
             {
                 listData[selectIndex].SetSelected(true);
+            }
+            return listData;
+        }
+        
+        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,Func<ListData,bool> selectIndex)
+        {
+            var listData = MakeListData(dataList,enable);
+            var find = listData.Find(a => selectIndex(a));
+            if (find != null)
+            {
+                find.SetSelected(true);
             }
             return listData;
         }

@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &105583959268483744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1233560828077097113}
+  - component: {fileID: 3418708392373448199}
+  m_Layer: 5
+  m_Name: StatusView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1233560828077097113
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105583959268483744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3348599161725573905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -40, y: 120}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3418708392373448199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105583959268483744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad8620818f9b8e4b92b688daece7323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statusPrefab: {fileID: 9026888361174397481, guid: ffb1718465d119a47829f712645643d9,
+    type: 3}
+  statusRoot: {fileID: 105583959268483744}
 --- !u!1 &462695181873576498
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +407,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6519999790750457292}
+  - {fileID: 1233560828077097113}
   - {fileID: 2388609733202499203}
   - {fileID: 6000533704789208806}
   - {fileID: 6470443485398498260}
@@ -833,7 +885,6 @@ MonoBehaviour:
   evaluate: {fileID: 0}
   additiveFaceThumb: {fileID: 0}
   grayScale: {fileID: 0}
-  selectCursor: {fileID: 0}
 --- !u!114 &1399851107438585608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2665,6 +2716,7 @@ MonoBehaviour:
   battle3DViewPrefab: {fileID: 4354662897515585056, guid: 1638cdb482741c543bea2f9407e9f1ac,
     type: 3}
   battle3DDamageView: {fileID: 1938394649661057932}
+  battle3DStatusView: {fileID: 3418708392373448199}
   magicList: {fileID: 6296845091119552131}
 --- !u!114 &5014649924481948106
 MonoBehaviour:

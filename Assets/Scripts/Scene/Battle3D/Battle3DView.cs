@@ -11,12 +11,13 @@ namespace Ryneus
         [SerializeField] private GameObject troopRoot = null;
         [SerializeField] private List<GameObject> partyPositions = null;
         [SerializeField] private List<GameObject> troopPositions = null;
-        [SerializeField] private GameObject statusPrefab = null;
+        [SerializeField] private GameObject cursorPrefab = null;
         [SerializeField] private Camera battleCamera = null;
+        public Camera BattleCamera => battleCamera;
 
         private Dictionary<int,VirtualModelController> _virtualModelControls = new ();
         public Dictionary<int,VirtualModelController> VirtualModelControls => _virtualModelControls;
-        private Dictionary<int,BattlerInfoComponent> _battlers = new ();
+        private Dictionary<int,GameObject> _selectCursor = new ();
         private VirtualCamera _virtualCamera;
 
         public void Initialize(List<BattlerInfo> battlerInfos) 
@@ -41,17 +42,18 @@ namespace Ryneus
                     {
                         prefab.transform.SetParent(troopPositions[idx].transform,false);
                         _virtualModelControls[battlerInfo.Index] = prefab.GetComponent<VirtualModelController>();
-                        var statusObject = Instantiate(statusPrefab);
-                        _virtualModelControls[battlerInfo.Index].SetStatusPrefab(statusObject);
-                        var battlerInfoComponent = statusObject.GetComponent<BattlerInfoComponent>();
-                        _battlers[battlerInfo.Index] = battlerInfoComponent;
-                        _battlers[battlerInfo.Index].UpdateInfo(battlerInfo);
+                        var cursorObject = Instantiate(cursorPrefab);
+                        _virtualModelControls[battlerInfo.Index].SetStatusPrefab(cursorObject);
+                        var battlerInfoComponent = cursorObject.GetComponent<BattlerInfoComponent>();
+                        _selectCursor[battlerInfo.Index] = cursorObject;
+                        //_battlers[battlerInfo.Index].UpdateInfo(battlerInfo);
                     }
                 }                        
                 _virtualModelControls[battlerInfo.Index].Initialize();
                 _virtualModelControls[battlerInfo.Index].CameraOff();
                 idx++;
-            }    
+            }
+            HideSelectCursor();
         }
 
         public void ResetCameraPosition()
@@ -63,17 +65,17 @@ namespace Ryneus
 
         public void UpdateSelectCursor(List<int> selectIndexes)
         {
-            foreach (var item in _battlers)
+            foreach (var item in _selectCursor)
             {
-                item.Value.UpdateSelectCursor(selectIndexes.Contains(item.Key));
+                item.Value.SetActive(selectIndexes.Contains(item.Key));
             }
         }
 
         public void HideSelectCursor()
         {
-            foreach (var item in _battlers)
+            foreach (var item in _selectCursor)
             {
-                item.Value.UpdateSelectCursor(false);
+                item.Value.SetActive(false);
             }
         }
 
@@ -82,14 +84,6 @@ namespace Ryneus
             _virtualModelControls[targetIndex].PlayEffect(effectAsset,animationPosition,animationScale,animationSpeed);
             
             SetCamera(_virtualModelControls[targetIndex].gameObject.transform);
-        }
-
-        public void RefreshStatus()
-        {
-            foreach (var item in _battlers)
-            {
-                item.Value.RefreshStatus();
-            }
         }
 
         private void StartAnimation(int index,AnimationState animationState)
@@ -132,18 +126,10 @@ namespace Ryneus
         public void StartDamage(int index,DamageType damageType,int value)
         {
             StartAnimation(index,AnimationState.Damaged);
-            if (_battlers.ContainsKey(index))
-            {
-                _battlers[index].StartDamage(damageType,value,false);
-            }
         }
 
         public void StartHeal(int index,DamageType damageType,int value)
         {
-            if (_battlers.ContainsKey(index))
-            {
-                _battlers[index].StartHeal(damageType,value,false);
-            }
         }
 
         public void Death(int index)
@@ -173,7 +159,7 @@ namespace Ryneus
 
         public void SetCamera(Transform target)
         {
-            Vector3 angle = new Vector3(-15,0,0);
+            Vector3 angle = new Vector3(target.transform.position.x + -15,0,0);
             
             //transform.RotateAround()をしようしてメインカメラを回転させる
             battleCamera.transform.RotateAround(target.transform.position, Vector3.up, angle.x);
@@ -181,7 +167,7 @@ namespace Ryneus
             //selfCamera.transform.parent.transform.localPosition = new Vector3(0,1,0); 
             _virtualCamera.SetZoomPosition(2.5f);
             UpdateCameraZoom();
-            battleCamera.transform.position += new Vector3(1.5f,0,0);
+            battleCamera.transform.position += new Vector3(target.transform.position.x + 2f,0,0);
         }        
         
         private void UpdateCameraZoom()
