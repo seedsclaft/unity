@@ -332,6 +332,11 @@ namespace Ryneus
             }
         }
 
+        public void StartBattle(int targetIndex)
+        {
+            _battle3dView.BattleStart(targetIndex);
+        }
+
         public void StartUIAnimation()
         {
             battleActorList.gameObject.SetActive(true);
@@ -394,6 +399,17 @@ namespace Ryneus
             SetActivate(battleEnemyLayer);
         }
 
+        public void SelectActor(List<ListData> battlerInfos)
+        {
+            battleEnemyLayer.gameObject.SetActive(true);
+            battleEnemyLayer.SetData(battlerInfos,true,() => 
+            {
+                battleEnemyLayer.Refresh(0);
+            });
+            SetActivate(battleEnemyLayer);
+            _battle3dView.SelectActor(battlerInfos);
+        }
+
         public new void SetHelpText(string text)
         {
             HelpWindow.SetHelpText(text);
@@ -436,7 +452,10 @@ namespace Ryneus
             foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
             {
                 battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
-                battle3DStatusView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
+                if (!virtualModelControlDict.Value.IsActor)
+                {
+                    battle3DStatusView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
+                }
             }
             foreach (var battlerInfo in battlerInfos)
             {
@@ -715,6 +734,11 @@ namespace Ryneus
             }
         }
 
+        public void SetActorBattleReady(int index)
+        {
+            _battle3dView.ActorBattleReady(index);
+        }
+
         public void StartDamage(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
         {
             _battlerComps[targetIndex].StartDamage(damageType,value,needPopupDelay);
@@ -748,11 +772,13 @@ namespace Ryneus
         {
             _battlerComps[targetIndex].StartDeathAnimation();
             _battle3dView.Death(targetIndex);
+            battle3DStatusView?.Death(targetIndex,false);
         }
 
         public void StartAliveAnimation(int targetIndex)
         {
             _battlerComps[targetIndex].StartAliveAnimation();
+            battle3DStatusView?.Death(targetIndex,true);
         }
 
         public void BattleVictory(int mvpActorId)

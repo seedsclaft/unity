@@ -83,6 +83,7 @@ namespace Ryneus
                 var data = (SkillInfo)b.Data;
                 return data.Id == currentBattler.LastSelectSkillId;
             }),resetScrollRect);
+            _view.SetActorBattleReady(currentBattler.Index);
         }
 
         /// <summary>
@@ -105,7 +106,13 @@ namespace Ryneus
                 {
                     list.Add(_model.GetBattlerInfo(targetIndex));
                 }
-                _view.SelectEnemy(ListData.MakeListData(list));
+                if (actionInfo.TargetType == TargetType.Opponent)
+                {
+                    _view.SelectEnemy(ListData.MakeListData(list));
+                } else
+                {
+                    _view.SelectActor(ListData.MakeListData(list));
+                }
             }
         }
 

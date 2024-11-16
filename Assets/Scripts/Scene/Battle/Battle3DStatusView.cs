@@ -58,6 +58,14 @@ namespace Ryneus
             }
         }
 
+        public void Death(int index,bool isAlive)
+        {
+            if (_battlers.ContainsKey(index))
+            {
+                _prefabs[index].SetActive(isAlive);
+            }
+        }
+
         private void StatusPosition(int targetIndex)
         {
             var target = _3dModels[targetIndex];

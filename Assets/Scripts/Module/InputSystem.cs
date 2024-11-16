@@ -85,6 +85,10 @@ namespace Ryneus
         private void UpdateGamePadData()
         {
             var gamePad = Gamepad.current;
+            if (gamePad == null)
+            {
+                return;
+            }
             UpdateInputGamePadData(InputKeyType.Up,gamePad.dpad.up,null);
             UpdateInputGamePadData(InputKeyType.Down,gamePad.dpad.down,null);
             UpdateInputGamePadData(InputKeyType.Left,gamePad.dpad.left,null);

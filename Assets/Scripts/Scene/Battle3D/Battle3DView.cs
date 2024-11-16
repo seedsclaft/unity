@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -49,7 +50,7 @@ namespace Ryneus
                         //_battlers[battlerInfo.Index].UpdateInfo(battlerInfo);
                     }
                 }                        
-                _virtualModelControls[battlerInfo.Index].Initialize();
+                _virtualModelControls[battlerInfo.Index].Initialize(battlerInfo.IsActor);
                 _virtualModelControls[battlerInfo.Index].CameraOff();
                 idx++;
             }
@@ -79,11 +80,25 @@ namespace Ryneus
             }
         }
 
+        public void BattleStart(int targetIndex)
+        {
+            ActorBattleReady(targetIndex);
+        }
+
         public void PlayEffect(int targetIndex,Effekseer.EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)
         {
             _virtualModelControls[targetIndex].PlayEffect(effectAsset,animationPosition,animationScale,animationSpeed);
-            
-            SetCamera(_virtualModelControls[targetIndex].gameObject.transform);
+            if (_virtualModelControls[targetIndex].IsActor)
+            {
+                ResetCameraPosition();
+                SetCamera(_virtualModelControls[targetIndex].gameObject.transform
+                    ,new Vector3(0,1,0),new Vector3(-160,0,0),-2);
+            } else
+            {
+                ResetCameraPosition();
+                SetCamera(_virtualModelControls[targetIndex].gameObject.transform,
+                    new Vector3(0.5f,1,0),new Vector3(-10,0,0),0.5f);
+            }
         }
 
         private void StartAnimation(int index,AnimationState animationState)
@@ -143,6 +158,12 @@ namespace Ryneus
             ResetCameraPosition();
         }
 
+        public void ActorBattleReady(int index)
+        {
+            ResetCameraPosition();
+            SetCamera(_virtualModelControls[index].gameObject.transform,new Vector3(1.0f,1,0),new Vector3(-17,0,0),-1.25f);
+        }
+
         public void BattleVictory(int mvpActorId)
         {
             battleCamera.enabled = false;
@@ -156,23 +177,41 @@ namespace Ryneus
                 }
             }
         }
-
-        public void SetCamera(Transform target)
+        
+        public void SetCamera(Transform target,Vector3 position,Vector3 angle,float zoom)
         {
-            Vector3 angle = new Vector3(target.transform.position.x + -15,0,0);
+            Vector3 rotate = new Vector3(target.transform.position.x + angle.x,target.transform.position.y + angle.y,0);
             
             //transform.RotateAround()をしようしてメインカメラを回転させる
-            battleCamera.transform.RotateAround(target.transform.position, Vector3.up, angle.x);
-            battleCamera.transform.RotateAround(target.transform.position, battleCamera.transform.right, angle.y);
+            battleCamera.transform.RotateAround(target.transform.position, Vector3.up, rotate.x);
+            battleCamera.transform.RotateAround(target.transform.position, battleCamera.transform.right, rotate.y);
             //selfCamera.transform.parent.transform.localPosition = new Vector3(0,1,0); 
-            _virtualCamera.SetZoomPosition(2.5f);
+            _virtualCamera.SetZoomPosition(zoom);
             UpdateCameraZoom();
-            battleCamera.transform.position += new Vector3(target.transform.position.x + 2f,0,0);
-        }        
-        
+            battleCamera.transform.position += new Vector3(target.transform.position.x + position.x,target.transform.position.y + position.y,0);
+        }
+
         private void UpdateCameraZoom()
         {
             _virtualCamera.UpdateCameraZoom();
+        }
+
+        public void SelectActor(List<ListData> targets)
+        {
+            int targetIndex = -1;
+            // Idleにして整列させる
+            foreach (var target in targets)
+            {
+                var battlerInfo = (BattlerInfo)target.Data;
+                _virtualModelControls[battlerInfo.Index].StartAnimation(AnimationState.Idle);
+                if (targetIndex == -1)
+                {
+                    targetIndex = battlerInfo.Index;
+                }
+            }
+            ResetCameraPosition();
+            SetCamera(_virtualModelControls[targetIndex].gameObject.transform
+                ,new Vector3(0,1,0),new Vector3(-180,0,0),-2);
         }
     }
 }

@@ -133,7 +133,12 @@ namespace Ryneus
         {
             _view.ClearMap();
             var actorInfos = new List<ActorInfo>();
-            actorInfos.Add(new ActorInfo(DataSystem.FindActor(1)));
+            var b = new ActorInfo(DataSystem.FindActor(2));
+            b.SetBattleIndex(1);
+            actorInfos.Add(b);
+            var a = new ActorInfo(DataSystem.FindActor(1));
+            a.SetBattleIndex(2);
+            actorInfos.Add(a);
             var enemyInfos = new List<BattlerInfo>();
             var enemyData = DataSystem.Enemies[3];
             enemyInfos.Add( new BattlerInfo(enemyData,1,0,LineType.Front,false));

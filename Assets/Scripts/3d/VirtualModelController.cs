@@ -26,8 +26,12 @@ namespace Ryneus
         private VirtualCamera _virtualCamera;
         private AnimationState _lastState = AnimationState.None;
 
-        public void Initialize() 
+        private bool _isActor;
+        public bool IsActor => _isActor;
+
+        public void Initialize(bool isActor) 
         { 
+            _isActor = isActor;
             transform.localScale = new Vector3(scaleSize,scaleSize,scaleSize);
             _virtualCamera = new VirtualCamera(selfCamera);
             UpdateCameraZoom();
@@ -204,13 +208,6 @@ namespace Ryneus
             {
                 ZoomOut();
             }
-        }
-
-        public void ChangePlayerSide(bool isActor)
-        {
-            var rotationY = isActor ? 65 : -115;
-            var rect = gameObject.GetComponent<RectTransform>();
-            rect.localRotation = Quaternion.Euler(new Vector3(0,rotationY,0));
         }
 
         public void RunForward()

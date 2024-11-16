@@ -110,6 +110,7 @@ namespace Ryneus
             _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartUIAnimation();
             _view.SetBattleAutoButton(true);
+            _view.StartBattle(_model.BattlerActors()[0].Index);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);
             _view.UpdateStartActivate();
@@ -573,7 +574,7 @@ namespace Ryneus
             if (_model.CheckVictory())
             {
                 _view.StartBattleStartAnim(DataSystem.GetText(16100));
-                _view.BattleVictory(-1);
+                _view.BattleVictory(_model.BattlerActors()[0].Index);
                 strategySceneInfo.GetItemInfos = _model.MakeBattlerResult();
                 strategySceneInfo.BattleTurn = _model.TurnCount;
                 strategySceneInfo.BattleResultScore = _model.MakeBattleScore(true,strategySceneInfo);

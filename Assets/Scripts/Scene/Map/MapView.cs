@@ -27,7 +27,7 @@ namespace Ryneus
         {
             var prefab = Instantiate(gameObject);
             virtualModelController = prefab.GetComponent<VirtualModelController>();
-            virtualModelController.Initialize();
+            virtualModelController.Initialize(true);
             CommandCreateMapObject(prefab);
             _mapPrefab = prefab;
         }
