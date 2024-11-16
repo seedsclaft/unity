@@ -504,7 +504,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28, y: 16}
+  m_AnchoredPosition: {x: -60, y: 16}
   m_SizeDelta: {x: 80, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6263850320586807131
@@ -1244,7 +1244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: 24}
+  m_AnchoredPosition: {x: 116, y: 24}
   m_SizeDelta: {x: 64, y: 32}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8972749631588752339
@@ -1538,7 +1538,9 @@ MonoBehaviour:
   textUguiList: []
   imageUguiList: []
   skillInfoComponent: {fileID: 4061044251296617296}
+  BgObj: {fileID: 0}
   AwakenObj: {fileID: 0}
+  MessiahObj: {fileID: 0}
   DisableSkill: {fileID: 2806420390202976053}
 --- !u!114 &4061044251296617296
 MonoBehaviour:
@@ -1561,6 +1563,9 @@ MonoBehaviour:
   type: {fileID: 922214103558783758}
   value: {fileID: 8735974461422640635}
   description: {fileID: 101522752879801026}
+  descriptionListObj: {fileID: 0}
+  descriptionListTarget: {fileID: 0}
+  descriptionScrollRect: {fileID: 0}
   range: {fileID: 3231497384408367826}
   learningCost: {fileID: 0}
   countTurn: {fileID: 6913366272447242171}

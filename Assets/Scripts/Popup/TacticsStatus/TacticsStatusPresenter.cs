@@ -22,6 +22,7 @@ namespace Ryneus
             _view.SetHelpWindow(_model.HelpText());
             _view.SetUIButton(GetListData(_model.TacticsStatusCommand()));
             _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetStatusEvent((type) => UpdateStatusCommand(type));
 
             CommandRefresh();
             if (_model.ActorInfos.Count == 1) _view.HideArrows();
@@ -77,6 +78,33 @@ namespace Ryneus
                     CommandCallHelp();
                     return;
             }
+        }
+
+        private void UpdateStatusCommand(StatusViewEvent statusViewEvent)
+        {
+            if (_busy || _view.AnimationBusy)
+            {
+                return;
+            }
+            switch (statusViewEvent.commandType)
+            {
+                case Status.CommandType.LevelUp:
+                    CommandLevelUp();
+                    return;
+                case Status.CommandType.ShowLearnMagic:
+                    CommandShowLearnMagic();
+                    return;
+                case Status.CommandType.LearnMagic:
+                    CommandLearnMagic((SkillInfo)statusViewEvent.template);
+                    return;
+                case Status.CommandType.HideLearnMagic:
+                    CommandHideLearnMagic();
+                    return;
+                case Status.CommandType.SelectCommandList:
+                    CommandSelectCommandList((SystemData.CommandData)statusViewEvent.template);
+                    return;
+            }
+            //CheckTutorialState();
         }
 
         private void CommandBack()

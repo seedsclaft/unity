@@ -109,7 +109,11 @@ namespace Ryneus
         public void SetEvent(System.Action<TacticsStatusViewEvent> commandData)
         {
             _commandData = commandData;
-            //statusLevelUp.SetEvent(commandData);
+        }
+
+        public void SetStatusEvent(System.Action<StatusViewEvent> statusCommandData)
+        {
+            statusLevelUp.SetEvent(statusCommandData);
         }
 
         public void SetViewInfo(StatusViewInfo statusViewInfo)

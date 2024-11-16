@@ -35,6 +35,11 @@ namespace Ryneus
         {
             if (ListData == null) return null;
             var data = ListItemData<SymbolResultInfo>();
+            // ショップならnullを返す
+            if (data.SymbolInfo.SymbolType == SymbolType.Shop)
+            {
+                return null;
+            }
             return data.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
         }
         
