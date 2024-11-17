@@ -83,7 +83,7 @@ namespace Ryneus
                 var data = (SkillInfo)b.Data;
                 return data.Id == currentBattler.LastSelectSkillId;
             }),resetScrollRect);
-            _view.SetActorBattleReady(currentBattler.Index);
+            _view.SetActorBattleReady(currentBattler.Index,_model.PartyAliveNum,_model.TroopAliveNum);
         }
 
         /// <summary>

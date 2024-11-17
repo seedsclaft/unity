@@ -110,7 +110,7 @@ namespace Ryneus
             _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartUIAnimation();
             _view.SetBattleAutoButton(true);
-            _view.StartBattle(_model.BattlerActors()[0].Index);
+            _view.StartBattle(_model.BattlerEnemies().Count);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);
             _view.UpdateStartActivate();

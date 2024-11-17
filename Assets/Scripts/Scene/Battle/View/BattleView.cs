@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
-    public class BattleView : BaseView ,IInputHandlerEvent
+    public partial class BattleView : BaseView ,IInputHandlerEvent
     {
         private new System.Action<BattleViewEvent> _commandData = null;
         [SerializeField] private BattleBattlerList battleActorList = null;
@@ -61,8 +61,6 @@ namespace Ryneus
         private BattleStartAnim _battleStartAnim = null;
         public bool StartAnimIsBusy => _battleStartAnim.IsBusy;
 
-        private Battle3DView _battle3dView = null;
-
         private bool _battleBusy = false;
         public bool BattleBusy => _battleBusy;
         public void SetBattleBusy(bool isBusy)
@@ -113,11 +111,7 @@ namespace Ryneus
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
             InitializeMagicList();
-            var prefab = Instantiate(battle3DViewPrefab);
-            CommandCreateMapObject(prefab);
-            _battle3dView = prefab.GetComponent<Battle3DView>();
-            battle3DDamageView.Initialize(_battle3dView.BattleCamera);
-            battle3DStatusView.Initialize(_battle3dView.BattleCamera);
+            Create3DView();
             if (GameSystem.TempData.InReplay)
             {
                 new BattleReplayPresenter(this);
@@ -330,11 +324,6 @@ namespace Ryneus
             {
                 _battle3dView.BattleReady(item.Key);
             }
-        }
-
-        public void StartBattle(int targetIndex)
-        {
-            _battle3dView.BattleStart(targetIndex);
         }
 
         public void StartUIAnimation()
@@ -734,8 +723,9 @@ namespace Ryneus
             }
         }
 
-        public void SetActorBattleReady(int index)
+        public void SetActorBattleReady(int index,int actorNum,int enemyNum)
         {
+            _battle3dView.UpdateParentPosition(actorNum,enemyNum);
             _battle3dView.ActorBattleReady(index);
         }
 

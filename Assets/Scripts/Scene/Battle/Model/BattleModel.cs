@@ -30,7 +30,9 @@ namespace Ryneus
         public Dictionary<int,BattleRecord> BattleRecords => _battleRecords;
 
         private UnitInfo _party = null;
+        public int PartyAliveNum => _party.AliveBattlerInfos.Count;
         private UnitInfo _troop = null;
+        public int TroopAliveNum => _troop.AliveBattlerInfos.Count;
 
 
         private Dictionary<int,List<ActionInfo>> _turnActionInfos = new ();

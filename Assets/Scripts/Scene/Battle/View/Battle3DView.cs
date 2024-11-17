@@ -14,16 +14,27 @@ namespace Ryneus
         [SerializeField] private List<GameObject> troopPositions = null;
         [SerializeField] private GameObject cursorPrefab = null;
         [SerializeField] private Camera battleCamera = null;
+        [SerializeField] private Camera dummyCamera = null;
         public Camera BattleCamera => battleCamera;
+        [SerializeField] Vector3 readyPosition;
+        [SerializeField] Vector3 readyAngel;
+        [SerializeField] float readyZoom;
+        
 
         private Dictionary<int,VirtualModelController> _virtualModelControls = new ();
         public Dictionary<int,VirtualModelController> VirtualModelControls => _virtualModelControls;
         private Dictionary<int,GameObject> _selectCursor = new ();
-        private VirtualCamera _virtualCamera;
+        //private VirtualCamera _virtualCamera;
+        private VirtualCamera _virtualDummyCamera;
+        private int _actorCount = 0;
+        private int _enemyCount = 0;
+
+        
 
         public void Initialize(List<BattlerInfo> battlerInfos) 
         {
-            _virtualCamera = new VirtualCamera(battleCamera);
+            //_virtualCamera = new VirtualCamera(battleCamera);
+            _virtualDummyCamera = new VirtualCamera(dummyCamera);
             var idx = 0;
             foreach (var battlerInfo in battlerInfos)
             {
@@ -57,10 +68,21 @@ namespace Ryneus
             HideSelectCursor();
         }
 
+        public void UpdateParentPosition(int actorNum,int enemyNum)
+        {
+            _actorCount = actorNum;
+            _enemyCount = enemyNum;
+            var positionX = enemyNum - actorNum;
+            var position = partyRoot.transform.localPosition;
+            partyRoot.transform.localPosition = new Vector3(positionX,position.y,-2.5f - (positionX * 0.5f));
+        }
+
         public void ResetCameraPosition()
         {
-            _virtualCamera.SetZoomPosition(0);
-            _virtualCamera.ResetInitialize();
+            //_virtualCamera.SetZoomPosition(0);
+            //_virtualCamera.ResetInitialize();
+            _virtualDummyCamera.SetZoomPosition(0);
+            _virtualDummyCamera.ResetInitialize();
             UpdateCameraZoom();
         }
 
@@ -80,9 +102,12 @@ namespace Ryneus
             }
         }
 
-        public void BattleStart(int targetIndex)
+        public void StartBattle(int enemyCount)
         {
-            ActorBattleReady(targetIndex);
+            _enemyCount = enemyCount;
+            ResetCameraPosition();
+            SetCamera(EnemyPosition(),
+                new Vector3(1*_enemyCount,0,0),new Vector3(-20,0,0),-1.5f);
         }
 
         public void PlayEffect(int targetIndex,Effekseer.EffekseerEffectAsset effectAsset,int animationPosition,float animationScale,float animationSpeed)
@@ -91,13 +116,13 @@ namespace Ryneus
             if (_virtualModelControls[targetIndex].IsActor)
             {
                 ResetCameraPosition();
-                SetCamera(_virtualModelControls[targetIndex].gameObject.transform
-                    ,new Vector3(0,1,0),new Vector3(-160,0,0),-2);
+                SetCamera(_virtualModelControls[targetIndex].gameObject.transform.position
+                    ,new Vector3(0,1,0),new Vector3(-180,0,0),-0.5f);
             } else
             {
                 ResetCameraPosition();
-                SetCamera(_virtualModelControls[targetIndex].gameObject.transform,
-                    new Vector3(0.5f,1,0),new Vector3(-10,0,0),0.5f);
+                SetCamera(_virtualModelControls[targetIndex].gameObject.transform.position,
+                    new Vector3(0.5f,1,0),new Vector3(-10,0,0),-0.5f);
             }
         }
 
@@ -158,42 +183,86 @@ namespace Ryneus
             ResetCameraPosition();
         }
 
+        private Vector3 EnemyPosition()
+        {
+            if (_enemyCount % 2 == 1)
+            {
+                return new Vector3(0,0,0);
+            }
+            return new Vector3(_enemyCount * 0.5f,0,0);
+        }
+
         public void ActorBattleReady(int index)
         {
             ResetCameraPosition();
-            SetCamera(_virtualModelControls[index].gameObject.transform,new Vector3(1.0f,1,0),new Vector3(-17,0,0),-1.25f);
+            var partyRootPos = partyRoot.transform.localPosition;
+            var troopRootPos = troopRoot.transform.localPosition;
+            
+            // 距離
+            var zPos = troopRootPos.z - partyRootPos.z - 1;
+
+            // 横のずれ
+            var xCenter = _actorCount-1;
+            var actorPosition = (index-1)*2;
+            var xPos = actorPosition + xCenter;
+            troopRoot.transform.localPosition = new Vector3(xPos*-1,troopRootPos.y,troopRootPos.z);
+
+            foreach (var _virtualModelControl in _virtualModelControls)
+            {
+                var virtualModelController = _virtualModelControl.Value; 
+                if (virtualModelController.IsActor)
+                {
+                    if (_virtualModelControls[index] != virtualModelController)
+                    {
+                        virtualModelController.transform.localPosition = virtualModelController.transform.forward * -1;
+                    } else
+                    {
+                        virtualModelController.transform.localPosition = new Vector3(virtualModelController.transform.localPosition.x,virtualModelController.transform.localPosition.y,0);
+                    }
+                }
+            }
+            SetCamera(_virtualModelControls[index].gameObject.transform.position,readyPosition + new Vector3(0.25f,0,0),readyAngel + new Vector3(-10f,0f,0),zPos*-1,0f);
+            ResetCameraPosition();
+            SetCamera(_virtualModelControls[index].gameObject.transform.position,readyPosition,readyAngel,zPos*-1,0.8f);
         }
 
         public void BattleVictory(int mvpActorId)
         {
             battleCamera.enabled = false;
+            dummyCamera.enabled = false;
             foreach (var _virtualModelControl in _virtualModelControls)
             {
-                _virtualModelControl.Value.StartAnimation(AnimationState.Victory);
                 if (_virtualModelControl.Key == mvpActorId)
                 {
+                    _virtualModelControl.Value.StartAnimation(AnimationState.Victory);
                     _virtualModelControls[mvpActorId].CameraOn();
                     _virtualModelControls[mvpActorId].SetVictoryCamera();
                 }
             }
         }
         
-        public void SetCamera(Transform target,Vector3 position,Vector3 angle,float zoom)
+        public void SetCamera(Vector3 targetPosition,Vector3 position,Vector3 angle,float zoom,float duration = 0)
         {
-            Vector3 rotate = new Vector3(target.transform.position.x + angle.x,target.transform.position.y + angle.y,0);
+            dummyCamera.transform.RotateAround(targetPosition, Vector3.up, angle.x);
+            dummyCamera.transform.RotateAround(targetPosition, dummyCamera.transform.right, angle.y);
+            dummyCamera.transform.RotateAround(targetPosition, Vector3.right, angle.z);
             
-            //transform.RotateAround()をしようしてメインカメラを回転させる
-            battleCamera.transform.RotateAround(target.transform.position, Vector3.up, rotate.x);
-            battleCamera.transform.RotateAround(target.transform.position, battleCamera.transform.right, rotate.y);
-            //selfCamera.transform.parent.transform.localPosition = new Vector3(0,1,0); 
-            _virtualCamera.SetZoomPosition(zoom);
+            _virtualDummyCamera.SetZoomPosition(zoom);
             UpdateCameraZoom();
-            battleCamera.transform.position += new Vector3(target.transform.position.x + position.x,target.transform.position.y + position.y,0);
+            dummyCamera.transform.position += new Vector3(targetPosition.x + position.x,targetPosition.y + position.y,0);
+
+            var sequence =  DOTween.Sequence()
+                .Join(battleCamera.transform.DOLocalMove(dummyCamera.transform.localPosition, duration))
+                .Join(battleCamera.transform.DOLocalRotate(dummyCamera.transform.localEulerAngles, duration))
+                .SetEase(Ease.OutCubic)
+                .OnComplete(() => 
+                {
+                });
         }
 
         private void UpdateCameraZoom()
         {
-            _virtualCamera.UpdateCameraZoom();
+            _virtualDummyCamera.UpdateCameraZoom();
         }
 
         public void SelectActor(List<ListData> targets)
@@ -210,8 +279,8 @@ namespace Ryneus
                 }
             }
             ResetCameraPosition();
-            SetCamera(_virtualModelControls[targetIndex].gameObject.transform
-                ,new Vector3(0,1,0),new Vector3(-180,0,0),-2);
+            SetCamera(_virtualModelControls[targetIndex].gameObject.transform.position
+                ,new Vector3(0,1,0),new Vector3(-180,0,0),-1);
         }
     }
 }
