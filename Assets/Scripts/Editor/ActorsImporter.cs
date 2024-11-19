@@ -129,6 +129,10 @@ namespace Ryneus
 						KindType Kind3 = (KindType)AssetPostImporter.ImportNumeric(BaseRow,"Kind3");
 						if (Kind3 != 0) ActorData.Kinds.Add(Kind3);
 
+						ActorData.X_Magic = AssetPostImporter.ImportNumeric(BaseRow,"X_Magic");
+						ActorData.Y_Magic = AssetPostImporter.ImportNumeric(BaseRow,"Y_Magic");
+						ActorData.L1_Magic = AssetPostImporter.ImportNumeric(BaseRow,"L1_Magic");
+						ActorData.R1_Magic = AssetPostImporter.ImportNumeric(BaseRow,"R1_Magic");
 						
 						Data.Data.Add(ActorData);
 					}

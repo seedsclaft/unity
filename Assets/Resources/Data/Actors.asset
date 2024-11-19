@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - Id: 1
-    Name: "\u30DF\u30AB"
+    Name: "\u5B9D\u9418\u30DE\u30EA\u30F3"
     SubName: "\u3010\u7149\u7344\u68D8\u59EB\u3011"
     Profile: "\u9AD8\u3044\u653B\u6483\u6027\u80FD\u3092\u6301\u3064\u30A2\u30BF\u30C3\u30AB\u30FC\u3002\n\u5168\u4F53\u7684\u306B\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\u9AD8\u304F\u3001\u8D64\u5C5E\u6027\u9B54\u6CD5\u3092\u7FD2\u5F97\u3059\u308B\u3053\u3068\u3067\u3055\u3089\u306B\u653B\u6483\u6027\u80FD\u3092\u4F38\u3070\u3059\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 1
@@ -120,6 +120,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 1060
+    Y_Magic: 1010
+    L1_Magic: 100120
+    R1_Magic: 0
   - Id: 2
     Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
     SubName: "\u3010ChargeCommander\u3011"
@@ -227,6 +231,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 3
     Name: "\u30A2\u30EA\u30A8\u30B9"
     SubName: "\u3010\u6020\u60F0\u306A\u5B88\u8B77\u5C11\u5973\u3011"
@@ -334,6 +342,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 4
     Name: "\u30B7\u30A4\u30CA"
     SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30C8\u30FB\u30EA\u30E1\u30C7\u30A3\u3011"
@@ -441,6 +453,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 5
     Name: "\u30EC\u30C0"
     SubName: "\u3010Self-sacrifice\u3011"
@@ -548,6 +564,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 6
     Name: "\u30EA\u30B7\u30A7\u30EA"
     SubName: "\u3010Faked-Magician\u3011"
@@ -655,6 +675,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 7
     Name: "\u30E6\u30CB"
     SubName: "\u3010\u5947\u8DE1\u306E\u4E59\u5973\u3011"
@@ -762,6 +786,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 8
     Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
     SubName: "\u3010\u552F\u5FC3\u306E\u5728\u51E6\u3011"
@@ -869,6 +897,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 9
     Name: "\u30CA\u30C4\u30AD"
     SubName: "\u3010\u9EC4\u660F\u30CB\u30D2\u30EA\u30B9\u30C8\u3011"
@@ -976,6 +1008,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 10
     Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
     SubName: "\u3010\u6028\u55DF\u306E\u9396\u3011"
@@ -1083,6 +1119,10 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0
   - Id: 11
     Name: "\u30BB\u30EA\u30CA"
     SubName: "\u3010\u6C37\u96EA\u306E\u52FF\u5FD8\u8349\u3011"
@@ -1193,3 +1233,7 @@ MonoBehaviour:
     - SkillId: 0
       Trigger1: 0
       Trigger2: 0
+    X_Magic: 0
+    Y_Magic: 0
+    L1_Magic: 0
+    R1_Magic: 0

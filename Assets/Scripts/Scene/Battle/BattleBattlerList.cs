@@ -49,7 +49,21 @@ namespace Ryneus
         
         public void UpdateSelectIndexList(List<int> indexes)
         {
-            SetSelectIndexes(indexes);
+            for (int i = 0; i < ItemPrefabList.Count;i++)
+            {
+                if (ItemPrefabList[i] == null) continue;
+                var listItem = ItemPrefabList[i].GetComponentInChildren<ListItem>();
+                if (listItem == null) continue;
+                if (listItem.ListData == null) continue;
+                var battler = (BattlerInfo)listItem.ListData.Data;
+                if (indexes.Contains(battler.Index))
+                {
+                    listItem.SetSelect();
+                } else
+                {
+                    listItem.SetUnSelect();
+                }
+            }
         }
 
         public void ClearSelect()

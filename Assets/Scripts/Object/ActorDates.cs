@@ -35,6 +35,10 @@ namespace Ryneus
         public List<KindType> Kinds;
         public List<LearningData> LearningSkills = new();
         public List<SkillTriggerActorData> SkillTriggerDates = new();
+        public int X_Magic;
+        public int Y_Magic;
+        public int L1_Magic;
+        public int R1_Magic;
     }
 
     public enum UnitType

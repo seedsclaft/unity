@@ -18,6 +18,13 @@ namespace Ryneus
         private int _stageId = 1;
         private int _seek = 1;
         private WorldType _worldType = WorldType.Main;
+        public int X_Magic;
+        public int Y_Magic;
+        public int L1_Magic;
+        public int R1_Magic;
+
+
+
         public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
         {
             var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
@@ -358,6 +365,10 @@ namespace Ryneus
             _currentMp = Master.InitStatus.Mp;
             InitSkillInfo();
             InitSkillTriggerInfos();
+            X_Magic = actorData.X_Magic;
+            Y_Magic = actorData.Y_Magic;
+            L1_Magic = actorData.L1_Magic;
+            R1_Magic = actorData.R1_Magic;
         }
 
 #if UNITY_ANDROID

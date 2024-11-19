@@ -37,8 +37,8 @@ namespace Ryneus
         [SerializeField] private Battle3DDamageView battle3DDamageView = null;
         [SerializeField] private Battle3DStatusView battle3DStatusView = null;
         
-        [SerializeField] private MagicList magicList = null;
-        public SkillInfo SelectSkill => magicList.ListItemData<SkillInfo>();
+        [SerializeField] private BattleMagicSelectView magicSelectView = null;
+        public SkillInfo SelectSkill => magicSelectView.SelectSkill;
 
         private List<BaseList> _viewActives = new ();
         private void SetActivate(BaseList baseView)
@@ -141,23 +141,35 @@ namespace Ryneus
 
         private void InitializeMagicList()
         {
-            magicList.Initialize();
-            magicList.SetInputHandler(InputKeyType.Decide,OnSelectMagic);
-            magicList.gameObject.SetActive(false);
-            SetInputHandler(magicList.gameObject);
-            _viewActives.Add(magicList);
+            magicSelectView.Initialize();
+            magicSelectView.SetInputHandler(InputKeyType.Option1,() => OnSelectMagic(InputKeyType.Option1));
+            magicSelectView.SetInputHandler(InputKeyType.Option2,() => OnSelectMagic(InputKeyType.Option2));
+            magicSelectView.SetInputHandler(InputKeyType.SideLeft1,() => OnSelectMagic(InputKeyType.SideLeft1));
+            magicSelectView.SetInputHandler(InputKeyType.SideRight1,() => OnSelectMagic(InputKeyType.SideRight1));
+            magicSelectView.SetInputHandler(InputKeyType.Decide,() => OnSelectMagic(InputKeyType.Decide));
+            magicSelectView.gameObject.SetActive(false);
+            SetInputHandler(magicSelectView.gameObject);
+            _viewActives.Add(magicSelectView);
         }
 
-        private void OnSelectMagic()
+        private void OnSelectMagic(InputKeyType inputKeyType)
         {
-            var listData = magicList.ListItemData<SkillInfo>();
-            if (listData != null)
+            if (inputKeyType == InputKeyType.Decide)
             {
-                var eventData = new BattleViewEvent(CommandType.OnSelectSkill)
+                var listData = magicSelectView.SelectSkill;
+                if (listData != null)
                 {
-                    template = listData
-                };
-                _commandData(eventData);
+                    var eventData = new BattleViewEvent(CommandType.OnSelectSkill)
+                    {
+                        template = listData
+                    };
+                    _commandData(eventData);
+                    return;
+                }
+            }
+            if (magicSelectView.SelectInputKeyType != inputKeyType)
+            {
+                magicSelectView.SetSelectSkill(inputKeyType);
             }
         }
 
@@ -196,12 +208,13 @@ namespace Ryneus
         public void UpdateSelectCursor(List<int> targetIndexes)
         {
             _battle3dView.UpdateSelectCursor(targetIndexes);
+            battleActorList.UpdateSelectIndexList(targetIndexes);
         }
 
         public void EndActionSelect()
         {
             SetActivate(null);
-            magicList.Hide();
+            magicSelectView.gameObject.SetActive(false);
             battleEnemyLayer.gameObject.SetActive(false);
             _battle3dView.HideSelectCursor();
         }
@@ -370,12 +383,12 @@ namespace Ryneus
             SetInputFrame(1);
         }
 
-        public void ShowMagicList(List<ListData> skillInfos,bool resetScrollRect)
+        public void ShowMagicList(Dictionary<InputKeyType,SkillInfo> skillInfos,bool resetScrollRect)
         {
             battleActorList.gameObject.SetActive(true);
-            magicList.gameObject.SetActive(true);
-            magicList.SetData(skillInfos,resetScrollRect);
-            SetActivate(magicList);
+            magicSelectView.gameObject.SetActive(true);
+            magicSelectView.SetMagicCommands(skillInfos);
+            SetActivate(magicSelectView);
         }
 
         public void SelectEnemy(List<ListData> battlerInfos)
@@ -654,7 +667,7 @@ namespace Ryneus
             _battle3dView.PlayEffect(targetIndex,effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
             battleActorList.gameObject.SetActive(false);
             battleEnemyLayer.gameObject.SetActive(false);
-            magicList.gameObject.SetActive(false);
+            magicSelectView.gameObject.SetActive(false);
         }
 
         public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)

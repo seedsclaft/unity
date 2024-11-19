@@ -267,6 +267,7 @@ namespace Ryneus
 
         public void SelectActor(List<ListData> targets)
         {
+            return;
             int targetIndex = -1;
             // Idleにして整列させる
             foreach (var target in targets)

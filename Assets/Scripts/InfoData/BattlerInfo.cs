@@ -48,6 +48,8 @@ namespace Ryneus
         
         private List<SkillInfo> _skills = new ();
         public List<SkillInfo> Skills => _skills;
+        private Dictionary<InputKeyType,SkillInfo> _magicCommands = new ();
+        public Dictionary<InputKeyType,SkillInfo> MagicCommands => _magicCommands;
         private List<SkillInfo> _enhanceSkills = new ();
         public List<SkillInfo> EnhanceSkills => _enhanceSkills;
         private ActorInfo _actorInfo;
@@ -90,6 +92,7 @@ namespace Ryneus
         public int BeCriticalCount => _beCriticalCount;
         private int _damagedValue = 0;
         public int DamagedValue => _damagedValue;
+
         public void SetDamagedValue(int damagedValue)
         {
             _damagedValue = damagedValue;
@@ -159,6 +162,14 @@ namespace Ryneus
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
             }
             _enhanceSkills = enhanceSkills;
+
+            var tempMagicCommands = new Dictionary<InputKeyType,SkillInfo>();
+            tempMagicCommands[InputKeyType.Option1] = _skills.Find(a => a.Id == actorInfo.Y_Magic);
+            tempMagicCommands[InputKeyType.Option2] = _skills.Find(a => a.Id == actorInfo.X_Magic);
+            tempMagicCommands[InputKeyType.SideLeft1] = _skills.Find(a => a.Id == actorInfo.L1_Magic);
+            tempMagicCommands[InputKeyType.SideRight1] = _skills.Find(a => a.Id == actorInfo.R1_Magic);
+            _magicCommands = tempMagicCommands;
+
             _demigodParam = actorInfo.DemigodParam;
             _isActor = true;
             _isAlcana = false;
