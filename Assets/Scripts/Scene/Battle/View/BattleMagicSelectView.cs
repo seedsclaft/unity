@@ -32,7 +32,7 @@ namespace Ryneus
 
         public void SetMagicCommands(Dictionary<InputKeyType,SkillInfo> magicCommands)
         {
-            selectMagicDescription.Clear();
+            ClearSelect();
             _magicCommands = magicCommands;
             foreach (var magicCommand in magicCommands)
             {
@@ -40,18 +40,38 @@ namespace Ryneus
                 {
                     case InputKeyType.Option1:
                         y_Magic.UpdateInfo(magicCommand.Value);
+                        y_Magic.SetButtonImage(magicCommand.Key);
                         break;
                     case InputKeyType.Option2:
                         x_Magic.UpdateInfo(magicCommand.Value);
+                        x_Magic.SetButtonImage(magicCommand.Key);
                         break;
                     case InputKeyType.SideLeft1:
                         l1_Magic.UpdateInfo(magicCommand.Value);
+                        l1_Magic.SetButtonImage(magicCommand.Key);
                         break;
                     case InputKeyType.SideRight1:
                         r1_Magic.UpdateInfo(magicCommand.Value);
+                        r1_Magic.SetButtonImage(magicCommand.Key);
                         break;
                 }
             }
+        }
+
+        private void ClearSelect()
+        {
+            _selectSkill = null;
+            _selectInputKeyType = InputKeyType.None;
+            selectMagic.Clear();
+            selectMagicDescription.Clear();
+            y_Magic.SetSelect(false);
+            x_Magic.SetSelect(false);
+            l1_Magic.SetSelect(false);
+            r1_Magic.SetSelect(false);
+            y_Magic.Clear();
+            x_Magic.Clear();
+            l1_Magic.Clear();
+            r1_Magic.Clear();
         }
     }
 }

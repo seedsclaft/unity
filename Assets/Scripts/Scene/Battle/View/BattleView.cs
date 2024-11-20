@@ -164,8 +164,8 @@ namespace Ryneus
                         template = listData
                     };
                     _commandData(eventData);
-                    return;
                 }
+                return;
             }
             if (magicSelectView.SelectInputKeyType != inputKeyType)
             {
@@ -216,6 +216,7 @@ namespace Ryneus
             SetActivate(null);
             magicSelectView.gameObject.SetActive(false);
             battleEnemyLayer.gameObject.SetActive(false);
+            battleActorList.UpdateSelectIndexList(new List<int>());
             _battle3dView.HideSelectCursor();
         }
 
@@ -434,7 +435,7 @@ namespace Ryneus
             _battle3dView.Initialize(battlerInfos);
             foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
             {
-                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
+                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value);
             }
             
             //CommandCreateMapObject(battle3DView.gameObject);
@@ -453,7 +454,7 @@ namespace Ryneus
             _battle3dView.Initialize(battlerInfos);
             foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
             {
-                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
+                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value);
                 if (!virtualModelControlDict.Value.IsActor)
                 {
                     battle3DStatusView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);

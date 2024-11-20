@@ -48,7 +48,8 @@ namespace Ryneus
             {
                 inputInfos = DataSystem.System.InputDataList.FindAll(a => a.Key == key);
             }
-            foreach(var prefab in _inputPrefabs){
+            foreach(var prefab in _inputPrefabs)
+            {
                 prefab.SetActive(false);
             }
             for (int i = 0;i < inputInfos.Count;i++)

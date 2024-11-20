@@ -10,7 +10,7 @@ namespace Ryneus
         private Canvas _canvas = null;
         private Camera _worldCamera = null;
 
-        private Dictionary<int,GameObject> _3dModels = new ();
+        private Dictionary<int,VirtualModelController> _3dModels = new ();
         private List<BattleDamage> _battleDamages = new ();
 
         public void Initialize(Camera worldCamera)
@@ -19,20 +19,20 @@ namespace Ryneus
             _worldCamera = worldCamera;
         }
 
-        public void Set3DGameObjects(int index,GameObject gameObject)
+        public void Set3DGameObjects(int index,VirtualModelController virtualModel)
         {
-            _3dModels[index] = gameObject;
+            _3dModels[index] = virtualModel;
         }
 
         private Vector2 DamagePosition(int targetIndex)
         {
-            var target = _3dModels[targetIndex];
+            var target = _3dModels[targetIndex].DamagePosition;
             var pos = Vector2.zero;
             var uiCamera = Camera.main;
             var worldCamera = _worldCamera;
-            var canvasRect = _canvas.GetComponent<RectTransform> ();
+            var canvasRect = _canvas.GetComponent<RectTransform>();
 
-            var screenPos = RectTransformUtility.WorldToScreenPoint (worldCamera, target.transform.position);
+            var screenPos = RectTransformUtility.WorldToScreenPoint(worldCamera, target.transform.position);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, uiCamera, out pos);
             return pos;
         }

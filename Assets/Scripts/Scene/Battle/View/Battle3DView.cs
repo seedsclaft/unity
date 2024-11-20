@@ -228,6 +228,7 @@ namespace Ryneus
 
         public void BattleVictory(int mvpActorId)
         {
+            /*
             battleCamera.enabled = false;
             dummyCamera.enabled = false;
             foreach (var _virtualModelControl in _virtualModelControls)
@@ -239,6 +240,7 @@ namespace Ryneus
                     _virtualModelControls[mvpActorId].SetVictoryCamera();
                 }
             }
+            */
         }
         
         public void SetCamera(Vector3 targetPosition,Vector3 position,Vector3 angle,float zoom,float duration = 0)

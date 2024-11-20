@@ -27,7 +27,8 @@ namespace Ryneus
                 guideText.text = "";
                 var sizeDelta = guideText.GetComponent<RectTransform>().sizeDelta;
                 int space = -16;
-                if (InputSystem.IsGamePad){
+                if (InputSystem.IsGamePad)
+                {
                     space = -4;
                 }
                 guideText.GetComponent<RectTransform>().sizeDelta = new Vector2(space,sizeDelta.y);
@@ -38,7 +39,7 @@ namespace Ryneus
             }
         }
 
-        private void UpdateGuideIcon(int keyId)
+        public void UpdateGuideIcon(int keyId)
         {
             if (InputSystem.IsGamePad)
             {

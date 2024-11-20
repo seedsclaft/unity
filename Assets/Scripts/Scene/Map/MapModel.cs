@@ -7,7 +7,7 @@ namespace Ryneus
     {
         public GameObject LeaderActorPrefab()
         {
-            return ResourceSystem.LoadActor3DModel("0002");
+            return ResourceSystem.LoadActor3DModel("0001");
         }
     }
 }

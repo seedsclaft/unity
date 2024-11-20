@@ -423,19 +423,19 @@ namespace Ryneus
     public enum InputKeyType
     {
         None,
-        Up,
-        Down,
-        Left,
-        Right,
-        Decide,
-        Cancel,
-        Option1, // □,A
-        Option2, // △,S
-        SideLeft1, // L1
-        SideRight1, // R1
-        SideLeft2, // L2
-        SideRight2, // R2
-        Start,
+        Up = 1,
+        Down = 0,
+        Left = 3,
+        Right = 2,
+        Decide = 4,
+        Cancel = 5,
+        Option1 = 6, // □,A
+        Option2 = 7, // △,S
+        SideLeft1 = 9, // L1
+        SideRight1 = 8, // R1
+        SideLeft2 = 11, // L2
+        SideRight2 = 10, // R2
+        Start = 12,
         LeftStickUp,
         LeftStickDown,
         LeftStickLeft,

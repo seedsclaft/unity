@@ -12,6 +12,8 @@ namespace Ryneus
         [SerializeField] private CharacterController characterController = null;
         [SerializeField] private Camera selfCamera = null;
         [SerializeField] private GameObject statusRoot = null;
+        [SerializeField] private GameObject damagePosition = null;
+        public GameObject DamagePosition => damagePosition;
         [SerializeField] private EffekseerEmitter effectEmitter = null;
         [SerializeField] float gravity = 20.0f;
         [SerializeField] float jumpSpeed = 8.0f;
