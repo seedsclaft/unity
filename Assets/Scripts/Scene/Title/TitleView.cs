@@ -10,14 +10,29 @@ namespace Ryneus
     public class TitleView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private TextMeshProUGUI versionText = null;
-        private new System.Action<TitleViewEvent> _commandData = null;
         [SerializeField] private Button tapTitle = null;
         [SerializeField] private OnOffButton rankingButton = null;
         [SerializeField] private TextMeshProUGUI playerName = null;
         [SerializeField] private TextMeshProUGUI playerId = null;
+        [SerializeField] private BaseList titleCommandList = null;
+        public SystemData.CommandData TitleCommand => titleCommandList.ListItemData<SystemData.CommandData>();
+        
+        private new System.Action<ViewEvent> _commandData = null;
+        public new void SetEvent(System.Action<ViewEvent> commandData) => _commandData = commandData;
+        public void CallEvent(CommandType titleCommandType)
+        {
+            var commandType = new ViewCommandType
+            {
+                TitleCommandType = titleCommandType
+            };
+            var eventData = new ViewEvent(commandType);
+            _commandData(eventData);
+        }
+
         public override void Initialize() 
         {
             base.Initialize();
+            InitializeTitleCommand();
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
@@ -27,18 +42,20 @@ namespace Ryneus
                 CallRanking();
             });
             new TitlePresenter(this);
-            tapTitle.onClick.AddListener(() => OnClickTitle());
+            tapTitle.onClick.AddListener(OnClickTitle);
         }
 
-        private void OnClickTitle()
+        private void InitializeTitleCommand()
         {
-            var eventData = new TitleViewEvent(CommandType.SelectTitle);
-            _commandData(eventData);
-        }
-
-        public void SetEvent(System.Action<TitleViewEvent> commandData)
+            titleCommandList.Initialize();
+            SetInputHandler(titleCommandList.gameObject);
+            titleCommandList.SetInputHandler(InputKeyType.Decide,OnClickTitle);
+        }        
+        
+        public void SetTitleCommand(List<ListData> titleCommand)
         {
-            _commandData = commandData;
+            titleCommandList.SetData(titleCommand);
+            titleCommandList.Activate();
         }
 
         public void SetVersion(string text)
@@ -52,16 +69,19 @@ namespace Ryneus
             playerId?.SetText(id);
         }
 
+        private void OnClickTitle()
+        {
+            CallEvent(CommandType.SelectTitle);
+        }
+
         private void CallSideMenu()
         {
-            var eventData = new TitleViewEvent(CommandType.SelectSideMenu);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectSideMenu);
         }
 
         private void CallRanking()
         {
-            var eventData = new TitleViewEvent(CommandType.Ranking);
-            _commandData(eventData);
+            CallEvent(CommandType.Ranking);
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)
@@ -81,22 +101,18 @@ namespace Ryneus
             }
         }
     }
+}
 
-    public class TitleViewEvent
+namespace Ryneus
+{    
+    public partial class ViewCommandType
     {
-        public CommandType commandType;
-        public object template;
-
-        public TitleViewEvent(CommandType type)
-        {
-            commandType = type;
-        }
+        public CommandType TitleCommandType;
     }
 }
 
-
 namespace Title
-{
+{    
     public enum CommandType
     {
         None = 0,

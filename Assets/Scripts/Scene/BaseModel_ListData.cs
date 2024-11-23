@@ -38,12 +38,15 @@ namespace Ryneus
 
         public List<SkillInfo> SkillActionList(ActorInfo actorInfo)
         {            
+            return new List<SkillInfo>();
+            /*
             if (actorInfo == null)
             {
                 return new List<SkillInfo>();
             }
             var alchemyIds = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             return actorInfo.SkillActionList(alchemyIds);
+            */
         }
 
         public List<ListData> SkillActionListData(ActorInfo actorInfo)
@@ -55,7 +58,7 @@ namespace Ryneus
         public List<ListData> ActorLearningMagicList(ActorInfo actorInfo,int selectAttribute = -1, int selectedSkillId = -1)
         {
             var skillInfos = new List<SkillInfo>();
-            
+            /*
             foreach (var alchemyId in PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType))
             {
                 var skillInfo = new SkillInfo(alchemyId);
@@ -71,6 +74,7 @@ namespace Ryneus
                 skillInfo.SetLearningCost(cost);
                 skillInfos.Add(skillInfo);
             }
+            */
             var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
             var listData = MakeListData(skillInfos,selectIndex);
             return listData;

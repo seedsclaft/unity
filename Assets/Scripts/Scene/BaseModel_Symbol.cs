@@ -108,6 +108,7 @@ namespace Ryneus
                         } else
                         if (prizeSet.GetItem.Type == GetItemType.Numinous)
                         {
+                            /*
                             var numinosBonus = PartyInfo.BattleNuminosBonus(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
                             var data = new GetItemData
                             {
@@ -116,6 +117,7 @@ namespace Ryneus
                                 Type = GetItemType.Numinous
                             };
                             getItemInfos.Add(new GetItemInfo(data));
+                            */
                         } else
                         {
                             getItemInfos.Add(getItemInfo);
@@ -147,6 +149,7 @@ namespace Ryneus
 
         private void MakeShopGetItemInfos(List<GetItemInfo> getItemInfos,SymbolInfo symbolInfo,RankType rankType,int count)
         {
+            /*
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && a.Value.Id % 10 == 0 && !alcanaIds.Contains(a.Value.Id)).ToList();
@@ -164,6 +167,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
         }
 
         private List<GetItemInfo> MakeSelectActorGetItemInfos(bool freeSelect)
@@ -180,6 +184,7 @@ namespace Ryneus
             } else
             {
                 // 選択できるアクターが3人まで
+                /*
                 var pastActorIdList = PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
                 var actorInfos = PartyInfo.ActorInfos.FindAll(a => !pastActorIdList.Contains(a.ActorId));
                 var count = 3;
@@ -202,6 +207,7 @@ namespace Ryneus
                         }
                     }
                 }
+                */
             }
             return getItemInfos;
         }
@@ -213,6 +219,7 @@ namespace Ryneus
                 // タイトル表示用
                 MakeGetItemInfo(GetItemType.SelectRelic, -1)
             };
+            /*
             var alcanaRank = rankType;
             var alcanaIds = PartyInfo.CurrentAlcanaIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             var alcanaSkills = DataSystem.Skills.Where(a => a.Value.Rank == alcanaRank && a.Value.Id % 10 == 0 && !alcanaIds.Contains(a.Value.Id)).ToList();
@@ -241,6 +248,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
             return getItemInfos;
         }
         
@@ -292,6 +300,7 @@ namespace Ryneus
                     case SymbolType.Actor:
                         // 今まで遭遇していないアクターを選定
                         var list = new List<int>();
+                        /*
                         foreach (var actorInfo in PartyInfo.ActorInfos)
                         {
                             if (!PartyInfo.PastActorIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType).Contains(actorInfo.ActorId))
@@ -299,16 +308,17 @@ namespace Ryneus
                                 list.Add(actorInfo.ActorId);
                             }
                         }
+                        */
                         targetRand = Random.Range(0,list.Count);
                         stageSymbolData.CopyParamData(symbol);
                         stageSymbolData.Param1 = list[targetRand];
                         stageSymbolData.Param2 = 0;
                         break;
                     case SymbolType.Alcana:
-                        if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType).Contains(symbol.Param1))
-                        {
-                            stageSymbolData.CopyParamData(symbol);
-                        }
+                        //if (!PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType).Contains(symbol.Param1))
+                        //{
+                        //    stageSymbolData.CopyParamData(symbol);
+                        //}
                         break;
                     default:
                         if (symbol.IsGroupSymbol())
@@ -335,8 +345,8 @@ namespace Ryneus
         private TroopInfo BattleTroop(StageSymbolData stageSymbolData)
         {
             var troopId = stageSymbolData.Param1;
-            var plusLv = PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
-            var plusNuminos = PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
+            var plusLv = 0;//PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
+            var plusNuminos = 0;//PartyInfo.BattleEnemyLv(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
             var troopInfo = new TroopInfo(troopId);
             var lv = DataSystem.Stages.Find(a => a.Id == stageSymbolData.StageId).StageLv + plusLv;
             // ランダム生成
@@ -371,8 +381,8 @@ namespace Ryneus
 
         private GetItemInfo MakeEnemyRandomNuminos(int stageId,int seek)
         {
-            var numinosBonus = PartyInfo.BattleNuminosBonus(stageId,seek,WorldType.Main);
-            var totalScore = (int)PartyInfo.TotalScore(WorldType.Main);
+            var numinosBonus = 0;//PartyInfo.BattleNuminosBonus(stageId,seek,WorldType.Main);
+            var totalScore = 0;//(int)PartyInfo.TotalScore(WorldType.Main);
             // 確定報酬でNuminos
             var numinosGetItem = new GetItemData
             {
@@ -419,6 +429,7 @@ namespace Ryneus
 
         private GetItemData AddSkillGetItemData(RankType rankType)
         {
+            /*
             var hasSkills = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
@@ -432,11 +443,13 @@ namespace Ryneus
                 };
                 return getItemData;
             }
+            */
             return null;
         }
 
         private GetItemData AddEnhanceSkillGetItemData(RankType rankType)
         {
+            /*
             var hasSkills = PartyInfo.CurrentAlchemyIdList(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
             var skillList = new List<SkillData>(DataSystem.Skills.Values);
             var skills = skillList.FindAll(a => a.Rank == rankType && !hasSkills.Contains(a.Id));
@@ -453,6 +466,7 @@ namespace Ryneus
                 };
                 return getItemData;
             }
+            */
             return null;
         }
     }

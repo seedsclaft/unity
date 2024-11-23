@@ -55,13 +55,13 @@ namespace Ryneus
             //SaveSystem.SaveStart();
         }
         
-        private void UpdateCommand(BootViewEvent viewEvent)
+        private void UpdateCommand(ViewEvent viewEvent)
         {
             if (_busy || _view.AnimationBusy)
             {
                 return;
             }
-            if (viewEvent.commandType == CommandType.LogoClick)
+            if (viewEvent.ViewCommandType.BootCommandType == CommandType.LogoClick)
             {
                 CommandLogoClick();
             }
@@ -69,7 +69,7 @@ namespace Ryneus
 
         private void CommandLogoClick()
         {
-            _view.CommandGotoSceneChange(Scene.Map);
+            _view.CommandGotoSceneChange(Scene.Title);
         }
     }
 }

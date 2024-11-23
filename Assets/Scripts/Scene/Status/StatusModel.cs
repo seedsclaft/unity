@@ -51,6 +51,7 @@ namespace Ryneus
 
         public List<GetItemInfo> MakeSelectGetItemInfos()
         {
+            /*
             var getItemInfos = CurrentSelectRecord().SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.AddActor);
             var getItemInfo = getItemInfos.Find(a => a.Param1 == CurrentActor.ActorId);
             if (getItemInfo != null)
@@ -64,6 +65,7 @@ namespace Ryneus
                 getItemInfos[0].SetResultParam(CurrentActor.ActorId);
                 return getItemInfos;
             }
+            */
             return new List<GetItemInfo>(){};
         }
 
@@ -76,7 +78,7 @@ namespace Ryneus
         {
             var tempActor = _actorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
             var currency = tempActor.ActorLevelReset();
-            PartyInfo.ChangeCurrency(Currency+ currency);
+            //PartyInfo.ChangeCurrency(Currency+ currency);
             return currency;
         }
 

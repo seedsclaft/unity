@@ -307,11 +307,11 @@ namespace Ryneus
                     _model.ReturnTempBattleMembers(); 
                     _view.CommandChangeViewToTransition(null);  
                     // ボス戦なら
-                    if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
-                    {
+                    //if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
+                    //{
                         //SoundManager.Instance.FadeOutBgm();
-                        PlayBossBgm();
-                    } else
+                    //    PlayBossBgm();
+                    //} else
                     {
                         var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
                         if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
@@ -326,7 +326,7 @@ namespace Ryneus
                     var battleSceneInfo = new BattleSceneInfo
                     {
                         ActorInfos = _model.BattleMembers(),
-                        EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
+                        //EnemyInfos = _model.CurrentTroopInfo().BattlerInfos
                     };
                     _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
                 } else
@@ -379,6 +379,7 @@ namespace Ryneus
         private void CommandCallEnemyInfo()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);  
+            /*
             var enemyIndex = _model.CurrentStage.CurrentSeekIndex;
             var enemyInfos = _model.TacticsSymbols()[enemyIndex].SymbolInfo.BattlerInfos();
             _busy = true;
@@ -388,6 +389,7 @@ namespace Ryneus
                 _view.SetHelpText(DataSystem.GetText(20020));
                 _busy = false;
             });  
+            */
         }
 
         private void SetHelpInputSkipEnable()
@@ -413,11 +415,6 @@ namespace Ryneus
                 // レコード新規保存
                 _model.SetSelectSymbol();
                 _model.EndStrategy();
-                if (_model.RemainTurns == 1 && _model.BrunchMode == false)
-                {
-                    _model.EndStage();
-                    _view.CommandGotoSceneChange(Scene.MainMenu);
-                } else
                 {
                     _model.SeekStage();
                     var tacticsSceneInfo = new TacticsSceneInfo

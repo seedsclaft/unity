@@ -98,12 +98,6 @@ namespace Ryneus
 
         private void CommandDropout()
         {  
-            if (_model.BrunchMode)
-            {
-                CommandCautionInfo(DataSystem.GetText(19360));
-                ClosePopup();
-                return;
-            }
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var confirmInfo = new ConfirmInfo(DataSystem.GetText(1100),(a) => UpdatePopupDropout(a));

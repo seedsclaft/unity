@@ -90,12 +90,12 @@ namespace Ryneus
             {
                 idList.Add(battleMember.ActorId);
             }
-            PartyInfo.SetLastBattlerIdList(idList);
+            //PartyInfo.SetLastBattlerIdList(idList);
         }
 
         public List<BattlerInfo> EnemyInfos()
         {
-            return CurrentTroopInfo().BattlerInfos;
+            return null;
         }
 
         public void SetInBattle()
@@ -126,7 +126,7 @@ namespace Ryneus
 
         public bool IsEnableBattleReplay()
         {
-            return CurrentTroopInfo().NeedReplayData;
+            return false;
         }
 
         public List<ListData> SideMenu()
@@ -171,7 +171,7 @@ namespace Ryneus
             {
                 if (a.Key == "Save" || a.Key == "Retire")
                 {
-                    return PartyInfo.ReturnSymbol == null;
+                    //return PartyInfo.ReturnSymbol == null;
                 }
                 return true;
             };

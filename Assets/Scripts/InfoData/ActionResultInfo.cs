@@ -1017,7 +1017,7 @@ namespace Ryneus
             {
                 // featureのIndex
                 var feature = skillInfo.FeatureDates.Count >= featureData.Param2 ? skillInfo.FeatureDates[featureData.Param2] : null;
-                var winCount = GameSystem.CurrentStageData.CurrentStage.ClearTroopIds.Count;
+                var winCount = 0;//GameSystem.CurrentStageData.CurrentStage.ClearTroopIds.Count;
                 if (feature != null)
                 {
                     switch (featureParamIndex)

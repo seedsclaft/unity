@@ -4,9 +4,23 @@ namespace Ryneus
 {
     public class TitleModel : BaseModel
     {
+        public List<ListData> TitleCommand()
+        {
+            var selectIndex = ExistsLoadFile() ? 1 : 0;
+            return ListData.MakeListData(DataSystem.TitleCommand,(a) => 
+            { 
+                switch (a.Key)
+                {
+                    case "CONTINUE":
+                        return ExistsLoadFile();
+                }
+                return true;
+            },selectIndex);
+        }
+
         public bool ExistsLoadFile()
         {
-            return SaveSystem.ExistsLoadPlayerFile();
+            return SaveSystem.ExistsStageFile();
         }
 
         public string VersionText()
@@ -55,6 +69,18 @@ namespace Ryneus
             list.Add(endCommand);
 #endif
             return list;
+        }
+
+        public void InitializeNewGame()
+        {
+            var actorInfos = new List<ActorInfo>();
+            var b = new ActorInfo(DataSystem.FindActor(1));
+            b.SetBattleIndex(1);
+            actorInfos.Add(b);
+            var a = new ActorInfo(DataSystem.FindActor(3));
+            a.SetBattleIndex(2);
+            actorInfos.Add(a);
+            PartyInfo.SetActorInfos(actorInfos);
         }
     }
 }

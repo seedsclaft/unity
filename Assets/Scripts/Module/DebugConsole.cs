@@ -22,6 +22,7 @@ namespace Ryneus
 
         void CallConsoleCommand(string inputText)
         {
+            /*
             if (consoleInputField.text.Contains("TS"))
             {
                 var replace = consoleInputField.text.Replace("TS","");
@@ -133,6 +134,7 @@ namespace Ryneus
                 var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
                 gameSystem.CommandSceneChange(sceneInfo);
             }
+            */
         }
     }
 }

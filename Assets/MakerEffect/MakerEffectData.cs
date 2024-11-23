@@ -25,6 +25,7 @@ public class MakerEffectData
         public int duration;
         public int[] color;
     }
+
     [Serializable]
     public class Rotation
     {
@@ -32,12 +33,14 @@ public class MakerEffectData
         public int y;
         public int z;
     }
+
     [Serializable]
     public class SoundTimings
     {
         public int frame;
         public Se se;
     }
+
     [Serializable]
     public class Se
     {

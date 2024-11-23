@@ -28,6 +28,7 @@ namespace Ryneus
 
         public void MakeBattleActor()
         {
+            /*
             GameSystem.CurrentStageData = new SaveStageInfo();
             var currentStageData = GameSystem.CurrentStageData;
             currentStageData.Initialize();
@@ -85,6 +86,7 @@ namespace Ryneus
                 }
                 currentStageData.CurrentStage.TestTroops(troopId,troopLv);
             }
+            */
         }
 
         

@@ -36,6 +36,7 @@ namespace Ryneus
             }
             if (dates.Count > 0)
             {
+                /*
                 var symbolStageId = dates[0].StageId;
                 var symbolSeek = dates[0].Seek;
                 var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
@@ -65,6 +66,7 @@ namespace Ryneus
                 {
                     stageDataText?.SetText(dates[0].StageId.ToString() + "-" + dates[0].Seek.ToString());
                 }
+                */
             }
         }
 

@@ -129,14 +129,14 @@ namespace Ryneus
 			return ExistsLoadFile(_playerDataKey);
 		}
 
-		public static void SaveStageInfo(SaveStageInfo userSaveInfo = null,int fileId = 0)
+		public static void SaveStageInfo(SaveGameInfo userSaveInfo = null,int fileId = 0)
 		{
 			SaveFile(PlayerStageDataKey(fileId),userSaveInfo);
 		}
 
 		public static bool LoadStageInfo(int fileId = 0)
 		{
-			var playerInfo = LoadFile<SaveStageInfo>(PlayerStageDataKey(fileId),(a) => 
+			var playerInfo = LoadFile<SaveGameInfo>(PlayerStageDataKey(fileId),(a) => 
 			{
 				GameSystem.CurrentStageData = a;
 				//GameSystem.CurrentStageData.Party.InitScorePrizeInfos();

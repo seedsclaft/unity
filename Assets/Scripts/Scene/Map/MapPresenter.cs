@@ -52,6 +52,9 @@ namespace Ryneus
                 case CommandType.BattleStart:
                     CommandBattleStart();
                     break;
+                case CommandType.CallStatus:
+                    CommandCallStatus();
+                    break;
             }
         }
 
@@ -132,23 +135,25 @@ namespace Ryneus
         private void CommandBattleStart()
         {
             _view.ClearMap();
-            var actorInfos = new List<ActorInfo>();
-            var b = new ActorInfo(DataSystem.FindActor(1));
-            b.SetBattleIndex(1);
-            actorInfos.Add(b);
-            var a = new ActorInfo(DataSystem.FindActor(3));
-            a.SetBattleIndex(2);
-            actorInfos.Add(a);
             var enemyInfos = new List<BattlerInfo>();
             var enemyData = DataSystem.Enemies[3];
             enemyInfos.Add( new BattlerInfo(enemyData,1,0,LineType.Front,false));
             enemyInfos.Add( new BattlerInfo(enemyData,1,1,LineType.Front,false));
             var battleSceneInfo = new BattleSceneInfo
             {
-                ActorInfos = actorInfos,
+                ActorInfos = _model.PartyMembers(),
                 EnemyInfos = enemyInfos
             };
             _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
+        }
+
+        private void CommandCallStatus()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CommandStatusInfo(_model.StageMembers(),false,true,false,false,-1,() => 
+            {
+                _view.SetHelpText(DataSystem.GetText(20020));
+            });
         }
 
         private void CommandRefresh()

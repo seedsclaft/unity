@@ -8,15 +8,17 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-public class MakerEffectImporter : AssetPostprocessor{
+public class MakerEffectImporter : AssetPostprocessor
+{
 	static readonly string ImportPath = "Assets/MakerEffect/Resources";
 	static readonly string ExportPath = "Assets/MakerEffect/Resources_bak/MakerEffectDatas";
 	static readonly string FileName = "Animations.json";
 
 	// Fileがあったら呼ばれる
-	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-		
-        foreach (string asset in importedAssets) {
+	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+	{	
+        foreach (string asset in importedAssets) 
+		{
 			if (CheckOnPostprocessAsset(asset,FileName))
 			{
 				CreateEffectData(asset);
@@ -63,11 +65,12 @@ public class MakerEffectImporter : AssetPostprocessor{
 
                 // エフェクト名で保存
                 MakerEffectAssetData Data = AssetDatabase.LoadAssetAtPath<MakerEffectAssetData>(ExportFilePath);
-                if (Data == null){
+                if (Data == null)
+				{
                     // データがなければ作成
                     Data = ScriptableObject.CreateInstance<MakerEffectAssetData>();
                     AssetDatabase.CreateAsset(Data, ExportFilePath);
-                    Data.hideFlags = HideFlags.NotEditable;
+                    //Data.hideFlags = HideFlags.NotEditable;
                 }
                 Data.AssetData = MakerEffectData;
                 EditorUtility.SetDirty(Data);

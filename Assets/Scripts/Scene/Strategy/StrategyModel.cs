@@ -58,6 +58,8 @@ namespace Ryneus
 
         public void MakeLvUpData()
         {
+            return;
+            /*
             if (_levelUpData.Count > 0) return;
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             if (record != null && record.Selected) return;
@@ -88,10 +90,12 @@ namespace Ryneus
                 lvUpList.Add(lvUpActorInfo);
             }
             _levelUpData = lvUpList;
+            */
         }
 
         public void MakeSelectRelicData()
         {
+            /*
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
             var getItemInfos = SceneParam.GetItemInfos;
@@ -107,11 +111,13 @@ namespace Ryneus
                     _relicData.Add(skillInfo);
                 }
             }
+            */
         }
 
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
+            /*
             var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
             foreach (var getItemInfo in getItemInfos)
@@ -399,6 +405,7 @@ namespace Ryneus
 
         public void SeekStage()
         {
+            /*
             var seekStage = RemainTurns == 1;
             if (RemainTurns > 1)
             {
@@ -414,40 +421,23 @@ namespace Ryneus
                 PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
             }
             SetStageSeek();
+            */
             SavePlayerStageData(true);
         }
 
-        public void EndStage()
-        {
-            var (stageId,currentTurn) = PartyInfo.LastStageIdTurns();
-            if (currentTurn == DataSystem.FindStage(stageId).Turns)
-            {
-                currentTurn += 1;
-            }
-            CurrentSaveData.MakeStageData(stageId);
-            CurrentStage.SetCurrentTurn(currentTurn);
-            SetStageSeek();
-            SavePlayerStageData(true);
-        }
 
         public void SetSelectSymbol()
         {
-            PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
+            //PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
         }
 
-        public bool EnableBattleSkip()
-        {
-            // スキップ廃止
-            return false;
-            //return CurrentData.PlayerInfo.EnableBattleSkip(CurrentTroopInfo().TroopId);
-        }
 
         public void ReturnTempBattleMembers()
         {
             foreach (var tempActorInfo in TempInfo.TempActorInfos)
             {
                 //tempActorInfo.SetBattleIndex(-1);
-                PartyInfo.UpdateActorInfo(tempActorInfo);
+                //PartyInfo.UpdateActorInfo(tempActorInfo);
             }
             //TempInfo.ClearBattleActors();
         }

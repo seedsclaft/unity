@@ -76,11 +76,13 @@ namespace Ryneus
         {
             if (CurrentStage != null)
             {
+                /*
                 if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
                 {
                     var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
                     return GetBgmData(bgmData.Key);
                 }
+                */
             }
             return GetBgmData("TACTICS2");
         }
@@ -138,8 +140,8 @@ namespace Ryneus
             _battlers.AddRange(saveBattleInfo.Troop.BattlerInfos);
 
             // アルカナ
-            var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
-            _battlers.Add(alcana);
+            //var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
+            //_battlers.Add(alcana);
 
             foreach (var battlerInfo1 in _battlers)
             {

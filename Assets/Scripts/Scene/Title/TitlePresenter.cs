@@ -45,15 +45,16 @@ namespace Ryneus
                 }
                 _view.SetPlayerData(_model.PlayerName(),_model.PlayerId());
             }
+            _view.SetTitleCommand(_model.TitleCommand());
         }
 
-        private void UpdateCommand(TitleViewEvent viewEvent)
+        private void UpdateCommand(ViewEvent viewEvent)
         {
             if (_busy || _view.AnimationBusy)
             {
                 return;
             }
-            switch (viewEvent.commandType)
+            switch (viewEvent.ViewCommandType.TitleCommandType)
             {
                 case CommandType.SelectSideMenu:
                     CommandSelectSideMenu();
@@ -93,24 +94,35 @@ namespace Ryneus
 
         private void CommandSelectTitle()
         {
+            var titleCommand = _view.TitleCommand;
+            switch (titleCommand?.Key)
+            {
+                case "NEWGAME":
+                    CommandNewGame();
+                    return;
+                case "CONTINUE":
+                    CommandContinue();
+                    return;
+            }
+            /*
             var loadFile = SaveSystem.ExistsLoadPlayerFile();
             if (loadFile)
             {
                 CommandContinue();
             } else
             {
-                CommandNewGame();
             }
+            */
         }
 
         private void CommandNewGame()
         {
             _busy = true;
             SoundManager.Instance.PlayStaticSe(SEType.PlayStart);
-            _view.WaitFrame(60,() => 
+            _view.WaitFrame(2,() => 
             {
                 _model.InitSaveInfo();
-                _view.CommandGotoSceneChange(Scene.NameEntry);
+                _view.CommandGotoSceneChange(Scene.Map);
             });
         }
 

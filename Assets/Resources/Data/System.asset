@@ -144,11 +144,15 @@ MonoBehaviour:
   TitleCommandData:
   - Id: 1
     Key: NEWGAME
-    Name: "\u30EA\u30BB\u30C3\u30C8"
+    Name: NewGame
     Help: '""'
   - Id: 2
     Key: CONTINUE
-    Name: "\u4F5C\u6226\u8A2D\u5B9A"
+    Name: Continue
+    Help: '""'
+  - Id: 3
+    Key: OPTION
+    Name: Option
     Help: '""'
   InitCurrency: 0
   TrainCount: 5
@@ -833,6 +837,18 @@ MonoBehaviour:
     Feature: 
   - Id: 13140
     Text: "\u30D7\u30EC\u30A4\u30E4\u30FCID:"
+    Help: '""'
+    Feature: 
+  - Id: 13210
+    Text: NewGame
+    Help: '""'
+    Feature: 
+  - Id: 13220
+    Text: Continue
+    Help: '""'
+    Feature: 
+  - Id: 13230
+    Text: Option
     Help: '""'
     Feature: 
   - Id: 13300

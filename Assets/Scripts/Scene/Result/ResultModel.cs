@@ -20,7 +20,7 @@ namespace Ryneus
 
         public string BattleTotalScore()
         {
-            return TotalScore.ToString("F2") + "%";
+            return "";//TotalScore.ToString("F2") + "%";
         }
 
         public List<SystemData.CommandData> ResultCommand()

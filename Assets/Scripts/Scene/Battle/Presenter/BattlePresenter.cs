@@ -136,7 +136,8 @@ namespace Ryneus
         }
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
-        {            
+        {
+            /*
             Func<TutorialData,bool> enable = (tutorialData) => 
             {
                 var checkFlag = true;
@@ -180,6 +181,7 @@ namespace Ryneus
                 }
             };
             _view.CommandCheckTutorialState(tutorialViewInfo);
+            */
         }
 
         private void UpdateCommand(BattleViewEvent viewEvent)

@@ -37,6 +37,13 @@ namespace Ryneus
             _commandData = commandData;
         }
 
+        public void CallEvent(CommandType commandType)
+        {
+            var eventData = new MapViewEvent(commandType);
+            _commandData(eventData);
+        }
+
+
         private void CallSideMenu()
         {
             var eventData = new MapViewEvent(CommandType.SelectSideMenu);
@@ -137,6 +144,9 @@ namespace Ryneus
                 case InputKeyType.None:
                     virtualModelController?.Stop();
                     return;
+                case InputKeyType.Cancel:
+                    CallEvent(CommandType.CallStatus);
+                    return;
             }
         }
 
@@ -178,5 +188,6 @@ namespace Map
         SelectSideMenu,
         Ranking,
         BattleStart,
+        CallStatus
     }
 }

@@ -24,7 +24,7 @@ namespace Ryneus
 
         private bool _getItemInit = false;
         private PartyInfo partyInfo => GameSystem.CurrentStageData.Party;
-        private StageInfo currentStageInfo => GameSystem.CurrentStageData.CurrentStage;
+        //private StageInfo currentStageInfo => GameSystem.CurrentStageData.CurrentStage;
         
         public void SetSelectable(bool selectable)
         {
@@ -122,6 +122,7 @@ namespace Ryneus
                 //data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
                 if (getItemInfo.GetItemType == GetItemType.Skill)
                 {
+                    /*
                     // 入手済みなら
                     if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.Param1))
                     {
@@ -131,15 +132,18 @@ namespace Ryneus
                     {
                         data.SetEnable(false);
                     }
+                    */
                     
                 } else
                 if (getItemInfo.GetItemType == GetItemType.AddActor)
                 {
+                    /*
                     // 入手済みなら
                     if (partyInfo.CurrentActorIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.ResultParam))
                     {
                         data.SetEnable(false);
                     }
+                    */
                 }
                 list.Add(data);
             }

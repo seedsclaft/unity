@@ -7,12 +7,12 @@ namespace Ryneus
     {
         public bool IsEnding()
         {
-            return PartyInfo.HasEndingGetItem();
+            return false;//PartyInfo.HasEndingGetItem();
         }
 
         public void StartSelectStage(int stageId)
         {
-            CurrentSaveData.MakeStageData(stageId);
+            //CurrentSaveData.MakeStageData(stageId);
             SetStageSeek();
             if (SelectedStage(stageId))
             {
@@ -22,7 +22,7 @@ namespace Ryneus
                 // 新規レコード作成
                 foreach (var record in StageResultInfos(stageId))
                 {
-                    PartyInfo.SetSymbolResultInfo(record);
+                    //PartyInfo.SetSymbolResultInfo(record);
                 }
             }
             SavePlayerStageData(true);
@@ -30,13 +30,15 @@ namespace Ryneus
         
         private bool SelectedStage(int stageId)
         {
-            var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageId);
-            return records.Count > 0;
+            return false;
+            //var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageId);
+            //return records.Count > 0;
         }
 
         public int SelectedStageCurrentTurn(int stageId)
         {
             var turn = 0;
+            /*
             var records = PartyInfo.SymbolRecordList.FindAll(a => a.StageId == stageId && a.Selected);
             foreach (var record in records)
             {
@@ -45,6 +47,7 @@ namespace Ryneus
                     turn = record.Seek;
                 }
             }
+            */
             return turn + 1;
         }
 
