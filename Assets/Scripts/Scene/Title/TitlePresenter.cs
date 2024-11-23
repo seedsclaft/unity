@@ -118,6 +118,7 @@ namespace Ryneus
         private void CommandNewGame()
         {
             _busy = true;
+            _model.InitializeNewGame();
             SoundManager.Instance.PlayStaticSe(SEType.PlayStart);
             _view.WaitFrame(2,() => 
             {

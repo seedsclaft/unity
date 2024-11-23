@@ -11,10 +11,7 @@ namespace Ryneus
 
 		public void Initialize()
 		{
-		}
-
-		private void SetInitMembers()
-		{
+			_party = new PartyInfo();
 		}
 	}
 }

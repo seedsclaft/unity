@@ -24,7 +24,6 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetStatusEvent((type) => UpdateStatusCommand(type));
             CommandRefresh();
             var enemyInfos = _model.EnemyInfos();
             _view.SetEnemyMembers(GetListData(enemyInfos));
@@ -140,13 +139,13 @@ namespace Ryneus
             CheckTutorialState(viewEvent.commandType);
         }
 
-        private void UpdateStatusCommand(StatusViewEvent statusViewEvent)
+        private void UpdateStatusCommand(ViewEvent statusViewEvent)
         {
             if (_busy || _view.AnimationBusy)
             {
                 return;
             }
-            switch (statusViewEvent.commandType)
+            switch (statusViewEvent.ViewCommandType.StatusCommandType)
             {
                 case Status.CommandType.LevelUp:
                     CommandLevelUp();

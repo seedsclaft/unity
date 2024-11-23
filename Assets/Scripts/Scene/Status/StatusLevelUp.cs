@@ -9,7 +9,7 @@ namespace Ryneus
 {
     public class StatusLevelUp : MonoBehaviour
     {
-        private System.Action<StatusViewEvent> _commandData = null;
+        private System.Action<ViewEvent> _commandData = null;
         [SerializeField] private OnOffButton levelUpButton = null;
         [SerializeField] private OnOffButton learnMagicButton = null;
         [SerializeField] private Button learnMagicBackButton = null;
@@ -38,27 +38,27 @@ namespace Ryneus
         public void CallLevelUp()
         {
             if (levelUpButton.gameObject.activeSelf == false) return;
-            var eventData = new StatusViewEvent(CommandType.LevelUp);
-            _commandData(eventData);
+            //var eventData = new StatusViewEvent(CommandType.LevelUp);
+            //_commandData(eventData);
         }
 
         public void CallLearnMagic()
         {
             if (learnMagicButton.gameObject.activeSelf == false) return;
-            var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
-            _commandData(eventData);
+            //var eventData = new StatusViewEvent(CommandType.ShowLearnMagic);
+            //_commandData(eventData);
         }
 
         public void CallHideLearnMagic()
         {
             if (learnMagicBackButton.gameObject.activeSelf == false) return;
-            var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
-            _commandData(eventData);
+            //var eventData = new StatusViewEvent(CommandType.HideLearnMagic);
+            //_commandData(eventData);
         }
 
-        public void SetEvent(System.Action<StatusViewEvent> commandData)
+        public void SetEvent(System.Action<ViewEvent> commandData)
         {
-            _commandData = commandData;
+            //_commandData = commandData;
         }
 
         public void SetLearnMagicButtonActive(bool IsActive)

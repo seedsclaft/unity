@@ -28,7 +28,7 @@ namespace Ryneus
         [SerializeField] private Color downColor;
         [SerializeField] private CanvasGroup canvasGroup;
 
-        private int _rectWidth = 80;
+        [SerializeField] private int _rectWidth = 80;
         public void UpdateInfo(StatusInfo statusInfo,StatusInfo baseStatus = null)
         {
             if (statusInfo == null)

@@ -22,25 +22,26 @@ namespace Ryneus
         private void Initialize()
         { 
             _view.SetHelpWindow(_model.HelpText());
-            _view.SetUIButton(GetListData(_model.StatusCommand()));
-            _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetCommandList(GetListData(_model.StatusCommand()));
+            _view.SetMemberList(GetListData(_model.StageMembers()));
+            _view.SetStatusEvent((type) => UpdateCommand(type));
 
             CommandRefresh();
-            if (_model.ActorInfos.Count == 1) _view.HideArrows();
             _view.OpenAnimation(() => 
             {
                 CheckTutorialState();
             });
         }
 
-        private void UpdateCommand(StatusViewEvent viewEvent)
+        private void UpdateCommand(ViewEvent viewEvent)
         {
-            if (_busy || _view.AnimationBusy)
+            UnityEngine.Debug.Log(viewEvent.commandType);
+            if (_busy /*|| _view.AnimationBusy*/)
             {
                 return;
             }
             UnityEngine.Debug.Log(viewEvent.commandType);
-            switch (viewEvent.commandType)
+            switch (viewEvent.ViewCommandType.StatusCommandType)
             {
                 case CommandType.DecideActor:
                     CommandDecideActor();
@@ -82,7 +83,7 @@ namespace Ryneus
                     CommandCallHelp();
                     return;
             }
-            CheckTutorialState(viewEvent.commandType);
+            //CheckTutorialState(viewEvent.commandType);
         }
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
@@ -200,7 +201,6 @@ namespace Ryneus
         {
             CommandLearnMagic(_model.CurrentActor,skillInfo,() => 
             {
-                _view.SetNuminous(_model.Currency);
                 _view.CommandRefresh();
                 CommandShowLearnMagic();
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
@@ -321,9 +321,6 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
-            _view.SetNuminous(_model.Currency);
-            _view.SetLvUpCost(_model.LevelUpCost());
-            _view.SetToLvText(_model.CurrentActor.LinkedLevel());
             _view.CommandRefresh();
             List<ListData> skillListData;
             if (_view.IsRanking)

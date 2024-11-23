@@ -22,7 +22,6 @@ namespace Ryneus
         [SerializeField] private OnOffButton battleReplayButton;
         [SerializeField] private OnOffButton enemyInfoButton;
         private new System.Action<BattlePartyViewEvent> _commandData = null;
-        private System.Action<StatusViewEvent> _statusCommandData = null;
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
         public AttributeType AttributeType => battleSelectCharacter.AttributeType;
         private bool _isEditMode = false;
@@ -52,21 +51,6 @@ namespace Ryneus
                 var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
                 CallChangeLineIndex(actorInfo);
             });
-            tacticsMemberList.SetInputHandler(InputKeyType.Option1,() => 
-            {
-                var eventData = new StatusViewEvent(Status.CommandType.LevelUp);
-                _statusCommandData(eventData);
-            });
-            tacticsMemberList.SetInputHandler(InputKeyType.Option2,() => 
-            {
-                var eventData = new StatusViewEvent(Status.CommandType.ShowLearnMagic);
-                _statusCommandData(eventData);
-            });
-            tacticsMemberList.SetInputHandler(InputKeyType.SideLeft2,() => 
-            {
-                var eventData = new StatusViewEvent(Status.CommandType.SelectCommandList);
-                _statusCommandData(eventData);
-            });
             if (GameSystem.ConfigData.InputType) 
             {
                 tacticsMemberList.Deactivate();
@@ -76,12 +60,6 @@ namespace Ryneus
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
-            });
-            learnMagicBackButton?.onClick.AddListener(() => 
-            {
-                if (learnMagicBackButton.gameObject.activeSelf == false) return;
-                var eventData = new StatusViewEvent(Status.CommandType.HideLearnMagic);
-                _statusCommandData(eventData);
             });
             commandList.Initialize();
             SetInputHandler(commandList.gameObject);
@@ -96,11 +74,6 @@ namespace Ryneus
         public void SetEvent(System.Action<BattlePartyViewEvent> commandData)
         {
             _commandData = commandData;
-        }
-
-        public void SetStatusEvent(System.Action<StatusViewEvent> commandData)
-        {
-            _statusCommandData = commandData;
         }
 
         private void CallSideMenu()
@@ -266,21 +239,7 @@ namespace Ryneus
             for (int i = 0; i < tacticsMemberList.ItemPrefabList.Count;i++)
             {
                 var battlePartyTacticsMember = tacticsMemberList.ItemPrefabList[i].GetComponent<BattlePartyTacticsMember>();
-                battlePartyTacticsMember.SetSkillTriggerHandler(() => 
-                {
-                    var eventData = new StatusViewEvent(Status.CommandType.SelectCommandList);
-                    _statusCommandData(eventData);
-                });
-                battlePartyTacticsMember.SetLevelUpHandler(() => 
-                {
-                    var eventData = new StatusViewEvent(Status.CommandType.LevelUp);
-                    _statusCommandData(eventData);
-                });
-                battlePartyTacticsMember.SetLearnMagicHandler(() => 
-                {
-                    var eventData = new StatusViewEvent(Status.CommandType.ShowLearnMagic);
-                    _statusCommandData(eventData);
-                });
+                
                 battlePartyTacticsMember.SetLineIndexHandler(() => 
                 {
                     var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
@@ -328,8 +287,6 @@ namespace Ryneus
             battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.Decide,() => CallSkillAlchemy());
             battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.Cancel,() => 
             {
-                var eventData = new StatusViewEvent(Status.CommandType.HideLearnMagic);
-                _statusCommandData(eventData);
             });
             battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.SideLeft1,() => 
             {
@@ -348,11 +305,6 @@ namespace Ryneus
             var listData = battleSelectCharacter.ActionData;
             if (listData != null && listData.Enable)
             {
-                var eventData = new StatusViewEvent(Status.CommandType.LearnMagic)
-                {
-                    template = listData
-                };
-                _statusCommandData(eventData);
             }
         }
 

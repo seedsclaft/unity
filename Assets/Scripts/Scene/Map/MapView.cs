@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Map;
@@ -7,7 +7,17 @@ namespace Ryneus
 {
     public class MapView : BaseView ,IInputHandlerEvent
     {
-        private new System.Action<MapViewEvent> _commandData = null;
+        private new Action<ViewEvent> _commandData = null;
+        public new void SetEvent(Action<ViewEvent> commandData) => _commandData = commandData;
+        public void CallEvent(CommandType mapCommandType)
+        {
+            var commandType = new ViewCommandType
+            {
+                MapCommandType = mapCommandType
+            };
+            var eventData = new ViewEvent(commandType);
+            _commandData(eventData);
+        }
 
         private VirtualModelController virtualModelController = null;
 
@@ -32,22 +42,8 @@ namespace Ryneus
             _mapPrefab = prefab;
         }
 
-        public void SetEvent(System.Action<MapViewEvent> commandData)
-        {
-            _commandData = commandData;
-        }
-
-        public void CallEvent(CommandType commandType)
-        {
-            var eventData = new MapViewEvent(commandType);
-            _commandData(eventData);
-        }
-
-
         private void CallSideMenu()
         {
-            var eventData = new MapViewEvent(CommandType.SelectSideMenu);
-            _commandData(eventData);
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)
@@ -57,7 +53,7 @@ namespace Ryneus
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
                     virtualModelController?.Jump();
-                    _commandData(new MapViewEvent(CommandType.BattleStart));
+                    CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickUp).IsTrigger())
@@ -100,7 +96,7 @@ namespace Ryneus
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
                     virtualModelController?.Jump();
-                    _commandData(new MapViewEvent(CommandType.BattleStart));
+                    CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
@@ -165,28 +161,21 @@ namespace Ryneus
             CommandGameSystem(Base.CommandType.MapClear);   
         }
     }
-
-    public class MapViewEvent
-    {
-        public CommandType commandType;
-        public object template;
-
-        public MapViewEvent(CommandType type)
-        {
-            commandType = type;
-        }
-    }
 }
 
+namespace Ryneus
+{    
+    public partial class ViewCommandType
+    {
+        public CommandType MapCommandType;
+    }
+}
 
 namespace Map
 {
     public enum CommandType
     {
         None = 0,
-        SelectMap,
-        SelectSideMenu,
-        Ranking,
         BattleStart,
         CallStatus
     }

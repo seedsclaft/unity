@@ -73,6 +73,7 @@ namespace Ryneus
 
         public void InitializeNewGame()
         {
+            InitSaveStageInfo();
             var actorInfos = new List<ActorInfo>();
             var b = new ActorInfo(DataSystem.FindActor(1));
             b.SetBattleIndex(1);

@@ -12,33 +12,47 @@ namespace Ryneus
     public class StatusView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private BattleSelectCharacter selectCharacter = null;
-        [SerializeField] private ActorInfoComponent actorInfoComponent = null;
-        [SerializeField] private Button decideButton = null;
-        public bool DecideButtonActive => decideButton.gameObject.activeSelf;
-        [SerializeField] private OnOffButton characterListButton = null;
-        private new System.Action<StatusViewEvent> _commandData = null;
-        [SerializeField] private Button leftButton = null;
-        [SerializeField] private Button rightButton = null;
         [SerializeField] private Button helpButton = null;
-        [SerializeField] private GameObject decideAnimation = null;
+
         [SerializeField] private MagicList magicList = null;
         [SerializeField] private BaseList commandList = null;
-        [SerializeField] private TextMeshProUGUI numinousText = null;
-        [SerializeField] private StatusLevelUp statusLevelUp = null;
-        
-        [SerializeField] private StatusAnimation statusAnimation = null;
-        [SerializeField] private GameObject leftRoot = null;
-        [SerializeField] private GameObject rightRoot = null;
+        [SerializeField] private BaseList memberList = null;
+
+        private List<BaseList> _viewActives = new ();
+        private void SetActivate(BaseList baseView)
+        {
+            var find = _viewActives.Find(a => a == baseView);
+            foreach (var viewActives in _viewActives)
+            {
+                if (viewActives == find)
+                {
+                    find.Activate();
+                } else
+                {
+                    viewActives.Deactivate();
+                }
+            }
+        }
+
+        private new Action<ViewEvent> _commandData = null;
+        public void SetStatusEvent(Action<ViewEvent> commandData) => _commandData = commandData;
+        public void CallEvent(CommandType statusCommandType)
+        {
+            var commandType = new ViewCommandType
+            {
+                StatusCommandType = statusCommandType
+            };
+            var eventData = new ViewEvent(commandType);
+            _commandData(eventData);
+        }
 
         public SkillInfo SelectMagic => (SkillInfo)magicList.ListData?.Data;
         private StatusViewInfo _statusViewInfo = null; 
 
-        private System.Action _backEvent = null;
+        private Action _backEvent = null;
         private bool _isDisplayDecide => _statusViewInfo != null && _statusViewInfo.DisplayDecideButton;
         public bool DisplayDecide => _isDisplayDecide;
         private string _helpText;
-        private bool _isDisplayLevelObj => _statusViewInfo != null && _statusViewInfo.DisplayLvResetButton;
-        private bool _isDisplayBack => _statusViewInfo != null && _statusViewInfo.DisplayBackButton;
         public bool IsRanking => _statusViewInfo != null && _statusViewInfo.IsRanking;
         public void Initialize(List<ActorInfo> actorInfos) 
         {
@@ -48,22 +62,57 @@ namespace Ryneus
             
             SetDecideAnimation();
             magicList.Initialize();
+            InitializeCommandList();
+            InitializeMemberList();
             SetInputHandler(magicList.gameObject);
-            commandList.Initialize();
-            SetInputHandler(commandList.gameObject);
 
-            statusLevelUp.Initialize();
-            
-            SetBaseAnimation(statusAnimation);
             new StatusPresenter(this,actorInfos);
             selectCharacter.SetBusy(false);
         }
 
+        private void InitializeCommandList()
+        {
+            commandList.Initialize();
+            SetInputHandler(commandList.gameObject);
+            commandList.SetInputHandler(InputKeyType.Decide,OnClickCommand);
+            commandList.SetInputHandler(InputKeyType.Cancel,OnClickBack);
+            commandList.SetInputHandler(InputKeyType.Option1,() => 
+            {
+            });
+            commandList.SetInputHandler(InputKeyType.Option2,() => 
+            {
+            });
+            _viewActives.Add(commandList);
+            SetActivate(commandList);
+        }
+
+        public void SetCommandList(List<ListData> commandListData)
+        {
+            commandList.SetData(commandListData);
+        }
+
+        private void InitializeMemberList()
+        {
+            memberList.Initialize();
+            SetInputHandler(memberList.gameObject);
+            memberList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
+            memberList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            memberList.SetInputHandler(InputKeyType.Option1,() => 
+            {
+            });
+            memberList.SetInputHandler(InputKeyType.Option2,() => 
+            {
+            });
+            _viewActives.Add(memberList);
+        }
+
+        public void SetMemberList(List<ListData> commandListData)
+        {
+            memberList.SetData(commandListData);
+        }
+
         public void OpenAnimation(Action endEvent)
         {
-            //statusAnimation.OpenAnimation(UiRoot.transform,null);
-            statusAnimation.LeftAnimation(leftRoot.transform,null);
-            statusAnimation.RightAnimation(rightRoot.transform,() => endEvent?.Invoke());
         }
 
         private void InitializeSelectCharacter()
@@ -73,90 +122,20 @@ namespace Ryneus
             selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail,false);
             selectCharacter.ShowActionList();
         }
-        
-        public void SetUIButton(List<ListData> commandListData)
-        {
-            leftButton.onClick.AddListener(() => OnClickLeft());
-            rightButton.onClick.AddListener(() => OnClickRight());
-            decideButton.onClick.AddListener(() => OnClickDecide());
-            helpButton.onClick.AddListener(() => OnClickHelp());
-            characterListButton.OnClickAddListener(() => OnClickCharacterList());
-            commandList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
-            commandList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            //commandList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickLeft());
-            //commandList.SetInputHandler(InputKeyType.SideRight1,() => OnClickRight());
-            //commandList.SetInputHandler(InputKeyType.SideLeft2,() => OnClickCharacterList());
-            commandList.SetInputHandler(InputKeyType.Option1,() => 
-            {
-                if (_isDisplayLevelObj)
-                {
-                    statusLevelUp.CallLevelUp();
-                }
-            });
-            commandList.SetInputHandler(InputKeyType.Option2,() => 
-            {
-                if (_isDisplayLevelObj)
-                {
-                    commandList.Deactivate();
-                    statusLevelUp.CallLearnMagic();
-                }
-            });
-            commandList.SetData(commandListData);
-        }
-
-        public void ShowArrows()
-        {
-            leftButton.gameObject.SetActive(true);
-            rightButton.gameObject.SetActive(true);
-        }
-
-        public void HideArrows()
-        {
-            leftButton.gameObject.SetActive(false);
-            rightButton.gameObject.SetActive(false);
-        }
-
-        public void ShowDecideButton()
-        {
-            if (_isDisplayDecide)
-            {
-                decideButton.gameObject.SetActive(true);
-                HelpWindow.SetHelpText(_helpText);
-                HelpWindow.SetInputInfo("SELECT_HEROINE");
-            }
-        }
-
-        public void HideDecideButton()
-        {
-            decideButton.gameObject.SetActive(false);
-        }
 
         public void SetHelpWindow(string helpText)
         {
             _helpText = helpText;
         }
 
-        public void SetEvent(Action<StatusViewEvent> commandData)
-        {
-            _commandData = commandData;
-            statusLevelUp.SetEvent(commandData);
-        }
-
         public void SetViewInfo(StatusViewInfo statusViewInfo)
         {
             _statusViewInfo = statusViewInfo;
             _backEvent = statusViewInfo.BackEvent;
-            DisplayCharacterList(statusViewInfo.DisplayCharacterList);
-            DisplayLvResetButton(statusViewInfo.DisplayLvResetButton);
             SetBackEvent(statusViewInfo.BackEvent);
-            DisplayDecideButton();
             if (statusViewInfo.StartIndex != -1)
             {
-                var eventData = new StatusViewEvent(CommandType.SelectCharacter)
-                {
-                    template = statusViewInfo.StartIndex
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectCharacter);
             }
         }
 
@@ -170,11 +149,7 @@ namespace Ryneus
             var data = commandList.ListItemData<SystemData.CommandData>();
             if (data != null)
             {
-                var eventData = new StatusViewEvent(CommandType.SelectCommandList)
-                {
-                    template = data
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectCommandList);
             }
         }
 
@@ -184,100 +159,31 @@ namespace Ryneus
             selectCharacter.SetBusy(busy);
         }
 
-        private void DisplayDecideButton()
-        {
-            statusLevelUp.SetActive(_isDisplayLevelObj);
-            decideButton.gameObject.SetActive(_isDisplayDecide);
-            commandList.gameObject.SetActive(_isDisplayLevelObj);
-            if (_isDisplayLevelObj)
-            {
-                commandList.Activate();
-            }
-            ChangeBackCommandActive(!_isDisplayDecide);
-            if (_isDisplayDecide)
-            {
-                SetHelpText(_helpText);
-                SetHelpInputInfo("SELECT_HEROINE");
-            } else
-            {
-                SetHelpText(DataSystem.GetHelp(202));
-                SetHelpInputInfo("STATUS");
-            }
-        }
-
-        private void DisplayLvResetButton(bool isDisplay)
-        {
-            if (isDisplay == false) return;
-            selectCharacter.InitializeLvReset(() => 
-            {
-                OnClickLvReset();
-            });
-        }
-
-        public void SetNuminous(int numinous)
-        {
-            numinousText.SetText(DataSystem.GetReplaceDecimalText(numinous));
-        }
-
-        public void SetLvUpCost(int cost)
-        {
-            statusLevelUp.SetLvUpCost(cost);
-        }
-
-        public void SetToLvText(int current)
-        {
-            statusLevelUp.ToLvText(current);
-        }
-
-        private void DisplayCharacterList(bool isDisplay)
-        {
-            characterListButton.gameObject.SetActive(isDisplay);
-        }
-
         private void OnClickBack()
         {
-            var eventData = new StatusViewEvent(CommandType.Back);
-            _commandData(eventData);
+            CallEvent(CommandType.Back);
         }
 
         private void OnClickCharacterList()
         {
-            var eventData = new StatusViewEvent(CommandType.CharacterList);
-            _commandData(eventData);
-        }
-
-        private void OnClickLeft()
-        {
-            if (!leftButton.gameObject.activeSelf) return;
-            var eventData = new StatusViewEvent(CommandType.LeftActor);
-            _commandData(eventData);
-        }
-
-        private void OnClickRight()
-        {
-            if (!rightButton.gameObject.activeSelf) return;
-            var eventData = new StatusViewEvent(CommandType.RightActor);
-            _commandData(eventData);
+            CallEvent(CommandType.CharacterList);
         }
 
         private void OnClickDecide()
         {
             if (!_isDisplayDecide) return;
-            var eventData = new StatusViewEvent(CommandType.DecideActor);
-            _commandData(eventData);
+            CallEvent(CommandType.DecideActor);
         }
 
         private void OnClickHelp()
         {
-            var eventData = new StatusViewEvent(CommandType.CallHelp);
-            _commandData(eventData);
+            CallEvent(CommandType.CallHelp);
         }
 
         private void OnClickLvReset()
         {
             if (!_statusViewInfo.DisplayLvResetButton) return;
-            var eventData = new StatusViewEvent(CommandType.LvReset);
-            _commandData(eventData);
+            CallEvent(CommandType.LvReset);
         }
         
         private void CallSkillAction()
@@ -285,11 +191,7 @@ namespace Ryneus
             var listData = selectCharacter.ActionData;
             if (listData != null)
             {
-                var eventData = new StatusViewEvent(CommandType.SelectSkillAction)
-                {
-                    template = listData
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectSkillAction);
             }
         }
 
@@ -327,7 +229,6 @@ namespace Ryneus
             selectCharacter.SetActorInfo(actorInfo,party);
             magicList.SetData(skillInfos);
             selectCharacter.SetSkillTriggerList(skillTriggerInfos);
-            actorInfoComponent.UpdateInfo(actorInfo,party);
         }
 
         public void ShowLeaningList(List<ListData> learnMagicList)
@@ -341,11 +242,7 @@ namespace Ryneus
                     var data = (SkillInfo)listData.Data;
                     if (data.Enable)
                     {
-                        var eventData = new StatusViewEvent(CommandType.LearnMagic)
-                        {
-                            template = data
-                        };
-                        _commandData(eventData);
+                        CallEvent(CommandType.LearnMagic);
                     }
                 }
             });
@@ -354,13 +251,11 @@ namespace Ryneus
                 magicList.SetInputHandler(InputKeyType.Decide,() => {});
                 magicList.SetInputHandler(InputKeyType.Cancel,() => {});
                 commandList.Activate();
-                statusLevelUp.CallHideLearnMagic();
             });
         }
 
         public void SetLearnMagicButtonActive(bool IsActive)
         {
-            statusLevelUp.SetLearnMagicButtonActive(IsActive);
         }
 
         public void CommandRefresh()
@@ -397,48 +292,22 @@ namespace Ryneus
                     OnClickDecide();
                     break;
                 case InputKeyType.SideLeft1:
-                    OnClickLeft();
                     break;
                 case InputKeyType.SideLeft2:
                     OnClickCharacterList();
                     break;
                 case InputKeyType.SideRight1:
-                    OnClickRight();
                     break;
             }
         }
 
         public new void MouseCancelHandler()
         {
-            var eventData = new StatusViewEvent(CommandType.Back);
-            _commandData(eventData);
+            CallEvent(CommandType.Back);
         }
 
         private void SetDecideAnimation()
         {
-            if (decideAnimation == null) return;
-            var rect = decideAnimation.GetComponent<RectTransform>();
-            var canvasGroup = decideAnimation.GetComponent<CanvasGroup>();
-            var duration = 1f;
-            DOTween.Sequence()
-                .Append(rect.DOScaleX(1.25f,duration))
-                .Join(rect.DOScaleY(1.1f,duration))
-                .Join(canvasGroup.DOFade(0,duration))
-                .Append(canvasGroup.DOFade(0,duration)
-                .SetEase(Ease.InOutQuad))
-                .SetLoops(-1);
-        }
-    }
-
-
-    public class StatusViewEvent
-    {
-        public CommandType commandType;
-        public object template;
-
-        public StatusViewEvent(CommandType type)
-        {
-            commandType = type;
         }
     }
 
@@ -518,6 +387,14 @@ namespace Ryneus
         {
             _isRanking = isRanking;
         }        
+    }
+}
+
+namespace Ryneus
+{    
+    public partial class ViewCommandType
+    {
+        public CommandType StatusCommandType;
     }
 }
 
