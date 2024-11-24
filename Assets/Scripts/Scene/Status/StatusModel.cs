@@ -26,10 +26,16 @@ namespace Ryneus
             foreach (var skillDict in CurrentActor.SkillSettingInfo.ActionSkillIds())
             {
                 var skillInfo = new SkillInfo(skillDict.Value);
+                skillInfo.SetSkillSlotType(skillDict.Key);
                 skillInfo.SetEnable(true);
                 list.Add(skillInfo);
             }
             return list;
+        }
+
+        public List<SkillInfo> ChangeAbleSkills()
+        {
+            return CurrentActor.SkillInfos();
         }
 
         public string HelpText()

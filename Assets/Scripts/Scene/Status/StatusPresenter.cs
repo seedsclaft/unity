@@ -27,6 +27,7 @@ namespace Ryneus
             _view.SetStatusEvent((type) => UpdateCommand(type));
 
             _view.CommandTopLayer();
+            _view.CallCommandList();
             CommandRefresh();
             _view.OpenAnimation(() => 
             {
@@ -54,7 +55,7 @@ namespace Ryneus
                     CommandBack();
                     return;
                 case CommandType.SelectActor:
-                    CommandSelectActor();
+                    CommandSelectActor((ActorInfo)viewEvent.template);
                     return;
                 case CommandType.CancelActor:
                     CommandCancelActor();
@@ -72,7 +73,6 @@ namespace Ryneus
                     CommandSelectCharacter((int)viewEvent.template);
                     return;
                 case CommandType.LvReset:
-                    CommandLvReset();
                     return;
                 case CommandType.LevelUp:
                     CommandLevelUp();
@@ -144,22 +144,39 @@ namespace Ryneus
             {
                 // 選択する
                 _model.SetSelectingSkillId(skillInfo);
-                _view.SetSelectingSkill(skillInfo);
+                _view.SetMagicList(GetListData(_model.ChangeAbleSkills()));
+                _view.SetSelectingSkill(new ListData(skillInfo));
             } else
             {
                 // 変更する
-                _model.SetActorSkillSlot(skillInfo.Id);
-                _model.SetSelectingSkillId(null);
-                _view.SetSelectingSkill(null);
-                CommandRefreshMagicList();
+                if (skillInfo.Enable)
+                {
+                    _model.SetActorSkillSlot(skillInfo.Id);
+                    ResetSelectSkill();
+                }
             }
         }
 
         private void CommandCancelSkill()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            if (_model.SelectingSkill != null)
+            {
+                // 選択魔法のキャンセル
+                ResetSelectSkill();
+                return;
+            }
             _view.CommandTopLayer();
+            CallMemberList();
             _model.SetSelectingSkillId(null);
             _view.SetSelectingSkill(null);
+        }
+
+        private void ResetSelectSkill()
+        {
+            _model.SetSelectingSkillId(null);
+            _view.SetSelectingSkill(null);
+            CommandRefreshMagicList();
         }
 
         private void CommandCharacterList()
@@ -189,10 +206,6 @@ namespace Ryneus
             CommandRefresh();
         }
 
-        private void CommandLvReset()
-        {
-        }
-
         private void CommandLevelUp()
         {
             _busy = true;
@@ -207,15 +220,7 @@ namespace Ryneus
 
         private void CommandShowLearnMagic()
         {
-            _view.SetLearnMagicButtonActive(true);
-            var lastSelectSkillId = -1;
-            var lastSelectSkill = _view.SelectMagic;
-            if (lastSelectSkill != null)
-            {
-                lastSelectSkillId = lastSelectSkill.Id;
-            }
             CommandRefresh();
-            _view.ShowLeaningList(_model.SelectActorLearningMagicList(lastSelectSkillId));
         }
 
         private void CommandLearnMagic(SkillInfo skillInfo)
@@ -230,12 +235,7 @@ namespace Ryneus
 
         private void CommandHideLearnMagic()
         {
-            _view.SetLearnMagicButtonActive(false);
             CommandRefresh();
-        }
-
-        private void UpdatePopupActorLvReset(ConfirmCommandType confirmCommandType)
-        {
         }
 
         private void CommandSelectCommandList(SystemData.CommandData commandData)
@@ -271,11 +271,13 @@ namespace Ryneus
             _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
-        private void CommandSelectActor()
+        private void CommandSelectActor(ActorInfo actorInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            _model.SelectActor(actorInfo.ActorId);
             CommandRefreshMagicList();
             _view.CommandStatusLayer();
+            _view.CallMagicList();
         }
 
         private void CommandCancelActor()
@@ -291,7 +293,6 @@ namespace Ryneus
                 {
                     CommandRefresh();
                 }
-                _view.ActivateSkillActionList();
             }
 
 
@@ -337,19 +338,6 @@ namespace Ryneus
         private void CommandRefresh()
         {
             _view.CommandRefresh();
-            List<ListData> skillListData;
-            if (_view.IsRanking)
-            {
-                skillListData = GetListData(_model.CurrentActor.SkillInfos());
-            } else
-            {
-                skillListData = _model.SkillActionListData(_model.CurrentActor);
-            }
-            if (skillListData.Count > 0)
-            {
-                skillListData[0].SetSelected(true);
-            }
-            _view.CommandRefreshStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),GetListData(_model.SkillTrigger()));
         }
 
         private void CommandRefreshMagicList()

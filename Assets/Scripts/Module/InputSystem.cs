@@ -422,7 +422,7 @@ namespace Ryneus
 
     public enum InputKeyType
     {
-        None,
+        None = -1,
         Up = 1,
         Down = 0,
         Left = 3,

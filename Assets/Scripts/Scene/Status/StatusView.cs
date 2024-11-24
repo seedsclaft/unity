@@ -4,21 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Status;
-using TMPro;
 using System;
-using NUnit.Framework;
 
 namespace Ryneus
 {
     public class StatusView : BaseView ,IInputHandlerEvent
     {
-        [SerializeField] private BattleSelectCharacter selectCharacter = null;
+
         [SerializeField] private Button helpButton = null;
 
         [SerializeField] private BaseList commandList = null;
         [SerializeField] private BaseList memberList = null;
         [SerializeField] private MagicList magicList = null;
-        [SerializeField] private SkillInfoComponent selectingSkillInfoComponent = null;
+        [SerializeField] private SkillAction selectingSkill = null;
         [SerializeField] private ActorInfoComponent selectingActorInfoComponent = null;
         [SerializeField] private GameObject topLayer = null;
         [SerializeField] private GameObject statusLayer = null;
@@ -65,16 +63,14 @@ namespace Ryneus
         public void Initialize(List<ActorInfo> actorInfos) 
         {
             base.Initialize();
-            selectCharacter.Initialize();
             InitializeSelectCharacter();
             
             InitializeCommandList();
             InitializeMemberList();
             InitializeMagicList();
-            selectingSkillInfoComponent.Clear();
+            selectingSkill.gameObject.SetActive(false);
 
             new StatusPresenter(this,actorInfos);
-            selectCharacter.SetBusy(false);
         }
 
         private void InitializeCommandList()
@@ -90,7 +86,6 @@ namespace Ryneus
             {
             });
             _viewActives.Add(commandList);
-            SetActivate(commandList);
         }
 
         public void SetCommandList(List<ListData> commandListData)
@@ -104,12 +99,6 @@ namespace Ryneus
             SetInputHandler(memberList.gameObject);
             memberList.SetInputHandler(InputKeyType.Decide,OnSelectActor);
             memberList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
-            memberList.SetInputHandler(InputKeyType.Option1,() => 
-            {
-            });
-            memberList.SetInputHandler(InputKeyType.Option2,() => 
-            {
-            });
             _viewActives.Add(memberList);
         }
 
@@ -138,6 +127,7 @@ namespace Ryneus
             magicList.SetInputHandler(InputKeyType.Decide,OnSelectMagic);
             magicList.SetInputHandler(InputKeyType.Cancel,OnCancelSkill);
             SetInputHandler(magicList.gameObject);
+            _viewActives.Add(magicList);
         }
 
         public void SetMagicList(List<ListData> skillInfos)
@@ -150,9 +140,11 @@ namespace Ryneus
             selectingActorInfoComponent.UpdateInfo(actorInfo,partyInfo);
         }
 
-        public void SetSelectingSkill(SkillInfo skillInfo)
+        public void SetSelectingSkill(ListData skillInfo)
         {
-            selectingSkillInfoComponent.UpdateInfo(skillInfo);
+            selectingSkill.gameObject.SetActive(skillInfo != null);
+            selectingSkill.SetListData(skillInfo,0);
+            selectingSkill.UpdateViewItem();
         }
 
         private void OnSelectMagic()
@@ -183,13 +175,14 @@ namespace Ryneus
 
         public void CallCommandList()
         {
+            memberList.UpdateSelectIndex(-1);
             SetActivate(commandList);
         }
 
         public void CallMemberList(int lastMemberIndex)
         {
-            memberList.UpdateSelectIndex(lastMemberIndex);
             SetActivate(memberList);
+            memberList.UpdateSelectIndex(lastMemberIndex);
         }
         
         public void CallMagicList()
@@ -203,10 +196,6 @@ namespace Ryneus
 
         private void InitializeSelectCharacter()
         {
-            selectCharacter.SetInputHandlerAction(InputKeyType.Decide,() => CallSkillAction());
-            selectCharacter.SetInputHandlerAction(InputKeyType.Cancel,() => OnClickBack());
-            selectCharacter.SelectCharacterTab((int)SelectCharacterTabType.Detail,false);
-            selectCharacter.ShowActionList();
         }
 
         public void SetHelpWindow(string helpText)
@@ -242,7 +231,6 @@ namespace Ryneus
         public new void SetBusy(bool busy)
         {
             base.SetBusy(busy);
-            selectCharacter.SetBusy(busy);
         }
 
         private void OnClickBack()
@@ -250,77 +238,18 @@ namespace Ryneus
             CallEvent(CommandType.Back);
         }
 
-        private void OnClickCharacterList()
-        {
-            CallEvent(CommandType.CharacterList);
-        }
-
         private void OnClickHelp()
         {
             CallEvent(CommandType.CallHelp);
         }
 
-        private void OnClickLvReset()
-        {
-            if (!_statusViewInfo.DisplayLvResetButton) return;
-            CallEvent(CommandType.LvReset);
-        }
-        
-        private void CallSkillAction()
-        {
-            var listData = selectCharacter.ActionData;
-            if (listData != null)
-            {
-                CallEvent(CommandType.SelectSkill);
-            }
-        }
-
-        public void ShowSkillActionList()
-        {
-            ActivateSkillActionList();
-        }
-
         public int SelectedSkillId()
         {
-            var listData = selectCharacter.ActionData;
-            if (listData != null)
-            {
-                return listData.Id;
-            }
             return -1;
-        }
-        
-        public void ActivateSkillActionList()
-        {
-            selectCharacter.MagicList.Activate();
-        }
-
-        public void DeactivateSkillActionList()
-        {
-            selectCharacter.MagicList.Deactivate();
-        }
-        
-        public void CommandRefreshStatus(List<ListData> skillInfos,ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillTriggerInfos)
-        {
-            selectCharacter.SetActiveTab(SelectCharacterTabType.Condition,false);
-            selectCharacter.SetActiveTab(SelectCharacterTabType.SkillTrigger,false);
-            ShowSkillActionList();
-            selectCharacter.UpdateStatus(actorInfo);
-            selectCharacter.SetActorInfo(actorInfo,party);
-            selectCharacter.SetSkillTriggerList(skillTriggerInfos);
-        }
-
-        public void ShowLeaningList(List<ListData> learnMagicList)
-        {
-        }
-
-        public void SetLearnMagicButtonActive(bool IsActive)
-        {
         }
 
         public void CommandRefresh()
         {
-            selectCharacter.RefreshCostInfo();
             if (_isDisplayDecide)
             {
                 SetHelpText(_helpText);
@@ -353,7 +282,6 @@ namespace Ryneus
                 case InputKeyType.SideLeft1:
                     break;
                 case InputKeyType.SideLeft2:
-                    OnClickCharacterList();
                     break;
                 case InputKeyType.SideRight1:
                     break;
