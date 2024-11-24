@@ -382,16 +382,6 @@ namespace Ryneus
             }
         }
 
-        public void SetWorldMove(bool enable,WorldType worldType)
-        {
-            //leftButton?.gameObject?.SetActive(false);
-            //rightButton?.gameObject?.SetActive(false);
-            leftButton?.gameObject?.SetActive(enable && worldType == WorldType.Brunch);
-            rightButton?.gameObject?.SetActive(enable && worldType == WorldType.Main);
-            
-            margeButton.gameObject.SetActive(worldType == WorldType.Brunch);
-        }
-
         public void ShowRecordList()
         {
             tacticsSymbolList.gameObject.SetActive(true);

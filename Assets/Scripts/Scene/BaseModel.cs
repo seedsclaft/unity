@@ -206,11 +206,7 @@ namespace Ryneus
             {
                 if (!stageMembers.Contains(actorInfo))
                 {
-                    var levelUpInfos = actorInfo.LevelUpInfos;
-                    if (levelUpInfos.FindAll(a => (int)a.WorldType != (int)CurrentStage.WorldType).Count > 0)
-                    {
-                        stageMembers.Add(actorInfo);
-                    }
+                    stageMembers.Add(actorInfo);
                 }
             }
             stageMembers.Sort((a,b) => a.Level - b.Level > 0 ? -1 : 1);
@@ -280,7 +276,6 @@ namespace Ryneus
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
                 var record = new SymbolResultInfo(symbolInfo);
-                record.SetWorldType(WorldType.Brunch);
                 if (addActor == false)
                 {
                     record.SetSelected(true);
@@ -526,7 +521,6 @@ namespace Ryneus
         {
             foreach (var actorInfo in PartyInfo.ActorInfos)
             {
-                actorInfo.SetStageSeek(CurrentStage.Id,CurrentStage.Seek,CurrentStage.WorldType);
                 actorInfo.ChangeHp(actorInfo.MaxHp);
             }
         }
@@ -536,7 +530,7 @@ namespace Ryneus
             var cost = ActorLevelUpCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1,CurrentStage.WorldType);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1);
             foreach (var skill in skills)
             {
                 actorInfo.AddSkillTriggerSkill(skill.Id);
@@ -550,12 +544,12 @@ namespace Ryneus
         
         public bool EnableActorLevelUp(ActorInfo actorInfo)
         {
-            return actorInfo.LevelLinked == false && Currency >= ActorLevelUpCost(actorInfo);
+            return Currency >= ActorLevelUpCost(actorInfo);
         }
 
         public bool ActorLevelLinked(ActorInfo actorInfo)
         {
-            return actorInfo.LevelLinked;
+            return false;
         }
 
         public void ActorLearnMagic(ActorInfo actorInfo,int skillId)

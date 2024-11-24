@@ -12,12 +12,33 @@ namespace Ryneus
             _actorInfos = actorInfos;
         }
 
+        private SkillInfo _selectingSkill = null;
+        public SkillInfo SelectingSkill => _selectingSkill;
+        public void SetSelectingSkillId(SkillInfo selectingSkill) => _selectingSkill = selectingSkill;
+        public void SetActorSkillSlot(int changeSkillId)
+        {
+            CurrentActor.SetSkillSlot(_selectingSkill.SkillSlotType,changeSkillId);
+        }
+
+        public List<SkillInfo> SlotSkills()
+        {
+            var list = new List<SkillInfo>();
+            foreach (var skillDict in CurrentActor.SkillSettingInfo.ActionSkillIds())
+            {
+                var skillInfo = new SkillInfo(skillDict.Value);
+                skillInfo.SetEnable(true);
+                list.Add(skillInfo);
+            }
+            return list;
+        }
+
         public string HelpText()
         {
             return DataSystem.GetText(18010);
         }
 
         private int _currentIndex = 0;
+        public int CurrentIndex => _currentIndex;
         public void SelectActor(int actorId)
         {
             var index = _actorInfos.FindIndex(a => a.ActorId == actorId);
@@ -69,18 +90,7 @@ namespace Ryneus
             return new List<GetItemInfo>(){};
         }
 
-        public bool EnableLvReset()
-        {
-            return CurrentActor.EnableLvReset();
-        }
 
-        public int ActorLvReset()
-        {
-            var tempActor = _actorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
-            var currency = tempActor.ActorLevelReset();
-            //PartyInfo.ChangeCurrency(Currency+ currency);
-            return currency;
-        }
 
         public List<SkillTriggerInfo> SkillTrigger(int selectIndex = -1)
         {
@@ -97,9 +107,6 @@ namespace Ryneus
             return ActorLearningMagicList(CurrentActor,-1,selectedSkillId);
         }
 
-        public int LevelUpCost()
-        {
-            return ActorLevelUpCost(CurrentActor);
-        }
+
     }
 }

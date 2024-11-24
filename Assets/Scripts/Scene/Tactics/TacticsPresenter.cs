@@ -802,7 +802,6 @@ namespace Ryneus
             _view.SetStageInfo(_model.CurrentStage);
             //_view.SetAlcanaInfo(_model.AlcanaSkillInfos());
             _view.SetTacticsCharaLayer(_model.StageMembers());
-            _view.SetPastMode(_model.CurrentStage.WorldType == WorldType.Brunch);
             _view.CommandRefresh();
         }
 
@@ -945,13 +944,11 @@ namespace Ryneus
 
         private void CommandNormalWorld()
         {
-            _model.CommandNormalWorld();
             _view.CommandGotoSceneChange(Scene.Tactics);
         }
 
         private void CommandAnotherWorld()
         {
-            _model.CommandAnotherWorld();
             _view.CommandGotoSceneChange(Scene.Tactics);
         }
 

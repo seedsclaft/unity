@@ -131,7 +131,6 @@ namespace Ryneus
                 var brunchSymbol = new SymbolInfo(stageSymbolData);
                 brunchSymbol.CopyData(symbolInfo);
                 var brunchRecord = new SymbolResultInfo(brunchSymbol);
-                brunchRecord.SetWorldType(WorldType.Brunch);
                 resultInfos.Add(brunchRecord);
             }
             return resultInfos;

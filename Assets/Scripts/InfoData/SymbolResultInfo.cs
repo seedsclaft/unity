@@ -49,41 +49,30 @@ namespace Ryneus
             _symbolInfo.ResetParamData();
         }
 
-        private WorldType _worldType = WorldType.Main;
-        public WorldType WorldType => _worldType;
-        public void SetWorldType(WorldType worldType)
-        {
-            _worldType = worldType;
-        }
-
         public bool IsSameSymbol(SymbolResultInfo symbolResultInfo)
         {
-            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex && symbolResultInfo.WorldType == _worldType;
+            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex;
         }
 
-        public bool IsSameSymbol(SymbolResultInfo symbolResultInfo,WorldType worldType)
-        {
-            return symbolResultInfo.StageId == StageId && symbolResultInfo.Seek == Seek && symbolResultInfo.SeekIndex == SeekIndex && worldType == _worldType;
-        }
 /*
         public bool IsSameSymbol(int stageId,int seek,int seekIndex)
         {
             return StageId == stageId && Seek == seek && SeekIndex == seekIndex;
         }
 */
-        public bool IsSameStageSeek(int stageId,int seek,WorldType worldType)
+        public bool IsSameStageSeek(int stageId,int seek)
         {
-            return StageId == stageId && Seek == seek && WorldType == worldType;
+            return StageId == stageId && Seek == seek;
         }
 
-        public bool IsBeforeStageSeek(int stageId,int seek,WorldType worldType)
+        public bool IsBeforeStageSeek(int stageId,int seek)
         {
-            return (StageId == stageId && Seek < seek || StageId < stageId) && WorldType == worldType;
+            return (StageId == stageId && Seek < seek || StageId < stageId);
         }
 
-        public bool IsAfterStageSeek(int stageId,int seek,WorldType worldType)
+        public bool IsAfterStageSeek(int stageId,int seek)
         {
-            return (StageId == stageId && Seek >= seek || StageId > stageId) && WorldType == worldType;
+            return (StageId == stageId && Seek >= seek || StageId > stageId);
         }
 
         public bool SaveBattleReplayStage()
@@ -97,12 +86,12 @@ namespace Ryneus
 
         public int SortKey()
         {
-            return (int)WorldType*10000 + StageId*1000 + Seek*100 + SeekIndex;
+            return (int)StageId*1000 + Seek*100 + SeekIndex;
         }
 
-        public bool EnableStage(int stageId,int seek,WorldType worldType)
+        public bool EnableStage(int stageId,int seek)
         {
-            return worldType == WorldType && (StageId == stageId && Seek < seek || StageId < stageId);
+            return (StageId == stageId && Seek < seek || StageId < stageId);
         }
     }
 }

@@ -6,6 +6,7 @@ using DG.Tweening;
 using Status;
 using TMPro;
 using System;
+using NUnit.Framework;
 
 namespace Ryneus
 {
@@ -14,9 +15,13 @@ namespace Ryneus
         [SerializeField] private BattleSelectCharacter selectCharacter = null;
         [SerializeField] private Button helpButton = null;
 
-        [SerializeField] private MagicList magicList = null;
         [SerializeField] private BaseList commandList = null;
         [SerializeField] private BaseList memberList = null;
+        [SerializeField] private MagicList magicList = null;
+        [SerializeField] private SkillInfoComponent selectingSkillInfoComponent = null;
+        [SerializeField] private ActorInfoComponent selectingActorInfoComponent = null;
+        [SerializeField] private GameObject topLayer = null;
+        [SerializeField] private GameObject statusLayer = null;
 
         private List<BaseList> _viewActives = new ();
         private void SetActivate(BaseList baseView)
@@ -36,13 +41,16 @@ namespace Ryneus
 
         private new Action<ViewEvent> _commandData = null;
         public void SetStatusEvent(Action<ViewEvent> commandData) => _commandData = commandData;
-        public void CallEvent(CommandType statusCommandType)
+        public void CallEvent(CommandType statusCommandType,object sendData = null)
         {
             var commandType = new ViewCommandType
             {
                 StatusCommandType = statusCommandType
             };
-            var eventData = new ViewEvent(commandType);
+            var eventData = new ViewEvent(commandType)
+            {
+                template = sendData
+            };
             _commandData(eventData);
         }
 
@@ -60,11 +68,10 @@ namespace Ryneus
             selectCharacter.Initialize();
             InitializeSelectCharacter();
             
-            SetDecideAnimation();
-            magicList.Initialize();
             InitializeCommandList();
             InitializeMemberList();
-            SetInputHandler(magicList.gameObject);
+            InitializeMagicList();
+            selectingSkillInfoComponent.Clear();
 
             new StatusPresenter(this,actorInfos);
             selectCharacter.SetBusy(false);
@@ -95,8 +102,8 @@ namespace Ryneus
         {
             memberList.Initialize();
             SetInputHandler(memberList.gameObject);
-            memberList.SetInputHandler(InputKeyType.Decide,() => OnClickCommand());
-            memberList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            memberList.SetInputHandler(InputKeyType.Decide,OnSelectActor);
+            memberList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
             memberList.SetInputHandler(InputKeyType.Option1,() => 
             {
             });
@@ -109,6 +116,85 @@ namespace Ryneus
         public void SetMemberList(List<ListData> commandListData)
         {
             memberList.SetData(commandListData);
+        }
+
+        private void OnSelectActor()
+        {
+            var data = memberList.ListItemData<ActorInfo>();
+            if (data != null)
+            {
+                CallEvent(CommandType.SelectActor,data);
+            }
+        }
+
+        private void OnCancelActor()
+        {
+            CallEvent(CommandType.CancelActor);
+        }
+
+        private void InitializeMagicList()
+        {
+            magicList.Initialize();
+            magicList.SetInputHandler(InputKeyType.Decide,OnSelectMagic);
+            magicList.SetInputHandler(InputKeyType.Cancel,OnCancelSkill);
+            SetInputHandler(magicList.gameObject);
+        }
+
+        public void SetMagicList(List<ListData> skillInfos)
+        {
+            magicList.SetData(skillInfos);
+        }
+
+        public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> partyInfo)
+        {
+            selectingActorInfoComponent.UpdateInfo(actorInfo,partyInfo);
+        }
+
+        public void SetSelectingSkill(SkillInfo skillInfo)
+        {
+            selectingSkillInfoComponent.UpdateInfo(skillInfo);
+        }
+
+        private void OnSelectMagic()
+        {
+            var data = magicList.ListItemData<SkillInfo>();
+            if (data != null)
+            {
+                CallEvent(CommandType.SelectSkill,data);
+            }
+        }
+
+        private void OnCancelSkill()
+        {
+            CallEvent(CommandType.CancelSkill);
+        }
+
+        public void CommandTopLayer()
+        {
+            statusLayer.SetActive(false);
+            topLayer.SetActive(true);
+        }
+
+        public void CommandStatusLayer()
+        {
+            statusLayer.SetActive(true);
+            topLayer.SetActive(false);
+        }
+
+        public void CallCommandList()
+        {
+            SetActivate(commandList);
+        }
+
+        public void CallMemberList(int lastMemberIndex)
+        {
+            memberList.UpdateSelectIndex(lastMemberIndex);
+            SetActivate(memberList);
+        }
+        
+        public void CallMagicList()
+        {
+            SetActivate(magicList);
         }
 
         public void OpenAnimation(Action endEvent)
@@ -149,7 +235,7 @@ namespace Ryneus
             var data = commandList.ListItemData<SystemData.CommandData>();
             if (data != null)
             {
-                CallEvent(CommandType.SelectCommandList);
+                CallEvent(CommandType.SelectCommandList,data);
             }
         }
 
@@ -169,12 +255,6 @@ namespace Ryneus
             CallEvent(CommandType.CharacterList);
         }
 
-        private void OnClickDecide()
-        {
-            if (!_isDisplayDecide) return;
-            CallEvent(CommandType.DecideActor);
-        }
-
         private void OnClickHelp()
         {
             CallEvent(CommandType.CallHelp);
@@ -191,7 +271,7 @@ namespace Ryneus
             var listData = selectCharacter.ActionData;
             if (listData != null)
             {
-                CallEvent(CommandType.SelectSkillAction);
+                CallEvent(CommandType.SelectSkill);
             }
         }
 
@@ -227,31 +307,11 @@ namespace Ryneus
             ShowSkillActionList();
             selectCharacter.UpdateStatus(actorInfo);
             selectCharacter.SetActorInfo(actorInfo,party);
-            magicList.SetData(skillInfos);
             selectCharacter.SetSkillTriggerList(skillTriggerInfos);
         }
 
         public void ShowLeaningList(List<ListData> learnMagicList)
         {
-            magicList.SetData(learnMagicList);
-            magicList.SetInputHandler(InputKeyType.Decide,() => 
-            {
-                var listData = magicList.ListData;
-                if (listData != null && listData.Enable)
-                {
-                    var data = (SkillInfo)listData.Data;
-                    if (data.Enable)
-                    {
-                        CallEvent(CommandType.LearnMagic);
-                    }
-                }
-            });
-            magicList.SetInputHandler(InputKeyType.Cancel,() => 
-            {
-                magicList.SetInputHandler(InputKeyType.Decide,() => {});
-                magicList.SetInputHandler(InputKeyType.Cancel,() => {});
-                commandList.Activate();
-            });
         }
 
         public void SetLearnMagicButtonActive(bool IsActive)
@@ -289,7 +349,6 @@ namespace Ryneus
                 case InputKeyType.Option2:
                     break;
                 case InputKeyType.Start:
-                    OnClickDecide();
                     break;
                 case InputKeyType.SideLeft1:
                     break;
@@ -304,10 +363,6 @@ namespace Ryneus
         public new void MouseCancelHandler()
         {
             CallEvent(CommandType.Back);
-        }
-
-        private void SetDecideAnimation()
-        {
         }
     }
 
@@ -403,10 +458,12 @@ namespace Status
     public enum CommandType
     {
         None = 0,
-        DecideActor,
+        SelectActor,
+        CancelActor,
         LeftActor,
         RightActor,
-        SelectSkillAction,
+        SelectSkill,
+        CancelSkill,
         DecideStage,
         CharacterList,
         SelectCharacter,

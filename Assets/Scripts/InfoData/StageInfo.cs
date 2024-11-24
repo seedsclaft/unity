@@ -59,13 +59,6 @@ namespace Ryneus
             _currentSeekIndex = battleIndex;
         }
 
-        private WorldType _worldType;
-        public WorldType WorldType => _worldType;
-        public void SetWorldType(WorldType worldType)
-        {
-            _worldType = worldType;
-        }
-
         private List<int> _clearTroopIds = new ();
         public List<int> ClearTroopIds => _clearTroopIds;
 

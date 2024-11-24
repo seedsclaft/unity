@@ -189,10 +189,4 @@ namespace Ryneus
         Evaluate = 1,
         Turns = 2
     }
-
-    public enum WorldType
-    {
-        Main = 0,
-        Brunch = 1,
-    }
 }

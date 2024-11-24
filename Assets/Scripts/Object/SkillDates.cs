@@ -559,10 +559,10 @@ namespace Ryneus
     public enum SkillSlotType
     {
         None = 0,
-        ActionA = 1, // Aアクション
-        ActionB = 2, // Bアクション
-        ActionX = 3, // Xアクション
-        ActionY = 4, // Yアクション
+        X = 1, // Xアクション
+        Y = 2, // Yアクション
+        L1 = 3, // Aアクション
+        R1 = 4, // Bアクション
         Passive = 5, // 4つまでパッシブ
         Liberation  = 6, // 解放
         Awaken = 7, // 覚醒

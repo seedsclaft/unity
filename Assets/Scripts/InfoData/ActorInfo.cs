@@ -13,119 +13,16 @@ namespace Ryneus
         public int ActorId => _actorId;
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
-        private List<LevelUpInfo> _levelUpInfos = new ();
-        public List<LevelUpInfo> LevelUpInfos => _levelUpInfos;
-        private int _stageId = 1;
-        private int _seek = 1;
-        private WorldType _worldType = WorldType.Main;
-        public int X_Magic;
-        public int Y_Magic;
-        public int L1_Magic;
-        public int R1_Magic;
 
+        private ActorSkillSettingInfo _skillSettingInfo = null;
+        public ActorSkillSettingInfo SkillSettingInfo => _skillSettingInfo;
+        public int X_Magic => _skillSettingInfo.X_Magic;
+        public int Y_Magic => _skillSettingInfo.Y_Magic;
+        public int L1_Magic => _skillSettingInfo.L1_Magic;
+        public int R1_Magic => _skillSettingInfo.R1_Magic;
 
-
-        public void SetLevelUpInfo(LevelUpInfo levelUpInfo)
-        {
-            var findIndex = _levelUpInfos.FindIndex(a => a.IsSameLevelUpInfo(levelUpInfo));
-            if (findIndex > -1)
-            {
-                _levelUpInfos.RemoveAt(findIndex);
-            }
-            _levelUpInfos.Add(levelUpInfo);
-        }
-
-        public int ActorLevelReset()
-        {
-            var currency = 0;
-            // リセットされる数
-            var levelUpDates = _levelUpInfos.FindAll(a => a.IsTrainData() && a.ActorId == _actorId);
-            var resetLv = levelUpDates.Count;
-            for (int i = levelUpDates.Count-1;i >= 0;i--)
-            {
-                currency += levelUpDates[i].Currency;
-                _levelUpInfos.Remove(levelUpDates[i]);
-            }
-            // 習得した魔法をリセット
-            var learnedSkill = LearnSkillIds();
-            var learnedSkillDates = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.ActorId == _actorId);
-            for (int i = learnedSkillDates.Count-1;i >= 0;i--)
-            {
-                currency += learnedSkillDates[i].Currency;
-                _levelUpInfos.Remove(learnedSkillDates[i]);
-            }
-            return currency;
-        }
-
-        public void RemoveLevelUpInfos(WorldType worldType)
-        {
-            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
-            {
-                var levelUpInfo = _levelUpInfos[i];
-                if ( levelUpInfo.WorldType == worldType)
-                {
-                    _levelUpInfos.Remove(levelUpInfo);
-                }
-            }
-        }
-
-        public void RemoveParamData(int stageId,int seek,WorldType worldType)
-        {
-            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
-            {
-                var levelUpInfo = _levelUpInfos[i];
-                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldType == worldType)
-                {
-                    _levelUpInfos.Remove(levelUpInfo);
-                }
-            }
-        }
-        
-        public void MargeLevelUpInfo(int stageId,int seek,WorldType worldType)
-        {
-            for (int i = _levelUpInfos.Count-1;i >= 0;i--)
-            {
-                var levelUpInfo = _levelUpInfos[i];
-                if (levelUpInfo.StageId == stageId && levelUpInfo.Seek == seek && levelUpInfo.WorldType == worldType)
-                {
-                    levelUpInfo.SetWorldType(WorldType.Main);
-                }
-            }
-        }
-
-        private string _addTiming = "";
-        public string AddTiming => _addTiming;
-        public void SetAddTiming(string addTiming)
-        {
-            _addTiming = addTiming;
-        }
-
-        public int Level => _levelUpInfos.FindAll(a => a.IsLevelUpData() && a.IsEnableStage(_stageId,_seek,_worldType)).Count + 1;
-        private int _levelLink = -1;
-
-        public void SetLevelLink(int levelLink)
-        {
-            _levelLink = levelLink;
-        }
-
-        public int LinkedLevel()
-        {
-            if (_levelLink >= Level)
-            {
-                return _levelLink;
-            }
-            return Level;
-        }
-        private bool _levelLinked = false;
-        public bool LevelLinked => _levelLinked;
-        public void SetLevelLinked(bool levelLinked) => _levelLinked = levelLinked;
-        public void SetStageSeek(int stageId,int seek,WorldType worldType)
-        {
-            _stageId = stageId;
-            _seek = seek;
-            _worldType = worldType;
-        }
-        public StatusInfo CurrentStatus => LevelUpStatus(LinkedLevel());
+        public int Level => 1;
+        public StatusInfo CurrentStatus => LevelUpStatus(Level);
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
         public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
 
@@ -312,11 +209,6 @@ namespace Ryneus
         public List<int> LearnSkillIds()
         {
             var list = new List<int>();
-            var learnSkills = _levelUpInfos.FindAll(a => a.IsLearnSkillData() && a.IsEnableStage(_stageId,_seek,_worldType));
-            foreach (var learnSkill in learnSkills)
-            {
-                list.Add(learnSkill.SkillId);
-            }
             return list;
         }
 
@@ -339,7 +231,7 @@ namespace Ryneus
         private int _currentMp;
         public int CurrentMp => _currentMp;
         // バトル勝利数
-        public int DemigodParam => 0 + _levelUpInfos.FindAll(a => a.IsBattleResultData()).Count;
+        public int DemigodParam => 0;
 
     // Tactics
         private int _tacticsCost = 0;
@@ -353,8 +245,6 @@ namespace Ryneus
         { 
             _battleIndex = battleIndex;
         }
-        private bool _lost = false;
-        public bool Lost => _lost;
         private StatusInfo _plusStatus = new StatusInfo();
 
         public ActorInfo(ActorData actorData)
@@ -365,10 +255,11 @@ namespace Ryneus
             _currentMp = Master.InitStatus.Mp;
             InitSkillInfo();
             InitSkillTriggerInfos();
-            X_Magic = actorData.X_Magic;
-            Y_Magic = actorData.Y_Magic;
-            L1_Magic = actorData.L1_Magic;
-            R1_Magic = actorData.R1_Magic;
+            _skillSettingInfo = new ActorSkillSettingInfo();
+            _skillSettingInfo.SetSkill(SkillSlotType.X,actorData.X_Magic);
+            _skillSettingInfo.SetSkill(SkillSlotType.Y,actorData.Y_Magic);
+            _skillSettingInfo.SetSkill(SkillSlotType.L1,actorData.L1_Magic);
+            _skillSettingInfo.SetSkill(SkillSlotType.R1,actorData.R1_Magic);
         }
 
 #if UNITY_ANDROID
@@ -409,12 +300,8 @@ namespace Ryneus
             _tacticsCost = baseActorInfo.TacticsCost;
             _tacticsCostRate = baseActorInfo.TacticsCostRate;
             _battleIndex = baseActorInfo.BattleIndex;
-            _lost = baseActorInfo.Lost;
-            _levelUpInfos = baseActorInfo._levelUpInfos;
             _lineIndex = baseActorInfo._lineIndex;
             _skillTriggerInfos = baseActorInfo._skillTriggerInfos;
-            _stageId = baseActorInfo._stageId;
-            _seek = baseActorInfo._seek;
         }
 
         private void SetInitialParameter(ActorData actorData)
@@ -440,7 +327,7 @@ namespace Ryneus
                 if (list.Find(a => a.Id == _learningData.SkillId) != null) continue;
                 if (LearnSkillIds().Contains(_learningData.SkillId)) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
-                if (LinkedLevel() >= _learningData.Level)
+                if (Level >= _learningData.Level)
                 {
                     skillInfo.SetLearningState(LearningState.Learned);
                 } else
@@ -473,38 +360,26 @@ namespace Ryneus
             ChangeMp(9999);
         }
 
-        public int TrainCost()
-        {
-            return _levelUpInfos.FindAll(a => a.IsEnableStage(_stageId,_seek,_worldType) && a.IsTrainData()).Count + 1;
-        }
-
-        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex ,WorldType worldType)
+        public LevelUpInfo LevelUp(int useCost,int stageId,int seek,int seekIndex)
         {
             var levelUpInfo = new LevelUpInfo
             (
-                _actorId,useCost,stageId,seek,seekIndex,worldType
+                _actorId,useCost,stageId,seek,seekIndex
             );
             levelUpInfo.SetLevel(Level);
-            _levelUpInfos.Add(levelUpInfo);
             ChangeHp(CurrentParameter(StatusParamType.Hp));
             ChangeMp(CurrentParameter(StatusParamType.Mp));
             return levelUpInfo;
         }
 
-        public bool EnableLvReset()
-        {
-            return LearnSkillIds().Count > 0 || _levelUpInfos.Find(a => a.Enable && a.Currency > 0) != null;
-        }
-
         public StatusInfo LevelUpStatus(int level)
         {
-            var lvUpStatus = new StatusInfo();
-            LevelUpStatusInfo(lvUpStatus,level);
-            return lvUpStatus;
+            return LevelUpStatusInfo(level);
         }
 
-        private void LevelUpStatusInfo(StatusInfo statusInfo,int level)
+        private StatusInfo LevelUpStatusInfo(int level)
         {
+            var statusInfo = new StatusInfo();
             statusInfo.AddParameter(StatusParamType.Hp,Master.InitStatus.Hp);
             statusInfo.AddParameter(StatusParamType.Mp,Master.InitStatus.Mp);
             statusInfo.AddParameter(StatusParamType.Atk,Master.InitStatus.Atk);
@@ -516,6 +391,7 @@ namespace Ryneus
             statusInfo.AddParameter(StatusParamType.Atk,LevelGrowthRate(StatusParamType.Atk,level));  
             statusInfo.AddParameter(StatusParamType.Def,LevelGrowthRate(StatusParamType.Def,level));  
             statusInfo.AddParameter(StatusParamType.Spd,LevelGrowthRate(StatusParamType.Spd,level));     
+            return statusInfo;
         }
 
         public int LevelGrowthRate(StatusParamType statusParamType,int level)
@@ -525,7 +401,7 @@ namespace Ryneus
 
         public List<SkillInfo> LearningSkills(int plusLv = 0)
         {
-            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (LinkedLevel()+plusLv));
+            return LearningSkillInfos().FindAll(a => a.LearningState == LearningState.NotLearn && a.LearningLv <= (Level+plusLv));
         }
 
         public bool IsLearnedSkill(int skillId)
@@ -534,11 +410,16 @@ namespace Ryneus
             return LearnSkillIds().Contains(skillId) || learnedSkill.Find(a => a.Id == skillId) != null;
         }
 
-        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1,WorldType worldType = WorldType.Main)
+        public LevelUpInfo LearnSkill(int skillId,int cost,int stageId,int seek,int seekIndex = -1)
         {
-            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex,worldType);
+            var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex);
             skillLevelUpInfo.SetSkillId(skillId);
             return skillLevelUpInfo;
+        }
+
+        public void SetSkillSlot(SkillSlotType skillSlotType,int changeSkillId)
+        {
+            _skillSettingInfo.SetSkill(skillSlotType,changeSkillId);
         }
 
         public void ChangeTacticsCostRate(int tacticsCostRate)
@@ -548,7 +429,7 @@ namespace Ryneus
 
         public int CurrentParameter(StatusParamType statusParamType)
         {
-            return LevelUpStatus(LinkedLevel()).GetParameter(statusParamType);
+            return LevelUpStatus(Level).GetParameter(statusParamType);
         }
 
         public void ChangeHp(int hp)
@@ -563,11 +444,6 @@ namespace Ryneus
         
         public void ChangeLost(bool isLost)
         {
-            if (isLost == false && _lost == true)
-            {
-                ChangeHp(1);
-            }
-            _lost = isLost;
         }
 
         public List<AttributeRank> AttributeRanks(List<ActorInfo> actorInfos)
@@ -748,8 +624,7 @@ namespace Ryneus
             return skillInfos;
         }
     }
-
-
+    
     public enum AttributeRank 
     {
         S = 0,
@@ -761,4 +636,5 @@ namespace Ryneus
         F = 6,
         G = 7
     }
-}
+}    
+

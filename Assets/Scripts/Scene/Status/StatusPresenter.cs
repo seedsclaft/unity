@@ -26,6 +26,7 @@ namespace Ryneus
             _view.SetMemberList(GetListData(_model.StageMembers()));
             _view.SetStatusEvent((type) => UpdateCommand(type));
 
+            _view.CommandTopLayer();
             CommandRefresh();
             _view.OpenAnimation(() => 
             {
@@ -43,9 +44,6 @@ namespace Ryneus
             UnityEngine.Debug.Log(viewEvent.commandType);
             switch (viewEvent.ViewCommandType.StatusCommandType)
             {
-                case CommandType.DecideActor:
-                    CommandDecideActor();
-                    return;
                 case CommandType.LeftActor:
                     CommandLeftActor();
                     return;
@@ -54,6 +52,18 @@ namespace Ryneus
                     return;
                 case CommandType.Back:
                     CommandBack();
+                    return;
+                case CommandType.SelectActor:
+                    CommandSelectActor();
+                    return;
+                case CommandType.CancelActor:
+                    CommandCancelActor();
+                    return;
+                case CommandType.SelectSkill:
+                    CommandSelectSkill((SkillInfo)viewEvent.template);
+                    return;
+                case CommandType.CancelSkill:
+                    CommandCancelSkill();
                     return;
                 case CommandType.CharacterList:
                     CommandCharacterList();
@@ -127,6 +137,31 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
 
+        private void CommandSelectSkill(SkillInfo skillInfo)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            if (_model.SelectingSkill == null)
+            {
+                // 選択する
+                _model.SetSelectingSkillId(skillInfo);
+                _view.SetSelectingSkill(skillInfo);
+            } else
+            {
+                // 変更する
+                _model.SetActorSkillSlot(skillInfo.Id);
+                _model.SetSelectingSkillId(null);
+                _view.SetSelectingSkill(null);
+                CommandRefreshMagicList();
+            }
+        }
+
+        private void CommandCancelSkill()
+        {
+            _view.CommandTopLayer();
+            _model.SetSelectingSkillId(null);
+            _view.SetSelectingSkill(null);
+        }
+
         private void CommandCharacterList()
         {
             SetBusy(true);
@@ -156,20 +191,6 @@ namespace Ryneus
 
         private void CommandLvReset()
         {
-            SetBusy(true);
-            var enable = _model.EnableLvReset();
-            if (enable)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(18300,_model.CurrentActor.Master.Name),(a) => UpdatePopupActorLvReset(a));
-                _view.CommandCallConfirm(confirmInfo);
-                _popupCommandType = CommandType.DecideStage;
-            } else
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Deny);
-                CommandCautionInfo(DataSystem.GetText(18340));
-                SetBusy(false);
-            }
         }
 
         private void CommandLevelUp()
@@ -215,34 +236,27 @@ namespace Ryneus
 
         private void UpdatePopupActorLvReset(ConfirmCommandType confirmCommandType)
         {
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                var currency = _model.ActorLvReset();
-                var confirmInfo = new ConfirmInfo(DataSystem.GetReplaceText(18310,currency.ToString()),(a) => 
-                {
-                    SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                    CommandRefresh();
-                    SetBusy(false);
-                });
-                confirmInfo.SetIsNoChoice(true);
-                _view.CommandCallConfirm(confirmInfo);
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            } else
-            {
-                SetBusy(false);
-            }
         }
 
         private void CommandSelectCommandList(SystemData.CommandData commandData)
         {
-            if (commandData.Key == "LV_RESET")
+            switch (commandData.Key)
             {
-                CommandLvReset();
-            } else
-            if (commandData.Key == "SKILL_TRIGGER")
-            {
-                CommandSelectSkillTrigger(_model.CurrentActor.ActorId);
+                case "STATUS":
+                    CallMemberList();
+                    break;
+                case "PARTY_EDIT":
+                    break;
+                case "RECORD":
+                    break;
+                case "SYSTEM":
+                    break;
             }
+        }
+
+        private void CallMemberList()
+        {
+            _view.CallMemberList(_model.CurrentIndex);
         }
 
         private void CommandSelectSkillTrigger(int actorId)
@@ -257,20 +271,21 @@ namespace Ryneus
             _view.CommandCallSkillTrigger(skillTriggerViewInfo);
         }
 
-        private void CommandDecideActor()
+        private void CommandSelectActor()
         {
-            SetBusy(true);
-            var actorInfo = _model.CurrentActor;
-            var text = DataSystem.GetReplaceText(18320,actorInfo.Master.Name);
-            var confirmInfo = new ConfirmInfo(text,(menuCommandInfo) => UpdatePopup(menuCommandInfo));
-            _view.CommandCallConfirm(confirmInfo);
-            _popupCommandType = CommandType.DecideStage;
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CommandRefreshMagicList();
+            _view.CommandStatusLayer();
+        }
+
+        private void CommandCancelActor()
+        {
+            _view.CallCommandList();
         }
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            if (_popupCommandType == CommandType.SelectSkillAction)
+            if (_popupCommandType == CommandType.SelectSkill)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)
                 {
@@ -335,6 +350,12 @@ namespace Ryneus
                 skillListData[0].SetSelected(true);
             }
             _view.CommandRefreshStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),GetListData(_model.SkillTrigger()));
+        }
+
+        private void CommandRefreshMagicList()
+        {
+            _view.SetMagicList(GetListData(_model.SlotSkills()));
+            _view.SetActorInfo(_model.CurrentActor,_model.ActorInfos);
         }
 
         private void SaveSelectedSkillId()

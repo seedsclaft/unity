@@ -35,26 +35,19 @@ namespace Ryneus
         public int Seek => _seek;
         private int _seekIndex = -1;
         public int SeekIndex => _seekIndex;
-        private WorldType _worldType;
-        public WorldType WorldType => _worldType;
-        public void SetWorldType(WorldType worldType)
-        {
-            _worldType = worldType;
-        }
 
-        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex,WorldType worldType)
+        public LevelUpInfo(int actorId,int currency,int stageId,int seek,int seekIndex)
         {
             _actorId = actorId;
             _currency = currency;
             _stageId = stageId;
             _seek = seek;
             _seekIndex = seekIndex;
-            _worldType = worldType;
         }
 
         public LevelUpInfo CopyBrunchData()
         {
-            var newLevelUpInfo = new LevelUpInfo(_actorId,_currency,_stageId,_seek,_seekIndex,WorldType.Brunch);
+            var newLevelUpInfo = new LevelUpInfo(_actorId,_currency,_stageId,_seek,_seekIndex);
             newLevelUpInfo.SetLevel(_level);
             newLevelUpInfo.SetEnable(_enable);
             newLevelUpInfo.SetSkillId(_skillId);
@@ -63,7 +56,7 @@ namespace Ryneus
 
         public bool IsSameLevelUpInfo(LevelUpInfo levelUpInfo)
         {
-            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex && levelUpInfo.WorldType == _worldType;
+            return levelUpInfo.ActorId == _actorId && levelUpInfo.SkillId == _skillId && levelUpInfo.Level == _level && levelUpInfo.StageId == _stageId && levelUpInfo.Seek == _seek && levelUpInfo.SeekIndex == _seekIndex;
         }
 
         public bool IsLevelUpData()
@@ -86,9 +79,9 @@ namespace Ryneus
             return IsLevelUpData() && _currency > 0;
         }
 
-        public bool IsEnableStage(int stageId,int seek,WorldType worldType)
+        public bool IsEnableStage(int stageId,int seek)
         {
-            return worldType == _worldType && (_stageId == stageId && _seek <= seek || _stageId < stageId);
+            return (_stageId == stageId && _seek <= seek || _stageId < stageId);
         }
     }
 }

@@ -42,7 +42,6 @@ namespace Ryneus
 
         [SerializeField] private TextMeshProUGUI recoveryCost;
         [SerializeField] private TextMeshProUGUI resourceGain;
-        [SerializeField] private TextMeshProUGUI addTiming;
         [SerializeField] private TextMeshProUGUI battlePosition;
         [SerializeField] private Image unitTypeImage;
         [SerializeField] private Image unitTypeImageBack;
@@ -58,17 +57,13 @@ namespace Ryneus
             UpdateData(actorData);
             if (mainThumb != null)
             {
-                if (actorInfo.CurrentHp == 0 && actorInfo.BattleIndex >= 0 || actorInfo.Lost)
+                if (actorInfo.CurrentHp == 0 && actorInfo.BattleIndex >= 0)
                 {
                     UpdateLostMainThumb();
                 }
             }
             demigod?.SetText(actorInfo.DemigodParam.ToString());
-            lv?.SetText(actorInfo.LinkedLevel().ToString());
-            if (lv != null && actorInfo.LevelLinked)
-            {
-                lv.color = DataSystem.PowerUpColor;
-            }
+            lv?.SetText(actorInfo.Level.ToString());
             if (sp != null){
             }
             if (statusInfoComponent != null)
@@ -110,7 +105,6 @@ namespace Ryneus
             recoveryCost?.SetText(TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString());
             resourceGain?.SetText(TacticsUtility.ResourceGain(actorInfo).ToString());
             evaluate?.SetText(actorInfo.Evaluate().ToString());
-            addTiming?.SetText(actorInfo.AddTiming.ToString());
             if (battlePosition != null)
             {
                 var textId = actorInfo.LineIndex == LineType.Front ? 2012 : 2013;

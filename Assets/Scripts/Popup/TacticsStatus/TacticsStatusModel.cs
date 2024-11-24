@@ -71,15 +71,12 @@ namespace Ryneus
 
         public bool EnableLvReset()
         {
-            return CurrentActor.EnableLvReset();
+            return false;
         }
 
         public int ActorLvReset()
         {
-            var tempActor = _actorInfos.Find(a => a.ActorId == CurrentActor.ActorId);
-            var currency = tempActor.ActorLevelReset();
-            //PartyInfo.ChangeCurrency(Currency+ currency);
-            return currency;
+            return 0;
         }
 
         public List<SkillTriggerInfo> SkillTrigger(int selectIndex = -1)

@@ -438,28 +438,6 @@ namespace Ryneus
             return cost;
         }
 
-        public void CommandNormalWorld()
-        {
-            SetWorldCurrentStage(WorldType.Main);
-        }
-
-        public void CommandAnotherWorld()
-        {
-            SetWorldCurrentStage(WorldType.Brunch);
-        }
-
-        private void SetWorldCurrentStage(WorldType worldType)
-        {
-            CurrentStage.SetWorldType(worldType);
-            /*
-            var symbolData = worldType == WorldType.Main ? PartyInfo.ReturnSymbol : PartyInfo.BrunchSymbol;
-            CurrentStage.SetStageId(symbolData.StageId);
-            CurrentStage.SetCurrentTurn(symbolData.Seek);
-            
-            */
-            SetStageSeek();
-        }
-
     }
 
     public class TacticsSceneInfo
