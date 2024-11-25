@@ -953,18 +953,6 @@ namespace Ryneus
             return scopeType;
         }
 
-        public List<MakerEffectData.SoundTimings> SkillActionSoundTimings(string animationName)
-        {
-            var makerEffectPath = animationName.Replace("MakerEffect/","");
-            var path = "Animations/AnimationData/" + makerEffectPath;
-            var result = Resources.Load<MakerEffectAssetData>(path);
-            if (result != null)
-            {
-                return result.AssetData.soundTimings;
-            }
-            return null;
-        }
-
         public Effekseer.EffekseerEffectAsset AwakenEffect(int actorId)
         {
             var result = ResourceSystem.LoadResourceEffect("NA_Effekseer/NA_cut-in_" + DataSystem.FindActor(actorId).ImagePath);

@@ -5,7 +5,7 @@ namespace Ryneus
 {
     public class BattleMagicSelectView : BaseList
     {
-        [SerializeField] SkillInfoComponent selectMagic;
+        [SerializeField] SkillAction selectMagic;
         [SerializeField] SkillInfoComponent selectMagicDescription;
         [SerializeField] BattleSkillSelect x_Magic;
         [SerializeField] BattleSkillSelect y_Magic;
@@ -22,7 +22,8 @@ namespace Ryneus
         {
             _selectInputKeyType = inputKeyType;
             _selectSkill = _magicCommands[inputKeyType];
-            selectMagic.UpdateInfo(_selectSkill);
+            selectMagic.SetListData(new ListData(_selectSkill),0);
+            selectMagic.UpdateViewItem();
             selectMagicDescription.UpdateInfo(_selectSkill);
             y_Magic.SetSelect(inputKeyType == InputKeyType.Option1);
             x_Magic.SetSelect(inputKeyType == InputKeyType.Option2);
@@ -58,7 +59,7 @@ namespace Ryneus
             }
         }
 
-        private void ClearSelect()
+        public void ClearSelect()
         {
             _selectSkill = null;
             _selectInputKeyType = InputKeyType.None;

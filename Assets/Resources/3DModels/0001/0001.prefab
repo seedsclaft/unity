@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3569955485873291365}
-  - component: {fileID: 7421064782264050976}
+  - component: {fileID: 1147179215102765084}
   m_Layer: 6
   m_Name: Emitter
   m_TagString: Untagged
@@ -129,7 +129,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1447361410892325726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7421064782264050976
+--- !u!114 &1147179215102765084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,14 +138,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3834968235162546406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d396bcb8480c24eb784eebe6096a99, type: 3}
+  m_Script: {fileID: 11500000, guid: e0ae5212d1f951e4aa25dc3e973dc932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TimingOfUpdate: 0
   EmitterScale: 0
   TimeScale: 0
   effectAsset: {fileID: 0}
-  playOnStart: 1
+  playOnStart: 0
   isLooping: 0
 --- !u!1 &4682673726386852732
 GameObject:
@@ -267,7 +267,7 @@ MonoBehaviour:
   selfCamera: {fileID: 5758521159649317098}
   statusRoot: {fileID: 4682673726386852732}
   damagePosition: {fileID: 5535940352316979435}
-  effectEmitter: {fileID: 7421064782264050976}
+  effectEmitter: {fileID: 1147179215102765084}
   gravity: 20
   jumpSpeed: 8
 --- !u!143 &8607431516795088382

@@ -364,8 +364,6 @@ namespace Ryneus
         private void PlayAnimation(AnimationData animationData,AnimationType animationType,List<int> targetIndexList,bool isCurse = false)
         {            
             var animation = ResourceSystem.LoadResourceEffect(animationData.AnimationPath);
-            var soundTimings = _model.SkillActionSoundTimings(animationData.AnimationPath);
-            _view.PlayMakerEffectSound(soundTimings);
             _view.ClearDamagePopup();
             if (animationType == AnimationType.All)
             {

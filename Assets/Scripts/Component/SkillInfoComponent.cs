@@ -215,6 +215,10 @@ namespace Ryneus
             range?.SetText("");
             countTurn?.gameObject?.SetActive(false);
             rank?.gameObject?.SetActive(false);
+            if (learningText != null)
+            {
+                learningText.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 }

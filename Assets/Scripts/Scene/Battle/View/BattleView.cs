@@ -148,6 +148,7 @@ namespace Ryneus
             magicSelectView.SetInputHandler(InputKeyType.SideRight1,() => OnSelectMagic(InputKeyType.SideRight1));
             magicSelectView.SetInputHandler(InputKeyType.Decide,() => OnSelectMagic(InputKeyType.Decide));
             magicSelectView.gameObject.SetActive(false);
+            magicSelectView.ClearSelect();
             SetInputHandler(magicSelectView.gameObject);
             _viewActives.Add(magicSelectView);
         }
@@ -679,26 +680,6 @@ namespace Ryneus
             }
             // transformの位置でエフェクトを再生する
             EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
-        }
-
-        public void PlayMakerEffectSound(List<MakerEffectData.SoundTimings> soundTimings)
-        {
-            if (GameSystem.ConfigData.BattleAnimationSkip == true) 
-            {
-                return;
-            }
-            _soundTimings = soundTimings;
-            if (_soundTimings != null)
-            {
-                foreach (var soundTimingsData in _soundTimings)
-                {
-                    var clip = Resources.Load<AudioClip>("Animations/Sound/" + soundTimingsData.se.name);
-                    var volume = soundTimingsData.se.volume * 0.01f;
-                    var pitch = soundTimingsData.se.pitch * 0.01f;
-                    var frame = soundTimingsData.frame;
-                    SoundManager.Instance.PlaySe(clip,volume,pitch,frame);
-                }
-            }
         }
 
         public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData,float speedRate)

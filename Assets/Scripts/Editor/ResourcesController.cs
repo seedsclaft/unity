@@ -242,29 +242,8 @@ namespace Ryneus
         }
 
         [MenuItem ("Resources/DeployMakerSound")]
-        static void DeployMakerSound() {
-            var animationDates = Resources.Load<AnimationDates>("Data/Animations");
-            var paths = new List<string>();
-            foreach (var item in animationDates.Data)
-            {
-                if (item.AnimationPath != "" && item.MakerEffect == true)
-                {
-                    
-                    var mt = Resources.Load<MakerEffectAssetData>("Animations/AnimationData/" + item.AnimationPath.Replace("MakerEffect/",""));
-                    
-                    if (mt != null)
-                    {
-                        foreach (var soundTimings in mt.AssetData.soundTimings)
-                        {
-                            if (soundTimings.se != null)
-                            {
-                                SoundOutput("/" + soundTimings.se.name);
-                            }
-                        }
-                    }
-                    
-                }
-            }
+        static void DeployMakerSound() 
+        {
         }
     }
 }

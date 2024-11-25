@@ -168,6 +168,10 @@ namespace Ryneus
             tempMagicCommands[InputKeyType.Option2] = _skills.Find(a => a.Id == actorInfo.X_Magic);
             tempMagicCommands[InputKeyType.SideLeft1] = _skills.Find(a => a.Id == actorInfo.L1_Magic);
             tempMagicCommands[InputKeyType.SideRight1] = _skills.Find(a => a.Id == actorInfo.R1_Magic);
+            tempMagicCommands[InputKeyType.Option1]?.SetEnable(true);
+            tempMagicCommands[InputKeyType.Option2]?.SetEnable(true);
+            tempMagicCommands[InputKeyType.SideLeft1]?.SetEnable(true);
+            tempMagicCommands[InputKeyType.SideRight1]?.SetEnable(true);
             _magicCommands = tempMagicCommands;
 
             _demigodParam = actorInfo.DemigodParam;

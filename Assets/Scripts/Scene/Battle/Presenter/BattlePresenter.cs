@@ -53,6 +53,8 @@ namespace Ryneus
             _view.SetBattleBusy(true);
             _model.CreateBattleData();
             await _model.LoadBattleResources(_model.Battlers);
+            var bgm = await _model.GetBattleBgm();
+            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             /*
             if (SoundManager.Instance.CrossFadeMode == false)
             {
@@ -351,8 +353,6 @@ namespace Ryneus
         private void PlayAnimation(AnimationData animationData,AnimationType animationType,List<int> targetIndexList,bool isCurse = false)
         {            
             var animation = ResourceSystem.LoadResourceEffect(animationData.AnimationPath);
-            var soundTimings = _model.SkillActionSoundTimings(animationData.AnimationPath);
-            _view.PlayMakerEffectSound(soundTimings);
             _view.ClearDamagePopup();
             if (animationType == AnimationType.All)
             {
