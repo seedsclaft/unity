@@ -15,27 +15,12 @@ namespace Ryneus
 
         [SerializeField] private BaseList commandList = null;
         [SerializeField] private BaseList memberList = null;
-        [SerializeField] private MagicList magicList = null;
+        [SerializeField] private MagicList slotSkillList = null;
+        [SerializeField] private MagicList changeSkillList = null;
         [SerializeField] private SkillAction selectingSkill = null;
         [SerializeField] private ActorInfoComponent selectingActorInfoComponent = null;
         [SerializeField] private GameObject topLayer = null;
         [SerializeField] private GameObject statusLayer = null;
-
-        private List<BaseList> _viewActives = new ();
-        private void SetActivate(BaseList baseView)
-        {
-            var find = _viewActives.Find(a => a == baseView);
-            foreach (var viewActives in _viewActives)
-            {
-                if (viewActives == find)
-                {
-                    find.Activate();
-                } else
-                {
-                    viewActives.Deactivate();
-                }
-            }
-        }
 
         private new Action<ViewEvent> _commandData = null;
         public void SetStatusEvent(Action<ViewEvent> commandData) => _commandData = commandData;
@@ -52,7 +37,6 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        public SkillInfo SelectMagic => (SkillInfo)magicList.ListData?.Data;
         private StatusViewInfo _statusViewInfo = null; 
 
         private Action _backEvent = null;
@@ -67,7 +51,8 @@ namespace Ryneus
             
             InitializeCommandList();
             InitializeMemberList();
-            InitializeMagicList();
+            InitializeSlotSkillList();
+            InitializeChangeSkillList();
             selectingSkill.gameObject.SetActive(false);
 
             new StatusPresenter(this,actorInfos);
@@ -85,7 +70,7 @@ namespace Ryneus
             commandList.SetInputHandler(InputKeyType.Option2,() => 
             {
             });
-            _viewActives.Add(commandList);
+            AddViewActives(commandList);
         }
 
         public void SetCommandList(List<ListData> commandListData)
@@ -99,7 +84,7 @@ namespace Ryneus
             SetInputHandler(memberList.gameObject);
             memberList.SetInputHandler(InputKeyType.Decide,OnSelectActor);
             memberList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
-            _viewActives.Add(memberList);
+            AddViewActives(memberList);
         }
 
         public void SetMemberList(List<ListData> commandListData)
@@ -121,18 +106,19 @@ namespace Ryneus
             CallEvent(CommandType.CancelActor);
         }
 
-        private void InitializeMagicList()
+        private void InitializeSlotSkillList()
         {
-            magicList.Initialize();
-            magicList.SetInputHandler(InputKeyType.Decide,OnSelectMagic);
-            magicList.SetInputHandler(InputKeyType.Cancel,OnCancelSkill);
-            SetInputHandler(magicList.gameObject);
-            _viewActives.Add(magicList);
+            slotSkillList.Initialize();
+            slotSkillList.SetInputHandler(InputKeyType.Decide,OnSelectSlotSkill);
+            slotSkillList.SetInputHandler(InputKeyType.Cancel,OnCancelSlotSkill);
+            SetInputHandler(slotSkillList.gameObject);
+            AddViewActives(slotSkillList);
         }
 
-        public void SetMagicList(List<ListData> skillInfos)
+        public void SetSlotSkillList(List<ListData> skillInfos)
         {
-            magicList.SetData(skillInfos);
+            var lastIndex = slotSkillList.Index;
+            slotSkillList.SetData(skillInfos,lastIndex == 0);
         }
 
         public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> partyInfo)
@@ -140,25 +126,48 @@ namespace Ryneus
             selectingActorInfoComponent.UpdateInfo(actorInfo,partyInfo);
         }
 
-        public void SetSelectingSkill(ListData skillInfo)
+        public void SetSelectingSlotSkill(ListData skillInfo)
         {
             selectingSkill.gameObject.SetActive(skillInfo != null);
             selectingSkill.SetListData(skillInfo,0);
             selectingSkill.UpdateViewItem();
         }
 
-        private void OnSelectMagic()
+        private void OnSelectSlotSkill()
         {
-            var data = magicList.ListItemData<SkillInfo>();
+            var data = slotSkillList.ListItemData<SkillInfo>();
             if (data != null)
             {
-                CallEvent(CommandType.SelectSkill,data);
+                CallEvent(CommandType.SelectSlotSkill,data);
             }
         }
 
-        private void OnCancelSkill()
+        private void OnCancelSlotSkill()
         {
-            CallEvent(CommandType.CancelSkill);
+            CallEvent(CommandType.CancelSlotSkill);
+        }
+
+        private void InitializeChangeSkillList()
+        {
+            changeSkillList.Initialize();
+            changeSkillList.SetInputHandler(InputKeyType.Decide,OnSelectChangeSkill);
+            changeSkillList.SetInputHandler(InputKeyType.Cancel,OnCancelSlotSkill);
+            SetInputHandler(changeSkillList.gameObject);
+            AddViewActives(changeSkillList);
+        }
+
+        public void SetChangeSkillList(List<ListData> skillInfos)
+        {
+            changeSkillList.SetData(skillInfos);
+        }
+
+        private void OnSelectChangeSkill()
+        {
+            var data = changeSkillList.ListItemData<SkillInfo>();
+            if (data != null)
+            {
+                CallEvent(CommandType.SelectChangeSkill,data);
+            }
         }
 
         public void CommandTopLayer()
@@ -185,9 +194,18 @@ namespace Ryneus
             memberList.UpdateSelectIndex(lastMemberIndex);
         }
         
-        public void CallMagicList()
+        public void CallSlotSkillList()
         {
-            SetActivate(magicList);
+            SetActivate(slotSkillList);
+            slotSkillList.gameObject.SetActive(true);
+            changeSkillList.gameObject.SetActive(false);
+        }
+
+        public void CallChangeSkillList()
+        {
+            SetActivate(changeSkillList);
+            changeSkillList.gameObject.SetActive(true);
+            slotSkillList.gameObject.SetActive(false);
         }
 
         public void OpenAnimation(Action endEvent)
@@ -390,8 +408,9 @@ namespace Status
         CancelActor,
         LeftActor,
         RightActor,
-        SelectSkill,
-        CancelSkill,
+        SelectSlotSkill,
+        CancelSlotSkill,
+        SelectChangeSkill,
         DecideStage,
         CharacterList,
         SelectCharacter,

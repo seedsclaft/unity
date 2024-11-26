@@ -40,22 +40,6 @@ namespace Ryneus
         [SerializeField] private BattleMagicSelectView magicSelectView = null;
         public SkillInfo SelectSkill => magicSelectView.SelectSkill;
 
-        private List<BaseList> _viewActives = new ();
-        private void SetActivate(BaseList baseView)
-        {
-            var find = _viewActives.Find(a => a == baseView);
-            foreach (var viewActives in _viewActives)
-            {
-                if (viewActives == find)
-                {
-                    find.Activate();
-                } else
-                {
-                    viewActives.Deactivate();
-                }
-            }
-        }
-        
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
         private BattleStartAnim _battleStartAnim = null;
@@ -136,7 +120,7 @@ namespace Ryneus
             battleEnemyLayer.SetSelectedHandler(TargetSelectCursor);
             battleEnemyLayer.gameObject.SetActive(false);
             SetInputHandler(battleEnemyLayer.gameObject);
-            _viewActives.Add(battleEnemyLayer);
+            AddViewActives(battleEnemyLayer);
         }
 
         private void InitializeMagicList()
@@ -150,7 +134,7 @@ namespace Ryneus
             magicSelectView.gameObject.SetActive(false);
             magicSelectView.ClearSelect();
             SetInputHandler(magicSelectView.gameObject);
-            _viewActives.Add(magicSelectView);
+            AddViewActives(magicSelectView);
         }
 
         private void OnSelectMagic(InputKeyType inputKeyType)
@@ -324,7 +308,7 @@ namespace Ryneus
             //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
             battleActorList.SetSelectedHandler(() => CallSelectActorList());
             SetInputHandler(battleActorList.gameObject);
-            _viewActives.Add(battleActorList);
+            AddViewActives(battleActorList);
             
             GameObject prefab = Instantiate(animPrefab);
             prefab.transform.SetParent(animRoot.transform, false);

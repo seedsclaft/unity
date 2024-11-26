@@ -60,11 +60,14 @@ namespace Ryneus
                 case CommandType.CancelActor:
                     CommandCancelActor();
                     return;
-                case CommandType.SelectSkill:
-                    CommandSelectSkill((SkillInfo)viewEvent.template);
+                case CommandType.SelectSlotSkill:
+                    CommandSelectSlotSkill((SkillInfo)viewEvent.template);
                     return;
-                case CommandType.CancelSkill:
+                case CommandType.CancelSlotSkill:
                     CommandCancelSkill();
+                    return;
+                case CommandType.SelectChangeSkill:
+                    CommandSelectChangeSkill((SkillInfo)viewEvent.template);
                     return;
                 case CommandType.CharacterList:
                     CommandCharacterList();
@@ -137,16 +140,38 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
 
-        private void CommandSelectSkill(SkillInfo skillInfo)
+        private void CommandSelectSlotSkill(SkillInfo skillInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            if (_model.SelectingSkill == null)
+            if (_model.SelectingSlotType == SkillSlotType.None)
             {
                 // 選択する
-                _model.SetSelectingSkillId(skillInfo);
-                _view.SetMagicList(GetListData(_model.ChangeAbleSkills()));
-                _view.SetSelectingSkill(new ListData(skillInfo));
-            } else
+                _model.SetSelectingSlotType(skillInfo.SkillSlotType);
+                _view.SetChangeSkillList(GetListData(_model.ChangeAbleSkills()));
+                _view.SetSelectingSlotSkill(new ListData(skillInfo));
+                _view.CallChangeSkillList();
+            }
+        }
+
+        private void CommandCancelSkill()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+            if (_model.SelectingSlotType != SkillSlotType.None)
+            {
+                // 選択魔法のキャンセル
+                ResetSelectSkill();
+                return;
+            }
+            _view.CommandTopLayer();
+            CallMemberList();
+            _model.SetSelectingSlotType(SkillSlotType.None);
+            _view.SetSelectingSlotSkill(null);
+        }
+
+        private void CommandSelectChangeSkill(SkillInfo skillInfo)
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            if (_model.SelectingSlotType != SkillSlotType.None)
             {
                 // 変更する
                 if (skillInfo.Enable)
@@ -157,26 +182,12 @@ namespace Ryneus
             }
         }
 
-        private void CommandCancelSkill()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (_model.SelectingSkill != null)
-            {
-                // 選択魔法のキャンセル
-                ResetSelectSkill();
-                return;
-            }
-            _view.CommandTopLayer();
-            CallMemberList();
-            _model.SetSelectingSkillId(null);
-            _view.SetSelectingSkill(null);
-        }
-
         private void ResetSelectSkill()
         {
-            _model.SetSelectingSkillId(null);
-            _view.SetSelectingSkill(null);
+            _model.SetSelectingSlotType(SkillSlotType.None);
+            _view.SetSelectingSlotSkill(null);
             CommandRefreshMagicList();
+            _view.CallSlotSkillList();
         }
 
         private void CommandCharacterList()
@@ -277,7 +288,7 @@ namespace Ryneus
             _model.SelectActor(actorInfo.ActorId);
             CommandRefreshMagicList();
             _view.CommandStatusLayer();
-            _view.CallMagicList();
+            _view.CallSlotSkillList();
         }
 
         private void CommandCancelActor()
@@ -287,7 +298,7 @@ namespace Ryneus
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            if (_popupCommandType == CommandType.SelectSkill)
+            if (_popupCommandType == CommandType.SelectSlotSkill)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)
                 {
@@ -337,12 +348,14 @@ namespace Ryneus
 
         private void CommandRefresh()
         {
+            _model.UpdateActorRemainMp();
             _view.CommandRefresh();
         }
 
         private void CommandRefreshMagicList()
         {
-            _view.SetMagicList(GetListData(_model.SlotSkills()));
+            CommandRefresh();
+            _view.SetSlotSkillList(GetListData(_model.SlotSkills()));
             _view.SetActorInfo(_model.CurrentActor,_model.ActorInfos);
         }
 

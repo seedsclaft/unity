@@ -593,7 +593,27 @@ namespace Ryneus
             return skillInfos;
         }
 
-        public List<SkillInfo> SkillInfos()
+        public List<SkillInfo> SlotSkills()
+        {
+            var list = new List<SkillInfo>();
+            foreach (var skillDict in _skillSettingInfo.ActionSkillIds())
+            {
+                var skillInfo = new SkillInfo(skillDict.Value);
+                skillInfo.SetSkillSlotType(skillDict.Key);
+                skillInfo.SetEnable(true);
+                list.Add(skillInfo);
+            }
+            foreach (var skillList in _skillSettingInfo.PassiveSkillIds())
+            {
+                var skillInfo = new SkillInfo(skillList);
+                skillInfo.SetSkillSlotType(SkillSlotType.Passive);
+                skillInfo.SetEnable(true);
+                list.Add(skillInfo);
+            }
+            return list;
+        }
+
+        public List<SkillInfo> ChangeAbleSkills()
         {
             var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);
 

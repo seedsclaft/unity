@@ -12,30 +12,51 @@ namespace Ryneus
             _actorInfos = actorInfos;
         }
 
-        private SkillInfo _selectingSkill = null;
-        public SkillInfo SelectingSkill => _selectingSkill;
-        public void SetSelectingSkillId(SkillInfo selectingSkill) => _selectingSkill = selectingSkill;
+        private SkillSlotType _selectingSlotType = SkillSlotType.None;
+        public SkillSlotType SelectingSlotType => _selectingSlotType;
+        public void SetSelectingSlotType(SkillSlotType selectingSlotType) => _selectingSlotType = selectingSlotType;
         public void SetActorSkillSlot(int changeSkillId)
         {
-            CurrentActor.SetSkillSlot(_selectingSkill.SkillSlotType,changeSkillId);
+            CurrentActor.SetSkillSlot(_selectingSlotType,changeSkillId);
+        }
+
+        public void UpdateActorRemainMp()
+        {
+            var costMp = 0;
+            foreach (var slotSkill in SlotSkills())
+            {
+                costMp += slotSkill.LearningCost;
+            }
+            CurrentActor.ChangeMp(CurrentActor.MaxMp - costMp);
         }
 
         public List<SkillInfo> SlotSkills()
         {
-            var list = new List<SkillInfo>();
-            foreach (var skillDict in CurrentActor.SkillSettingInfo.ActionSkillIds())
+            var slotSkills = CurrentActor.SlotSkills();
+            foreach (var slotSkill in slotSkills)
             {
-                var skillInfo = new SkillInfo(skillDict.Value);
-                skillInfo.SetSkillSlotType(skillDict.Key);
-                skillInfo.SetEnable(true);
-                list.Add(skillInfo);
+                if (slotSkill.Master != null && !slotSkill.IsBattleSpecialSkill())
+                {
+                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,slotSkill.Attribute,_actorInfos,slotSkill.Master.Rank);
+                    slotSkill.SetLearningCost(cost);
+                }
             }
-            return list;
+            return slotSkills;
         }
 
         public List<SkillInfo> ChangeAbleSkills()
         {
-            return CurrentActor.SkillInfos();
+            var changeAbleSkills = CurrentActor.ChangeAbleSkills();
+            foreach (var changeAbleSkill in changeAbleSkills)
+            {
+                if (changeAbleSkill.Master != null && !changeAbleSkill.IsBattleSpecialSkill())
+                {
+                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,changeAbleSkill.Attribute,_actorInfos,changeAbleSkill.Master.Rank);
+                    changeAbleSkill.SetLearningCost(cost);
+                    changeAbleSkill.SetEnable(cost <= CurrentActor.CurrentMp);
+                }
+            }
+            return changeAbleSkills;
         }
 
         public string HelpText()

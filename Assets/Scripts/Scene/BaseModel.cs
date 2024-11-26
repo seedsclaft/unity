@@ -561,7 +561,7 @@ namespace Ryneus
 
         public void AddPlayerInfoActorSkillId(int actorId)
         {
-            foreach (var skillInfo in Actors().Find(a => a.ActorId == actorId).SkillInfos())
+            foreach (var skillInfo in Actors().Find(a => a.ActorId == actorId).ChangeAbleSkills())
             {
                 AddPlayerInfoSkillId(skillInfo.Id);
             }

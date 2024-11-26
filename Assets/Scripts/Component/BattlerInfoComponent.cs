@@ -14,7 +14,7 @@ namespace Ryneus
         [SerializeField] private ActorInfoComponent actorInfoComponent;
         [SerializeField] private EnemyInfoComponent enemyInfoComponent;
         [SerializeField] private StatusInfoComponent statusInfoComponent;
-        [SerializeField] private EffekseerEmitter effekseerEmitter;
+        [SerializeField] private MakerEffekseerEmitter effekseerEmitter;
         [SerializeField] private _2dxFX_DestroyedFX deathAnimation;
         private GameObject _battleDamageRoot;
         public GameObject BattleDamageRoot => _battleDamageRoot;
@@ -365,24 +365,6 @@ namespace Ryneus
             effekseerEmitter.Stop();
             effekseerEmitter.speed = animationSpeed;
             effekseerEmitter.Play(effectAsset);
-            if (effectAsset is MakerEffectAsset)
-            {
-                var makerEffect = (MakerEffectAsset)effectAsset;
-                foreach (var soundTiming in makerEffect.soundTimings)
-                {
-                    PlayMakerEffectSound(soundTiming);
-                }
-            }
-        }
-
-        private void PlayMakerEffectSound(MakerEffectData.SoundTimings soundTimings)
-        {
-            Debug.Log(soundTimings.se.name);
-            var clip = Resources.Load<AudioClip>("Animations/Sound/" + soundTimings.se.name);
-            var volume = soundTimings.se.volume * 0.01f;
-            var pitch = soundTimings.se.pitch * 0.01f;
-            var frame = soundTimings.frame;
-            SoundManager.Instance.PlaySe(clip,volume,pitch,frame);
         }
 
         public void SetThumbAlpha(bool isSelectable)

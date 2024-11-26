@@ -30,6 +30,22 @@ namespace Ryneus
         public bool AnimationBusy => baseAnimation != null ? baseAnimation.Busy : false;
         private int _wait = 0;
         public System.Action _waitEndEvent = null;
+        private List<BaseList> _viewActives = new ();
+        public void AddViewActives(BaseList baseList) => _viewActives.Add(baseList);
+        public void SetActivate(BaseList baseView)
+        {
+            var find = _viewActives.Find(a => a == baseView);
+            foreach (var viewActives in _viewActives)
+            {
+                if (viewActives == find)
+                {
+                    find.Activate();
+                } else
+                {
+                    viewActives.Deactivate();
+                }
+            }
+        }
 
         private HelpWindow _helpWindow = null;
         public HelpWindow HelpWindow => _helpWindow;
