@@ -94,17 +94,17 @@ namespace Ryneus
                 if (tutorialData.Param1 == 300)
                 {
                     // トレジャーのマスを初めて開く
-                    checkFlag = _model.CurrentStage.Seek == 2;
+                    checkFlag = _model.CurrentStage.CurrentSeek == 2;
                 }
                 if (tutorialData.Param1 == 400)
                 {
                     // Seek３の編成を初めて開く
-                    checkFlag = _model.CurrentStage.Seek == 3 && commandType == CommandType.SelectSymbol;
+                    checkFlag = _model.CurrentStage.CurrentSeek == 3 && commandType == CommandType.SelectSymbol;
                 }
                 if (tutorialData.Param1 == 900)
                 {
                     // 仲間加入のマスを初めて開く
-                    checkFlag = _view.SymbolRecordListActive && _model.CurrentStage.Seek == 7;
+                    checkFlag = _view.SymbolRecordListActive && _model.CurrentStage.CurrentSeek == 7;
                 }
                 if (tutorialData.Param1 == 1100)
                 {
@@ -430,7 +430,7 @@ namespace Ryneus
 
         private void CommandSelectRecord(SymbolResultInfo recordInfo)
         {
-            var currentTurn = _model.CurrentStage.Seek;
+            var currentTurn = _model.CurrentStage.CurrentSeek;
             var currentStage = _model.CurrentStage.Id;
             if (recordInfo.Seek == currentTurn && recordInfo.StageId == currentStage)
             {
@@ -450,19 +450,13 @@ namespace Ryneus
             _model.SetStageSeekIndex(recordInfo.SeekIndex);
             _view.HideRecordList();
             // 回路解析
+            /*
             switch (recordInfo.SymbolType)
             {
                 case SymbolType.Battle:
                 case SymbolType.Boss:
                     _view.ChangeBackCommandActive(true);
                     _view.ChangeSymbolBackCommandActive(true);
-                    /*
-                    _view.ShowCharacterDetail(_model.TacticsActor(),_model.StageMembers(),_model.SkillActionListData(_model.TacticsActor()));
-
-                    _view.ShowConfirmCommand();
-                    _view.ShowBattleReplay(recordInfo.SaveBattleReplayStage());
-                    _view.ShowSelectCharacter();
-                    */
                     CommandRefresh();
                     _busy = true;
                     var popupInfo = new PopupInfo
@@ -473,17 +467,14 @@ namespace Ryneus
                             _busy = false;
                             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                             CommandCancelSelectSymbol();
-                            _view.SetNuminous(_model.Currency);
+                            //_view.SetNuminous(_model.Currency);
                         }
                     };
                     _view.CommandCallPopup(popupInfo);
                     _backCommand = CommandType.CancelSelectSymbol;
                     break;
-                case SymbolType.Recover:
-                    CheckRecoverSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
-                    break;
                 case SymbolType.Actor:
-                    CheckActorSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
+                    //CheckActorSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
                 case SymbolType.SelectActor:
                     CheckSelectActorSymbol();
@@ -492,15 +483,13 @@ namespace Ryneus
                     CheckShopStageSymbol();
                     break;
                 case SymbolType.Alcana:
-                    CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
+                    //CheckAlcanaSymbol(recordInfo.SymbolInfo.GetItemInfos);
                     break;
                 case SymbolType.Resource:
-                    CheckResourceSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
-                    break;
-                case SymbolType.Rebirth:
-                    CheckRebirthSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
+                    //CheckResourceSymbol(recordInfo.SymbolInfo.GetItemInfos[0]);
                     break;
             }
+            */
         }
 
         private void CommandCancelSelectSymbol()
@@ -682,24 +671,6 @@ namespace Ryneus
             */
         }
 
-        private void CheckRecoverSymbol(GetItemInfo getItemInfo)
-        {
-        }
-
-        private void UpdatePopupRecoverSymbol(ConfirmCommandType confirmCommandType)
-        {
-            /*
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                var currentSymbol = _model.CurrentSelectRecord();
-                GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
-            } else
-            {
-                CommandSelectTacticsCommand(_model.TacticsCommandType);
-            }
-            */
-        }
-
         private void CheckAlcanaSymbol(List<GetItemInfo> getItemInfos)
         {
             CheckAlcanaSymbol(_model.AlcanaMagicSkillInfos(getItemInfos));
@@ -761,26 +732,6 @@ namespace Ryneus
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
         }
 
-        private void CheckRebirthSymbol(GetItemInfo getItemInfo)
-        {
-            var confirmInfo = new ConfirmInfo("ロストしたキャラを復活しますか？",(a) => UpdatePopupRebirthSymbol((ConfirmCommandType)a));
-            _view.CommandCallConfirm(confirmInfo);
-        }
-
-        private void UpdatePopupRebirthSymbol(ConfirmCommandType confirmCommandType)
-        {
-            /*
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                var currentSymbol = _model.CurrentSelectRecord();
-                GotoStrategyScene(currentSymbol.SymbolInfo.GetItemInfos,_model.StageMembers());
-            } else
-            {
-                CommandSelectTacticsCommand(_model.TacticsCommandType);
-            }
-            */
-        }
-
         private void CommandPopupSkillInfo(GetItemInfo getItemInfo)
         {
         }
@@ -807,6 +758,7 @@ namespace Ryneus
 
         private void CommandCallEnemyInfo(SymbolResultInfo symbolResultInfo)
         {
+            /*
             switch (symbolResultInfo.SymbolType)
             {
                 case SymbolType.Battle:
@@ -835,12 +787,14 @@ namespace Ryneus
                     CallPopupSkillDetail(DataSystem.GetText(19240),_model.BasicSkillGetItemInfos(symbolResultInfo.SymbolInfo.GetItemInfos));
                     break;
             }
+            */
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
         }
 
         private void CommandCallAddActorInfo(SymbolResultInfo symbolResultInfo,bool addCommand)
         {
             List<ActorInfo> actorInfos;
+            /*
             if (symbolResultInfo.StageSymbolData.Param2 == 0 && symbolResultInfo.SymbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.AddActor) == null)
             {
                 actorInfos = _model.AddSelectActorInfos();
@@ -869,6 +823,7 @@ namespace Ryneus
 
                 });
             }
+            */
         }
 
         private void CommandSelectSideMenu()

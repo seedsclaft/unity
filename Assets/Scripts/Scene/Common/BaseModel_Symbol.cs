@@ -7,9 +7,9 @@ namespace Ryneus
 {
     public partial class BaseModel
     {
-        public List<SymbolResultInfo> StageResultInfos(List<StageSymbolData> stageSymbolDates)
+        public List<SymbolInfo> StageSymbolInfos(List<StageSymbolData> stageSymbolDates)
         {
-            var resultInfos = new List<SymbolResultInfo>();
+            var symbolInfos = new List<SymbolInfo>();
             var symbolDates = stageSymbolDates.FindAll(a => a.Seek > 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
             foreach (var symbolMaster in symbolDates)
             {
@@ -125,15 +125,9 @@ namespace Ryneus
                     }
                 }
                 symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo);
-                resultInfos.Add(record);
-                // ブランチ用データ作成
-                var brunchSymbol = new SymbolInfo(stageSymbolData);
-                brunchSymbol.CopyData(symbolInfo);
-                var brunchRecord = new SymbolResultInfo(brunchSymbol);
-                resultInfos.Add(brunchRecord);
+                symbolInfos.Add(symbolInfo);
             }
-            return resultInfos;
+            return symbolInfos;
         }
 
         private GetItemInfo MakeGetItemInfo(GetItemType getItemType,int param1)

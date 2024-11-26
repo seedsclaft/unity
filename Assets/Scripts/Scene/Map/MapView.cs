@@ -7,6 +7,7 @@ namespace Ryneus
 {
     public class MapView : BaseView ,IInputHandlerEvent
     {
+        [SerializeField] private BaseList symbolInfoList;
         private new Action<ViewEvent> _commandData = null;
         public new void SetEvent(Action<ViewEvent> commandData) => _commandData = commandData;
         public void CallEvent(CommandType mapCommandType)
@@ -19,7 +20,7 @@ namespace Ryneus
             _commandData(eventData);
         }
 
-        private VirtualModelController virtualModelController = null;
+        private VirtualModelController _virtualModelController = null;
 
         private GameObject _mapPrefab = null;
         public override void Initialize() 
@@ -29,15 +30,41 @@ namespace Ryneus
             {
                 CallSideMenu();
             });
+            InitializeSymbolInfoList();
             
             new MapPresenter(this);
+        }
+
+        private void InitializeSymbolInfoList()
+        {
+            symbolInfoList.Initialize();
+            SetInputHandler(symbolInfoList.gameObject);
+            //symbolInfoList.SetInputHandler(InputKeyType.Decide,OnSelectActor);
+            //symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
+            AddViewActives(symbolInfoList);
+        }
+
+        public void SetSymbolList(List<ListData> symbolList)
+        {
+            symbolInfoList.SetData(symbolList,false,() => 
+            {
+                var SymbolRecordDates = symbolInfoList.GetComponentsInChildren<SymbolRecordData>();
+                foreach (var SymbolRecordData in SymbolRecordDates)
+                {
+                    //SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
+                }
+                symbolInfoList.SetSelectedHandler(() => 
+                {
+                    // 消さないこと
+                });
+            });
         }
 
         public void CreateMapLeaderActor(GameObject gameObject)
         {
             var prefab = Instantiate(gameObject);
-            virtualModelController = prefab.GetComponent<VirtualModelController>();
-            virtualModelController.Initialize(true);
+            _virtualModelController = prefab.GetComponent<VirtualModelController>();
+            _virtualModelController.Initialize(true);
             CommandCreateMapObject(prefab);
             _mapPrefab = prefab;
         }
@@ -52,93 +79,93 @@ namespace Ryneus
             {
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
-                    virtualModelController?.Jump();
+                    _virtualModelController?.Jump();
                     CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickUp).IsTrigger())
                 {
-                    virtualModelController?.Forward();
+                    _virtualModelController?.Forward();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickDown).IsTrigger())
                 {
-                    virtualModelController?.BackForward();
+                    _virtualModelController?.BackForward();
                 }
                 
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickRight).IsTrigger())
                 {
-                    virtualModelController?.RightForward();
+                    _virtualModelController?.RightForward();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickLeft).IsTrigger())
                 {
-                    virtualModelController?.LeftForward();
+                    _virtualModelController?.LeftForward();
                 }
                 
                 if (InputSystem.GetInputDate(InputKeyType.RightStickUp).IsTrigger())
                 {
-                    virtualModelController?.DownCamera();
+                    _virtualModelController?.DownCamera();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.RightStickDown).IsTrigger())
                 {
-                    virtualModelController?.UpCamera();
+                    _virtualModelController?.UpCamera();
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.RightStickLeft).IsTrigger())
                 {
-                    virtualModelController?.LeftCamera();
+                    _virtualModelController?.LeftCamera();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.RightStickRight).IsTrigger())
                 {
-                    virtualModelController?.RightCamera();
+                    _virtualModelController?.RightCamera();
                 }
             } else
             {
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
-                    virtualModelController?.Jump();
+                    _virtualModelController?.Jump();
                     CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
                 {
-                    virtualModelController?.Forward();
+                    _virtualModelController?.Forward();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.Down).IsTrigger())
                 {
-                    virtualModelController?.BackForward();
+                    _virtualModelController?.BackForward();
                 }
                 
                 if (InputSystem.GetInputDate(InputKeyType.Right).IsTrigger())
                 {
-                    virtualModelController?.RightForward();
+                    _virtualModelController?.RightForward();
                 } else
                 if (InputSystem.GetInputDate(InputKeyType.Left).IsTrigger())
                 {
-                    virtualModelController?.LeftForward();
+                    _virtualModelController?.LeftForward();
                 }
 
             }
             if (InputSystem.GetInputDate(InputKeyType.SideRight1).IsTrigger())
             {
-                virtualModelController?.RightRotation();
+                _virtualModelController?.RightRotation();
             } else
             if (InputSystem.GetInputDate(InputKeyType.SideLeft1).IsTrigger())
             {
-                virtualModelController?.LeftRotation();
+                _virtualModelController?.LeftRotation();
             }
 
             if (InputSystem.GetInputDate(InputKeyType.SideRight2).IsTrigger())
             {
-                virtualModelController?.RightCamera();
+                _virtualModelController?.RightCamera();
             } else
             if (InputSystem.GetInputDate(InputKeyType.SideLeft2).IsTrigger())
             {
-                virtualModelController?.LeftCamera();
+                _virtualModelController?.LeftCamera();
             }
             switch (keyType)
             {
                 case InputKeyType.None:
-                    virtualModelController?.Stop();
+                    _virtualModelController?.Stop();
                     return;
                 case InputKeyType.Cancel:
                     CallEvent(CommandType.CallStatus);
@@ -148,12 +175,12 @@ namespace Ryneus
 
         public new void MouseMoveHandler(Vector3 position)
         {
-            virtualModelController?.MouseMove(position);
+            _virtualModelController?.MouseMove(position);
         }
 
         public new void MouseWheelHandler(Vector2 position)
         {
-            virtualModelController?.MouseWheel(position);
+            _virtualModelController?.MouseWheel(position);
         }
 
         public void ClearMap()

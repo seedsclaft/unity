@@ -9,27 +9,40 @@ namespace Ryneus
         private StageSymbolData _stageSymbolData;
         public StageSymbolData Master => _stageSymbolData;
         public SymbolType SymbolType => Master.SymbolType;
-        private TroopInfo _troopInfo;
+
+        private TroopInfo _troopInfo = null;
         public TroopInfo TroopInfo => _troopInfo;
         public void SetTroopInfo(TroopInfo troopInfo)
         {
             _troopInfo = troopInfo;
         }
-        private List<GetItemInfo> _getItemInfos = new ();
+
+        private List<GetItemInfo> _getItemInfos = new();
         public List<GetItemInfo> GetItemInfos => _getItemInfos;
         public void SetGetItemInfos(List<GetItemInfo> getItemInfos)
         {
             _getItemInfos = getItemInfos;
         }
-        private bool _lastSelected;
-        public bool LastSelected => _lastSelected;
-        public void SetLastSelected(bool lastSelected)
+
+        private bool _selected;
+        public bool Selected => _selected;
+        public void SetSelected(bool lastSelected)
         {
-            _lastSelected = lastSelected;
+            _selected = lastSelected;
         }
+
         public SymbolInfo(StageSymbolData stageSymbolData)
         {
             _stageSymbolData = stageSymbolData;
+            if (stageSymbolData.PrizeSetId > 0)
+            {
+                var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == stageSymbolData.PrizeSetId);
+                foreach (var prizeSet in prizeSets)
+                {
+                    var getItemInfo = new GetItemInfo(prizeSet.GetItem);
+                    _getItemInfos.Add(getItemInfo);
+                }
+            }
         }
 
         public void CopyData(SymbolInfo symbolInfo)

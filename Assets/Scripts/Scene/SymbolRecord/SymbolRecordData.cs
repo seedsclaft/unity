@@ -20,7 +20,7 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var dates = ListItemData<List<SymbolResultInfo>>();
+            var dates = ListItemData<List<SymbolInfo>>();
             foreach (var symbolComponent in symbolComponents)
             {
                 symbolComponent.gameObject.SetActive(false);
@@ -29,18 +29,17 @@ namespace Ryneus
             {
                 if (symbolComponents.Count > 0)
                 {
-                    var symbolComponent = symbolComponents[data.SeekIndex];
+                    var symbolComponent = symbolComponents[data.Master.SeekIndex];
                     symbolComponent.gameObject.SetActive(true);
-                    symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
+                    symbolComponent.UpdateInfo(data,data.Selected,data.Master.Seek);
                 }
             }
             if (dates.Count > 0)
             {
-                /*
-                var symbolStageId = dates[0].StageId;
-                var symbolSeek = dates[0].Seek;
-                var currentStageId = GameSystem.CurrentStageData.CurrentStage.Id;
-                var currentTurn = GameSystem.CurrentStageData.CurrentStage.Seek;
+                var symbolStageId = dates[0].Master.StageId;
+                var symbolSeek = dates[0].Master.Seek;
+                var currentStageId = GameSystem.CurrentStageData.PartyInfo.StageId;
+                var currentTurn = GameSystem.CurrentStageData.PartyInfo.Seek;
                 pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
                 nextObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
                 futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
@@ -64,9 +63,8 @@ namespace Ryneus
                     stageDataText?.SetText("");
                 } else
                 {
-                    stageDataText?.SetText(dates[0].StageId.ToString() + "-" + dates[0].Seek.ToString());
+                    stageDataText?.SetText(dates[0].Master.StageId.ToString() + "-" + dates[0].Master.Seek.ToString());
                 }
-                */
             }
         }
 

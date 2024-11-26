@@ -39,7 +39,7 @@ namespace Ryneus
             }
             if (lastSelected != null)
             {
-                var lastSelect = _symbolInfo.LastSelected;
+                var lastSelect = _symbolInfo.Selected;
                 lastSelected.SetActive(lastSelect);
                 //symbolImage.gameObject.SetActive(!_symbolInfo.Past && !lastSelect);
                 if (_animationInit == false && lastSelect)

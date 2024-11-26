@@ -273,6 +273,7 @@ namespace Ryneus
 
         private void OnClickSymbol()
         {
+            /*
             if (symbolRecordList.ScrollRect.enabled == false) return;
             var data = symbolRecordList.ListItemData<List<SymbolResultInfo>>();
             if (data != null)
@@ -286,6 +287,7 @@ namespace Ryneus
                     _commandData(eventData);
                 }
             }
+            */
         }
 
         public void ShowSymbolRecord()
@@ -300,6 +302,7 @@ namespace Ryneus
 
         private void CallBattleEnemy()
         {
+            /*
             if (tacticsSymbolList.IsSelectSymbol())
             {
                 var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
@@ -350,11 +353,13 @@ namespace Ryneus
                     }
                 }
             }
+            */
         }
 
         private void OnClickEnemyInfo()
         {
             var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
+            /*
             if (data != null && data.SymbolType != SymbolType.None)
             {
                 var eventData = new TacticsViewEvent(CommandType.CallEnemyInfo)
@@ -363,6 +368,7 @@ namespace Ryneus
                 };
                 _commandData(eventData);
             }
+            */
         }
 
         private void OnClickParallel()

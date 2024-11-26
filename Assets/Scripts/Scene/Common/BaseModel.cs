@@ -14,9 +14,9 @@ namespace Ryneus
         public SaveInfo CurrentData => GameSystem.CurrentData;
         public SaveGameInfo CurrentSaveData => GameSystem.CurrentStageData;
         public TempInfo TempInfo => GameSystem.TempData;
-        public StageInfo CurrentStage => null;
+        public StageInfo CurrentStage => CurrentSaveData.StageInfo;
 
-        public PartyInfo PartyInfo => CurrentSaveData.Party;
+        public PartyInfo PartyInfo => CurrentSaveData.PartyInfo;
 
         public int Currency => 0;
         //public float TotalScore => PartyInfo.TotalScore(CurrentStage.WorldType);
@@ -92,7 +92,7 @@ namespace Ryneus
 
         public List<StageEventData> StageEvents(EventTiming eventTiming)
         {
-            int CurrentTurn = CurrentStage.Seek;
+            int CurrentTurn = CurrentStage.CurrentSeek;
             var eventKeys = CurrentStage.ReadEventKeys;
             return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
         }
@@ -223,82 +223,33 @@ namespace Ryneus
             CurrentData.PlayerInfo.GainClearCount();
         }
 
-        public List<SymbolResultInfo> OpeningStageResultInfos()
+        public List<SymbolInfo> OpeningStageResultInfos()
         {
-            var recordInfos = new List<SymbolResultInfo>();
+            var symbolInfos = new List<SymbolInfo>();
             // 初期加入マス
-            var symbols = DataSystem.FindStage(0).StageSymbols;
-            symbols = symbols.FindAll(a => a.Seek == 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
+            var stageSymbolDates = DataSystem.FindStage(0).StageSymbols;
+            stageSymbolDates = stageSymbolDates.FindAll(a => a.Seek == 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
             bool addActor = false;
-            foreach (var symbol in symbols)
+            foreach (var stageSymbolData in stageSymbolDates)
             {
-                var symbolInfo = new SymbolInfo(symbol);
-                var getItemInfos = new List<GetItemInfo>();
-                if (symbol.PrizeSetId > 0)
-                {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
-                    foreach (var prizeSet in prizeSets)
-                    {
-                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                        getItemInfos.Add(getItemInfo);
-                    }
-                }
-                symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo);
+                var symbolInfo = new SymbolInfo(stageSymbolData);
                 if (addActor == false)
                 {
-                    record.SetSelected(true);
-                    var addActorGetItemInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
+                    var addActorGetItemInfo = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
                     if (addActorGetItemInfo != null)
                     {
                         // 初期アクター
                         addActorGetItemInfo.SetResultParam(1);
                         addActorGetItemInfo.SetGetFlag(true);
                         AddPlayerInfoActorSkillId(1);
-                        //addActor = true;
                     }
                 }
-                recordInfos.Add(record);
+                symbolInfos.Add(symbolInfo);
             }
-            // アナザー世界のレコードを作る
-            foreach (var symbol in symbols)
-            {
-                var symbolInfo = new SymbolInfo(symbol);
-                var getItemInfos = new List<GetItemInfo>();
-                if (symbol.PrizeSetId > 0)
-                {
-                    var prizeSets = DataSystem.PrizeSets.FindAll(a => a.Id == symbol.PrizeSetId);
-                    foreach (var prizeSet in prizeSets)
-                    {
-                        var getItemInfo = new GetItemInfo(prizeSet.GetItem);
-                        getItemInfos.Add(getItemInfo);
-                    }
-                }
-                symbolInfo.SetGetItemInfos(getItemInfos);
-                var record = new SymbolResultInfo(symbolInfo);
-                if (addActor == false)
-                {
-                    record.SetSelected(true);
-                    var addActorGetItemInfo = getItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
-                    if (addActorGetItemInfo != null)
-                    {
-                        // 初期アクター
-                        addActorGetItemInfo.SetResultParam(1);
-                        addActorGetItemInfo.SetGetFlag(true);
-                        AddPlayerInfoActorSkillId(1);
-                        //addActor = true;
-                    }
-                }
-                recordInfos.Add(record);
-            }
-            return recordInfos;
+            return symbolInfos;
         }
 
-        public List<SymbolResultInfo> StageResultInfos(int stageId)
-        {
-            var stageData = DataSystem.FindStage(stageId);
-            return StageResultInfos(stageData.StageSymbols);
-        }
+
 
         public void StartOpeningStage()
         {
@@ -452,7 +403,6 @@ namespace Ryneus
 
         public void GainSaveCount()
         {
-            CurrentStage.GainSaveCount();
         }
 
         public bool EnableContinue()
@@ -511,7 +461,7 @@ namespace Ryneus
             if (CurrentStage != null)
             {
                 stageKey.Append(string.Format(CurrentStage.Id.ToString("00")));
-                stageKey.Append(string.Format(CurrentStage.Seek.ToString("00")));
+                stageKey.Append(string.Format(CurrentStage.CurrentSeek.ToString("00")));
                 stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
             }
             return stageKey.ToString();
@@ -530,7 +480,7 @@ namespace Ryneus
             var cost = ActorLevelUpCost(actorInfo);
             // 新規魔法取得があるか
             var skills = actorInfo.LearningSkills(1);
-            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.Seek,-1);
+            var levelUpInfo = actorInfo.LevelUp(cost,CurrentStage.Id,CurrentStage.CurrentSeek,-1);
             foreach (var skill in skills)
             {
                 actorInfo.AddSkillTriggerSkill(skill.Id);

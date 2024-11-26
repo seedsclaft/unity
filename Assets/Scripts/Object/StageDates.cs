@@ -113,11 +113,9 @@ namespace Ryneus
         None = 0,
         Battle = 1,
         Boss = 2,
-        Recover = 3,
         Alcana = 4,
         Actor = 5,
         Resource = 6,
-        Rebirth = 7,
         SelectActor = 8,
         Shop = 9,
         Group = 99, // 99以上はグループ指定

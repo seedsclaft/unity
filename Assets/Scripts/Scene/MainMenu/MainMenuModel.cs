@@ -20,7 +20,7 @@ namespace Ryneus
             } else
             {
                 // 新規レコード作成
-                foreach (var record in StageResultInfos(stageId))
+                foreach (var record in GetStageSymbolInfos(stageId))
                 {
                     //PartyInfo.SetSymbolResultInfo(record);
                 }
@@ -57,7 +57,7 @@ namespace Ryneus
             var find = DataSystem.Stages.Find(a => a.Id > CurrentStage.Id);
             if (find != null)
             {
-                return new StageInfo(find);
+                return new StageInfo(find.Id);
             }
             return null;
         }

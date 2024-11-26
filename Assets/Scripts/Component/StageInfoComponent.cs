@@ -15,8 +15,6 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI help;
         [SerializeField] private TextMeshProUGUI turns;
         [SerializeField] private TextMeshProUGUI clearCount;
-        [SerializeField] private TextMeshProUGUI score;
-        [SerializeField] private TextMeshProUGUI scoreMax;
         [SerializeField] private TextMeshProUGUI stageLv;
 
         public void UpdateInfo(StageInfo stageInfo)
@@ -46,8 +44,6 @@ namespace Ryneus
             }
             */
 
-            score?.SetText(DataSystem.GetReplaceDecimalText(stageInfo.Score));
-            scoreMax?.SetText(DataSystem.GetReplaceDecimalText(stageInfo.ScoreMax));
             stageLv?.SetText(stageData.StageLv.ToString());
             stageNoText?.SetText(DataSystem.GetReplaceText(15010,stageData.Id.ToString()));
         }

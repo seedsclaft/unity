@@ -23,7 +23,7 @@ namespace Ryneus
         public bool Selectable => _selectable;
 
         private bool _getItemInit = false;
-        private PartyInfo partyInfo => GameSystem.CurrentStageData.Party;
+        private PartyInfo partyInfo => GameSystem.CurrentStageData.PartyInfo;
         //private StageInfo currentStageInfo => GameSystem.CurrentStageData.CurrentStage;
         
         public void SetSelectable(bool selectable)
@@ -34,15 +34,15 @@ namespace Ryneus
         public List<GetItemInfo> SelectRelicInfos()
         {
             if (ListData == null) return null;
-            var data = ListItemData<SymbolResultInfo>();
-            return data.SymbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
+            var data = ListItemData<SymbolInfo>();
+            return data.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
         }
         
         public GetItemInfo GetItemInfo()
         {
             if (ListData == null) return null;
-            var data = ListItemData<SymbolResultInfo>();
-            var convert = MakeGetItemListData(data.SymbolInfo);
+            var data = ListItemData<SymbolInfo>();
+            var convert = MakeGetItemListData(data);
             var getItemInfo = convert[getItemList.Index];
             return (GetItemInfo)getItemInfo.Data;
         }
@@ -82,13 +82,13 @@ namespace Ryneus
         public void UpdateViewItem()
         {
             if (ListData == null) return;
-            var data = ListItemData<SymbolResultInfo>();
-            symbolComponent.UpdateInfo(data.SymbolInfo,data.Selected,data.Seek);
+            var data = ListItemData<SymbolInfo>();
+            symbolComponent.UpdateInfo(data,data.Selected,data.Master.Seek);
             if (_getItemInit == false)
             {
                 getItemList.Initialize();
             }
-            getItemList.SetData(MakeGetItemListData(data.SymbolInfo),false);
+            getItemList.SetData(MakeGetItemListData(data),false);
             if (_getItemInit == false)
             {
                 getItemList.SetSelectedHandler(() => 

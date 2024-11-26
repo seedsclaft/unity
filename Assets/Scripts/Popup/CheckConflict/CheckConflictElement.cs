@@ -18,11 +18,13 @@ namespace Ryneus
             var data = ListItemData<List<SymbolResultInfo>>();
             var mainResultInfo = data[0];
             var brunchResultInfo = data[1];
+            /*
             mainSymbol.UpdateInfo(mainResultInfo.SymbolInfo,mainResultInfo.Selected,mainResultInfo.Seek);
             brunchSymbol.UpdateInfo(brunchResultInfo.SymbolInfo,brunchResultInfo.Selected,brunchResultInfo.Seek);
         
             mainGetItemInfo.SetData(MakeGetItemListData(mainResultInfo.SymbolInfo));
             brunchGetItemInfo.SetData(MakeGetItemListData(brunchSymbol.SymbolInfo));
+            */
         }
 
         

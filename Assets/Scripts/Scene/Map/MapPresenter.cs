@@ -28,6 +28,8 @@ namespace Ryneus
             _view.CommandMapChange(MapType.Default);
 
             _view.CreateMapLeaderActor(_model.LeaderActorPrefab());
+            _model.MakeStageInfo(1);
+            _view.SetSymbolList(_model.StageSymbolInfos());
             //CommandRefresh();
             _busy = false;
         }
