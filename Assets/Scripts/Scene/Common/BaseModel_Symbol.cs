@@ -76,7 +76,7 @@ namespace Ryneus
                         break;
                     case SymbolType.Resource:
                         // 報酬設定
-                        getItemInfos.Add(MakeGetItemInfo(GetItemType.Numinous,stageSymbolData.Param1));
+                        getItemInfos.Add(MakeGetItemInfo(GetItemType.Currency,stageSymbolData.Param1));
                         break;
                     case SymbolType.Actor:
                         // 表示用に報酬設定
@@ -106,7 +106,7 @@ namespace Ryneus
                         {
                             //getItemInfos.AddRange(MakeSelectActorGetItemInfos(getItemInfo.Param2 == 0));
                         } else
-                        if (prizeSet.GetItem.Type == GetItemType.Numinous)
+                        if (prizeSet.GetItem.Type == GetItemType.Currency)
                         {
                             /*
                             var numinosBonus = PartyInfo.BattleNuminosBonus(stageSymbolData.StageId,stageSymbolData.Seek,WorldType.Main);
@@ -380,7 +380,7 @@ namespace Ryneus
             var numinosGetItem = new GetItemData
             {
                 Param1 = totalScore + seek + numinosBonus,
-                Type = GetItemType.Numinous
+                Type = GetItemType.Currency
             };
             return new GetItemInfo(numinosGetItem);
         }

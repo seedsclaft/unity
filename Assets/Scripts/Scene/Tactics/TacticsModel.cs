@@ -214,12 +214,6 @@ namespace Ryneus
                 return DataSystem.Adventures.Find(a => a.Id == 151);
             }
             */
-            var isBEndGameClear = CurrentStage.ClearTroopIds.Contains(4010);
-            if (isBEndGameClear)
-            {
-                CurrentStage.SetEndingType(EndingType.B);
-                return DataSystem.Adventures.Find(a => a.Id == 152);
-            }
             return null;
         }
 

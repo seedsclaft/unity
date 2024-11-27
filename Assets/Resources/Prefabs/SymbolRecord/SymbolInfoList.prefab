@@ -243,9 +243,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8093652789931220252}
-  - component: {fileID: 4356453675280910576}
   - component: {fileID: 3270535924221528907}
   - component: {fileID: 1048020017008643609}
+  - component: {fileID: 7438056429684016814}
   m_Layer: 5
   m_Name: SymbolRecord
   m_TagString: Untagged
@@ -273,27 +273,6 @@ RectTransform:
   m_AnchoredPosition: {x: -480, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4356453675280910576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4828631303006432334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontal: 0
-  reverse: 1
-  warpMode: 0
-  scrollRect: {fileID: 1223078275609177980}
-  itemPrefabMode: 1
-  itemPrefab: {fileID: 3688749309385022170, guid: c3dfc355811263f46b10955391917333,
-    type: 3}
-  _helpWindow: {fileID: 0}
-  beforeSelect: 1
 --- !u!95 &3270535924221528907
 Animator:
   serializedVersion: 7
@@ -328,6 +307,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7438056429684016814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4828631303006432334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa36f76049a42aa4bbfd1809a542d4f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal: 0
+  reverse: 1
+  warpMode: 0
+  scrollRect: {fileID: 1223078275609177980}
+  itemPrefabMode: 1
+  itemPrefab: {fileID: 3688749309385022170, guid: c3dfc355811263f46b10955391917333,
+    type: 3}
+  _helpWindow: {fileID: 0}
+  beforeSelect: 1
 --- !u!1 &6098779635583948325
 GameObject:
   m_ObjectHideFlags: 0

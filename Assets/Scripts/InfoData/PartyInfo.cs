@@ -27,11 +27,23 @@ namespace Ryneus
         {
             _seek = seek;
         }
-        private int _seekIndex = -1;
+        private int _seekIndex = 0;
         public int SeekIndex => _seekIndex;
         public void SetSeekIndex(int seekIndex)
         {
             _seekIndex = seekIndex;
+        }
+
+        // 所持金
+        private int _currency = 0;
+        public int Currency => _currency;
+        public void AddCurrency(int currency)
+        {
+            _currency += currency;
+            if (_currency < 0)
+            {
+                _currency = 0;
+            }
         }
 
         // クリア情報
@@ -40,6 +52,21 @@ namespace Ryneus
         public void AddGetItemInfo(GetItemInfo getItemInfo)
         {
             _getItemInfos.Add(getItemInfo);
+            CheckAddActor();
+        }
+
+        private void CheckAddActor()
+        {
+            var addActorInfos = _getItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.AddActor);
+            foreach (var addActorInfo in addActorInfos)
+            {
+                if (_actorInfos.Find(a => a.ActorId == addActorInfo.Param1) == null)
+                {
+                    // 新規加入
+                    var actorInfo = new ActorInfo(DataSystem.FindActor(addActorInfo.Param1));
+                    _actorInfos.Add(actorInfo);
+                }
+            }
         }
     }
 }

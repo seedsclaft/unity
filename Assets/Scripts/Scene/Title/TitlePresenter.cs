@@ -122,7 +122,6 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.PlayStart);
             _view.WaitFrame(2,() => 
             {
-                _model.InitSaveInfo();
                 _view.CommandGotoSceneChange(Scene.Map);
             });
         }

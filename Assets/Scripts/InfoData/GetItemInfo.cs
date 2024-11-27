@@ -47,7 +47,7 @@ namespace Ryneus
         {
             switch (_getItemType)
             {
-                case GetItemType.Numinous:
+                case GetItemType.Currency:
                     return "+" + _resultParam.ToString() + "/" + Param1.ToString() + DataSystem.GetText(1000);
                 case GetItemType.Skill:
                     var skillData = DataSystem.FindSkill(Param1);
@@ -92,7 +92,7 @@ namespace Ryneus
 
         public bool IsAttributeSkill()
         {
-            return (int)_getItemType >= (int)GetItemType.AttributeFire && (int)_getItemType <= (int)GetItemType.AttributeDark;
+            return false;//(int)_getItemType >= (int)GetItemType.AttributeFire && (int)_getItemType <= (int)GetItemType.AttributeDark;
         }
 
         public bool IsAddActor()

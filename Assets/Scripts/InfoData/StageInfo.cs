@@ -27,8 +27,6 @@ namespace Ryneus
             _currentSeekIndex = seekIndex;
         }
 
-        private List<int> _clearTroopIds = new ();
-        public List<int> ClearTroopIds => _clearTroopIds;
 
         private List<string> _readEventKeys = new ();
         public List<string> ReadEventKeys => _readEventKeys;
@@ -44,7 +42,6 @@ namespace Ryneus
         public StageInfo(int id)
         {
             _id = id;
-            _clearTroopIds.Clear();
         }
         
         public TroopInfo TestTroops(int troopId,int troopLv)

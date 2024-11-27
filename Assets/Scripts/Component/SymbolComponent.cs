@@ -16,6 +16,7 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private GameObject selected;
         [SerializeField] private GameObject lastSelected;
+        [SerializeField] private GameObject selectCursor;
         private SymbolInfo _symbolInfo = null;
         public SymbolInfo SymbolInfo => _symbolInfo;
         private int _seek = -1;
@@ -115,6 +116,11 @@ namespace Ryneus
                 var value = _symbolInfo.BattleEvaluate();
                 evaluate.text = DataSystem.System.GetTextData(51).Text + ":" + value.ToString();
             }
+        }
+
+        public void UpdateCursor(bool select)
+        {
+            selectCursor?.SetActive(select);
         }
     }
 }

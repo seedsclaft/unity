@@ -9,11 +9,6 @@ namespace Ryneus
     public class SymbolRecordData : ListItem ,IListViewItem
     {
         [SerializeField] private List<SymbolComponent> symbolComponents;
-        [SerializeField] private GameObject pastObj;
-        [SerializeField] private GameObject nextObj;
-        [SerializeField] private GameObject currentObj;
-        [SerializeField] private GameObject futureObj;
-        [SerializeField] private TextMeshProUGUI seekerText;
         [SerializeField] private TextMeshProUGUI stageDataText;
 
         private bool _isButtonInit = false;
@@ -25,6 +20,7 @@ namespace Ryneus
             {
                 symbolComponent.gameObject.SetActive(false);
             }
+            var idx = 0;
             foreach (var data in dates)
             {
                 if (symbolComponents.Count > 0)
@@ -33,31 +29,10 @@ namespace Ryneus
                     symbolComponent.gameObject.SetActive(true);
                     symbolComponent.UpdateInfo(data,data.Selected,data.Master.Seek);
                 }
+                idx++;
             }
             if (dates.Count > 0)
             {
-                var symbolStageId = dates[0].Master.StageId;
-                var symbolSeek = dates[0].Master.Seek;
-                var currentStageId = GameSystem.CurrentStageData.PartyInfo.StageId;
-                var currentTurn = GameSystem.CurrentStageData.PartyInfo.Seek;
-                pastObj?.SetActive(symbolStageId < currentStageId || symbolSeek < currentTurn);
-                nextObj?.SetActive(dates[0].SymbolType != SymbolType.None && symbolStageId == currentStageId && symbolSeek == currentTurn);
-                futureObj?.SetActive(symbolStageId >= currentStageId && symbolSeek > currentTurn);
-                currentObj?.SetActive(dates[0].SymbolType == SymbolType.None);
-                var textId = 19631;
-                if (nextObj.activeSelf)
-                {
-                    textId = 19632;
-                } else
-                if (futureObj.activeSelf)
-                {
-                    textId = 19633;
-                } else
-                if (currentObj.activeSelf)
-                {
-                    textId = 19634;
-                }
-                seekerText?.SetText(DataSystem.GetText(textId));
                 if (dates[0].SymbolType == SymbolType.None)
                 {
                     stageDataText?.SetText("");
@@ -88,19 +63,16 @@ namespace Ryneus
 
         void Update() 
         {
-            if (seekerText != null && Cursor != null)
+            if (Cursor != null)
             {
-                seekerText.gameObject.SetActive(Cursor.activeSelf);
+                var currentSeekIndex = GameSystem.CurrentStageData.PartyInfo.SeekIndex;
+                var idx = 0;
+                foreach (var symbolComponent in symbolComponents)
+                {
+                    symbolComponent.UpdateCursor(Cursor.activeSelf && currentSeekIndex == idx);
+                    idx++;
+                }
             }
         }
-
-        void LateUpdate() 
-        {
-            if (seekerText != null && Cursor != null)
-            {
-                seekerText.gameObject.SetActive(Cursor.activeSelf);
-            }
-        }
-        
     }
 }

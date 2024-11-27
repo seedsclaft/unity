@@ -7,20 +7,29 @@ namespace Ryneus
 {
     public class MapView : BaseView ,IInputHandlerEvent
     {
-        [SerializeField] private BaseList symbolInfoList;
+        [SerializeField] private SymbolList symbolInfoList;
         private new Action<ViewEvent> _commandData = null;
         public new void SetEvent(Action<ViewEvent> commandData) => _commandData = commandData;
-        public void CallEvent(CommandType mapCommandType)
+        public void CallEvent(CommandType mapCommandType,object sendData = null)
         {
             var commandType = new ViewCommandType
             {
                 MapCommandType = mapCommandType
             };
-            var eventData = new ViewEvent(commandType);
+            var eventData = new ViewEvent(commandType)
+            {
+                template = sendData
+            };
             _commandData(eventData);
         }
 
         private VirtualModelController _virtualModelController = null;
+
+        private bool _busy = false;
+        public new void SetBusy(bool isBusy)
+        {
+            _busy = isBusy;
+        }
 
         private GameObject _mapPrefab = null;
         public override void Initialize() 
@@ -39,7 +48,11 @@ namespace Ryneus
         {
             symbolInfoList.Initialize();
             SetInputHandler(symbolInfoList.gameObject);
-            //symbolInfoList.SetInputHandler(InputKeyType.Decide,OnSelectActor);
+            symbolInfoList.SetInputHandler(InputKeyType.Decide,OnClickSymbol);
+            symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelSymbol);
+            symbolInfoList.SetInputHandler(InputKeyType.Right,() => OnSelectSymbolIndex(1));
+            symbolInfoList.SetInputHandler(InputKeyType.Left,() => OnSelectSymbolIndex(-1));
+            symbolInfoList.SetSelectedHandler(OnSelectListSymbolList);
             //symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
             AddViewActives(symbolInfoList);
         }
@@ -48,16 +61,56 @@ namespace Ryneus
         {
             symbolInfoList.SetData(symbolList,false,() => 
             {
-                var SymbolRecordDates = symbolInfoList.GetComponentsInChildren<SymbolRecordData>();
-                foreach (var SymbolRecordData in SymbolRecordDates)
-                {
-                    //SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
-                }
-                symbolInfoList.SetSelectedHandler(() => 
-                {
-                    // 消さないこと
-                });
             });
+        }
+
+        public void UpdateSelectSymbolList(SymbolInfo symbolInfo)
+        {
+            symbolInfoList.UpdateAllItems();
+            symbolInfoList.UpdateSymbolInfo(symbolInfo);
+        }
+
+        public void SetPositionSymbolRecords(int selectIndex)
+        {
+            var resultIndex = symbolInfoList.DataCount - selectIndex;
+            if (resultIndex < 0)
+            {
+                resultIndex = 0;
+            }
+            symbolInfoList.UpdateSelectIndex(resultIndex - 1);
+            symbolInfoList.UpdateScrollRect(resultIndex + 1);
+        }
+
+        private void OnClickSymbol()
+        {
+            if (symbolInfoList.ScrollRect.enabled == false) return;
+            var data = symbolInfoList.SelectSymbolInfo();
+            if (data != null)
+            {
+                CallEvent(CommandType.OnClickSymbol);
+            }
+        }
+
+        private void OnCancelSymbol()
+        {
+            symbolInfoList.gameObject.SetActive(false);
+            CallEvent(CommandType.OnCancelSymbol);
+        }
+
+        private void OnSelectSymbolIndex(int selectIndex)
+        {
+            if (symbolInfoList.ScrollRect.enabled == false) return;
+            CallEvent(CommandType.OnSelectSymbolIndex,selectIndex);
+        }
+
+        private void OnSelectListSymbolList()
+        {
+            if (symbolInfoList.ScrollRect.enabled == false) return;
+            var data = symbolInfoList.SelectSymbolInfo();
+            if (data != null)
+            {
+                CallEvent(CommandType.OnSelectSymbolList,data);
+            }
         }
 
         public void CreateMapLeaderActor(GameObject gameObject)
@@ -69,18 +122,26 @@ namespace Ryneus
             _mapPrefab = prefab;
         }
 
+        public void UpdatePartyInfo(PartyInfo partyInfo)
+        {
+            symbolInfoList.UpdatePartyInfo(partyInfo);
+        }
+
         private void CallSideMenu()
         {
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
+            if (_busy == true)
+            {
+                return;
+            }
             if (InputSystem.IsGamePad)
             {
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
                     _virtualModelController?.Jump();
-                    CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.LeftStickUp).IsTrigger())
@@ -170,16 +231,28 @@ namespace Ryneus
                 case InputKeyType.Cancel:
                     CallEvent(CommandType.CallStatus);
                     return;
+                case InputKeyType.Option1:
+                    CallEvent(CommandType.CallSymbol);
+                    symbolInfoList.gameObject.SetActive(true);
+                    return;
             }
         }
 
         public new void MouseMoveHandler(Vector3 position)
         {
+            if (_busy == true)
+            {
+                return;
+            }
             _virtualModelController?.MouseMove(position);
         }
 
         public new void MouseWheelHandler(Vector2 position)
         {
+            if (_busy == true)
+            {
+                return;
+            }
             _virtualModelController?.MouseWheel(position);
         }
 
@@ -204,6 +277,11 @@ namespace Map
     {
         None = 0,
         BattleStart,
-        CallStatus
+        CallStatus,
+        CallSymbol,
+        OnClickSymbol,
+        OnCancelSymbol,
+        OnSelectSymbolIndex,
+        OnSelectSymbolList,
     }
 }

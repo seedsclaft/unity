@@ -11,8 +11,8 @@ namespace Ryneus
             CurrentSaveData.SetStageInfo(stageInfo);
             PartyInfo.SetStageId(stageId);
             PartyInfo.SetSeek(1);
-            PartyInfo.SetSeekIndex(-1);
-        }        
+            PartyInfo.SetSeekIndex(0);
+        }
         
         public List<SymbolInfo> GetStageSymbolInfos(int stageId)
         {
@@ -44,6 +44,29 @@ namespace Ryneus
                 listData.Add(list);
             }
             return listData;
+        }
+
+        public void EndSymbolInfo(SymbolInfo symbolInfo)
+        {
+            foreach (var getItemInfo in symbolInfo.GetItemInfos)
+            {   
+                getItemInfo.SetGetFlag(true);
+                switch (getItemInfo.GetItemType)
+                {
+                    case GetItemType.Currency:
+                        PartyInfo.AddCurrency(getItemInfo.Param1);
+                        break;
+                    default:
+                        PartyInfo.AddGetItemInfo(getItemInfo);
+                        break;
+                }
+            }
+        }
+
+        public void SeekNext()
+        {
+            PartyInfo.SetSeek(PartyInfo.Seek + 1);
+            PartyInfo.SetSeekIndex(0);
         }
     }
 }

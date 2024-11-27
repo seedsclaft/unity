@@ -73,15 +73,14 @@ namespace Ryneus
 
         public void InitializeNewGame()
         {
+            InitSaveInfo();
             InitSaveStageInfo();
-            var actorInfos = new List<ActorInfo>();
-            var b = new ActorInfo(DataSystem.FindActor(1));
-            b.SetBattleIndex(1);
-            actorInfos.Add(b);
-            var a = new ActorInfo(DataSystem.FindActor(3));
-            a.SetBattleIndex(2);
-            actorInfos.Add(a);
-            PartyInfo.SetActorInfos(actorInfos);
+            foreach (var getItemInfo in OpeningGetItemInfos())
+            {
+                getItemInfo.SetGetFlag(true);
+                PartyInfo.AddGetItemInfo(getItemInfo);            
+            }
+            MakeStageInfo(1);
         }
     }
 }

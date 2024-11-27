@@ -223,30 +223,18 @@ namespace Ryneus
             CurrentData.PlayerInfo.GainClearCount();
         }
 
-        public List<SymbolInfo> OpeningStageResultInfos()
+        public List<GetItemInfo> OpeningGetItemInfos()
         {
-            var symbolInfos = new List<SymbolInfo>();
+            var getItemInfos = new List<GetItemInfo>();
             // 初期加入マス
             var stageSymbolDates = DataSystem.FindStage(0).StageSymbols;
             stageSymbolDates = stageSymbolDates.FindAll(a => a.Seek == 0 && a.ClearCount <= CurrentData.PlayerInfo.ClearCount);
-            bool addActor = false;
             foreach (var stageSymbolData in stageSymbolDates)
             {
                 var symbolInfo = new SymbolInfo(stageSymbolData);
-                if (addActor == false)
-                {
-                    var addActorGetItemInfo = symbolInfo.GetItemInfos.Find(a => a.GetItemType == GetItemType.SelectAddActor);
-                    if (addActorGetItemInfo != null)
-                    {
-                        // 初期アクター
-                        addActorGetItemInfo.SetResultParam(1);
-                        addActorGetItemInfo.SetGetFlag(true);
-                        AddPlayerInfoActorSkillId(1);
-                    }
-                }
-                symbolInfos.Add(symbolInfo);
+                getItemInfos.AddRange(symbolInfo.GetItemInfos);
             }
-            return symbolInfos;
+            return getItemInfos;
         }
 
 
