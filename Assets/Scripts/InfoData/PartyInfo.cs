@@ -64,6 +64,7 @@ namespace Ryneus
                 {
                     // 新規加入
                     var actorInfo = new ActorInfo(DataSystem.FindActor(addActorInfo.Param1));
+                    actorInfo.SetBattleIndex(1);
                     _actorInfos.Add(actorInfo);
                 }
             }

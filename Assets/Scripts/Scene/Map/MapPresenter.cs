@@ -102,6 +102,9 @@ namespace Ryneus
             {
                 switch (currentSymbol.Master.SymbolType)
                 {
+                    case SymbolType.Battle:
+                        CommandBattleStart();
+                        return;
                     case SymbolType.Resource:
                         _model.EndSymbolInfo(currentSymbol);
                         CommandNextSeek();

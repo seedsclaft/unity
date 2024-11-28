@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - Id: 1
-    Name: "\u30CD\u30EC\u30A4\u30C9\u30B8\u30A7\u30E0"
-    ImagePath: Jelslime
+    Name: "\u30B9\u30E9\u30A4\u30E0"
+    ImagePath: Slime
     BaseStatus:
       _hp: 48
       _mp: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
       Trigger2: 0
   - Id: 2
     Name: "\u30AB\u30FC\u30B9\u30C9"
-    ImagePath: Cursed
+    ImagePath: Beholder
     BaseStatus:
       _hp: 32
       _mp: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
       Trigger2: 0
   - Id: 3
     Name: "\u30D3\u30FC"
-    ImagePath: Bee
+    ImagePath: BattleBee
     BaseStatus:
       _hp: 34
       _mp: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
       Trigger2: 0
   - Id: 4
     Name: "\u30A6\u30EB\u30D5"
-    ImagePath: Slime
+    ImagePath: Werewolf
     BaseStatus:
       _hp: 41
       _mp: 0
@@ -274,8 +274,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 6
-    Name: "\u30CD\u30FC\u30E0\u30EC\u30B9"
-    ImagePath: Nameless
+    Name: "\u30D3\u30B7\u30E7\u30C3\u30D7"
+    ImagePath: BishopKnight
     BaseStatus:
       _hp: 46
       _mp: 0
@@ -326,8 +326,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 7
-    Name: "\u30B5\u30FC\u30C1\u30E3\u30FC"
-    ImagePath: Seacher
+    Name: "\u30B9\u30DA\u30AF\u30BF\u30FC"
+    ImagePath: Specter
     BaseStatus:
       _hp: 38
       _mp: 0
@@ -378,8 +378,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 8
-    Name: "\u30B7\u30FC\u30EB\u30C9"
-    ImagePath: Shiled
+    Name: "\u30BF\u30FC\u30C8\u30EB\u30B7\u30A7\u30EB"
+    ImagePath: TurtleShell
     BaseStatus:
       _hp: 51
       _mp: 0
@@ -431,7 +431,7 @@ MonoBehaviour:
       Trigger2: 0
   - Id: 9
     Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
-    ImagePath: Dryad
+    ImagePath: MonsterPlant
     BaseStatus:
       _hp: 47
       _mp: 0
@@ -482,8 +482,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 10
-    Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
-    ImagePath: Scorpion
+    Name: "\u30B9\u30C6\u30A3\u30F3\u30B0\u30EC\u30A4"
+    ImagePath: StingRay
     BaseStatus:
       _hp: 32
       _mp: 0
@@ -534,8 +534,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 11
-    Name: "\u30B9\u30AF\u30A4\u30C3\u30C9"
-    ImagePath: Squid
+    Name: "\u30D5\u30A3\u30C3\u30B7\u30E3\u30FC\u30DE\u30F3"
+    ImagePath: Fishman
     BaseStatus:
       _hp: 43
       _mp: 0
@@ -586,8 +586,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 12
-    Name: "\u30AF\u30EA\u30FC\u30D1\u30FC"
-    ImagePath: Creeper
+    Name: "\u30D6\u30E9\u30C3\u30AF\u30CA\u30A4\u30C8"
+    ImagePath: BlackKnight
     BaseStatus:
       _hp: 45
       _mp: 0
@@ -638,8 +638,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 13
-    Name: "\u30A4\u30F3\u30D7"
-    ImagePath: Imp
+    Name: "\u30B5\u30A4\u30AF\u30ED\u30D7\u30B9"
+    ImagePath: Cyclops
     BaseStatus:
       _hp: 48
       _mp: 0
@@ -696,8 +696,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 14
-    Name: "\u30B4\u30FC\u30B9\u30C8\u30A2\u30FC\u30DE\u30FC"
-    ImagePath: Armor
+    Name: "\u30B9\u30B1\u30EB\u30C8\u30F3"
+    ImagePath: Skeleton
     BaseStatus:
       _hp: 45
       _mp: 0
@@ -748,8 +748,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 15
-    Name: "\u30BD\u30FC\u30C9"
-    ImagePath: Sword
+    Name: "\u30EA\u30B6\u30FC\u30C9"
+    ImagePath: NagaWizard
     BaseStatus:
       _hp: 41
       _mp: 0
