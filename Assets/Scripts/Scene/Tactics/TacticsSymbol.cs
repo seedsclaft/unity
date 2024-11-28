@@ -83,7 +83,7 @@ namespace Ryneus
         {
             if (ListData == null) return;
             var data = ListItemData<SymbolInfo>();
-            symbolComponent.UpdateInfo(data,data.Selected,data.Master.Seek);
+            symbolComponent.UpdateInfo(data);
             if (_getItemInit == false)
             {
                 getItemList.Initialize();

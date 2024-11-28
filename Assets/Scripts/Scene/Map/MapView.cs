@@ -24,14 +24,14 @@ namespace Ryneus
         }
 
         private VirtualModelController _virtualModelController = null;
+        public SymbolInfo SelectSymbolInfo => symbolInfoList.SelectSymbolInfo();
 
-        private bool _busy = false;
-        public new void SetBusy(bool isBusy)
+        private bool _viewBusy = false;
+        public void SetViewBusy(bool isBusy)
         {
-            _busy = isBusy;
+            _viewBusy = isBusy;
         }
 
-        private GameObject _mapPrefab = null;
         public override void Initialize() 
         {
             base.Initialize();
@@ -50,35 +50,25 @@ namespace Ryneus
             SetInputHandler(symbolInfoList.gameObject);
             symbolInfoList.SetInputHandler(InputKeyType.Decide,OnClickSymbol);
             symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelSymbol);
-            symbolInfoList.SetInputHandler(InputKeyType.Right,() => OnSelectSymbolIndex(1));
-            symbolInfoList.SetInputHandler(InputKeyType.Left,() => OnSelectSymbolIndex(-1));
-            symbolInfoList.SetSelectedHandler(OnSelectListSymbolList);
+            //symbolInfoList.SetSelectedHandler(OnSelectListSymbolList);
             //symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
             AddViewActives(symbolInfoList);
+            symbolInfoList.gameObject.SetActive(false);
         }
 
-        public void SetSymbolList(List<ListData> symbolList)
+        public void SetSymbolList(List<ListData> symbolList,int seekIndex,int seek)
         {
-            symbolInfoList.SetData(symbolList,false,() => 
+            symbolInfoList.SetSeekIndex(seekIndex);
+            symbolInfoList.SetData(symbolList,true,() => 
             {
+                var selectIndex = symbolInfoList.DataCount - seek;
+                if (selectIndex < 0)
+                {
+                    selectIndex = 0;
+                }
+                symbolInfoList.UpdateSelectIndex(selectIndex);
+                symbolInfoList.UpdateScrollRect(selectIndex + 2);
             });
-        }
-
-        public void UpdateSelectSymbolList(SymbolInfo symbolInfo)
-        {
-            symbolInfoList.UpdateAllItems();
-            symbolInfoList.UpdateSymbolInfo(symbolInfo);
-        }
-
-        public void SetPositionSymbolRecords(int selectIndex)
-        {
-            var resultIndex = symbolInfoList.DataCount - selectIndex;
-            if (resultIndex < 0)
-            {
-                resultIndex = 0;
-            }
-            symbolInfoList.UpdateSelectIndex(resultIndex - 1);
-            symbolInfoList.UpdateScrollRect(resultIndex + 1);
         }
 
         private void OnClickSymbol()
@@ -87,7 +77,7 @@ namespace Ryneus
             var data = symbolInfoList.SelectSymbolInfo();
             if (data != null)
             {
-                CallEvent(CommandType.OnClickSymbol);
+                CallEvent(CommandType.OnClickSymbol,data);
             }
         }
 
@@ -97,29 +87,12 @@ namespace Ryneus
             CallEvent(CommandType.OnCancelSymbol);
         }
 
-        private void OnSelectSymbolIndex(int selectIndex)
-        {
-            if (symbolInfoList.ScrollRect.enabled == false) return;
-            CallEvent(CommandType.OnSelectSymbolIndex,selectIndex);
-        }
-
-        private void OnSelectListSymbolList()
-        {
-            if (symbolInfoList.ScrollRect.enabled == false) return;
-            var data = symbolInfoList.SelectSymbolInfo();
-            if (data != null)
-            {
-                CallEvent(CommandType.OnSelectSymbolList,data);
-            }
-        }
-
         public void CreateMapLeaderActor(GameObject gameObject)
         {
             var prefab = Instantiate(gameObject);
             _virtualModelController = prefab.GetComponent<VirtualModelController>();
             _virtualModelController.Initialize(true);
             CommandCreateMapObject(prefab);
-            _mapPrefab = prefab;
         }
 
         public void UpdatePartyInfo(PartyInfo partyInfo)
@@ -133,7 +106,7 @@ namespace Ryneus
 
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
-            if (_busy == true)
+            if (_viewBusy == true)
             {
                 return;
             }
@@ -184,7 +157,6 @@ namespace Ryneus
                 if (InputSystem.GetInputDate(InputKeyType.Decide).IsTrigger())
                 {
                     _virtualModelController?.Jump();
-                    CallEvent(CommandType.BattleStart);
                 }
 
                 if (InputSystem.GetInputDate(InputKeyType.Up).IsTrigger())
@@ -240,7 +212,7 @@ namespace Ryneus
 
         public new void MouseMoveHandler(Vector3 position)
         {
-            if (_busy == true)
+            if (_viewBusy == true)
             {
                 return;
             }
@@ -249,7 +221,7 @@ namespace Ryneus
 
         public new void MouseWheelHandler(Vector2 position)
         {
-            if (_busy == true)
+            if (_viewBusy == true)
             {
                 return;
             }
@@ -281,7 +253,5 @@ namespace Map
         CallSymbol,
         OnClickSymbol,
         OnCancelSymbol,
-        OnSelectSymbolIndex,
-        OnSelectSymbolList,
     }
 }

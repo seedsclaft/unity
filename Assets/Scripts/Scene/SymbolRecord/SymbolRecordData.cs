@@ -10,6 +10,8 @@ namespace Ryneus
     {
         [SerializeField] private List<SymbolComponent> symbolComponents;
         [SerializeField] private TextMeshProUGUI stageDataText;
+        private int _seekIndex = -1;
+        public void SetSeekIndex(int seekIndex) => _seekIndex = seekIndex;
 
         private bool _isButtonInit = false;
         public void UpdateViewItem()
@@ -27,7 +29,7 @@ namespace Ryneus
                 {
                     var symbolComponent = symbolComponents[data.Master.SeekIndex];
                     symbolComponent.gameObject.SetActive(true);
-                    symbolComponent.UpdateInfo(data,data.Selected,data.Master.Seek);
+                    symbolComponent.UpdateInfo(data);
                 }
                 idx++;
             }
@@ -65,7 +67,7 @@ namespace Ryneus
         {
             if (Cursor != null)
             {
-                var currentSeekIndex = GameSystem.CurrentStageData.PartyInfo.SeekIndex;
+                var currentSeekIndex = _seekIndex;
                 var idx = 0;
                 foreach (var symbolComponent in symbolComponents)
                 {

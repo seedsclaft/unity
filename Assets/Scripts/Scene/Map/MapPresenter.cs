@@ -53,30 +53,27 @@ namespace Ryneus
                     CommandCallSymbol();
                     break;
                 case CommandType.OnClickSymbol:
-                    CommandOnClickSymbol();
+                    CommandOnClickSymbol((SymbolInfo)viewEvent.template);
                     break;
                 case CommandType.OnCancelSymbol:
                     CommandOnCancelSymbol();
-                    break;
-                case CommandType.OnSelectSymbolIndex:
-                    CommandOnSelectSymbolIndex((int)viewEvent.template);
-                    break;
-                case CommandType.OnSelectSymbolList:
-                    CommandOnSelectSymbolList((List<SymbolInfo>)viewEvent.template);
                     break;
             }
         }
 
         private void CommandBattleStart()
         {
-            _view.ClearMap();
-            var currentSymbol = _model.SelectSymbolInfo();
-            var battleSceneInfo = new BattleSceneInfo
+            var currentSymbol = _view.SelectSymbolInfo;
+            if (currentSymbol != null)
             {
-                ActorInfos = _model.PartyMembers(),
-                EnemyInfos = currentSymbol.TroopInfo.BattlerInfos
-            };
-            _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
+                _view.ClearMap();
+                var battleSceneInfo = new BattleSceneInfo
+                {
+                    ActorInfos = _model.PartyMembers(),
+                    EnemyInfos = currentSymbol.TroopInfo.BattlerInfos
+                };
+                _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
+            }
         }
 
         private void CommandCallStatus()
@@ -84,24 +81,24 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             CommandStatusInfo(_model.StageMembers(),false,true,false,false,-1,() => 
             {
-                _view.SetBusy(false);
+                _view.SetViewBusy(false);
                 //_view.SetHelpText(DataSystem.GetText(20020));
             });
-            _view.SetBusy(true);
+            _view.SetViewBusy(true);
         }
 
         private void CommandCallSymbol()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            _view.SetSymbolList(_model.StageSymbolInfos());
-            _view.SetPositionSymbolRecords(_model.PartyInfo.Seek);
-            _view.SetBusy(true);
+            _view.SetSymbolList(_model.StageSymbolInfos(),_model.PartyInfo.SeekIndex,_model.PartyInfo.Seek);
+            _view.UpdatePartyInfo(_model.PartyInfo);
+            _view.SetViewBusy(true);
         }
 
-        private void CommandOnClickSymbol()
+        private void CommandOnClickSymbol(SymbolInfo symbolInfo)
         {
-            var currentSymbol = _model.SelectSymbolInfo();
-            if (currentSymbol != null && _model.IsCurrentSeekSymbolInfo())
+            var currentSymbol = symbolInfo;
+            if (currentSymbol != null && _model.IsCurrentSeekSymbolInfo(symbolInfo))
             {
                 switch (currentSymbol.Master.SymbolType)
                 {
@@ -115,26 +112,14 @@ namespace Ryneus
 
         private void CommandOnCancelSymbol()
         {
-            _view.SetBusy(false);
-        }
-
-        private void CommandOnSelectSymbolIndex(int selectIndex)
-        {
-            _model.GainSeekIndex(selectIndex);
-            _view.UpdateSelectSymbolList(_model.SelectSymbolInfo());
-        }
-
-        private void CommandOnSelectSymbolList(List<SymbolInfo> symbolInfos)
-        {
-            _model.SetCurrentSymbolInfos(symbolInfos);
-            _view.UpdateSelectSymbolList(_model.SelectSymbolInfo());
+            _view.SetViewBusy(false);
         }
 
         private void CommandNextSeek()
         {
             _model.SeekNext();
-            _view.SetSymbolList(_model.StageSymbolInfos());
-            _view.SetPositionSymbolRecords(_model.PartyInfo.Seek);
+            _view.SetSymbolList(_model.StageSymbolInfos(),_model.PartyInfo.SeekIndex,_model.PartyInfo.Seek);
+            _view.UpdatePartyInfo(_model.PartyInfo);
         }
     }
 }

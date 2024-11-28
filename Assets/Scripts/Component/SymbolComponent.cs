@@ -19,14 +19,12 @@ namespace Ryneus
         [SerializeField] private GameObject selectCursor;
         private SymbolInfo _symbolInfo = null;
         public SymbolInfo SymbolInfo => _symbolInfo;
-        private int _seek = -1;
-        public int Seek => _seek;
+        public int Seek => _symbolInfo != null ? _symbolInfo.Master.Seek : -1;
 
         private bool _animationInit = false;
-        public void UpdateInfo(SymbolInfo symbolInfo,bool select,int seek)
+        public void UpdateInfo(SymbolInfo symbolInfo)
         {
             _symbolInfo = symbolInfo;
-            _seek = seek;
             if (_symbolInfo == null)
             {
                 return;
@@ -36,7 +34,7 @@ namespace Ryneus
             UpdateEvaluate();
             if (selected != null)
             {
-                selected.SetActive(select);
+                selected.SetActive(symbolInfo.Selected);
             }
             if (lastSelected != null)
             {
