@@ -11,37 +11,37 @@ namespace Ryneus
         {
             _actorInfos = actorInfos;
         }
+        private SkillInfo _selectSkillInfo = null;
+        public SkillInfo SelectSkillInfo => _selectSkillInfo;
+        public void SetSelectSkillInfo(SkillInfo skillInfo) => _selectSkillInfo = skillInfo;
 
-        private SkillSlotType _selectingSlotType = SkillSlotType.None;
-        public SkillSlotType SelectingSlotType => _selectingSlotType;
-        public void SetSelectingSlotType(SkillSlotType selectingSlotType) => _selectingSlotType = selectingSlotType;
-        public void SetActorSkillSlot(int changeSkillId)
+        public void ChangeEquipSkill(int changeSkillId)
         {
-            CurrentActor.SetSkillSlot(_selectingSlotType,changeSkillId);
+            CurrentActor.ChangeEquipSkill(changeSkillId,_selectSkillInfo.Id);
         }
 
         public void UpdateActorRemainMp()
         {
             var costMp = 0;
-            foreach (var slotSkill in SlotSkills())
+            foreach (var slotSkill in EquipSkills())
             {
                 costMp += slotSkill.LearningCost;
             }
             CurrentActor.ChangeMp(CurrentActor.MaxMp - costMp);
         }
 
-        public List<SkillInfo> SlotSkills()
+        public List<SkillInfo> EquipSkills()
         {
-            var slotSkills = CurrentActor.SlotSkills();
-            foreach (var slotSkill in slotSkills)
+            var equipSkills = CurrentActor.EquipSkills();
+            foreach (var equipSkill in equipSkills)
             {
-                if (slotSkill.Master != null && !slotSkill.IsBattleSpecialSkill())
+                if (equipSkill.Master != null && !equipSkill.IsBattleSpecialSkill())
                 {
-                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,slotSkill.Attribute,_actorInfos,slotSkill.Master.Rank);
-                    slotSkill.SetLearningCost(cost);
+                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,equipSkill.Attribute,_actorInfos,equipSkill.Master.Rank);
+                    equipSkill.SetLearningCost(cost);
                 }
             }
-            return slotSkills;
+            return equipSkills;
         }
 
         public List<SkillInfo> ChangeAbleSkills()

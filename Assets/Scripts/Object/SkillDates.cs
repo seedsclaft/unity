@@ -555,17 +555,4 @@ namespace Ryneus
         EffectValue = 0,
         RateValue = 1, //割合回復
     }
-
-    public enum SkillSlotType
-    {
-        None = 0,
-        Y = 1, // Yアクション
-        X = 2, // Xアクション
-        L1 = 3, // L1アクション
-        R1 = 4, // R1アクション
-        Passive = 99, // 4つまでパッシブ
-        Liberation  = 6, // 解放
-        Awaken = 7, // 覚醒
-        
-    }
 }

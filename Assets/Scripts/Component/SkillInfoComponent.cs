@@ -28,7 +28,6 @@ namespace Ryneus
         [SerializeField] private GameObject selectable;
         [SerializeField] private GameObject selectedAlcana;
         [SerializeField] private _2dxFX_Shiny_Reflect shinyReflect;
-        [SerializeField] private InputInfoComponent slotType;
 
         public void UpdateInfo(SkillInfo skillInfo)
         {
@@ -75,10 +74,6 @@ namespace Ryneus
                 {
                     learningText.transform.parent.gameObject.SetActive(false);
                 }
-            }
-            if (slotType != null)
-            {
-                UpdateSlotType(skillInfo.SkillSlotType);
             }
         }
 
@@ -185,30 +180,6 @@ namespace Ryneus
         public void SetName(string name)
         {
             nameText.SetText(name);
-        }
-
-        private void UpdateSlotType(SkillSlotType skillSlotType)
-        {
-            InputKeyType inputKeyType = InputKeyType.None;
-            switch (skillSlotType)
-            {
-                case SkillSlotType.Y:
-                    inputKeyType = InputKeyType.Option1;
-                    break;
-                case SkillSlotType.X:
-                    inputKeyType = InputKeyType.Option2;
-                    break;
-                case SkillSlotType.L1:
-                    inputKeyType = InputKeyType.SideLeft1;
-                    break;
-                case SkillSlotType.R1:
-                    inputKeyType = InputKeyType.SideRight1;
-                    break;
-            }
-            if (inputKeyType != InputKeyType.None)
-            {
-                slotType.UpdateGuideIcon((int)inputKeyType);
-            }
         }
 
         public void Clear()

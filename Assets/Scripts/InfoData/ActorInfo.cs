@@ -14,117 +14,17 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
 
-        private ActorSkillSettingInfo _skillSettingInfo = null;
-        public ActorSkillSettingInfo SkillSettingInfo => _skillSettingInfo;
-        public int X_Magic => _skillSettingInfo.X_Magic;
-        public int Y_Magic => _skillSettingInfo.Y_Magic;
-        public int L1_Magic => _skillSettingInfo.L1_Magic;
-        public int R1_Magic => _skillSettingInfo.R1_Magic;
-
         public int Level => 1;
+        private List<int> _equipmentSkillIds = new ();
+        public void ChangeEquipSkill(int changeSkillId,int removeSkillId)
+        {
+            _equipmentSkillIds.Remove(removeSkillId);
+            if (!_equipmentSkillIds.Contains(changeSkillId))
+            {
+                _equipmentSkillIds.Add(changeSkillId);
+            }
+        }
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
-        private List<SkillTriggerInfo> _skillTriggerInfos = new ();
-        public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
-
-        public void InitSkillTriggerInfos()
-        {
-            var skillTriggerDates = Master.SkillTriggerDates;
-            for (int i = 0;i < skillTriggerDates.Count;i++)
-            {
-                var skillTriggerData = skillTriggerDates[i];
-                var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(skillTriggerData.SkillId));
-                skillTriggerInfo.SetPriority(i);
-                var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
-                var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
-                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
-                _skillTriggerInfos.Add(skillTriggerInfo);
-            }
-        }
-
-        public void AddSkillTriggerSkill(int skillId)
-        {
-            for (int i = 0;i < _skillTriggerInfos.Count;i++)
-            {
-                var skillTriggerInfo = _skillTriggerInfos[i];
-                if (skillTriggerInfo.SkillId == 0)
-                {
-                    var skillInfo = new SkillInfo(skillId);
-                    // アクティブか覚醒なら自動で加える
-                    if (skillInfo.IsBattleActiveSkill())
-                    {
-                        skillTriggerInfo.SetSkillInfo(new SkillInfo(skillId));
-                        break;
-                    }
-                }
-            }
-        }
-    
-        public void SetSkillTriggerSkill(int index,SkillInfo skillInfo)
-        {
-            if (_skillTriggerInfos.Count > index)
-            {
-                _skillTriggerInfos[index].SetSkillInfo(skillInfo);
-            }
-        }
-        
-        public void SetSkillTriggerTrigger(int index,int triggerIndex,SkillTriggerData triggerType)
-        {
-            if (_skillTriggerInfos.Count > index)
-            {
-                var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
-                SkillTriggerData triggerData1 = null;
-                SkillTriggerData triggerData2 = null;
-                if (triggerIndex == 1)
-                {
-                    if (triggerType == null && triggerTypes[1] != null)
-                    {
-                        triggerData1 = triggerTypes[1];
-                        triggerData2 = triggerType;
-                    } else
-                    {
-                        triggerData1 = triggerType;
-                        triggerData2 = triggerTypes[1];
-                    }
-                } else
-                if (triggerIndex == 2)
-                {
-                    triggerData1 = triggerTypes[0];
-                    triggerData2 = triggerType;
-                }
-                var list = new List<SkillTriggerData>
-                {
-                    triggerData1,
-                    triggerData2
-                };
-                _skillTriggerInfos[index].UpdateTriggerDates(list);
-            }
-        }
-
-        public void SetTriggerIndexUp(int index)
-        {
-            if (index > 0)
-            {
-                var upTriggerData = _skillTriggerInfos[index];
-                var downTriggerData = _skillTriggerInfos[index - 1];
-                upTriggerData.SetPriority(index-1);
-                downTriggerData.SetPriority(index);
-            }
-            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
-        }
-
-        public void SetTriggerIndexDown(int index)
-        {
-            if (index+1 >= _skillTriggerInfos.Count)
-            {
-                return;
-            }
-            var upTriggerData = _skillTriggerInfos[index+1];
-            var downTriggerData = _skillTriggerInfos[index];
-            upTriggerData.SetPriority(index);
-            downTriggerData.SetPriority(index+1);
-            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
-        }
-
         public List<AttributeRank> GetAttributeRank()
         {
             var list = new List<AttributeRank>();
@@ -137,74 +37,6 @@ namespace Ryneus
             return list;
         }
 
-        public void RecommendActiveSkill()
-        {
-            _skillTriggerInfos.Clear();
-            // 初期設定に戻す
-            InitSkillTriggerInfos();
-            var addActive = LearningSkillInfos().FindAll(a => a.Master.SkillType == SkillType.Active && a.Id > 1000 && a.LearningState == LearningState.Learned);
-            // 新たに追加したアクティブをアクティブの下に入れる
-            InsertSkillTriggerSkills(addActive,false);
-            var addPassive = LearningSkillInfos().FindAll(a => a.Master.SkillType == SkillType.Passive && a.Id > 1000 && a.LearningState == LearningState.Learned);
-            
-            // その他のパッシブを加える
-            InsertSkillTriggerSkills(addPassive,true);
-
-            for (int i = 0;i < _skillTriggerInfos.Count;i++)
-            {
-                _skillTriggerInfos[i].SetPriority(i);
-            }
-            
-        }
-
-        private void InsertSkillTriggerSkills(List<SkillInfo> skillInfos,bool isOnlyCheckEnemy = true)
-        {
-            foreach (var learnSkill in skillInfos)
-            {
-                if (_skillTriggerInfos.Find(a => a.SkillId == learnSkill.Id) == null)
-                {
-                    var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(learnSkill.Id));
-                    var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
-                    var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
-                    // 敵データに同じスキルがあればコピーする
-
-                    var enemyDates = DataSystem.Enemies.FindAll(a => a.SkillTriggerDates.Find(b => b.SkillId == learnSkill.Id) != null);
-                    if (enemyDates.Count > 0)
-                    {
-                        var enemyData = enemyDates[enemyDates.Count-1];
-                        var skillTriggerData = enemyData.SkillTriggerDates.Find(a => a.SkillId == learnSkill.Id);
-                        skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
-                        skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
-                    }
-                    skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
-            
-                    var findIndex = _skillTriggerInfos.FindIndex(a => DataSystem.Skills[a.SkillId].SkillType == SkillType.Active);
-                    if (findIndex == -1)
-                    {
-                        findIndex = 1;
-                    }
-                    findIndex++;
-                    // パッシブは条件を設定している場合にのみ挿入する
-                    if (learnSkill.Master.SkillType == SkillType.Passive)
-                    {
-                        if (skillTriggerData1.Id == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (isOnlyCheckEnemy == false)
-                    {
-                        _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
-                    } else
-                    {
-                        if (enemyDates.Count > 0)
-                        {
-                            _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
-                        }
-                    }
-                }
-            }
-        }
     
         public List<int> LearnSkillIds()
         {
@@ -255,11 +87,6 @@ namespace Ryneus
             _currentMp = Master.InitStatus.Mp;
             InitSkillInfo();
             InitSkillTriggerInfos();
-            _skillSettingInfo = new ActorSkillSettingInfo();
-            _skillSettingInfo.SetSkill(SkillSlotType.X,actorData.X_Magic);
-            _skillSettingInfo.SetSkill(SkillSlotType.Y,actorData.Y_Magic);
-            _skillSettingInfo.SetSkill(SkillSlotType.L1,actorData.L1_Magic);
-            _skillSettingInfo.SetSkill(SkillSlotType.R1,actorData.R1_Magic);
         }
 
 #if UNITY_ANDROID
@@ -317,6 +144,13 @@ namespace Ryneus
             {
                 _lastSelectSkillId = selectSkill.Id;
             }
+            foreach (var skillInfo in LearningSkillInfos())
+            {
+                if (skillInfo.LearningState == LearningState.Learned)
+                {
+                    _equipmentSkillIds.Add(skillInfo.Id);
+                }
+            }
         }
 
         public List<SkillInfo> LearningSkillInfos(List<int> alchemyIds = null)
@@ -330,6 +164,7 @@ namespace Ryneus
                 if (Level >= _learningData.Level)
                 {
                     skillInfo.SetLearningState(LearningState.Learned);
+                    skillInfo.SetEnable(true);
                 } else
                 {
                     skillInfo.SetLearningLv(_learningData.Level);
@@ -341,6 +176,7 @@ namespace Ryneus
             {
                 var skillInfo = new SkillInfo(learnSkillId);
                 skillInfo.SetLearningState(LearningState.Learned);
+                skillInfo.SetEnable(true);
                 if (alchemyIds != null)
                 {
                     if (!alchemyIds.Contains(learnSkillId))
@@ -415,11 +251,6 @@ namespace Ryneus
             var skillLevelUpInfo = new LevelUpInfo(_actorId,cost,stageId,seek,seekIndex);
             skillLevelUpInfo.SetSkillId(skillId);
             return skillLevelUpInfo;
-        }
-
-        public void SetSkillSlot(SkillSlotType skillSlotType,int changeSkillId)
-        {
-            _skillSettingInfo.SetSkill(skillSlotType,changeSkillId);
         }
 
         public void ChangeTacticsCostRate(int tacticsCostRate)
@@ -593,24 +424,13 @@ namespace Ryneus
             return skillInfos;
         }
 
-        public List<SkillInfo> SlotSkills()
+        public List<SkillInfo> EquipSkills()
         {
-            var list = new List<SkillInfo>();
-            foreach (var skillDict in _skillSettingInfo.ActionSkillIds())
-            {
-                var skillInfo = new SkillInfo(skillDict.Value);
-                skillInfo.SetSkillSlotType(skillDict.Key);
-                skillInfo.SetEnable(true);
-                list.Add(skillInfo);
-            }
-            foreach (var skillList in _skillSettingInfo.PassiveSkillIds())
-            {
-                var skillInfo = new SkillInfo(skillList);
-                skillInfo.SetSkillSlotType(SkillSlotType.Passive);
-                skillInfo.SetEnable(true);
-                list.Add(skillInfo);
-            }
-            return list;
+            var skillInfo = new SkillInfo(0);
+            skillInfo.SetEnable(true);
+            var skillInfos = LearningSkillInfos().FindAll(a => a.Id >= 1000 && _equipmentSkillIds.Contains(a.Master.Id));
+            skillInfos.Add(skillInfo);
+            return skillInfos;
         }
 
         public List<SkillInfo> ChangeAbleSkills()
@@ -637,11 +457,183 @@ namespace Ryneus
                 }
             }
             skillInfos.Clear();
+            skillInfos.Add(new SkillInfo(1));
             skillInfos.AddRange(sortList1);
             skillInfos.AddRange(sortList2);
             sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
             skillInfos.AddRange(sortList3);
             return skillInfos;
+        }
+    
+        private List<SkillTriggerInfo> _skillTriggerInfos = new ();
+        public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
+
+        public void InitSkillTriggerInfos()
+        {
+            var skillTriggerDates = Master.SkillTriggerDates;
+            for (int i = 0;i < skillTriggerDates.Count;i++)
+            {
+                var skillTriggerData = skillTriggerDates[i];
+                var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(skillTriggerData.SkillId));
+                skillTriggerInfo.SetPriority(i);
+                var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
+                _skillTriggerInfos.Add(skillTriggerInfo);
+            }
+        }
+
+        public void AddSkillTriggerSkill(int skillId)
+        {
+            for (int i = 0;i < _skillTriggerInfos.Count;i++)
+            {
+                var skillTriggerInfo = _skillTriggerInfos[i];
+                if (skillTriggerInfo.SkillId == 0)
+                {
+                    var skillInfo = new SkillInfo(skillId);
+                    // アクティブか覚醒なら自動で加える
+                    if (skillInfo.IsBattleActiveSkill())
+                    {
+                        skillTriggerInfo.SetSkillInfo(new SkillInfo(skillId));
+                        break;
+                    }
+                }
+            }
+        }
+    
+        public void SetSkillTriggerSkill(int index,SkillInfo skillInfo)
+        {
+            if (_skillTriggerInfos.Count > index)
+            {
+                _skillTriggerInfos[index].SetSkillInfo(skillInfo);
+            }
+        }
+        
+        public void SetSkillTriggerTrigger(int index,int triggerIndex,SkillTriggerData triggerType)
+        {
+            if (_skillTriggerInfos.Count > index)
+            {
+                var triggerTypes = _skillTriggerInfos[index].SkillTriggerDates;
+                SkillTriggerData triggerData1 = null;
+                SkillTriggerData triggerData2 = null;
+                if (triggerIndex == 1)
+                {
+                    if (triggerType == null && triggerTypes[1] != null)
+                    {
+                        triggerData1 = triggerTypes[1];
+                        triggerData2 = triggerType;
+                    } else
+                    {
+                        triggerData1 = triggerType;
+                        triggerData2 = triggerTypes[1];
+                    }
+                } else
+                if (triggerIndex == 2)
+                {
+                    triggerData1 = triggerTypes[0];
+                    triggerData2 = triggerType;
+                }
+                var list = new List<SkillTriggerData>
+                {
+                    triggerData1,
+                    triggerData2
+                };
+                _skillTriggerInfos[index].UpdateTriggerDates(list);
+            }
+        }
+
+        public void SetTriggerIndexUp(int index)
+        {
+            if (index > 0)
+            {
+                var upTriggerData = _skillTriggerInfos[index];
+                var downTriggerData = _skillTriggerInfos[index - 1];
+                upTriggerData.SetPriority(index-1);
+                downTriggerData.SetPriority(index);
+            }
+            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
+        }
+
+        public void SetTriggerIndexDown(int index)
+        {
+            if (index+1 >= _skillTriggerInfos.Count)
+            {
+                return;
+            }
+            var upTriggerData = _skillTriggerInfos[index+1];
+            var downTriggerData = _skillTriggerInfos[index];
+            upTriggerData.SetPriority(index);
+            downTriggerData.SetPriority(index+1);
+            _skillTriggerInfos.Sort((a,b) => a.Priority - b.Priority > 0 ? 1 : -1);
+        }
+
+        private void InsertSkillTriggerSkills(List<SkillInfo> skillInfos,bool isOnlyCheckEnemy = true)
+        {
+            foreach (var learnSkill in skillInfos)
+            {
+                if (_skillTriggerInfos.Find(a => a.SkillId == learnSkill.Id) == null)
+                {
+                    var skillTriggerInfo = new SkillTriggerInfo(_actorId,new SkillInfo(learnSkill.Id));
+                    var skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                    var skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == 0);
+                    // 敵データに同じスキルがあればコピーする
+
+                    var enemyDates = DataSystem.Enemies.FindAll(a => a.SkillTriggerDates.Find(b => b.SkillId == learnSkill.Id) != null);
+                    if (enemyDates.Count > 0)
+                    {
+                        var enemyData = enemyDates[enemyDates.Count-1];
+                        var skillTriggerData = enemyData.SkillTriggerDates.Find(a => a.SkillId == learnSkill.Id);
+                        skillTriggerData1 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger1);
+                        skillTriggerData2 = DataSystem.SkillTriggers.Find(a => a.Id == skillTriggerData.Trigger2);
+                    }
+                    skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){skillTriggerData1,skillTriggerData2});
+            
+                    var findIndex = _skillTriggerInfos.FindIndex(a => DataSystem.Skills[a.SkillId].SkillType == SkillType.Active);
+                    if (findIndex == -1)
+                    {
+                        findIndex = 1;
+                    }
+                    findIndex++;
+                    // パッシブは条件を設定している場合にのみ挿入する
+                    if (learnSkill.Master.SkillType == SkillType.Passive)
+                    {
+                        if (skillTriggerData1.Id == 0)
+                        {
+                            continue;
+                        }
+                    }
+                    if (isOnlyCheckEnemy == false)
+                    {
+                        _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
+                    } else
+                    {
+                        if (enemyDates.Count > 0)
+                        {
+                            _skillTriggerInfos.Insert(findIndex,skillTriggerInfo);
+                        }
+                    }
+                }
+            }
+        }
+        
+        public void RecommendActiveSkill()
+        {
+            _skillTriggerInfos.Clear();
+            // 初期設定に戻す
+            InitSkillTriggerInfos();
+            var addActive = LearningSkillInfos().FindAll(a => a.Master.SkillType == SkillType.Active && a.Id > 1000 && a.LearningState == LearningState.Learned);
+            // 新たに追加したアクティブをアクティブの下に入れる
+            InsertSkillTriggerSkills(addActive,false);
+            var addPassive = LearningSkillInfos().FindAll(a => a.Master.SkillType == SkillType.Passive && a.Id > 1000 && a.LearningState == LearningState.Learned);
+            
+            // その他のパッシブを加える
+            InsertSkillTriggerSkills(addPassive,true);
+
+            for (int i = 0;i < _skillTriggerInfos.Count;i++)
+            {
+                _skillTriggerInfos[i].SetPriority(i);
+            }
+            
         }
     }
     

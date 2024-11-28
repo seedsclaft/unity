@@ -247,6 +247,35 @@ namespace Effekseer.Internal
 				sound.Stop();
 			}
 		}
+
+		public void PlaySound(EffekseerSoundResource resource,
+			float volume, float pan, float pitch,
+			bool mode3D, float x, float y, float z, float distance)
+		{
+			if (resource == null)
+			{
+				return;
+			}
+
+			EffekseerSoundInstance optimalInstance = null;
+			foreach (var instance in childInstances)
+			{
+				if (!instance.CheckPlaying())
+				{
+					optimalInstance = instance;
+					break;
+				}
+				else if (optimalInstance == null || instance.lastPlayTime < optimalInstance.lastPlayTime)
+				{
+					optimalInstance = instance;
+				}
+			}
+			if (optimalInstance != null)
+			{
+				optimalInstance.Stop();
+				optimalInstance.Play("", resource, volume, pan, pitch, mode3D, x, y, z, distance);
+			}
+		}
 	}
 
 	public class EffekseerSoundInstance : MonoBehaviour

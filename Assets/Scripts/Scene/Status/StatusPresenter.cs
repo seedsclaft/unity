@@ -60,10 +60,10 @@ namespace Ryneus
                 case CommandType.CancelActor:
                     CommandCancelActor();
                     return;
-                case CommandType.SelectSlotSkill:
-                    CommandSelectSlotSkill((SkillInfo)viewEvent.template);
+                case CommandType.SelectEquipSkill:
+                    CommandSelectEquipSkill((SkillInfo)viewEvent.template);
                     return;
-                case CommandType.CancelSlotSkill:
+                case CommandType.CancelEquipSkill:
                     CommandCancelSkill();
                     return;
                 case CommandType.SelectChangeSkill:
@@ -140,23 +140,20 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
         }
 
-        private void CommandSelectSlotSkill(SkillInfo skillInfo)
+        private void CommandSelectEquipSkill(SkillInfo skillInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            if (_model.SelectingSlotType == SkillSlotType.None)
-            {
-                // 選択する
-                _model.SetSelectingSlotType(skillInfo.SkillSlotType);
-                _view.SetChangeSkillList(GetListData(_model.ChangeAbleSkills()));
-                _view.SetSelectingSlotSkill(new ListData(skillInfo));
-                _view.CallChangeSkillList();
-            }
+            _model.SetSelectSkillInfo(skillInfo);
+            // 選択する
+            _view.SetChangeSkillList(GetListData(_model.ChangeAbleSkills()));
+            _view.SetSelectingEquipSkill(new ListData(skillInfo));
+            _view.CallChangeSkillList();
         }
 
         private void CommandCancelSkill()
         {
             SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-            if (_model.SelectingSlotType != SkillSlotType.None)
+            if (_model.SelectSkillInfo != null)
             {
                 // 選択魔法のキャンセル
                 ResetSelectSkill();
@@ -164,30 +161,26 @@ namespace Ryneus
             }
             _view.CommandTopLayer();
             CallMemberList();
-            _model.SetSelectingSlotType(SkillSlotType.None);
-            _view.SetSelectingSlotSkill(null);
+            _view.SetSelectingEquipSkill(null);
         }
 
         private void CommandSelectChangeSkill(SkillInfo skillInfo)
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
-            if (_model.SelectingSlotType != SkillSlotType.None)
+            // 変更する
+            if (skillInfo.Enable)
             {
-                // 変更する
-                if (skillInfo.Enable)
-                {
-                    _model.SetActorSkillSlot(skillInfo.Id);
-                    ResetSelectSkill();
-                }
+                _model.ChangeEquipSkill(skillInfo.Id);
+                ResetSelectSkill();
             }
         }
 
         private void ResetSelectSkill()
         {
-            _model.SetSelectingSlotType(SkillSlotType.None);
-            _view.SetSelectingSlotSkill(null);
+            _model.SetSelectSkillInfo(null);
+            _view.SetSelectingEquipSkill(null);
             CommandRefreshMagicList();
-            _view.CallSlotSkillList();
+            _view.CallEquipSkillList();
         }
 
         private void CommandCharacterList()
@@ -288,7 +281,7 @@ namespace Ryneus
             _model.SelectActor(actorInfo.ActorId);
             CommandRefreshMagicList();
             _view.CommandStatusLayer();
-            _view.CallSlotSkillList();
+            _view.CallEquipSkillList();
         }
 
         private void CommandCancelActor()
@@ -298,7 +291,7 @@ namespace Ryneus
 
         private void UpdatePopup(ConfirmCommandType confirmCommandType)
         {
-            if (_popupCommandType == CommandType.SelectSlotSkill)
+            if (_popupCommandType == CommandType.SelectEquipSkill)
             {
                 if (confirmCommandType == ConfirmCommandType.Yes)
                 {
@@ -355,7 +348,7 @@ namespace Ryneus
         private void CommandRefreshMagicList()
         {
             CommandRefresh();
-            _view.SetSlotSkillList(GetListData(_model.SlotSkills()));
+            _view.SetEquipSkillList(GetListData(_model.EquipSkills()));
             _view.SetActorInfo(_model.CurrentActor,_model.ActorInfos);
         }
 

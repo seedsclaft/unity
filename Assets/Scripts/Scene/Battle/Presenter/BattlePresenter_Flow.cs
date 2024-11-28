@@ -78,7 +78,7 @@ namespace Ryneus
 
         private void ShowMagicList(BattlerInfo currentBattler,bool resetScrollRect)
         {
-            _view.ShowMagicList(currentBattler.MagicCommands,resetScrollRect);
+            _view.ShowMagicList(GetListData(_model.SkillActionList(currentBattler)),resetScrollRect);
             _view.SetActorBattleReady(currentBattler.Index,_model.PartyAliveNum,_model.TroopAliveNum);
         }
 
