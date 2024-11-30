@@ -52,7 +52,7 @@ namespace Ryneus
         {
             _view.SetBattleBusy(true);
             _model.CreateBattleData();
-            await _model.LoadBattleResources(_model.Battlers);
+            //await _model.LoadBattleResources(_model.Battlers);
             var bgm = await _model.GetBattleBgm();
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             /*
@@ -302,6 +302,9 @@ namespace Ryneus
             });
         }
 
+        /// <summary>
+        /// バトル開始時のパッシブを付与
+        /// </summary>
         private void CommandStartBattleAction()
         {
             _view.UpdateGridLayer();
@@ -310,19 +313,6 @@ namespace Ryneus
 
         private void CommandUpdateAp()
         {
-#if UNITY_EDITOR
-            if (_testBattle == true && _model.TestBattler() != null) {
-                _model.SetActionBattler(_model.TestBattler().Index);
-                if (_model.CurrentBattler != null)
-                {
-                    CommandStartSelect();
-                } else
-                {
-                    _testBattle = false;
-                }
-                return;
-            }
-#endif
             /*
             var currentActionInfo = _model.CurrentActionInfo;
             if (currentActionInfo != null)

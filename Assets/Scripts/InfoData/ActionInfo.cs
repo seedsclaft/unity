@@ -54,6 +54,10 @@ namespace Ryneus
             _repeatTime--;
         }
 
+        private bool _isSettingParameter = false;
+        public bool IsSettingParameter => _isSettingParameter;
+        public void SetIsSettingParameter(bool isSettingParameter) => _isSettingParameter = isSettingParameter;
+
         public bool FirstAttack()
         {
             return (_baseRepeatTime-1) == _repeatTime;
@@ -61,7 +65,7 @@ namespace Ryneus
 
         public bool LastAttack()
         {
-            return _repeatTime == 0;
+            return _repeatTime == 1;
         }
 
         private List<int> _actionedRepeatTimes = new ();

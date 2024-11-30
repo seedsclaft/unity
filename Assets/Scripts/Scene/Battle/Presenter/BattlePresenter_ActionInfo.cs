@@ -31,59 +31,55 @@ namespace Ryneus
             {
                 if (isActor)
                 {
-                    StartAnimationMessiah();
+                    StartAnimationMessiah(actionInfo);
                 } else
                 {
-                    StartAnimationMessiahEnemy();
+                    StartAnimationMessiahEnemy(actionInfo);
                 }
             } else
             if (actionInfo.FirstAttack() && actionInfo.Master.SkillType == SkillType.Awaken && actionInfo.Master.AnimationId > 0)
             {
-                StartAnimationAwaken();
+                StartAnimationAwaken(actionInfo);
             } else
             {
-                StartAnimationSkill();
+                StartAnimationSkill(actionInfo);
             }
         }
         
         /// <summary>
         /// 覚醒アニメーション再生してからアニメーション再生
         /// </summary>
-        private async void StartAnimationMessiah()
+        private async void StartAnimationMessiah(ActionInfo actionInfo)
         {
-            var actionInfo = _model.CurrentActionInfo;
             var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
             var actorId = subject.ActorInfo != null ? subject.ActorInfo.ActorId : subject.EnemyData.Id - 1000;
             var sprite = _model.AwakenSprite(actorId);
             await _view.StartAnimationMessiah(subject,sprite);
-            StartAnimationSkill();
+            StartAnimationSkill(actionInfo);
         }
 
         /// <summary>
         /// 覚醒アニメーション再生してからアニメーション再生
         /// </summary>
-        private async void StartAnimationMessiahEnemy()
+        private async void StartAnimationMessiahEnemy(ActionInfo actionInfo)
         {
-            var actionInfo = _model.CurrentActionInfo;
             var subject = _model.GetBattlerInfo(actionInfo.SubjectIndex);
             var sprite = _model.AwakenEnemySprite(subject.EnemyData.Id);
             await _view.StartAnimationMessiah(subject,sprite);
-            StartAnimationSkill();
+            StartAnimationSkill(actionInfo);
         }
         
         /// <summary>
         /// カットインアニメーション再生してからアニメーション再生
         /// </summary>
-        private async void StartAnimationAwaken()
+        private async void StartAnimationAwaken(ActionInfo actionInfo)
         {
-            var actionInfo = _model.CurrentActionInfo;
             await _view.StartAnimationDemigod(_model.GetBattlerInfo(actionInfo.SubjectIndex),actionInfo.Master);
-            StartAnimationSkill();
+            StartAnimationSkill(actionInfo);
         }
 
-        private async void StartAnimationSkill()
+        private async void StartAnimationSkill(ActionInfo actionInfo)
         {           
-            var actionInfo = _model.CurrentActionInfo;
             _view.ChangeSideMenuButtonActive(false);
             _view.SetBattlerThumbAlpha(true);
             //_view.ShowEnemyStateOverlay();

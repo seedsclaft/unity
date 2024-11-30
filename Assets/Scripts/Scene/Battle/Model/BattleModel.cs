@@ -74,22 +74,7 @@ namespace Ryneus
 
         public UniTask<List<AudioClip>> GetBattleBgm()
         {
-            if (CurrentStage != null)
-            {
-                /*
-                if (CurrentSelectRecord().SymbolType == SymbolType.Boss)
-                {
-                    var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BossBGMId);
-                    return GetBgmData(bgmData.Key);
-                }
-                */
-            }
             return GetBgmData("TACTICS2");
-        }
-
-        public GameObject BattleBackGroundObject()
-        {
-            return ResourceSystem.LoadBattleBackGround(CurrentStage.Master.BackGround);
         }
 
         public void CreateBattleData()
@@ -120,37 +105,16 @@ namespace Ryneus
             _battlers.Add(alcana);
             */
 
-            foreach (var battlerInfo1 in _battlers)
+            foreach (var battlerInfo in _battlers)
             {
-                _passiveSkillInfos[battlerInfo1.Index] = new ();
+                //_passiveSkillInfos[battlerInfo.Index] = new ();
             }
             _party = new UnitInfo();
             _party.SetBattlers(BattlerActors());
             _troop = new UnitInfo();
             _troop.SetBattlers(BattlerEnemies());
-            _saveBattleInfo.SetParty(_party.CopyData());
-            _saveBattleInfo.SetTroop(_troop.CopyData());
-        }
-
-        public void CreateBattleData(SaveBattleInfo saveBattleInfo)
-        {
-            _actionIndex = 0;
-            _battlers.Clear();
-            _battlers.AddRange(saveBattleInfo.Party.BattlerInfos);
-            _battlers.AddRange(saveBattleInfo.Troop.BattlerInfos);
-
-            // アルカナ
-            //var alcana = new BattlerInfo(AlcanaSkillInfos(),true,1);
-            //_battlers.Add(alcana);
-
-            foreach (var battlerInfo1 in _battlers)
-            {
-                _passiveSkillInfos[battlerInfo1.Index] = new ();
-            }
-            _party = new UnitInfo();
-            _party.SetBattlers(BattlerActors());
-            _troop = new UnitInfo();
-            _troop.SetBattlers(BattlerEnemies());
+            //_saveBattleInfo.SetParty(_party.CopyData());
+            //_saveBattleInfo.SetTroop(_troop.CopyData());
         }
 
         public List<BattlerInfo> FieldBattlerInfos()
@@ -757,7 +721,7 @@ namespace Ryneus
                 return;
             }
             actionInfo.SetCandidateTargetIndexList(indexList);
-            actionInfo.SeekRepeatTime();
+            //actionInfo.SeekRepeatTime();
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             // ターゲットの生死判定
             var aliveType = actionInfo.Master.AliveType;
@@ -776,6 +740,7 @@ namespace Ryneus
             }
 
             // かばう判定
+            /*
             var newIndexList = new List<int>();
             if (needCheckCover)
             {
@@ -805,9 +770,10 @@ namespace Ryneus
             {
                 newIndexList = indexList;
             }
+            */
             var actionResultInfos = new List<ActionResultInfo>();
 
-            foreach (var targetIndex in newIndexList)
+            foreach (var targetIndex in indexList)
             {
                 var target = GetBattlerInfo(targetIndex);
                 var featureDates = new List<SkillData.FeatureData>();
@@ -1004,10 +970,12 @@ namespace Ryneus
                 {
                     subject.GainHealCount(1);
                 }
+                /*
                 if (addSaveData)
                 {
                     _saveBattleInfo.AddActionData(actionInfo);
                 }
+                */
                 ExecActionResultInfos(actionInfo.ActionResults,false);
                 actionInfo.AddActionedRepeatTimes(actionInfo.RepeatTime);
                 if (actionInfo.Master.IsRevengeHpDamageFeature())
@@ -1015,6 +983,8 @@ namespace Ryneus
                     // 受けたダメージをリセット
                     subject.SetDamagedValue(0);
                 }
+                // 行動回数を減らす
+                actionInfo.SeekRepeatTime();
             }
         }
 
@@ -1210,10 +1180,12 @@ namespace Ryneus
             }
             
             actionResultInfo.SetTurnCount(_turnCount);
+            /*
             if (addSaveData)
             {
                 _saveBattleInfo.AddResultData(actionResultInfo);
             }
+            */
         }
         
         public List<int> DeathBattlerIndex(List<ActionResultInfo> actionResultInfos)
@@ -1273,9 +1245,9 @@ namespace Ryneus
             //_currentTurnBattler.GainMp(gainAp);
         }
 
-        public List<StateInfo> UpdateNextSelfTurn()
+        public List<StateInfo> UpdateNextSelfTurn(BattlerInfo battlerInfo)
         {
-            var result = _currentBattler.UpdateState(RemovalTiming.NextSelfTurn);
+            var result = battlerInfo.UpdateState(RemovalTiming.NextSelfTurn);
             return result;
         }
 
@@ -1360,10 +1332,12 @@ namespace Ryneus
                 {
                     if (plusActionInfo.Master.SkillType == SkillType.Passive)
                     {
+                        /*
                         if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(plusActionInfo.Master.Id))
                         {
                             _passiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
                         }
+                        */
                     }
                     AddActionInfo(plusActionInfo,false);
                     AddTurnActionInfos(plusActionInfo,false);
@@ -1377,10 +1351,12 @@ namespace Ryneus
                     {
                         if (skillInfo.Master.SkillType == SkillType.Passive)
                         {
+                            /*
                             if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(skillInfo.Master.Id))
                             {
                                 _passiveSkillInfos[actionInfo.SubjectIndex].Add(skillInfo.Master.Id);
                             }
+                            */
                         }
                         var plusTriggerActionInfo = new ActionInfo(skillInfo,_actionIndex,actionInfo.SubjectIndex,-1,null);
                         plusTriggerActionInfo.SetTriggerSkill(true);
@@ -1607,10 +1583,12 @@ namespace Ryneus
                             continue;
                         }
                     }
+                    /*
                     if (_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Id))
                     {
                         continue;
                     }
+                    */
                     if (passiveInfo.CountTurn > 0)
                     {
                         continue;
@@ -1724,6 +1702,7 @@ namespace Ryneus
         public List<ActionResultInfo> CheckRemovePassiveInfos()
         {
             var actionResultInfos = new List<ActionResultInfo>();
+            /*
             foreach (var battlerInfo in _battlers)
             {
                 var passiveSkillIds = _passiveSkillInfos[battlerInfo.Index];
@@ -1796,6 +1775,7 @@ namespace Ryneus
                     }
                 }
             }
+            */
             return actionResultInfos;
         }
 

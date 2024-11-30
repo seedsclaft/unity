@@ -10,9 +10,7 @@ namespace Ryneus
 {
     public class StatusView : BaseView ,IInputHandlerEvent
     {
-
         [SerializeField] private Button helpButton = null;
-
         [SerializeField] private BaseList commandList = null;
         [SerializeField] private BaseList memberList = null;
         [SerializeField] private MagicList equipSkillList = null;

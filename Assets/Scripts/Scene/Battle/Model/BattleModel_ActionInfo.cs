@@ -12,8 +12,10 @@ namespace Ryneus
         // 現在最優先の行動
         private ActionInfo _currentActionInfo = null;
         public ActionInfo CurrentActionInfo => _currentActionInfo;
-        // 現在最優先の行動
-        public BattlerInfo CurrentActionBattler => _currentActionInfo != null ? GetBattlerInfo(_currentActionInfo.SubjectIndex) : null;
+        // 現在の行動
+        private ActionInfo _activeActionInfo = null;
+        public ActionInfo ActiveActionInfo => _activeActionInfo;
+        public void SetActiveActionInfo(ActionInfo actionInfo) => _activeActionInfo = actionInfo;
 
         // 優先敵対象
         private BattlerInfo _targetEnemy = null;
@@ -69,7 +71,7 @@ namespace Ryneus
 
         private void PopActionInfo()
         {
-            _actionInfos.RemoveAt(0);
+            //_actionInfos.RemoveAt(0);
             _currentActionInfo = _actionInfos.Count > 0 ? _actionInfos[0] : null;
         }
 

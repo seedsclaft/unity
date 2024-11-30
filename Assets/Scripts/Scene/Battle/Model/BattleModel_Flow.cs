@@ -21,6 +21,14 @@ namespace Ryneus
             _firstActionBattler = firstActionBattler;
         }
 
+        // 今行動中の者
+        private BattlerInfo _currentActionBattler = null;
+        public BattlerInfo CurrentActionBattler => _currentActionBattler;
+        public void SetCurrentActionBattler(BattlerInfo currentActionBattler)
+        {
+            _currentActionBattler = currentActionBattler;
+        }
+
         public BattlerInfo CheckApCurrentBattler()
         {
             var battlerInfos = FieldBattlerInfos().FindAll(a => a.IsAlive());
@@ -36,7 +44,7 @@ namespace Ryneus
         /// <param name="skillId"></param>
         /// <param name="oneTargetIndex"></param>
         /// <returns></returns>
-        public List<int> GetActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
+        public (ActionInfo,List<int>) GetActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
         {
             var skillInfo = battlerInfo.Skills.Find(a => a.Id == skillId);
             if (skillInfo == null)
@@ -46,7 +54,7 @@ namespace Ryneus
             var actionInfo = MakeActionInfo(battlerInfo,skillInfo,false,false);
             //AddActionInfo(actionInfo,false);
             // 対象を自動決定
-            return MakeAutoSelectIndex(actionInfo,oneTargetIndex);
+            return (actionInfo,MakeAutoSelectIndex(actionInfo,oneTargetIndex));
         }
         
 
@@ -59,14 +67,15 @@ namespace Ryneus
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             //int MpCost = CalcMpCost(subject,actionInfo.Master.CountTurn);
             //actionInfo.SetMpCost(MpCost);
-            int HpCost = CalcHpCost(actionInfo);
-            actionInfo.SetHpCost(HpCost);
+            int hpCost = CalcHpCost(actionInfo);
+            actionInfo.SetHpCost(hpCost);
 
             //var isPrism = PrismRepeatTime(subject,actionInfo) > 0;
             var repeatTime = CalcRepeatTime(subject,actionInfo);
             //repeatTime += PrismRepeatTime(subject,actionInfo);
             actionInfo.SetRepeatTime(repeatTime);
             actionInfo.SetBaseRepeatTime(repeatTime);
+            actionInfo.SetIsSettingParameter(true);
         }
     }
 }

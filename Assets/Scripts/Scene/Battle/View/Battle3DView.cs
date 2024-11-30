@@ -226,6 +226,13 @@ namespace Ryneus
             SetCamera(_virtualModelControls[index].gameObject.transform.position,readyPosition,readyAngel,zPos*-1,0.8f);
         }
 
+        public void EnemyBattleReady(int index)
+        {
+            ResetCameraPosition();
+            SetCamera(_virtualModelControls[index].gameObject.transform.position,
+                new Vector3(0.5f,1,0),new Vector3(-10,0,0),-0.5f);
+        }
+
         public void BattleVictory(int mvpActorId)
         {
             /*

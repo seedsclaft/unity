@@ -43,13 +43,13 @@ namespace Ryneus
         public float MpRate => _mp > 0 ? _mp / (float)MaxMp : 0;
         private float _ap;
         private float _preserveMinusAp = 0;
-
         public float Ap => _ap;
         
         private List<SkillInfo> _skills = new ();
         public List<SkillInfo> Skills => _skills;
         private List<SkillInfo> _enhanceSkills = new ();
         public List<SkillInfo> EnhanceSkills => _enhanceSkills;
+        private List<int> _passiveActiveSkillIds = new ();
         private ActorInfo _actorInfo;
         public ActorInfo ActorInfo => _actorInfo;
         private int _enemyId;
@@ -450,25 +450,11 @@ namespace Ryneus
 
         public int UpdateApValue()
         {
-            var apValue = 0;
-            if (!IsActor)
+            if (IsState(StateType.Death) || IsState(StateType.Stun) || IsState(StateType.Wait))
             {
-                return apValue;
+                return 0;
             }
-            if (IsState(StateType.Death))
-            {
-                return apValue;
-            }
-            if (IsState(StateType.Stun))
-            {
-                return apValue;
-            }
-            if (IsState(StateType.Wait))
-            {
-                return apValue;
-            }
-            apValue = -8;
-            return apValue;
+            return -4;
         }
 
         public float WaitFrame(int turn)

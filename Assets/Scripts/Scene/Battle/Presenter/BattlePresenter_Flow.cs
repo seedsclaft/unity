@@ -63,6 +63,7 @@ namespace Ryneus
                     return;
                 }
                 */
+                _model.SetCurrentActionBattler(currentBattler);
                 if (currentBattler.IsActor)
                 {
                     // マニュアルなら魔法選択
@@ -71,6 +72,7 @@ namespace Ryneus
                 } else
                 {
                     // Autoなら
+                    _view.SetEnemyBattleReady(currentBattler.Index);
                     MakeActionInfoSkillTrigger();
                 }
             }
@@ -148,7 +150,7 @@ namespace Ryneus
                 // ActionInfoを設定する
                 var actionInfo = _model.SelectActionInfo;
                 var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,battlerInfo.Index);
-                _model.AddActionInfo(actionInfo,false);
+                _model.SetActiveActionInfo(actionInfo);
                 MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
 
                 _view.EndActionSelect();
@@ -156,6 +158,10 @@ namespace Ryneus
         }
 
 
+        /// <summary>
+        /// 行動者を登録する
+        /// </summary>
+        /// <returns></returns>
         public async void CheckFirstActionBattler()
         {
             if (_model.FirstActionBattler == null)
@@ -163,7 +169,7 @@ namespace Ryneus
                 var currentBattler = _model.CurrentBattler;
                 _model.SetFirstActionBattler(currentBattler);
                 // 解除判定は行動開始の最初のみ
-                var removed =_model.UpdateNextSelfTurn();
+                var removed =_model.UpdateNextSelfTurn(currentBattler);
                 foreach (var removedState in removed)
                 {
                     _view.StartStatePopup(removedState.TargetIndex,DamageType.State,"-" + removedState.Master.Name);
@@ -198,8 +204,8 @@ namespace Ryneus
         private void MakeActionInfoTargetIndexes(BattlerInfo battlerInfo,int skillId,int oneTargetIndex = -1)
         {
             // 対象を自動決定
-            var targetIndexes = _model.GetActionInfoTargetIndexes(battlerInfo,skillId,oneTargetIndex);
-            MakeActionResultInfoTargetIndexes(_model.CurrentActionInfo,targetIndexes);
+            var (actionInfo,targetIndexes) = _model.GetActionInfoTargetIndexes(battlerInfo,skillId,oneTargetIndex);
+            MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
         }
 
         /// <summary>
@@ -212,27 +218,30 @@ namespace Ryneus
             _view.ChangeBackCommandActive(false);
 
             _model.SetActionInfoParameter(actionInfo);
-            await MakeActionResultInfo(indexList);
-            StartActionInfo();
+            await MakeActionResultInfo(actionInfo,indexList);
+            _model.SetActiveActionInfo(actionInfo);
+            StartActionInfo(actionInfo);
         }
 
         /// <summary>
         /// 行動結果を生成する
         /// </summary>
         /// <param name="indexList"></param>
-        private async UniTask MakeActionResultInfo(List<int> indexList)
+        private async UniTask MakeActionResultInfo(ActionInfo actionInfo,List<int> indexList)
         {
-            var actionInfo = _model.CurrentActionInfo;
             if (actionInfo != null)
             {
                 _view.BattlerBattleClearSelect();
 
                 // 自分,味方,相手の行動前パッシブ
+                /*
                 CheckBeforeActionInfo(actionInfo);
+                */
 
                 // 開始行動のアクションの結果を生成
                 _model.MakeActionResultInfo(actionInfo,indexList);
 
+                /*
                 var current = _model.CurrentActionInfo;
                 // かばう専用割り込み判定
                 CheckPrimaryInterruptActionInfoTriggerTimings();
@@ -258,6 +267,7 @@ namespace Ryneus
 
                 // 行動決定後の割り込みスキル判定
                 CheckInterruptActionInfoTriggerTimings(current);
+                */
             }
         }
 
@@ -296,10 +306,9 @@ namespace Ryneus
             _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.Use},actionInfo,actionInfo.ActionResults);
         }
 
-        private void StartActionInfo()
+        private void StartActionInfo(ActionInfo actionInfo)
         {
             // 行動変化対応のため再取得
-            var actionInfo = _model.CurrentActionInfo;
             //LogOutput.Log(actionInfo.Master.Id + "行動");
             if (actionInfo != null)
             {
@@ -320,7 +329,7 @@ namespace Ryneus
         /// <param name="actionInfo"></param>
         private void CommandEndAnimation()
         {
-            var actionInfo = _model.CurrentActionInfo;
+            var actionInfo = _model.ActiveActionInfo;
             if (actionInfo != null)
             {
                 // ダメージなどを適用
@@ -367,7 +376,7 @@ namespace Ryneus
         private async void RepeatActionInfo(ActionInfo actionInfo)
         {
             _model.ResetTargetIndexList(actionInfo);
-            await MakeActionResultInfo(actionInfo.CandidateTargetIndexList);
+            await MakeActionResultInfo(actionInfo,actionInfo.CandidateTargetIndexList);
             // 再取得
             if (actionInfo == _model.CurrentActionInfo)
             {
@@ -377,7 +386,7 @@ namespace Ryneus
             } else
             {
                 // 割り込みでアクションが変わった場合
-                StartActionInfo();
+                StartActionInfo(actionInfo);
             }
         }
 
@@ -424,7 +433,7 @@ namespace Ryneus
         
         private async void EndTurn()
         {
-            var actionInfo = _model.CurrentActionInfo;
+            var actionInfo = _model.ActiveActionInfo;
             // ターン終了
             _view.RefreshStatus();
             // PlusSkill
@@ -437,9 +446,9 @@ namespace Ryneus
             await RemovePassiveInfos();
 
             bool isDemigodActor = false;
-            if (_model.CurrentBattler != null)
+            if (_model.CurrentActionBattler != null)
             {
-                isDemigodActor = _model.CurrentBattler.IsState(StateType.Demigod);
+                isDemigodActor = _model.CurrentActionBattler.IsState(StateType.Demigod);
             }
             // 行動者のActionInfoか
             bool isTriggeredSkill = actionInfo.TriggeredSkill;
@@ -533,7 +542,7 @@ namespace Ryneus
 
             // 待機できなくなった場合は待機状態をはずす
             _model.RemoveOneMemberWaitBattlers();
-            _view.UpdateGridLayer();
+            //_view.UpdateGridLayer();
             _view.RefreshStatus();
 
             // 次の行動があれば続ける

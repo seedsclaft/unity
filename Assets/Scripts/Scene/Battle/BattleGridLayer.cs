@@ -53,50 +53,31 @@ namespace Ryneus
 
         public void UpdatePosition()
         {
-            var waitFrameList = new List<float>();
-            var turnWait = new Dictionary<BattlerInfo,float>();
-            var addCount = 0;
+            var turnWaits = new Dictionary<BattlerInfo,float>();
+            _battlerInfos.Sort((a,b) => a.Ap < b.Ap ? -1 : 1);
             foreach (var battler in _battlerInfos)
             {
                 if (battler.IsAlive())
                 {
-                    turnWait[battler] = battler.WaitFrame(0);
-                    for (int i = 0;i < 1;i++)
-                    {
-                        var waitFrame = battler.WaitFrame(i);
-                        waitFrameList.Add(waitFrame);
-                        addCount++;
-                    }
-                }
-            }
-            waitFrameList.Sort((a,b) => a < b ? -1 : 1);
-            var sortedBattlerList = new List<BattlerInfo>();
-            var sortedBattlerApList = new List<float>();
-            var targetIndex = 0;
-            while (sortedBattlerList.Count < addCount)
-            {
-                var ap = waitFrameList[targetIndex];
-                targetIndex++;
-                foreach (var turnW in turnWait)
-                {
-                    sortedBattlerList.Add(turnW.Key);
-                    sortedBattlerApList.Add(ap);
+                    turnWaits[battler] = battler.WaitFrame(0);
                 }
             }
 
-            for (int i = 0;i < sortedBattlerList.Count;i++)
+            var idx = 0;
+            foreach (var turnWait in turnWaits)
             {
                 //if (i > 6) continue;
-                var battler = sortedBattlerList[i];
-                _actorBattlers[i].UpdateAlpha(battler.IsActor);
-                _enemyBattlers[i].UpdateAlpha(!battler.IsActor);
+                var battler = turnWait.Key;
+                _actorBattlers[idx].UpdateAlpha(battler.IsActor);
+                _enemyBattlers[idx].UpdateAlpha(!battler.IsActor);
                 if (battler.IsActor)
                 {
-                    _actorBattlers[i].UpdateInfo(battler,(int)sortedBattlerApList[i],i);
+                    _actorBattlers[idx].UpdateInfo(battler,(int)turnWait.Value,idx);
                 } else
                 {
-                    _enemyBattlers[i].UpdateInfo(battler,(int)sortedBattlerApList[i],i);
+                    _enemyBattlers[idx].UpdateInfo(battler,(int)turnWait.Value,idx);
                 }
+                idx++;
             }
         }
 

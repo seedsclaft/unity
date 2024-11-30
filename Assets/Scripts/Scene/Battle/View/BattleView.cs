@@ -91,13 +91,7 @@ namespace Ryneus
             battleCutinAnimation.Initialize();
             InitializeMagicList();
             Create3DView();
-            if (GameSystem.TempData.InReplay)
-            {
-                new BattleReplayPresenter(this);
-            } else
-            {
-                new BattlePresenter(this);
-            }
+            new BattlePresenter(this);
         }
 
         public void CreateBattleBackGround(GameObject gameObject)
@@ -677,6 +671,12 @@ namespace Ryneus
         {
             _battle3dView.UpdateParentPosition(actorNum,enemyNum);
             _battle3dView.ActorBattleReady(index);
+        }
+
+        public void SetEnemyBattleReady(int index)
+        {
+            //_battle3dView.UpdateParentPosition(actorNum,enemyNum);
+            _battle3dView.EnemyBattleReady(index);
         }
 
         public void StartDamage(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)

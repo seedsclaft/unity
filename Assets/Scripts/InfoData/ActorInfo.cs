@@ -426,10 +426,17 @@ namespace Ryneus
 
         public List<SkillInfo> EquipSkills()
         {
-            var skillInfo = new SkillInfo(0);
-            skillInfo.SetEnable(true);
             var skillInfos = LearningSkillInfos().FindAll(a => a.Id >= 1000 && _equipmentSkillIds.Contains(a.Master.Id));
-            skillInfos.Add(skillInfo);
+            if (skillInfos.Count < 8)
+            {
+                var count = 8 - skillInfos.Count;
+                for (int i = 0;i < count;i++)
+                {
+                    var skillInfo = new SkillInfo(0);
+                    skillInfo.SetEnable(true);
+                    skillInfos.Add(skillInfo);
+                }
+            }
             return skillInfos;
         }
 
