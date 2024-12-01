@@ -15,7 +15,7 @@ MonoBehaviour:
   BGM:
   - Id: 1
     Key: TITLE
-    FileName: Field3
+    FileName: libra_rebirth_arrange
     Loop: 0
     CrossFade: 
   - Id: 2
@@ -25,24 +25,24 @@ MonoBehaviour:
     CrossFade: 
   - Id: 3
     Key: TACTICS1
-    FileName: Field3
+    FileName: all_out_attack
     Loop: 0
-    CrossFade: TACTICS2
+    CrossFade: 
   - Id: 4
     Key: TACTICS2
     FileName: Battle5
     Loop: 0
-    CrossFade: TACTICS1
+    CrossFade: 
   - Id: 5
     Key: TACTICS3
     FileName: PerituneMaterial_Grief_inst_loop
     Loop: 0
-    CrossFade: TACTICS4
+    CrossFade: 
   - Id: 6
     Key: TACTICS4
     FileName: PerituneMaterial_Grief_loop
     Loop: 0
-    CrossFade: TACTICS3
+    CrossFade: 
   - Id: 11
     Key: BOSS1
     FileName: PerituneMaterial_Cyber_Noir_loop
@@ -76,101 +76,101 @@ MonoBehaviour:
   SE:
   - Id: 1
     Key: DECIDE
-    FileName: decide7
+    FileName: cursor33
     Volume: 1
     Pitch: 1
   - Id: 2
     Key: CANCEL
-    FileName: decide7
+    FileName: cursor27
     Volume: 1
     Pitch: 1
   - Id: 3
     Key: CURSOR
-    FileName: cursor_move8
+    FileName: cursor11
     Volume: 1
     Pitch: 1
   - Id: 4
     Key: DAMAGE
-    FileName: damage
+    FileName: cursor32
     Volume: 0.5
     Pitch: 1
   - Id: 5
     Key: DEFEAT
-    FileName: defeat
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 6
     Key: DEMIGOD
-    FileName: swordspecial
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 7
     Key: DENY
-    FileName: beap3
+    FileName: Shot2
     Volume: 1
     Pitch: 1
   - Id: 8
     Key: LEVELUP
-    FileName: decide43
+    FileName: cursor32
     Volume: 1
     Pitch: 1
   - Id: 9
     Key: CRITICAL
-    FileName: Sword2
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 10
     Key: SKILL
-    FileName: Skill1
+    FileName: cursor32
     Volume: 0.6
     Pitch: 1
   - Id: 11
     Key: AWAKEN
-    FileName: demigod
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 12
     Key: COUNTUP
-    FileName: messagedisplay1
+    FileName: cursor32
     Volume: 1
     Pitch: 1
   - Id: 13
     Key: MISS
-    FileName: Miss
+    FileName: cursor32
     Volume: 0.6
     Pitch: 1
   - Id: 14
     Key: HEAL
-    FileName: Up1
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 15
     Key: BUFF
-    FileName: Sword1
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 16
     Key: DEBUFF
-    FileName: power36
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 17
     Key: BATTLESTART
-    FileName: swordspecial
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 18
     Key: LEARNSKILL
-    FileName: Flash2
+    FileName: cursor32
     Volume: 0.8
     Pitch: 1
   - Id: 19
     Key: CURSOR_MOVE
-    FileName: cursor
+    FileName: cursor11
     Volume: 0.8
     Pitch: 1
   - Id: 20
     Key: PLAYSTART
-    FileName: gamestart
+    FileName: cursor33
     Volume: 0.8
     Pitch: 1

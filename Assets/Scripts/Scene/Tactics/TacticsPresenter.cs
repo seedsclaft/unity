@@ -60,6 +60,7 @@ namespace Ryneus
             _view.SetHelpWindow();
             _view.ChangeBackCommandActive(false);
             _view.SetEvent((type) => UpdateCommand(type));
+            _view.SetBackGround(_model.CurrentStage?.Master?.BackGround);
             
             _view.SetStageInfo(_model.CurrentStage);
             _view.SetTacticsCommand(_model.TacticsCommand());
@@ -80,7 +81,8 @@ namespace Ryneus
         {
             Func<TutorialData,bool> enable = (tutorialData) => 
             {
-                var checkFlag = true;
+                var checkFlag = false;
+                /*
                 if (tutorialData.Param1 == 100)
                 {
                     // マス一覧を初めて開く
@@ -116,6 +118,7 @@ namespace Ryneus
                     // Activeの魔法を初めて入手するかステージ3の最初
                     checkFlag = _model.StageMembers().Find(a => a.LearnSkillIds().FindAll(b => DataSystem.FindSkill(b).SkillType == SkillType.Active).Count > 0) != null || _model.CurrentStage.Id == 3;
                 }
+                */
                 return checkFlag;
             };
             Func<TutorialData,bool> checkEnd = (tutorialData) => 

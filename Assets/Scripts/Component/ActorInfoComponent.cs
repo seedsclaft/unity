@@ -33,12 +33,14 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI element3;
         [SerializeField] private TextMeshProUGUI element4;
         [SerializeField] private TextMeshProUGUI element5;
+        [SerializeField] private TextMeshProUGUI element6;
 
         [SerializeField] private TextMeshProUGUI element1Cost;
         [SerializeField] private TextMeshProUGUI element2Cost;
         [SerializeField] private TextMeshProUGUI element3Cost;
         [SerializeField] private TextMeshProUGUI element4Cost;
         [SerializeField] private TextMeshProUGUI element5Cost;
+        [SerializeField] private TextMeshProUGUI element6Cost;
 
         [SerializeField] private TextMeshProUGUI recoveryCost;
         [SerializeField] private TextMeshProUGUI resourceGain;
@@ -96,11 +98,16 @@ namespace Ryneus
             {
                 UpdateAttributeRank(element5,actorInfo,AttributeType.Dark,actorInfos);
             }
+            if (element6 != null)
+            {
+                UpdateAttributeRank(element6,actorInfo,AttributeType.Dark,actorInfos);
+            }
             element1Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Fire,actorInfos).ToString());
             element2Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Thunder,actorInfos).ToString());
             element3Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Ice,actorInfos).ToString());
             element4Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Shine,actorInfos).ToString());
             element5Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Dark,actorInfos).ToString());
+            element6Cost?.SetText(TacticsUtility.LearningMagicCost(actorInfo,AttributeType.Void,actorInfos).ToString());
             
             recoveryCost?.SetText(TacticsUtility.RemainRecoveryCost(actorInfo,true).ToString());
             resourceGain?.SetText(TacticsUtility.ResourceGain(actorInfo).ToString());

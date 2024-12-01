@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - Id: 1
-    Name: "\u5B9D\u9418\u30DE\u30EA\u30F3"
-    SubName: "\u3010\u7149\u7344\u68D8\u59EB\u3011"
+    Name: "\u30A8\u30EA\u30B7\u30E3"
+    SubName: Alisha
     Profile: "\u9AD8\u3044\u653B\u6483\u6027\u80FD\u3092\u6301\u3064\u30A2\u30BF\u30C3\u30AB\u30FC\u3002\n\u5168\u4F53\u7684\u306B\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\u9AD8\u304F\u3001\u8D64\u5C5E\u6027\u9B54\u6CD5\u3092\u7FD2\u5F97\u3059\u308B\u3053\u3068\u3067\u3055\u3089\u306B\u653B\u6483\u6027\u80FD\u3092\u4F38\u3070\u3059\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 1
     UnitType: 1
@@ -36,14 +36,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 55
-      _mp: 0
+      _mp: 100
       _atk: 60
       _def: 30
       _spd: 35
-    Attribute: 0100000002000000060000000300000006000000
+    Attribute: 010000000400000004000000050000000500000002000000
     X: -88
     Y: 24
-    Scale: 1.25
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -121,8 +121,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 2
-    Name: "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
-    SubName: "\u3010ChargeCommander\u3011"
+    Name: "\u30BD\u30E9"
+    SubName: Sora
     Profile: "\u56DE\u907F\u7387\u3092\u4E0A\u3052\u3066\u653B\u6483\u3092\u907F\u3051\u308B\u30A2\u30BF\u30C3\u30AB\u30FC\u3002\n\u6253\u305F\u308C\u5F31\u3044\u304CSPD\u304C\u9AD8\u304F\u3001\u56DE\u907F\u7387\u3092\u30A2\u30C3\u30D7\u3059\u308B\u96F7\u5C5E\u6027\u9B54\u6CD5\u3092\u7FD2\u5F97\u3057\u3084\u3059\u3044\u3002"
     ClassId: 2
     UnitType: 1
@@ -143,14 +143,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 60
-      _mp: 0
+      _mp: 100
       _atk: 40
       _def: 25
       _spd: 70
-    Attribute: 0200000001000000050000000700000003000000
+    Attribute: 040000000100000007000000070000000200000003000000
     X: -20
     Y: -52
-    Scale: 0.71
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -228,8 +228,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 3
-    Name: "\u96EA\u82B1\u30E9\u30DF\u30A3"
-    SubName: "\u3010\u6020\u60F0\u306A\u5B88\u8B77\u5C11\u5973\u3011"
+    Name: "\u30EA\u30B8\u30A7"
+    SubName: Ligier
     Profile: "\u76F8\u624B\u306E\u653B\u6483\u3092\u8DF3\u306D\u8FD4\u3059\u30C7\u30A3\u30D5\u30A7\u30F3\u30C0\u30FC\u3002\n\u53D7\u3051\u305F\u653B\u6483\u30C0\u30E1\u30FC\u30B8\u306E\u4E00\u90E8\u3092\u8DF3\u306D\u8FD4\u3059\u300C\u30AB\u30A6\u30F3\u30BF\u30FC\u30AA\u30FC\u30E9\u300D\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 3
     UnitType: 2
@@ -237,11 +237,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 35
+      _hp: 40
       _mp: 5
-      _atk: 17
+      _atk: 26
       _def: 17
-      _spd: 9
+      _spd: 18
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -250,14 +250,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 85
-      _mp: 0
-      _atk: 25
+      _mp: 100
+      _atk: 50
       _def: 50
-      _spd: 25
-    Attribute: 0300000006000000010000000200000006000000
+      _spd: 30
+    Attribute: 040000000600000001000000020000000300000006000000
     X: -10
     Y: -64
-    Scale: 2
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -335,8 +335,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 4
-    Name: "\u535A\u8863\u3053\u3088\u308A"
-    SubName: "\u3010\u30A4\u30CE\u30BB\u30F3\u30C8\u30FB\u30EA\u30E1\u30C7\u30A3\u3011"
+    Name: "\u30DF\u30B7\u30A7\u30EB"
+    SubName: Michelle
     Profile: "\u56DE\u5FA9\u306B\u7279\u5316\u3057\u305F\u30D2\u30FC\u30E9\u30FC\u3002\n\u5168\u4F53\u7684\u306B\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\u4F4E\u3044\u304C\u3001\u5473\u65B9\u306EHp\u3092\u56DE\u5FA9\u3059\u308B\u300C\u30D2\u30FC\u30EA\u30F3\u30B0\u300D\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 4
     UnitType: 4
@@ -357,14 +357,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 85
-      _mp: 0
+      _mp: 100
       _atk: 35
       _def: 15
       _spd: 30
-    Attribute: 0400000003000000030000000100000007000000
+    Attribute: 070000000400000007000000010000000700000007000000
     X: -4
     Y: -68
-    Scale: 2
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -442,8 +442,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 5
-    Name: "\u30EC\u30C0"
-    SubName: "\u3010Self-sacrifice\u3011"
+    Name: "\u30B7\u30A4\u30CA"
+    SubName: Shiina
     Profile: "\u76F8\u624B\u306E\u653B\u6483\u6027\u80FD\u3092\u4E0B\u3052\u308B\u30B8\u30E3\u30DE\u30FC\u3002\n\u300C\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9\u300D\u3067\u5473\u65B9\u304C\u53D7\u3051\u308B\u30C0\u30E1\u30FC\u30B8\u3092\u6291\u3048\u305F\u308A\u3001\u300C\u6BD2\u300D\u3067\u30B9\u30EA\u30C3\u30D7\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u9B54\u6CD5\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 5
     UnitType: 5
@@ -464,14 +464,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 70
-      _mp: 0
+      _mp: 100
       _atk: 30
       _def: 40
       _spd: 45
-    Attribute: 0400000006000000020000000500000001000000
+    Attribute: 050000000500000002000000060000000100000003000000
     X: -8
     Y: -44
-    Scale: 0.82
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -549,8 +549,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 6
-    Name: "\u30EA\u30B7\u30A7\u30EA"
-    SubName: "\u3010Faked-Magician\u3011"
+    Name: "\u30EB\u30CD"
+    SubName: Renee
     Profile: "\u5473\u65B9\u306ECT\u3092\u77ED\u7E2E\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u30B5\u30DD\u30FC\u30BF\u30FC\u3002\nCT\uFF08\u9B54\u6CD5\u3092\u518D\u4F7F\u7528\u3059\u308B\u307E\u3067\u306E\u30BF\u30FC\u30F3\u6570\uFF09\u3092\u77ED\u7E2E\u3057\u30D1\u30FC\u30C6\u30A3\u5168\u4F53\u306E\u88DC\u52A9\u3092\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
     ClassId: 6
     UnitType: 3
@@ -571,14 +571,14 @@ MonoBehaviour:
       _spd: 0
     NeedStatus:
       _hp: 40
-      _mp: 0
+      _mp: 100
       _atk: 50
       _def: 50
       _spd: 50
-    Attribute: 0100000006000000020000000600000003000000
+    Attribute: 030000000300000003000000040000000400000001000000
     X: 48
     Y: -68
-    Scale: 0.76
+    Scale: 0.75
     AwakenX: 0
     AwakenY: 0
     AwakenScale: 1
@@ -635,544 +635,6 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
     - SkillId: 100610
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 7
-    Name: "\u30E6\u30CB"
-    SubName: "\u3010\u5947\u8DE1\u306E\u4E59\u5973\u3011"
-    Profile: "\u5473\u65B9\u306E\u884C\u52D5\u5F85\u6A5F\u6642\u9593\u3092\u77ED\u304F\u3059\u308B\u30B5\u30DD\u30FC\u30BF\u30FC\u3002\n\u300C\u30A2\u30A6\u30C8\u30AA\u30D6\u30AA\u30FC\u30C0\u30FC\u300D\u3067\u4E21\u96A3\u306B\u914D\u7F6E\u3057\u305F\u5473\u65B9\u306E\u884C\u52D5\u5F85\u6A5F\u6642\u9593\u3092\u77ED\u7E2E\u3057\u305F\u308A\u3001\u5473\u65B9\u306EATK\u30FBDEF\u3092\u30A2\u30C3\u30D7\u3059\u308B\u30D0\u30D5\u9B54\u6CD5\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
-    ClassId: 7
-    UnitType: 3
-    ImagePath: 0007
-    InitLv: 1
-    MaxLv: 99
-    InitStatus:
-      _hp: 40
-      _mp: 5
-      _atk: 22
-      _def: 18
-      _spd: 16
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 65
-      _mp: 0
-      _atk: 45
-      _def: 40
-      _spd: 30
-    Attribute: 0400000001000000040000000300000004000000
-    X: -20
-    Y: -60
-    Scale: 0.79
-    AwakenX: 0
-    AwakenY: 0
-    AwakenScale: 1
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2040
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100710
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100720
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 12090
-      Level: 11
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 412090
-      Level: 26
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2050
-      Level: 41
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 2040
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100720
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100710
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 8
-    Name: "\u30DE\u30EA\u30FC\u30D9\u30EB"
-    SubName: "\u3010\u552F\u5FC3\u306E\u5728\u51E6\u3011"
-    Profile: "\u5473\u65B9\u306E\u653B\u6483\u3092\u4EE3\u308F\u308A\u306B\u53D7\u3051\u6301\u3064\u30C7\u30A3\u30D5\u30A7\u30F3\u30C0\u30FC\u3002\n\u300C\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5\u300D\u3067\u4E00\u5B9A\u56DE\u6570\u653B\u6483\u3092\u7121\u52B9\u306B\u3057\u305F\u308A\u3001\u5473\u65B9\u306E\u653B\u6483\u3092\u4EE3\u308F\u308A\u306B\u53D7\u3051\u30D1\u30FC\u30C6\u30A3\u306E\u751F\u5B58\u7387\u3092\u4E0A\u3052\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
-    ClassId: 8
-    UnitType: 2
-    ImagePath: 0008
-    InitLv: 1
-    MaxLv: 99
-    InitStatus:
-      _hp: 37
-      _mp: 5
-      _atk: 15
-      _def: 21
-      _spd: 16
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 80
-      _mp: 0
-      _atk: 40
-      _def: 60
-      _spd: 35
-    Attribute: 0600000002000000010000000500000004000000
-    X: -52
-    Y: -52
-    Scale: 0.8
-    AwakenX: 0
-    AwakenY: 0
-    AwakenScale: 1
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3070
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100810
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100820
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 13060
-      Level: 11
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 403070
-      Level: 26
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3060
-      Level: 41
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 100820
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3070
-      Trigger1: 14114
-      Trigger2: 9120
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100810
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 9
-    Name: "\u30CA\u30C4\u30AD"
-    SubName: "\u3010\u9EC4\u660F\u30CB\u30D2\u30EA\u30B9\u30C8\u3011"
-    Profile: "\u653B\u6483\u56DE\u6570\u306E\u591A\u3044\u653B\u6483\u6027\u80FD\u3092\u6301\u3064\u30A2\u30BF\u30C3\u30AB\u30FC\u3002\nHp\u304C\u4F4E\u3044\u304CATK\u304C\u9AD8\u304F\u3001\u653B\u6483\u56DE\u6570\u306E\u591A\u3044\u300C\u30D5\u30EC\u30A4\u30E0\u30EC\u30A4\u30F3\u300D\u3092\u4F7F\u3046\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
-    ClassId: 9
-    UnitType: 1
-    ImagePath: 0009
-    InitLv: 1
-    MaxLv: 99
-    InitStatus:
-      _hp: 34
-      _mp: 5
-      _atk: 25
-      _def: 12
-      _spd: 24
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 25
-      _mp: 0
-      _atk: 65
-      _def: 30
-      _spd: 50
-    Attribute: 0100000004000000040000000700000002000000
-    X: -16
-    Y: -52
-    Scale: 0.75
-    AwakenX: 0
-    AwakenY: 0
-    AwakenScale: 1
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 1010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 1050
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100910
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 100920
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 11070
-      Level: 11
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 401050
-      Level: 26
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 1080
-      Level: 41
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 100920
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 1050
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 1010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 100910
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 10
-    Name: "\u30E1\u30EA\u30A2\u30C9\u30FC\u30EB"
-    SubName: "\u3010\u6028\u55DF\u306E\u9396\u3011"
-    Profile: "SPD\u6027\u80FD\u306B\u7279\u5316\u3057\u305F\u30B8\u30E3\u30DE\u30FC\u3002\n\u300C\u30B7\u30E7\u30C3\u30AF\u30A4\u30F3\u30D1\u30EB\u30B9\u300D\u3067\u76F8\u624B\u3092\u884C\u52D5\u4E0D\u53EF\u306B\u3059\u308B\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
-    ClassId: 10
-    UnitType: 5
-    ImagePath: 0010
-    InitLv: 1
-    MaxLv: 99
-    InitStatus:
-      _hp: 30
-      _mp: 5
-      _atk: 17
-      _def: 7
-      _spd: 31
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 45
-      _mp: 0
-      _atk: 30
-      _def: 20
-      _spd: 75
-    Attribute: 0400000001000000060000000500000002000000
-    X: 12
-    Y: -64
-    Scale: 0.77
-    AwakenX: 0
-    AwakenY: 0
-    AwakenScale: 1
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2030
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 101010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 101020
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 12010
-      Level: 11
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 402030
-      Level: 26
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 2080
-      Level: 41
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 2030
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 101020
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 2010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 101010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
-      Trigger1: 0
-      Trigger2: 0
-  - Id: 11
-    Name: "\u30BB\u30EA\u30CA"
-    SubName: "\u3010\u6C37\u96EA\u306E\u52FF\u5FD8\u8349\u3011"
-    Profile: "\u51CD\u7D50\u653B\u6483\u3092\u4E3B\u4F53\u3068\u3059\u308B\u30A2\u30BF\u30C3\u30AB\u30FC\u3002\n\u300C\u30C7\u30A3\u30FC\u30D7\u30D5\u30EA\u30FC\u30BA\u300D\u3067\u653B\u6483\u6642\u306B\u4E00\u5B9A\u91CF\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u300C\u51CD\u7D50\u300D\u72B6\u614B\u306B\u3057\u3001\u51CD\u7D50\u52B9\u679C\u3092\u3055\u3089\u306B\u30A2\u30C3\u30D7\u3059\u308B\u3053\u3068\u3067\u81EA\u6EC5\u306B\u8FFD\u3044\u8FBC\u3080\u3053\u3068\u304C\u3067\u304D\u308B\u3002"
-    ClassId: 11
-    UnitType: 1
-    ImagePath: 0011
-    InitLv: 1
-    MaxLv: 99
-    InitStatus:
-      _hp: 33
-      _mp: 5
-      _atk: 21
-      _def: 16
-      _spd: 18
-    PlusStatus:
-      _hp: 0
-      _mp: 0
-      _atk: 0
-      _def: 0
-      _spd: 0
-    NeedStatus:
-      _hp: 65
-      _mp: 0
-      _atk: 40
-      _def: 25
-      _spd: 30
-    Attribute: 0600000006000000010000000300000002000000
-    X: 0
-    Y: -54
-    Scale: 0.87
-    AwakenX: 0
-    AwakenY: 0
-    AwakenScale: 1
-    Kinds: 
-    LearningSkills:
-    - SkillId: 11
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 21
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 31
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3010
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3050
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 101110
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 101120
-      Level: 0
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 13090
-      Level: 11
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 403050
-      Level: 26
-      Weight: 0
-      TriggerDates: []
-    - SkillId: 3080
-      Level: 41
-      Weight: 0
-      TriggerDates: []
-    SkillTriggerDates:
-    - SkillId: 3050
-      Trigger1: 6712
-      Trigger2: 0
-    - SkillId: 101120
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 3010
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 101110
-      Trigger1: 0
-      Trigger2: 0
-    - SkillId: 0
       Trigger1: 0
       Trigger2: 0
     - SkillId: 0

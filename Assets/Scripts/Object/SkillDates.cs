@@ -230,7 +230,8 @@ namespace Ryneus
         Thunder = 2,
         Ice = 3,
         Shine = 4,
-        Dark = 5
+        Dark = 5,
+        Void = 6,
     }
 
     public enum RankType

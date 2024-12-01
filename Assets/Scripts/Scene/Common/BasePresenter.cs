@@ -60,15 +60,8 @@ namespace Ryneus
         public async void PlayTacticsBgm()
         {
             var bgmKey = _model.TacticsBgmKey();
-            var bgmData = DataSystem.Data.GetBGM(bgmKey);
             var bgm = await _model.GetBgmData(bgmKey);
-            if (bgmData.CrossFade != "")
-            {
-                SoundManager.Instance.PlayCrossFadeBgm(bgm,1.0f);
-            } else
-            {
-                SoundManager.Instance.PlayBgm(bgm,1.0f);
-            }
+            SoundManager.Instance.PlayBgm(bgm,1.0f);
         }
 
         public async void PlayBossBgm()

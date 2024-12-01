@@ -80,7 +80,7 @@ namespace Ryneus
                 getItemInfo.SetGetFlag(true);
                 PartyInfo.AddGetItemInfo(getItemInfo);            
             }
-            MakeStageInfo(1);
+            MakeStageInfo(10);
         }
     }
 }
