@@ -3,16 +3,6 @@ using System.Collections.Generic;
 
 namespace Ryneus
 {
-    public class TacticsViewEvent
-    {
-        public Tactics.CommandType commandType;
-        public object template;
-
-        public TacticsViewEvent(Tactics.CommandType type)
-        {
-            commandType = type;
-        }
-    }
 }
 
 namespace Tactics
@@ -21,6 +11,10 @@ namespace Tactics
     {
         None = 0,
         SelectTacticsCommand, // // 戦略コマンドを選択した
+        BattleStart,
+        CallSymbol,
+        OnClickSymbol,
+        OnCancelSymbol,
         SelectSymbol,
         PopupSkillInfo,
         SelectRecord,

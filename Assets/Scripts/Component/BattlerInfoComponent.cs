@@ -224,7 +224,6 @@ namespace Ryneus
 
         public void StartDamage(DamageType damageType,int value,bool needPopupDelay)
         {
-            /*
             var battleDamage = CreatePrefab();
             int delayCount = _battleDamages.Count;
             if (needPopupDelay == false)
@@ -243,7 +242,6 @@ namespace Ryneus
                 }
             },delayCount);
             _battleDamages.Add(battleDamage);
-            */
             if (damageType == DamageType.HpDamage || damageType == DamageType.HpCritical)
             {
                 ChangeHpAnimation(_battlerInfo.Hp,value * -1 + _battlerInfo.Hp);

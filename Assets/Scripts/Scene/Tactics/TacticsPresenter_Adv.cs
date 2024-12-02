@@ -30,14 +30,6 @@ namespace Ryneus
                         //_model.SetIsAlcana(stageEvent.Param == 1);
                         break;
                     case StageEventType.SelectAddActor:
-                        _eventBusy = true;
-                        _model.AddEventReadFlag(stageEvent);
-                        var selectAddActor = new ConfirmInfo(DataSystem.GetText(11050),(menuCommandInfo) => UpdatePopupSelectAddActor((ConfirmCommandType)menuCommandInfo));
-                        selectAddActor.SetIsNoChoice(true);
-                        selectAddActor.SetSelectIndex(0);
-                        _view.CommandCallConfirm(selectAddActor);
-                        _view.ChangeUIActive(false);
-                        PlayTacticsBgm();
                         
                         break;
                     case StageEventType.SaveCommand:

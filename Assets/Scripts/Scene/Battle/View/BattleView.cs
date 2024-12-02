@@ -32,9 +32,6 @@ namespace Ryneus
         [SerializeField] private GameObject battleBackGroundRoot = null;
         [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
-        [SerializeField] private GameObject battle3DViewPrefab = null;
-        [SerializeField] private Battle3DDamageView battle3DDamageView = null;
-        [SerializeField] private Battle3DStatusView battle3DStatusView = null;
         [SerializeField] private MagicList magicList = null;
 
         private BattleBackGroundAnimation _backGroundAnimation = null;
@@ -67,7 +64,7 @@ namespace Ryneus
 
             InitializeSelectCharacter();
             battleGridLayer.Initialize();
-            battleActorList.Initialize();
+            InitializeActorList();
             InitializeEnemyLayer();
             SideMenuButton.OnClickAddListener(() => 
             {
@@ -90,7 +87,6 @@ namespace Ryneus
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
             InitializeMagicList();
-            Create3DView();
             new BattlePresenter(this);
         }
 
@@ -101,13 +97,23 @@ namespace Ryneus
             //_backGroundAnimation = prefab.GetComponent<BattleBackGroundAnimation>();
         }
         
+        private void InitializeActorList()
+        {
+            battleActorList.Initialize();
+            battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
+            //battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
+            //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
+            battleActorList.SetSelectedHandler(() => CallSelectActorList());
+            SetInputHandler(battleActorList.gameObject);
+            AddViewActives(battleActorList);
+        }
+
         private void InitializeEnemyLayer()
         {
             battleEnemyLayer.Initialize();
             battleEnemyLayer.SetInputHandler(InputKeyType.Decide,OnSelectEnemy);
             battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
             battleEnemyLayer.SetSelectedHandler(TargetSelectCursor);
-            battleEnemyLayer.gameObject.SetActive(false);
             SetInputHandler(battleEnemyLayer.gameObject);
             AddViewActives(battleEnemyLayer);
         }
@@ -171,7 +177,6 @@ namespace Ryneus
 
         public void UpdateSelectCursor(List<int> targetIndexes)
         {
-            _battle3dView.UpdateSelectCursor(targetIndexes);
             battleActorList.UpdateSelectIndexList(targetIndexes);
         }
 
@@ -179,9 +184,8 @@ namespace Ryneus
         {
             SetActivate(null);
             magicList.gameObject.SetActive(false);
-            battleEnemyLayer.gameObject.SetActive(false);
+            //battleEnemyLayer.gameObject.SetActive(false);
             battleActorList.UpdateSelectIndexList(new List<int>());
-            _battle3dView.HideSelectCursor();
         }
 
         private void InitializeSelectCharacter()
@@ -281,26 +285,17 @@ namespace Ryneus
 
         public void CreateObject()
         {
-            battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
-            //battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
-            battleActorList.SetSelectedHandler(() => CallSelectActorList());
-            SetInputHandler(battleActorList.gameObject);
-            AddViewActives(battleActorList);
-            
             GameObject prefab = Instantiate(animPrefab);
             prefab.transform.SetParent(animRoot.transform, false);
             _battleStartAnim = prefab.GetComponent<BattleStartAnim>();
+            _battleStartAnim.gameObject.SetActive(false);
         }
 
         public void StartBattleStartAnim(string text)
         {
             _battleStartAnim.SetText(text);
             _battleStartAnim.StartAnim(true);
-            foreach (var item in _battlerComps)
-            {
-                _battle3dView.BattleReady(item.Key);
-            }
+            _battleStartAnim.gameObject.SetActive(true);
         }
 
         public void StartUIAnimation()
@@ -357,7 +352,6 @@ namespace Ryneus
 
         public void SelectEnemy(List<ListData> battlerInfos)
         {
-            battleEnemyLayer.gameObject.SetActive(true);
             battleEnemyLayer.SetData(battlerInfos,true,() => 
             {
                 battleEnemyLayer.Refresh(0);
@@ -367,13 +361,11 @@ namespace Ryneus
 
         public void SelectActor(List<ListData> battlerInfos)
         {
-            battleEnemyLayer.gameObject.SetActive(true);
             battleEnemyLayer.SetData(battlerInfos,true,() => 
             {
                 battleEnemyLayer.Refresh(0);
             });
             SetActivate(battleEnemyLayer);
-            _battle3dView.SelectActor(battlerInfos);
         }
 
         public new void SetHelpText(string text)
@@ -394,14 +386,6 @@ namespace Ryneus
                 _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetActorInfo(battlerInfos);
-            //battleActorList.gameObject.SetActive(false);
-            _battle3dView.Initialize(battlerInfos);
-            foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
-            {
-                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value);
-            }
-            
-            //CommandCreateMapObject(battle3DView.gameObject);
         }
         
         public void SetEnemies(List<BattlerInfo> battlerInfos)
@@ -413,21 +397,6 @@ namespace Ryneus
                 _battlerComps[battlerInfo.Index] = battleEnemyLayer.GetBattlerInfoComp(battlerInfo.Index);
             }
             battleGridLayer.SetEnemyInfo(battlerInfos);
-            battleEnemyLayer.gameObject.SetActive(false);
-            _battle3dView.Initialize(battlerInfos);
-            foreach (var virtualModelControlDict in _battle3dView.VirtualModelControls)
-            {
-                battle3DDamageView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value);
-                if (!virtualModelControlDict.Value.IsActor)
-                {
-                    battle3DStatusView.Set3DGameObjects(virtualModelControlDict.Key,virtualModelControlDict.Value.gameObject);
-                }
-            }
-            foreach (var battlerInfo in battlerInfos)
-            {
-                battle3DStatusView.UpdateBattlerInfo(battlerInfo);
-            }
-            
         }
 
         private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
@@ -610,19 +579,18 @@ namespace Ryneus
 
         public void StartAnimation(int targetIndex,EffekseerEffectAsset effekseerEffectAsset,int animationPosition,float animationScale = 1.0f,float animationSpeed = 1.0f)
         {
+            magicList.gameObject.SetActive(false);
             if (GameSystem.ConfigData.BattleAnimationSkip == true) 
             {
                 return;
             }
             animationSpeed *= GameSystem.ConfigData.BattleSpeed;
-            _battle3dView.PlayEffect(targetIndex,effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
-            battleActorList.gameObject.SetActive(false);
-            battleEnemyLayer.gameObject.SetActive(false);
-            magicList.gameObject.SetActive(false);
+            _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
         }
 
         public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
         {
+            magicList.gameObject.SetActive(false);
             if (GameSystem.ConfigData.BattleAnimationSkip == true) 
             {
                 return;
@@ -655,38 +623,12 @@ namespace Ryneus
             foreach (var item in _battlerComps)
             {
                 item.Value.ClearDamagePopup();
-                //_battle3dView.BattleReady(item.Key);
             }
-        }
-
-        public void SetBattleReady()
-        {
-            foreach (var item in _battlerComps)
-            {
-                _battle3dView.BattleReady(item.Key);
-            }
-        }
-
-        public void SetActorBattleReady(int index,int actorNum,int enemyNum)
-        {
-            _battle3dView.UpdateParentPosition(actorNum,enemyNum);
-            _battle3dView.ActorBattleReady(index);
-        }
-
-        public void SetEnemyBattleReady(int index)
-        {
-            //_battle3dView.UpdateParentPosition(actorNum,enemyNum);
-            _battle3dView.EnemyBattleReady(index);
         }
 
         public void StartDamage(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
         {
             _battlerComps[targetIndex].StartDamage(damageType,value,needPopupDelay);
-            battle3DDamageView.StartDamage(targetIndex,damageType,value,needPopupDelay);
-            //_backGroundAnimation?.SeekAnimation();
-
-            _battle3dView?.StartDamage(targetIndex,damageType,value);
-            battle3DStatusView?.StartDamage(targetIndex,damageType,value);
         }
 
         public void StartBlink(int targetIndex)
@@ -697,33 +639,25 @@ namespace Ryneus
         public void StartHeal(int targetIndex,DamageType damageType,int value,bool needPopupDelay = true)
         {
             _battlerComps[targetIndex].StartHeal(damageType,value,needPopupDelay);
-            battle3DDamageView.StartHeal(targetIndex,damageType,value,needPopupDelay);
-            _battle3dView?.StartHeal(targetIndex,damageType,value);
-            battle3DStatusView?.StartHeal(targetIndex,damageType,value);
         }
 
         public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)
         {
             //_battlerComps[targetIndex].StartStatePopup(damageType,stateName);
-            battle3DDamageView.StartStatePopup(targetIndex,damageType,stateName);
         }
 
         public void StartDeathAnimation(int targetIndex)
         {
             _battlerComps[targetIndex].StartDeathAnimation();
-            _battle3dView.Death(targetIndex);
-            battle3DStatusView?.Death(targetIndex,false);
         }
 
         public void StartAliveAnimation(int targetIndex)
         {
             _battlerComps[targetIndex].StartAliveAnimation();
-            battle3DStatusView?.Death(targetIndex,true);
         }
 
         public void BattleVictory(int mvpActorId)
         {
-            _battle3dView.BattleVictory(mvpActorId);
         }
 
         public void RefreshStatus()
@@ -733,7 +667,6 @@ namespace Ryneus
             {
                 item.Value.RefreshStatus();
             }
-            battle3DStatusView.RefreshStatus();
         }
 
         public void RefreshTurn(int turn)
@@ -852,7 +785,6 @@ namespace Ryneus
                 _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
             }
             */
-            _battle3dView.Attack(subjectIndex);
         }
 
         public void StartAnimationSlipDamage(List<int> targetIndexes)

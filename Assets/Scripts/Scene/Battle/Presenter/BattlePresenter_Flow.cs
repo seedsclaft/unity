@@ -51,7 +51,6 @@ namespace Ryneus
             if (currentBattler != null)
             {
                 _view.SetBattleBusy(true);
-                _view.SetBattleReady();
                 _model.UpdateApModify(currentBattler);
                 _view.UpdateGridLayer();
                 CheckFirstActionBattler();
@@ -71,8 +70,6 @@ namespace Ryneus
                     _view.SetAnimationBusy(false);
                 } else
                 {
-                    // Autoなら
-                    _view.SetEnemyBattleReady(currentBattler.Index);
                     MakeActionInfoSkillTrigger();
                 }
             }
@@ -81,7 +78,6 @@ namespace Ryneus
         private void ShowMagicList(BattlerInfo currentBattler,bool resetScrollRect)
         {
             _view.ShowMagicList(GetListData(_model.SkillActionList(currentBattler)),resetScrollRect);
-            _view.SetActorBattleReady(currentBattler.Index,_model.PartyAliveNum,_model.TroopAliveNum);
         }
 
         /// <summary>
@@ -92,6 +88,7 @@ namespace Ryneus
         {
             if (skillInfo != null)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 var currentBattler = _model.CurrentBattler;
                 // 選択中のActionInfoを生成
                 var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
@@ -119,6 +116,7 @@ namespace Ryneus
         /// </summary>
         private void CommandOnCancelEnemy()
         {
+            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
             _view.EndActionSelect();
             _model.SetSelectActionInfo(null);
             ShowMagicList(_model.CurrentBattler,false);
@@ -147,6 +145,7 @@ namespace Ryneus
             // 対象を決定
             if (battlerInfo != null)
             {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
                 // ActionInfoを設定する
                 var actionInfo = _model.SelectActionInfo;
                 var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,battlerInfo.Index);

@@ -14,6 +14,11 @@ namespace Ryneus
             _sceneParam = (TacticsSceneInfo)GameSystem.SceneStackManager.LastSceneParam;
             SetFirstBattleActorId();
         }
+        
+        public bool IsCurrentSeekSymbolInfo(SymbolInfo symbolInfo)
+        {
+            return symbolInfo?.Master.Seek == PartyInfo.Seek;
+        }
 
         public void SetFirstBattleActorId()
         {

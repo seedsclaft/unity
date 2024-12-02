@@ -44,7 +44,6 @@ namespace Ryneus
             debugger.consoleInputField = GameSystem.DebugBattleData.consoleInputField;
     #endif
             _view.SetHelpText("");
-            _view.CommandMapChange(MapType.Battle);
             Initialize();
         }
 
@@ -53,8 +52,8 @@ namespace Ryneus
             _view.SetBattleBusy(true);
             _model.CreateBattleData();
             //await _model.LoadBattleResources(_model.Battlers);
-            var bgm = await _model.GetBattleBgm();
-            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            //var bgm = await _model.GetBattleBgm();
+            //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             /*
             if (SoundManager.Instance.CrossFadeMode == false)
             {
@@ -66,19 +65,17 @@ namespace Ryneus
 
             ViewInitialize();
             
-            StartBattle();
-            /*
             _view.CommandStartTransition(() => 
             {
                 _view.CommandGameSystem(Base.CommandType.ClosePopup);
                 StartBattle();
             });
-            */
         }
 
         public void ViewInitialize()
         {
             _view.SetUIButton();
+            _view.SetBackGround(_model.CurrentStage.Master.BackGround);
 
             _view.ClearCurrentSkillData();
             _view.CreateObject();
@@ -112,7 +109,7 @@ namespace Ryneus
             _view.StartBattleStartAnim(_model.BattleStartText());
             _view.StartUIAnimation();
             _view.SetBattleAutoButton(true);
-            _view.StartBattle(_model.BattlerEnemies().Count);
+            //_view.StartBattle(_model.BattlerEnemies().Count);
             await UniTask.WaitUntil(() => _view.StartAnimIsBusy == false);
             _view.SetBattleSkipActive(true);
             _view.UpdateStartActivate();

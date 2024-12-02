@@ -66,8 +66,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 2
-    Name: "\u30AB\u30FC\u30B9\u30C9"
-    ImagePath: Beholder
+    Name: "\u30D0\u30C3\u30C8"
+    ImagePath: Bat
     BaseStatus:
       _hp: 32
       _mp: 0
@@ -118,8 +118,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 3
-    Name: "\u30D3\u30FC"
-    ImagePath: BattleBee
+    Name: "\u30DB\u30FC\u30CD\u30C3\u30C8"
+    ImagePath: Hornet
     BaseStatus:
       _hp: 34
       _mp: 0
@@ -170,8 +170,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 4
-    Name: "\u30A6\u30EB\u30D5"
-    ImagePath: Werewolf
+    Name: "\u30B9\u30D1\u30A4\u30C0\u30FC"
+    ImagePath: Spider
     BaseStatus:
       _hp: 41
       _mp: 0
@@ -222,8 +222,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 5
-    Name: "\u30AF\u30ED\u30A6"
-    ImagePath: Crow
+    Name: "\u30D3\u30C3\u30B0\u30E9\u30C3\u30C8"
+    ImagePath: Rat
     BaseStatus:
       _hp: 35
       _mp: 0
@@ -274,8 +274,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 6
-    Name: "\u30D3\u30B7\u30E7\u30C3\u30D7"
-    ImagePath: BishopKnight
+    Name: "\u30A6\u30A3\u30B9\u30D7"
+    ImagePath: Willowisp
     BaseStatus:
       _hp: 46
       _mp: 0
@@ -326,8 +326,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 7
-    Name: "\u30B9\u30DA\u30AF\u30BF\u30FC"
-    ImagePath: Specter
+    Name: "\u30B9\u30CD\u30FC\u30AF"
+    ImagePath: Snake
     BaseStatus:
       _hp: 38
       _mp: 0
@@ -378,8 +378,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 8
-    Name: "\u30BF\u30FC\u30C8\u30EB\u30B7\u30A7\u30EB"
-    ImagePath: TurtleShell
+    Name: "\u30B9\u30B3\u30FC\u30D4\u30AA\u30F3"
+    ImagePath: Scorpion
     BaseStatus:
       _hp: 51
       _mp: 0
@@ -430,8 +430,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 9
-    Name: "\u30C9\u30E9\u30A4\u30A2\u30C9"
-    ImagePath: MonsterPlant
+    Name: "\u30BC\u30EA\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
+    ImagePath: Jellyfish
     BaseStatus:
       _hp: 47
       _mp: 0
@@ -482,8 +482,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 10
-    Name: "\u30B9\u30C6\u30A3\u30F3\u30B0\u30EC\u30A4"
-    ImagePath: StingRay
+    Name: "\u30DE\u30C3\u30C9\u30D7\u30E9\u30F3\u30C8"
+    ImagePath: Plant
     BaseStatus:
       _hp: 32
       _mp: 0
@@ -534,8 +534,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 11
-    Name: "\u30D5\u30A3\u30C3\u30B7\u30E3\u30FC\u30DE\u30F3"
-    ImagePath: Fishman
+    Name: "\u30B4\u30FC\u30B9\u30C8"
+    ImagePath: Ghost
     BaseStatus:
       _hp: 43
       _mp: 0
@@ -586,8 +586,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 12
-    Name: "\u30D6\u30E9\u30C3\u30AF\u30CA\u30A4\u30C8"
-    ImagePath: BlackKnight
+    Name: "\u30B9\u30B1\u30EB\u30C8\u30F3"
+    ImagePath: Skeleton
     BaseStatus:
       _hp: 45
       _mp: 0
@@ -638,8 +638,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 13
-    Name: "\u30B5\u30A4\u30AF\u30ED\u30D7\u30B9"
-    ImagePath: Cyclops
+    Name: "\u30AA\u30FC\u30AF"
+    ImagePath: Orc
     BaseStatus:
       _hp: 48
       _mp: 0
@@ -696,8 +696,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 14
-    Name: "\u30B9\u30B1\u30EB\u30C8\u30F3"
-    ImagePath: Skeleton
+    Name: "\u30A4\u30F3\u30D7"
+    ImagePath: Imp
     BaseStatus:
       _hp: 45
       _mp: 0
@@ -748,8 +748,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 15
-    Name: "\u30EA\u30B6\u30FC\u30C9"
-    ImagePath: NagaWizard
+    Name: "\u30B2\u30A4\u30B6\u30FC"
+    ImagePath: Gayzer
     BaseStatus:
       _hp: 41
       _mp: 0
@@ -799,9 +799,94 @@ MonoBehaviour:
     - SkillId: 401050
       Trigger1: 0
       Trigger2: 0
+  - Id: 16
+    Name: "\u30D1\u30DA\u30C3\u30C8"
+    ImagePath: Puppet
+    BaseStatus:
+      _hp: 46
+      _mp: 0
+      _atk: 8
+      _def: 7
+      _spd: 12
+    Kinds: 060000000b000000
+    HpGrowth: 90
+    MpGrowth: 0
+    AtkGrowth: 55
+    DefGrowth: 40
+    SpdGrowth: 30
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 17
+    Name: "\u30BE\u30F3\u30D3"
+    ImagePath: Zombie
+    BaseStatus:
+      _hp: 38
+      _mp: 0
+      _atk: 11
+      _def: 6
+      _spd: 20
+    Kinds: 020000000b000000
+    HpGrowth: 60
+    MpGrowth: 0
+    AtkGrowth: 80
+    DefGrowth: 20
+    SpdGrowth: 60
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 18
+    Name: "\u30B3\u30AB\u30C8\u30EA\u30B9"
+    ImagePath: Cockatrice
+    BaseStatus:
+      _hp: 51
+      _mp: 0
+      _atk: 7
+      _def: 15
+      _spd: 14
+    Kinds: 060000000b000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 50
+    DefGrowth: 75
+    SpdGrowth: 40
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 19
+    Name: "\u30B5\u30CF\u30AE\u30F3"
+    ImagePath: Sahagin
+    BaseStatus:
+      _hp: 47
+      _mp: 0
+      _atk: 12
+      _def: 4
+      _spd: 12
+    Kinds: 040000000b000000
+    HpGrowth: 90
+    MpGrowth: 0
+    AtkGrowth: 80
+    DefGrowth: 20
+    SpdGrowth: 40
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 20
+    Name: "\u30A6\u30A7\u30A2\u30A6\u30EB\u30D5"
+    ImagePath: Werewolf
+    BaseStatus:
+      _hp: 32
+      _mp: 0
+      _atk: 11
+      _def: 2
+      _spd: 31
+    Kinds: 050000000b000000
+    HpGrowth: 50
+    MpGrowth: 0
+    AtkGrowth: 60
+    DefGrowth: 20
+    SpdGrowth: 70
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 101
-    Name: "\u30A2\u30E2\u30F3"
-    ImagePath: Ammon
+    Name: "\u30D9\u30D2\u30FC\u30E2\u30B9"
+    ImagePath: Behemoth
     BaseStatus:
       _hp: 40
       _mp: 0
@@ -824,8 +909,8 @@ MonoBehaviour:
       Trigger1: 5061
       Trigger2: 0
   - Id: 102
-    Name: "\u30D9\u30EA\u30C8"
-    ImagePath: Berith
+    Name: "\u30DF\u30CE\u30BF\u30A6\u30ED\u30B9"
+    ImagePath: Minotaur
     BaseStatus:
       _hp: 50
       _mp: 0
@@ -876,8 +961,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 103
-    Name: "\u30D1\u30A4\u30E2\u30F3"
-    ImagePath: Paimon
+    Name: "\u30B7\u30EB\u30D5"
+    ImagePath: Windspirit
     BaseStatus:
       _hp: 70
       _mp: 0
@@ -935,8 +1020,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 104
-    Name: "\u30A2\u30F3\u30C9\u30E9\u30B9"
-    ImagePath: Andras
+    Name: "\u30A4\u30F4\u30A3\u30EB\u30AD\u30F3\u30B0"
+    ImagePath: Evilking
     BaseStatus:
       _hp: 70
       _mp: 0
@@ -980,8 +1065,8 @@ MonoBehaviour:
       Trigger1: 0
       Trigger2: 0
   - Id: 105
-    Name: "\u30D3\u30D5\u30ED\u30F3\u30B9"
-    ImagePath: Bifrons
+    Name: "\u30B1\u30EB\u30D9\u30ED\u30B9"
+    ImagePath: Kerberos
     BaseStatus:
       _hp: 100
       _mp: 0
@@ -1038,6 +1123,159 @@ MonoBehaviour:
     - SkillId: 403070
       Trigger1: 0
       Trigger2: 0
+  - Id: 106
+    Name: "\u30AC\u30EB\u30FC\u30C0"
+    ImagePath: Garuda
+    BaseStatus:
+      _hp: 40
+      _mp: 0
+      _atk: 12
+      _def: 3
+      _spd: 18
+    Kinds: 050000000c000000
+    HpGrowth: 80
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 40
+    SpdGrowth: 20
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 107
+    Name: "\u30C9\u30E9\u30B4\u30F3"
+    ImagePath: Dragon
+    BaseStatus:
+      _hp: 50
+      _mp: 0
+      _atk: 21
+      _def: 6
+      _spd: 18
+    Kinds: 040000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 60
+    DefGrowth: 35
+    SpdGrowth: 40
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 108
+    Name: "\u30E9\u30DF\u30A2"
+    ImagePath: Lamia
+    BaseStatus:
+      _hp: 70
+      _mp: 0
+      _atk: 14
+      _def: 5
+      _spd: 22
+    Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 50
+    DefGrowth: 30
+    SpdGrowth: 30
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 109
+    Name: "\u30B3\u30D4\u30FC\u30D1\u30DA\u30C3\u30C8"
+    ImagePath: Puppet_E
+    BaseStatus:
+      _hp: 70
+      _mp: 0
+      _atk: 15
+      _def: 2
+      _spd: 16
+    Kinds: 020000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 50
+    DefGrowth: 25
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 110
+    Name: "\u30F4\u30A1\u30F3\u30D1\u30A4\u30A2"
+    ImagePath: Vampire
+    BaseStatus:
+      _hp: 100
+      _mp: 0
+      _atk: 12
+      _def: 25
+      _spd: 13
+    Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 50
+    SpdGrowth: 15
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 111
+    Name: "\u30C7\u30B9"
+    ImagePath: Death
+    BaseStatus:
+      _hp: 40
+      _mp: 0
+      _atk: 12
+      _def: 3
+      _spd: 18
+    Kinds: 050000000c000000
+    HpGrowth: 80
+    MpGrowth: 0
+    AtkGrowth: 70
+    DefGrowth: 40
+    SpdGrowth: 20
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 112
+    Name: "\u30A8\u30CA\u30E1\u30EB\u30B9\u30E9\u30A4\u30E0"
+    ImagePath: Slime_L
+    BaseStatus:
+      _hp: 50
+      _mp: 0
+      _atk: 21
+      _def: 6
+      _spd: 18
+    Kinds: 040000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 60
+    DefGrowth: 35
+    SpdGrowth: 40
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 113
+    Name: "\u30C7\u30FC\u30E2\u30F3"
+    ImagePath: Demon_E
+    BaseStatus:
+      _hp: 70
+      _mp: 0
+      _atk: 14
+      _def: 5
+      _spd: 22
+    Kinds: 060000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 50
+    DefGrowth: 30
+    SpdGrowth: 30
+    LearningSkills: []
+    SkillTriggerDates: []
+  - Id: 114
+    Name: "\u30AD\u30E1\u30E9"
+    ImagePath: Chimera
+    BaseStatus:
+      _hp: 70
+      _mp: 0
+      _atk: 15
+      _def: 2
+      _spd: 16
+    Kinds: 020000000c000000
+    HpGrowth: 100
+    MpGrowth: 0
+    AtkGrowth: 50
+    DefGrowth: 25
+    SpdGrowth: 50
+    LearningSkills: []
+    SkillTriggerDates: []
   - Id: 201
     Name: "\u30A2\u30F3\u30EA\u30DE\u30E6"
     ImagePath: Cyaegha

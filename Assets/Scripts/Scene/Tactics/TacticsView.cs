@@ -13,10 +13,11 @@ namespace Ryneus
         [SerializeField] private BaseList tacticsCommandList = null;
         [SerializeField] private StageInfoComponent stageInfoComponent = null;
         [SerializeField] private AlcanaInfoComponent alcanaInfoComponent = null;
-        [SerializeField] private BaseList symbolRecordList = null;
+        [SerializeField] private SymbolList symbolInfoList = null;
+        public SymbolInfo SelectSymbolInfo => symbolInfoList.SelectSymbolInfo();
         [SerializeField] private MagicList alcanaSelectList = null;
         [SerializeField] private TextMeshProUGUI saveScoreText = null;
-        private new System.Action<TacticsViewEvent> _commandData = null;
+        private new System.Action<ViewEvent> _commandData = null;
         [SerializeField] private TacticsAlcana tacticsAlcana = null;
         [SerializeField] private Button alcanaButton = null;
         [SerializeField] private Button stageHelpButton = null;
@@ -25,7 +26,23 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI pastText = null;
 
         private bool _initRecordDisplay = false;
-
+        private bool _viewBusy = false;
+        public void SetViewBusy(bool isBusy)
+        {
+            _viewBusy = isBusy;
+        }
+        public void CallEvent(CommandType tacticsCommandType,object sendData = null)
+        {
+            var commandType = new ViewCommandType
+            {
+                TacticsCommandType = tacticsCommandType
+            };
+            var eventData = new ViewEvent(commandType)
+            {
+                template = sendData
+            };
+            _commandData(eventData);
+        }
         public override void Initialize()
         {
             base.Initialize();
@@ -41,17 +58,9 @@ namespace Ryneus
             });
             stageHelpButton.onClick.AddListener(() => 
             {
-                var eventData = new TacticsViewEvent(CommandType.StageHelp);
-                _commandData(eventData);
+                CallEvent(CommandType.StageHelp);
             });
-            symbolRecordList.Initialize();
-            SetInputHandler(symbolRecordList.gameObject);
-            symbolRecordList.SetInputHandler(InputKeyType.Decide,() => OnClickSymbol());
-            symbolRecordList.SetInputHandler(InputKeyType.Cancel,() => 
-            {
-                var eventData = new TacticsViewEvent(CommandType.CancelSymbolRecord);
-                _commandData(eventData);
-            });
+            InitializeSymbolInfoList();
 
             alcanaSelectList.Initialize();
             HideSymbolRecord();
@@ -60,14 +69,61 @@ namespace Ryneus
             presenter.CommandReturnStrategy();
         }
 
+        private void InitializeSymbolInfoList()
+        {
+            symbolInfoList.Initialize();
+            SetInputHandler(symbolInfoList.gameObject);
+            symbolInfoList.SetInputHandler(InputKeyType.Decide,OnClickSymbol);
+            symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelSymbol);
+            //symbolInfoList.SetSelectedHandler(OnSelectListSymbolList);
+            //symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
+            AddViewActives(symbolInfoList);
+            symbolInfoList.gameObject.SetActive(false);
+        }
+
+        public void SetSymbolList(List<ListData> symbolList,int seekIndex,int seek)
+        {
+            symbolInfoList.SetSeekIndex(seekIndex);
+            symbolInfoList.SetData(symbolList,true,() => 
+            {
+                var selectIndex = symbolInfoList.DataCount - seek;
+                if (selectIndex < 0)
+                {
+                    selectIndex = 0;
+                }
+                symbolInfoList.UpdateSelectIndex(selectIndex);
+                symbolInfoList.UpdateScrollRect(selectIndex + 2);
+            });
+        }
+
+        private void OnClickSymbol()
+        {
+            if (symbolInfoList.ScrollRect.enabled == false) return;
+            var data = symbolInfoList.SelectSymbolInfo();
+            if (data != null)
+            {
+                CallEvent(CommandType.OnClickSymbol,data);
+            }
+        }
+
+        private void OnCancelSymbol()
+        {
+            symbolInfoList.gameObject.SetActive(false);
+            CallEvent(CommandType.OnCancelSymbol);
+        }
+
+        public void UpdatePartyInfo(PartyInfo partyInfo)
+        {
+            symbolInfoList.UpdatePartyInfo(partyInfo);
+        }
+
         public void StartAnimation()
         {
         }
 
         private void CallSideMenu()
         {
-            var eventData = new TacticsViewEvent(CommandType.SelectSideMenu);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectSideMenu);
         }
 
         public void SetTacticsCommand(List<ListData> menuCommands)
@@ -87,11 +143,7 @@ namespace Ryneus
             {
                 var commandData = (SystemData.CommandData)listData.Data;
                 SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new TacticsViewEvent(CommandType.SelectTacticsCommand)
-                {
-                    template = commandData.Id
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectTacticsCommand,commandData.Id);
             }
         }
 
@@ -110,29 +162,16 @@ namespace Ryneus
             SetBackCommand(() => OnClickBack());
         }
 
-        public void ChangeSymbolBackCommandActive(bool IsActive)
-        {
-        }
-
         private void OnClickBack()
         {
-            var eventData = new TacticsViewEvent(CommandType.Back);
-            _commandData(eventData);
-        }
-
-        private void OnClickLeft()
-        {
-        }
-
-        private void OnClickRight()
-        {
+            CallEvent(CommandType.Back);
         }
 
         public void SetHelpWindow()
         {
         }
 
-        public void SetEvent(System.Action<TacticsViewEvent> commandData)
+        public new void SetEvent(System.Action<ViewEvent> commandData)
         {
             _commandData = commandData;
         }
@@ -156,70 +195,14 @@ namespace Ryneus
             HideRecordList();
         }
 
-        public void SetSymbolRecords(List<ListData> recordInfos)
-        {
-            if (symbolRecordList.ListDates.Count > 0)
-            {
-                return;
-            }
-            symbolRecordList.SetData(recordInfos,false,() => 
-            {
-                var SymbolRecordDates = symbolRecordList.GetComponentsInChildren<SymbolRecordData>();
-                foreach (var SymbolRecordData in SymbolRecordDates)
-                {
-                    SymbolRecordData.SetSymbolItemCallHandler((a) => OnClickSymbol());
-                }
-                symbolRecordList.SetSelectedHandler(() => 
-                {
-                    // 消さないこと
-                });
-            });
-
-        }
-        
-        public void SetPositionSymbolRecords(int firstRecordIndex)
-        {
-            if (_initRecordDisplay == false)
-            {
-                var selectIndex = firstRecordIndex;
-                var resultIndex = symbolRecordList.DataCount - selectIndex;
-                if (resultIndex < 0)
-                {
-                    resultIndex = 0;
-                }
-                symbolRecordList.UpdateSelectIndex(resultIndex - 1);
-                symbolRecordList.UpdateScrollRect(resultIndex + 1);
-                _initRecordDisplay = true;
-            }
-        }
-
-        private void OnClickSymbol()
-        {
-            /*
-            if (symbolRecordList.ScrollRect.enabled == false) return;
-            var data = symbolRecordList.ListItemData<List<SymbolResultInfo>>();
-            if (data != null)
-            {
-                if (data[0].SymbolType != SymbolType.None)
-                {
-                    var eventData = new TacticsViewEvent(CommandType.SelectRecord)
-                    {
-                        template = data[0]
-                    };
-                    _commandData(eventData);
-                }
-            }
-            */
-        }
-
         public void ShowSymbolRecord()
         {
-            symbolRecordList.gameObject.SetActive(true);
+            symbolInfoList.gameObject.SetActive(true);
         }
 
         public void HideSymbolRecord()
         {
-            symbolRecordList.gameObject.SetActive(false);
+            symbolInfoList.gameObject.SetActive(false);
         }
 
         private void CallBattleEnemy()
@@ -233,7 +216,7 @@ namespace Ryneus
                     if (data != null && data.SymbolType != SymbolType.None)
                     {
                         SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                        var eventData = new TacticsViewEvent(CommandType.SelectSymbol)
+                        CallEvent(CommandType.SelectSymbol)
                         {
                             template = data
                         };
@@ -245,7 +228,7 @@ namespace Ryneus
                 var getItemInfos = tacticsSymbolList.SelectRelicInfos();
                 if (getItemInfos != null && getItemInfos.Count > 0)
                 {
-                    var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
+                    CallEvent(CommandType.PopupSkillInfo)
                     {
                         template = getItemInfos
                     };
@@ -255,7 +238,7 @@ namespace Ryneus
                     var getItemInfo = tacticsSymbolList.GetItemInfo();
                     if (getItemInfo != null && (getItemInfo.IsSkill() || getItemInfo.IsAttributeSkill()))
                     {
-                        var eventData = new TacticsViewEvent(CommandType.PopupSkillInfo)
+                        CallEvent(CommandType.PopupSkillInfo)
                         {
                             template = new List<GetItemInfo>(){getItemInfo}
                         };
@@ -266,7 +249,7 @@ namespace Ryneus
                         var data = tacticsSymbolList.ListItemData<SymbolResultInfo>();
                         if (data != null)
                         {
-                            var eventData = new TacticsViewEvent(CommandType.CallAddActorInfo)
+                            CallEvent(CommandType.CallAddActorInfo)
                             {
                                 template = data
                             };
@@ -284,29 +267,18 @@ namespace Ryneus
 
         private void OnClickParallel()
         {
-            var eventData = new TacticsViewEvent(CommandType.Parallel);
-            _commandData(eventData);
+            CallEvent(CommandType.Parallel);
         }
 
-        private void CallSymbolRecord()
-        {
-            var listData = symbolRecordList.ListData;
-            if (listData != null)
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var eventData = new TacticsViewEvent(CommandType.DecideRecord);
-                _commandData(eventData);
-            }
-        }
 
         public void ShowRecordList()
         {
-            symbolRecordList.ScrollRect.enabled = false;
+            //symbolInfoList.ScrollRect.enabled = false;
         }
 
         public void HideRecordList()
         {
-            symbolRecordList.ScrollRect.enabled = true;
+            //symbolInfoList.ScrollRect.enabled = true;
         }
 
         public void SetSaveScore(float saveScore)
@@ -321,8 +293,7 @@ namespace Ryneus
 
         private void CallAlcanaCheck()
         {
-            var eventData = new TacticsViewEvent(CommandType.AlcanaCheck);
-            _commandData(eventData);
+            CallEvent(CommandType.AlcanaCheck);
         }
 
         public void HideAlcanaList()
@@ -339,11 +310,7 @@ namespace Ryneus
                 var skillInfo = AlcanaSelectSkillInfo();
                 if (skillInfo != null && skillInfo.Enable)
                 {
-                    var eventData = new TacticsViewEvent(CommandType.SelectAlcanaList)
-                    {
-                        template = skillInfo
-                    };
-                    _commandData(eventData);
+                    CallEvent(CommandType.SelectAlcanaList,skillInfo);
                 }
             });
             alcanaSelectList.Show();
@@ -377,16 +344,16 @@ namespace Ryneus
         {
         }
 
-        public void UpdateInputKeyActive(TacticsViewEvent viewEvent,TacticsCommandType currentTacticsCommandType)
+        public void UpdateInputKeyActive(ViewCommandType viewEvent,TacticsCommandType currentTacticsCommandType)
         {
-            switch (viewEvent.commandType)
+            switch (viewEvent.TacticsCommandType)
             {
                 case CommandType.SelectTacticsCommand:
-                    var tacticsCommandType = (TacticsCommandType)viewEvent.template;
+                    var tacticsCommandType = (TacticsCommandType)viewEvent.TacticsCommandType;
                     switch (tacticsCommandType)
                     {
                         case TacticsCommandType.Paradigm:
-                            symbolRecordList.Activate();
+                            symbolInfoList.Activate();
                             tacticsCommandList.Deactivate();
                             break;
                         case TacticsCommandType.Train:
@@ -396,14 +363,14 @@ namespace Ryneus
                     }
                     break;
                 case CommandType.SelectRecord:
-                    symbolRecordList.Deactivate();
+                    symbolInfoList.Deactivate();
                     break;
                 case CommandType.CancelRecordList:
-                    symbolRecordList.Activate();
+                    symbolInfoList.Activate();
                     break;
                 case CommandType.CancelSymbolRecord:
                     tacticsCommandList.Activate();
-                    symbolRecordList.Deactivate();
+                    symbolInfoList.Deactivate();
                     break;
             }
         }
@@ -414,7 +381,7 @@ namespace Ryneus
 
         public void CommandRefresh()
         {
-            if (symbolRecordList.gameObject.activeSelf && symbolRecordList.Active)
+            if (symbolInfoList.gameObject.activeSelf && symbolInfoList.Active)
             {
                 SetHelpInputInfo("RECORD_LIST");
             } else
@@ -422,5 +389,9 @@ namespace Ryneus
                 SetHelpInputInfo("TACTICS");
             }
         }
+    }
+    public partial class ViewCommandType
+    {
+        public CommandType TacticsCommandType;
     }
 }
