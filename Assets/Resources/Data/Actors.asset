@@ -237,11 +237,11 @@ MonoBehaviour:
     InitLv: 1
     MaxLv: 99
     InitStatus:
-      _hp: 40
+      _hp: 25
       _mp: 5
-      _atk: 26
-      _def: 17
-      _spd: 18
+      _atk: 18
+      _def: 6
+      _spd: 15
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -249,13 +249,13 @@ MonoBehaviour:
       _def: 0
       _spd: 0
     NeedStatus:
-      _hp: 85
+      _hp: 55
       _mp: 100
-      _atk: 50
+      _atk: 40
       _def: 50
-      _spd: 30
+      _spd: 40
     Attribute: 040000000600000001000000020000000300000006000000
-    X: -10
+    X: -96
     Y: -64
     Scale: 0.75
     AwakenX: 0

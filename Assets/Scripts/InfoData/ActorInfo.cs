@@ -14,7 +14,9 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
 
-        public int Level => 1;
+        private int _level = 1;
+        public int Level => _level;
+        public void SetLevel(int level) => _level = level;
         private List<int> _equipmentSkillIds = new ();
         public void ChangeEquipSkill(int changeSkillId,int removeSkillId)
         {

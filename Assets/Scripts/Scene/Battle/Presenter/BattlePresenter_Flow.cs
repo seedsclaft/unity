@@ -67,6 +67,7 @@ namespace Ryneus
                 {
                     // マニュアルなら魔法選択
                     ShowMagicList(currentBattler,true);
+                    _view.SelectedCharacter(currentBattler);
                     _view.SetAnimationBusy(false);
                 } else
                 {
@@ -308,6 +309,8 @@ namespace Ryneus
         private void StartActionInfo(ActionInfo actionInfo)
         {
             // 行動変化対応のため再取得
+            _view.EndActionSelect();
+            _view.HideBattleThumb();
             //LogOutput.Log(actionInfo.Master.Id + "行動");
             if (actionInfo != null)
             {

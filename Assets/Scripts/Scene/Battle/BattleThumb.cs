@@ -19,14 +19,12 @@ namespace Ryneus
         public void ShowBattleThumb(BattlerInfo battlerInfo)
         {
             gameObject.SetActive(false);
-            var awaken = false;//battlerInfo.IsAwaken;
-            var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
+            var image = actorInfoComponent.MainThumb;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-24,0,0);
-            image.color = new Color(255,255,255,0);
+            //image.color = new Color(255,255,255,0);
             canvasGroup.alpha = 1;
             MoveAndFade(gameObject.GetComponent<RectTransform>(),0,1,0.1f);
-            awakenThumbRoot.SetActive(awaken);
-            mainThumbRoot.SetActive(!awaken);
+            mainThumbRoot.SetActive(true);
             gameObject.SetActive(true);
             UpdateThumb(battlerInfo.ActorInfo.Master);
         }
@@ -60,8 +58,7 @@ namespace Ryneus
             {
                 return;
             }
-            var awaken = false;//battlerInfo.IsAwaken;
-            var image = awaken ? actorInfoComponent.AwakenThumb : actorInfoComponent.MainThumb;
+            var image = actorInfoComponent.MainThumb;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3(20,0,0);
             canvasGroup.alpha = 1;
             _animationBusy = true;
@@ -70,8 +67,7 @@ namespace Ryneus
             {
                 _animationBusy = false;
             });
-            awakenThumbRoot.SetActive(awaken);
-            mainThumbRoot.SetActive(!awaken);
+            mainThumbRoot.SetActive(true);
             gameObject.SetActive(true);
             UpdateThumb(battlerInfo.ActorInfo.Master);
         }
@@ -87,6 +83,7 @@ namespace Ryneus
                 })
                 .SetEase(Ease.InOutQuad));
         }
+
         public void Kill()
         {
             _sequence?.Complete();

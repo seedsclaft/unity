@@ -10,10 +10,6 @@ namespace Ryneus
     public class TitleView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private TextMeshProUGUI versionText = null;
-        [SerializeField] private Button tapTitle = null;
-        [SerializeField] private OnOffButton rankingButton = null;
-        [SerializeField] private TextMeshProUGUI playerName = null;
-        [SerializeField] private TextMeshProUGUI playerId = null;
         [SerializeField] private BaseList titleCommandList = null;
         public SystemData.CommandData TitleCommand => titleCommandList.ListItemData<SystemData.CommandData>();
         
@@ -37,12 +33,7 @@ namespace Ryneus
             {
                 CallSideMenu();
             });
-            rankingButton?.OnClickAddListener(() => 
-            {
-                CallRanking();
-            });
             new TitlePresenter(this);
-            tapTitle.onClick.AddListener(OnClickTitle);
         }
 
         private void InitializeTitleCommand()
@@ -52,21 +43,21 @@ namespace Ryneus
             titleCommandList.SetInputHandler(InputKeyType.Decide,OnClickTitle);
         }        
         
-        public void SetTitleCommand(List<ListData> titleCommand)
+        public void SetTitleCommand(List<ListData> titleCommand,bool selectContinue)
         {
-            titleCommandList.SetData(titleCommand);
+            titleCommandList.SetData(titleCommand,true,() => 
+            {
+                if (selectContinue)
+                {
+                    titleCommandList.UpdateSelectIndex(1);
+                }
+            });
             titleCommandList.Activate();
         }
 
         public void SetVersion(string text)
         {
             versionText.SetText(text);
-        }
-
-        public void SetPlayerData(string name,string id)
-        {
-            playerName?.SetText(name);
-            playerId?.SetText(id);
         }
 
         private void OnClickTitle()
@@ -79,26 +70,8 @@ namespace Ryneus
             CallEvent(CommandType.SelectSideMenu);
         }
 
-        private void CallRanking()
-        {
-            CallEvent(CommandType.Ranking);
-        }
-
         public void InputHandler(InputKeyType keyType, bool pressed)
         {
-            switch (keyType)
-            {
-                case InputKeyType.Decide:
-                case InputKeyType.Start:
-                    OnClickTitle();
-                    return;
-                case InputKeyType.Option1:
-                    CallSideMenu();
-                    return;
-                case InputKeyType.Option2:
-                    CallRanking();
-                    return;
-            }
         }
     }
 }
@@ -118,6 +91,5 @@ namespace Title
         None = 0,
         SelectTitle,
         SelectSideMenu,
-        Ranking,
     }
 }

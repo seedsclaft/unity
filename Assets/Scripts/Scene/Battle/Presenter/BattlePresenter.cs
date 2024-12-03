@@ -590,7 +590,7 @@ namespace Ryneus
             }
             */
             _view.CommandGameSystem(Base.CommandType.CloseLoading);
-            _view.CommandChangeViewToTransition(null);
+            //_view.CommandChangeViewToTransition(null);
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
         }
 

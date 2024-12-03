@@ -184,7 +184,7 @@ namespace Ryneus
         {
             SetActivate(null);
             magicList.gameObject.SetActive(false);
-            //battleEnemyLayer.gameObject.SetActive(false);
+            battleEnemyLayer.UpdateSelectIndexList(new List<int>());
             battleActorList.UpdateSelectIndexList(new List<int>());
         }
 

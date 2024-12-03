@@ -63,8 +63,10 @@ namespace Ryneus
                 if (_actorInfos.Find(a => a.ActorId == addActorInfo.Param1) == null)
                 {
                     // 新規加入
-                    var actorInfo = new ActorInfo(DataSystem.FindActor(addActorInfo.Param1));
+                    var actorData = DataSystem.FindActor(addActorInfo.Param1);
+                    var actorInfo = new ActorInfo(actorData);
                     actorInfo.SetBattleIndex(1);
+                    actorInfo.SetLevel(actorData.InitLv);
                     _actorInfos.Add(actorInfo);
                 }
             }
