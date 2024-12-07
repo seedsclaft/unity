@@ -78,7 +78,13 @@ namespace Ryneus
 
         private void ShowMagicList(BattlerInfo currentBattler,bool resetScrollRect)
         {
-            _view.ShowMagicList(GetListData(_model.SkillActionList(currentBattler)),resetScrollRect);
+            var skillInfos = _model.SkillActionList(currentBattler);
+            int selectIndex = 0;
+            if (resetScrollRect)
+            {
+                selectIndex = skillInfos.FindIndex(a => a.Id == currentBattler.LastSelectSkillId);
+            }
+            _view.ShowMagicList(GetListData(skillInfos),resetScrollRect,selectIndex);
         }
 
         /// <summary>

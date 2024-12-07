@@ -117,21 +117,28 @@ namespace Ryneus
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            /*
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
+            //var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
             foreach (var getItemInfo in getItemInfos)
             {
                 var resultInfo = new StrategyResultViewInfo();
                 switch (getItemInfo.GetItemType)
                 {
-                    case GetItemType.Numinous:
+                    case GetItemType.Exp:
+                        getItemInfo.SetGetFlag(true);
+                        var target = _sceneParam.ActorInfos.Find(a => a.ActorId == getItemInfo.Param1);
+                        if (target != null)
+                        {
+                            target.Exp.GainValue(getItemInfo.Param2);
+                        }
+                        break;
+                    case GetItemType.Currency:
                         getItemInfo.SetGetFlag(true);
                         if (_inBattleResult)
                         { 
                             var beforeGain = getItemInfo.ResultParam;
                             var baseCurrency = getItemInfo.Param1;
-                            var bonusCurrency = (int)Math.Round(getItemInfo.Param1 * TotalScore * 0.01f);
+                            var bonusCurrency = 0;//(int)Math.Round(getItemInfo.Param1 * TotalScore * 0.01f);
                             var gainCurrency = baseCurrency + bonusCurrency;
                             
                             if (beforeGain == 0 || gainCurrency > beforeGain)
@@ -197,7 +204,7 @@ namespace Ryneus
                         if (battleScore > beforeSave)
                         {
                             getItemInfo.SetResultParam(battleScore);
-                            record.SetBattleScore(battleScore);
+                            //record.SetBattleScore(battleScore);
                         }
                         break;
                     case GetItemType.SelectRelic:

@@ -132,29 +132,17 @@ namespace Ryneus
             );
             _status = statusInfo;
             _index = index;
-            var skills = actorInfo.LearningSkillInfos().FindAll(a => a.LearningState == LearningState.Learned);
 
             _skills.Clear();
-            var battleSkills = skills.FindAll(a => !a.IsEnhanceSkill());
+            var battleSkills = actorInfo.EquipSkills();
             foreach (var battleSkill in battleSkills)
             {
-                if (battleSkill.IsBattleActiveSkill())
-                {
-                    // アクティブと覚醒は作戦にあれば加える
-                    if (_skillTriggerInfos.Find(a => a.SkillId == battleSkill.Id) != null)
-                    {
-                        _skills.Add(battleSkill);
-                    }
-                } else
-                if (battleSkill.IsBattlePassiveSkill())
-                {
-                    // パッシブは作戦になくても加える
-                    _skills.Add(battleSkill);
-                }
+                battleSkill.InitCountTurn();
+                _skills.Add(battleSkill);
             }
             
             // _skills確定後に強化する
-            var enhanceSkills = skills.FindAll(a => a.IsEnhanceSkill());
+            var enhanceSkills = _skills.FindAll(a => a.IsEnhanceSkill());
             foreach (var enhanceSkill in enhanceSkills)
             {
                 var result = new ActionResultInfo(this,this,enhanceSkill.FeatureDates,enhanceSkill.Id);
@@ -271,7 +259,7 @@ namespace Ryneus
             foreach (var skill in _skills)
             {
                 skill.SetUseCount(0);
-                skill.SetCountTurn(0);
+                skill.CountTurn.SetValue(0);
             }            
         }
 
@@ -331,6 +319,7 @@ namespace Ryneus
 
         private void AddKindPassive()
         {
+            /*
             var kindSkills = new List<SkillInfo>();
             foreach (var kind in _kinds)
             {
@@ -357,6 +346,7 @@ namespace Ryneus
                 skillTriggerInfo.UpdateTriggerDates(new List<SkillTriggerData>(){SkillTriggerData1,SkillTriggerData2});
                 _skillTriggerInfos.Add(skillTriggerInfo);
             }
+            */
         }
 
         public void ResetAp(bool IsBattleStart)
@@ -568,12 +558,12 @@ namespace Ryneus
             if (skillId > -1)
             {
                 var find = _skills.Find(a => a.Id == skillId);
-                find?.SetCountTurn(find.CountTurn - seekCount);
+                find?.CountTurn.GainValue(seekCount);
                 return;
             }
             foreach (var skill in _skills)
             {
-                skill.SetCountTurn(skill.CountTurn - seekCount);
+                skill.CountTurn.GainValue(seekCount);
             }
         }
 
@@ -1009,19 +999,19 @@ namespace Ryneus
             {
                 if (skillInfos.Find(a => a.Id == skillInfo.Id) == null)
                 {
-                    skillInfo.SeekCountTurn();
+                    skillInfo.CountTurn.GainValue(-1);
                 }
             }
         }
 
         public List<SkillInfo> ActiveSkills()
         {
-            return _skills.FindAll(a => a.IBattleActiveSkill());
+            return _skills.FindAll(a => a.IsBattleActiveSkill());
         }
 
         public List<SkillInfo> PassiveSkills()
         {
-            return _skills.FindAll(a => a.IBattlePassiveSkill());
+            return _skills.FindAll(a => a.IsBattlePassiveSkill());
         }
 
         public List<StateInfo> IconStateInfos()

@@ -24,6 +24,8 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private TextMeshProUGUI demigod;
         [SerializeField] private TextMeshProUGUI lv;
+        [SerializeField] private TextMeshProUGUI exp;
+        [SerializeField] private Image expGauge;
         [SerializeField] private TextMeshProUGUI sp;
         [SerializeField] private StatusInfoComponent statusInfoComponent;
         [SerializeField] private StatusInfoComponent needStatusInfoComponent;
@@ -66,6 +68,11 @@ namespace Ryneus
             }
             demigod?.SetText(actorInfo.DemigodParam.ToString());
             lv?.SetText(actorInfo.Level.ToString());
+            exp?.SetText(actorInfo.NextExp.ToString());
+            if (expGauge != null)
+            {
+                expGauge.fillAmount = actorInfo.Exp.Value % 100 * 0.01f;
+            }
             if (sp != null){
             }
             if (statusInfoComponent != null)

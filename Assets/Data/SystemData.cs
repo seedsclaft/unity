@@ -121,6 +121,7 @@ namespace Ryneus
 		Currency = 2,
 		Demigod = 3,
 		ReBirth = 4,
+		Exp = 5,
 		AddActor = 11,
 		LevelUp = 21,
 		StatusUp = 22,

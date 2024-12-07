@@ -537,14 +537,21 @@ namespace Ryneus
             DamageValue *= GetDefenseRateValue(atkValue,DefValue);
             float hpDamage = CalcDamageValue(subject,target,DamageValue,isNoEffect);
 
+            // 有利属性なら1.5倍
+            var skillData = DataSystem.FindSkill(_skillId);
+            if (target.Kinds.Contains((KindType)skillData.Attribute))
+            {
+                hpDamage *= 1.5f;
+            }
+
             // 効果補正
             return CalcDamageEffect(hpDamage,subject,target,isNoEffect);
         }
 
         private float CalcAttackDamageValue(float atkValue,BattlerInfo subject,float featureValue,bool isNoEffect,bool isOneTarget)
         {
-            float DamageRate = featureValue * CurrentDamageRate(subject,isNoEffect,isOneTarget);
-            return DamageRate * atkValue * 0.01f;
+            float damageRate = featureValue * CurrentDamageRate(subject,isNoEffect,isOneTarget);
+            return damageRate * atkValue * 0.01f;
         }
         
 

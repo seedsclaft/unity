@@ -224,33 +224,11 @@ namespace Ryneus
 
         public List<SkillInfo> SkillActionList(BattlerInfo battlerInfo)
         {
-            var skillInfos = battlerInfo.Skills.FindAll(a => a.Master.SkillType != SkillType.None && a.Master.Id > 100 && a.IsEnhanceSkill() == false);
-            for (int i = 0; i < skillInfos.Count;i++)
-            {
-                skillInfos[i].SetEnable(CheckCanUse(skillInfos[i],_currentBattler));
-            }
-            var sortList1 = new List<SkillInfo>();
-            var sortList2 = new List<SkillInfo>();
-            var sortList3 = new List<SkillInfo>();
-            skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+            var skillInfos = battlerInfo.ActiveSkills().FindAll(a => a.Master.Id > 100);
             foreach (var skillInfo in skillInfos)
             {
-                if (skillInfo.Master.IconIndex >= MagicIconType.Elementarism && skillInfo.Master.IconIndex <= MagicIconType.Psionics)
-                {
-                    sortList1.Add(skillInfo);
-                } else
-                if (skillInfo.Master.IconIndex >= MagicIconType.Demigod && skillInfo.Master.IconIndex < MagicIconType.Other)
-                {
-                    sortList2.Add(skillInfo);
-                } else
-                {
-                    sortList3.Add(skillInfo);
-                }
+                skillInfo.SetEnable(CheckCanUse(skillInfo,battlerInfo));
             }
-            skillInfos.Clear();
-            skillInfos.AddRange(sortList1);
-            skillInfos.AddRange(sortList2);
-            skillInfos.AddRange(sortList3);
             return skillInfos;
         }
 
@@ -270,7 +248,7 @@ namespace Ryneus
 
         private bool CheckCanUse(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (skillInfo.CountTurn > 0)
+            if (skillInfo.CountTurn.Value > 0)
             {
                 return false;
             }
@@ -315,7 +293,7 @@ namespace Ryneus
 
         private bool CheckCanUsePassive(SkillInfo skillInfo,BattlerInfo battlerInfo)
         {
-            if (skillInfo.CountTurn > 0)
+            if (skillInfo.CountTurn.Value > 0)
             {
                 return false;
             }
@@ -559,14 +537,14 @@ namespace Ryneus
                     case FeatureType.CtHeal:
                     if (subject != null)
                     {
-                        if (target.Skills.Find(a => a.CountTurn > 0) != null)
+                        if (target.Skills.Find(a => a.CountTurn.Value > 0) != null)
                         {
                             IsEnable = true;
                         }
                     }
                     break;
                     case FeatureType.CtDamage:
-                    if (target.Skills.Find(a => a.CountTurn < a.Master.CountTurn) != null)
+                    if (target.Skills.Find(a => a.CountTurn.Value < a.Master.CountTurn) != null)
                     {
                         IsEnable = true;
                     }
@@ -955,7 +933,7 @@ namespace Ryneus
             {
                 var subject = GetBattlerInfo(actionInfo.SubjectIndex);
                 // 支払いは最後の1回
-                if (actionInfo.RepeatTime == 0)
+                if (actionInfo.RepeatTime == 1)
                 {
                     // Hpの支払い
                     subject.GainHp(actionInfo.HpCost * -1);
@@ -1589,7 +1567,7 @@ namespace Ryneus
                         continue;
                     }
                     */
-                    if (passiveInfo.CountTurn > 0)
+                    if (passiveInfo.CountTurn.Value > 0)
                     {
                         continue;
                     }
@@ -1648,13 +1626,13 @@ namespace Ryneus
                                 var stateData = DataSystem.FindState(addPassive.Param1);
                                 if (stateData.OverLap == 0)
                                 {
-                                    _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                    //_passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
                                 } else
                                 {
                                     var overLapCount = battlerInfo.GetStateInfoAll(stateData.StateType).Count;
                                     if (stateData.OverLap-1 <= overLapCount)
                                     {
-                                        _passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                        //_passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
                                     }
                                 }
                             }
@@ -2361,12 +2339,22 @@ namespace Ryneus
         public List<GetItemInfo> MakeBattlerResult()
         {
             var list = new List<GetItemInfo>();
-            /*
-            if (CurrentSelectRecord() != null)
+            var enemyInfos = BattlerEnemies().FindAll(a => !a.IsAlive());
+            // 経験値アイテムを作る
+            foreach (var enemyInfo in enemyInfos)
             {
-                list.AddRange(CurrentSelectRecord().SymbolInfo.GetItemInfos);
+                foreach (var actorInfo in BattlerActors())
+                {
+                    var expData = new GetItemData();
+                    expData.Type = GetItemType.Exp;
+                    // 誰に対して
+                    expData.Param1 = actorInfo.ActorInfo.ActorId;
+                    // いくつ
+                    expData.Param2 = 20 + (enemyInfo.Level - actorInfo.Level) * 2;
+                    var expItem = new GetItemInfo(expData);
+                    list.Add(expItem);
+                }
             }
-            */
             return list;
         }
 

@@ -14,9 +14,15 @@ namespace Ryneus
         public int MaxHp => CurrentStatus.Hp;
         public int MaxMp => CurrentStatus.Mp;
 
-        private int _level = 1;
-        public int Level => _level;
-        public void SetLevel(int level) => _level = level;
+        public ParameterInt Exp;
+        public int NextExp => 100 - Exp.Value % 100;
+        public int Level => (Exp.Value / 100) + 1;
+        public void SetLevel(int level)
+        {
+            Exp.SetValue((level-1) * 100);
+        }
+
+
         private List<int> _equipmentSkillIds = new ();
         public void ChangeEquipSkill(int changeSkillId,int removeSkillId)
         {
@@ -87,6 +93,7 @@ namespace Ryneus
             SetInitialParameter(actorData);
             _currentHp = Master.InitStatus.Hp;
             _currentMp = Master.InitStatus.Mp;
+            Exp = new ParameterInt();
             InitSkillInfo();
             InitSkillTriggerInfos();
         }

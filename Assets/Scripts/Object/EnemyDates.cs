@@ -50,14 +50,19 @@ namespace Ryneus
     public enum KindType
     {
         None = 0,
-        Undead = 1,
-        Air = 2,
-        Demon = 3,
-        Creature = 4,
-        Animal = 5,
-        UnKnown = 6,
+        Fire = 1,
+        Thunder = 2,
+        Ice = 3,
+        Shine = 4,
+        Dark = 5,
         Normal = 11,
-        Boss = 12
+        Boss = 12,
+        Undead = 21,
+        Air = 22,
+        Demon = 23,
+        Creature = 24,
+        Animal = 25,
+        UnKnown = 26,
     }
 
     public enum LineType

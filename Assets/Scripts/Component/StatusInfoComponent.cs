@@ -117,7 +117,7 @@ namespace Ryneus
                 {
                     rate = currentHp / (float)maxStatusHp;
                 }
-                hpGaugeAnimation.UpdateGauge(_rectWidth,3,rate);
+                hpGaugeAnimation.UpdateGauge(rate);
             }
         }
 
@@ -140,8 +140,8 @@ namespace Ryneus
                 {
                     rate = currentMp / (float)maxStatusMp;
                 }
-                mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,rate);
-                mpGaugeAnimation.UpdateGauge(maxStatusMp * 1.5f,3,rate);
+                mpGaugeAnimation.SetGaugeAnimation(rate);
+                mpGaugeAnimation.UpdateGauge(rate);
             }
         }
 
@@ -154,7 +154,7 @@ namespace Ryneus
                 {
                     fromRate = fromHp / (float)maxStatusHp;
                 }
-                hpGaugeAnimation.SetGaugeAnimation(_rectWidth,3,fromRate);
+                hpGaugeAnimation.SetGaugeAnimation(fromRate);
                 var rate = 0f;
                 if (currentHp > 0)
                 {
@@ -173,7 +173,7 @@ namespace Ryneus
                 {
                     fromRate = fromMp / (float)maxStatusMp;
                 }
-                mpGaugeAnimation.SetGaugeAnimation(maxStatusMp * 1.5f,3,fromRate);
+                mpGaugeAnimation.SetGaugeAnimation(fromRate);
                 var rate = 0f;
                 if (currentMp > 0)
                 {

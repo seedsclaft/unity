@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.Mathematics.Geometry;
+using UnityEngine;
 
 namespace Ryneus
 {
@@ -72,30 +74,11 @@ namespace Ryneus
 
         public void InitCountTurn()
         {
-            _countTurn = Master.CountTurn - _minusCountTurn;
-            if (_countTurn < 0)
-            {
-                _countTurn = 0;
-            }
+            var count = Mathf.Max(Master.CountTurn - _minusCountTurn);
+            CountTurn.SetValue(count);
         }
 
-        private int _countTurn = 0;
-        public int CountTurn => _countTurn;
-        public void SetCountTurn(int countTurn)
-        {
-            _countTurn = countTurn;
-            if (_countTurn < 0)
-            {
-                _countTurn = 0;
-            }
-        }
-        public void SeekCountTurn()
-        {
-            if (_countTurn > 0)
-            {
-                _countTurn--;
-            }
-        }
+        public ParameterInt CountTurn;
 
         public SkillInfo(int id)
         {
@@ -110,6 +93,7 @@ namespace Ryneus
                 }
                 _featureDates = list;
             }
+            CountTurn = new ParameterInt();
         }
         
         public void SetTriggerDates(List<SkillData.TriggerData> triggerDates)
@@ -133,16 +117,6 @@ namespace Ryneus
                 }
             }
             return gainAp;
-        }
-
-        public bool IBattleActiveSkill()
-        {
-            return Master.SkillType != SkillType.Passive && Master.SkillType != SkillType.UseAlcana && Master.SkillType != SkillType.Relic;
-        }
-
-        public bool IBattlePassiveSkill()
-        {
-            return Master.SkillType == SkillType.Passive || Master.SkillType == SkillType.UseAlcana || Master.SkillType == SkillType.Relic;
         }
 
         public bool IsEnhanceSkill()

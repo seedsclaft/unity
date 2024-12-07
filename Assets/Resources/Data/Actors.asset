@@ -234,14 +234,14 @@ MonoBehaviour:
     ClassId: 3
     UnitType: 2
     ImagePath: 0003
-    InitLv: 1
+    InitLv: 4
     MaxLv: 99
     InitStatus:
-      _hp: 25
+      _hp: 35
       _mp: 5
       _atk: 18
-      _def: 6
-      _spd: 15
+      _def: 8
+      _spd: 23
     PlusStatus:
       _hp: 0
       _mp: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
       Level: 0
       Weight: 0
       TriggerDates: []
-    - SkillId: 3020
+    - SkillId: 3110
       Level: 0
       Weight: 0
       TriggerDates: []

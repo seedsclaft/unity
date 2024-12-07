@@ -342,11 +342,17 @@ namespace Ryneus
             SetInputFrame(1);
         }
 
-        public void ShowMagicList(List<ListData> skillInfos,bool resetScrollRect)
+        public void ShowMagicList(List<ListData> skillInfos,bool resetScrollRect,int selectIndex)
         {
             battleActorList.gameObject.SetActive(true);
             magicList.gameObject.SetActive(true);
-            magicList.SetData(skillInfos);
+            magicList.SetData(skillInfos,resetScrollRect,() => 
+            {
+                if (resetScrollRect)
+                {
+                    magicList.UpdateSelectIndex(selectIndex);
+                }
+            });
             SetActivate(magicList);
         }
 
