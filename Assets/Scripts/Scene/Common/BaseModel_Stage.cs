@@ -66,6 +66,10 @@ namespace Ryneus
 
         public void SeekNext()
         {
+            foreach (var actorInfo in PartyInfo.ActorInfos)
+            {
+                actorInfo.ChangeHp(actorInfo.MaxHp);
+            }
             PartyInfo.SetSeek(PartyInfo.Seek + 1);
             PartyInfo.SetSeekIndex(0);
         }

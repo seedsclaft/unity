@@ -19,21 +19,11 @@ namespace Ryneus
         public bool Selectable;
         public string Help;
         public int StageLv;
-        public int Turns;
         public List<int> InitMembers;
         public int RandomTroopCount;
         public string BackGround;
         public int BGMId;
         public int BossBGMId;
-        public int StageRect;
-        public bool Reborn;
-        public bool Alcana;
-        public int SaveLimit;
-        public int ContinueLimit;
-        public RankingType RankingStage;
-        public bool SlotSave;
-        public int SubordinateValue;
-        public bool UseSlot;
         public List<StageEventData> StageEvents;
         public List<StageSymbolData> StageSymbols;
     }

@@ -25,7 +25,6 @@ namespace Ryneus
         [SerializeField] private _2dxFX_NoiseAnimated _2DxFX_NoiseAnimated = null;
         [SerializeField] private TextMeshProUGUI pastText = null;
 
-        private bool _initRecordDisplay = false;
         private bool _viewBusy = false;
         public void SetViewBusy(bool isBusy)
         {
@@ -47,8 +46,7 @@ namespace Ryneus
         {
             base.Initialize();
 
-
-            tacticsCommandList.Initialize();
+            InitializeCommandList();
             tacticsAlcana.gameObject.SetActive(false);
             alcanaButton.onClick.AddListener(() => CallAlcanaCheck());
 
@@ -67,6 +65,16 @@ namespace Ryneus
             alcanaSelectList.Hide();
             var presenter = new TacticsPresenter(this);
             presenter.CommandReturnStrategy();
+        }
+
+        private void InitializeCommandList()
+        {
+            tacticsCommandList.Initialize();
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSelectTacticsCommand());
+            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallSideMenu());
+            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
+            SetInputHandler(tacticsCommandList.gameObject);
+            AddViewActives(tacticsCommandList);
         }
 
         private void InitializeSymbolInfoList()
@@ -129,10 +137,6 @@ namespace Ryneus
         public void SetTacticsCommand(List<ListData> menuCommands)
         {
             tacticsCommandList.SetData(menuCommands);
-            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSelectTacticsCommand());
-            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallSideMenu());
-            tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
-            SetInputHandler(tacticsCommandList.gameObject);
             UpdateHelpWindow();
         }
         
@@ -338,6 +342,7 @@ namespace Ryneus
 
         public void EndStatus()
         {
+            SetActivate(tacticsCommandList);
         }
 
         public void EndStatusCursor()
@@ -346,6 +351,7 @@ namespace Ryneus
 
         public void UpdateInputKeyActive(ViewCommandType viewEvent,TacticsCommandType currentTacticsCommandType)
         {
+            /*
             switch (viewEvent.TacticsCommandType)
             {
                 case CommandType.SelectTacticsCommand:
@@ -373,6 +379,7 @@ namespace Ryneus
                     symbolInfoList.Deactivate();
                     break;
             }
+            */
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)

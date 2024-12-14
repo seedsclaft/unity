@@ -59,7 +59,7 @@ namespace Ryneus
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
 					ISheet EventSheet = Book.GetSheetAt(1);
-					ISheet SymbolSheet = Book.GetSheetAt(2);
+					//ISheet SymbolSheet = Book.GetSheetAt(2);
 					ISheet TutorialSheet = Book.GetSheetAt(4);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
@@ -75,7 +75,6 @@ namespace Ryneus
                             Selectable = AssetPostImporter.ImportNumeric(BaseRow, "Selectable") == 1,
                             Help = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Help,
                             StageLv = AssetPostImporter.ImportNumeric(BaseRow, "StageLv"),
-                            Turns = AssetPostImporter.ImportNumeric(BaseRow, "Turns"),
                             InitMembers = new List<int>()
                         };
                         string[] list = AssetPostImporter.ImportString(BaseRow,"InitMembers").Split(',');
@@ -87,15 +86,6 @@ namespace Ryneus
 						StageData.BackGround = AssetPostImporter.ImportString(BaseRow,"BackGround");
 						StageData.BGMId = AssetPostImporter.ImportNumeric(BaseRow,"BGMId");
 						StageData.BossBGMId = AssetPostImporter.ImportNumeric(BaseRow,"BossBGMId");
-						StageData.StageRect = AssetPostImporter.ImportNumeric(BaseRow,"StageRect");
-						StageData.Reborn = AssetPostImporter.ImportNumeric(BaseRow,"Reborn") == 1;
-						StageData.Alcana = AssetPostImporter.ImportNumeric(BaseRow,"Alcana") == 1;
-						StageData.SaveLimit = AssetPostImporter.ImportNumeric(BaseRow,"SaveLimit");
-						StageData.ContinueLimit = AssetPostImporter.ImportNumeric(BaseRow,"ContinueLimit");
-						StageData.RankingStage = (RankingType)AssetPostImporter.ImportNumeric(BaseRow,"RankingStage");
-						StageData.SlotSave = AssetPostImporter.ImportNumeric(BaseRow,"SlotSave") == 1;
-						StageData.SubordinateValue = AssetPostImporter.ImportNumeric(BaseRow,"SubordinateValue");
-						StageData.UseSlot = AssetPostImporter.ImportNumeric(BaseRow,"UseSlot") == 1;
 						
 						StageData.StageEvents = new List<StageEventData>();
 						
@@ -121,7 +111,7 @@ namespace Ryneus
 							}
 						}
 						StageData.StageSymbols = new ();
-						
+						/*
 						KeyRow = SymbolSheet.GetRow(0);
 						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						for (int j = 1; j <= SymbolSheet.LastRowNum; j++)
@@ -145,7 +135,7 @@ namespace Ryneus
 								StageData.StageSymbols.Add(SymbolData);
 							}
 						}
-						
+						*/
 
 						Data.Data.Add(StageData);
 					}

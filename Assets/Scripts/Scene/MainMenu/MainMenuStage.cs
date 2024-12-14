@@ -31,10 +31,10 @@ namespace Ryneus
             component.UpdateInfo(data);
             if (rankingButton != null)
             {
-                rankingButton.gameObject.SetActive(data.Master.RankingStage > 0);
+                //rankingButton.gameObject.SetActive(data.Master.RankingStage > 0);
             }
-            var rect = gameObject.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x,data.Master.StageRect);
+            //var rect = gameObject.GetComponent<RectTransform>();
+            //rect.sizeDelta = new Vector2(rect.sizeDelta.x,data.Master.StageRect);
         }
     }
 }

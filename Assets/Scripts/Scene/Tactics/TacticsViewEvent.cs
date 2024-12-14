@@ -34,9 +34,6 @@ namespace Tactics
         SelectAlcanaList,
         HideAlcanaList,
         EndShopSelect,
-        NormalWorld,
-        AnotherWorld,
         SelectCharaLayer,
-        MargeRequest,
     }
 }

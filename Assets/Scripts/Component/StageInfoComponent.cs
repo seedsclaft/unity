@@ -37,7 +37,7 @@ namespace Ryneus
                 achieveText?.SetText(DataSystem.GetText(31) + DataSystem.GetText(10000));
             }
             help?.SetText(stageData.Help.Replace("\\p",GameSystem.CurrentData.PlayerInfo.PlayerName));
-            turns?.SetText(stageData.Turns.ToString());
+            //turns?.SetText(stageData.Turns.ToString());
             /*
             if (clearCount != null){
                 clearCount.text = stageInfo.ClearCount.ToString();

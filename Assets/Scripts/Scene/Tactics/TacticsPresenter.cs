@@ -271,17 +271,8 @@ namespace Ryneus
                 case CommandType.AlcanaCheck:
                     CommandAlcanaCheck();
                     break;
-                case CommandType.NormalWorld:
-                    CommandNormalWorld();
-                    break;
-                case CommandType.AnotherWorld:
-                    CommandAnotherWorld();
-                    break;
                 case CommandType.SelectCharaLayer:
                     CommandSelectCharaLayer((int)viewEvent.template);
-                    break;
-                case CommandType.MargeRequest:
-                    CommandMargeRequest();
                     break;
             }
             // チュートリアル確認
@@ -897,16 +888,6 @@ namespace Ryneus
             _backCommand = CommandType.HideAlcanaList;
         }
 
-        private void CommandNormalWorld()
-        {
-            _view.CommandGotoSceneChange(Scene.Tactics);
-        }
-
-        private void CommandAnotherWorld()
-        {
-            _view.CommandGotoSceneChange(Scene.Tactics);
-        }
-
         private void CommandHideAlcanaList()
         {
             _view.HideAlcanaList();
@@ -932,18 +913,6 @@ namespace Ryneus
             {
                 _view.CommandSelectCharaLayer(a);
             });
-        }
-
-        private void CommandMargeRequest()
-        {
-            var confirmInfo = new ConfirmInfo("マージしますか？",(a) => 
-            {
-                if (a == ConfirmCommandType.Yes)
-                {
-                    CommandNeedEndBrunch();
-                }
-            });
-            _view.CommandCallConfirm(confirmInfo);
         }
     }
 }

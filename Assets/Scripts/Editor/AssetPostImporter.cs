@@ -33,6 +33,26 @@ namespace Ryneus
 			return true;
 		}
 
+		static public bool CheckOnPostprocessAllAssetsDivide(string asset,string ExcelName)
+		{
+			string ext = Path.GetExtension(asset);
+			if (ext != ".xls" && ext != ".xlsx" && ext != ".xlsm") return false;
+
+			// エクセルを開いているデータはスキップ
+			string fileName = Path.GetFileName(asset);
+			if (fileName.StartsWith("~$")) return false;
+
+			// 同じパスのみ
+			string filePath = Path.GetDirectoryName(asset);
+			filePath = filePath.Replace("\\", "/");
+			if (filePath != AssetPostImporter.ExcelPath) return false;
+
+			string FileName = Path.GetFileNameWithoutExtension(ExcelName);
+			// ファイル名を含む
+			if (!fileName.Contains(FileName)) return false;
+			return true;
+		}
+
 		public static int ImportNumeric(IRow BaseRow,int Column)
 		{
 			var cell = BaseRow.GetCell(Column);

@@ -395,7 +395,7 @@ namespace Ryneus
 
         public bool EnableContinue()
         {
-            return CurrentStage.Master.ContinueLimit > 0;
+            return false;
         }
 
         public bool EnableUserContinue()
@@ -404,16 +404,6 @@ namespace Ryneus
             return enable;
         }
 
-        public string ContinuePopupTitle()
-        {
-            var baseText = DataSystem.GetText(3061);
-#if UNITY_ANDROID
-            var subText = DataSystem.GetReplaceText(3062,CurrentStage.Master.ContinueLimit.ToString());
-#else
-            var subText = DataSystem.GetReplaceText(3064,CurrentStage.Master.ContinueLimit.ToString());
-#endif
-            return baseText + "\n" + subText;
-        }
 
         public bool NeedAdsContinue()
         {
@@ -453,14 +443,6 @@ namespace Ryneus
                 stageKey.Append(string.Format(CurrentStage.CurrentSeekIndex.ToString("00")));
             }
             return stageKey.ToString();
-        }
-
-        public void SetStageSeek()
-        {
-            foreach (var actorInfo in PartyInfo.ActorInfos)
-            {
-                actorInfo.ChangeHp(actorInfo.MaxHp);
-            }
         }
 
         public void ActorLevelUp(ActorInfo actorInfo)

@@ -30,8 +30,8 @@ namespace Ryneus
             _view.InitActors();
             _view.InitResultList(GetListData(_model.ResultCommand()));
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
-            var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
-            SoundManager.Instance.PlayBgm(bgm,1.0f,true);
+            //var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
+            //SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandStartStrategy();
@@ -116,9 +116,26 @@ namespace Ryneus
         {
             if (_model.InBattleResult)
             {
-                SeekStrategyState();
+                var battledResultActors = _model.BattleResultActors();
+                var bonusList = new List<bool>();
+                foreach (var item in battledResultActors)
+                {
+                    bonusList.Add(false);
+                }
+                _view.SetTitle(DataSystem.GetText(20010));
+                _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
+                // 勝利時
+                if (_model.BattleResultVictory)
+                {
+                    //_model.MakeSelectRelicData();
+                    if (_model.LevelUpData.Count > 0)
+                    {
+                        _view.StartLvUpAnimation();
+                        _view.HideResultList();
+                    }
+                }
             } else
-            {
+            { 
                 CheckTacticsActors();
             }
         }
@@ -128,45 +145,6 @@ namespace Ryneus
             var tacticsActors = _model.TacticsActors();
             if (tacticsActors != null && tacticsActors.Count > 0)
             {
-                SeekStrategyState();
-            } else
-            {
-                EndStrategy();
-            }
-        }
-
-        private void SeekStrategyState()
-        {
-            if (_model.InBattleResult)
-            {
-                var battledResultActors = _model.BattleResultActors();
-                var bonusList = new List<bool>();
-                foreach (var item in battledResultActors)
-                {
-                    bonusList.Add(false);
-                }
-                // 勝利時
-                if (_model.BattleResultVictory)
-                {
-                    _model.MakeLvUpData();
-                    _model.MakeSelectRelicData();
-                    _model.MakeResult();
-                    _view.SetTitle(DataSystem.GetText(20010));
-                    _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
-                    if (_model.LevelUpData.Count > 0)
-                    {
-                        _view.StartLvUpAnimation();
-                        _view.HideResultList();
-                    }
-                } else
-                {
-                    _view.SetTitle(DataSystem.GetText(20010));
-                    _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
-                }
-            } else
-            {
-                var tacticsActors = _model.TacticsActors();
-                _model.MakeResult();
                 var bonusList = new List<bool>();
                 foreach (var item in tacticsActors)
                 {
@@ -174,6 +152,9 @@ namespace Ryneus
                 }
                 _view.SetTitle(DataSystem.GetText(20040));
                 _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
+            } else
+            {
+                EndStrategy();
             }
         }
 
@@ -223,7 +204,7 @@ namespace Ryneus
 
         private void CommandEndLvUpAnimation()
         {
-            _view.ShowLvUpActor(_model.LevelUpData[0],_model.LevelUpActorStatus(0));
+            _view.ShowLvUpActor(_model.LevelUpData[0],_model.LevelUpActorStatus());
         }
 
         private void CommandLvUpNext()
@@ -413,17 +394,14 @@ namespace Ryneus
             } else
             {
                 // レコード新規保存
-                _model.SetSelectSymbol();
                 _model.EndStrategy();
+                _model.SeekStage();
+                var tacticsSceneInfo = new TacticsSceneInfo
                 {
-                    _model.SeekStage();
-                    var tacticsSceneInfo = new TacticsSceneInfo
-                    {
-                        ReturnNextBattle = true,
-                        SeekIndex = _model.CurrentStage.CurrentSeekIndex
-                    };
-                    _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
-                }
+                    ReturnNextBattle = true,
+                    SeekIndex = _model.CurrentStage.CurrentSeekIndex
+                };
+                _view.CommandGotoSceneChange(Scene.Tactics,tacticsSceneInfo);
             }
         }
     }

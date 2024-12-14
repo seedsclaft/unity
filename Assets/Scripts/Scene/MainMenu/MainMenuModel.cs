@@ -12,8 +12,6 @@ namespace Ryneus
 
         public void StartSelectStage(int stageId)
         {
-            //CurrentSaveData.MakeStageData(stageId);
-            SetStageSeek();
             if (SelectedStage(stageId))
             {
                 CurrentStage.SetCurrentTurn(SelectedStageCurrentTurn(stageId));

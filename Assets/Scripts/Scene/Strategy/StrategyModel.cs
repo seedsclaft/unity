@@ -12,11 +12,13 @@ namespace Ryneus
 
         private bool _inBattleResult = false;
         public bool InBattleResult => _inBattleResult;
+
         public StrategyModel()
         {
             _sceneParam = (StrategySceneInfo)GameSystem.SceneStackManager.LastSceneParam;
             _inBattleResult = _sceneParam.InBattle;
             _battleResultVictory = _sceneParam.BattleResultVictory;
+            MakeResult();
         }
         public void ClearSceneParam()
         {
@@ -34,7 +36,7 @@ namespace Ryneus
         public List<ActorInfo> LevelUpData => _levelUpData;
         private List<LearnSkillInfo> _learnSkillInfo = new();
         public List<LearnSkillInfo> LearnSkillInfo => _learnSkillInfo;
-        public List<ListData> LevelUpActorStatus(int index)
+        public List<ListData> LevelUpActorStatus()
         {
             var list = new List<ListData>();
             var listData = new ListData(_levelUpData[0]);
@@ -42,7 +44,7 @@ namespace Ryneus
             list.Add(listData);
             list.Add(listData);
             list.Add(listData);
-            //list.Add(listData);
+            list.Add(listData);
             return list;
         }
 
@@ -54,43 +56,6 @@ namespace Ryneus
                 return SceneParam.ActorInfos;
             }
             return null;
-        }
-
-        public void MakeLvUpData()
-        {
-            return;
-            /*
-            if (_levelUpData.Count > 0) return;
-            var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
-            if (record != null && record.Selected) return;
-            //var lvUpActorInfos = TacticsActors().FindAll(a => a.TacticsCommandType == TacticsCommandType.Train);
-            var lvUpList = new List<ActorInfo>();
-            // 結果出力
-            foreach (var lvUpActorInfo in BattleMembers())
-            {
-                // 新規魔法取得があるか
-                var skills = lvUpActorInfo.LearningSkills(1);
-                var from = lvUpActorInfo.Evaluate();
-                var levelUpInfo = lvUpActorInfo.LevelUp(0,CurrentStage.Id,CurrentStage.Seek,CurrentStage.CurrentSeekIndex,CurrentStage.WorldType);
-                PartyInfo.SetLevelUpInfo(levelUpInfo);
-                var to = lvUpActorInfo.Evaluate();
-                if (skills.Count > 0)
-                {
-                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
-                    _learnSkillInfo.Add(learnSkillInfo);
-                    foreach (var skill in skills)
-                    {
-                        // 作戦項目に追加
-                        lvUpActorInfo.AddSkillTriggerSkill(skill.Id);  
-                    }
-                } else
-                {
-                    _learnSkillInfo.Add(null);
-                }
-                lvUpList.Add(lvUpActorInfo);
-            }
-            _levelUpData = lvUpList;
-            */
         }
 
         public void MakeSelectRelicData()
@@ -117,65 +82,83 @@ namespace Ryneus
         public void MakeResult()
         {
             var getItemInfos = SceneParam.GetItemInfos;
-            //var record = PartyInfo.SymbolRecordList.Find(a => a.IsSameSymbol(CurrentSelectRecord()));
             
+            var lvUpList = new List<ActorInfo>();
+            // Expを付与する,結果非表示
+            var expGetItemInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Exp);
+            foreach (var expGetItemInfo in expGetItemInfos)
+            {
+                expGetItemInfo.SetGetFlag(true);
+                var target = _sceneParam.ActorInfos.Find(a => a.ActorId == expGetItemInfo.Param1);
+                if (target != null)
+                {
+                    var beforeLv = target.Level;
+                    var from = target.Evaluate();
+                    target.Exp.GainValue(expGetItemInfo.Param2);
+                    if (beforeLv != target.Level)
+                    {
+                        // 新規魔法取得があるか
+                        var skills = target.LearningSkills(target.Level - beforeLv);
+                        var to = target.Evaluate();
+                        if (skills.Count > 0)
+                        {
+                            foreach (var skill in skills)
+                            {
+                                var learnSkillInfo = new LearnSkillInfo(from,to,skill);
+                                _learnSkillInfo.Add(learnSkillInfo);
+                            }
+                        } else
+                        {
+                            _learnSkillInfo.Add(null);
+                        }
+                        lvUpList.Add(target);
+                    }
+                }
+            }
+            _levelUpData = lvUpList;
+
+            // エナジー獲得
+            var gainCurrency = 0;
+            var currencyGetItemInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Currency);
+            foreach (var currencyGetItemInfo in currencyGetItemInfos)
+            {
+                currencyGetItemInfo.SetGetFlag(true);
+                var gain = currencyGetItemInfo.Param1;
+                PartyInfo.AddCurrency(gain);
+                gainCurrency += gain;
+            }
+
+            // 魔法入手
+            var skillGetItemInfos = getItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
+            foreach (var skillGetItemInfo in skillGetItemInfos)
+            {
+                skillGetItemInfo.SetGetFlag(true);
+                AddPlayerInfoSkillId(skillGetItemInfo.Param1);
+            }
+
+            // 獲得エナジー、魔法情報を生成
+            _resultInfos.Clear();
+            if (gainCurrency > 0)
+            {
+                var resultInfo = new StrategyResultViewInfo();
+                resultInfo.SetTitle("+" + gainCurrency.ToString() + DataSystem.GetText(1000));
+                _resultInfos.Add(resultInfo);
+            }
+            foreach (var skillGetItemInfo in skillGetItemInfos)
+            {
+                var resultInfo = new StrategyResultViewInfo();
+                var skillData = DataSystem.FindSkill(skillGetItemInfo.Param1);
+                resultInfo.SetSkillId(skillData.Id);
+                resultInfo.SetTitle(skillData.Name);
+                _resultInfos.Add(resultInfo);
+            }
+
+
             foreach (var getItemInfo in getItemInfos)
             {
                 var resultInfo = new StrategyResultViewInfo();
                 switch (getItemInfo.GetItemType)
                 {
-                    case GetItemType.Exp:
-                        getItemInfo.SetGetFlag(true);
-                        var target = _sceneParam.ActorInfos.Find(a => a.ActorId == getItemInfo.Param1);
-                        if (target != null)
-                        {
-                            target.Exp.GainValue(getItemInfo.Param2);
-                        }
-                        break;
-                    case GetItemType.Currency:
-                        getItemInfo.SetGetFlag(true);
-                        if (_inBattleResult)
-                        { 
-                            var beforeGain = getItemInfo.ResultParam;
-                            var baseCurrency = getItemInfo.Param1;
-                            var bonusCurrency = 0;//(int)Math.Round(getItemInfo.Param1 * TotalScore * 0.01f);
-                            var gainCurrency = baseCurrency + bonusCurrency;
-                            
-                            if (beforeGain == 0 || gainCurrency > beforeGain)
-                            {
-                                // 獲得したNuを更新
-                                getItemInfo.SetResultParam(gainCurrency);
-                            }
-                            
-                            // 通常獲得+Nu
-                            resultInfo.SetTitle("+" + baseCurrency.ToString() + DataSystem.GetText(1000));
-                            _resultInfos.Add(resultInfo);
-                            // ボーナス獲得+Nu
-                            if (bonusCurrency > 0)
-                            {
-                                var bonusResult = new StrategyResultViewInfo();
-                                bonusResult.SetTitle(DataSystem.GetReplaceText(20050,bonusCurrency.ToString()) + DataSystem.GetText(1000));
-                                _resultInfos.Add(bonusResult);
-                            }
-                        } else
-                        {
-                            // 獲得+Nu
-                            var gain = getItemInfo.Param1;
-                            resultInfo.SetTitle("+" + gain.ToString() + DataSystem.GetText(1000));
-                            _resultInfos.Add(resultInfo);
-                            getItemInfo.SetResultParam(gain);
-                        }
-                        break;
-                    case GetItemType.Skill:
-                        getItemInfo.SetGetFlag(true);
-                        AddPlayerInfoSkillId(getItemInfo.Param1);
-                        // 魔法取得
-                        var skillData = DataSystem.FindSkill(getItemInfo.Param1);
-                        resultInfo.SetSkillId(skillData.Id);
-                        resultInfo.SetTitle(skillData.Name);
-                        //getItemInfo.SetResultParam(skillData.Id);
-                        _resultInfos.Add(resultInfo);
-                        break;
                     case GetItemType.Regeneration:
                     case GetItemType.Demigod:
                     case GetItemType.StatusUp:
@@ -197,59 +180,14 @@ namespace Ryneus
                         resultInfo.SetTitle(DataSystem.GetReplaceText(20200,actorData2.Name));
                         _resultInfos.Add(resultInfo);
                         break;
-                    case GetItemType.BattleScoreBonus:
-                        getItemInfo.SetGetFlag(true);
-                        var beforeSave = getItemInfo.ResultParam;
-                        var battleScore = SceneParam.BattleResultScore;
-                        if (battleScore > beforeSave)
-                        {
-                            getItemInfo.SetResultParam(battleScore);
-                            //record.SetBattleScore(battleScore);
-                        }
-                        break;
                     case GetItemType.SelectRelic:
                         // アルカナ選択の時は既にFlagを変えておく
-                        break;
-                    case GetItemType.BattleNuminosBonus:
-                    case GetItemType.BattleEnemyLvUp:
-                        getItemInfo.SetGetFlag(true);
-                        getItemInfo.SetResultParam(getItemInfo.Param1);
                         break;
                     case GetItemType.Ending:
                         getItemInfo.SetGetFlag(true);
                         break;
                 }
             }
-            // スコア報酬を更新
-            /*
-            PartyInfo.UpdateScorePrizeInfos(CurrentStage.WorldType);
-            var nextScorePrizeInfos = PartyInfo.CheckGainScorePrizeInfos();
-            foreach (var nextScorePrizeInfo in nextScorePrizeInfos)
-            {
-                foreach (var prizeMaster in nextScorePrizeInfo.PrizeMaster)
-                {
-                    var resultInfo = new StrategyResultViewInfo();
-                    switch(prizeMaster.GetItem.Type)
-                    {
-                        case GetItemType.RemakeHistory:
-                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(20100));
-                            _resultInfos.Add(resultInfo);
-                            break;
-                        case GetItemType.ParallelHistory:
-                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(20110));
-                            _resultInfos.Add(resultInfo);
-                            break;
-                        case GetItemType.Multiverse:
-                            getItemInfos.Add(new GetItemInfo(prizeMaster.GetItem));
-                            resultInfo.SetTitle(DataSystem.GetText(20120));
-                            _resultInfos.Add(resultInfo);
-                            break;
-                    }
-                }
-            }
-            */
         }
 
         public void MakeSelectRelic(int skillId)
@@ -412,31 +350,10 @@ namespace Ryneus
 
         public void SeekStage()
         {
-            /*
-            var seekStage = RemainTurns == 1;
-            if (RemainTurns > 1)
-            {
-                CurrentStage.SeekStage();
-            }
-            if (CurrentStage.WorldType == WorldType.Brunch)
-            {
-                if (seekStage)
-                {
-                    CurrentSaveData.MakeStageData(CurrentStage.Id+1);
-                    CurrentStage.SetCurrentTurn(1);
-                }
-                PartyInfo.SetBrunchStageIdSeek(CurrentStage.Id,CurrentStage.Seek,false);
-            }
-            SetStageSeek();
-            */
+            SeekNext();
             SavePlayerStageData(true);
         }
 
-
-        public void SetSelectSymbol()
-        {
-            //PartyInfo.SetSelectSymbol(CurrentSelectRecord(),true);
-        }
 
 
         public void ReturnTempBattleMembers()
