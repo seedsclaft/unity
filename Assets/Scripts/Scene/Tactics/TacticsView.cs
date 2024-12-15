@@ -102,6 +102,7 @@ namespace Ryneus
                 symbolInfoList.UpdateSelectIndex(selectIndex);
                 symbolInfoList.UpdateScrollRect(selectIndex + 2);
             });
+            SetActivate(symbolInfoList);
         }
 
         private void OnClickSymbol()

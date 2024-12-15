@@ -33,11 +33,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1565751814204633514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 176, y: 144}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 16, y: -28}
+  m_SizeDelta: {x: 144, y: 74}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &4790477418314545724
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5372549}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -266,6 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1565751814204633514}
+  - component: {fileID: 1117363098816992685}
   - component: {fileID: 8888183867708612583}
   m_Layer: 5
   m_Name: SymbolItem
@@ -296,11 +297,32 @@ RectTransform:
   - {fileID: 5446308469214167267}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 176, y: 96}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1117363098816992685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2207730369780647802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bce55d9541e7594c84dc777e7bf6369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickButton: {fileID: 1030471526905338187}
+  cursor: {fileID: 0}
+  changeCursorColor: 1
+  disable: {fileID: 0}
+  selectColor: {r: 0, g: 0, b: 0, a: 0}
+  unSelectColor: {r: 0, g: 0, b: 0, a: 0}
+  textUguiList: []
+  imageUguiList: []
+  symbolComponent: {fileID: 8888183867708612583}
 --- !u!114 &8888183867708612583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,8 +353,8 @@ MonoBehaviour:
   evaluateRoot: {fileID: 0}
   evaluate: {fileID: 0}
   selected: {fileID: 8789257321732522173}
-  lastSelected: {fileID: 6386410571209062719}
-  selectCursor: {fileID: 5677061188887663286}
+  lastSelected: {fileID: 5677061188887663286}
+  getItemList: {fileID: 0}
 --- !u!1 &2367144986214893900
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6587502417479211784
 RectTransform:
   m_ObjectHideFlags: 0

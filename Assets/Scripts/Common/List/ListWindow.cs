@@ -193,6 +193,7 @@ namespace Ryneus
             var prevView = prev.GetComponent<IListViewItem>();
             if (prevView != null)
             {
+                prev.name = "-1";
                 _itemList.AddLast(prevView);
             }
         }
@@ -391,6 +392,7 @@ namespace Ryneus
                 UpdateItemPrefab();
                 UpdateAllItems();
                 _lastStartIndex = startIndex;
+                _selectedHandler?.Invoke();
             }
         }
 

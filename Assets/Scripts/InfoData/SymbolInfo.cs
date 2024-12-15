@@ -31,6 +31,13 @@ namespace Ryneus
             _selected = lastSelected;
         }
 
+        private bool _lastSelected;
+        public bool LastSelected => _lastSelected;
+        public void SetLastSelected(bool lastSelected)
+        {
+            _lastSelected = lastSelected;
+        }
+
         public SymbolInfo(StageSymbolData stageSymbolData)
         {
             _stageSymbolData = stageSymbolData;

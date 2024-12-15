@@ -105,13 +105,17 @@ namespace Ryneus
             _busy = isBusy;
         }
 
-        public void Update()
+        public void LateUpdate() 
         {
             if (_inputSystem != null && _busy == false)
             {
                 _inputSystemModel.UpdateInputKeyType(_inputSystem.Update());
             }
             UpdateWait();
+        }
+
+        public void Update()
+        {
         }
 
         private void UpdateWait()

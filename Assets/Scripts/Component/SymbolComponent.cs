@@ -16,12 +16,19 @@ namespace Ryneus
         [SerializeField] private TextMeshProUGUI evaluate;
         [SerializeField] private GameObject selected;
         [SerializeField] private GameObject lastSelected;
-        [SerializeField] private GameObject selectCursor;
+        [SerializeField] private BaseList getItemList = null;
+        public BaseList GetItemList => getItemList;
         private SymbolInfo _symbolInfo = null;
         public SymbolInfo SymbolInfo => _symbolInfo;
         public int Seek => _symbolInfo != null ? _symbolInfo.Master.Seek : -1;
 
         private bool _animationInit = false;
+
+        public void Initialize()
+        {
+            getItemList?.Initialize();
+        }
+
         public void UpdateInfo(SymbolInfo symbolInfo)
         {
             _symbolInfo = symbolInfo;
@@ -32,15 +39,13 @@ namespace Ryneus
             UpdateCommandTitle();
             UpdateSymbolImage();
             UpdateEvaluate();
-            if (selected != null)
-            {
-                selected.SetActive(symbolInfo.Selected);
-            }
+            selected?.SetActive(symbolInfo.Selected);
             if (lastSelected != null)
             {
-                var lastSelect = _symbolInfo.Selected;
-                lastSelected.SetActive(lastSelect);
+                //var lastSelect = _symbolInfo.Selected;
+                lastSelected.SetActive(symbolInfo.LastSelected);
                 //symbolImage.gameObject.SetActive(!_symbolInfo.Past && !lastSelect);
+                /*
                 if (_animationInit == false && lastSelect)
                 {
                     var uiView = lastSelected.GetComponent<RectTransform>();
@@ -50,6 +55,11 @@ namespace Ryneus
                         1.2f);
                     _animationInit = true;
                 }
+                */
+            }
+            if (getItemList != null)
+            {
+                getItemList.SetData(MakeGetItemListData(),false);
             }
         }
 
@@ -116,9 +126,45 @@ namespace Ryneus
             }
         }
 
-        public void UpdateCursor(bool select)
+        private List<ListData> MakeGetItemListData()
         {
-            selectCursor?.SetActive(select);
+            var list = new List<ListData>();
+            foreach (var getItemInfo in _symbolInfo.GetItemInfos)
+            {
+                if (getItemInfo.GetItemType == GetItemType.None)
+                {
+                    continue;
+                }
+                var data = new ListData(getItemInfo);
+                //data.SetEnable(symbolInfo.Cleared != true || getItemInfo.GetItemType != GetItemType.Numinous);
+                if (getItemInfo.GetItemType == GetItemType.Skill)
+                {
+                    /*
+                    // 入手済みなら
+                    if (partyInfo.CurrentAlchemyIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.Param1))
+                    {
+                        data.SetEnable(false);
+                    }
+                    if (partyInfo.CurrentAlcanaIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.Param1))
+                    {
+                        data.SetEnable(false);
+                    }
+                    */
+                    
+                } else
+                if (getItemInfo.GetItemType == GetItemType.AddActor)
+                {
+                    /*
+                    // 入手済みなら
+                    if (partyInfo.CurrentActorIdList(currentStageInfo.Id,currentStageInfo.Seek,currentStageInfo.WorldType).Contains(getItemInfo.ResultParam))
+                    {
+                        data.SetEnable(false);
+                    }
+                    */
+                }
+                list.Add(data);
+            }
+            return list;
         }
     }
 }
