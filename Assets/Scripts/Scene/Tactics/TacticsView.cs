@@ -137,6 +137,7 @@ namespace Ryneus
         {
             tacticsCommandList.SetData(menuCommands);
             UpdateHelpWindow();
+            SetActivate(tacticsCommandList);
         }
         
         private void CallSelectTacticsCommand()
@@ -339,7 +340,7 @@ namespace Ryneus
         {
         }
 
-        public void EndStatus()
+        public void ActivateCommandList()
         {
             SetActivate(tacticsCommandList);
         }

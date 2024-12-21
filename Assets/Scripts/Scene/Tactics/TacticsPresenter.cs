@@ -170,23 +170,6 @@ namespace Ryneus
             CheckTutorialState();
         }
 
-        private void CommandNeedEndBrunch()
-        {
-            // コンフリクト確認
-            _busy = true;
-            var popupInfo = new PopupInfo
-            {
-                PopupType = PopupType.CheckConflict,
-                EndEvent = () =>
-                {
-                    _busy = false;
-                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                }
-            };
-            _view.CommandCallPopup(popupInfo);
-        }
-
-
         private void UpdateCommand(ViewEvent viewEvent)
         {
             if (_busy || _view.AnimationBusy)
@@ -329,6 +312,7 @@ namespace Ryneus
         private void CommandOnCancelSymbol()
         {
             _view.SetViewBusy(false);
+            _view.ActivateCommandList();
         }
 
         private void CommandNextSeek()
@@ -905,7 +889,7 @@ namespace Ryneus
                 {
                     _busy = false;
                 });
-                _view.EndStatus();
+                _view.ActivateCommandList();
                 _view.SetHelpText(DataSystem.GetText(20020));
                 _view.SetNuminous(_model.Currency);
                 CommandRefresh();

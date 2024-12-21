@@ -575,10 +575,7 @@ namespace Ryneus
             {
                 return;
             }
-            if (_cancelEvent != null)
-            {
-                _cancelEvent();
-            }
+            _cancelEvent?.Invoke();
         }
 
         public void MouseMoveHandler(Vector3 position)
@@ -662,6 +659,8 @@ namespace Ryneus
                     ScrollRect.normalizedPosition = new Vector2(0,normalizedPosition);
                 }
             }
+            UpdateListItem();
+            UpdateSelectIndex(Index);
         }
 
         private int ListItemCount()
