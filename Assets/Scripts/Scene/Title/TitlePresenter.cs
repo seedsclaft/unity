@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Title;
 
 namespace Ryneus
 {
+    using Title;
     public class TitlePresenter : BasePresenter
     {
         TitleModel _model = null;
@@ -56,7 +56,7 @@ namespace Ryneus
             {
                 return;
             }
-            switch (viewEvent.ViewCommandType.TitleCommandType)
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.SelectSideMenu:
                     CommandSelectSideMenu();

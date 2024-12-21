@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Map;
 
 namespace Ryneus
 {
+    using Map;
     public class MapPresenter : BasePresenter
     {
         MapModel _model = null;
@@ -40,6 +40,7 @@ namespace Ryneus
             {
                 return;
             }
+            /*
             Debug.Log(viewEvent.ViewCommandType.MapCommandType);
             switch (viewEvent.ViewCommandType.MapCommandType)
             {
@@ -59,6 +60,7 @@ namespace Ryneus
                     CommandOnCancelSymbol();
                     break;
             }
+            */
         }
 
         private void CommandBattleStart()

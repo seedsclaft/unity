@@ -145,7 +145,7 @@ namespace Ryneus
             {
                 return;
             }
-            switch (statusViewEvent.ViewCommandType.StatusCommandType)
+            switch (statusViewEvent.ViewCommandType.CommandType)
             {
                 case Status.CommandType.LevelUp:
                     CommandLevelUp();

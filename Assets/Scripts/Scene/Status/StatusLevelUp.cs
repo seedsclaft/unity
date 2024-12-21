@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Status;
 
 namespace Ryneus
 {
+    using Status;
     public class StatusLevelUp : MonoBehaviour
     {
         private System.Action<ViewEvent> _commandData = null;

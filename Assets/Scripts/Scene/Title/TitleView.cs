@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using Title;
 
 namespace Ryneus
 {
+    using Title;
     public class TitleView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private TextMeshProUGUI versionText = null;
@@ -17,10 +16,7 @@ namespace Ryneus
         public new void SetEvent(System.Action<ViewEvent> commandData) => _commandData = commandData;
         public void CallEvent(CommandType titleCommandType)
         {
-            var commandType = new ViewCommandType
-            {
-                TitleCommandType = titleCommandType
-            };
+            var commandType = new ViewCommandType(ViewCommandSceneType.Title,titleCommandType);
             var eventData = new ViewEvent(commandType);
             _commandData(eventData);
         }
@@ -74,22 +70,14 @@ namespace Ryneus
         {
         }
     }
-}
 
-namespace Ryneus
-{    
-    public partial class ViewCommandType
-    {
-        public CommandType TitleCommandType;
-    }
-}
-
-namespace Title
-{    
-    public enum CommandType
-    {
-        None = 0,
-        SelectTitle,
-        SelectSideMenu,
+    namespace Title
+    {    
+        public enum CommandType
+        {
+            None = 0,
+            SelectTitle,
+            SelectSideMenu,
+        }
     }
 }

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Map;
 
 namespace Ryneus
 {
+    using Map;
     public class MapView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private SymbolList symbolInfoList;
@@ -12,15 +12,6 @@ namespace Ryneus
         public new void SetEvent(Action<ViewEvent> commandData) => _commandData = commandData;
         public void CallEvent(CommandType mapCommandType,object sendData = null)
         {
-            var commandType = new ViewCommandType
-            {
-                MapCommandType = mapCommandType
-            };
-            var eventData = new ViewEvent(commandType)
-            {
-                template = sendData
-            };
-            _commandData(eventData);
         }
 
         private VirtualModelController _virtualModelController = null;
@@ -237,21 +228,16 @@ namespace Ryneus
 
 namespace Ryneus
 {    
-    public partial class ViewCommandType
+    namespace Map
     {
-        public CommandType MapCommandType;
-    }
-}
-
-namespace Map
-{
-    public enum CommandType
-    {
-        None = 0,
-        BattleStart,
-        CallStatus,
-        CallSymbol,
-        OnClickSymbol,
-        OnCancelSymbol,
+        public enum CommandType
+        {
+            None = 0,
+            BattleStart,
+            CallStatus,
+            CallSymbol,
+            OnClickSymbol,
+            OnCancelSymbol,
+        }
     }
 }

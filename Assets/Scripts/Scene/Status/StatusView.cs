@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using Status;
 using System;
 
 namespace Ryneus
 {
+    using Status;
     public class StatusView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private Button helpButton = null;
@@ -24,10 +24,7 @@ namespace Ryneus
         public void SetStatusEvent(Action<ViewEvent> commandData) => _commandData = commandData;
         public void CallEvent(CommandType statusCommandType,object sendData = null)
         {
-            var commandType = new ViewCommandType
-            {
-                StatusCommandType = statusCommandType
-            };
+            var commandType = new ViewCommandType(ViewCommandSceneType.Status,statusCommandType);
             var eventData = new ViewEvent(commandType)
             {
                 template = sendData
@@ -387,38 +384,30 @@ namespace Ryneus
             _isRanking = isRanking;
         }        
     }
-}
-
-namespace Ryneus
-{    
-    public partial class ViewCommandType
+    
+    namespace Status
     {
-        public CommandType StatusCommandType;
-    }
-}
-
-namespace Status
-{
-    public enum CommandType
-    {
-        None = 0,
-        SelectActor,
-        CancelActor,
-        LeftActor,
-        RightActor,
-        SelectEquipSkill,
-        CancelEquipSkill,
-        SelectChangeSkill,
-        DecideStage,
-        CharacterList,
-        SelectCharacter,
-        SelectCommandList,
-        LvReset,
-        LevelUp,
-        ShowLearnMagic,
-        LearnMagic,
-        HideLearnMagic,
-        CallHelp,
-        Back
+        public enum CommandType
+        {
+            None = 0,
+            SelectActor,
+            CancelActor,
+            LeftActor,
+            RightActor,
+            SelectEquipSkill,
+            CancelEquipSkill,
+            SelectChangeSkill,
+            DecideStage,
+            CharacterList,
+            SelectCharacter,
+            SelectCommandList,
+            LvReset,
+            LevelUp,
+            ShowLearnMagic,
+            LearnMagic,
+            HideLearnMagic,
+            CallHelp,
+            Back
+        }
     }
 }

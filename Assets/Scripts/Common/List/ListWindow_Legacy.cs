@@ -6,6 +6,7 @@ namespace Ryneus
 {
     abstract public partial class ListWindow : MonoBehaviour
     {
+        /*
         private void CreateListPrefab(int count)
         {
             var listCount = count;
@@ -60,5 +61,6 @@ namespace Ryneus
                 }
             }
         }
+        */
     }
 }

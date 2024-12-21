@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Boot;
-using Ryneus;
 
 namespace Ryneus
 {
+    using Boot;
     public class BootView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private Button logoButton = null;
         private new System.Action<ViewEvent> _commandData = null;
         public new void SetEvent(System.Action<ViewEvent> commandData) => _commandData = commandData;
+        public void CallEvent(CommandType bootCommand)
+        {
+            var commandType = new ViewCommandType(ViewCommandSceneType.Boot,bootCommand);
+            var eventData = new ViewEvent(commandType);
+            _commandData(eventData);
+        }
 
         public override void Initialize() 
         {
@@ -27,12 +32,7 @@ namespace Ryneus
 
         private void CallLogoClick()
         {
-            var commandType = new ViewCommandType
-            {
-                BootCommandType = CommandType.LogoClick
-            };
-            var eventData = new ViewEvent(commandType);
-            _commandData(eventData);
+            CallEvent(CommandType.LogoClick);
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)
@@ -42,23 +42,14 @@ namespace Ryneus
                 CallLogoClick();
             }
         }
-    }
-}
 
-namespace Ryneus
-{    
-    public partial class ViewCommandType
-    {
-        public CommandType BootCommandType;
     }
-    
-}
-
-namespace Boot
-{    
-    public enum CommandType
-    {
-        None = 0,
-        LogoClick,
+    namespace Boot
+    {    
+        public enum CommandType
+        {
+            None = 0,
+            LogoClick,
+        }
     }
 }

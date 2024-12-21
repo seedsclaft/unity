@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Tactics;
 
 namespace Ryneus
 {
+    using Tactics;
     public partial class TacticsPresenter : BasePresenter
     {
         TacticsModel _model = null;
@@ -76,7 +76,7 @@ namespace Ryneus
             //CheckTutorialState();
         }
 
-        private void CheckTutorialState(CommandType commandType = CommandType.None)
+        private void CheckTutorialState(object commandType = null)
         {
             Func<TutorialData,bool> enable = (tutorialData) => 
             {
@@ -195,7 +195,7 @@ namespace Ryneus
             }
             _view.UpdateInputKeyActive(viewEvent.ViewCommandType,_model.TacticsCommandType);
             //Debug.Log(viewEvent.commandType);
-            switch (viewEvent.ViewCommandType.TacticsCommandType)
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.BattleStart:
                     CommandBattleStart();
@@ -276,7 +276,7 @@ namespace Ryneus
                     break;
             }
             // チュートリアル確認
-            CheckTutorialState(viewEvent.ViewCommandType.TacticsCommandType);
+            CheckTutorialState(viewEvent.ViewCommandType.CommandType);
         }
 
         private void CommandBattleStart()

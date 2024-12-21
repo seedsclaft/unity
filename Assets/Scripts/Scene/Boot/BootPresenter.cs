@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Boot;
+
 namespace Ryneus
 {
+    using Boot;
     public class BootPresenter : BasePresenter
     {
         private BootView _view = null;
@@ -61,9 +62,15 @@ namespace Ryneus
             {
                 return;
             }
-            if (viewEvent.ViewCommandType.BootCommandType == CommandType.LogoClick)
+            if (viewEvent.ViewCommandType.ViewCommandSceneType != ViewCommandSceneType.Boot)
             {
-                CommandLogoClick();
+                return;
+            }
+            switch (viewEvent.ViewCommandType.CommandType)
+            {
+                case CommandType.LogoClick:
+                    CommandLogoClick();
+                    break;
             }
         }
 

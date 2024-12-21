@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Status;
 
 namespace Ryneus
 {
+    using Status;
     public class StatusPresenter : BasePresenter
     {
         private StatusModel _model = null;
@@ -43,7 +43,7 @@ namespace Ryneus
                 return;
             }
             UnityEngine.Debug.Log(viewEvent.commandType);
-            switch (viewEvent.ViewCommandType.StatusCommandType)
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.LeftActor:
                     CommandLeftActor();

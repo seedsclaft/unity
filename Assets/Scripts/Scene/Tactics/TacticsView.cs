@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Tactics;
 using TMPro;
 using DG.Tweening;
 
 namespace Ryneus
 {
+    using Tactics;
     public class TacticsView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private BaseList tacticsCommandList = null;
@@ -29,19 +29,17 @@ namespace Ryneus
         public void SetViewBusy(bool isBusy)
         {
             _viewBusy = isBusy;
-        }
+        }        
         public void CallEvent(CommandType tacticsCommandType,object sendData = null)
         {
-            var commandType = new ViewCommandType
-            {
-                TacticsCommandType = tacticsCommandType
-            };
+            var commandType = new ViewCommandType(ViewCommandSceneType.Tactics,tacticsCommandType);
             var eventData = new ViewEvent(commandType)
             {
                 template = sendData
             };
             _commandData(eventData);
         }
+        
         public override void Initialize()
         {
             base.Initialize();
@@ -398,8 +396,5 @@ namespace Ryneus
             }
         }
     }
-    public partial class ViewCommandType
-    {
-        public CommandType TacticsCommandType;
-    }
+
 }

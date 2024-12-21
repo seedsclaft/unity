@@ -28,10 +28,25 @@ namespace Ryneus
         }
     }    
     
-    public partial class ViewCommandType
-    {
+    public class ViewCommandType
+    {        
+        public ViewCommandSceneType ViewCommandSceneType;
+        public object CommandType;
+        public ViewCommandType(ViewCommandSceneType viewCommandSceneType,object template)
+        {
+            ViewCommandSceneType = viewCommandSceneType;
+            CommandType = template;
+        }
     }
 
+    public enum ViewCommandSceneType
+    {
+        None,
+        Boot,
+        Title,
+        Tactics,
+        Status,
+    }
 
     public interface IClickHandlerEvent
     {

@@ -32,16 +32,17 @@ namespace Ryneus
         private int _inputBusyFrame = 0;
 
         //[SerializeField] private bool isScrollList = true; // 表示数が初期プレハブ数より多くなるか
-        [SerializeField] private bool horizontal = false; 
         [SerializeField] private bool reverse = false; 
         [SerializeField] private bool warpMode = true; 
-        [SerializeField] private ScrollRect scrollRect = null; 
-        [SerializeField] private bool itemPrefabMode = true; 
-        public ScrollRect ScrollRect => scrollRect; 
-        [SerializeField] private GameObject itemPrefab = null; 
+        [SerializeField] private GameObject itemPrefab = null;
+
+        private ScrollRect _scrollRect = null; 
+        public ScrollRect ScrollRect => _scrollRect; 
+        private bool _horizontal => _scrollRect.horizontal; 
         private List<GameObject> _itemPrefabList = new ();
         public List<GameObject> ItemPrefabList => _itemPrefabList;
         private GameObject _prevPrefab = null;
+        private GameObject _prefabPool = null;
         private List<ListData> _listDates = new ();
         public List<ListData> ListDates => _listDates;
         public int DataCount => _listDates.Count;
@@ -79,7 +80,7 @@ namespace Ryneus
 
         private void DestroyListChildren()
         {
-            foreach(Transform child in scrollRect.content.transform)
+            foreach(Transform child in _scrollRect.content.transform)
             {
                 Destroy(child.gameObject);
             }
@@ -87,12 +88,15 @@ namespace Ryneus
 
         public void InitializeListView()
         {
+            _prefabPool = Instantiate(new GameObject());
+            _prefabPool.transform.SetParent(gameObject.transform,false);
+            _scrollRect = GetComponentInChildren<ScrollRect>();
             DestroyListChildren();
             _objectList = new List<GameObject>();
             SetValueChangedEvent();
             SetItemSize();
             _inputCallHandler = null;
-            scrollRect.scrollSensitivity = 10;
+            _scrollRect.scrollSensitivity = 10;
         }
 
         public void SetListData(List<ListData> listData)
@@ -106,7 +110,7 @@ namespace Ryneus
 
         private void SetValueChangedEvent()
         {
-            scrollRect.onValueChanged.AddListener(ValueChanged);
+            _scrollRect.onValueChanged.AddListener(ValueChanged);
         }
 
         private void ValueChanged(Vector2 scrollPosition)
@@ -134,14 +138,8 @@ namespace Ryneus
         public void CreateList()
         {
             if (_itemPrefabList.Count > 0) return;
-            if (itemPrefabMode == false)
-            {
-                CreateListPrefab(ListDates.Count);
-            } else
-            {
-                CreateObjectPrefab();
-                CreateListItemPrefab();
-            }
+            CreateObjectPrefab();
+            CreateListItemPrefab();
         }
 
         public void UpdateObjectList()
@@ -156,7 +154,7 @@ namespace Ryneus
         {
             _blankObject = new GameObject("blank");
             _blankObject.AddComponent<RectTransform>();
-            _blankObject.transform.SetParent(scrollRect.content, false);
+            _blankObject.transform.SetParent(_scrollRect.content, false);
             _objectList.Add(_blankObject);
             var rect = _blankObject.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector3(_itemSize.x,_itemSize.y,0);
@@ -165,7 +163,7 @@ namespace Ryneus
             for (var i = 0; i < createCount-1;i++)
             {
                 var prefab = Instantiate(_blankObject);
-                prefab.transform.SetParent(scrollRect.content, false);
+                prefab.transform.SetParent(_scrollRect.content, false);
                 _objectList.Add(prefab);
             }
             if (reverse)
@@ -188,38 +186,25 @@ namespace Ryneus
                     _itemList.AddLast(view);
                 }
             }
-            var prev = Instantiate(itemPrefab);
-            _prevPrefab = prev;
-            var prevView = prev.GetComponent<IListViewItem>();
+            _prevPrefab = Instantiate(itemPrefab);
+            var prevView = _prevPrefab.GetComponent<IListViewItem>();
             if (prevView != null)
             {
-                prev.name = "-1";
+                _prevPrefab.name = "-1";
                 _itemList.AddLast(prevView);
             }
         }
 
         public void UpdateItemPrefab(int selectIndex = -1)
         {
-            if (itemPrefabMode == false) 
-            {
-                UpdateListItemData();
-                return;
-            }
             var startIndex = selectIndex == -1 ? GetStartIndex(): selectIndex;
             for (int i = 0;i < _itemPrefabList.Count;i++)
             {
                 var itemPrefab = _itemPrefabList[i];
-                var itemIndex = i+startIndex;
                 itemPrefab.SetActive(false);
-                //itemPrefab.transform.SetParent(scrollRect.content,false);
+                var itemIndex = i+startIndex;
                 var listItem = itemPrefab.GetComponent<ListItem>();
-                if (ListDates.Count <= itemIndex)
-                {
-                    listItem.SetListData(null,-1);
-                    listItem.SetUnSelect();
-                    continue;
-                }
-                if (_objectList.Count <= itemIndex || itemIndex < 0)
+                if (ListDates.Count <= itemIndex || _objectList.Count <= itemIndex || itemIndex < 0)
                 {
                     listItem.SetListData(null,-1);
                     listItem.SetUnSelect();
@@ -229,30 +214,26 @@ namespace Ryneus
                 itemPrefab.transform.SetParent(_objectList[itemIndex].transform,false);
                 itemPrefab.SetActive(true);
             }
-            if (startIndex > 0)
+            if (startIndex > 0 && _objectList.Count > startIndex)
             {   
-                if (_objectList.Count > startIndex)
+                if (_objectList[startIndex-1].transform.childCount == 0)
                 {
-                    if (_objectList[startIndex-1].transform.childCount == 0)
+                    _prevPrefab.SetActive(true);
+                    _prevPrefab.transform.SetParent(_objectList[startIndex-1].transform,false);
+                } else
+                {
+                    _prevPrefab.SetActive(false);
+                    var childObject = _objectList[startIndex-1].transform.GetChild(0).gameObject;
+                    if (childObject.activeSelf == false)
                     {
-                        _prevPrefab.SetActive(true);
-                        _prevPrefab.transform.SetParent(_objectList[startIndex-1].transform,false);
-                    } else
-                    {
-                        _prevPrefab.SetActive(false);
-                        var childObject = _objectList[startIndex-1].transform.GetChild(0).gameObject;
-                        if (childObject.activeSelf == false)
-                        {
-                            childObject.SetActive(true);
-                        }
+                        childObject.SetActive(true);
                     }
+                    _prevPrefab.transform.SetParent(_prefabPool.transform,false);
                 }
             } else
             {
-                if (_prevPrefab != null)
-                {
-                    _prevPrefab.SetActive(false);
-                }
+                _prevPrefab?.SetActive(false);
+                _prevPrefab?.transform.SetParent(_prefabPool.transform,false);
             }
         }
 
@@ -265,30 +246,26 @@ namespace Ryneus
 
         public void AddCreateList(int count)
         {
-            if (itemPrefabMode == false) 
-            {
-                AddCreateListPlus(count);
-                return;
-            }
             int createCount = count;
             foreach (var objectList in _objectList)
             {
                 for (int i = 0;i < objectList.transform.childCount;i++)
                 {
                     var child = objectList.transform.GetChild(i);
-                    child.transform.SetParent(scrollRect.content, false);
+                    child.transform.SetParent(_scrollRect.content, false);
                 }
             }
             for (var i = 0; i < createCount;i++)
             {
                 var prefab = Instantiate(_blankObject);
-                prefab.transform.SetParent(scrollRect.content, false);
+                prefab.transform.SetParent(_scrollRect.content, false);
                 _objectList.Add(prefab);
             }
             var startIndex = 0;
             for (int i = startIndex;i < _itemPrefabList.Count;i++)
             {
-                if (ListDates.Count <= i){
+                if (ListDates.Count <= i)
+                {
                     continue;
                 }
                 _itemPrefabList[i].transform.SetParent(_objectList[i].transform,false);
@@ -297,12 +274,12 @@ namespace Ryneus
 
         public InputKeyType GetPlusKey()
         {   
-            return (horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
+            return (_horizontal == true) ? InputKeyType.Right : InputKeyType.Down;
         }
         
         public InputKeyType GetMinusKey()
         {   
-            return (horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
+            return (_horizontal == true) ? InputKeyType.Left : InputKeyType.Up;
         }
 
         public bool InputDir4(InputKeyType keyType)
@@ -312,27 +289,27 @@ namespace Ryneus
 
         private float GetViewPortWidth()
         {
-            return scrollRect.viewport.rect.width;
+            return _scrollRect.viewport.rect.width;
         }
 
         private float GetViewPortHeight()
         {
-            return scrollRect.viewport.rect.height;
+            return _scrollRect.viewport.rect.height;
         }
 
         private float GetScrolledWidth()
         {
-            return (scrollRect.content.rect.width - GetViewPortWidth()) * scrollRect.normalizedPosition.x;
+            return (_scrollRect.content.rect.width - GetViewPortWidth()) * _scrollRect.normalizedPosition.x;
         }
 
         private float GetScrolledHeight()
         {
-            return (scrollRect.content.rect.height - GetViewPortHeight()) * (1.0f - scrollRect.normalizedPosition.y);
+            return (_scrollRect.content.rect.height - GetViewPortHeight()) * (1.0f - _scrollRect.normalizedPosition.y);
         }
 
         private float ItemSpace()
         {
-            if (horizontal)
+            if (_horizontal)
             {
                 var horizontal = GetComponentInChildren<HorizontalLayoutGroup>();
                 if (horizontal != null)
@@ -352,7 +329,7 @@ namespace Ryneus
 
         private float ListMargin()
         {
-            if (horizontal)
+            if (_horizontal)
             {
                 var horizontal = GetComponentInChildren<HorizontalLayoutGroup>();
                 if (horizontal != null)
@@ -378,8 +355,8 @@ namespace Ryneus
         {
             var itemSpace = ItemSpace();
             var listMargin = ListMargin();
-            var itemSize = horizontal ? _itemSize.x : _itemSize.y;
-            var rectSize = horizontal ? GetScrolledWidth() : Math.Max(0,GetScrolledHeight());
+            var itemSize = _horizontal ? _itemSize.x : _itemSize.y;
+            var rectSize = _horizontal ? GetScrolledWidth() : Math.Max(0,GetScrolledHeight());
             var index = (int)Math.Floor( (rectSize - itemSpace - listMargin + 4) / (itemSize + itemSpace) );
             return Math.Max(0,index);
         }
@@ -677,7 +654,7 @@ namespace Ryneus
             {
                 var num = 1.0f / (dataCount - listCount);
                 var normalizedPosition = 1.0f - (num * (listIndex - (listCount-1)));
-                if (horizontal)
+                if (_horizontal)
                 {
                     ScrollRect.normalizedPosition = new Vector2(normalizedPosition,0);
                 } else
@@ -693,7 +670,7 @@ namespace Ryneus
             var height = GetViewPortHeight();
             var listMargin = ListMargin();
             var space = ItemSpace();
-            if (horizontal)
+            if (_horizontal)
             {   
                 return (int)Math.Round( (width - listMargin) / (_itemSize.x + space));
             } else
@@ -704,7 +681,7 @@ namespace Ryneus
 
         public void ResetScrollRect()
         {
-            if (horizontal)
+            if (_horizontal)
             {   
                 ScrollRect.normalizedPosition = new Vector2(1,0);
             } else
