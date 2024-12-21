@@ -14,6 +14,7 @@ namespace Ryneus
     public class StageData
     {   
         public int Id;
+        public int StageNo;
         public string Name;
         public string AchieveText;
         public bool Selectable;

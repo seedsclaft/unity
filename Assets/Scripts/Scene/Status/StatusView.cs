@@ -15,7 +15,6 @@ namespace Ryneus
         [SerializeField] private BaseList memberList = null;
         [SerializeField] private MagicList equipSkillList = null;
         [SerializeField] private MagicList changeSkillList = null;
-        [SerializeField] private SkillAction selectingSkill = null;
         [SerializeField] private ActorInfoComponent selectingActorInfoComponent = null;
         [SerializeField] private GameObject topLayer = null;
         [SerializeField] private GameObject statusLayer = null;
@@ -48,7 +47,6 @@ namespace Ryneus
             InitializeMemberList();
             InitializeEquipSkillList();
             InitializeChangeSkillList();
-            selectingSkill.gameObject.SetActive(false);
 
             new StatusPresenter(this,actorInfos);
         }
@@ -123,9 +121,6 @@ namespace Ryneus
 
         public void SetSelectingEquipSkill(ListData skillInfo)
         {
-            selectingSkill.gameObject.SetActive(skillInfo != null);
-            selectingSkill.SetListData(skillInfo,0);
-            selectingSkill.UpdateViewItem();
         }
 
         private void OnSelectEquipSkill()

@@ -45,7 +45,7 @@ namespace Ryneus
             */
 
             stageLv?.SetText(stageData.StageLv.ToString());
-            stageNoText?.SetText(DataSystem.GetReplaceText(15010,stageData.Id.ToString()));
+            stageNoText?.SetText(DataSystem.GetReplaceText(15010,stageData.StageNo.ToString()));
         }
     }
 }

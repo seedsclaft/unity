@@ -198,11 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa36f76049a42aa4bbfd1809a542d4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 0
   reverse: 1
   warpMode: 0
-  scrollRect: {fileID: 1223078275609177980}
-  itemPrefabMode: 1
   itemPrefab: {fileID: 3688749309385022170, guid: c3dfc355811263f46b10955391917333,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -979,7 +976,7 @@ PrefabInstance:
     - target: {fileID: 3876660468450746646, guid: fa6896dc5eeda29489627f533e8a02d6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 320
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3876660468450746646, guid: fa6896dc5eeda29489627f533e8a02d6,
         type: 3}

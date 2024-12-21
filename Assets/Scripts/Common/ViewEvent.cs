@@ -184,7 +184,7 @@ namespace Ryneus
             if (cursor != null)
             {
                 var images = cursor.GetComponentsInChildren<Image>();
-                var cursorColor = new Color(200/255f,128/255f,12/255f);
+                var cursorColor = new Color(136/255f,200/255f,224/255f);
                 foreach (var image in images)
                 {
                     if (image.sprite == null)

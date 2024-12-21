@@ -46,42 +46,16 @@ namespace Ryneus
             return StageMembers().Find(a => a.ActorId == _selectActorId);
         }
 
-        private TacticsCommandType _TacticsCommandType = TacticsCommandType.Train;
-        public TacticsCommandType TacticsCommandType => _TacticsCommandType;
-        public void SetTacticsCommandType(TacticsCommandType tacticsCommandType)
-        {
-            _TacticsCommandType = tacticsCommandType;
-        }
         private int _firstRecordIndex = -1;
         public int FirstRecordIndex => _firstRecordIndex;
 
         private List<int> _shopSelectIndexes = new ();
 
 
-        private Dictionary<TacticsCommandType,bool> _tacticsCommandEnables = new ();
-        public void SetTacticsCommandEnables(TacticsCommandType tacticsCommand,bool isEnable)
-        {
-            _tacticsCommandEnables[tacticsCommand] = isEnable;
-        }
 
         public List<ListData> TacticsCommand()
         {
-            if (StageMembers().Count == 0)
-            {
-                SetTacticsCommandEnables(TacticsCommandType.Train,false);
-                SetTacticsCommandEnables(TacticsCommandType.Alchemy,false);
-                SetTacticsCommandEnables(TacticsCommandType.Status,false);
-                //SetTacticsCommandEnables(TacticsCommandType.Recovery,false);
-            }
             var commandListDates = MakeListData(DataSystem.TacticsCommand);
-            foreach (var commandListData in commandListDates)
-            {
-                var commandData = (SystemData.CommandData)commandListData.Data;
-                if (_tacticsCommandEnables.ContainsKey((TacticsCommandType)commandData.Id))
-                {
-                    commandListData.SetEnable(_tacticsCommandEnables[(TacticsCommandType)commandData.Id]);
-                }
-            }
             return commandListDates;
         }
 

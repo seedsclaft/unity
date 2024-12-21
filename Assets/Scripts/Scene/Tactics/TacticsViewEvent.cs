@@ -8,7 +8,8 @@ namespace Ryneus
         public enum CommandType
         {
             None = 0,
-            SelectTacticsCommand, // // 戦略コマンドを選択した
+            CallSymbolList,
+            CallStatus,
             BattleStart,
             CallSymbol,
             OnClickSymbol,

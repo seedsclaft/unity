@@ -45,6 +45,7 @@ namespace Ryneus
         public override void Initialize() 
         {
             base.Initialize();
+            InitializeActorList();
             statusList.Initialize();
             statusList.SetInputHandler(InputKeyType.Decide,() => CallLvUpNext());
             SetInputHandler(statusList.gameObject);
@@ -74,6 +75,18 @@ namespace Ryneus
             alcanaSelectList.Initialize();
             alcanaSelectList.Hide();
             new StrategyPresenter(this);
+        }
+
+        private void InitializeActorList()
+        {
+            strategyActorList.Initialize();
+            strategyActorList.gameObject.SetActive(false);
+        }
+
+        public void SetResultActorList(List<ListData> actorInfos)
+        {
+            strategyActorList.SetData(actorInfos);
+            strategyActorList.gameObject.SetActive(true);
         }
 
         private void CallLvUpNext()
@@ -126,8 +139,6 @@ namespace Ryneus
 
         public void InitActors()
         {
-            strategyActorList.Initialize();
-            strategyActorList.gameObject.SetActive(false);
         }
 
         public void InitResultList(List<ListData> confirmCommands)
@@ -149,17 +160,7 @@ namespace Ryneus
             _commandData = commandData;
         }
 
-        public void StartResultAnimation(List<ListData> actorInfos,List<bool> isBonusList = null)
-        {
-            DeactivateAll();
-            strategyActorList.gameObject.SetActive(false);
-            strategyActorList.SetData(actorInfos);
-            strategyActorList.StartResultAnimation(actorInfos.Count,isBonusList,() => 
-            {
-                CallEndAnimation();
-            });
-            strategyActorList.gameObject.SetActive(true);
-        }
+
 
         private void CallEndAnimation()
         {

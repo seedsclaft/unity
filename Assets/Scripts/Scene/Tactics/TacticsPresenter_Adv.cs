@@ -20,7 +20,7 @@ namespace Ryneus
                 switch (stageEvent.Type)
                 {
                     case StageEventType.CommandDisable:
-                        _model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param + 1,false);
+                        //_model.SetTacticsCommandEnables((TacticsCommandType)stageEvent.Param + 1,false);
                         break;
                     case StageEventType.NeedAllTactics:
                         break;

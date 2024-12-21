@@ -68,11 +68,27 @@ namespace Ryneus
         private void InitializeCommandList()
         {
             tacticsCommandList.Initialize();
-            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSelectTacticsCommand());
-            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallSideMenu());
+            tacticsCommandList.SetInputHandler(InputKeyType.Decide,() => CallSymbolList());
+            tacticsCommandList.SetInputHandler(InputKeyType.Option1,() => CallStatus());
             tacticsCommandList.SetSelectedHandler(() => UpdateHelpWindow());
             SetInputHandler(tacticsCommandList.gameObject);
             AddViewActives(tacticsCommandList);
+        }
+
+        private void CallSymbolList()
+        {
+            var listData = tacticsCommandList.ListData;
+            if (listData != null && listData.Enable)
+            {
+                SoundManager.Instance.PlayStaticSe(SEType.Decide);
+                CallEvent(CommandType.CallSymbolList);
+            }
+        }
+
+        private void CallStatus()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            CallEvent(CommandType.CallStatus);
         }
 
         private void InitializeSymbolInfoList()
@@ -140,16 +156,6 @@ namespace Ryneus
             SetActivate(tacticsCommandList);
         }
         
-        private void CallSelectTacticsCommand()
-        {
-            var listData = tacticsCommandList.ListData;
-            if (listData != null && listData.Enable)
-            {
-                var commandData = (SystemData.CommandData)listData.Data;
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                CallEvent(CommandType.SelectTacticsCommand,commandData.Id);
-            }
-        }
 
         private void UpdateHelpWindow()
         {

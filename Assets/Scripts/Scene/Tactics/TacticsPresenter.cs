@@ -176,7 +176,7 @@ namespace Ryneus
             {
                 return;
             }
-            _view.UpdateInputKeyActive(viewEvent.ViewCommandType,_model.TacticsCommandType);
+            //_view.UpdateInputKeyActive(viewEvent.ViewCommandType,_model.TacticsCommandType);
             //Debug.Log(viewEvent.commandType);
             switch (viewEvent.ViewCommandType.CommandType)
             {
@@ -192,8 +192,11 @@ namespace Ryneus
                 case CommandType.OnCancelSymbol:
                     CommandOnCancelSymbol();
                     break;
-                case CommandType.SelectTacticsCommand:
-                    CommandSelectTacticsCommand((TacticsCommandType)viewEvent.template);
+                case CommandType.CallSymbolList:
+                    CommandCallSymbolList();
+                    break;
+                case CommandType.CallStatus:
+                    CommandStatus();
                     break;
                 case CommandType.SelectSymbol:
                     CommandSelectRecord((SymbolResultInfo)viewEvent.template);
@@ -356,20 +359,9 @@ namespace Ryneus
             }
         }
 
-        private void CommandSelectTacticsCommand(TacticsCommandType tacticsCommandType)
+        private void CommandCallSymbolList()
         {
-            _model.SetTacticsCommandType(tacticsCommandType);
-            switch (tacticsCommandType)
-            {
-                case TacticsCommandType.Paradigm:
-                    CommandCallSymbol();
-                    return;
-                case TacticsCommandType.Train:
-                case TacticsCommandType.Alchemy:
-                case TacticsCommandType.Status:
-                    CommandStatus();
-                    break;
-            }
+            CommandCallSymbol();
         }
 
         private void CommandStageSymbol()
@@ -475,7 +467,7 @@ namespace Ryneus
             CommandRefresh();
             _view.ShowRecordList();
             _view.ShowSymbolRecord();
-            _backCommand = CommandType.SelectTacticsCommand;
+            _backCommand = CommandType.CallSymbolList;
         }
 
         private void CancelSelectSymbol()

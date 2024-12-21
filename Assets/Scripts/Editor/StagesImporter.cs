@@ -70,6 +70,7 @@ namespace Ryneus
                         var StageData = new StageData
                         {
                             Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            StageNo = AssetPostImporter.ImportNumeric(BaseRow, "StageNo"),
                             Name = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Text,
                             AchieveText = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "AchieveTextId"))?.Text,
                             Selectable = AssetPostImporter.ImportNumeric(BaseRow, "Selectable") == 1,

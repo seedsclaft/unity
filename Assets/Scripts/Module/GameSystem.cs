@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utage;
@@ -302,7 +301,7 @@ namespace Ryneus
             //SetIsBusyMainAndStatus();
         }
 
-        private async void CommandPopupView(PopupInfo popupInfo)
+        private void CommandPopupView(PopupInfo popupInfo)
         {
             var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
             var baseView = prefab.GetComponent<BaseView>();
@@ -326,7 +325,7 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
         
-        private void CommandOptionView(System.Action endEvent)
+        private void CommandOptionView(Action endEvent)
         {
             var prefab = popupAssign.CreatePopup(PopupType.Option,helpWindow);
             var optionView = prefab.GetComponent<OptionView>();

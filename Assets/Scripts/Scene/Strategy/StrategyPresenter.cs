@@ -27,7 +27,6 @@ namespace Ryneus
             _busy = true;
             _view.SetHelpWindow();
 
-            _view.InitActors();
             _view.InitResultList(GetListData(_model.ResultCommand()));
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
             //var bgm = await _model.GetBgmData(_model.TacticsBgmKey());
@@ -117,21 +116,18 @@ namespace Ryneus
             if (_model.InBattleResult)
             {
                 var battledResultActors = _model.BattleResultActors();
-                var bonusList = new List<bool>();
-                foreach (var item in battledResultActors)
-                {
-                    bonusList.Add(false);
-                }
                 _view.SetTitle(DataSystem.GetText(20010));
-                _view.StartResultAnimation(_model.MakeListData(battledResultActors),bonusList);
+                _view.SetResultActorList(_model.MakeListData(battledResultActors));
                 // 勝利時
                 if (_model.BattleResultVictory)
                 {
-                    //_model.MakeSelectRelicData();
                     if (_model.LevelUpData.Count > 0)
                     {
                         _view.StartLvUpAnimation();
                         _view.HideResultList();
+                    } else
+                    {
+                        NextSeekResult();
                     }
                 }
             } else
@@ -151,7 +147,7 @@ namespace Ryneus
                     bonusList.Add(_model.IsBonusTactics(item.ActorId));
                 }
                 _view.SetTitle(DataSystem.GetText(20040));
-                _view.StartResultAnimation(_model.MakeListData(tacticsActors),bonusList);
+                _view.SetResultActorList(_model.MakeListData(tacticsActors));
             } else
             {
                 EndStrategy();
