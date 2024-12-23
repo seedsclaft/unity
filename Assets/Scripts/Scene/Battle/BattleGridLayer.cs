@@ -6,78 +6,69 @@ namespace Ryneus
 {
     public class BattleGridLayer : MonoBehaviour
     {
-        [SerializeField] private GameObject battleGridPrefab;
-        [SerializeField] private GameObject battleGridEnemyPrefab;
+        [SerializeField] private GameObject actorPrefab;
+        [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private GameObject actorRoot;
         [SerializeField] private GameObject enemyRoot;
-        private Dictionary<BattlerInfo,BattlerInfoComponent> _battlers = new ();
-        private List<BattlerGrid> _actorBattlers = new ();
-        private List<BattlerGrid> _enemyBattlers = new ();
-        private List<BattlerInfo> _battlerInfos = new ();
+        private Dictionary<BattlerInfo,BattlerGrid> _battlers = new ();
 
         public void Initialize()
         {
-            for (int i = 0; i < 10;i++)
-            {
-                var prefab = Instantiate(battleGridPrefab);
-                prefab.transform.SetParent(actorRoot.transform, false);
-                var comp = prefab.GetComponent<BattlerGrid>();
-                comp.UpdateAlpha(false);
-                _actorBattlers.Add(comp);
-            }
-            for (int i = 0; i < 10;i++)
-            {
-                var prefab = Instantiate(battleGridEnemyPrefab);
-                prefab.transform.SetParent(enemyRoot.transform, false);
-                var comp = prefab.GetComponent<BattlerGrid>();
-                comp.UpdateAlpha(false);
-                _enemyBattlers.Add(comp);
-            }
         }
 
         public void SetActorInfo(List<BattlerInfo> battlerInfos)
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
-                _battlerInfos.Add(battlerInfos[i]);
+                GameObject prefab = Instantiate(actorPrefab);
+                prefab.transform.SetParent(actorRoot.transform, false);
+                var comp = prefab.GetComponent<BattlerGrid>();
+                comp.UpdateInfo(battlerInfos[i]);
+                _battlers[battlerInfos[i]] = comp;
             }
+            UpdatePosition();
+            RefreshStatus();
         }
         
         public void SetEnemyInfo(List<BattlerInfo> battlerInfos)
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
-                _battlerInfos.Add(battlerInfos[i]);
+                GameObject prefab = Instantiate(enemyPrefab);
+                prefab.transform.SetParent(enemyRoot.transform, false);
+                var comp = prefab.GetComponent<BattlerGrid>();
+                comp.UpdateInfo(battlerInfos[i]);
+                int gridKey = 0;
+                foreach (var item in _battlers)
+                {
+                    if (item.Key.EnemyData != null)
+                    {
+                        if (item.Key.EnemyData.Id == battlerInfos[i].EnemyData.Id)
+                        {
+                            gridKey++;
+                        }
+                    }
+                }
+                _battlers[battlerInfos[i]] = comp;
+                //comp.SetGridKey(gridKey);
             }
+            UpdatePosition();
+            RefreshStatus();
         }
 
         public void UpdatePosition()
         {
-            var turnWaits = new Dictionary<BattlerInfo,float>();
-            _battlerInfos.Sort((a,b) => a.Ap < b.Ap ? -1 : 1);
-            foreach (var battler in _battlerInfos)
+            var battlerInfos = new List<BattlerInfo>();
+            foreach (var data in _battlers)
             {
-                if (battler.IsAlive())
-                {
-                    turnWaits[battler] = battler.WaitFrame(0);
-                }
+                var rect = data.Value.gameObject.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(rect.localPosition.x, data.Key.Ap, 0);
+                battlerInfos.Add(data.Key);
             }
-
-            var idx = 0;
-            foreach (var turnWait in turnWaits)
+            battlerInfos.Sort((a,b)=> (int)a.Ap - (int)b.Ap);
+            foreach (var info in battlerInfos)
             {
-                //if (i > 6) continue;
-                var battler = turnWait.Key;
-                _actorBattlers[idx].UpdateAlpha(battler.IsActor);
-                _enemyBattlers[idx].UpdateAlpha(!battler.IsActor);
-                if (battler.IsActor)
-                {
-                    _actorBattlers[idx].UpdateInfo(battler,(int)turnWait.Value,idx);
-                } else
-                {
-                    _enemyBattlers[idx].UpdateInfo(battler,(int)turnWait.Value,idx);
-                }
-                idx++;
+                _battlers[info].gameObject.transform.SetAsFirstSibling();
             }
         }
 

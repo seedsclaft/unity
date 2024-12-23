@@ -26,7 +26,115 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     StageEvents: []
-    StageSymbols: []
+    StageSymbols:
+    - StageId: 0
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 8
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 113
+      ClearCount: 0
+    - StageId: 10
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: -1
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 1
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1011
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 2
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 100
+      Param1: 1021
+      Param2: 0
+      PrizeSetId: 1021
+      ClearCount: 0
+    - StageId: 10
+      Seek: 3
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1031
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 4
+      SeekIndex: 0
+      SymbolType: 4
+      Rate: 100
+      Param1: 1041
+      Param2: 0
+      PrizeSetId: 1041
+      ClearCount: 0
+    - StageId: 10
+      Seek: 5
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1051
+      Param2: 0
+      PrizeSetId: 1051
+      ClearCount: 0
+    - StageId: 10
+      Seek: 5
+      SeekIndex: 1
+      SymbolType: 1
+      Rate: 100
+      Param1: 1052
+      Param2: 0
+      PrizeSetId: 1052
+      ClearCount: 0
+    - StageId: 10
+      Seek: 6
+      SeekIndex: 0
+      SymbolType: 3
+      Rate: 100
+      Param1: 1061
+      Param2: 0
+      PrizeSetId: 1061
+      ClearCount: 0
+    - StageId: 10
+      Seek: 7
+      SeekIndex: 0
+      SymbolType: 2
+      Rate: 100
+      Param1: 1101
+      Param2: 0
+      PrizeSetId: 1101
+      ClearCount: 0
+    - StageId: 10
+      Seek: 8
+      SeekIndex: 0
+      SymbolType: 4
+      Rate: 100
+      Param1: 1081
+      Param2: 0
+      PrizeSetId: 1081
+      ClearCount: 0
+    - StageId: 10
+      Seek: 8
+      SeekIndex: 1
+      SymbolType: 6
+      Rate: 100
+      Param1: 1082
+      Param2: 0
+      PrizeSetId: 1082
+      ClearCount: 0
   - Id: 10
     StageNo: 1
     Name: "\u9577\u91DD\u3092\u8FFD\u3044\u304B\u3051\u3066"
@@ -40,7 +148,115 @@ MonoBehaviour:
     BGMId: 3
     BossBGMId: 11
     StageEvents: []
-    StageSymbols: []
+    StageSymbols:
+    - StageId: 0
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 8
+      Rate: 100
+      Param1: 0
+      Param2: 0
+      PrizeSetId: 113
+      ClearCount: 0
+    - StageId: 10
+      Seek: 0
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: -1
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 1
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1011
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 2
+      SeekIndex: 0
+      SymbolType: 6
+      Rate: 100
+      Param1: 1021
+      Param2: 0
+      PrizeSetId: 1021
+      ClearCount: 0
+    - StageId: 10
+      Seek: 3
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1031
+      Param2: 0
+      PrizeSetId: 0
+      ClearCount: 0
+    - StageId: 10
+      Seek: 4
+      SeekIndex: 0
+      SymbolType: 4
+      Rate: 100
+      Param1: 1041
+      Param2: 0
+      PrizeSetId: 1041
+      ClearCount: 0
+    - StageId: 10
+      Seek: 5
+      SeekIndex: 0
+      SymbolType: 1
+      Rate: 100
+      Param1: 1051
+      Param2: 0
+      PrizeSetId: 1051
+      ClearCount: 0
+    - StageId: 10
+      Seek: 5
+      SeekIndex: 1
+      SymbolType: 1
+      Rate: 100
+      Param1: 1052
+      Param2: 0
+      PrizeSetId: 1052
+      ClearCount: 0
+    - StageId: 10
+      Seek: 6
+      SeekIndex: 0
+      SymbolType: 3
+      Rate: 100
+      Param1: 1061
+      Param2: 0
+      PrizeSetId: 1061
+      ClearCount: 0
+    - StageId: 10
+      Seek: 7
+      SeekIndex: 0
+      SymbolType: 2
+      Rate: 100
+      Param1: 1101
+      Param2: 0
+      PrizeSetId: 1101
+      ClearCount: 0
+    - StageId: 10
+      Seek: 8
+      SeekIndex: 0
+      SymbolType: 4
+      Rate: 100
+      Param1: 1081
+      Param2: 0
+      PrizeSetId: 1081
+      ClearCount: 0
+    - StageId: 10
+      Seek: 8
+      SeekIndex: 1
+      SymbolType: 6
+      Rate: 100
+      Param1: 1082
+      Param2: 0
+      PrizeSetId: 1082
+      ClearCount: 0
   - Id: 20
     StageNo: 2
     Name: "\u964D\u308A\u308B\u5E33\u3068\u5730\u4E0B\u6249"

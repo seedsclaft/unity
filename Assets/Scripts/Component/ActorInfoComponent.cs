@@ -246,12 +246,12 @@ namespace Ryneus
             if (faceThumb != null)
             {
                 faceThumb.sprite = null;
-                faceThumb.gameObject.SetActive(false);
+                //faceThumb.gameObject.SetActive(false);
             }
             if (awakenFaceThumb != null)
             {
                 awakenFaceThumb.sprite = null;
-                awakenFaceThumb.gameObject.SetActive(false);
+                //awakenFaceThumb.gameObject.SetActive(false);
             }
         }
 

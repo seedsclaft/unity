@@ -45,7 +45,7 @@ namespace Ryneus
                     enemyInfoComponent?.Clear();
                 } else
                 {
-                    actorInfoComponent?.Clear();
+                    //actorInfoComponent?.Clear();
                 }
             }
             if (evaluate != null)
@@ -172,7 +172,7 @@ namespace Ryneus
                     enemyInfoComponent?.Clear();
                 } else
                 {
-                    actorInfoComponent?.Clear();
+                    //actorInfoComponent?.Clear();
                 }
             }
             ChangeHp(_battlerInfo.Hp);

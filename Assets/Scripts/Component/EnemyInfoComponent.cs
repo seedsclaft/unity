@@ -9,6 +9,7 @@ namespace Ryneus
     public class EnemyInfoComponent : MonoBehaviour
     {
         [SerializeField] private Image mainThumb;
+        [SerializeField] private Image gridThumb;
         public Image MainThumb => mainThumb;
         [SerializeField] private TextMeshProUGUI nameText;
         [SerializeField] private TextMeshProUGUI lv;
@@ -44,17 +45,21 @@ namespace Ryneus
             }
         }
 
-        private void UpdateMainThumb(string imagePath,int x,int y,float scale)
+        private void UpdateMainThumb(Image image,string imagePath,int x,int y,float scale,bool nativeSize)
         {
             //var handle = await ResourceSystem.LoadAsset<Sprite>("Enemies/" + imagePath);
             var handle = ResourceSystem.LoadEnemySprite(imagePath);
-            if (mainThumb != null)
+            if (image != null)
             {
-                mainThumb.gameObject.SetActive(true);
-                var rect = mainThumb.GetComponent<RectTransform>();
+                image.gameObject.SetActive(true);
+                var rect = image.GetComponent<RectTransform>();
                 rect.localPosition = new Vector3(x, y, 0);
                 rect.localScale = new Vector3(scale, scale, 1);
-                mainThumb.sprite = handle;
+                image.sprite = handle;
+                if (nativeSize)
+                {
+                    image.SetNativeSize();
+                }
             }
         }
         
@@ -67,7 +72,11 @@ namespace Ryneus
             }
             if (mainThumb != null)
             {
-                UpdateMainThumb(enemyData.ImagePath,0,0,1.0f);
+                UpdateMainThumb(mainThumb,enemyData.ImagePath,0,0,1.0f,false);
+            }
+            if (gridThumb != null)
+            {
+                UpdateMainThumb(gridThumb,enemyData.ImagePath,0,0,1.0f,true);
             }
             nameText?.SetText(enemyData.Name);
         }

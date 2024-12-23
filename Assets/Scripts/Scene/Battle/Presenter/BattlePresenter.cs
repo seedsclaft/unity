@@ -308,7 +308,7 @@ namespace Ryneus
             _model.CheckTriggerPassiveInfos(BattleUtility.StartTriggerTimings(),null,null);
         }
 
-        private void CommandUpdateAp()
+        private async void CommandUpdateAp()
         {
             /*
             var currentActionInfo = _model.CurrentActionInfo;
@@ -324,7 +324,23 @@ namespace Ryneus
             var currentBattler = CheckApCurrentBattler();
             if (currentBattler == null)
             {
-                UpdateApBattlerInfos();
+                if (IsBattleEnd())
+                {
+                    BattleEnd();
+                    return;
+                }
+                var removeStateList = _model.UpdateAp();
+                if (removeStateList.Count > 0)
+                {
+                    _view.ClearDamagePopup();
+                    foreach (var removeState in removeStateList)
+                    {
+                        _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
+                    }
+                    // Passive解除
+                    await RemovePassiveInfos();
+                }
+                _view.UpdateGridLayer();
             } else
             {
                 CommandStartSelect();

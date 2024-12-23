@@ -21,25 +21,9 @@ namespace Ryneus
         /// <returns></returns>
         public async void UpdateApBattlerInfos()
         {
-            while (_model.CurrentBattler == null)
-            {
-                if (IsBattleEnd())
-                {
-                    BattleEnd();
-                    return;
-                }
-                var removeStateList = _model.UpdateAp();
-                if (removeStateList.Count > 0)
-                {
-                    _view.ClearDamagePopup();
-                    foreach (var removeState in removeStateList)
-                    {
-                        _view.StartStatePopup(removeState.TargetIndex,DamageType.State,"-" + removeState.Master.Name);
-                    }
-                    // Passive解除
-                    await RemovePassiveInfos();
-                }
-            }
+            //while (_model.CurrentBattler == null)
+            //{
+            //}
         }
 
         /// <summary>
