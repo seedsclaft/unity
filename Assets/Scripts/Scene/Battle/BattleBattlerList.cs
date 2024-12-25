@@ -13,8 +13,13 @@ namespace Ryneus
 
         public void SetData(List<ListData> listDates)
         {
-            base.SetData(listDates);
+            base.SetData(listDates,true,null,true);
             SetBattlerInfoComp(listDates);
+        }
+
+        public void RefreshList(List<ListData> listDates)
+        {
+            base.SetData(listDates);
         }
 
         public void SetTargetListData(List<ListData> listDates)

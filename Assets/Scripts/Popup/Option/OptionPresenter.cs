@@ -26,7 +26,7 @@ namespace Ryneus
         private void Initialize()
         {
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetOptionCategoryList(GetListData(_model.OptionCategoryList()));
+            _view.SetOptionCategoryList(MakeListData(_model.OptionCategoryList()));
             _view.SetHelpWindow();
             CommandSelectCategory();
             _view.OpenAnimation();
@@ -229,7 +229,7 @@ namespace Ryneus
             var categoryIndex = _view.OptionCategoryIndex + 1;
             if (categoryIndex >= 1 && categoryIndex < 3)
             {
-                _view.SetOptionList(GetListData(_model.OptionCommandData(
+                _view.SetOptionList(MakeListData(_model.OptionCommandData(
                     categoryIndex,
                     (a) => CommandVolumeSlider(a),
                     (a) => CommandVolumeMute(a),

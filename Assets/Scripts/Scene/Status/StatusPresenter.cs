@@ -22,8 +22,8 @@ namespace Ryneus
         private void Initialize()
         { 
             _view.SetHelpWindow(_model.HelpText());
-            _view.SetCommandList(GetListData(_model.StatusCommand()));
-            _view.SetMemberList(GetListData(_model.StageMembers()));
+            _view.SetCommandList(MakeListData(_model.StatusCommand()));
+            _view.SetMemberList(MakeListData(_model.StageMembers()));
             _view.SetStatusEvent((type) => UpdateCommand(type));
 
             _view.CommandTopLayer();
@@ -145,9 +145,8 @@ namespace Ryneus
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetSelectSkillInfo(skillInfo);
             // 選択する
-            _view.SetChangeSkillList(GetListData(_model.ChangeAbleSkills()));
-            _view.SetSelectingEquipSkill(new ListData(skillInfo));
             _view.CallChangeSkillList();
+            _view.SetChangeSkillList(MakeListData(_model.ChangeAbleSkills()));
         }
 
         private void CommandCancelSkill()
@@ -161,7 +160,6 @@ namespace Ryneus
             }
             _view.CommandTopLayer();
             CallMemberList();
-            _view.SetSelectingEquipSkill(null);
         }
 
         private void CommandSelectChangeSkill(SkillInfo skillInfo)
@@ -178,9 +176,8 @@ namespace Ryneus
         private void ResetSelectSkill()
         {
             _model.SetSelectSkillInfo(null);
-            _view.SetSelectingEquipSkill(null);
-            CommandRefreshMagicList();
             _view.CallEquipSkillList();
+            CommandRefreshMagicList();
         }
 
         private void CommandCharacterList()
@@ -279,9 +276,9 @@ namespace Ryneus
         {
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SelectActor(actorInfo.ActorId);
+            _view.CallEquipSkillList();
             CommandRefreshMagicList();
             _view.CommandStatusLayer();
-            _view.CallEquipSkillList();
         }
 
         private void CommandCancelActor()
@@ -348,7 +345,7 @@ namespace Ryneus
         private void CommandRefreshMagicList()
         {
             CommandRefresh();
-            _view.SetEquipSkillList(GetListData(_model.EquipSkills()));
+            _view.SetEquipSkillList(MakeListData(_model.EquipSkills()));
             _view.SetActorInfo(_model.CurrentActor,_model.ActorInfos);
         }
 

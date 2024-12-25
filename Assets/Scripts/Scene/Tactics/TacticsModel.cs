@@ -53,10 +53,9 @@ namespace Ryneus
 
 
 
-        public List<ListData> TacticsCommand()
+        public List<SystemData.CommandData> TacticsCommand()
         {
-            var commandListDates = MakeListData(DataSystem.TacticsCommand);
-            return commandListDates;
+            return DataSystem.TacticsCommand;
         }
 
         public ListData ChangeEnableCommandData(int index,bool enable)
@@ -331,7 +330,6 @@ namespace Ryneus
                 listData.Add(list);
             }
             */
-            _firstRecordIndex = listData.FindIndex(a => a.Selected);
             return listData;
         }
 

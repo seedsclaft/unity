@@ -150,7 +150,7 @@ namespace Ryneus
                 tacticsSymbol.SetSelectable(i == 0);
                 tacticsSymbol.SetAddListenHandler(true);
             }
-            Refresh(symbolInfos.FindIndex(a => a.Selected));
+            Refresh();
         }
 
         public new void Refresh(int selectIndex = 0)

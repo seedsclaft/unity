@@ -18,9 +18,9 @@ namespace Ryneus
             _model = model;
         }
 
-        public List<ListData> GetListData<T>(List<T> dataList,int selectIndex = 0)
+        public List<ListData> MakeListData<T>(List<T> dataList)
         {
-            return _model.MakeListData(dataList,selectIndex);
+            return ListData.MakeListData(dataList);
         }
 
         public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)

@@ -68,7 +68,7 @@ namespace Ryneus
             {
                 selectIndex = skillInfos.FindIndex(a => a.Id == currentBattler.LastSelectSkillId);
             }
-            _view.ShowMagicList(GetListData(skillInfos),resetScrollRect,selectIndex);
+            _view.ShowMagicList(MakeListData(skillInfos),resetScrollRect,selectIndex);
         }
 
         /// <summary>
@@ -77,28 +77,29 @@ namespace Ryneus
         /// <param name="skillInfo"></param> <summary>
         private void CommandOnSelectSkill(SkillInfo skillInfo)
         {
-            if (skillInfo != null)
+            if (skillInfo == null)
             {
-                SoundManager.Instance.PlayStaticSe(SEType.Decide);
-                var currentBattler = _model.CurrentBattler;
-                // 選択中のActionInfoを生成
-                var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
-                // 選択中のActionInfoを上書き
-                _model.SetSelectActionInfo(actionInfo);
-                // 選択対象を決定
-                var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,currentBattler.Index,false);
-                var list = new List<BattlerInfo>();
-                foreach (var targetIndex in targetIndexes)
-                {
-                    list.Add(_model.GetBattlerInfo(targetIndex));
-                }
-                if (actionInfo.TargetType == TargetType.Opponent)
-                {
-                    _view.SelectEnemy(ListData.MakeListData(list));
-                } else
-                {
-                    _view.SelectActor(ListData.MakeListData(list));
-                }
+                return;
+            }
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            var currentBattler = _model.CurrentBattler;
+            // 選択中のActionInfoを生成
+            var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
+            // 選択中のActionInfoを上書き
+            _model.SetSelectActionInfo(actionInfo);
+            // 選択対象を決定
+            var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,currentBattler.Index,false);
+            var list = new List<BattlerInfo>();
+            foreach (var targetIndex in targetIndexes)
+            {
+                list.Add(_model.GetBattlerInfo(targetIndex));
+            }
+            if (actionInfo.TargetType == TargetType.Opponent)
+            {
+                _view.SelectEnemy(MakeListData(list));
+            } else
+            {
+                _view.SelectActor(MakeListData(list));
             }
         }
 

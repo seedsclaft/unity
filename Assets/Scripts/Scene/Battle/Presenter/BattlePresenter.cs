@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Battle;
 
 namespace Ryneus
 {
+    using Battle;
     public partial class BattlePresenter : BasePresenter
     {
         BattleModel _model = null;
@@ -86,8 +86,9 @@ namespace Ryneus
             _view.SetBattleSpeedButton(ConfigUtility.CurrentBattleSpeedText());
             _view.SetBattleSkipButton(DataSystem.GetText(16010));
             _view.SetSkillLogButton(DataSystem.GetText(16020));
-            _view.SetActors(_model.BattlerActors());
-            _view.SetEnemies(_model.BattlerEnemies());
+            _view.SetActors(MakeListData(_model.BattlerActors()));
+            _view.SetEnemies(MakeListData(_model.BattlerEnemies()));
+            _view.SetGridMembers(_model.Battlers);
             _view.BattlerBattleClearSelect();
 
             _view.RefreshStatus();
@@ -183,10 +184,10 @@ namespace Ryneus
             */
         }
 
-        private void UpdateCommand(BattleViewEvent viewEvent)
+        private void UpdateCommand(ViewEvent viewEvent)
         {
             LogOutput.Log(viewEvent.commandType);
-            switch (viewEvent.commandType)
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.ChangeBattleAuto:
                     //CommandChangeBattleAuto();
@@ -214,7 +215,7 @@ namespace Ryneus
             {
                 return;
             }
-            switch (viewEvent.commandType)
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.UpdateAp:
                     CommandUpdateAp();
@@ -231,56 +232,54 @@ namespace Ryneus
                 case CommandType.OnCancelEnemy:
                     CommandOnCancelEnemy();
                     break;
-                case Battle.CommandType.ActorList:
+                case CommandType.ActorList:
                     //CommandTargetEnemy((BattlerInfo)viewEvent.template);
                     // var targetIndexes = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
                     //CommandSelectTargetIndexes(targetIndexes);
                     break;
-                case Battle.CommandType.SelectActorList:
-                case Battle.CommandType.SelectEnemyList:
+                case CommandType.SelectActorList:
+                case CommandType.SelectEnemyList:
                     /*
                     var targetIndexes2 = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
                     _view.UpdateSelectIndexList(targetIndexes2);
                     */
                     break;
-                case Battle.CommandType.AttributeType:
+                case CommandType.AttributeType:
                     //RefreshSkillInfos();
                     break;
-                case Battle.CommandType.DecideActor:
+                case CommandType.DecideActor:
                     //CommandDecideActor();
                     break;
-                case Battle.CommandType.SelectEnemy:
+                case CommandType.SelectEnemy:
                     //CommandSelectEnemy();
                     break;
-                case Battle.CommandType.StartSelect:
+                case CommandType.StartSelect:
                     CommandStartSelect();
                     break;
-                case Battle.CommandType.Back:
+                case CommandType.Back:
                     CommandBack();
                     break;
-                case Battle.CommandType.Escape:
+                case CommandType.Escape:
                     CommandEscape();
                     break;
-                case Battle.CommandType.EnemyDetail:
+                case CommandType.EnemyDetail:
                     CommandEnemyDetail((int)viewEvent.template);
                     break;
-                case Battle.CommandType.SelectSideMenu:
+                case CommandType.SelectSideMenu:
                     CommandSelectSideMenu();
                     break;
-                case Battle.CommandType.SkillLog:
+                case CommandType.SkillLog:
                     CommandSkillLog();
                     break;
             }
-            CheckTutorialState(viewEvent.commandType);
+            //CheckTutorialState(viewEvent.commandType);
         }
 
         private void CommandBack()
         {
             if (_backCommandType != CommandType.None)
             {
-                var eventData = new BattleViewEvent(_backCommandType);
-                _backCommandType = CommandType.None;
-                UpdateCommand(eventData);
+                //UpdateCommand(_backCommandType);
             }
         }
 
@@ -671,7 +670,7 @@ namespace Ryneus
         {
             if (_busy) return;
             _busy = true;
-            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
+            CommandCallSideMenu(MakeListData(_model.SideMenu()),() => 
             {
                 _busy = false;
             });

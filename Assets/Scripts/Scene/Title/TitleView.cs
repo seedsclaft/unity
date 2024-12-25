@@ -39,15 +39,9 @@ namespace Ryneus
             titleCommandList.SetInputHandler(InputKeyType.Decide,OnClickTitle);
         }        
         
-        public void SetTitleCommand(List<ListData> titleCommand,bool selectContinue)
+        public void SetTitleCommand(List<ListData> titleCommand)
         {
-            titleCommandList.SetData(titleCommand,true,() => 
-            {
-                if (selectContinue)
-                {
-                    titleCommandList.UpdateSelectIndex(1);
-                }
-            });
+            titleCommandList.SetData(titleCommand);
             titleCommandList.Activate();
         }
 

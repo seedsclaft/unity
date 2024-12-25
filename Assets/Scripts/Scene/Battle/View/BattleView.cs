@@ -1,16 +1,15 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Battle;
 using Effekseer;
 using TMPro;
 using Cysharp.Threading.Tasks;
 
 namespace Ryneus
 {
+    using Battle;
     public partial class BattleView : BaseView ,IInputHandlerEvent
     {
-        private new System.Action<BattleViewEvent> _commandData = null;
         [SerializeField] private BattleBattlerList battleActorList = null;
         [SerializeField] private BattleBattlerList battleEnemyLayer = null;
         [SerializeField] private BattleGridLayer battleGridLayer = null;
@@ -33,7 +32,17 @@ namespace Ryneus
         [SerializeField] private EffekseerEmitter demigodCutinAnimation = null;
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
         [SerializeField] private MagicList magicList = null;
+        private new Action<ViewEvent> _commandData = null;
 
+        public void CallEvent(CommandType battleCommandType,object sendData = null)
+        {
+            var commandType = new ViewCommandType(ViewCommandSceneType.Battle,battleCommandType);
+            var eventData = new ViewEvent(commandType)
+            {
+                template = sendData
+            };
+            _commandData(eventData);
+        }
         private BattleBackGroundAnimation _backGroundAnimation = null;
         
         private BattleStartAnim _battleStartAnim = null;
@@ -63,7 +72,6 @@ namespace Ryneus
             ClearCurrentSkillData();
 
             InitializeSelectCharacter();
-            battleGridLayer.Initialize();
             InitializeActorList();
             InitializeEnemyLayer();
             SideMenuButton.OnClickAddListener(() => 
@@ -81,8 +89,7 @@ namespace Ryneus
             skillLogButton.OnClickAddListener(() => 
             {
                 if (skillLogButton.gameObject.activeSelf == false) return;
-                var eventData = new BattleViewEvent(CommandType.SkillLog);
-                _commandData(eventData);
+                CallEvent(CommandType.SkillLog);
             });
             SetBattleSkipActive(false);
             battleCutinAnimation.Initialize();
@@ -108,6 +115,16 @@ namespace Ryneus
             AddViewActives(battleActorList);
         }
 
+        public void SetActors(List<ListData> battlerInfos)
+        {
+            battleActorList.SetData(battlerInfos);
+            foreach (var battlerInfo in battlerInfos)
+            {
+                var data = (BattlerInfo)battlerInfo.Data;
+                _battlerComps[data.Index] = battleActorList.GetBattlerInfoComp(data.Index);
+            }
+        }
+
         private void InitializeEnemyLayer()
         {
             battleEnemyLayer.Initialize();
@@ -118,6 +135,35 @@ namespace Ryneus
             AddViewActives(battleEnemyLayer);
         }
 
+        public void SetEnemies(List<ListData> battlerInfos)
+        {
+            battleEnemyLayer.SetData(battlerInfos);
+            //battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
+            foreach (var battlerInfo in battlerInfos)
+            {
+                var data = (BattlerInfo)battlerInfo.Data;
+                _battlerComps[data.Index] = battleEnemyLayer.GetBattlerInfoComp(data.Index);
+            }
+        }
+        private void OnSelectEnemy()
+        {
+            var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
+            if (listData != null)
+            {
+                CallEvent(CommandType.OnSelectEnemy,listData);
+            }
+        }
+
+        private void OnCancelEnemy()
+        {
+            CallEvent(CommandType.OnCancelEnemy);
+        }
+
+        public void SetGridMembers(List<BattlerInfo> battlerInfos)
+        {
+            battleGridLayer.SetGridMembers(battlerInfos);
+        }
+        
         private void InitializeMagicList()
         {
             magicList.Initialize();
@@ -134,44 +180,19 @@ namespace Ryneus
                 var listData = magicList.ListItemData<SkillInfo>();
                 if (listData != null)
                 {
-                    var eventData = new BattleViewEvent(CommandType.OnSelectSkill)
-                    {
-                        template = listData
-                    };
-                    _commandData(eventData);
+                    CallEvent(CommandType.OnSelectSkill,listData);
                 }
             }
         }
 
-        private void OnSelectEnemy()
-        {
-            var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
-            if (listData != null)
-            {
-                var eventData = new BattleViewEvent(CommandType.OnSelectEnemy)
-                {
-                    template = listData
-                };
-                _commandData(eventData);
-            }
-        }
 
-        private void OnCancelEnemy()
-        {
-            var eventData = new BattleViewEvent(CommandType.OnCancelEnemy);
-            _commandData(eventData);
-        }
 
         private void TargetSelectCursor()
         {
             var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
             if (listData != null)
             {
-                var eventData = new BattleViewEvent(CommandType.TargetSelectCursor)
-                {
-                    template = listData
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.TargetSelectCursor,listData);
             }
         }
 
@@ -215,7 +236,7 @@ namespace Ryneus
             battleAutoButton.SetCallHandler(() => 
             {
                 if (battleAutoButton.gameObject.activeSelf == false) return;
-                var eventData = new BattleViewEvent(CommandType.ChangeBattleAuto);
+                var eventData = CallEvent(CommandType.ChangeBattleAuto);
                 _commandData(eventData);
             },() => 
             {
@@ -268,19 +289,14 @@ namespace Ryneus
         private void CallBattleSkip()
         {
             if (battleSkipButton.gameObject.activeSelf == false) return;
-            var eventData = new BattleViewEvent(CommandType.SkipBattle);
             _skipBattle = true;
-            _commandData(eventData);
+            CallEvent(CommandType.SkipBattle);
         }
 
         private void CallChangeBattleSpeed(int plus)
         {
             if (battleSpeedButton.gameObject.activeSelf == false) return;
-            var eventData = new BattleViewEvent(CommandType.ChangeBattleSpeed)
-            {
-                template = plus
-            };
-            _commandData(eventData);
+            CallEvent(CommandType.ChangeBattleSpeed,plus);
         }
 
         public void CreateObject()
@@ -337,41 +353,32 @@ namespace Ryneus
 
         private void OnClickBack()
         { 
-            var eventData = new BattleViewEvent(CommandType.Back);
-            _commandData(eventData);
+            CallEvent(CommandType.Back);
             SetInputFrame(1);
         }
 
         public void ShowMagicList(List<ListData> skillInfos,bool resetScrollRect,int selectIndex)
         {
+            SetActivate(magicList);
             battleActorList.gameObject.SetActive(true);
             magicList.gameObject.SetActive(true);
-            magicList.SetData(skillInfos,resetScrollRect,() => 
+            magicList.SetData(skillInfos,resetScrollRect);
+            if (resetScrollRect)
             {
-                if (resetScrollRect)
-                {
-                    magicList.UpdateSelectIndex(selectIndex);
-                }
-            });
-            SetActivate(magicList);
+                magicList.Refresh(selectIndex);
+            }
         }
 
         public void SelectEnemy(List<ListData> battlerInfos)
         {
-            battleEnemyLayer.SetData(battlerInfos,true,() => 
-            {
-                battleEnemyLayer.Refresh(0);
-            });
             SetActivate(battleEnemyLayer);
+            battleEnemyLayer.RefreshList(battlerInfos);
         }
 
         public void SelectActor(List<ListData> battlerInfos)
         {
-            battleEnemyLayer.SetData(battlerInfos,true,() => 
-            {
-                battleEnemyLayer.Refresh(0);
-            });
             SetActivate(battleEnemyLayer);
+            battleEnemyLayer.RefreshList(battlerInfos);
         }
 
         public new void SetHelpText(string text)
@@ -379,31 +386,12 @@ namespace Ryneus
             HelpWindow.SetHelpText(text);
         }
 
-        public void SetEvent(System.Action<BattleViewEvent> commandData)
+        public new void SetEvent(System.Action<ViewEvent> commandData)
         {
             _commandData = commandData;
         }
 
-        public void SetActors(List<BattlerInfo> battlerInfos)
-        {
-            battleActorList.SetData(ListData.MakeListData(battlerInfos,false));
-            foreach (var battlerInfo in battlerInfos)
-            {
-                _battlerComps[battlerInfo.Index] = battleActorList.GetBattlerInfoComp(battlerInfo.Index);
-            }
-            battleGridLayer.SetActorInfo(battlerInfos);
-        }
         
-        public void SetEnemies(List<BattlerInfo> battlerInfos)
-        {
-            battleEnemyLayer.SetData(ListData.MakeListData(battlerInfos,false));
-            //battleEnemyLayer.SetSelectedHandler(() => CallSelectEnemyList());
-            foreach (var battlerInfo in battlerInfos)
-            {
-                _battlerComps[battlerInfo.Index] = battleEnemyLayer.GetBattlerInfoComp(battlerInfo.Index);
-            }
-            battleGridLayer.SetEnemyInfo(battlerInfos);
-        }
 
         private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
         {
@@ -412,11 +400,7 @@ namespace Ryneus
             var battlerInfo = battlerInfos.Find(a => a.Index == selectedIndex);
             if (battlerInfo != null)
             {
-                var eventData = new BattleViewEvent(CommandType.EnemyDetail)
-                {
-                    template = selectedIndex
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.EnemyDetail,selectedIndex);
             }
         }
 
@@ -426,11 +410,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.ActorList)
-                {
-                    template = data
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.ActorList,data);
             }
         }
 
@@ -441,11 +421,7 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.SelectActorList)
-                {
-                    template = data.Index
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectActorList,data.Index);
             }
         }
 
@@ -456,11 +432,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (BattlerInfo)listData.Data;
-                var eventData = new BattleViewEvent(CommandType.SelectEnemyList)
-                {
-                    template = data.Index
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectEnemyList,data.Index);
             }
         }
 
@@ -499,14 +471,12 @@ namespace Ryneus
 
         private void OnClickSelectEnemy()
         {
-            var eventData = new BattleViewEvent(CommandType.SelectEnemy);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectEnemy);
         }
 
         private void OnClickSelectParty()
         {
-            var eventData = new BattleViewEvent(CommandType.SelectParty);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectParty);
         }
 
         public void RefreshPartyBattlerList(List<ListData> battlerInfos)
@@ -692,8 +662,7 @@ namespace Ryneus
         {     
             base.Update();
             if (_battleBusy == true) return;
-            var eventData = new BattleViewEvent(CommandType.UpdateAp);
-            _commandData(eventData);
+            CallEvent(CommandType.UpdateAp);
         }
 
         public void UpdateGridLayer()
@@ -703,12 +672,12 @@ namespace Ryneus
 
         private void CallSideMenu()
         {
-            var eventData = new BattleViewEvent(CommandType.SelectSideMenu);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectSideMenu);
         }
         
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
+            /*
             if (GameSystem.ConfigData.InputType == false)
             {
                 return;
@@ -751,6 +720,7 @@ namespace Ryneus
                     CallChangeBattleSpeed(1);
                     break;
             }
+            */
         }
 
         public void ChangeBattleAuto(bool isAuto)

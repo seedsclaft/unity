@@ -26,11 +26,11 @@ namespace Ryneus
             _view.SetEvent((type) => UpdateCommand(type));
             CommandRefresh();
             var enemyInfos = _model.EnemyInfos();
-            _view.SetEnemyMembers(GetListData(enemyInfos));
-            _view.SetAttributeList(GetListData(_model.AttributeTabList()));
+            _view.SetEnemyMembers(MakeListData(enemyInfos));
+            _view.SetAttributeList(MakeListData(_model.AttributeTabList()));
             _view.SetStatusButtonEvent(() => CommandStatusInfo());
-            _view.SetTacticsMembers(GetListData(_model.BattlePartyMembers()));
-            _view.SetCommandList(GetListData(_model.BattlePartyCommand()));
+            _view.SetTacticsMembers(MakeListData(_model.BattlePartyMembers()));
+            _view.SetCommandList(MakeListData(_model.BattlePartyCommand()));
             _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
@@ -212,7 +212,7 @@ namespace Ryneus
             _model.SetCurrentActorInfo(actorInfo);
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
             _model.SetInBattle();
-            _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
+            _view.RefreshTacticsMembers(MakeListData(_model.BattlePartyMembers()));
             CommandRefresh();
         }
 
@@ -392,7 +392,7 @@ namespace Ryneus
             {
                 actorInfo.SetLineIndex(LineType.Front);
             }
-            _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
+            _view.RefreshTacticsMembers(MakeListData(_model.BattlePartyMembers()));
             CommandRefresh();
         }
 
@@ -423,7 +423,7 @@ namespace Ryneus
                 _busy = false;
                 _view.SetBusy(false);
                 CommandRefresh();
-                _view.RefreshTacticsMembers(GetListData(_model.BattlePartyMembers()));
+                _view.RefreshTacticsMembers(MakeListData(_model.BattlePartyMembers()));
                 CheckTutorialState();
             });
         }
@@ -477,7 +477,7 @@ namespace Ryneus
         private void CommandRefresh()
         {
             ShowCharacterDetail();
-            _view.SetBattleMembers(GetListData(_model.BattleMembers()));
+            _view.SetBattleMembers(MakeListData(_model.BattleMembers()));
             _view.SetNuminous(_model.Currency);
             _view.CommandRefresh();
             //CheckTutorialState();

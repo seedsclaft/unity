@@ -47,7 +47,7 @@ namespace Ryneus
                 _view.SetPlayerData(_model.PlayerName(),_model.PlayerId());
             }
             */
-            _view.SetTitleCommand(_model.TitleCommand(),_model.ExistsLoadFile());
+            _view.SetTitleCommand(_model.TitleCommand());
         }
 
         private void UpdateCommand(ViewEvent viewEvent)
@@ -136,7 +136,7 @@ namespace Ryneus
         private void CommandSelectSideMenu()
         {
             _busy = true;
-            CommandCallSideMenu(GetListData(_model.SideMenu()),() => 
+            CommandCallSideMenu(MakeListData(_model.SideMenu()),() => 
             {            
                 CommandRefresh();
                 _busy = false;

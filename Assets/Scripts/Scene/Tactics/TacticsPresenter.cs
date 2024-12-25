@@ -5,6 +5,8 @@ using UnityEngine;
 namespace Ryneus
 {
     using Tactics;
+    using Unity.VisualScripting;
+
     public partial class TacticsPresenter : BasePresenter
     {
         TacticsModel _model = null;
@@ -63,7 +65,7 @@ namespace Ryneus
             _view.SetBackGround(_model.CurrentStage?.Master?.BackGround);
             
             _view.SetStageInfo(_model.CurrentStage);
-            _view.SetTacticsCommand(_model.TacticsCommand());
+            _view.SetTacticsCommand(MakeListData(_model.TacticsCommand()));
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);

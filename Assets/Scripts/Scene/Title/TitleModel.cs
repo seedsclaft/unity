@@ -15,7 +15,7 @@ namespace Ryneus
                         return ExistsLoadFile();
                 }
                 return true;
-            },0);
+            },selectIndex);
         }
 
         public bool ExistsLoadFile()

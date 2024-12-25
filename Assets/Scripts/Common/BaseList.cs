@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Ryneus
@@ -11,7 +10,6 @@ namespace Ryneus
         [SerializeField] private bool beforeSelect = true; 
         private bool _isInit = false;
         public bool IsInit => _isInit;
-        private bool _initializeList = false;
         private int _beforeSelectIndex = -1;
         public ListData ListData 
         { 
@@ -42,9 +40,8 @@ namespace Ryneus
             _isInit = true;
         }
 
-        public void SetData(List<ListData> listData,bool resetScrollRect = true,Action initializeAfterEvent = null)
+        public void SetData(List<ListData> listData,bool resetScrollRect = true,Action initializeAfterEvent = null,bool unselect = false)
         {
-            int beforeIndex = Index;
             if (resetScrollRect && listData != ListDates)
             {
                 ResetScrollRect();
@@ -61,25 +58,17 @@ namespace Ryneus
             var selectIndex = -1;
             if (resetScrollRect == false)
             {
-                selectIndex = beforeIndex;
-            }
-            if (resetScrollRect)
-            {
-                selectIndex = ListDates.FindIndex(a => a.Selected);
-                if (selectIndex == -1)
-                {
-                    //selectIndex = ListDates.FindIndex(a => a.Enable);
-                }
-            }
-            if (_initializeList == false)
-            {
-                InitializeRefresh(selectIndex);
+                selectIndex = Index;
             } else
             {
-                Refresh(selectIndex);
+                selectIndex = listData.FindIndex(a => a.Selected);
+                if (selectIndex == -1 && unselect == false)
+                {
+                    selectIndex = 0;
+                }
             }
+            Refresh(selectIndex);
             initializeAfterEvent?.Invoke();
-            _initializeList = true;
         }
 
         /// <summary>
@@ -120,12 +109,6 @@ namespace Ryneus
         public new void Refresh(int selectIndex = 0)
         {
             base.Refresh(selectIndex);
-            if (selectIndex > 0)
-            {
-                //Canvas.ForceUpdateCanvases();
-                //UpdateScrollRect(selectIndex);
-                //UpdateListItem();
-            }
             _beforeSelectIndex = selectIndex;
         }
 
@@ -162,85 +145,6 @@ namespace Ryneus
                     ListDates[i].SetEnable(false);
                 }
             }
-            Refresh(ListDates.FindIndex(a => a.Selected));
-        }
-    }
-
-
-    [Serializable]
-    public class ListData
-    {    
-        private int _index;
-        public int Index => _index;
-        private object _data;
-        public object Data => _data;
-        private bool _enable = true;
-        public bool Enable => _enable;
-        public void SetEnable(bool enable)
-        {
-            _enable = enable;
-        }
-        private bool _selected = false;
-        public bool Selected => _selected;
-        public void SetSelected(bool selected)
-        {
-            _selected = selected;
-        }
-
-        public ListData(object data,int index = 0,bool enable = true)
-        {
-            _data = data;
-            _index = index;
-            _enable = enable;
-        }
-
-        public static List<ListData> MakeListData<T>(List<T> dataList,bool isEnable = true)
-        {
-            var list = new List<ListData>();
-            var idx = 0;
-            foreach (var data in dataList)
-            {
-                var listData = new ListData(data,idx);
-                listData.SetEnable(isEnable);
-                list.Add(listData);
-                idx++;
-            }
-            return list;
-        }
-
-        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> Enable)
-        {
-            var list = new List<ListData>();
-            var idx = 0;
-            foreach (var data in dataList)
-            {
-                var listData = new ListData(data,idx);
-                listData.SetEnable(Enable(data));
-                list.Add(listData);
-                idx++;
-            }
-            return list;
-        }        
-        
-        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = -1)
-        {
-            var listData = MakeListData(dataList,enable);
-            if (selectIndex != -1 && listData.Count > selectIndex)
-            {
-                listData[selectIndex].SetSelected(true);
-            }
-            return listData;
-        }
-        
-        public static List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,Func<ListData,bool> selectIndex)
-        {
-            var listData = MakeListData(dataList,enable);
-            var find = listData.Find(a => selectIndex(a));
-            if (find != null)
-            {
-                find.SetSelected(true);
-            }
-            return listData;
         }
     }
 }

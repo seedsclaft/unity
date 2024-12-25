@@ -27,7 +27,7 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             _view.SetSkillTrigger(_model.SkillTrigger(_view.SkillTriggerViewInfo.ActorId,0));
-            _view.SetTriggerCategoryList(GetListData(_model.SkillTriggerCategoryList()));
+            _view.SetTriggerCategoryList(MakeListData(_model.SkillTriggerCategoryList()));
             _view.OpenAnimation();
             CheckTutorialState();
         }
@@ -149,7 +149,7 @@ namespace Ryneus
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
-                _view.SetTrigger1List(GetListData(list));
+                _view.SetTrigger1List(MakeListData(list));
             }
         }
 
@@ -160,7 +160,7 @@ namespace Ryneus
             if (index > -1 && skillListIndex > -1)
             {
                 var list = _model.SkillTriggerDataList(skillListIndex,index + 1);
-                _view.SetTrigger2List(GetListData(list));
+                _view.SetTrigger2List(MakeListData(list));
             }
         }
 

@@ -24,7 +24,7 @@ namespace Ryneus
         {
             _view.SetHelpWindow();
             _view.SetEvent((type) => UpdateCommand(type));
-            _view.SetEnemies(GetListData(_model.EnemyBattlerInfos));
+            _view.SetEnemies(MakeListData(_model.EnemyBattlerInfos));
             CommandRefresh();
             _busy = false;
         }
@@ -62,8 +62,8 @@ namespace Ryneus
         {
             var skillInfos = _model.SkillActionList();
             var lastSelectIndex = 0;
-            _view.SetCondition(GetListData(_model.SelectCharacterConditions()));
-            _view.CommandRefreshStatus(GetListData(skillInfos,0),_model.CurrentEnemy,GetListData(_model.EnemySkillTriggerInfo(),0),_model.EnemyIndexes(),lastSelectIndex);
+            _view.SetCondition(MakeListData(_model.SelectCharacterConditions()));
+            _view.CommandRefreshStatus(MakeListData(skillInfos),_model.CurrentEnemy,MakeListData(_model.EnemySkillTriggerInfo()),_model.EnemyIndexes(),lastSelectIndex);
         }
     }
 }

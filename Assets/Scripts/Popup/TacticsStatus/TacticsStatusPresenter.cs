@@ -20,7 +20,7 @@ namespace Ryneus
         private void Initialize()
         { 
             _view.SetHelpWindow(_model.HelpText());
-            _view.SetUIButton(GetListData(_model.TacticsStatusCommand()));
+            _view.SetUIButton(MakeListData(_model.TacticsStatusCommand()));
             _view.SetEvent((type) => UpdateCommand(type));
 
             CommandRefresh();
@@ -283,11 +283,7 @@ namespace Ryneus
             _view.SetToLvText(_model.CurrentActor.Level);
             _view.CommandRefresh();
             var skillListData = _model.SkillActionListData(_model.CurrentActor);
-            if (skillListData.Count > 0)
-            {
-                skillListData[0].SetSelected(true);
-            }
-            _view.CommandRefreshTacticsStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),GetListData(_model.SkillTrigger()));
+            _view.CommandRefreshTacticsStatus(skillListData,_model.CurrentActor,_model.PartyMembers(),MakeListData(_model.SkillTrigger()));
         }
 
         private void SaveSelectedSkillId()

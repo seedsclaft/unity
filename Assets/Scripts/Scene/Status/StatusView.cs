@@ -41,7 +41,6 @@ namespace Ryneus
         public void Initialize(List<ActorInfo> actorInfos) 
         {
             base.Initialize();
-            InitializeSelectCharacter();
             
             InitializeCommandList();
             InitializeMemberList();
@@ -110,17 +109,12 @@ namespace Ryneus
 
         public void SetEquipSkillList(List<ListData> skillInfos)
         {
-            var lastIndex = equipSkillList.Index;
-            equipSkillList.SetData(skillInfos,lastIndex == 0);
+            equipSkillList.SetData(skillInfos);
         }
 
         public void SetActorInfo(ActorInfo actorInfo,List<ActorInfo> partyInfo)
         {
             selectingActorInfoComponent.UpdateInfo(actorInfo,partyInfo);
-        }
-
-        public void SetSelectingEquipSkill(ListData skillInfo)
-        {
         }
 
         private void OnSelectEquipSkill()
@@ -199,10 +193,6 @@ namespace Ryneus
         }
 
         public void OpenAnimation(Action endEvent)
-        {
-        }
-
-        private void InitializeSelectCharacter()
         {
         }
 

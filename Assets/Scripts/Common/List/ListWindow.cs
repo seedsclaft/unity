@@ -515,12 +515,13 @@ namespace Ryneus
 
         public void UpdateSelectIndex(int index)
         {
+            Debug.Log(this.name + " " + index);
             SelectIndex(index);
             UpdateHelpWindow();
-            for (int i = 0; i < _objectList.Count;i++)
+            foreach (var objectList in _objectList)
             {
-                if (_objectList[i] == null) continue;
-                var listItem = _objectList[i].GetComponentInChildren<ListItem>();
+                if (objectList == null) continue;
+                var listItem = objectList.GetComponentInChildren<ListItem>();
                 if (listItem == null) continue;
                 if (_active && (index == listItem.Index || _selectIndexes.Contains(listItem.Index)))
                 {

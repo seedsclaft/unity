@@ -6,23 +6,15 @@ namespace Ryneus
 {
     public partial class BaseModel 
     {
-        public List<ListData> MakeListData<T>(List<T> dataList,int selectIndex = 0)
+        public List<ListData> MakeListData<T>(List<T> dataList)
         {
             var listData = ListData.MakeListData(dataList);
-            if (selectIndex != -1 && listData.Count > selectIndex)
-            {
-                listData[selectIndex].SetSelected(true);
-            }
             return listData;
         }
 
         public List<ListData> MakeListData<T>(List<T> dataList,Func<T,bool> enable,int selectIndex = 0)
         {
             var listData = ListData.MakeListData(dataList,enable);
-            if (selectIndex != -1 && listData.Count > selectIndex)
-            {
-                listData[selectIndex].SetSelected(true);
-            }
             return listData;
         }
 
@@ -76,7 +68,7 @@ namespace Ryneus
             }
             */
             var selectIndex = skillInfos.FindIndex(a => a.Id == selectedSkillId);
-            var listData = MakeListData(skillInfos,selectIndex);
+            var listData = MakeListData(skillInfos);
             return listData;
         }
         

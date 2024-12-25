@@ -12,11 +12,13 @@ namespace Ryneus
         [SerializeField] private GameObject enemyRoot;
         private Dictionary<BattlerInfo,BattlerGrid> _battlers = new ();
 
-        public void Initialize()
+        public void SetGridMembers(List<BattlerInfo> battlerInfos)
         {
+            SetActorInfo(battlerInfos.FindAll(a => a.IsActor));
+            SetEnemyInfo(battlerInfos.FindAll(a => !a.IsActor));
         }
 
-        public void SetActorInfo(List<BattlerInfo> battlerInfos)
+        private void SetActorInfo(List<BattlerInfo> battlerInfos)
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
@@ -30,7 +32,7 @@ namespace Ryneus
             RefreshStatus();
         }
         
-        public void SetEnemyInfo(List<BattlerInfo> battlerInfos)
+        private void SetEnemyInfo(List<BattlerInfo> battlerInfos)
         {
             for (int i = 0; i < battlerInfos.Count;i++)
             {
