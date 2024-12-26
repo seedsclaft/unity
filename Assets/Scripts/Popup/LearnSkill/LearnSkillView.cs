@@ -7,6 +7,7 @@ namespace Ryneus
 {
     public class LearnSkillView : BaseView, IInputHandlerEvent
     {
+        [SerializeField] private GameObject evaluateObj = null;
         [SerializeField] private TextMeshProUGUI evaluateText = null;
         [SerializeField] private TextMeshProUGUI afterEvaluateText = null;
         [SerializeField] private SkillInfoComponent skillInfoComponent = null;
@@ -26,6 +27,7 @@ namespace Ryneus
 
         public void SetLearnSkillInfo(LearnSkillInfo learnSkillInfo)
         {
+            evaluateObj?.SetActive(learnSkillInfo.From !=  learnSkillInfo.To);
             evaluateText?.SetText(learnSkillInfo.From.ToString());
             afterEvaluateText?.SetText(learnSkillInfo.To.ToString());
             skillInfoComponent.UpdateInfo(learnSkillInfo.SkillInfo);

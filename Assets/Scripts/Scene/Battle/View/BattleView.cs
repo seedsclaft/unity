@@ -33,7 +33,10 @@ namespace Ryneus
         [SerializeField] private BattleAwakenAnimation battleAwakenAnimation = null;
         [SerializeField] private MagicList magicList = null;
         private new Action<ViewEvent> _commandData = null;
-
+        public new void SetEvent(Action<ViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
         public void CallEvent(CommandType battleCommandType,object sendData = null)
         {
             var commandType = new ViewCommandType(ViewCommandSceneType.Battle,battleCommandType);
@@ -178,14 +181,12 @@ namespace Ryneus
             if (inputKeyType == InputKeyType.Decide)
             {
                 var listData = magicList.ListItemData<SkillInfo>();
-                if (listData != null)
+                if (listData != null && listData.Enable)
                 {
                     CallEvent(CommandType.OnSelectSkill,listData);
                 }
             }
         }
-
-
 
         private void TargetSelectCursor()
         {
@@ -386,10 +387,7 @@ namespace Ryneus
             HelpWindow.SetHelpText(text);
         }
 
-        public new void SetEvent(System.Action<ViewEvent> commandData)
-        {
-            _commandData = commandData;
-        }
+
 
         
 

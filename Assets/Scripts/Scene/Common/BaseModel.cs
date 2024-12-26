@@ -68,6 +68,92 @@ namespace Ryneus
             return PartyInfo.ActorInfos;
         }
 
+        public List<SkillInfo> SortSkillInfos(List<SkillInfo> skillInfos)
+        {
+            var sortList1 = new List<SkillInfo>();
+            var sortList2 = new List<SkillInfo>();
+            var sortList3 = new List<SkillInfo>();
+            skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
+            foreach (var skillInfo in skillInfos)
+            {
+                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Active || skillInfo.IsBattleSpecialSkill())
+                {
+                    sortList1.Add(skillInfo);
+                } else
+                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Passive)
+                {
+                    sortList2.Add(skillInfo);
+                } else
+                {
+                    sortList3.Add(skillInfo);
+                }
+            }
+            skillInfos.Clear();
+            skillInfos.AddRange(sortList1);
+            skillInfos.AddRange(sortList2);
+            sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
+            skillInfos.AddRange(sortList3);
+            return skillInfos;
+        }
+
+        public List<SkillInfo> ChangeAbleSkills(ActorInfo actorInfo)
+        {
+            var changeAbleSkills = actorInfo.ChangeAbleSkills();
+            foreach (var learnSkillId in PartyInfo.LearningSkillIds)
+            {
+                if (actorInfo.EquipmentSkillIds.Contains(learnSkillId))
+                {
+                    continue;
+                }
+                var skillInfo = new SkillInfo(learnSkillId);
+                skillInfo.SetLearningState(LearningState.Learned);
+                skillInfo.SetEnable(true);
+                changeAbleSkills.Add(skillInfo);
+            }
+            foreach (var changeAbleSkill in SortSkillInfos(changeAbleSkills))
+            {
+                if (changeAbleSkill.Master != null && !changeAbleSkill.IsBattleSpecialSkill())
+                {
+                    var cost = TacticsUtility.LearningMagicCost(actorInfo,changeAbleSkill.Attribute,PartyInfo.ActorInfos,changeAbleSkill.Master.Rank);
+                    changeAbleSkill.SetLearningCost(cost);
+                    if (changeAbleSkill.Enable)
+                    {
+                        changeAbleSkill.SetEnable(cost <= actorInfo.CurrentMp);
+                    }
+                }
+            }
+            return changeAbleSkills;
+        }
+
+        public List<SkillInfo> EquipSkills(ActorInfo actorInfo)
+        {
+            var equipSkills = new List<SkillInfo>();
+            var equipSkillIds = actorInfo.EquipmentSkillIds;
+            foreach (var equipSkillId in equipSkillIds)
+            {
+                if (equipSkillId < 1000)
+                {
+                    continue;
+                }
+                var skillInfo = new SkillInfo(equipSkillId);
+                skillInfo.SetLearningState(LearningState.Learned);
+                skillInfo.SetEnable(true);
+                equipSkills.Add(skillInfo);
+            }            
+            if (equipSkills.Count < 8)
+            {
+                var count = 8 - equipSkills.Count;
+                for (int i = 0;i < count;i++)
+                {
+                    var skillInfo = new SkillInfo(0);
+                    skillInfo.SetEnable(true);
+                    equipSkills.Add(skillInfo);
+                }
+            }
+            return equipSkills;
+        }
+        
+
         public string TacticsBgmKey()
         {
             if (CurrentStage != null)

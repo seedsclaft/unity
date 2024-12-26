@@ -51,7 +51,7 @@ namespace Ryneus
                     {
                         enemyIndexKeys[enemyData.Id] = 0;
                     }
-                    battlerInfo.SetEnemyIndex(enemyIndexKeys[enemyData.Id]);
+                    battlerInfo.EnemyIndex.SetValue(enemyIndexKeys[enemyData.Id]);
                     enemyIndexKeys[enemyData.Id]++;
                 }
             }

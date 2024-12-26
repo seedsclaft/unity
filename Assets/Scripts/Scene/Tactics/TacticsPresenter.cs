@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Ryneus
 {
     using Tactics;
-    using Unity.VisualScripting;
 
     public partial class TacticsPresenter : BasePresenter
     {
@@ -298,20 +297,48 @@ namespace Ryneus
 
         private void CommandOnClickSymbol(SymbolInfo symbolInfo)
         {
-            var currentSymbol = symbolInfo;
-            if (currentSymbol != null && _model.IsCurrentSeekSymbolInfo(symbolInfo))
+            if (symbolInfo != null && _model.IsCurrentSeekSymbolInfo(symbolInfo))
             {
-                switch (currentSymbol.Master.SymbolType)
+                switch (symbolInfo.Master.SymbolType)
                 {
                     case SymbolType.Battle:
                         CommandBattleStart();
                         return;
+                    case SymbolType.Alcana:
+                        // 獲得スキルが1つなら
+                        var getItemInfos = symbolInfo.GetItemInfos.FindAll(a => a.GetItemType == GetItemType.Skill);
+                        if (getItemInfos.Count == 1)
+                        {
+                            // 魔法入手表示
+                            var learnSkillInfo = new LearnSkillInfo(0,0,new SkillInfo(getItemInfos[0].Param1));
+                            SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
+
+                            var popupInfo = new PopupInfo
+                            {
+                                PopupType = PopupType.LearnSkill,
+                                EndEvent = () =>
+                                {
+                                    CommandAfterGetItem(symbolInfo);
+                                },
+                                template = learnSkillInfo
+                            };
+                            _view.CommandCallPopup(popupInfo);
+                        } else
+                        {
+                            CommandAfterGetItem(symbolInfo);
+                        }
+                        return;
                     case SymbolType.Resource:
-                        _model.EndSymbolInfo(currentSymbol);
-                        CommandNextSeek();
+                        CommandAfterGetItem(symbolInfo);
                         return;
                 }
             }
+        }
+
+        private void CommandAfterGetItem(SymbolInfo symbolInfo)
+        {
+            _model.EndSymbolInfo(symbolInfo);
+            CommandNextSeek();
         }
 
         private void CommandOnCancelSymbol()

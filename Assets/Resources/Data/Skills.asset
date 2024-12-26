@@ -930,6 +930,31 @@ MonoBehaviour:
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
+  - Id: 3120
+    Name: "\u30A6\u30A9\u30FC\u30BF\u30FC\u30D2\u30FC\u30EB"
+    IconIndex: 1
+    AnimationId: 21
+    AnimationType: 1
+    CountTurn: 2
+    Rank: 2
+    Attribute: 3
+    Scope: 3
+    SkillType: 1
+    TargetType: 2
+    Help: "\\s\u306EHp\u3092/f[f,0,1]\u56DE\u5FA9"
+    Range: 2
+    RepeatTime: 1
+    AliveType: 1
+    TimingOnlyCount: 0
+    FeatureDates:
+    - SkillId: 3120
+      FeatureType: 2010
+      Param1: 15
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates: []
+    ScopeTriggers: []
   - Id: 4010
     Name: "\u30BB\u30A4\u30F3\u30C8\u30EC\u30FC\u30B6\u30FC"
     IconIndex: 1

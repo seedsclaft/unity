@@ -53,7 +53,24 @@ namespace Ryneus
         {
             _getItemInfos.Add(getItemInfo);
             CheckAddActor();
+            CheckLearningSkillId();
         }
+
+        private List<int> _learningSkillIds = new();
+        public List<int> LearningSkillIds => _learningSkillIds;
+        private void CheckLearningSkillId()
+        {
+            var addSkillInfos = _getItemInfos.FindAll(a => a.GetFlag && a.GetItemType == GetItemType.Skill);
+            foreach (var addSkillInfo in addSkillInfos)
+            {
+                if (!_learningSkillIds.Contains(addSkillInfo.Param1))
+                {
+                    // 新規魔法入手
+                    _learningSkillIds.Add(addSkillInfo.Param1);
+                }
+            }
+        }
+
 
         private void CheckAddActor()
         {

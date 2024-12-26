@@ -32,31 +32,12 @@ namespace Ryneus
 
         public List<SkillInfo> EquipSkills()
         {
-            var equipSkills = CurrentActor.EquipSkills();
-            foreach (var equipSkill in equipSkills)
-            {
-                if (equipSkill.Master != null && !equipSkill.IsBattleSpecialSkill())
-                {
-                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,equipSkill.Attribute,_actorInfos,equipSkill.Master.Rank);
-                    equipSkill.SetLearningCost(cost);
-                }
-            }
-            return equipSkills;
+            return EquipSkills(CurrentActor);
         }
 
         public List<SkillInfo> ChangeAbleSkills()
         {
-            var changeAbleSkills = CurrentActor.ChangeAbleSkills();
-            foreach (var changeAbleSkill in changeAbleSkills)
-            {
-                if (changeAbleSkill.Master != null && !changeAbleSkill.IsBattleSpecialSkill())
-                {
-                    var cost = TacticsUtility.LearningMagicCost(CurrentActor,changeAbleSkill.Attribute,_actorInfos,changeAbleSkill.Master.Rank);
-                    changeAbleSkill.SetLearningCost(cost);
-                    changeAbleSkill.SetEnable(cost <= CurrentActor.CurrentMp);
-                }
-            }
-            return changeAbleSkills;
+            return ChangeAbleSkills(CurrentActor);
         }
 
         public string HelpText()

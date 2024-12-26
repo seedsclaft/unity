@@ -24,12 +24,18 @@ namespace Ryneus
 
 
         private List<int> _equipmentSkillIds = new ();
+        public List<int> EquipmentSkillIds => _equipmentSkillIds;
         public void ChangeEquipSkill(int changeSkillId,int removeSkillId)
         {
-            _equipmentSkillIds.Remove(removeSkillId);
+            var findIndex = _equipmentSkillIds.FindIndex(a => a == removeSkillId);
+            if (findIndex > -1)
+            {
+                _equipmentSkillIds.RemoveAt(findIndex);
+            }
+            var insertIndex = findIndex > -1 ? findIndex : _equipmentSkillIds.Count;
             if (!_equipmentSkillIds.Contains(changeSkillId))
             {
-                _equipmentSkillIds.Add(changeSkillId);
+                _equipmentSkillIds.Insert(insertIndex,changeSkillId);
             }
         }
         public StatusInfo CurrentStatus => LevelUpStatus(Level);
@@ -89,11 +95,11 @@ namespace Ryneus
 
         public ActorInfo(ActorData actorData)
         {
+            Exp = new ParameterInt();
             _actorId = actorData.Id;
             SetInitialParameter(actorData);
             _currentHp = Master.InitStatus.Hp;
             _currentMp = Master.InitStatus.Mp;
-            Exp = new ParameterInt();
             InitSkillInfo();
             InitSkillTriggerInfos();
         }
@@ -148,7 +154,7 @@ namespace Ryneus
         private void InitSkillInfo()
         {
             _lastSelectSkillId = 0;
-            var selectSkill = LearningSkillInfos().Find(a => a.Id >= 100);
+            var selectSkill = LearningSkillInfos().Find(a => a.Id >= 1000);
             if (selectSkill != null)
             {
                 _lastSelectSkillId = selectSkill.Id;
@@ -162,11 +168,17 @@ namespace Ryneus
             }
         }
 
-        public List<SkillInfo> LearningSkillInfos(List<int> alchemyIds = null)
+        public List<SkillInfo> ChangeAbleSkills()
+        {
+            return LearningSkillInfos().FindAll(a => !_equipmentSkillIds.Contains(a.Id));
+        }
+
+        public List<SkillInfo> LearningSkillInfos()
         {
             var list = new List<SkillInfo>();
             foreach (var _learningData in Master.LearningSkills)
             {
+                if (_learningData.SkillId < 1000) continue;
                 if (list.Find(a => a.Id == _learningData.SkillId) != null) continue;
                 if (LearnSkillIds().Contains(_learningData.SkillId)) continue;
                 var skillInfo = new SkillInfo(_learningData.SkillId);
@@ -178,20 +190,7 @@ namespace Ryneus
                 {
                     skillInfo.SetLearningLv(_learningData.Level);
                     skillInfo.SetLearningState(LearningState.NotLearn);
-                }
-                list.Add(skillInfo);
-            }
-            foreach (var learnSkillId in LearnSkillIds())
-            {
-                var skillInfo = new SkillInfo(learnSkillId);
-                skillInfo.SetLearningState(LearningState.Learned);
-                skillInfo.SetEnable(true);
-                if (alchemyIds != null)
-                {
-                    if (!alchemyIds.Contains(learnSkillId))
-                    {
-                        skillInfo.SetLearningState(LearningState.NotLearnedByAlchemy);
-                    }
+                    skillInfo.SetEnable(false);
                 }
                 list.Add(skillInfo);
             }
@@ -400,85 +399,6 @@ namespace Ryneus
             }
             int total = statusValue + (int)magicValue + DemigodParam * 10;
             return total;
-        }
-    
-        public List<SkillInfo> SkillActionList(List<int> alchemyIds)
-        {
-            var skillInfos = LearningSkillInfos(alchemyIds).FindAll(a => a.Id > 100);
-
-            skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
-            var sortList1 = new List<SkillInfo>();
-            var sortList2 = new List<SkillInfo>();
-            var sortList3 = new List<SkillInfo>();
-            skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
-            foreach (var skillInfo in skillInfos)
-            {
-                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Active || skillInfo.IsBattleSpecialSkill())
-                {
-                    sortList1.Add(skillInfo);
-                } else
-                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Passive)
-                {
-                    sortList2.Add(skillInfo);
-                } else
-                {
-                    sortList3.Add(skillInfo);
-                }
-            }
-            skillInfos.Clear();
-            skillInfos.AddRange(sortList1);
-            skillInfos.AddRange(sortList2);
-            sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
-            skillInfos.AddRange(sortList3);
-            return skillInfos;
-        }
-
-        public List<SkillInfo> EquipSkills()
-        {
-            var skillInfos = LearningSkillInfos().FindAll(a => a.Id >= 1000 && _equipmentSkillIds.Contains(a.Master.Id));
-            if (skillInfos.Count < 8)
-            {
-                var count = 8 - skillInfos.Count;
-                for (int i = 0;i < count;i++)
-                {
-                    var skillInfo = new SkillInfo(0);
-                    skillInfo.SetEnable(true);
-                    skillInfos.Add(skillInfo);
-                }
-            }
-            return skillInfos;
-        }
-
-        public List<SkillInfo> ChangeAbleSkills()
-        {
-            var skillInfos = LearningSkillInfos().FindAll(a => a.Id > 100);
-
-            skillInfos.ForEach(a => a.SetEnable(a.LearningState == LearningState.Learned));
-            var sortList1 = new List<SkillInfo>();
-            var sortList2 = new List<SkillInfo>();
-            var sortList3 = new List<SkillInfo>();
-            skillInfos.Sort((a,b) => {return a.Master.Id > b.Master.Id ? 1 : -1;});
-            foreach (var skillInfo in skillInfos)
-            {
-                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Active || skillInfo.IsBattleSpecialSkill())
-                {
-                    sortList1.Add(skillInfo);
-                } else
-                if (skillInfo.LearningState == LearningState.Learned && skillInfo.Master.SkillType == SkillType.Passive)
-                {
-                    sortList2.Add(skillInfo);
-                } else
-                {
-                    sortList3.Add(skillInfo);
-                }
-            }
-            skillInfos.Clear();
-            skillInfos.Add(new SkillInfo(1));
-            skillInfos.AddRange(sortList1);
-            skillInfos.AddRange(sortList2);
-            sortList3.Sort((a,b) => {return a.LearningLv > b.LearningLv ? 1 : -1;});
-            skillInfos.AddRange(sortList3);
-            return skillInfos;
         }
     
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();

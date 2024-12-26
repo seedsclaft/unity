@@ -41,7 +41,7 @@ namespace Ryneus
             }
             if (gridKey != null)
             {
-                UpdateGridKey(battlerInfo.EnemyIndex);
+                UpdateGridKey(battlerInfo.EnemyIndex.Value);
             }
         }
 

@@ -115,7 +115,7 @@ namespace Ryneus
 
         public void SetSkillTriggerSkill(int index,int skillId)
         {
-            var skills = CurrentActor.ChangeAbleSkills();
+            var skills = ChangeAbleSkills(CurrentActor);
             var skillInfo = skills.Find(a => a.Id == skillId);
             CurrentActor.SetSkillTriggerSkill(index,skillInfo);
             if (skillInfo == null)

@@ -19,9 +19,7 @@ namespace Ryneus
         }
         private int _index = 0;
         public int Index => _index;
-        private int _enemyIndex = 0;
-        public int EnemyIndex => _enemyIndex;
-        public void SetEnemyIndex(int enemyIndex) => _enemyIndex = enemyIndex;
+        public ParameterInt EnemyIndex;
         private bool _isActor = false;
         public bool IsActor => _isActor;
         // 見た目上は味方か
@@ -56,11 +54,11 @@ namespace Ryneus
         public EnemyData EnemyData => DataSystem.Enemies.Find(a => a.Id == _enemyId);
         private List<KindType> _kinds = new ();
         public List<KindType> Kinds => _kinds;
-        private int _lastSelectSkillId = 0;
-        public int LastSelectSkillId => _lastSelectSkillId;
+        private ParameterInt LastSelectSkill;
+        public int LastSelectSkillId => LastSelectSkill.Value;
         public void SetLastSelectSkillId(int selectSkillId)
         {
-            _lastSelectSkillId = selectSkillId;
+            LastSelectSkill?.SetValue(selectSkillId);
         }
         private List<StateInfo> _stateInfos = new ();
         public List<StateInfo> StateInfos => _stateInfos;
@@ -134,9 +132,9 @@ namespace Ryneus
             _index = index;
 
             _skills.Clear();
-            var battleSkills = actorInfo.EquipSkills();
-            foreach (var battleSkill in battleSkills)
+            foreach (var equipmentSkillId in actorInfo.EquipmentSkillIds)
             {
+                var battleSkill = new SkillInfo(equipmentSkillId);
                 battleSkill.InitCountTurn();
                 _skills.Add(battleSkill);
             }
@@ -160,9 +158,13 @@ namespace Ryneus
             _mp = actorInfo.CurrentMp;
             _lineIndex = actorInfo.LineIndex;
 
-            if (_lastSelectSkillId == 0)
+            LastSelectSkill = new ParameterInt();
+            if (actorInfo.LastSelectSkillId == 0)
             {
-                _lastSelectSkillId = _skills.Find(a => a.Id > 100).Id;
+                SetLastSelectSkillId(_skills.Find(a => a.Id > 100).Id);
+            } else
+            {
+                SetLastSelectSkillId(actorInfo.LastSelectSkillId);
             }
             InitKindTypes(actorInfo.Master.Kinds);
             InitSkillCount();
@@ -171,6 +173,7 @@ namespace Ryneus
 
         public BattlerInfo(EnemyData enemyData,int lv,int index,LineType lineIndex,bool isBoss)
         {
+            EnemyIndex = new ParameterInt();
             _enemyId = enemyData.Id;
             _charaId = enemyData.Id;
             _level = lv;
