@@ -145,11 +145,11 @@ namespace Ryneus
             {
                 if (skillData.IsHpDamageFeature())
                 {
-                    targeBattlerIndex = _targetEnemy != null ? _targetEnemy.Index : -1;
+                    targeBattlerIndex = _targetBattler != null ? _targetBattler.Index : -1;
                 } else
                 if (skillData.IsHpHealFeature())
                 {
-                    targeBattlerIndex = _targetActor != null ? _targetActor.Index : -1;
+                    targeBattlerIndex = _targetBattler != null ? _targetBattler.Index : -1;
                 }
             }
             // 条件なし

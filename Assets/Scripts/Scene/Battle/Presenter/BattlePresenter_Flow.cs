@@ -81,7 +81,6 @@ namespace Ryneus
             {
                 return;
             }
-            SoundManager.Instance.PlayStaticSe(SEType.Decide);
             var currentBattler = _model.CurrentBattler;
             // 選択中のActionInfoを生成
             var actionInfo = _model.MakeActionInfo(currentBattler,skillInfo,false,false);
@@ -89,18 +88,57 @@ namespace Ryneus
             _model.SetSelectActionInfo(actionInfo);
             // 選択対象を決定
             var targetIndexes = _model.GetSkillTargetIndexList(skillInfo.Id,currentBattler.Index,false);
-            var list = new List<BattlerInfo>();
-            foreach (var targetIndex in targetIndexes)
+            actionInfo.SetCandidateTargetIndexList(targetIndexes);
+            if (targetIndexes.Count > 0)
             {
-                list.Add(_model.GetBattlerInfo(targetIndex));
+                _model.SetTargetBattler(_model.GetBattlerInfo(targetIndexes[0]));
             }
-            if (actionInfo.TargetType == TargetType.Opponent)
+            //_view.UpdateSelectCursor(targetIndexes);
+            var selectTargetIndexes = _model.MakeAutoSelectIndex(_model.SelectActionInfo,_model.TargetBattler.Index);
+            _view.UpdateSelectCursor(selectTargetIndexes);
+        }
+
+        /// <summary>
+        /// 対象を左右変更
+        /// </summary>
+        /// <param name="inputKeyType"></param>
+        private void CommandOnSelectTarget(InputKeyType inputKeyType)
+        {           
+            var candidateTargetIndexes = _model.SelectActionInfo.CandidateTargetIndexList;
+            if (candidateTargetIndexes.Count <= 1)
             {
-                _view.SelectEnemy(MakeListData(list));
+                return;
+            }
+            var findIndex = candidateTargetIndexes.FindIndex(a => a == _model.TargetBattler.Index);
+            if (findIndex == -1)
+            {
+                return;
+            }
+            if (inputKeyType == InputKeyType.Right)
+            {
+                var nextIndex = candidateTargetIndexes.Count > (findIndex+1) ? (findIndex+1) : 0;
+                _model.SetTargetBattler(_model.GetBattlerInfo(candidateTargetIndexes[nextIndex]));
+                
             } else
+            if (inputKeyType == InputKeyType.Left)
             {
-                _view.SelectActor(MakeListData(list));
+                var nextIndex = (findIndex-1) < 0 ? candidateTargetIndexes.Count : findIndex-1;
+                _model.SetTargetBattler(_model.GetBattlerInfo(candidateTargetIndexes[nextIndex]));
             }
+            var selectTargetIndexes = _model.MakeAutoSelectIndex(_model.SelectActionInfo,_model.TargetBattler.Index);
+            _view.UpdateSelectCursor(selectTargetIndexes);
+        }
+
+        private void CommandDecideSkill()
+        {
+            SoundManager.Instance.PlayStaticSe(SEType.Decide);
+            // ActionInfoを設定する
+            var actionInfo = _model.SelectActionInfo;
+            var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,_model.TargetBattler.Index);
+            _model.SetActiveActionInfo(actionInfo);
+            MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
+
+            _view.EndActionSelect();
         }
 
         /// <summary>

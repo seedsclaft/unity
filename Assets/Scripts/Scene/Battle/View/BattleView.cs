@@ -110,12 +110,12 @@ namespace Ryneus
         private void InitializeActorList()
         {
             battleActorList.Initialize();
-            battleActorList.SetInputHandler(InputKeyType.Decide,() => CallOnSelectActor());
-            battleActorList.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
+            //battleActorList.SetInputHandler(InputKeyType.Decide,() => CallOnSelectActor());
+            //battleActorList.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
             //battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
             //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
-            battleActorList.SetSelectedHandler(() => CallSelectActorList());
-            SetInputHandler(battleActorList.gameObject);
+            //battleActorList.SetSelectedHandler(() => CallSelectActorList());
+            //SetInputHandler(battleActorList.gameObject);
             AddViewActives(battleActorList);
         }
 
@@ -132,10 +132,10 @@ namespace Ryneus
         private void InitializeEnemyLayer()
         {
             battleEnemyLayer.Initialize();
-            battleEnemyLayer.SetInputHandler(InputKeyType.Decide,OnSelectEnemy);
-            battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
-            battleEnemyLayer.SetSelectedHandler(TargetSelectCursor);
-            SetInputHandler(battleEnemyLayer.gameObject);
+            //battleEnemyLayer.SetInputHandler(InputKeyType.Decide,OnSelectEnemy);
+            //battleEnemyLayer.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
+            //battleEnemyLayer.SetSelectedHandler(TargetSelectCursor);
+            //SetInputHandler(battleEnemyLayer.gameObject);
             AddViewActives(battleEnemyLayer);
         }
 
@@ -149,18 +149,11 @@ namespace Ryneus
                 _battlerComps[data.Index] = battleEnemyLayer.GetBattlerInfoComp(data.Index);
             }
         }
-        private void OnSelectEnemy()
-        {
-            var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
-            if (listData != null)
-            {
-                CallEvent(CommandType.OnSelectEnemy,listData);
-            }
-        }
 
-        private void OnCancelEnemy()
+        public void UpdateSelectCursor(List<int> targetIndexes)
         {
-            CallEvent(CommandType.OnCancelEnemy);
+            battleActorList.UpdateSelectIndexList(targetIndexes);
+            battleEnemyLayer.UpdateSelectIndexList(targetIndexes);
         }
 
         public void SetGridMembers(List<BattlerInfo> battlerInfos)
@@ -176,36 +169,36 @@ namespace Ryneus
         private void InitializeMagicList()
         {
             magicList.Initialize();
-            magicList.SetInputHandler(InputKeyType.Decide,() => OnSelectMagic(InputKeyType.Decide));
+            magicList.SetInputHandler(InputKeyType.Decide,OnDecideSkill);
+            magicList.SetInputHandler(InputKeyType.Right,() => OnSelectTarget(InputKeyType.Right));
+            magicList.SetInputHandler(InputKeyType.Left,() => OnSelectTarget(InputKeyType.Left));
             magicList.gameObject.SetActive(false);
+            magicList.SetSelectedHandler(OnSelectMagic);
             SetInputHandler(magicList.gameObject);
             AddViewActives(magicList);
         }
 
-        private void OnSelectMagic(InputKeyType inputKeyType)
+        private void OnDecideSkill()
         {
-            if (inputKeyType == InputKeyType.Decide)
+            var listData = magicList.ListItemData<SkillInfo>();
+            if (listData != null && listData.Enable)
             {
-                var listData = magicList.ListItemData<SkillInfo>();
-                if (listData != null && listData.Enable)
-                {
-                    CallEvent(CommandType.OnSelectSkill,listData);
-                }
+                CallEvent(CommandType.OnDecideSkill,listData);
             }
         }
 
-        private void TargetSelectCursor()
+        private void OnSelectMagic()
         {
-            var listData = battleEnemyLayer.ListItemData<BattlerInfo>();
-            if (listData != null)
+            var listData = magicList.ListItemData<SkillInfo>();
+            if (listData != null && listData.Enable)
             {
-                CallEvent(CommandType.TargetSelectCursor,listData);
+                CallEvent(CommandType.OnSelectSkill,listData);
             }
         }
 
-        public void UpdateSelectCursor(List<int> targetIndexes)
+        private void OnSelectTarget(InputKeyType inputKeyType)
         {
-            battleActorList.UpdateSelectIndexList(targetIndexes);
+            CallEvent(CommandType.OnSelectTarget,inputKeyType);
         }
 
         public void EndActionSelect()
@@ -347,12 +340,6 @@ namespace Ryneus
                 */
         }
 
-        public void SetUIButton()
-        {
-            SetBackCommand(() => OnClickBack());
-            //ChangeSideMenuButtonActive(false);
-        }
-
         public void ChangeSideMenuButtonActive(bool isActive)
         {
             //SideMenuButton.gameObject.SetActive(isActive);
@@ -374,28 +361,13 @@ namespace Ryneus
             {
                 magicList.Refresh(selectIndex);
             }
-        }
-
-        public void SelectEnemy(List<ListData> battlerInfos)
-        {
-            SetActivate(battleEnemyLayer);
-            battleEnemyLayer.RefreshList(battlerInfos);
-        }
-
-        public void SelectActor(List<ListData> battlerInfos)
-        {
-            SetActivate(battleActorList);
-            battleActorList.RefreshList(battlerInfos);
+            OnSelectMagic();
         }
 
         public new void SetHelpText(string text)
         {
             HelpWindow.SetHelpText(text);
         }
-
-
-
-        
 
         private void CallEnemyDetailInfo(List<BattlerInfo> battlerInfos)
         {
@@ -405,38 +377,6 @@ namespace Ryneus
             if (battlerInfo != null)
             {
                 CallEvent(CommandType.EnemyDetail,selectedIndex);
-            }
-        }
-
-        private void CallOnSelectActor()
-        {
-            var listData = battleActorList.ListData;
-            if (listData != null)
-            {
-                var data = (BattlerInfo)listData.Data;
-                CallEvent(CommandType.OnSelectActor,data);
-            }
-        }
-
-        private void CallSelectActorList()
-        {
-            if (_animationBusy) return;
-            var listData = battleActorList.ListData;
-            if (listData != null && listData.Enable)
-            {
-                var data = (BattlerInfo)listData.Data;
-                CallEvent(CommandType.SelectActorList,data);
-            }
-        }
-
-        private void CallSelectEnemyList()
-        {
-            if (_animationBusy) return;
-            var listData = battleEnemyLayer.ListData;
-            if (listData != null)
-            {
-                var data = (BattlerInfo)listData.Data;
-                CallEvent(CommandType.SelectEnemyList,data.Index);
             }
         }
 

@@ -18,13 +18,9 @@ namespace Ryneus
         public void SetActiveActionInfo(ActionInfo actionInfo) => _activeActionInfo = actionInfo;
 
         // 優先敵対象
-        private BattlerInfo _targetEnemy = null;
-        public BattlerInfo TargetEnemy => _targetEnemy;
-        public void SetTargetEnemy(BattlerInfo battlerInfo) => _targetEnemy = battlerInfo;
-
-        private BattlerInfo _targetActor = null;
-        public BattlerInfo TargetActor => _targetActor;
-        public void SetTargetActor(BattlerInfo battlerInfo) =>_targetActor = battlerInfo;
+        private BattlerInfo _targetBattler = null;
+        public BattlerInfo TargetBattler => _targetBattler;
+        public void SetTargetBattler(BattlerInfo battlerInfo) => _targetBattler = battlerInfo;
 
         public void AddActionInfo(ActionInfo actionInfo,bool IsInterrupt)
         {

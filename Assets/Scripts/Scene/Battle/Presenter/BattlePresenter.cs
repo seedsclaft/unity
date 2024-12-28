@@ -74,7 +74,6 @@ namespace Ryneus
 
         public void ViewInitialize()
         {
-            _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
 
             _view.ClearCurrentSkillData();
@@ -208,36 +207,14 @@ namespace Ryneus
                 case CommandType.UpdateAp:
                     CommandUpdateAp();
                     break;
+                case CommandType.OnDecideSkill:
+                    CommandDecideSkill();
+                    break;
                 case CommandType.OnSelectSkill:
                     CommandOnSelectSkill((SkillInfo)viewEvent.template);
                     break;
-                case CommandType.OnSelectActor:
-                case CommandType.OnSelectEnemy:
-                    CommandOnSelectEnemy((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.TargetSelectCursor:
-                    CommandTargetSelectCursor((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.EnemyLayer:
-                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.CancelSelectActor:
-                    CancelSelectActor();
-                    break;
-                case CommandType.CancelSelectEnemy:
-                    CancelSelectEnemy();
-                    break;
-                case CommandType.OnCancelEnemy:
-                    CommandOnCancelEnemy();
-                    break;
-                case CommandType.SelectActorList:
-                    CommandTargetActor((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.SelectEnemyList:
-                    /*
-                    var targetIndexes2 = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
-                    _view.UpdateSelectIndexList(targetIndexes2);
-                    */
+                case CommandType.OnSelectTarget:
+                    CommandOnSelectTarget((InputKeyType)viewEvent.template);
                     break;
                 case CommandType.AttributeType:
                     //RefreshSkillInfos();
@@ -596,45 +573,6 @@ namespace Ryneus
             _view.CommandGameSystem(Base.CommandType.CloseLoading);
             //_view.CommandChangeViewToTransition(null);
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
-        }
-
-        private void CommandTargetActor(BattlerInfo battlerInfo)
-        {
-            if (_model.TargetActor != null && _model.TargetActor.Index == battlerInfo.Index)
-            {
-                CancelSelectActor();
-                return;
-            }
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.SetTargetActor(battlerInfo);
-            _view.SetTargetActor(battlerInfo);
-        }
-
-        private void CancelSelectActor()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.SetTargetActor(null);
-            _view.SetTargetActor(null);
-        }
-
-        private void CommandTargetEnemy(BattlerInfo battlerInfo)
-        {
-            if (_model.TargetEnemy != null && _model.TargetEnemy.Index == battlerInfo.Index)
-            {
-                CancelSelectEnemy();
-                return;
-            }
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.SetTargetEnemy(battlerInfo);
-            _view.SetTargetEnemy(battlerInfo);
-            CheckTutorialState();
-        }
-
-        private void CancelSelectEnemy()
-        {
-            SoundManager.Instance.PlayStaticSe(SEType.Cursor);
-            _model.SetTargetEnemy(null);
-            _view.SetTargetEnemy(null);
         }
 
         private void CommandSkillLog()
