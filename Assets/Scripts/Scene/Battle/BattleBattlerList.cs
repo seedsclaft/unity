@@ -75,10 +75,12 @@ namespace Ryneus
         {
             SetSelectIndexes(new List<int>(){-1});
             UpdateSelectIndex(-1);
+            /*
             foreach (var battleBattler in _battleBattler)
             {
                 battleBattler.Value.SetDisable();
             }
+            */
         }
     }
 }

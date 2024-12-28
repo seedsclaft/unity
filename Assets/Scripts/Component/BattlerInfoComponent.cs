@@ -264,7 +264,6 @@ namespace Ryneus
 
         public void StartHeal(DamageType damageType,int value,bool needPopupDelay)
         {
-            /*
             var battleDamage = CreatePrefab();
             int delayCount = _battleDamages.Count;
             if (needPopupDelay == false)
@@ -283,7 +282,6 @@ namespace Ryneus
                 }
             },delayCount);
             _battleDamages.Add(battleDamage);
-            */
             if (damageType == DamageType.HpHeal)
             {
                 ChangeHpAnimation(_battlerInfo.Hp,value + _battlerInfo.Hp);
@@ -294,7 +292,6 @@ namespace Ryneus
             }
         }
 
-/*
         public void StartStatePopup(DamageType damageType,string stateName)
         {
             var battleDamage = CreatePrefab();
@@ -311,7 +308,6 @@ namespace Ryneus
             });
             _battleDamages.Add(battleDamage);
         }
-*/
 
         public void StartDeathAnimation()
         {

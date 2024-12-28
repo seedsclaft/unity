@@ -10,8 +10,7 @@ namespace Ryneus
             SelectSideMenu,
             AttributeType,
             StartSelect,
-            DecideActor,
-            ActorList,
+            OnSelectActor,
             SelectActorList,
             SelectEnemyList,
             SkillLog,
@@ -21,7 +20,6 @@ namespace Ryneus
             OnCancelEnemy,  // 敵を選択から戻る
             TargetSelectCursor,  // 対象にカーソル選択
             EnemyLayer,
-            SelectEnemy,
             SelectParty,
             EnemyDetail,
             ChangeBattleAuto,

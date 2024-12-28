@@ -86,6 +86,7 @@ namespace Ryneus
                     GameSystem.CurrentStageData.Party.SetSymbolResultInfo(record,false);
                 }
             }
+            */
             if (consoleInputField.text == "R")
             {
                 SceneManager.LoadScene(0);
@@ -134,7 +135,6 @@ namespace Ryneus
                 var sceneInfo = new SceneInfo(){ToScene = Scene.Tactics};
                 gameSystem.CommandSceneChange(sceneInfo);
             }
-            */
         }
     }
 }

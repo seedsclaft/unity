@@ -110,7 +110,8 @@ namespace Ryneus
         private void InitializeActorList()
         {
             battleActorList.Initialize();
-            battleActorList.SetInputHandler(InputKeyType.Decide,() => CallActorList());
+            battleActorList.SetInputHandler(InputKeyType.Decide,() => CallOnSelectActor());
+            battleActorList.SetInputHandler(InputKeyType.Cancel,OnCancelEnemy);
             //battleActorList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
             //battleActorList.SetInputHandler(InputKeyType.SideLeft1,() => OnClickSelectEnemy());
             battleActorList.SetSelectedHandler(() => CallSelectActorList());
@@ -167,6 +168,11 @@ namespace Ryneus
             battleGridLayer.SetGridMembers(battlerInfos);
         }
         
+        public void UpdateGridLayer()
+        {
+            battleGridLayer.UpdatePosition();
+        }
+
         private void InitializeMagicList()
         {
             magicList.Initialize();
@@ -206,8 +212,8 @@ namespace Ryneus
         {
             SetActivate(null);
             magicList.gameObject.SetActive(false);
-            battleEnemyLayer.UpdateSelectIndexList(new List<int>());
-            battleActorList.UpdateSelectIndexList(new List<int>());
+            battleEnemyLayer.ClearSelect();
+            battleActorList.ClearSelect();
         }
 
         private void InitializeSelectCharacter()
@@ -378,8 +384,8 @@ namespace Ryneus
 
         public void SelectActor(List<ListData> battlerInfos)
         {
-            SetActivate(battleEnemyLayer);
-            battleEnemyLayer.RefreshList(battlerInfos);
+            SetActivate(battleActorList);
+            battleActorList.RefreshList(battlerInfos);
         }
 
         public new void SetHelpText(string text)
@@ -402,13 +408,13 @@ namespace Ryneus
             }
         }
 
-        private void CallActorList()
+        private void CallOnSelectActor()
         {
             var listData = battleActorList.ListData;
             if (listData != null)
             {
                 var data = (BattlerInfo)listData.Data;
-                CallEvent(CommandType.ActorList,data);
+                CallEvent(CommandType.OnSelectActor,data);
             }
         }
 
@@ -419,7 +425,7 @@ namespace Ryneus
             if (listData != null && listData.Enable)
             {
                 var data = (BattlerInfo)listData.Data;
-                CallEvent(CommandType.SelectActorList,data.Index);
+                CallEvent(CommandType.SelectActorList,data);
             }
         }
 
@@ -467,15 +473,6 @@ namespace Ryneus
         {
         }
 
-        private void OnClickSelectEnemy()
-        {
-            CallEvent(CommandType.SelectEnemy);
-        }
-
-        private void OnClickSelectParty()
-        {
-            CallEvent(CommandType.SelectParty);
-        }
 
         public void RefreshPartyBattlerList(List<ListData> battlerInfos)
         {
@@ -617,7 +614,7 @@ namespace Ryneus
 
         public void StartStatePopup(int targetIndex,DamageType damageType,string stateName)
         {
-            //_battlerComps[targetIndex].StartStatePopup(damageType,stateName);
+            _battlerComps[targetIndex].StartStatePopup(damageType,stateName);
         }
 
         public void StartDeathAnimation(int targetIndex)
@@ -663,10 +660,6 @@ namespace Ryneus
             CallEvent(CommandType.UpdateAp);
         }
 
-        public void UpdateGridLayer()
-        {
-            battleGridLayer.UpdatePosition();
-        }
 
         private void CallSideMenu()
         {
@@ -675,50 +668,6 @@ namespace Ryneus
         
         public void InputHandler(InputKeyType keyType,bool pressed)
         {
-            /*
-            if (GameSystem.ConfigData.InputType == false)
-            {
-                return;
-            }
-            var selectIndex = 0;
-            switch (keyType)
-            {
-                case InputKeyType.Start:
-                    CallBattleSkip();
-                    break;
-                case InputKeyType.Decide:
-                    if (battleActorList.Active)
-                    {
-                        selectIndex = battleActorList.Index;
-                        if (selectIndex >= 0)
-                        {
-                            CallSelectActorList();
-                        }
-                    } else
-                    {
-                        selectIndex = battleEnemyLayer.Index;
-                        if (selectIndex >= 0)
-                        {
-                            CallSelectEnemyList();
-                        }
-                    }
-                    break;
-                case InputKeyType.Left:
-                    battleActorList.Activate();
-                    battleActorList.UpdateSelectIndex(0);
-                    break;
-                case InputKeyType.Right:
-                    battleActorList.Deactivate();
-                    battleActorList.UpdateSelectIndex(-1);
-                    break;
-                case InputKeyType.SideLeft1:
-                    CallChangeBattleSpeed(-1);
-                    break;
-                case InputKeyType.SideRight1:
-                    CallChangeBattleSpeed(1);
-                    break;
-            }
-            */
         }
 
         public void ChangeBattleAuto(bool isAuto)
@@ -751,14 +700,13 @@ namespace Ryneus
 
         public void StartAnimationBeforeSkill(int subjectIndex,EffekseerEffectAsset effekseerEffect)
         {
-            /*
-            SoundManager.Instance.PlayStaticSe(SEType.Skill);
-            StartAnimation(subjectIndex,effekseerEffect,0,1f,1.0f);
-            if (_battlerComps.ContainsKey(subjectIndex))
+            if (!_battlerComps.ContainsKey(subjectIndex))
             {
-                _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
+                return;
             }
-            */
+            SoundManager.Instance.PlayStaticSe(SEType.Skill);
+            StartAnimation(subjectIndex, effekseerEffect, 0, 1f, 1.0f);
+            _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
         }
 
         public void StartAnimationSlipDamage(List<int> targetIndexes)

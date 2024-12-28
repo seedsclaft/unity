@@ -198,18 +198,6 @@ namespace Ryneus
                 case CommandType.SkipBattle:
                     CommandSkipBattle();
                     break;
-                case CommandType.EnemyLayer:
-                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.ActorList:
-                    CommandTargetActor((BattlerInfo)viewEvent.template);
-                    break;
-                case CommandType.CancelSelectActor:
-                    CancelSelectActor();
-                    break;
-                case CommandType.CancelSelectEnemy:
-                    CancelSelectEnemy();
-                    break;
             }
             if (_busy)
             {
@@ -223,21 +211,28 @@ namespace Ryneus
                 case CommandType.OnSelectSkill:
                     CommandOnSelectSkill((SkillInfo)viewEvent.template);
                     break;
+                case CommandType.OnSelectActor:
                 case CommandType.OnSelectEnemy:
                     CommandOnSelectEnemy((BattlerInfo)viewEvent.template);
                     break;
                 case CommandType.TargetSelectCursor:
                     CommandTargetSelectCursor((BattlerInfo)viewEvent.template);
                     break;
+                case CommandType.EnemyLayer:
+                    CommandTargetEnemy((BattlerInfo)viewEvent.template);
+                    break;
+                case CommandType.CancelSelectActor:
+                    CancelSelectActor();
+                    break;
+                case CommandType.CancelSelectEnemy:
+                    CancelSelectEnemy();
+                    break;
                 case CommandType.OnCancelEnemy:
                     CommandOnCancelEnemy();
                     break;
-                case CommandType.ActorList:
-                    //CommandTargetEnemy((BattlerInfo)viewEvent.template);
-                    // var targetIndexes = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
-                    //CommandSelectTargetIndexes(targetIndexes);
-                    break;
                 case CommandType.SelectActorList:
+                    CommandTargetActor((BattlerInfo)viewEvent.template);
+                    break;
                 case CommandType.SelectEnemyList:
                     /*
                     var targetIndexes2 = _model.ActionInfoTargetIndexes(_model.CurrentActionInfo,(int)viewEvent.template);
@@ -246,12 +241,6 @@ namespace Ryneus
                     break;
                 case CommandType.AttributeType:
                     //RefreshSkillInfos();
-                    break;
-                case CommandType.DecideActor:
-                    //CommandDecideActor();
-                    break;
-                case CommandType.SelectEnemy:
-                    //CommandSelectEnemy();
                     break;
                 case CommandType.StartSelect:
                     CommandStartSelect();
@@ -608,12 +597,6 @@ namespace Ryneus
             //_view.CommandChangeViewToTransition(null);
             _view.CommandGotoSceneChange(Scene.Strategy,strategySceneInfo);
         }
-
-        /*
-        private void CommandSelectEnemy()
-        {
-        }
-        */
 
         private void CommandTargetActor(BattlerInfo battlerInfo)
         {
