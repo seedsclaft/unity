@@ -18,6 +18,8 @@ namespace Ryneus
         private static List<Object> _lastLoadAssets = new List<Object>();
 
         private static string _bgmPath = "Audios/BGM/";
+        private static string _bgsPath = "Audios/BGS/";
+        private static string _sePath = "Audios/Se/";
 
         public static void ReleaseScene()
         {
@@ -72,6 +74,20 @@ namespace Ryneus
                 result1,result2
             };
         }
+        public async static UniTask<AudioClip>LoadBGSAsset(string fileName)
+        {    
+            var data = _bgsPath + fileName;
+            AudioClip result = await LoadAssetResources<AudioClip>(data);
+            return result;
+        }
+
+        public async static UniTask<AudioClip>LoadSeAsset(string fileName)
+        {    
+            var data = _sePath + fileName;
+            AudioClip result = await LoadAssetResources<AudioClip>(data);
+            return result;
+        }
+
 
         public static async UniTask<AudioClip> LoadAssetResources<T>(string address){
             var handle = Resources.LoadAsync<AudioClip>(address);

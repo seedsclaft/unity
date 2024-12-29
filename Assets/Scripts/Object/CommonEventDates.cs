@@ -17,6 +17,7 @@ namespace Ryneus
         public int trigger;
         public string name;
         public int switch_id;
+        
         public EventCommandDate[] list;
         public int id;
     }

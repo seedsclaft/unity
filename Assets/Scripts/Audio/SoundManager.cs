@@ -21,8 +21,10 @@ namespace Ryneus
         private List<SEData> _seMaster;
         
         [SerializeField] private List<SoundIntroLoop> _bgmTracks;
+        [SerializeField] private SoundIntroLoop _bgsTrack;
         public SoundIntroLoop BgmTrack => _bgmTracks[(int)_mainTrack];
         public SoundIntroLoop BgmSubTrack => _bgmTracks[(int)_subTrack];
+        public SoundIntroLoop BgsTrack => _bgsTrack;
         private AudioTrackType _mainTrack = AudioTrackType.Main;
         private AudioTrackType _subTrack = AudioTrackType.Sub;
         
@@ -140,6 +142,16 @@ namespace Ryneus
             _crossFadeTrackNo = 0;
         }
 
+        public void PlayBgs(AudioClip clip, float volume = 1.0f, bool loop = true)
+        {
+            _bgsTrack.Stop();
+            _bgsTrack.SetClip(new List<AudioClip>(){clip},loop);
+            
+            UpdateBgmVolume();
+            _bgsTrack.Play();
+            _bgsTrack.FadeVolume(volume * _bgmVolume,1);
+        }
+
         public void PlayCrossFadeBgm(List<AudioClip> clip, float volume = 1.0f)
         {
             if (clip.Count < 2) return;
@@ -185,6 +197,12 @@ namespace Ryneus
             BgmTrack.Stop();
             _lastPlayAudio = null;
         }
+
+        public void StopBgs()
+        {
+            _bgsTrack.Stop();
+        }
+
 
         public void FadeOutBgm()
         {

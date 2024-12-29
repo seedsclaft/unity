@@ -25,8 +25,17 @@ namespace Utage
                 case "PlayBgm":
                     command = new AdvCommandPlayBgm(row);
                     break;
+                case "PlayBgs":
+                    command = new AdvCommandPlayBgs(row);
+                    break;
+                case "PlaySe":
+                    command = new AdvCommandPlaySe(row);
+                    break;
                 case "StopBgm2":
                     command = new AdvCommandStopBgm2(row);
+                    break;
+                case "StopBgs2":
+                    command = new AdvCommandStopBgs2(row);
                     break;
                 case "SetSelect1Actor":
                     command = new AdvCommandSetSelect1Actor(row);
@@ -55,6 +64,42 @@ namespace Utage
         }
     }
 
+    public class AdvCommandPlayBgs : AdvCommand
+    {
+        private string bgsKey = "";
+        public AdvCommandPlayBgs(StringGridRow row)
+            :base(row)
+        {
+            bgsKey = ParseCell<string>(AdvColumnName.Arg1);
+        }
+        
+        //コマンド実行
+        public override async void DoCommand(AdvEngine engine)
+        {
+            var bgs = await Ryneus.ResourceSystem.LoadBGSAsset(bgsKey);
+            Ryneus.SoundManager.Instance.PlayBgs(bgs,1.0f,true);
+        }
+    }
+
+    public class AdvCommandPlaySe : AdvCommand
+    {
+        private string fileName = "";
+        private int? volume = 80;
+        public AdvCommandPlaySe(StringGridRow row)
+            :base(row)
+        {
+            fileName = ParseCell<string>(AdvColumnName.Arg1);
+            //volume = ParseCell<int?>(AdvColumnName.Arg2);
+        }
+        
+        //コマンド実行
+        public override async void DoCommand(AdvEngine engine)
+        {
+            var se = await Ryneus.ResourceSystem.LoadSeAsset(fileName);
+            Ryneus.SoundManager.Instance.PlaySe(se,(int)volume * 0.01f,0);
+        }
+    }
+
     public class AdvCommandStopBgm2 : AdvCommand
     {
         public AdvCommandStopBgm2(StringGridRow row)
@@ -65,6 +110,19 @@ namespace Utage
         public override void DoCommand(AdvEngine engine)
         {
             Ryneus.SoundManager.Instance.StopBgm();
+        }
+    }
+
+    public class AdvCommandStopBgs2 : AdvCommand
+    {
+        public AdvCommandStopBgs2(StringGridRow row)
+            :base(row)
+        {
+        }
+    
+        public override void DoCommand(AdvEngine engine)
+        {
+            Ryneus.SoundManager.Instance.StopBgs();
         }
     }
 
