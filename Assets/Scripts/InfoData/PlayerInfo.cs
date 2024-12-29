@@ -50,5 +50,32 @@ namespace Ryneus
         private List<int> _readTutorials = new ();
         public List<int> ReadTutorials => _readTutorials;
         public void AddReadTutorials(int id) => _readTutorials.Add(id);
+
+        private Dictionary<int,List<KindType>> _enemyWeakPointDict = new ();
+        public Dictionary<int,List<KindType>> EnemyWeakPointDict => _enemyWeakPointDict;
+        public void AddEnemyWeakPointDict(int enemyId,KindType kindType)
+        {
+            if (CheckEnemyWeakPointDict(enemyId,kindType))
+            {
+                return;
+            }
+            if (!_enemyWeakPointDict.ContainsKey(enemyId) || _enemyWeakPointDict[enemyId] == null)
+            {
+                _enemyWeakPointDict[enemyId] = new ();
+            }
+            _enemyWeakPointDict[enemyId].Add(kindType);
+        }
+        
+        public bool CheckEnemyWeakPointDict(int enemyId,KindType kindType)
+        {
+            if (_enemyWeakPointDict.ContainsKey(enemyId))
+            {
+                if (_enemyWeakPointDict[enemyId] != null && _enemyWeakPointDict[enemyId].Contains(kindType))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

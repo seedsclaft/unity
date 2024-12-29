@@ -137,5 +137,16 @@ namespace Ryneus
             AddTurnActionInfos(actionInfo,IsInterrupt);
             return actionInfo;
         }
+
+        public void HitWeakPoint(int targetIndex,int skillId)
+        {
+            var target = GetBattlerInfo(targetIndex);
+            if (!target.IsActor)
+            {
+                var kindType = (KindType)DataSystem.FindSkill(skillId).Attribute;
+                CurrentData.PlayerInfo.AddEnemyWeakPointDict(target.EnemyData.Id,kindType);
+                target.SetWeakPoint(kindType);
+            }
+        }
     }
 }

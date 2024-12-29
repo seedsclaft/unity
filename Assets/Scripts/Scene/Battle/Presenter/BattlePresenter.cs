@@ -354,13 +354,17 @@ namespace Ryneus
                 {
                     _model.GainBeCriticalCount(actionResultInfo.TargetIndex);
                 }
-                var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+                var damageType = actionResultInfo.Critical || actionResultInfo.WeakPoint ? DamageType.HpCritical : DamageType.HpDamage;
                 _view.StartDamage(targetIndex,damageType,actionResultInfo.HpDamage,needPopupDelay);
                 if (needDamageBlink)
                 {
                     _view.StartBlink(targetIndex);
                     PlayDamageSound(damageType);
                 }
+            }
+            if (actionResultInfo.WeakPoint)
+            {
+                _model.HitWeakPoint(actionResultInfo.TargetIndex,actionResultInfo.SkillId);
             }
             if (actionResultInfo.HpHeal > 0)
             {
@@ -396,7 +400,7 @@ namespace Ryneus
                 reDamage += actionResultInfo.CurseDamage;
                 if (reDamage > 0)
                 {
-                    var damageType = actionResultInfo.Critical ? DamageType.HpCritical : DamageType.HpDamage;
+                    var damageType = actionResultInfo.Critical || actionResultInfo.WeakPoint ? DamageType.HpCritical : DamageType.HpDamage;
                     PlayDamageSound(damageType);
                     _view.StartDamage(actionResultInfo.SubjectIndex,damageType,reDamage);
                     _view.StartBlink(actionResultInfo.SubjectIndex);

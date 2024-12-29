@@ -54,6 +54,8 @@ namespace Ryneus
         public EnemyData EnemyData => DataSystem.Enemies.Find(a => a.Id == _enemyId);
         private List<KindType> _kinds = new ();
         public List<KindType> Kinds => _kinds;
+        private List<KindType> _weakPoints = new ();
+        public List<KindType> WeakPoints => _weakPoints;
         private ParameterInt LastSelectSkill;
         public int LastSelectSkillId => LastSelectSkill.Value;
         public void SetLastSelectSkillId(int selectSkillId)
@@ -272,6 +274,14 @@ namespace Ryneus
             foreach (var kind in kindTypes)
             {
                 _kinds.Add(kind);
+            }
+        }
+
+        public void SetWeakPoint(KindType weakPoint)
+        {
+            if (!_weakPoints.Contains(weakPoint))
+            {
+                _weakPoints.Add(weakPoint);
             }
         }
 

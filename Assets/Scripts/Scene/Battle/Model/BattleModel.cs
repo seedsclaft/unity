@@ -94,6 +94,13 @@ namespace Ryneus
             {
                 enemy.ResetData(enemy.Level);
                 enemy.InitParamInfos(enemy.EnemyData);
+                foreach (var kind in enemy.Kinds)
+                {
+                    if (CurrentData.PlayerInfo.CheckEnemyWeakPointDict(enemy.EnemyData.Id,kind))
+                    {
+                        enemy.SetWeakPoint(kind);
+                    }
+                }
                 //enemy.GainHp(-9999);
                 _battlers.Add(enemy);
                 _battleRecords[enemy.Index] = new BattleRecord(enemy.Index);

@@ -17,6 +17,7 @@ namespace Ryneus
         [SerializeField] private StatusInfoComponent needStatusInfoComponent;
         [SerializeField] private TextMeshProUGUI gridKey;
         [SerializeField] private List<GameObject> actorOnlyGameObjects;
+        [SerializeField] private List<SkillAttributeItem> weakPoints;
 
         public void UpdateInfo(BattlerInfo battlerInfo)
         {
@@ -42,6 +43,10 @@ namespace Ryneus
             if (gridKey != null)
             {
                 UpdateGridKey(battlerInfo.EnemyIndex.Value);
+            }
+            if (weakPoints != null)
+            {
+                UpdateWeakPoints(battlerInfo.WeakPoints);
             }
         }
 
@@ -85,6 +90,21 @@ namespace Ryneus
         {
             var textId = 16800 + index;
             gridKey.text = DataSystem.GetText(textId);
+        }
+
+        private void UpdateWeakPoints(List<KindType> kindTypes)
+        {
+            for (int i = 0;i < weakPoints.Count;i++)
+            {
+                weakPoints[i].gameObject.SetActive(kindTypes.Count > i);
+                if (kindTypes.Count <= i)
+                {
+                    continue;
+                }
+                weakPoints[i].SetListData(new ListData(kindTypes[i]),i);
+                weakPoints[i].UpdateViewItem();
+                weakPoints[i].SetUnSelect();
+            }
         }
 
         public void Clear()

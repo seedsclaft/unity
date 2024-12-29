@@ -153,42 +153,30 @@ namespace Ryneus
 
         private GameObject GetPrefabType(DamageType damageType)
         {
-            switch (damageType)
+            return damageType switch
             {
-                case DamageType.HpDamage:
-                return hpDamagePrefab;
-                case DamageType.HpCritical:
-                return hpCriticalPrefab;
-                case DamageType.HpHeal:
-                return hpHealPrefab;
-                case DamageType.MpHeal:
-                return mpHealPrefab;
-                case DamageType.State:
-                return statePrefab;
-                case DamageType.MpDamage:
-                return mpDamagePrefab;
-            }
-            return null;
+                DamageType.HpDamage => hpDamagePrefab,
+                DamageType.HpCritical => hpCriticalPrefab,
+                DamageType.HpHeal => hpHealPrefab,
+                DamageType.MpHeal => mpHealPrefab,
+                DamageType.State => statePrefab,
+                DamageType.MpDamage => mpDamagePrefab,
+                _ => null,
+            };
         }
         
         private GameObject GetRootType(DamageType damageType)
         {
-            switch (damageType)
+            return damageType switch
             {
-                case DamageType.HpDamage:
-                return hpDamageRoot;
-                case DamageType.HpCritical:
-                return hpCriticalRoot;
-                case DamageType.HpHeal:
-                return hpHealRoot;
-                case DamageType.MpHeal:
-                return mpHealRoot;
-                case DamageType.State:
-                return stateRoot;
-                case DamageType.MpDamage:
-                return mpDamageRoot;
-            }
-            return null;
+                DamageType.HpDamage => hpDamageRoot,
+                DamageType.HpCritical => hpCriticalRoot,
+                DamageType.HpHeal => hpHealRoot,
+                DamageType.MpHeal => mpHealRoot,
+                DamageType.State => stateRoot,
+                DamageType.MpDamage => mpDamageRoot,
+                _ => null,
+            };
         }
     }
 }

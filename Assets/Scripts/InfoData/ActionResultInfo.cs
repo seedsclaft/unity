@@ -127,6 +127,8 @@ namespace Ryneus
         public int HpDamage => _hpDamage;
         private int _overkillHpDamage = 0;
         public int OverkillHpDamage => _overkillHpDamage;
+        private bool _weakPoint = false;
+        public bool WeakPoint => _weakPoint;
         private int _hpHeal = 0;
         public int HpHeal => _hpHeal;
         public void SetHpHeal(int hpHeal)
@@ -542,6 +544,7 @@ namespace Ryneus
             if (target.Kinds.Contains((KindType)skillData.Attribute))
             {
                 hpDamage *= 1.5f;
+                _weakPoint = true;
             }
 
             // 効果補正
