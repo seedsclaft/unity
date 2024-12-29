@@ -352,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4241249360194201178
 RectTransform:
   m_ObjectHideFlags: 0
@@ -660,6 +660,8 @@ MonoBehaviour:
   evaluate: {fileID: 0}
   demigod: {fileID: 0}
   lv: {fileID: 0}
+  exp: {fileID: 0}
+  expGauge: {fileID: 0}
   sp: {fileID: 0}
   statusInfoComponent: {fileID: 489724224604677111}
   needStatusInfoComponent: {fileID: 0}
@@ -705,12 +707,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainThumb: {fileID: 8767594273287993238}
+  gridThumb: {fileID: 0}
   nameText: {fileID: 0}
   lv: {fileID: 0}
   statusInfoComponent: {fileID: 0}
   needStatusInfoComponent: {fileID: 0}
   gridKey: {fileID: 0}
   actorOnlyGameObjects: []
+  weakPoints: []
 --- !u!1 &3899190482659443846
 GameObject:
   m_ObjectHideFlags: 0

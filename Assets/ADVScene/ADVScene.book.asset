@@ -46,7 +46,7 @@ MonoBehaviour:
       debugIndex: 1
       strings:
       - Actor0001
-      - "\u30DF\u30AB"
+      - "\u30A8\u30EA\u30B7\u30E3"
       - 
       - 
       - 0
@@ -62,7 +62,7 @@ MonoBehaviour:
       debugIndex: 2
       strings:
       - Actor0002
-      - "\u30A8\u30EA\u30B6\u30D9\u30FC\u30C8"
+      - "\u30BD\u30E9"
       - 
       - 
       - 0
@@ -78,7 +78,7 @@ MonoBehaviour:
       debugIndex: 3
       strings:
       - Actor0003
-      - "\u30A2\u30EA\u30A8\u30B9"
+      - "\u30EA\u30B8\u30A7"
       - 
       - 
       - 0
@@ -93,8 +93,8 @@ MonoBehaviour:
     - rowIndex: 4
       debugIndex: 4
       strings:
-      - Actor0001_2
-      - "\u8D64\u9AEA\u306E\u5973\u6027"
+      - Actor0004
+      - "\u30DF\u30B7\u30A7\u30EB"
       - 
       - 
       - 0
@@ -102,15 +102,15 @@ MonoBehaviour:
       - 
       - .5
       - 
-      - Actors/0001/Main
+      - Actors/0004/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 5
       debugIndex: 5
       strings:
-      - Actor0002_2
-      - "\u91D1\u9AEA\u306E\u5973\u6027"
+      - Actor0005
+      - "\u30B7\u30FC\u30CA"
       - 
       - 
       - 0
@@ -118,15 +118,15 @@ MonoBehaviour:
       - 
       - .5
       - 
-      - Actors/0002/Main
+      - Actors/0005/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 6
       debugIndex: 6
       strings:
-      - Actor0003_2
-      - "\u6C17\u3060\u308B\u305D\u3046\u306A\u5973\u6027"
+      - Actor0006
+      - "\u30E6\u30CB"
       - 
       - 
       - 0
@@ -134,29 +134,29 @@ MonoBehaviour:
       - 
       - .5
       - 
-      - Actors/0003/Main
+      - Actors/0006/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     - rowIndex: 7
       debugIndex: 7
       strings:
-      - HighOnes1
-      - "\u4E0A\u4F4D\u8005(\u60AA\u9B54)"
+      - Actor0007
+      - "\u30DE\u30EA\u30FC"
       - 
       - 
-      - 120
+      - 0
       - 
       - 
-      - 1.5
+      - .5
       - 
-      - Enemies/Mephisto
+      - Actors/0007/Main
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Character
     type: 1
-    textLength: 396
+    textLength: 371
     headerRow: 0
     sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
       type: 3}
@@ -204,12 +204,12 @@ MonoBehaviour:
       - Event1
       - Bg
       - 
-      - 24
+      - 0
       - 
       - 
       - 1
       - 
-      - NA_background image_3D like_656
+      - event1
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -219,12 +219,12 @@ MonoBehaviour:
       - Event2
       - Bg
       - 
-      - 24
+      - 0
       - 
       - 
       - 1
       - 
-      - NA_background image_3D like_656
+      - event2
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
@@ -234,18 +234,108 @@ MonoBehaviour:
       - Event3
       - Bg
       - 
-      - 24
+      - 0
       - 
       - 
       - 1
       - 
-      - NA_background image_3D like_656
+      - event3
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - Event4
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event4
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - Event5
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event5
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Event6
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event6
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - Event7
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event7
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - Event8
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event8
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - Event9
+      - Bg
+      - 
+      - 0
+      - 
+      - 
+      - 1
+      - 
+      - event9
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
     name: Assets/ADVScene/ADVScene.xls:Texture
     type: 1
-    textLength: 279
+    textLength: 297
     headerRow: 0
     sourceAssetInEditor: {fileID: 102900000, guid: cfe001472457b044c85053811f5aa116,
       type: 3}
