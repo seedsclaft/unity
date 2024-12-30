@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Text;
 using NPOI.SS.UserModel;
+using System.Linq;
 
 namespace Ryneus
 {
@@ -58,17 +59,25 @@ namespace Ryneus
             convert += stringData.Substring(1,stringData.Length-1);
             convert += "}";
             var CommonEventDates = JsonUtility.FromJson<CommonEventMasterDates>(convert);
-            
+            var CommonEventSoundDates = JsonUtility.FromJson<CommonEventMasterSoundDates>(convert);
             foreach (var CommonEventData in CommonEventDates.data)
             {
                 if (CommonEventData.list == null)
                 {
                     continue;
                 }
+                var idx = 0;
                 foreach (var item in CommonEventData.list)
                 {
-                    Debug.Log(item.code);
-                    //Debug.Log(item.parameters);
+                    if (item.code is 241 or 245 or 250)
+                    {
+                        var soundData = CommonEventSoundDates.data.ToList().Find(a => a.id == CommonEventData.id).list[idx].parameters;
+                        if (soundData != null)
+                        {
+                            item.soundDate = soundData[0];
+                        }
+                    }
+                    idx++;
                 }
             }
 
@@ -81,7 +90,7 @@ namespace Ryneus
 			}
             // 情報の初期化
             Data.hideFlags = HideFlags.None;
-            Data.data = CommonEventDates.data;
+            Data.data = CommonEventDates.data.ToList().FindAll(a => a.id == 101);
         }
         
         [MenuItem ("Resources/CommonEvent")]
@@ -105,11 +114,11 @@ namespace Ryneus
                     {
                         continue;
                     }
-                    if (d.id != 101)
-                    {
-                        continue;
-                    }
                     var lastName = "";
+                    var lastFace = 0;
+                    var lastPosition = -1;
+                    var doubleText = false;
+                    var codeIdx = 0;
                     foreach (var l in d.list)
                     {
                         var csvCol = new List<string>();
@@ -117,20 +126,60 @@ namespace Ryneus
                         {
                             case 101: // メッセージ準備
                                 lastName = l.parameters[0];
+                                lastFace = int.Parse(l.parameters[1]);
+                                lastPosition = int.Parse(l.parameters[3]);
+                                doubleText = false;
                             break;
                             case 401: // メッセージ表示
+                                if (doubleText)
+                                {
+                                    doubleText = false;
+                                    break;
+                                }
                                 csvCol.Add("");
-                                csvCol.Add(lastName); // アクター名
+                                // アクター名
+                                if (lastName != "")
+                                {
+                                    csvCol.Add(lastName + "_" + lastFace.ToString("00")); 
+                                } else
+                                {
+                                    csvCol.Add("");
+                                }
+                                csvCol.Add("");
+                                 // ポジション
+                                if (lastName != "" && lastPosition == 0)
+                                {
+                                    csvCol.Add("Character0");
+                                } else
+                                if (lastName != "" && lastPosition == 1)
+                                {
+                                    csvCol.Add("Character1");
+                                } else
+                                if (lastName != "" && lastPosition == 2)
+                                {
+                                    csvCol.Add("Character2");
+                                } else
+                                {
+                                    csvCol.Add("");
+                                }
                                 csvCol.Add("");
                                 csvCol.Add("");
                                 csvCol.Add("");
                                 csvCol.Add("");
-                                csvCol.Add("");
-                                csvCol.Add("");
-                                csvCol.Add(l.parameters[0]);
+                                // 文章
+                                var nextCode = d.list[codeIdx+1];
+                                if (nextCode.code == 401)
+                                {
+                                    // 2行データ
+                                    csvCol.Add(l.parameters[0] +"\\n" + nextCode.parameters[0]);
+                                    doubleText = true;
+                                } else
+                                {
+                                    csvCol.Add(l.parameters[0]);
+                                }
                                 break;
                             case 108: // 注釈
-                                continue;
+                                break;
                             case 213: // 吹き出し表示
                             break;
                             case 221: // フェードアウト
@@ -165,10 +214,17 @@ namespace Ryneus
                                 csvCol.Add(l.parameters[1]);
                                 break;
                             case 241: // BGM再生 (ファイル指定・音量不可)
-                                csvCol.Add("Bgm");
+                                if (l.soundDate.name != "")
+                                {
+                                    csvCol.Add("PlayBgm2");
+                                    csvCol.Add(l.soundDate.name);
+                                } else
+                                {
+                                    csvCol.Add("StopBgm2");
+                                }
                                 break;
                             case 242: // BGMフェードアウト
-                                csvCol.Add("StopBgm");
+                                csvCol.Add("StopBgm2");
                                 csvCol.Add("");
                                 csvCol.Add("");
                                 csvCol.Add("");
@@ -177,10 +233,11 @@ namespace Ryneus
                                 csvCol.Add("2");
                                 break;
                             case 245: // BGS再生(ファイル指定・音量不可)
-                                csvCol.Add("Ambience");
+                                csvCol.Add("PlayBgs");
+                                csvCol.Add(l.soundDate.name);
                                 break;
                             case 246: // BGSフェードアウト
-                                csvCol.Add("StopAmbience");
+                                csvCol.Add("StopBgs");
                                 csvCol.Add("");
                                 csvCol.Add("");
                                 csvCol.Add("");
@@ -190,12 +247,12 @@ namespace Ryneus
                                 break;
                             case 250: // Se再生(ファイル指定・音量不可)
                                 csvCol.Add("PlaySe");
+                                csvCol.Add(l.soundDate.name);
                                 break;
                             case 320: // アクター名変更（変換不可）
                             break;
-                            
-                            
                         }
+                        codeIdx++;
                         if (csvCol.Count == 0)
                         {
                             continue;

@@ -34,8 +34,8 @@ namespace Utage
                 case "StopBgm2":
                     command = new AdvCommandStopBgm2(row);
                     break;
-                case "StopBgs2":
-                    command = new AdvCommandStopBgs2(row);
+                case "StopBgs":
+                    command = new AdvCommandStopBgs(row);
                     break;
                 case "SetSelect1Actor":
                     command = new AdvCommandSetSelect1Actor(row);
@@ -113,9 +113,9 @@ namespace Utage
         }
     }
 
-    public class AdvCommandStopBgs2 : AdvCommand
+    public class AdvCommandStopBgs : AdvCommand
     {
-        public AdvCommandStopBgs2(StringGridRow row)
+        public AdvCommandStopBgs(StringGridRow row)
             :base(row)
         {
         }
