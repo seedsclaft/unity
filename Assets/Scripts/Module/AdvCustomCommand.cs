@@ -85,18 +85,20 @@ namespace Utage
     {
         private string fileName = "";
         private int? volume = 80;
+        private int? pitch = 100;
         public AdvCommandPlaySe(StringGridRow row)
             :base(row)
         {
             fileName = ParseCell<string>(AdvColumnName.Arg1);
-            //volume = ParseCell<int?>(AdvColumnName.Arg2);
+            volume = ParseCell<int?>(AdvColumnName.Arg2);
+            pitch = ParseCell<int?>(AdvColumnName.Arg3);
         }
         
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
             var se = await Ryneus.ResourceSystem.LoadSeAsset(fileName);
-            Ryneus.SoundManager.Instance.PlaySe(se,(int)volume * 0.01f,0);
+            Ryneus.SoundManager.Instance.PlaySe(se,(int)volume * 0.01f,(int)pitch * 0.01f);
         }
     }
 
@@ -136,10 +138,10 @@ namespace Utage
     
         public override void DoCommand(AdvEngine engine)
         {
-            if (Ryneus.GameSystem.CurrentStageData == null) return;
+            if (Ryneus.GameSystem.GameInfo == null) return;
             //if (Ryneus.GameSystem.CurrentStageData.CurrentStage == null) return;
-            if (Ryneus.GameSystem.CurrentStageData.PartyInfo.ActorInfos.Count == 0) return;
-            int actorId = Ryneus.GameSystem.CurrentStageData.PartyInfo.ActorInfos[0].ActorId;
+            if (Ryneus.GameSystem.GameInfo.PartyInfo.ActorInfos.Count == 0) return;
+            int actorId = Ryneus.GameSystem.GameInfo.PartyInfo.ActorInfos[0].ActorId;
             var actorData = Ryneus.DataSystem.FindActor(actorId);
             if (actorData != null)
             {

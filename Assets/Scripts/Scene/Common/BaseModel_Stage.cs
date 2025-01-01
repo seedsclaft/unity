@@ -9,7 +9,7 @@ namespace Ryneus
         {
             var stageInfo = new StageInfo(stageId);
             stageInfo.SetSymbolInfos(GetStageSymbolInfos(stageId));
-            CurrentSaveData.SetStageInfo(stageInfo);
+            CurrentGameInfo.SetStageInfo(stageInfo);
             PartyInfo.SetStageId(stageId);
             PartyInfo.SetSeek(1);
             PartyInfo.SetSeekIndex(0);

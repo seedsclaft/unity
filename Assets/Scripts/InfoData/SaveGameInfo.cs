@@ -13,6 +13,13 @@ namespace Ryneus
 		public StageInfo StageInfo => _stageInfo;
 		public void SetStageInfo(StageInfo stageInfo) => _stageInfo = stageInfo;
 
+        private List<string> _readEventKeys = new ();
+        public List<string> ReadEventKeys => _readEventKeys;
+        public void AddEventReadFlag(string key)
+        {
+            _readEventKeys.Add(key);
+        }
+		
 		public void Initialize()
 		{
 			_partyInfo = new PartyInfo();

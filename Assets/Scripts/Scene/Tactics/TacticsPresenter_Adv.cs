@@ -72,7 +72,8 @@ namespace Ryneus
             {
                 var advInfo = new AdvCallInfo();
                 advInfo.SetLabel(_model.GetAdvFile(StartTacticsAdvData.Id));
-                advInfo.SetCallEvent(() => {
+                advInfo.SetCallEvent(() => 
+                {
                     if (StartTacticsAdvData.EndJump != Scene.None)
                     {
                         _view.CommandSceneChange(StartTacticsAdvData.EndJump);
@@ -86,12 +87,13 @@ namespace Ryneus
 
         private bool CheckBeforeTacticsAdvEvent()
         {
-            var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => {
+            var isAbort = CheckAdvStageEvent(EventTiming.BeforeTactics,() => 
+            {
                 _view.CommandGotoSceneChange(Scene.Tactics);
-            },_model.CurrentStage.SelectActorIdsClassId(0));
+            },-1);
             if (isAbort)
             {
-                _view.ChangeUIActive(false);
+                _view.gameObject.SetActive(false);
             }
             return isAbort;
         }

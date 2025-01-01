@@ -28,8 +28,6 @@ namespace Ryneus
         }
 
 
-        private List<string> _readEventKeys = new ();
-        public List<string> ReadEventKeys => _readEventKeys;
 
         private EndingType _endingType = EndingType.C;
         public EndingType EndingType => _endingType;
@@ -62,10 +60,6 @@ namespace Ryneus
             //_stageSymbolInfos.Add(symbolInfo);
         }
 
-        public void AddEventReadFlag(string key)
-        {
-            _readEventKeys.Add(key);
-        }
 
         public int SelectActorIdsClassId(int selectIndex)
         {

@@ -23,7 +23,7 @@ namespace Ryneus
             return ListData.MakeListData(dataList);
         }
 
-        public bool CheckAdvStageEvent(EventTiming eventTiming,System.Action endCall,int selectActorId = 0)
+        public bool CheckAdvStageEvent(EventTiming eventTiming,Action endCall,int selectActorId = 0)
         {
             var isAbort = false;
             var advId = -1;

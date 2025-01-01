@@ -12,11 +12,11 @@ namespace Ryneus
     public partial class BaseModel
     {
         public SaveInfo CurrentData => GameSystem.CurrentData;
-        public SaveGameInfo CurrentSaveData => GameSystem.CurrentStageData;
+        public SaveGameInfo CurrentGameInfo => GameSystem.GameInfo;
         public TempInfo TempInfo => GameSystem.TempData;
-        public StageInfo CurrentStage => CurrentSaveData.StageInfo;
+        public StageInfo CurrentStage => CurrentGameInfo.StageInfo;
 
-        public PartyInfo PartyInfo => CurrentSaveData.PartyInfo;
+        public PartyInfo PartyInfo => CurrentGameInfo.PartyInfo;
 
         public int Currency => 0;
         //public float TotalScore => PartyInfo.TotalScore(CurrentStage.WorldType);
@@ -31,9 +31,9 @@ namespace Ryneus
 
         public void InitSaveStageInfo()
         {
-            var saveStageInfo = new SaveGameInfo();
-            saveStageInfo.Initialize();
-            GameSystem.CurrentStageData = saveStageInfo;
+            var saveGameInfo = new SaveGameInfo();
+            saveGameInfo.Initialize();
+            GameSystem.GameInfo = saveGameInfo;
         }
 
         public void InitConfigInfo()
@@ -179,7 +179,7 @@ namespace Ryneus
         public List<StageEventData> StageEvents(EventTiming eventTiming)
         {
             int CurrentTurn = CurrentStage.CurrentSeek;
-            var eventKeys = CurrentStage.ReadEventKeys;
+            var eventKeys = CurrentGameInfo.ReadEventKeys;
             return StageEventDates.FindAll(a => a.Timing == eventTiming && a.Turns == CurrentTurn && !eventKeys.Contains(a.EventKey));
         }
         
@@ -196,7 +196,7 @@ namespace Ryneus
         {
             if (stageEventDates.ReadFlag)
             {
-                CurrentStage.AddEventReadFlag(stageEventDates.EventKey);
+                CurrentGameInfo.AddEventReadFlag(stageEventDates.EventKey);
             }
         }
 
@@ -363,7 +363,7 @@ namespace Ryneus
         {
             TempInfo.ClearRankingInfo();
             SetResumeStage(isResumeStage);
-            SaveSystem.SaveStageInfo(GameSystem.CurrentStageData);
+            SaveSystem.SaveStageInfo(GameSystem.GameInfo);
             SavePlayerData();
         }
 

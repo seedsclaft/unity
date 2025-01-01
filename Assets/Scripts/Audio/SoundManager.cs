@@ -211,7 +211,7 @@ namespace Ryneus
             _lastPlayAudio = null;
         }
 
-        public async void PlaySe(AudioClip clip, float volume,float pitch,int delayFrame = 0)
+        public async void PlaySe(AudioClip clip, float volume,float pitch = 1f,int delayFrame = 0)
         {
             int audioSourceIndex = -1;
             for (int i = 0;i < _seAudioSourceNum;i++)

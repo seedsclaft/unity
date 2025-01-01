@@ -23,7 +23,7 @@ namespace Ryneus
         public bool Selectable => _selectable;
 
         private bool _getItemInit = false;
-        private PartyInfo partyInfo => GameSystem.CurrentStageData.PartyInfo;
+        private PartyInfo partyInfo => GameSystem.GameInfo.PartyInfo;
         //private StageInfo currentStageInfo => GameSystem.CurrentStageData.CurrentStage;
         
         public void SetSelectable(bool selectable)

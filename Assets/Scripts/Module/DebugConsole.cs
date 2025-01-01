@@ -93,23 +93,23 @@ namespace Ryneus
             }
             if (consoleInputField.text == "S0")
             {
-                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,0);
+                SaveSystem.SaveStageInfo(GameSystem.GameInfo,0);
             }
             if (consoleInputField.text == "S1")
             {
-                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,1);
+                SaveSystem.SaveStageInfo(GameSystem.GameInfo,1);
             }
             if (consoleInputField.text == "S2")
             {
-                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,2);
+                SaveSystem.SaveStageInfo(GameSystem.GameInfo,2);
             }
             if (consoleInputField.text == "S3")
             {
-                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,3);
+                SaveSystem.SaveStageInfo(GameSystem.GameInfo,3);
             }
             if (consoleInputField.text == "S4")
             {
-                SaveSystem.SaveStageInfo(GameSystem.CurrentStageData,4);
+                SaveSystem.SaveStageInfo(GameSystem.GameInfo,4);
             }
             if (consoleInputField.text == "L1")
             {

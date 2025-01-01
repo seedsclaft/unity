@@ -147,7 +147,13 @@ MonoBehaviour:
     BackGround: stage1
     BGMId: 3
     BossBGMId: 11
-    StageEvents: []
+    StageEvents:
+    - EventKey: 0BeforeTacticsAdvStart10
+      Turns: 0
+      Timing: 11
+      Type: 11
+      Param: 10
+      ReadFlag: 1
     StageSymbols:
     - StageId: 0
       Seek: 0

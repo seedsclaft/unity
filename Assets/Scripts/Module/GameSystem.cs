@@ -36,7 +36,7 @@ namespace Ryneus
         private BaseModel _model = null;
         
         public static SaveInfo CurrentData = null;
-        public static SaveGameInfo CurrentStageData = null;
+        public static SaveGameInfo GameInfo = null;
         public static SaveConfigInfo ConfigData = null;
         public static TempInfo TempData = null;
         private static TutorialData _lastTutorialData = null;

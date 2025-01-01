@@ -104,6 +104,7 @@ namespace Ryneus
         None = 0,
         Battle = 1,
         Boss = 2,
+        Event = 3,
         Alcana = 4,
         Actor = 5,
         Resource = 6,

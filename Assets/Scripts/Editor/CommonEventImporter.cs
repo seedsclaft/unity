@@ -218,6 +218,8 @@ namespace Ryneus
                                 {
                                     csvCol.Add("PlayBgm2");
                                     csvCol.Add(l.soundDate.name);
+                                    csvCol.Add(l.soundDate.volume.ToString());
+                                    csvCol.Add(l.soundDate.pitch.ToString());
                                 } else
                                 {
                                     csvCol.Add("StopBgm2");
@@ -235,6 +237,8 @@ namespace Ryneus
                             case 245: // BGS再生(ファイル指定・音量不可)
                                 csvCol.Add("PlayBgs");
                                 csvCol.Add(l.soundDate.name);
+                                csvCol.Add(l.soundDate.volume.ToString());
+                                csvCol.Add(l.soundDate.pitch.ToString());
                                 break;
                             case 246: // BGSフェードアウト
                                 csvCol.Add("StopBgs");
@@ -248,6 +252,8 @@ namespace Ryneus
                             case 250: // Se再生(ファイル指定・音量不可)
                                 csvCol.Add("PlaySe");
                                 csvCol.Add(l.soundDate.name);
+                                csvCol.Add(l.soundDate.volume.ToString());
+                                csvCol.Add(l.soundDate.pitch.ToString());
                                 break;
                             case 320: // アクター名変更（変換不可）
                             break;
