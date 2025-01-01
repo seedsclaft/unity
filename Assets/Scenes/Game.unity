@@ -3756,6 +3756,8 @@ MonoBehaviour:
     saveMax: 9
   CustomSaveDataObjects: []
   restartSubThread: 0
+  thumbnailType: 0
+  thumbnailParamName: 
 --- !u!114 &456724005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8569,6 +8571,9 @@ MonoBehaviour:
   iconWaitInput: {fileID: 136622325}
   iconBrPage: {fileID: 2033263234}
   isLinkPositionIconBrPage: 1
+  onPreChangeText:
+    m_PersistentCalls:
+      m_Calls: []
   onPostChangeText:
     m_PersistentCalls:
       m_Calls: []
@@ -9565,6 +9570,7 @@ MonoBehaviour:
   backLog: {fileID: 591757718}
   disableMouseWheelBackLog: 1
   filterInputUtilDisable: -1
+  enableInputKeyOnHideMessage: 0
 --- !u!114 &1083959043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19167,6 +19173,9 @@ MonoBehaviour:
   iconWaitInput: {fileID: 1527172635}
   iconBrPage: {fileID: 6735528}
   isLinkPositionIconBrPage: 1
+  onPreChangeText:
+    m_PersistentCalls:
+      m_Calls: []
   onPostChangeText:
     m_PersistentCalls:
       m_Calls: []

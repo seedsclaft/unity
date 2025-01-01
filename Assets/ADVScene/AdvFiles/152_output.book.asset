@@ -13,5 +13,1797 @@ MonoBehaviour:
   m_Name: 152_output.book
   m_EditorClassIdentifier: 
   importVersion: 0
-  importGridList: []
-  gridList: []
+  importGridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 2
+      strings:
+      - Bg
+      - stage12
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 3
+      strings:
+      - FadeOut
+      - '#00000068'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 4
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 5
+      strings:
+      - PlayBgm
+      - "\u3075\u308D\u30FC\u305A\u3093\u98A8\u8ECA"
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 6
+      strings:
+      - PlayBgs
+      - factory1
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 8
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u5B66\u6821\u5185\u306E\u8CC7\u6599\u3092\u63A2\u3057\u305F\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u304C"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 9
+      strings:
+      - 
+      - Actor04_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u3088\u3046\u306A\u65BD\u8A2D\u304C\u3042\u308B\u306A\u3069\u3068\\n\u8A18\u8FF0\u3055\u308C\u305F\u3082\u306E\u306F\u3042\u308A\u307E\u305B\u3093\u3067\u3057\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 10
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3093\u306A\u65BD\u8A2D\u304C\\n\u5730\u4E0B\u306B\u5E83\u304C\u3063\u3066\u3044\u305F\u306A\u3093\u3066"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 11
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 12
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3075\u30FC\u3093\u2026\u2026\\n\u7709\u553E\u3060\u3063\u305F\u3051\u3069"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 13
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\\N[3]\u306E\u89AA\u7236\u3055\u3093\u306E\u96A0\u3057\u6D1E\u7A9F\\n\u307E\u3055\u304B\u3001\u5B66\u6821\u306E\u5730\u4E0B\u306B\u7E4B\u304C\u3063\u3066\u305F\u306A\u3093\u3066\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 14
+      strings:
+      - 
+      - Actor03_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u7236\u3055\u3093\u306E\u624B\u8A18\u3092\u898B\u305F\u3089\u8F09\u3063\u3066\u305F\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 15
+      strings:
+      - 
+      - Actor03_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u9B54\u8005\u306E\u5B58\u5728\u3082\u3053\u3053\u304B\u3089\\n\u63A2\u308A\u3092\u5165\u308C\u3066\u3044\u305F\u307F\u305F\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 16
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308A\u3083\u3042\u3001\u4EA1\u304D\u8005\u306B\u3057\u3066\u304A\u304D\u305F\u3044\u308F\u3051\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 17
+      strings:
+      - 
+      - Actor03_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u5148\u306F\u3069\u3046\u306A\u3063\u3066\u308B\u306E\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 18
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3053\u306F\u3001\u305F\u3060\u306E\u7814\u7A76\u65BD\u8A2D\u3060\u3088\\n\u9B54\u6CD5\u3068\u306F\u95A2\u4FC2\u306A\u3044\u4E00\u822C\u7684\u306A\u3082\u306E\u3060\u304B\u3089"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 19
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u9996\u3092\u7A81\u3063\u8FBC\u3093\u3067\u3082\u305F\u3044\u3057\u305F\u3082\u306E\u306F\\n\u51FA\u3066\u3053\u306A\u3044\u3088\u3001\u305F\u3076\u3093"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 20
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u9ED2\u6C34\u6676\u306F\u3001\u3069\u3053\u306B\u5B89\u7F6E\u3057\u3066\u3044\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 21
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6848\u5185\u3059\u308B\u3088\\n\u306A\u3093\u3068\u306A\u304F\u3001\u76EE\u51E6\u306F\u3064\u3044\u3066\u3044\u308B\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 22
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u306B\u3057\u3066\u3082\\n\u6848\u5916\u3001\u7C21\u5358\u306B\u6F5C\u5165\u3067\u304D\u305F\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 23
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u307E\u305F\u3001\u7F60\u306E\u53EF\u80FD\u6027\u306F\u2026\u2026\\n\u8A98\u3044\u8FBC\u307E\u308C\u3066\u3044\u308B\u3093\u3058\u3083\u306A\u3044\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 24
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u4ECA\u56DE\u306F\u5927\u4E08\u592B\\n\u306A\u3093\u3066\u8A00\u3063\u305F\u3063\u3066\u3001\u5B66\u6821\u9577\u304C\u4E0D\u5728\u306A\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 25
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u8868\u306E\u30B4\u30BF\u30B4\u30BF\u3092\u307E\u3068\u3081\u3042\u3052\u3089\u308C\u308B\\n\u4EBA\u6750\u306A\u3093\u3066\u3001\u3053\u306E\u5B66\u6821\u306B\u6B8B\u3063\u3066\u3044\u306A\u3044\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 26
+      strings:
+      - 
+      - Actor03_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5B66\u6821\u9577\u3063\u3066\u6226\u4E89\u3067\u5927\u5C06\u3092\u3057\u3066\u3044\u305F\\n\u4E00\u756A\u3001\u5049\u3044\u4EBA\u3067\u3057\u3087\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 27
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3060\u3088\\n\u3042\u305F\u3057\u304C\u9000\u5374\u3057\u305F\u6642\u306B\u306F\u3082\u3046\u884C\u65B9\u77E5\u3089\u305A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 28
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6226\u4E89\u3067\u5DFB\u304D\u6DFB\u3048\u98DF\u3089\u3063\u3066\\n\u3068\u3063\u304F\u306B\u3044\u306A\u304F\u306A\u3063\u3066\u308B\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 29
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u30D0\u30AB\u306A\u8A71\u3060\u3088\u306D\\n\u6226\u4E89\u8D77\u3053\u3057\u305F\u5143\u51F6\u304C\u771F\u3063\u5148\u306B\u5012\u308C\u308B\u306A\u3093\u3066\u3055"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 30
+      strings:
+      - 
+      - Actor01_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4FC4\u306B\u4FE1\u3058\u3089\u308C\u306A\u3044\u304C\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 31
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5FCD\u3073\u8FBC\u3080\u306A\u3089\u3001\u4ECA\u304C\u597D\u6A5F\u306A\u3093\u3060\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 32
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3044\u3046\u3053\u3068\u3060\u304B\u3089\\n\u3055\u3063\u3055\u3068\u5148\u306B\u9032\u3080\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 33
+      strings:
+      - PlaySe
+      - step01
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 34
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 35
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 35
+      debugIndex: 36
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 36
+      debugIndex: 37
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 37
+      debugIndex: 38
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 38
+      debugIndex: 39
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5927\u4E08\u592B\u3001\\N[5]\u3061\u3083\u3093\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 39
+      debugIndex: 40
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3044\u3001\u306A\u3093\u3060\u304B\u3001\u7DCA\u5F35\u3057\u3066\u304D\u307E\u3057\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 40
+      debugIndex: 41
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u3001\u3061\u3087\u3063\u3068\u6016\u304F\u306A\u3063\u3066\u304D\u3061\u3083\u3063\u305F\u304B\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 41
+      debugIndex: 42
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3046\u3044\u3046\u6642\u306F\u3055"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 42
+      debugIndex: 43
+      strings:
+      - 
+      - Actor03_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u3044\u30C3"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 43
+      debugIndex: 44
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u2026\u2026\u5148\u751F\u306E\u624B\u3001\u3042\u3063\u305F\u304B\u3044\u3067\u3059\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 44
+      debugIndex: 45
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u624B\u306E\u9707\u3048\\n\u63E1\u3063\u3066\u3044\u308B\u3068\u5C11\u3057\u306F\u5B89\u5FC3\u3059\u308B\u3067\u3057\u3087\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 45
+      debugIndex: 46
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 47
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u5C11\u3057\u306E\u9593\u3001\u3064\u306A\u3044\u3060\u307E\u307E\u3067\u3082\u3044\u3044\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 48
+      strings:
+      - 
+      - Actor03_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093\u2026\u2026\\N[5]\u3061\u3083\u3093\u3082\u3001\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 49
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 49
+      debugIndex: 50
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 50
+      debugIndex: 51
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 51
+      debugIndex: 52
+      strings:
+      - EndScenario
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/152_output.csv
+    type: 0
+    textLength: 1639
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 4900000, guid: e8ec7358338fa4043b9a664dace34ad8,
+      type: 3}
+    entityIndexTbl: 
+    entityDataList: []
+  gridList:
+  - rows:
+    - rowIndex: 0
+      debugIndex: 0
+      strings:
+      - Command
+      - Arg1
+      - Arg2
+      - Arg3
+      - Arg4
+      - Arg5
+      - Arg6
+      - WaitType
+      - Text
+      - PageCtrl
+      - Voice
+      - WindowType
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 1
+      debugIndex: 1
+      strings: []
+      isEmpty: 1
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 2
+      debugIndex: 2
+      strings:
+      - Bg
+      - stage12
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 3
+      debugIndex: 3
+      strings:
+      - FadeOut
+      - '#00000068'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 4
+      debugIndex: 4
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 5
+      debugIndex: 5
+      strings:
+      - PlayBgm
+      - "\u3075\u308D\u30FC\u305A\u3093\u98A8\u8ECA"
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 6
+      debugIndex: 6
+      strings:
+      - PlayBgs
+      - factory1
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 7
+      debugIndex: 7
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 8
+      debugIndex: 8
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u5B66\u6821\u5185\u306E\u8CC7\u6599\u3092\u63A2\u3057\u305F\u3053\u3068\u304C\u3042\u308A\u307E\u3059\u304C"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 9
+      debugIndex: 9
+      strings:
+      - 
+      - Actor04_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u3088\u3046\u306A\u65BD\u8A2D\u304C\u3042\u308B\u306A\u3069\u3068\\n\u8A18\u8FF0\u3055\u308C\u305F\u3082\u306E\u306F\u3042\u308A\u307E\u305B\u3093\u3067\u3057\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 10
+      debugIndex: 10
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3093\u306A\u65BD\u8A2D\u304C\\n\u5730\u4E0B\u306B\u5E83\u304C\u3063\u3066\u3044\u305F\u306A\u3093\u3066"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 11
+      debugIndex: 11
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 12
+      debugIndex: 12
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3075\u30FC\u3093\u2026\u2026\\n\u7709\u553E\u3060\u3063\u305F\u3051\u3069"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 13
+      debugIndex: 13
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\\N[3]\u306E\u89AA\u7236\u3055\u3093\u306E\u96A0\u3057\u6D1E\u7A9F\\n\u307E\u3055\u304B\u3001\u5B66\u6821\u306E\u5730\u4E0B\u306B\u7E4B\u304C\u3063\u3066\u305F\u306A\u3093\u3066\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 14
+      debugIndex: 14
+      strings:
+      - 
+      - Actor03_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u7236\u3055\u3093\u306E\u624B\u8A18\u3092\u898B\u305F\u3089\u8F09\u3063\u3066\u305F\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 15
+      debugIndex: 15
+      strings:
+      - 
+      - Actor03_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u9B54\u8005\u306E\u5B58\u5728\u3082\u3053\u3053\u304B\u3089\\n\u63A2\u308A\u3092\u5165\u308C\u3066\u3044\u305F\u307F\u305F\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 16
+      debugIndex: 16
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308A\u3083\u3042\u3001\u4EA1\u304D\u8005\u306B\u3057\u3066\u304A\u304D\u305F\u3044\u308F\u3051\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 17
+      strings:
+      - 
+      - Actor03_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u5148\u306F\u3069\u3046\u306A\u3063\u3066\u308B\u306E\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3053\u306F\u3001\u305F\u3060\u306E\u7814\u7A76\u65BD\u8A2D\u3060\u3088\\n\u9B54\u6CD5\u3068\u306F\u95A2\u4FC2\u306A\u3044\u4E00\u822C\u7684\u306A\u3082\u306E\u3060\u304B\u3089"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 19
+      debugIndex: 19
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u9996\u3092\u7A81\u3063\u8FBC\u3093\u3067\u3082\u305F\u3044\u3057\u305F\u3082\u306E\u306F\\n\u51FA\u3066\u3053\u306A\u3044\u3088\u3001\u305F\u3076\u3093"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 20
+      debugIndex: 20
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u9ED2\u6C34\u6676\u306F\u3001\u3069\u3053\u306B\u5B89\u7F6E\u3057\u3066\u3044\u308B\u306E\u3060\u308D\u3046\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 21
+      debugIndex: 21
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6848\u5185\u3059\u308B\u3088\\n\u306A\u3093\u3068\u306A\u304F\u3001\u76EE\u51E6\u306F\u3064\u3044\u3066\u3044\u308B\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 22
+      debugIndex: 22
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u306B\u3057\u3066\u3082\\n\u6848\u5916\u3001\u7C21\u5358\u306B\u6F5C\u5165\u3067\u304D\u305F\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 23
+      debugIndex: 23
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u307E\u305F\u3001\u7F60\u306E\u53EF\u80FD\u6027\u306F\u2026\u2026\\n\u8A98\u3044\u8FBC\u307E\u308C\u3066\u3044\u308B\u3093\u3058\u3083\u306A\u3044\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 24
+      debugIndex: 24
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u4ECA\u56DE\u306F\u5927\u4E08\u592B\\n\u306A\u3093\u3066\u8A00\u3063\u305F\u3063\u3066\u3001\u5B66\u6821\u9577\u304C\u4E0D\u5728\u306A\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 25
+      debugIndex: 25
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u8868\u306E\u30B4\u30BF\u30B4\u30BF\u3092\u307E\u3068\u3081\u3042\u3052\u3089\u308C\u308B\\n\u4EBA\u6750\u306A\u3093\u3066\u3001\u3053\u306E\u5B66\u6821\u306B\u6B8B\u3063\u3066\u3044\u306A\u3044\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - 
+      - Actor03_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5B66\u6821\u9577\u3063\u3066\u6226\u4E89\u3067\u5927\u5C06\u3092\u3057\u3066\u3044\u305F\\n\u4E00\u756A\u3001\u5049\u3044\u4EBA\u3067\u3057\u3087\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3060\u3088\\n\u3042\u305F\u3057\u304C\u9000\u5374\u3057\u305F\u6642\u306B\u306F\u3082\u3046\u884C\u65B9\u77E5\u3089\u305A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 28
+      debugIndex: 28
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6226\u4E89\u3067\u5DFB\u304D\u6DFB\u3048\u98DF\u3089\u3063\u3066\\n\u3068\u3063\u304F\u306B\u3044\u306A\u304F\u306A\u3063\u3066\u308B\u306E\u304B\u3082\u3057\u308C\u306A\u3044\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 29
+      debugIndex: 29
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u30D0\u30AB\u306A\u8A71\u3060\u3088\u306D\\n\u6226\u4E89\u8D77\u3053\u3057\u305F\u5143\u51F6\u304C\u771F\u3063\u5148\u306B\u5012\u308C\u308B\u306A\u3093\u3066\u3055"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 30
+      strings:
+      - 
+      - Actor01_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4FC4\u306B\u4FE1\u3058\u3089\u308C\u306A\u3044\u304C\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5FCD\u3073\u8FBC\u3080\u306A\u3089\u3001\u4ECA\u304C\u597D\u6A5F\u306A\u3093\u3060\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - 
+      - Actor02_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u3046\u3044\u3046\u3053\u3068\u3060\u304B\u3089\\n\u3055\u3063\u3055\u3068\u5148\u306B\u9032\u3080\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - PlaySe
+      - step01
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 34
+      debugIndex: 34
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 35
+      debugIndex: 35
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 36
+      debugIndex: 36
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 37
+      debugIndex: 37
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 38
+      debugIndex: 38
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 39
+      debugIndex: 39
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u5927\u4E08\u592B\u3001\\N[5]\u3061\u3083\u3093\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 40
+      debugIndex: 40
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3044\u3001\u306A\u3093\u3060\u304B\u3001\u7DCA\u5F35\u3057\u3066\u304D\u307E\u3057\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 41
+      debugIndex: 41
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u79C1\u3082\u3001\u3061\u3087\u3063\u3068\u6016\u304F\u306A\u3063\u3066\u304D\u3061\u3083\u3063\u305F\u304B\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 42
+      debugIndex: 42
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u3046\u3044\u3046\u6642\u306F\u3055"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 43
+      debugIndex: 43
+      strings:
+      - 
+      - Actor03_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u3044\u30C3"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 44
+      debugIndex: 44
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3042\u2026\u2026\u5148\u751F\u306E\u624B\u3001\u3042\u3063\u305F\u304B\u3044\u3067\u3059\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 45
+      debugIndex: 45
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u624B\u306E\u9707\u3048\\n\u63E1\u3063\u3066\u3044\u308B\u3068\u5C11\u3057\u306F\u5B89\u5FC3\u3059\u308B\u3067\u3057\u3087\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u5C11\u3057\u306E\u9593\u3001\u3064\u306A\u3044\u3060\u307E\u307E\u3067\u3082\u3044\u3044\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 48
+      strings:
+      - 
+      - Actor03_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3046\u3093\u2026\u2026\\N[5]\u3061\u3083\u3093\u3082\u3001\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 49
+      debugIndex: 49
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 50
+      debugIndex: 50
+      strings:
+      - StopBgm2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 2
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 51
+      debugIndex: 51
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 52
+      debugIndex: 52
+      strings:
+      - EndScenario
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    name: Assets/ADVScene/AdvFiles/152_output.csv
+    type: 0
+    textLength: 1639
+    headerRow: 0
+    sourceAssetInEditor: {fileID: 4900000, guid: e8ec7358338fa4043b9a664dace34ad8,
+      type: 3}
