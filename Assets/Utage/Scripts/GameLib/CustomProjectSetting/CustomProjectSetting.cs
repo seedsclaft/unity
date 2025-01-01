@@ -11,7 +11,7 @@ namespace Utage
     /// </summary>
     public class CustomProjectSetting : ScriptableObject
     {
-        static CustomProjectSetting instance;
+        [RuntimeInitializeStaticField] static CustomProjectSetting instance;
         /// <summary>
         /// シングルトンなインスタンスの取得
         /// </summary>

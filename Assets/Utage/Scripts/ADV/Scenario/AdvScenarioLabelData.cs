@@ -352,5 +352,11 @@ namespace Utage
 			var elseIf = new AdvScenarioDataIfElse(this);
 			elseIf.CheckError(dataManager);
 		}
+
+		//シナリオラベル開始時に呼ぶ処理
+		public void OnStartScenarioLabel(AdvEngine engine)
+		{
+			this.scenarioLabelCommand?.OnStartScenarioLabel(engine);
+		}
 	}
 }

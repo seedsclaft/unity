@@ -10,6 +10,11 @@ namespace Utage
     public abstract class EditorSettingsSingleton<T> : ScriptableSingleton<T>
         where T : ScriptableObject
     {
+        protected virtual void OnEnable()
+        {
+            hideFlags &= ~HideFlags.NotEditable;
+        }
+        
         public static T GetInstance()
         {
             return instance;

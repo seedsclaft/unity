@@ -57,25 +57,25 @@ namespace Utage
 		/// エンコード処理（独自に設定したい場合は上書きする）
 		/// </summary>
 		public static Func<byte[], byte[], byte[]> CustomEncode { get { return customEncode; } set { customEncode = value; } }
-		static Func<byte[], byte[], byte[]> customEncode = DefaultEncode;
+		[StaticField] static Func<byte[], byte[], byte[]> customEncode = DefaultEncode;
 
 		/// <summary>
 		/// デコード処理（独自に設定したい場合は上書きする）
 		/// </summary>
 		public static Func<byte[], byte[], byte[]> CustomDecode { get { return customDecode; } set { customDecode = value; } }
-		static Func<byte[], byte[], byte[]> customDecode = DefaultDecode;
+		[StaticField] static Func<byte[], byte[], byte[]> customDecode = DefaultDecode;
 
 		/// <summary>
 		/// 非圧縮・高速のエンコード処理（独自に設定したい場合は上書きする）
 		/// </summary>
 		public static Action<byte[], byte[], int, int> CustomEncodeNoCompress { get { return customEncodeNoCompress; } set { customEncodeNoCompress = value; } }
-		static Action<byte[], byte[], int, int> customEncodeNoCompress = DefaultEncodeNoCompress;
+		[StaticField] static Action<byte[], byte[], int, int> customEncodeNoCompress = DefaultEncodeNoCompress;
 
 		/// <summary>
 		/// 非圧縮・高速のデコード処理（独自に設定したい場合は上書きする）
 		/// </summary>
-		static Action<byte[], byte[], int, int> customDecodeNoCompress = DefaultDecodeNoCompress;
 		public static Action<byte[], byte[], int, int> CustomDecodeNoCompress { get { return customDecodeNoCompress; } set { customDecodeNoCompress = value; } }
+		[StaticField] static Action<byte[], byte[], int, int> customDecodeNoCompress = DefaultDecodeNoCompress;
 
 		//デフォルトのエンコード処理
 		static byte[] DefaultEncode(byte[] keyBytes, byte[] bytes)
@@ -118,13 +118,14 @@ namespace Utage
 			Frequency,
 			Max,
 		};
-		static protected int[] audioHeader = new int[(int)SoundHeader.Max];
+
+		[StaticField] static protected int[] audioHeader = new int[(int)SoundHeader.Max];
 		protected const int audioHeaderSize = (int)(SoundHeader.Max) * 4;
 		protected const int maxWorkBufferSize = 256 * 1024;
 		protected const int maxAudioWorkSize = maxWorkBufferSize / 2;
-		static protected byte[] workBufferArray = new byte[maxWorkBufferSize];
-		static protected short[] audioShortWorkArray = new short[maxAudioWorkSize];
-		static protected float[] audioSamplesWorkArray = new float[maxAudioWorkSize];
+		[StaticField] static protected byte[] workBufferArray = new byte[maxWorkBufferSize];
+		[StaticField] static protected short[] audioShortWorkArray = new short[maxAudioWorkSize];
+		[StaticField] static protected float[] audioSamplesWorkArray = new float[maxAudioWorkSize];
 
 		/// <summary>
 		/// デコード

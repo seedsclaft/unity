@@ -282,14 +282,14 @@ namespace Utage
 		/// <summary>
 		/// エディタ上のエラーチェックのために起動してるか
 		/// </summary>
-		static public bool IsEditorErrorCheck
+		public static bool IsEditorErrorCheck
 		{
 			get { return isEditorErrorCheck; }
 			set { isEditorErrorCheck = value; }
 		}
-		static bool isEditorErrorCheck = false;
+		[RuntimeInitializeStaticField] static bool isEditorErrorCheck = false;
+		[StaticField] static AssetFileManager instance;
 
-		static AssetFileManager instance;
 		public static AssetFileManager GetInstance()
 		{
 			if (instance == null)

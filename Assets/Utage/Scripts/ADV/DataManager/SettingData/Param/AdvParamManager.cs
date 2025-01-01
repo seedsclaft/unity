@@ -40,6 +40,8 @@ namespace Utage
 		//デフォルトパラメーター
 		public AdvParamManager DefaultParameter { get; set; }
 
+		protected AdvEngine AdvEngine { get; set; }
+
 		/// <summary>
 		/// キーからパラメータを取得
 		/// </summary>
@@ -145,6 +147,11 @@ namespace Utage
 					Debug.LogError("Param: " + keyValue.Key + "  is not found in default param");
 				}
 			}
+		}
+
+		public void SetAdvEngine(AdvEngine advEngine)
+		{
+			AdvEngine = advEngine;
 		}
 
 		public int GetParameterInt(string key)
@@ -259,6 +266,11 @@ namespace Utage
 			if (data.SaveFileType == AdvParamData.FileType.System)
 			{
 				HasChangedSystemParam = true;
+			}
+
+			if (AdvEngine != null)
+			{
+				AdvEngine.ParameterEventTrigger.CallEventChangeParameter(data);
 			}
 			return true;
 		}

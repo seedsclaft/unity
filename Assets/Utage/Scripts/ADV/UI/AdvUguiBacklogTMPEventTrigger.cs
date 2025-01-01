@@ -128,7 +128,7 @@ namespace Utage
 		{
 			if(Camera==null || !IsEntered) return;
 			// 現在のマウス位置を取得する
-			var mousePosition = Input.mousePosition;
+			var mousePosition = InputUtil.GetMousePosition();
 			ChangeCurrentTarget(HitTest(mousePosition,Camera));
 		}
 

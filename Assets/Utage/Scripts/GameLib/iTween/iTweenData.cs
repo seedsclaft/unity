@@ -108,7 +108,7 @@ namespace Utage
 		string strLoopType;
 
 		//文字列をキーにして値を返すコールバック（変数処理のため）
-		public static System.Func<string, object> CallbackGetValue;
+		[RuntimeInitializeStaticField] public static System.Func<string, object> CallbackGetValue;
 
 		//ダイナミック(変数が仕込まれていて、実行ごとに結果がかわる)
 		public bool IsDynamic { get { return this.isDynamic; } }
@@ -194,7 +194,12 @@ namespace Utage
 						for (int i = 0; i < args.Length / 2; ++i)
 						{
 							string name = args[i * 2];
-							HashObjects.Add(name,ParseValue(this.type, name, args[i * 2 + 1], ref isDynamic));
+							var obj = ParseValue(this.type, name, args[i * 2 + 1], ref isDynamic);
+							if (obj == null)
+							{
+								AddErrorMsg($"{name}={args[i * 2 + 1]}　はTweenとして解析できません。");
+							}
+							HashObjects.Add(name, obj);
 						}
 					}
 				}

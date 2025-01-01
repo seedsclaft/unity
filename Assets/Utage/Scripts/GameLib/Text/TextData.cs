@@ -12,7 +12,7 @@ namespace Utage
 	{
 		//テキスト解析処理カスタムする場合のコールバック
 		//TextMeshPro対応などで使う
-		public static Func<string, TextParserBase> CreateCustomTextParser = null;
+		[RuntimeInitializeStaticField] public static Func<string, TextParserBase> CreateCustomTextParser = null;
 
 		//テキスト解析処理のインスタンスを作成
 		static TextParserBase CreateTextParser(string text)
@@ -29,7 +29,7 @@ namespace Utage
 
 		//ログテキストを作成する場合のコールバック
 		//TextMeshPro対応などで使う
-		public static Func<string, string> MakeCustomLogText = null;
+		[RuntimeInitializeStaticField] public static Func<string, string> MakeCustomLogText = null;
 
 		//ログ用のテキストを作成
 		internal static string MakeLogText(string text)

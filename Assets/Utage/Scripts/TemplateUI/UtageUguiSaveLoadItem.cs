@@ -101,6 +101,11 @@ namespace Utage
 						captureImage.texture = autoSaveIcon;
 						captureImage.color = Color.white;
 					}
+					else if(this.TryGetComponent(out UtageUguiSaveLoadItemThumbnail thumbnail) && thumbnail.TrySetThumbnail(data))
+					{
+						//サムネイル画像がセーブデータ内のパラメーターに設定されている場合
+						captureImage.color = Color.white;
+					}
 					else
 					{
 						//テクスチャがない

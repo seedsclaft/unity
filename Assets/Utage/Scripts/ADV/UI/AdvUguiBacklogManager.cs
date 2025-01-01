@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Utage;
+using UtageExtensions;
 
 namespace Utage
 {
@@ -11,6 +12,7 @@ namespace Utage
 	/// </summary>
 	[AddComponentMenu("Utage/ADV/AdvUguiBacklogManager")]
 	public class AdvUguiBacklogManager : MonoBehaviour
+		, IAdvEngineGetter
 	{
 		public enum BacklogType
 		{
@@ -22,9 +24,15 @@ namespace Utage
 		[SerializeField]
 		BacklogType type = BacklogType.MessageWindow;
 
-		public AdvEngine Engine => engine;
+		public AdvEngine Engine
+		{
+			get => engine;
+			protected set => engine = value;
+		}
 		[SerializeField]
 		protected AdvEngine engine;
+		public AdvEngine AdvEngineGetter => Engine;
+
 
 		/// <summary>選択肢のリストビュー</summary>
 		public UguiListView ListView
@@ -51,6 +59,19 @@ namespace Utage
 
 		/// <summary>開いているか</summary>
 		public virtual bool IsOpen { get { return this.gameObject.activeSelf; } }
+		
+	
+		//外部からAdvEngineを設定する
+		public void InitEngine(AdvEngine advEngine)
+		{
+			Engine = advEngine; 
+		}
+
+		//外部から設定したAdvEngineを開放する
+		public void ReleaseEngine()
+		{
+			Engine = null;
+		}
 
 		/// <summary>
 		/// 閉じる
@@ -113,7 +134,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//閉じる入力された
-			if (InputUtil.IsMouseRightButtonDown() || IsInputBottomEndScrollWheelDown() )
+			if (InputUtil.IsInputGuiClose() || IsInputBottomEndScrollWheelDown() )
 			{
 				Back();
 			}
@@ -129,7 +150,7 @@ namespace Utage
 		//スクロール最下段でマウスホイール入力で閉じる入力するチェック
 		protected virtual bool IsInputBottomEndScrollWheelDown()
 		{
-			if(isCloseScrollWheelDown && InputUtil.IsInputScrollWheelDown())
+			if(isCloseScrollWheelDown && InputUtil.IsInputCloseBackLog())
 			{
 				Scrollbar scrollBar = ListView.ScrollRect.verticalScrollbar;
 				if(scrollBar)

@@ -150,6 +150,9 @@ namespace Utage
 				case "br":
 					//改行文字はすでに文字として組み込まれているので、タグにしない
 					return new TagData(fullString, name, arg, true);
+				case "sprite":
+					//文字数を1カウント
+					return new TagData(fullString, name, arg) { CountCharacter = 1 };
 
 				//通常のタグ
 				default:

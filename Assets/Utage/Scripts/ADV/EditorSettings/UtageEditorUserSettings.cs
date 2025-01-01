@@ -67,7 +67,10 @@ namespace Utage
             public AdvTextValidatorUserSettings TextValidator => textValidator;
             [SerializeField, UnfoldedSerializable] AdvTextValidatorUserSettings textValidator = new();
 
-
+            //シナリオログファイルを出力するか
+            public bool EnableScenarioLogFile => enableScenarioLogFile;
+            [SerializeField] bool enableScenarioLogFile = true;
+            
             public bool CheckAutoImportType()
             {
                 switch (autoImportType)

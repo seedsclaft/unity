@@ -165,7 +165,10 @@ namespace Utage
 		//セーブデータを消去して終了
 		public void OnClickDeleteAllSaveDataAndQuit()
 		{
-			targetDeleteAllSaveData.SafeSendMessage("OnDeleteAllSaveDataAndQuit");
+			foreach (var component in targetDeleteAllSaveData.GetComponentsInChildren<IAdvSaveDelete>(true))
+			{
+				component.OnDeleteAllSaveDataAndQuit();
+			}
 			PlayerPrefs.DeleteAll();
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;

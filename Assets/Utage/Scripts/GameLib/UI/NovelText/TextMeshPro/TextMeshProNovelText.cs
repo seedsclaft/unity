@@ -64,9 +64,13 @@ namespace Utage
 			set
 			{
 				TextMeshPro.color = value;
-				foreach (var obj in RubyObjectList)
+				if (RubyObjectList.Count > 0)
 				{
-					obj.SetColor(value);
+					var textInfo = TextMeshPro.ForceGetTextInfo();
+					foreach (var ruby in RubyObjectList)
+					{
+						ruby.UpdateColor(textInfo);
+					}
 				}
 			}
 		}
@@ -209,6 +213,8 @@ namespace Utage
 		//リッチテキストテキスト解析の結果の文字数と、TextMeshProの表示文字数が一致しているかチェックする
 		bool CheckTextParse()
 		{
+			if (TextMeshPro == null) return true;
+			if (TextMeshPro.textInfo == null) return true;
 			int len = TextData.Length;
 			int count = TextMeshPro.textInfo.characterCount;
 			if (len != count)
@@ -219,9 +225,20 @@ namespace Utage
 					tmpTxt += TextMeshPro.textInfo.characterInfo[i].character;
 				}
 
-				Debug.LogErrorFormat(this,
-					$"Please Check for errors in rich text tags. The number of characters {len} in the text analysis result and the number of characters {count} displayed in TextMeshPro are different. \n"
-					+ $"{TextMeshPro.text}\n---\n{tmpTxt}");
+				try
+				{
+					string text = TextMeshPro.text;
+					string errorString =
+						$"Please Check for errors in rich text tags. The number of characters {len} in the text analysis result and the number of characters {count} displayed in TextMeshPro are different." +
+						$" \n{text}" +
+						$"\n---" +
+						$"\n{tmpTxt}";
+					Debug.LogError(errorString,this);
+				}
+				catch (Exception e)
+				{
+					Debug.LogException(e);
+				}
 				return false;
 			}
 			return true;
@@ -384,12 +401,15 @@ namespace Utage
 				}
 			}
 			RubyObjectList.Clear();
-			TMP_TextInfo textInfo = TextMeshPro.textInfo;
-			foreach (var ruby in RubyInfoList)
+			if (RubyInfoList.Count > 0)
 			{
-				AddRubyTextObject(textInfo, ruby);
+				TMP_TextInfo textInfo = TextMeshPro.ForceGetTextInfo();
+				foreach (var ruby in RubyInfoList)
+				{
+					AddRubyTextObject(textInfo, ruby);
+				}
+				UpdateVisibleIndex();
 			}
-			UpdateVisibleIndex();
 			HasChanged = false;
 		}
 

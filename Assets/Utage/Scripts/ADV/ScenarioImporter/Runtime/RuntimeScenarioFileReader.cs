@@ -17,7 +17,7 @@ namespace Utage
         bool DebugLog => debugLog;
         [SerializeField] bool debugLog = false; 
 
-        private List<DebugLogInfo> DebugLogInfoList { get; } = new();
+        public List<DebugLogInfo> DebugLogInfoList { get; } = new();
 
         public bool TryReadScenario(string directory, out StringGridDictionary scenario)
         {

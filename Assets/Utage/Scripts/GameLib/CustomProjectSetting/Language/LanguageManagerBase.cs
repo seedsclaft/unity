@@ -12,7 +12,7 @@ namespace Utage
 	/// </summary>
 	public abstract class LanguageManagerBase : ScriptableObject
 	{
-		static LanguageManagerBase instance;
+		[StaticField] static LanguageManagerBase instance;
 		/// <summary>
 		/// シングルトンなインスタンスの取得
 		/// </summary>

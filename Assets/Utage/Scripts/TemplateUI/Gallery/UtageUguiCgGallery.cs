@@ -41,11 +41,7 @@ namespace Utage
 		List<AdvCgGalleryData> itemDataList = new List<AdvCgGalleryData>();
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref engine); }
-		}
-
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] AdvEngine engine;
 
 		//ガイドメッセージの表示。設定してないときは表示しない
@@ -112,7 +108,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (isInit && InputUtil.IsMouseRightButtonDown())
+			if (isInit && InputUtil.IsInputGuiClose())
 			{
 				Gallery.Back();
 			}

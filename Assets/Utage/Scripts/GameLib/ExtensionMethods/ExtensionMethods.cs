@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 using Utage;
 
 namespace UtageExtensions
@@ -136,6 +137,28 @@ namespace UtageExtensions
 		public static bool Approximately(this Vector2 a, Vector2 b)
 		{
 			return Mathf.Approximately(a.x, b.x) && Mathf.Approximately(a.y, b.y);
+		}
+
+
+		//******** TextMeshProの拡張メソッド********//
+	
+		//TMP_TextInfoが未完成なことを想定して強制アップデートして取得
+		//重いので頻繁には使わないこと
+		public static TMP_TextInfo ForceGetTextInfo(this TMP_Text tmpText)
+		{
+			return tmpText.GetTextInfo(tmpText.text);
+		}
+
+
+
+		//レイヤーマスクからレイヤー番号を取得する
+		public static IEnumerable<int> GetLayerNumbers(this LayerMask layerMask)
+		{
+			for (int i = 0; i < 32; i++)
+			{
+				if ((layerMask & (1 << i)) != 0)
+					yield return i;
+			}
 		}
 	}
 }

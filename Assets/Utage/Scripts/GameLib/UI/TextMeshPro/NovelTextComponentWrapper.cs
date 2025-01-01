@@ -81,7 +81,8 @@ namespace Utage
             }
         }
 
-        public static void SetNovelTextData(UguiNovelText legacy, TextMeshProNovelText textMeshPro, TextData textData, int lengthOfView)
+        public static void SetNovelTextData(UguiNovelText legacy, TextMeshProNovelText textMeshPro, TextData textData,
+            int lengthOfView)
         {
             if (legacy != null)
             {
@@ -93,14 +94,20 @@ namespace Utage
 
             if (textMeshPro != null)
             {
-                textMeshPro.SetNovelTextData(textData,lengthOfView);
+                //旧NovelTextの場合、「-1で全部のテキストを表示」だったので、それに合わせる
+                textMeshPro.SetNovelTextData(textData, lengthOfView < 0 ? 99999 : lengthOfView);
             }
         }
 
-        public static void SetMaxVisibleCharacters(UguiNovelText legacy, TextMeshProNovelText textMeshPro, int maxVisibleCharacters)
+        public static void SetMaxVisibleCharacters(UguiNovelText legacy, TextMeshProNovelText textMeshPro,
+            int maxVisibleCharacters)
         {
             if (legacy != null) legacy.LengthOfView = maxVisibleCharacters;
-            if (textMeshPro != null) textMeshPro.MaxVisibleCharacters = maxVisibleCharacters;
+            if (textMeshPro != null)
+            {
+                //旧NovelTextの場合、「-1で全部のテキストを表示」だったので、それに合わせる
+                textMeshPro.MaxVisibleCharacters = maxVisibleCharacters < 0 ? 99999 : maxVisibleCharacters;
+            }
         }
 
         public static Vector3 GetCurrentEndPosition(UguiNovelText legacy, TextMeshProNovelText textMeshPro)

@@ -8,7 +8,12 @@ namespace Utage
     [System.Serializable]
     public class TextMetrics
     {
+#if UNITY_6000_0_OR_NEWER
+        //Unity6000.3以降で型がintからfloatに変わったので、その対応
+        [SerializeField] float pointSize;
+#else
         [SerializeField] int pointSize;
+#endif
         [SerializeField] float lineHeight;
         [SerializeField] float ascentLine;
         [SerializeField] float capLine;
@@ -34,7 +39,8 @@ namespace Utage
 
         public TextMetrics(FaceInfo faceInfo)
         {
-            pointSize = (int)faceInfo.pointSize;
+            pointSize = faceInfo.pointSize;
+
             lineHeight = faceInfo.lineHeight;
             ascentLine = faceInfo.ascentLine;
             capLine = faceInfo.capLine;
@@ -78,7 +84,7 @@ namespace Utage
         public bool EnableApply(TMP_FontAsset fontAsset, bool debuglog)
         {
             var originalFaceInfo = fontAsset.faceInfo;
-            if (originalFaceInfo.pointSize != pointSize)
+            if (IsEqualPointSize(fontAsset))
             {
                 if (debuglog)
                 {
@@ -95,7 +101,7 @@ namespace Utage
         public void ApplyToFontAsset(TMP_FontAsset fontAsset)
         {
             var originalFaceInfo = fontAsset.faceInfo;
-            if(originalFaceInfo.pointSize != pointSize)
+            if(!IsEqualPointSize(fontAsset))
             {
                 Debug.LogError($"Font{fontAsset.name} PointSize({originalFaceInfo.pointSize}) is not TextMetrics PointSize{this.pointSize}",fontAsset);
                 return;
@@ -109,6 +115,18 @@ namespace Utage
                 UnityEditor.EditorUtility.SetDirty(fontAsset);
 #endif
             }
+        }
+        
+        //PointSizeの比較
+        bool IsEqualPointSize(TMP_FontAsset fontAsset)
+        {
+            var originalPointSize = fontAsset.faceInfo.pointSize;
+#if UNITY_6000_0_OR_NEWER
+            //Unity6000.3以降で型がintからfloatに変わったので、その対応
+            return Mathf.Approximately(originalPointSize ,pointSize);
+#else
+            return originalPointSize == pointSize;
+#endif
         }
 
         FaceInfo CreateFaceInfo(FaceInfo srcFaceInfo)

@@ -5419,9 +5419,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0003069244
+    x: 0
     y: 0
-    width: 0.99938613
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -8194,6 +8194,7 @@ GameObject:
   - component: {fileID: 456724013}
   - component: {fileID: 456724016}
   - component: {fileID: 456724014}
+  - component: {fileID: 456724018}
   m_Layer: 0
   m_Name: AdvEngine
   m_TagString: Untagged
@@ -8613,6 +8614,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableScenarioVoce: 0
+--- !u!114 &456724018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456724000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe5cb5562e9404395913ab503bd4137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onChangedByNamesEvents: []
+  onChangedBoolParamEvents: []
+  onChangedFloatParamEvents: []
+  onChangedIntParamEvents: []
+  onChangedStringParamEvents: []
 --- !u!1 &462686638
 GameObject:
   m_ObjectHideFlags: 0
@@ -19811,6 +19832,7 @@ MonoBehaviour:
   backLog: {fileID: 591757718}
   disableMouseWheelBackLog: 0
   filterInputUtilDisable: -1
+  enableInputKeyOnHideMessage: 0
 --- !u!114 &1083959043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27654,9 +27676,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0003069244
+    x: 0
     y: 0
-    width: 0.99938613
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

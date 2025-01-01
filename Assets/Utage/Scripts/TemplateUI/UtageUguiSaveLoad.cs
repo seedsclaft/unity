@@ -23,11 +23,7 @@ namespace Utage
 		protected List<AdvSaveData> itemDataList;
 
 		/// <summary>ADVエンジン</summary>
-		public virtual AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref engine); }
-		}
-
+		public virtual AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] protected AdvEngine engine;
 
 		/// <summary>メイン画面</summary>
@@ -47,6 +43,8 @@ namespace Utage
 		//ロード後、画面を閉じるまでの待機時間
 		public float waitTimeOnLoad = 0;
 
+		//セーブ画面か、ロード画面かの区別
+		public bool IsSave => isSave;
 		protected bool isSave;
 
 		protected bool isInit = false;
@@ -141,7 +139,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (isInit && InputUtil.IsMouseRightButtonDown())
+			if (isInit && InputUtil.IsInputGuiClose())
 			{
 				Back();
 			}
@@ -180,6 +178,7 @@ namespace Utage
 			}
 		}
 
+		
 		protected virtual IEnumerator CoWaitOnLoad(UtageUguiSaveLoadItem item)
 		{
 			this.StoreAndChangeCanvasGroupInput(false);

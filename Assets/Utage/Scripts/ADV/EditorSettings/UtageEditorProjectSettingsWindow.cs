@@ -9,7 +9,7 @@ namespace Utage
     //宴のプロジェクトで共有するエディター設定のエディターウィンドウ
     public class UtageEditorProjectSettingsWindow : EditorSettingsWindow<UtageEditorProjectSettings>
     {
-        [MenuItem("Tools/Utage/Editor Project Settings", priority = 800)]
+        [MenuItem("Tools/Utage/Editor Project Settings", priority = 700)]
         public static void ShowWindow()
         {
             // 新しいエディタウィンドウを開く

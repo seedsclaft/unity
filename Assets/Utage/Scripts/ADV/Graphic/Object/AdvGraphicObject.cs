@@ -121,7 +121,7 @@ namespace Utage
 				lipSync.OnCheckTextLipSync.AddListener(
 					(x) =>
 					{
-						x.EnableTextLipSync = (x.CharacterLabel == Engine.Page.CharacterLabel && Engine.Page.IsSendChar);
+						x.EnableTextLipSync = Engine.ScenarioSound.CheckTextLipSync(x.CharacterLabel);
 					});
 				lipSync.OnCheckUpdateingText.AddListener(
 					(x) =>

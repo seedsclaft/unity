@@ -6,6 +6,7 @@ using UtageExtensions;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Events;
 
 
 namespace Utage
@@ -15,7 +16,7 @@ namespace Utage
 	public class AdvUguiTipsList : UguiView
 	{
 		//ADVエンジン
-		public AdvEngine Engine => this.GetComponentCacheFindIfMissing(ref this.engine);
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] AdvEngine engine;
 		
 		//TIPS管理
@@ -29,6 +30,9 @@ namespace Utage
 		[SerializeField] AdvUguiTipsDetail tipsDetail;
 
 		protected bool IsInit { get; set; }
+
+		public UnityEvent OnInit => onInit;
+		[SerializeField] UnityEvent onInit = new();
 
 		
 		protected virtual void OnOpen()
@@ -55,12 +59,13 @@ namespace Utage
 				AdvUguiTipsListButton button = rootButtons.AddChildPrefab(prefabTipsButton);
 				button.Init(tipsInfo);
 			}
+			OnInit.Invoke();
 		}
 
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (IsInit && InputUtil.IsMouseRightButtonDown())
+			if (IsInit && InputUtil.IsInputGuiClose())
 			{
 				Back();
 			}

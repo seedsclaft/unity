@@ -47,6 +47,11 @@ namespace Utage
 		internal void Init(AdvGraphicInfo graphic, float pixelsToUnits)
 		{
 			this.Setting = graphic.RenderTextureSetting;
+			var customPixelsToUnits = this.GetComponentInParent<IRenderTextureCustomPixelsToUnits>();
+			if (customPixelsToUnits != null)
+			{
+				pixelsToUnits = customPixelsToUnits.GetRenderTexturesPixelsToUnits(graphic, pixelsToUnits);
+			}
 			CreateCamera(pixelsToUnits);
 			CreateTexture();
 			CreateRoot(graphic, pixelsToUnits);

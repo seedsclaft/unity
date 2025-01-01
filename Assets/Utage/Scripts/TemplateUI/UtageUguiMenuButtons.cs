@@ -17,7 +17,7 @@ namespace Utage
 	public class UtageUguiMenuButtons : MonoBehaviour
 	{
 		// ADVエンジン
-		public virtual AdvEngine Engine => this.GetComponentCacheFindIfMissing(ref engine);
+		public virtual AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] protected AdvEngine engine;
 
 		[SerializeField] protected GameObject rootButtons;
@@ -28,15 +28,15 @@ namespace Utage
 		[SerializeField] protected Image bg;
 		
 		// スキップボタン
-		[SerializeField] Toggle checkSkip;
+		[SerializeField] protected Toggle checkSkip;
 
 		// 自動で読み進むボタン
-		[SerializeField] Toggle checkAuto;
+		[SerializeField] protected Toggle checkAuto;
 
 		//ノベルゲームモードでのメイン画面
-		[SerializeField] UtageUguiMainGame mainGame;
+		[SerializeField] protected UtageUguiMainGame mainGame;
 		//コンフィグ画面（ノベルゲーム以外で直接開く場合）
-		[SerializeField] UtageUguiConfig config;
+		[SerializeField] protected UtageUguiConfig config;
 
 
 		public virtual void Open()
@@ -44,6 +44,7 @@ namespace Utage
 			this.gameObject.SetActive(true);
 		}
 
+		
 		public virtual void Close()
 		{
 			this.gameObject.SetActive(false);

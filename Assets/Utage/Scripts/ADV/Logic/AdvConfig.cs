@@ -440,7 +440,7 @@ namespace Utage
 				//スキップを無視する
 				return false;
 			}
-			else if (forceSkipInputCtrl && InputUtil.IsInputControl())
+			else if (forceSkipInputCtrl && InputUtil.IsInputForceSkip())
 			{
 				//強制スキップ
 				return true;

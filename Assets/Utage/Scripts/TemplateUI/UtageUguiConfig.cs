@@ -17,11 +17,7 @@ namespace Utage
 	public class UtageUguiConfig : UguiView
 	{
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref this.engine); }
-		}
-
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] protected AdvEngine engine;
 
 		//コンフィグデータへのインターフェース
@@ -287,7 +283,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (isInit && InputUtil.IsMouseRightButtonDown())
+			if (isInit && InputUtil.IsInputGuiClose())
 			{
 				Back();
 			}

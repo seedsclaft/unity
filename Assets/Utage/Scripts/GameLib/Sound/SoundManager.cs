@@ -34,7 +34,7 @@ namespace Utage
 			}
 			return instance;
 		}
-		static SoundManager instance;
+		[StaticField] static SoundManager instance;
 
 		void OnDestroy()
 		{

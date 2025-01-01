@@ -60,7 +60,7 @@ namespace Utage
         //マウスの位置にあるリンクを取得
         public static int FindIntersectingLinkAtMousePosition(TMP_Text text)
         {
-            return FindIntersectingLink(text, Input.mousePosition);
+            return FindIntersectingLink(text, InputUtil.GetMousePosition());
         }
 
         //指定の位置にあるリンクを取得

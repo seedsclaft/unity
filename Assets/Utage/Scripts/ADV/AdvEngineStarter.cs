@@ -40,9 +40,8 @@ namespace Utage
 		string startScenario = "";
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing( ref engine); } }
-		[SerializeField]
-		AdvEngine engine;
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
+		[SerializeField] AdvEngine engine;
 
 		/// <summary>データの置き場所</summary>
 		public StrageType Strage

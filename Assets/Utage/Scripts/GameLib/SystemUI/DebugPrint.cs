@@ -23,7 +23,7 @@ namespace Utage
 			}
 			return instance;
 		}
-		static DebugPrint instance;
+		[StaticField] static DebugPrint instance;
 
 		/// <summary>
 		/// デバッグログの追加

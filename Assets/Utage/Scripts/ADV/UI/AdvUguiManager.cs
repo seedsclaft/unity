@@ -21,11 +21,23 @@ namespace Utage
 		// メッセージウィンドウ
 		public AdvUguiMessageWindowManager MessageWindow{ get { return Engine.MessageWindowManager.UiMessageWindowManager as AdvUguiMessageWindowManager; }}
 
-		[SerializeField]
-		protected AdvUguiSelectionManager selection;
+		//デフォルトの選択肢
+		[SerializeField] protected AdvUguiSelectionManager selection;
+		//埋め込み選択肢
+		protected AdvUguiSelectionManager EmbedSelection { get; set; }
+		//埋め込み選択肢が有効か
+		protected bool EnableEmbedSelection { get; set; }
+		//現在の選択肢
+		public AdvUguiSelectionManager CurrentSelection => EnableEmbedSelection ? EmbedSelection : selection;
 
-		[SerializeField]
-		protected AdvUguiBacklogManager backLog;
+		//デフォルトのバックログ
+		[SerializeField] protected AdvUguiBacklogManager backLog;
+		//埋め込みバックログ
+		protected AdvUguiBacklogManager EmbedBackLog { get; set; }
+		//埋め込みバックログが有効か
+		protected bool EnableEmbedBackLog { get; set; }
+		//現在のバックログ
+		public AdvUguiBacklogManager CurrentBacklog => EnableEmbedBackLog ? EmbedBackLog : backLog;
 
 
 		//マウスホイールによるバックログの有効・無効
@@ -47,13 +59,60 @@ namespace Utage
 		[EnumFlags,SerializeField]
 		protected InputUtilDisableFilter filterInputUtilDisable = (InputUtilDisableFilter)(-1);
 
+		//メッセージウィンドウを非表示にした時にも、キー入力を有効にするか
+		[SerializeField] protected bool enableInputKeyOnHideMessage = false; 
+
 		//InputUtilが無効の時の設定されたフィルターをチェック
 		protected bool CheckInputUtilDisable(InputUtilDisableFilter flag)
 		{
 			if (InputUtil.EnableInput) return false;
 			return (FilterInputUtilDisable & flag) == flag;
 		}
+		
+		//埋め込み選択肢の設定
+		//nullが設定された場合は、選択肢が無効になる
+		public void SetEmbedSelection(AdvUguiSelectionManager embedSelection)
+		{
+			EnableEmbedSelection = true;
+			EmbedSelection = embedSelection;
+			if (EmbedSelection != null)
+			{
+				EmbedSelection.InitEngine(this.Engine);
+			}
+		}
+		//埋め込み選択肢を解除して、デフォルトの選択肢に戻す
+		public void ReleaseEmbedSelection()
+		{
+			EnableEmbedSelection = false;
+			if (EmbedSelection != null)
+			{
+				EmbedSelection.ReleaseEngine();
+			}
+			EmbedSelection = null;
+		}
 
+		//埋め込みバックログの設定
+		//nullが設定された場合は、バックログが無効になる
+		public void SetEmbedBackLog(AdvUguiBacklogManager backlog)
+		{
+			EnableEmbedBackLog = true;
+			EmbedBackLog = backlog;
+			if (EmbedBackLog != null)
+			{
+				EmbedBackLog.InitEngine(this.Engine);
+			}
+		}
+
+		//埋め込みバックログを解除して、デフォルトのバックログに戻す
+		public void ReleaseEmbedBackLog()
+		{
+			EnableEmbedBackLog = false;
+			if (EmbedBackLog != null)
+			{
+				EmbedBackLog.ReleaseEngine();
+			}
+			EmbedBackLog = null;
+		}
 
 		public override void Open()
 		{
@@ -65,8 +124,8 @@ namespace Utage
 		{
 			this.gameObject.SetActive(false);
 			MessageWindow.Close();
-			if (selection != null) selection.Close();
-			if (backLog != null) backLog.Close();
+			if (CurrentSelection != null) CurrentSelection.Close();
+			if (CurrentBacklog != null) CurrentBacklog.Close();
 		}
 
 		protected override void ChangeStatus(UiStatus newStatus)
@@ -74,23 +133,23 @@ namespace Utage
 			switch (newStatus)
 			{
 				case UiStatus.Backlog:
-					if (backLog == null) return;
+					if (CurrentBacklog == null) return;
 
 					MessageWindow.Close();
-					if (selection != null) selection.Close();
-					if (backLog != null) backLog.Open();
+					if (CurrentSelection != null) CurrentSelection.Close();
+					if (CurrentBacklog != null) CurrentBacklog.Open();
 					Engine.Config.IsSkip = false;
 					break;
 				case UiStatus.HideMessageWindow:
 					MessageWindow.Close();
-					if (selection != null) selection.Close();
-					if (backLog != null) backLog.Close();
+					if (CurrentSelection != null) CurrentSelection.Close();
+					if (CurrentBacklog != null) CurrentBacklog.Close();
 					Engine.Config.IsSkip = false;
 					break;
 				case UiStatus.Default:
 					MessageWindow.Open();
-					if (selection != null) selection.Open();
-					if (backLog != null) backLog.Close();
+					if (CurrentSelection != null) CurrentSelection.Open();
+					if (CurrentBacklog != null) CurrentBacklog.Close();
 					break;
 			}
 			this.status = newStatus;
@@ -107,19 +166,19 @@ namespace Utage
 			if(CheckInputUtilDisable(InputUtilDisableFilter.Update)) return;
 			
 			//読み進みなどの入力
-			bool IsInput = (Engine.Config.IsMouseWheelSendMessage && InputUtil.IsInputScrollWheelDown())
-								|| InputUtil.IsInputKeyboadReturnDown();
+			bool isInput = (Engine.Config.IsMouseWheelSendMessage && InputUtil.IsInputNexByMouse())
+								|| InputUtil.IsInputNextButton();
 			switch (Status)
 			{
 				case UiStatus.Backlog:
 					break;
 				case UiStatus.HideMessageWindow:	//メッセージウィンドウが非表示
 					//右クリック
-					if (InputUtil.IsMouseRightButtonDown())
+					if (InputUtil.IsInputGuiClose())
 					{	//通常画面に復帰
 						Status = UiStatus.Default;
 					}
-					else if (!DisableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
+					else if (!DisableMouseWheelBackLog && InputUtil.IsInputOpenBackLog())
 					{
 						//バックログ開く
 						Status = UiStatus.Backlog;
@@ -133,17 +192,17 @@ namespace Utage
 					}
 					if (IsShowingMessageWindow || Engine.SelectionManager.IsWaitInput)
 					{	//入力待ち
-						if (InputUtil.IsMouseRightButtonDown())
+						if (InputUtil.IsInputGuiClose())
 						{	//右クリックでウィンドウ閉じる
 							Status = UiStatus.HideMessageWindow;
 						}
-						else if (!DisableMouseWheelBackLog && InputUtil.IsInputScrollWheelUp())
+						else if (!DisableMouseWheelBackLog && InputUtil.IsInputOpenBackLog())
 						{	//バックログ開く
 							Status = UiStatus.Backlog;
 						}
 						else
 						{
-							if (IsInput)
+							if (isInput)
 							{
 								//メッセージ送り
 								Engine.Page.InputSendMessage();
@@ -153,9 +212,11 @@ namespace Utage
 					}
 					else
 					{
-						if (IsInput)
+						//enableInputKeyOnHideMessageがtrueの時は、
+						//メッセージウィンドウが表示されていないときもキーによる入力を有効にする
+						if (isInput && enableInputKeyOnHideMessage)
 						{
-							base.IsInputTrig = false;
+							base.IsInputTrig = true;
 						}
 					}
 					break;

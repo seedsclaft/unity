@@ -15,6 +15,13 @@ namespace Utage
 	/// 自分用に使いやすくしたアセットデータベース
 	public static class AssetDataBaseEx
 	{
+		//指定のGUIDがプロジェクト内に存在するアセットか判定
+		public static bool IsExistAssetByGuid(string guid)
+		{
+			var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+			return !string.IsNullOrEmpty(assetPath);
+		}
+
 		//GUIDでアセットをロード（ロードできない場合エラーを出す）
 		public static T LoadAssetByGuid<T>(string guid)
 			where T : UnityEngine.Object
@@ -199,6 +206,18 @@ namespace Utage
 		{
 			var gameObject = InstantiateFromPrefabGuid(guid, gameObjectName, parent);
 			return gameObject.GetComponent<T>();
+		}
+
+		//GUIDでunity packageをインポート
+		public static void ImportPackageByGuid(string guid, bool interactive)
+		{
+			var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+			if (string.IsNullOrEmpty(assetPath))
+			{
+				Debug.LogError($"{guid} is not valid");
+				return;
+			}
+			AssetDatabase.ImportPackage(assetPath, interactive);
 		}
 	}
 }

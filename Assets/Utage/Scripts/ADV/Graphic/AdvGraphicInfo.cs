@@ -23,12 +23,13 @@ namespace Utage
 		//独自オブジェクトを作成するためのコールバック
 		//独自にカスタムしたい、ファイルタイプのオブジェクトの型だけ作成すればいい
 		public delegate void CreateCustom(string fileType, ref Type type);
-		public static CreateCustom CallbackCreateCustom;
+
+		[field: RuntimeInitializeStaticField] public static CreateCustom CallbackCreateCustom;
 
 		/// <summary>
 		/// 文字列の条件式を計算するコールバック
 		/// </summary> 
-		public static Func<string, bool> CallbackExpression;
+		[field: RuntimeInitializeStaticField] public static Func<string, bool> CallbackExpression;
 
 		public const string FileType2D = "2D";
 		public const string FileTypeAvatar = "Avatar";

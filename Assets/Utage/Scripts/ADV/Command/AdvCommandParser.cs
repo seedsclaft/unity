@@ -15,9 +15,7 @@ namespace Utage
 		//独自コマンドを作成するためのコールバック
 		//独自にカスタムしたい、IDのコマンドだけ作成すればいい
 		public delegate void CreateCustomCommandFromID( string id, StringGridRow row, AdvSettingDataManager dataManager, ref AdvCommand command);
-		static public CreateCustomCommandFromID OnCreateCustomCommandFromID;
-		[System.Obsolete("Use OnCreateCustomCommandFromID  instead")]
-		static public CreateCustomCommandFromID OnCreateCustomCommnadFromID;
+		[field: RuntimeInitializeStaticField] public static CreateCustomCommandFromID OnCreateCustomCommandFromID;
 
 		/// <summary>
 		/// コマンド生成
@@ -25,12 +23,18 @@ namespace Utage
 		/// <param name="row">行データ</param>
 		/// <param name="dataManager">データマネージャー</param>
 		/// <returns>生成されたコマンド</returns>
-		static public AdvCommand CreateCommand(StringGridRow row, AdvSettingDataManager dataManager)
+		public static AdvCommand CreateCommand(StringGridRow row, AdvSettingDataManager dataManager)
 		{
+			if (row.IsCommentOut)
+			{
+				//コメント
+				return null;
+			}
 			Profiler.BeginSample("CreateCommandRow");
 
+			string id = AdvParser.ParseCellOptional<string>(row, AdvColumnName.Command, "");
 			Profiler.BeginSample("Check Comment");
-			if (row.IsCommentOut || IsComment(row))
+			if (IsComment(id,row))
 			{
 				Profiler.EndSample();
 				Profiler.EndSample();
@@ -40,7 +44,7 @@ namespace Utage
 			Profiler.EndSample();
 
 			///基本のコマンド解析処理
-			AdvCommand command = CreateCommand(ParseCommandID(row), row, dataManager);
+			AdvCommand command = CreateCommand(ParseCommandID(id,row), row, dataManager);
 
 			Profiler.BeginSample("Check IsAllEmptyCellNamedColumn");
 			if (command == null)
@@ -139,9 +143,10 @@ namespace Utage
 		public const string IdRuleFadeOut = "RuleFadeOut";          //ルール画像つきフェードアウト
 //		public const string IdObjectFadeIn = "ObjectFadeIn";		//オブジェクトに対してのフェードイン
 //		public const string IdObjectFadeOut = "ObjectFadeOut";		//オブジェクトに対してのフェードアウト
-		public const string IdWaitFadeObjects = "WaitFadeObjects";	//オブジェクトに対してのフェードを待つ
-		public const string IdWaitEffectTime = "WaitEffectTime";	//エフェクトの終了時間を待つ
-		public const string IdWaitSound = "WaitSound";				//サウンドの再生終了を待つ
+		public const string IdWaitFadeObjects = "WaitFadeObjects"; //オブジェクトに対してのフェードを待つ
+		public const string IdWaitEffectTime = "WaitEffectTime";   //エフェクトの終了時間を待つ
+		public const string IdWaitSound = "WaitSound";             //サウンドの再生終了を待つ
+		public const string IdWaitVideo = "WaitVideo";             //ビデオオブジェクトの再生終了を待つ
 
 		public const string IdCaptureImage = "CaptureImage";		//キャプチャ画像の作成と表示
 
@@ -256,7 +261,7 @@ namespace Utage
 					return new AdvCommandSetPivot(row, dataManager);
 				case IdResetPivot:
 					return new AdvCommandResetPivot(row, dataManager);
-				
+
 				case IdVideo:
 					return new AdvCommandVideo(row, dataManager);
 
@@ -287,6 +292,8 @@ namespace Utage
 					return new AdvCommandWaitEffectTime(row, dataManager);
 				case　IdWaitSound:
 					return new AdvCommandWaitSound(row, dataManager);
+				case　IdWaitVideo:
+					return new AdvCommandWaitVideo(row, dataManager);
 
 /*				case IdObjectFadeIn:
 					return new AdvCommandObjectFadeIn(row);
@@ -437,8 +444,13 @@ namespace Utage
 		/// <returns>生成するコマンドID</returns>
 		static string ParseCommandID(StringGridRow row)
 		{
-			Profiler.BeginSample("ParseCommandID");
 			string id = AdvParser.ParseCellOptional<string>(row, AdvColumnName.Command, "");
+			return ParseCommandID(id, row);
+		}
+
+		static string ParseCommandID(string id, StringGridRow row)
+		{
+			Profiler.BeginSample("ParseCommandID");
 			if (string.IsNullOrEmpty(id))
 			{
 				//コマンドなしは、テキスト表示が基本
@@ -511,9 +523,8 @@ namespace Utage
 
 
 		//コメントのコマンドかチェック
-		static bool IsComment(StringGridRow row)
+		static bool IsComment(string command, StringGridRow row)
 		{
-			string command = AdvParser.ParseCellOptional<string>(row, AdvColumnName.Command, "");
 			if( string.IsNullOrEmpty(command) )
 			{
 				return false;

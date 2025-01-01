@@ -12,7 +12,7 @@ namespace Utage
 	public class AdvOpenGallery : MonoBehaviour
 	{
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref engine ); } }
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine );
 		[SerializeField]
 		protected AdvEngine engine;
 

@@ -90,22 +90,22 @@ namespace Ryneus
 			}
             // 情報の初期化
             Data.hideFlags = HideFlags.None;
-            Data.data = CommonEventDates.data.ToList().FindAll(a => a.id == 101);
+            Data.data = CommonEventDates.data.ToList();
         }
         
         [MenuItem ("Resources/CommonEvent")]
         static void CommonEvent() 
         {
-            var csvStrings = new List<string>
-            {
-                // パラメータ設定
-                "Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType" + "\n"
-            };
             var CommonEventDates = Resources.Load<CommonEventDates>("Data/CommonEvents").data;
             if (CommonEventDates != null)
             {
                 foreach (var d in CommonEventDates)
                 {
+                    var csvStrings = new List<string>
+                    {
+                        // パラメータ設定
+                        "Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType" + "\n"
+                    };
                     if (d.list == null)
                     {
                         continue;
@@ -216,7 +216,7 @@ namespace Ryneus
                             case 241: // BGM再生 (ファイル指定・音量不可)
                                 if (l.soundDate.name != "")
                                 {
-                                    csvCol.Add("PlayBgm2");
+                                    csvCol.Add("PlayBgm");
                                     csvCol.Add(l.soundDate.name);
                                     csvCol.Add(l.soundDate.volume.ToString());
                                     csvCol.Add(l.soundDate.pitch.ToString());
@@ -235,10 +235,16 @@ namespace Ryneus
                                 csvCol.Add("2");
                                 break;
                             case 245: // BGS再生(ファイル指定・音量不可)
-                                csvCol.Add("PlayBgs");
-                                csvCol.Add(l.soundDate.name);
-                                csvCol.Add(l.soundDate.volume.ToString());
-                                csvCol.Add(l.soundDate.pitch.ToString());
+                                if (l.soundDate.name != "")
+                                {
+                                    csvCol.Add("PlayBgs");
+                                    csvCol.Add(l.soundDate.name);
+                                    csvCol.Add(l.soundDate.volume.ToString());
+                                    csvCol.Add(l.soundDate.pitch.ToString());
+                                } else
+                                {
+                                    csvCol.Add("StopBgs");
+                                }
                                 break;
                             case 246: // BGSフェードアウト
                                 csvCol.Add("StopBgs");
@@ -279,17 +285,25 @@ namespace Ryneus
                         if (csvText != "")
                         {
                             csvStrings.Add(csvText);  
-                        }  
+                        }
+                    }
+
+                    if (csvStrings.Count > 0)
+                    {
+                        csvStrings.Add("EndScenario,,,,,,,,,,,");
+                    }
+                    
+                    using(StreamWriter sw = new StreamWriter(d.id + "_output.csv", false))
+                    {
+                        foreach (var csvString in csvStrings)
+                        {
+                            sw.WriteLine(csvString);
+                        }
+                        sw.Flush();
+                        sw.Close();
                     }
                 }
             }
-            var sw = new StreamWriter(@"output.csv", false);
-            foreach (var csvString in csvStrings)
-            {
-                sw.WriteLine(csvString);
-            }
-            sw.Flush();
-            sw.Close();
         }
 	}
 }

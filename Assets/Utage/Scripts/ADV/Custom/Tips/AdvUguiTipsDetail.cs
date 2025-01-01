@@ -16,7 +16,7 @@ namespace Utage
 	public class AdvUguiTipsDetail : UguiView
 	{
 		//ADVエンジン
-		public AdvEngine Engine => this.GetComponentCacheFindIfMissing(ref this.engine);
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] AdvEngine engine;
 		
 		//TIPS管理
@@ -89,7 +89,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (IsInit && InputUtil.IsMouseRightButtonDown())
+			if (IsInit && InputUtil.IsInputGuiClose())
 			{
 				Back();
 			}

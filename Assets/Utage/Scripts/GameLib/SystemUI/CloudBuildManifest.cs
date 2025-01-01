@@ -26,7 +26,8 @@ namespace Utage
 			instance = JsonUtility.FromJson<CloudBuildManifest>(json.text);
 			return instance;
 		}
-		static CloudBuildManifest instance;
+
+		[StaticField] static CloudBuildManifest instance;
 
 
 		//Unity Cloud Build によってビルドされた commit、または changelist

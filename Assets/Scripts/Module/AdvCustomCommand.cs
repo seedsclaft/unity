@@ -48,19 +48,23 @@ namespace Utage
     public class AdvCommandPlayBgm : AdvCommand
     {
         private string bgmKey = "";
-        private bool? loop = true;
+        private int? volume = 80;
+        private int? pitch = 100;
+        //private bool? loop = true;
         public AdvCommandPlayBgm(StringGridRow row)
             :base(row)
         {
             bgmKey = ParseCell<string>(AdvColumnName.Arg1);
-            loop = ParseCell<bool>(AdvColumnName.Arg2);
+            volume = ParseCell<int?>(AdvColumnName.Arg2);
+            pitch = ParseCell<int?>(AdvColumnName.Arg3);
+            //loop = ParseCell<bool>(AdvColumnName.Arg2);
         }
         
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
             var bgm = await Ryneus.ResourceSystem.LoadBGMAsset(bgmKey);
-            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,(bool)loop);
+            Ryneus.SoundManager.Instance.PlayBgm(bgm,1.0f,(bool)true);
         }
     }
 

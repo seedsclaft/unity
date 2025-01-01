@@ -17,7 +17,7 @@ namespace Utage
 		/// <summary>
 		/// 文字列から数式を計算するコールバック
 		/// </summary> 
-		public static Func<string, object> CallbackCalcExpression;
+		[RuntimeInitializeStaticField] public static Func<string, object> CallbackCalcExpression;
 
 		[Obsolete("Use TextData.MakeLogText")]
 		public static string MakeLogText(string text)

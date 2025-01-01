@@ -17,9 +17,9 @@ namespace Utage
 	public abstract class GuiDrawerHelper
 	{
 		//コンポーネントやScriptableObject（つまり、UnityEngine.Object）にあるメソッドを名前で呼び出す
-		public void CallFunction(SerializedProperty property, GuiDrawerFunction function, object[] args = null)
+		public object CallFunction(SerializedProperty property, GuiDrawerFunction function, object[] args = null)
 		{
-			CallFunctionSub(property, function, args);
+			return CallFunctionSub(property, function, args);
 		}
 
 		//コンポーネントやScriptableObject（つまり、UnityEngine.Object）にあるメソッドを名前で呼び出す

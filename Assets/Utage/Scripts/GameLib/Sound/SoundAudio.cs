@@ -379,8 +379,8 @@ namespace Utage
 		void LateUpdate()
 		{
 #if UNITY_EDITOR
-			if (Audio0 != null) time0 = Audio0.time;
-			if (Audio1 != null) time1 = Audio1.time;
+			if (Audio0 != null && Audio0.clip!=null) time0 = Audio0.time;
+			if (Audio1 != null && Audio1.clip != null) time1 = Audio1.time;
 #endif
 
 			//ボリュームの更新
@@ -424,7 +424,7 @@ namespace Utage
 		// オーディオのボリュームを取得
 		const int samples = 256;
 		const int channel = 0;
-		static float[] waveData = new float[samples];
+		[StaticField] static float[] waveData = new float[samples];
 		float GetSamplesVolume(AudioSource audio)
 		{
 			audio.GetOutputData(waveData, channel);

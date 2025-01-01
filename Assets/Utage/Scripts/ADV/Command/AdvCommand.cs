@@ -17,18 +17,18 @@ namespace Utage
 		/// <summary>
 		/// エディタ上のエラーチェックのために起動してるか
 		/// </summary>
-		static public bool IsEditorErrorCheck
+		public static bool IsEditorErrorCheck
 		{
 			get { return isEditorErrorCheck; }
 			set { isEditorErrorCheck = value; }
 		}
-		static bool isEditorErrorCheck = false;
+		[RuntimeInitializeStaticField] static bool isEditorErrorCheck = false;
 
 		/// <summary>
 		/// エディタ上のエラーチェック中に、WaitTypeの古い書式のチェックをするか
 		/// </summary>
-		static public bool IsEditorErrorCheckWaitType{ get; set; }
-
+		[field: RuntimeInitializeStaticField] public static bool IsEditorErrorCheckWaitType{ get; set; }
+		
 		protected AdvCommand(StringGridRow row)
 		{
 			this.RowData = row;
@@ -88,12 +88,21 @@ namespace Utage
 			AddLoadFileSub(graphic.File);
 
 			//キャラクターの場合はアイコンファイルもロード
-			if (graphic.SettingData is AdvCharacterSettingData)
+			AddLoadIconFile(graphic);
+		}
+
+			//キャラクターの場合はアイコンファイルもロード
+		void AddLoadIconFile(AdvGraphicInfo graphic)
+		{
+			if (graphic.SettingData is AdvCharacterSettingData settingData)
 			{
-				AdvCharacterSettingData settingData = graphic.SettingData as AdvCharacterSettingData;
-				if (settingData.Icon != null && settingData.Icon.File !=null)
+				foreach (var info in settingData.Graphic.InfoList)
 				{
-					AddLoadFileSub(settingData.Icon.File);
+					var icon = info.Icon;
+					if (icon != null && icon.File != null)
+					{
+						AddLoadFileSub(icon.File);
+					}
 				}
 			}
 		}
@@ -118,7 +127,10 @@ namespace Utage
 			}
 			else
 			{
-				loadFileList.Add(file);
+				if (!loadFileList.Contains(file))
+				{
+					loadFileList.Add(file);
+				}
 			}
 			return file;
 		}

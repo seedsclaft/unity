@@ -18,11 +18,7 @@ namespace Utage
 	public class UtageUguiMainGame : UguiView
 	{
 		/// <summary>ADVエンジン</summary>
-		public virtual AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref engine); }
-		}
-
+		public virtual AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] protected AdvEngine engine;
 
 		/// <summary>キャプチャ用のカメラ</summary>
@@ -263,7 +259,7 @@ namespace Utage
 			{
 				if (page.IsSavePoint)
 				{
-					Debug.Log("Capture");
+//					Debug.Log("Capture");
 					StartCoroutine(CoCaptureScreen());
 				}
 			}
@@ -380,6 +376,10 @@ namespace Utage
 		//セーブ用のスクショを撮る
 		protected virtual Texture2D CaptureScreen()
 		{
+			if (!Engine.SaveManager.EnableCapture(Engine.Param))
+			{
+				return null;
+			}
 			Rect rect = LetterBoxCamera.CachedCamera.rect;
 			int x = Mathf.CeilToInt(rect.x * Screen.width);
 			int y = Mathf.CeilToInt(rect.y * Screen.height);

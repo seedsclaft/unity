@@ -115,8 +115,8 @@ namespace Utage
 	public static class AdvColumnNameExtentison
 	{
 		//ToStringの高速版
-		static string[] names = null;
-		static public string QuickToString(this AdvColumnName value)
+		[StaticField] static string[] names = null;
+		public static string QuickToString(this AdvColumnName value)
 		{
 			Profiler.BeginSample("QuickToString");
 			if (names == null)

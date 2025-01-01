@@ -13,11 +13,18 @@ namespace Utage
 	/// </summary>
 	[AddComponentMenu("Utage/ADV/AdvUguiSelectionManager")]
 	public class AdvUguiSelectionManager : MonoBehaviour
+		, IAdvEngineGetter
 	{
-		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCache(ref engine); } }
+		//ADVエンジン
+		public AdvEngine Engine
+		{
+			get => engine;
+			protected set => engine = value;
+		}
 		[SerializeField]
 		protected AdvEngine engine;
+		public AdvEngine AdvEngineGetter => Engine;
+
 
 		/// <summary>選択済みのテキスト色</summary>
 		/// <summary>選択済みのテキスト色を変えるか</summary>
@@ -60,6 +67,9 @@ namespace Utage
 
 		public List<GameObject> Items { get { return items; } }
 		List<GameObject> items = new List<GameObject>();
+		
+		//初期化済みかのフラグ
+		private bool IsInitialized { get; set; }
 
 		/// <summary>開く</summary>
 		public virtual void Open()
@@ -75,10 +85,46 @@ namespace Utage
 
 		protected virtual void Awake()
 		{
+			InitSub();
+		}
+		
+		//外部からAdvEngineを設定する
+		public void InitEngine(AdvEngine advEngine)
+		{
+			Engine = advEngine;
+			InitSub();
+		}
+
+		//外部からAdvEngineを設定する
+		public void ReleaseEngine()
+		{
+			ReleaseEvents();
+			Engine = null;
+		}
+
+		protected virtual void InitSub()
+		{
+			if( IsInitialized) return;
+			if (Engine == null || SelectionManager == null) return;
+
 			SelectionManager.OnClear.AddListener(OnClear);
 			SelectionManager.OnBeginShow.AddListener(OnBeginShow);
 			SelectionManager.OnBeginWaitInput.AddListener(OnBeginWaitInput);
 			ClearAll();
+			IsInitialized = true;
+		}
+		
+
+		protected virtual void ReleaseEvents()
+		{
+			if(!IsInitialized) return;
+			if (Engine != null && SelectionManager != null)
+			{
+				SelectionManager.OnClear.RemoveListener(OnClear);
+				SelectionManager.OnBeginShow.RemoveListener(OnBeginShow);
+				SelectionManager.OnBeginWaitInput.RemoveListener(OnBeginWaitInput);
+			}
+			IsInitialized = false;
 		}
 
 		//全てクリア

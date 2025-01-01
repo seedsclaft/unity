@@ -9,7 +9,7 @@ namespace Utage
 	[AddComponentMenu("Utage/Lib/Events/ApplicationEvent")]
 	public class ApplicationEvent : MonoBehaviour
 	{
-		static public ApplicationEvent Get()
+		public static ApplicationEvent Get()
 		{
 			if (instance==null)
 			{
@@ -19,8 +19,7 @@ namespace Utage
 			}
 			return instance;
 		}
-
-		static ApplicationEvent instance;
+		[StaticField] static ApplicationEvent instance;
 
 		public UnityEvent OnScreenSizeChanged = new UnityEvent();
 

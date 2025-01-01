@@ -49,11 +49,21 @@ namespace Utage
 
 			for (int i = 0; i < views.Length; ++i)
 			{
-				if (i == index) continue;
-				views[i].ToggleOpen(false);
+				if (views[i] == null)
+				{
+					Debug.LogError($"views[{i}] is null",this);
+					continue;
+				}
+				if (i == index)
+				{
+					views[i].ToggleOpen(true);
+				}
+				else
+				{
+					views[i].ToggleOpen(false);
+				}
 			}
 
-			views[index].ToggleOpen(true);
 			tabIndex = index;
 		}
 	}

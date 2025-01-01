@@ -8,6 +8,6 @@ namespace Utage
 	/// バージョン情報
 	public class VersionUtil
 	{
-		public const string Version = "4.0.5";
+		public const string Version = "4.1.5";
 	}
 }

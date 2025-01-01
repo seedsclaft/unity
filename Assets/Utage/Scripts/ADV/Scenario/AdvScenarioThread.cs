@@ -205,6 +205,7 @@ namespace Utage
 			while (CurrentLabelData != null)
 			{
 				OnStartScenarioLabel.Invoke();
+				CurrentLabelData.OnStartScenarioLabel(Engine);
 				ScenarioPlayer.UpdateSceneGallery(CurrentLabelData.ScenarioLabel, Engine);
 				AdvScenarioPageData currentPageData = CurrentLabelData.GetPageData(page);
 				//ページデータを取得

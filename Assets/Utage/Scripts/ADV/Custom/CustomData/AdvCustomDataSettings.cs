@@ -9,17 +9,15 @@ namespace Utage
     public class AdvCustomDataSettings
     {
         List<AdvCustomDataContainerCreator> DataContainerCreators => dataContainerCreators;
-        [SerializeField] List<AdvCustomDataContainerCreator> dataContainerCreators;
+        [SerializeField] List<AdvCustomDataContainerCreator> dataContainerCreators = new ();
 
         public bool IsCustomData(string customDataName)
         {
             return FindDataContainerCreator(customDataName) != null;
         }
-
         public AdvCustomDataContainerCreator FindDataContainerCreator(string customDataName)
         {
-            return null;
-            return DataContainerCreators?.Find(x => x.IsTargetDataName(customDataName));
+            return DataContainerCreators.Find(x => x.IsTargetDataName(customDataName));
         }
     }
 }

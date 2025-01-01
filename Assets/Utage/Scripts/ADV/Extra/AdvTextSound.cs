@@ -24,7 +24,7 @@ namespace Utage
 		}
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref this.engine); } }
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField]
 		protected AdvEngine engine;
 

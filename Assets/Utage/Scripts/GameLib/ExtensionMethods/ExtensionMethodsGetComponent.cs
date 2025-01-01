@@ -135,6 +135,7 @@ namespace UtageExtensions
 			}
 			return component;
 		}
+		
 		public static T GetComponentCacheFindIfMissing<T>(this Component target, ref T component) where T : Component
 		{
 			return target.gameObject.GetComponentCacheFindIfMissing<T>(ref component);
@@ -200,12 +201,12 @@ namespace UtageExtensions
 		public static T GetComponentCacheInParent<T>(this GameObject go, ref T component) where T : class
 		{
 			if (component != null) return component;
-			return component = go.GetComponentInParent<T>();
+			return component = go.GetComponentInParent<T>(true);
 		}
 		public static T GetComponentCacheInParent<T>(this Component target, ref T component) where T : class
 		{
 			if (component != null) return component;
-			return component = target.GetComponentInParent<T>();
+			return component = target.GetComponentInParent<T>(true);
 		}
 
 		//コンポーネントのシングルトンの処理

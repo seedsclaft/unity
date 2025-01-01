@@ -31,6 +31,10 @@ namespace Utage
             /// インポート時にセルの終端の空白をチェックする
             [SerializeField] bool checkWhiteSpaceEndOfCell = true;
             public bool CheckWhiteSpaceEndOfCell => checkWhiteSpaceEndOfCell;
+
+            // シナリオファイルの読み込み直後に実行する処理
+            [SerializeField] List<ScenarioFileReadPostprocessor> scenarioFileReadPostprocessors = new ();
+            public List<ScenarioFileReadPostprocessor> ScenarioFileReadPostprocessors => scenarioFileReadPostprocessors;
         }
         [SerializeField, UnfoldedSerializable] ImportSettings importSettings = new();
         public ImportSettings ImportSetting => importSettings;

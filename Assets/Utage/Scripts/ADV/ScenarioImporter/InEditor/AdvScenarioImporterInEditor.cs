@@ -219,11 +219,18 @@ namespace Utage
 
 			var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
 			book.SetSourceAsset(asset);
+			var editorProjectSettings = UtageEditorProjectSettings.GetInstance().ImportSetting;
+			foreach (var scenarioFileReadPostprocessor in editorProjectSettings.ScenarioFileReadPostprocessors)
+			{
+				scenarioFileReadPostprocessor.OnScenarioFileReadPostprocess(this,path,book);
+			}
+
+
+			//コメントアウト処理
 			if (Project.EnableCommentOutOnImport)
 			{
 				book.EraseCommentOutStrings(@"//");
 			}
-			var editorProjectSettings = UtageEditorProjectSettings.GetInstance().ImportSetting;
 			int checkCount = editorProjectSettings.CheckBlankRowCount; 
 			int checkCellCount = editorProjectSettings.CheckCellCount; 
 			foreach (var sheet in book.Values)
@@ -374,6 +381,7 @@ namespace Utage
 			foreach (AdvScenarioData data in scenarioList)
 			{
 				data.Init(setting);
+				data.DelayInitializeAllCommand(setting);
 			}
 
 

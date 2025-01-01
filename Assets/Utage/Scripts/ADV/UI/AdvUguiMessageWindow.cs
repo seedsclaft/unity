@@ -13,7 +13,7 @@ namespace Utage
 	public class AdvUguiMessageWindow : MonoBehaviour, IAdvMessageWindow, IAdvMessageWindowCaracterCountChecker
 	{
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing( ref engine); } }
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing( ref engine);
 		[SerializeField]
 		protected AdvEngine engine;
 
@@ -67,15 +67,23 @@ namespace Utage
 
 		public bool IsCurrent { get; protected set; }
 
+		//テキストの変更処理が始まる前に呼ばれる
+		public AdvMessageWindowEvent OnPreChangeText => onPreChangeText;
+		[SerializeField] AdvMessageWindowEvent onPreChangeText = new();
+
 		//テキストの変更処理が終わった後に呼ばれる
 		public AdvMessageWindowEvent OnPostChangeText => onPostChangeText;
 		[SerializeField]
-		AdvMessageWindowEvent onPostChangeText = new AdvMessageWindowEvent();
+		AdvMessageWindowEvent onPostChangeText = new ();
 
 
 		//ゲーム起動時の初期化
 		public virtual void OnInit(AdvMessageWindowManager windowManager)
 		{
+			if (engine == null)
+			{
+				engine = windowManager.Engine;
+			}
 			defaultTextColor = NovelTextComponentWrapper.GetColor(text, textPro);
 			defaultNameTextColor = NovelTextComponentWrapper.GetColor(nameText, nameTextPro);
 			Clear();
@@ -119,6 +127,9 @@ namespace Utage
 		//テキストに変更があった場合
 		public virtual void OnTextChanged(AdvMessageWindow window)
 		{
+			//テキスト変更が始まる前の拡張イベント
+			OnPreChangeText.Invoke(window);
+		
 			//表示テキストの設定
 			NovelTextComponentWrapper.SetNovelTextData(text, textPro, window.Text,window.TextLength);
 
@@ -149,6 +160,8 @@ namespace Utage
 			}
 
 			LinkIcon();
+
+			//テキスト変更が始まった後の拡張イベント
 			OnPostChangeText.Invoke(window);
 		}
 

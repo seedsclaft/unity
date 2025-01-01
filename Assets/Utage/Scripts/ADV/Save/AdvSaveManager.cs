@@ -18,6 +18,7 @@ namespace Utage
 	/// </summary>
 	[AddComponentMenu("Utage/ADV/Internal/AdvSaveManager")]
 	public class AdvSaveManager : MonoBehaviour
+		, IAdvSaveDelete
 	{
 		protected virtual FileIOManager FileIOManager { get { return this.GetComponentCacheFindIfMissing( ref fileIOManager); } }
 		[SerializeField]
@@ -141,6 +142,19 @@ namespace Utage
 		}
 		[SerializeField] 
 		bool restartSubThread = false;
+
+		public enum ThumbnailType
+		{
+			Capture,		//今の画面をキャプチャーする（デフォルト）
+			ThumbnailFile,	//サムイネイル画像ラベルを指定のパラメーターに保存
+			Both,			//両用する（サムイネイル画像指定がなかったらキャプチャー）
+		}
+
+		public ThumbnailType Thumbnail => thumbnailType;
+		[SerializeField] ThumbnailType thumbnailType = ThumbnailType.Capture;
+		//サムイネイル画像を指定する場合のパラメーター名
+		public string ThumbnailParamName => thumbnailParamName;
+		[SerializeField,Hide(nameof(DisableThumbnailParam))] string thumbnailParamName = ""; 	
 
 		//AdvEngine以下のオブジェクト
 		public virtual List<IBinaryIO> GetSaveIoListCreateIfMissing(AdvEngine engine)
@@ -319,9 +333,9 @@ namespace Utage
 			saveData.SaveGameData(CurrentAutoSaveData, engine, UtageToolKit.CreateResizeTexture(CaptureTexture, CaptureWidth, CaptureHeight));
 			FileIOManager.WriteBinaryEncode(saveData.Path, saveData.Write);
 		}
-
-		//セーブデータを消去して終了(SendMessageでコールバックされるので名前固定)
-		protected virtual void OnDeleteAllSaveDataAndQuit()
+		
+		//セーブデータを消去して終了(インターフェースを使用するのでpublicに変更)
+		public virtual void OnDeleteAllSaveDataAndQuit()
 		{
 			DeleteAllSaveData();
 			isAutoSave = false;
@@ -375,6 +389,91 @@ namespace Utage
 				{
 					FileIOManager.WriteBinaryEncode(CurrentAutoSaveData.Path, CurrentAutoSaveData.Write);
 				}
+			}
+		}
+		
+		//サムネイルパラメーター名の利用が無効になっているか
+		public virtual bool DisableThumbnailParam => Thumbnail == ThumbnailType.Capture;
+		
+		//キャプチャが有効か
+		public virtual bool EnableCapture(AdvParamManager param)
+		{
+			switch (Thumbnail)
+			{
+				case ThumbnailType.Capture:
+					return true;
+				case ThumbnailType.ThumbnailFile:
+					return false;
+				case ThumbnailType.Both:
+					return string.IsNullOrEmpty(param.GetParameterString(ThumbnailParamName));
+				default:
+					Debug.LogError($"Unknown ThumbnailType {Thumbnail}");
+					return false;
+			}
+		}
+
+		//セーブ用のサムネイル画像名をパラメーターに設定
+		public virtual void SetThumbnailParam(string thumbnailName, AdvEngine engine)
+		{
+			if (!string.IsNullOrEmpty(thumbnailName))
+			{
+				//エラーチェック用
+				TryGetUiTextureData(thumbnailName, engine, out _);
+			}
+			engine.Param.SetParameter(ThumbnailParamName, thumbnailName);
+		}
+		
+		//サムネイル名からUiTextureDataを取得
+		public virtual bool TryGetUiTextureData(string thumbnailName, AdvEngine engine, out UiTextureData uiTextureData)
+		{
+			uiTextureData = null;
+			var dataContainer = engine.DataManager.SettingDataManager.CustomDataManager.GetCustomData<UiTextureDataContainer>();
+			if (dataContainer == null)
+			{
+				//UiTexture用のデータコンテナが見つからないのでエラー
+				Debug.LogError($"{nameof(UiTextureDataContainer)} is not found");
+				return false;
+			}
+
+			if (!dataContainer.DataDictionary.TryGetValue(thumbnailName, out uiTextureData))
+			{
+				//サムネイル画像のデータが見つからないのでエラー
+				Debug.LogError($"{thumbnailName} is not found in {nameof(UiTextureDataContainer)}");
+				return false;
+			}
+			return true;
+		}
+		
+		//シナリオラベルの開始時によばれる
+		public virtual void OnStartScenarioLabel(AdvCommandScenarioLabel scenarioLabel, AdvEngine engine)
+		{
+			//Arg3を取得
+			//セーブデータのサムネイル画像用のパラメーター名が設定されているなら、
+			string thumbnail;
+			switch (Thumbnail)
+			{
+				case ThumbnailType.Capture:
+					//キャプチャ画像をサムネイルにするので何もしない
+					return;
+				case ThumbnailType.ThumbnailFile:
+					//Arg3でサムイネイル画像ラベルを取得
+					thumbnail = scenarioLabel.ParseCellOptional(AdvColumnName.Arg3, "");
+					if (string.IsNullOrEmpty(thumbnail))
+					{
+						//サムネイル画像名が空欄の場合は、上書きせずに直前の状態を引き継ぐ
+						return;
+					}
+					SetThumbnailParam(thumbnail, engine);
+					break;
+				case ThumbnailType.Both:
+					//Arg3でサムイネイル画像ラベルを取得
+					//空白文字の場合は自動的にキャプチャ画像を使う処理になる
+					thumbnail = scenarioLabel.ParseCellOptional(AdvColumnName.Arg3, "");
+					SetThumbnailParam(thumbnail, engine);
+					break;
+				default:
+					Debug.LogError($"Unknown ThumbnailType {Thumbnail}");
+					break;
 			}
 		}
 	}

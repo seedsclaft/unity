@@ -193,6 +193,9 @@ namespace Utage
 		public AdvParamManager Param { get { return this.param; } }
 		AdvParamManager param = new AdvParamManager();
 
+		//パラメーター変更イベント
+		public AdvParameterEventTrigger ParameterEventTrigger => this.GetComponentCacheCreateIfMissing(ref parameterEventTrigger);
+		AdvParameterEventTrigger parameterEventTrigger;
 
 		//起動時に非同期で
 		[SerializeField]
@@ -222,12 +225,12 @@ namespace Utage
 		//パラメーターにボイス言語設定があればそれに合わせる
 		public string VoiceLanguageKeyOfParam
 		{
-			get => languageKeyOfParam;
+			get => voiceLanguageKeyOfParam;
 			set => voiceLanguageKeyOfParam = value;
 		}
 		[SerializeField]
 		string voiceLanguageKeyOfParam = "";
-
+		
 		/// <summary>
 		/// カスタムコマンド用のコンポーネントリスト
 		/// </summary>
@@ -590,6 +593,7 @@ namespace Utage
 			GraphicManager.BootInit(this, DataManager.SettingDataManager.LayerSetting);
 			//パラメーターをデフォルト値でリセット
 			Param.InitDefaultAll(DataManager.SettingDataManager.DefaultParam);
+			Param.SetAdvEngine(this);
 			//パラメーターを反映
 			InitCallback = true;
 			AdvGraphicInfo.CallbackExpression = Param.CalcExpressionBoolean;

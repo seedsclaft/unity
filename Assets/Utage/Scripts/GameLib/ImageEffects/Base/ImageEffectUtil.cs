@@ -38,7 +38,8 @@ namespace Utage
 			public Type componentType;
 			public Shader[] shaders;
 		}
-		static List<ImageEffectPattern> patterns = new List<ImageEffectPattern>()
+
+		static readonly List<ImageEffectPattern> patterns = new List<ImageEffectPattern>()
 		{
 			new ImageEffectPattern(ImageEffectType.ColorFade.ToString(), typeof(ColorFade), new Shader[] { Shader.Find(ShaderManager.ColorFade) }),
 			new ImageEffectPattern(ImageEffectType.Bloom.ToString(), typeof(Bloom), new Shader[] { Shader.Find(ShaderManager.BloomName) }),

@@ -36,7 +36,7 @@ namespace Utage
 
 		bool IsMouseDown()
 		{
-			if (!isPauseOnMouseDown || !Input.GetMouseButtonDown(0) )
+			if (!isPauseOnMouseDown || !InputUtil.IsInputDebugPause0() )
 				return false;
 //			return IsInputAlt() && IsInputShift();
 			return true;
@@ -44,20 +44,10 @@ namespace Utage
 
 		bool IsMouseUp()
 		{
-			if (!isPauseOnMouseUp || !Input.GetMouseButtonUp (0) )
+			if (!isPauseOnMouseUp || !InputUtil.IsInputDebugPause1() )
 				return false;
 //			return IsInputAlt();
 			return true;
-		}
-
-		bool IsInputAlt()
-		{
-			return Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.LeftAlt);
-		}
-
-		bool IsInputShift()
-		{
-			return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 		}
 		
 

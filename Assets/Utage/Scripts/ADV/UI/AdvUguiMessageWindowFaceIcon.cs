@@ -12,7 +12,7 @@ namespace Utage
 	public class AdvUguiMessageWindowFaceIcon : MonoBehaviour
 	{
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine { get { return this.GetComponentCacheFindIfMissing(ref engine); } }
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField]
 		protected AdvEngine engine;
 
@@ -140,6 +140,10 @@ namespace Utage
 			else
 			{
 				flip.enabled = true;
+				//イベントCG等でグラフィックが非表示の場合はここまで
+				if(graphicObject==null) return;
+				
+				//アイコンの自動反転を更新
 				var layerSettings = graphicObject.Layer.SettingData;
 				flip.FlipX = layerSettings.FlipX;
 				flip.FlipY = layerSettings.FlipY;

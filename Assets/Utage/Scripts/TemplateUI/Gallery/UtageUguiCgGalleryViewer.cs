@@ -27,11 +27,7 @@ namespace Utage
 		public AdvUguiLoadGraphicFile texture;
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref engine); }
-		}
-
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] AdvEngine engine;
 
 		/// <summary>スクロール対応</summary>
@@ -100,7 +96,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (InputUtil.IsMouseRightButtonDown())
+			if (InputUtil.IsInputGuiClose())
 			{
 				Back();
 			}

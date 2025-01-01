@@ -14,12 +14,26 @@ namespace Utage
 	/// <summary>
 	/// グラフィックのレイヤー管理の基底クラス
 	/// </summary>
-	public abstract class AdvGraphicLayer : MonoBehaviour, IAdvGraphicLayer
+	public abstract class AdvGraphicLayer : MonoBehaviour
+		, IAdvGraphicLayer
+		, IAdvEngineGetter
 	{
 		public AdvLayerSettingData SettingData { get; protected set; }
 		abstract internal AdvLayerSettingData.LayerType LayerType { get; }
 
-		public AdvEngine Engine { get { return Manager.Engine; } }
+		public AdvEngine Engine
+		{
+			get
+			{
+				if (Manager == null)
+				{
+					return null;
+				}
+				return Manager.Engine;
+			}
+		}
+		public AdvEngine AdvEngineGetter => Engine;
+
 
 		public AdvGraphicManager Manager { get; protected set; }
 

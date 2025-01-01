@@ -24,12 +24,15 @@ namespace Utage
 
         Vector3 startPosition = Vector3.zero;
 		Vector3 startScale = Vector3.one;
-		Vector3 startEulerAngles = Vector3.one;
+		Vector3 startEulerAngles = Vector3.zero;
+		bool IsInitialized { get; set; }
+		
 		void Awake()
-        {
+		{
 			startPosition = this.transform.localPosition;
 			startScale = this.transform.localScale;
 			startEulerAngles = this.transform.localEulerAngles;
+			IsInitialized = true;
 		}
 
 		const int Version = 0;
@@ -83,9 +86,12 @@ namespace Utage
 
         internal void OnClear()
         {
-        	this.transform.localPosition = startPosition;
-            this.transform.localScale = startScale;
-            this.transform.localEulerAngles = startEulerAngles;
+	        if (IsInitialized)
+	        {
+		        this.transform.localPosition = startPosition;
+		        this.transform.localScale = startScale;
+		        this.transform.localEulerAngles = startEulerAngles;
+	        }
             LetterBoxCamera.OnClear();
 			LetterBoxCamera.gameObject.RemoveComponents<ImageEffectBase>();
         }

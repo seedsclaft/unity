@@ -90,7 +90,7 @@ namespace Utage
 		{
 			return date.ToString(cultureInfJp);
 		}
-		static System.Globalization.CultureInfo cultureInfJp = new System.Globalization.CultureInfo("ja-JP");
+		static readonly System.Globalization.CultureInfo cultureInfJp = new System.Globalization.CultureInfo("ja-JP");
 
 
 		/// <summary>

@@ -12,7 +12,7 @@ namespace Utage
 	{
 		//独自にカスタムしたいファイルタイプの、ルートディレクトリを指定
 		public delegate void ParseCustomFileTypeRootDir(string fileType, ref string rootDir);
-		public static ParseCustomFileTypeRootDir CallbackParseCustomFileTypeRootDir;
+		[field: RuntimeInitializeStaticField] public static ParseCustomFileTypeRootDir CallbackParseCustomFileTypeRootDir;
 
 		/// <summary>
 		/// テクスチャのタイプ

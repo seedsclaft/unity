@@ -248,6 +248,8 @@ namespace Utage
 #if UNITY_IPHONE
 #if UNITY_4_6_OR_EARLIER
 			Handheld.SetActivityIndicatorStyle(iOSActivityIndicatorStyle.Gray);
+#elif UNITY_6000_0_OR_NEWER
+			Handheld.SetActivityIndicatorStyle(UnityEngine.iOS.ActivityIndicatorStyle.Medium);
 #else
 			Handheld.SetActivityIndicatorStyle(UnityEngine.iOS.ActivityIndicatorStyle.Gray);
 #endif

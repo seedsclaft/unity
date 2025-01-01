@@ -13,60 +13,60 @@ namespace Utage
 	public static class ShaderManager
 	{
 		//ルール画像付きのフェード処理をする場合のシェーダー
-		static public Shader RuleFade { get { return Shader.Find("Utage/UI/RuleFade"); } }
+		public static Shader RuleFade { get { return Shader.Find("Utage/UI/RuleFade"); } }
 
 		//背景を透過しないクロスフェード処理をする場合のシェーダー
-		static public Shader CrossFade { get { return Shader.Find("Utage/CrossFadeImage"); } }
+		public static Shader CrossFade { get { return Shader.Find("Utage/CrossFadeImage"); } }
 
 		//透過画像を描きこむシェーダー
-		static public Shader RenderTexture { get { return Shader.Find("Utage/RenderTexture"); } }
+		public static Shader RenderTexture { get { return Shader.Find("Utage/RenderTexture"); } }
 
 		//透過画像を描き込んだRenderTextureを描画するシェーダー
-		static public Shader DrawByRenderTexture { get { return Shader.Find("Utage/DrawByRenderTexture"); } }
+		public static Shader DrawByRenderTexture { get { return Shader.Find("Utage/DrawByRenderTexture"); } }
 
 		//カラーフェード
-		static public string ColorFade = "Utage/ImageEffect/ColorFade";
+		public static readonly string ColorFade = "Utage/ImageEffect/ColorFade";
 
 		//ブルームシェーダー名
-		static public string BloomName = "Utage/ImageEffect/Bloom";
+		public static readonly string BloomName = "Utage/ImageEffect/Bloom";
 
 		//ブラー
-		static public string BlurName = "Utage/ImageEffect/Blur";
+		public static readonly string BlurName = "Utage/ImageEffect/Blur";
 
 		//モザイク
-		static public string MosaicName = "Utage/ImageEffect/Mosaic";
+		public static readonly string MosaicName = "Utage/ImageEffect/Mosaic";
 
 		//カラーコレクション（ランプ画像）
-		static public string ColorCorrectionRampName = "Utage/ImageEffect/ColorCorrectionRamp";
+		public static readonly string ColorCorrectionRampName = "Utage/ImageEffect/ColorCorrectionRamp";
 
 		//グレースケール
-		static public string GrayScaleName = "Utage/ImageEffect/Grayscale";
+		public static readonly string GrayScaleName = "Utage/ImageEffect/Grayscale";
 
 		//モーションブラー
-		static public string MotionBlurName = "Utage/ImageEffect/MotionBlur";
+		public static readonly string MotionBlurName = "Utage/ImageEffect/MotionBlur";
 
 		//ノイズ
-		static public string NoiseAndGrainName = "Utage/ImageEffect/NoiseAndGrain";
+		public static readonly string NoiseAndGrainName = "Utage/ImageEffect/NoiseAndGrain";
 
 		//オーバーレイ
-		static public string BlendModesOverlayName = "Utage/ImageEffect/BlendModesOverlay";
+		public static readonly string BlendModesOverlayName = "Utage/ImageEffect/BlendModesOverlay";
 
 		//セピア
-		static public string SepiatoneName = "Utage/ImageEffect/Sepiatone";
+		public static readonly string SepiatoneName = "Utage/ImageEffect/Sepiatone";
 
 		//ネガポジ反転
-		static public string NegaPosiName = "Utage/ImageEffect/NegaPosi";
+		public static readonly string NegaPosiName = "Utage/ImageEffect/NegaPosi";
 
 		//魚眼
-		static public string FisheyeName = "Utage/ImageEffect/Fisheye";
+		public static readonly string FisheyeName = "Utage/ImageEffect/Fisheye";
 
 		//一点を中心に画像を歪ませる
-		static public string TwirlName = "Utage/ImageEffect/Twirl";
+		public static readonly string TwirlName = "Utage/ImageEffect/Twirl";
 
 		//円で画像を歪ませる
-		static public string VortexName = "Utage/ImageEffect/Vortex";
+		public static readonly string VortexName = "Utage/ImageEffect/Vortex";
 
 		//ルール画像付きのフェード
-		static public string RuleFadeName = "Utage/ImageEffect/RuleFade";
+		public static readonly string RuleFadeName = "Utage/ImageEffect/RuleFade";
 	}
 }

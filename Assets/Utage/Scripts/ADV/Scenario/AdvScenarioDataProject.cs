@@ -54,8 +54,9 @@ namespace Utage
 							list.Add(path);
 						}
 					}
-
-					return list;
+					
+					//重複を削除して返す
+					return list.Distinct().ToList();
 				}
 			}
 		}

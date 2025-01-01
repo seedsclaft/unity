@@ -1,5 +1,7 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimurausing UnityEngine;
 
+using UnityEngine;
+
 namespace Utage
 {
 
@@ -38,5 +40,12 @@ namespace Utage
 				return ParseCellLocalized(AdvColumnName.Arg2.QuickToString());
 			}
 		}
+		
+		//シナリオラベル開始時に呼ぶ処理
+		public virtual void OnStartScenarioLabel(AdvEngine engine)
+		{
+			engine.SaveManager.OnStartScenarioLabel(this,engine);
+		}
+
 	}
 }

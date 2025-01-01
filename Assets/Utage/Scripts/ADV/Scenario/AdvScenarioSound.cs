@@ -16,7 +16,19 @@ namespace Utage
 		//現在のシナリオ中のボイスかどうかを区別しない場合（旧仕様のまま）はtrueに
 		bool DisableScenarioVoce => disableScenarioVoce; 
 		[SerializeField] bool disableScenarioVoce = false;
+
+		//全てのキャラクターのリップシンクが有効となる特別なラベル名
+		public string AlmightyLabel => almightyLabel;
+		[SerializeField] string almightyLabel = "";
 		
+		//全てのキャラクターのリップシンクが有効となる特別なラベル名が有効か
+		bool EnableAlmightyLabel => !string.IsNullOrEmpty(AlmightyLabel);
+		
+		//リップシンクが有効となる最低のボリューム値
+		public float LipSyncVolumeMin => lipSyncVolumeMin;
+		[SerializeField] float lipSyncVolumeMin = 0.3f;
+		
+		//キャラクターラベルと現在のシナリオ中のボイスファイルの対応
 		Dictionary<string, AssetFile> VoiceFilesInScenario { get; } = new Dictionary<string, AssetFile>();
 
 		AdvEngine Engine => this.GetComponentCacheInParent(ref engine);
@@ -55,27 +67,54 @@ namespace Utage
 		{
 			if (characterLabel.IsNullOrEmpty()) return false;
 			if (SoundManager==null) return false;
-			if (!IsPlayingScenarioVoice(characterLabel)) return false;
-
-			var samplesVolume = SoundManager.GetVoiceSamplesVolume(characterLabel);
-//			Debug.Log($"samplesVolume={samplesVolume}");
-			return samplesVolume > 0.3f;
+			if (IsPlayingAlmighty() && CheckLipSyncVolume(AlmightyLabel))
+			{
+				return true;
+			}
+			if (IsPlayingScenarioVoiceSub(characterLabel) && CheckLipSyncVolume(characterLabel))
+			{
+				return true;
+			}
+			return false;
 		}
+		
+		//再生中の音源のボリュームがリップシンクの閾値を超えているか
+		protected virtual bool CheckLipSyncVolume(string label)
+		{
+			var samplesVolume = SoundManager.GetVoiceSamplesVolume(label);
+			//			Debug.Log($"samplesVolume={samplesVolume}");
+			return samplesVolume > LipSyncVolumeMin;
+		}
+		
 
-		//現在のシナリオ内のボイスが再生されているか
+		//現在のシナリオ内で指定のボイスが再生されているか
 		public bool IsPlayingScenarioVoice(string characterLabel)
 		{
 			if (characterLabel.IsNullOrEmpty()) return false;
-			if (SoundManager==null) return false;
-			
+			if (IsPlayingAlmighty()) return false;
+			return IsPlayingScenarioVoiceSub(characterLabel);
+		}
+
+		public bool IsPlayingAlmighty()
+		{
+			if (string.IsNullOrEmpty(AlmightyLabel)) return false;
+			return IsPlayingScenarioVoiceSub(AlmightyLabel);
+		}
+		
+		//指定のラベルのボイスが再生されているか
+		protected virtual bool IsPlayingScenarioVoiceSub(string label)
+		{
+			if (label.IsNullOrEmpty()) return false;
+			if (SoundManager == null) return false;
+
 			if (DisableScenarioVoce)
 			{
 				//現在のシナリオ中のボイスかどうかを区別しない場合（旧仕様のまま）
-				return SoundManager.IsPlayingVoice(characterLabel);
+				return SoundManager.IsPlayingVoice(label);
 			}
 			else
 			{
-				if (!VoiceFilesInScenario.TryGetValue(characterLabel, out AssetFile file))
+				if (!VoiceFilesInScenario.TryGetValue(label, out AssetFile file))
 				{
 					return false;
 				}
@@ -85,16 +124,39 @@ namespace Utage
 					return false;
 				}
 
-				var soundManagerSystemEx = SoundManager.SystemEx; 
+				var soundManagerSystemEx = SoundManager.SystemEx;
 				if (soundManagerSystemEx != null)
 				{
-					return soundManagerSystemEx.IsPlaying(SoundManager.IdVoice,characterLabel,file);
+					return soundManagerSystemEx.IsPlaying(SoundManager.IdVoice, label, file);
 				}
 				else
 				{
-					return SoundManager.IsPlayingVoice(characterLabel);
+					return SoundManager.IsPlayingVoice(label);
 				}
 			}
 		}
+
+		public AudioSource GetAudioSource(string characterLabel)
+		{
+			if (characterLabel.IsNullOrEmpty()) return null;
+			if (SoundManager == null) return null;
+			
+			if (IsPlayingAlmighty())
+			{
+				return SoundManager.System.GetAudioSource(SoundManager.IdVoice, AlmightyLabel);
+			}
+			return SoundManager.System.GetAudioSource(SoundManager.IdVoice, characterLabel);
+		}
+
+		//テキストリップシンクのチェック（サウンドは関係ないが、似たような処理なのでここで行う）
+		public bool CheckTextLipSync(string characterLabel)
+		{
+			if (!Engine.Page.IsSendChar) return false;
+
+			if (characterLabel == Engine.Page.CharacterLabel) return true;
+			if (EnableAlmightyLabel && AlmightyLabel == Engine.Page.CharacterLabel) return true;
+			return false;
+		}
+
 	}
 }

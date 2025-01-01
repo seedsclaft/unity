@@ -12,6 +12,7 @@ namespace Utage
 	/// </summary>
 	[AddComponentMenu("Utage/ADV/Internal/AdvSystemSaveData")]
 	public class AdvSystemSaveData : MonoBehaviour
+		,IAdvSaveDelete
 	{
 		/// <summary>
 		/// システムセーブデータを使わない
@@ -128,8 +129,8 @@ namespace Utage
 			}
 		}
 
-		//セーブデータを消去して終了(SendMessageでコールバックされるので名前固定)
-		protected virtual void OnDeleteAllSaveDataAndQuit()
+		//セーブデータを消去して終了(インターフェースを使用するのでpublicに変更)
+		public virtual void OnDeleteAllSaveDataAndQuit()
 		{
 			Delete();
 			isAutoSaveOnQuit = false;

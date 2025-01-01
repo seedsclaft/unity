@@ -10,7 +10,7 @@ namespace Utage
     //TIPS系のUIを制御するコンポーネント
     public class AdvUguiTipsUiController : MonoBehaviour
     {
-        public AdvEngine Engine => this.GetComponentCacheFindIfMissing(ref engine);
+        public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
         [SerializeField] AdvEngine engine;
 
         public UtageUguiMainGame MainGame => this.GetComponentCacheFindIfMissing(ref mainGame);

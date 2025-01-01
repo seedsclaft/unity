@@ -38,10 +38,14 @@ namespace Utage
 			}
 		}
 		VideoClip VideoClip { get; set; }
-		VideoPlayer VideoPlayer { get; set; }
+		public VideoPlayer VideoPlayer { get; private set; }
 		protected Timer FadeTimer { get; set; }
 		//描画先とするバックバッファ
 		RenderTexture RenderTexture { get; set; }
+		
+		public bool IsPlayingOrPreparing { get { return VideoPlayer.isPlaying || IsPreparing; } }
+		public bool IsPreparing { get; set; }
+
 		int Width { get; set; }
 		int Height { get; set; }
 
@@ -105,7 +109,11 @@ namespace Utage
 			ReleaseTexture();
 			this.RenderTexture = new RenderTexture((int)VideoClip.width, (int)VideoClip.height, 16, RenderTextureFormat.ARGB32);
 			this.VideoPlayer.targetTexture = this.RenderTexture;
-			this.VideoPlayer.Play();
+
+			IsPreparing = true;
+			this.VideoPlayer.prepareCompleted += OnPrepareCompleted;
+			this.VideoPlayer.Prepare();
+
 
 			this.RawImage.texture = this.RenderTexture;
 			this.RawImage.SetNativeSize();
@@ -113,6 +121,14 @@ namespace Utage
 			if (LastResource == null)
 			{
 				ParentObject.FadeIn(fadeTime);
+			}
+			return;
+			
+			void OnPrepareCompleted(VideoPlayer player)
+			{
+				IsPreparing = false;
+				player.prepareCompleted -= OnPrepareCompleted;
+				player.Play();
 			}
 
 			//			this.VideoPlayer.alpha = 0.5f;
@@ -128,6 +144,8 @@ namespace Utage
 			player.SetDirectAudioVolume(0, volume);
 		}
 #else
+		public UnityEngine.Video.VideoPlayer VideoPlayer { get; } = null;
+		public bool IsPlayingOrPreparing { get;  } = false;
 		protected override Material Material
 		{
 			get
@@ -146,12 +164,12 @@ namespace Utage
 			throw new NotImplementedException();
 		}
 
-		internal override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
+		public override void ChangeResourceOnDraw(AdvGraphicInfo graphic, float fadeTime)
 		{
 			throw new NotImplementedException();
 		}
 
-		internal override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
+		public override bool CheckFailedCrossFade(AdvGraphicInfo graphic)
 		{
 			throw new NotImplementedException();
 		}

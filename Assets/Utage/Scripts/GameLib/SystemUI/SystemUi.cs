@@ -20,7 +20,7 @@ namespace Utage
 		{
 			return instance;
 		}
-		static SystemUi instance;
+		[StaticField] static SystemUi instance;
 
 
 		void Awake()
@@ -176,7 +176,7 @@ namespace Utage
 			//Android版・バックキーでアプリ終了確認
 			if (IsEnableInputEscape)
 			{
-				if (InputUtil.GetKeyDown(KeyCode.Escape))
+				if (InputUtil.IsInputExit())
 				{
 					OnOpenDialogExitGame();
 				}

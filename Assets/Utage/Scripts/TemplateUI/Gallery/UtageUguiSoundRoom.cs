@@ -35,11 +35,7 @@ namespace Utage
 		protected List<AdvSoundSettingData> itemDataList = new List<AdvSoundSettingData>();
 
 		/// <summary>ADVエンジン</summary>
-		public AdvEngine Engine
-		{
-			get { return this.GetComponentCacheFindIfMissing(ref engine); }
-		}
-
+		public AdvEngine Engine => this.GetAdvEngineCacheFindIfMissing(ref engine);
 		[SerializeField] protected AdvEngine engine;
 
 		protected bool isInit = false;
@@ -126,7 +122,7 @@ namespace Utage
 		protected virtual void Update()
 		{
 			//右クリックで戻る
-			if (isInit && InputUtil.IsMouseRightButtonDown())
+			if (isInit && InputUtil.IsInputGuiClose())
 			{
 				Gallery.Back();
 			}

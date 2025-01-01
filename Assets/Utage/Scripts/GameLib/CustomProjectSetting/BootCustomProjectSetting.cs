@@ -21,7 +21,10 @@ namespace Utage
 
 		private void OnDestroy()
 		{
-			LanguageManagerBase.Instance.OnFinalize();
+			if (LanguageManagerBase.Instance != null)
+			{
+				LanguageManagerBase.Instance.OnFinalize();
+			}
 		}
 	}
 }
