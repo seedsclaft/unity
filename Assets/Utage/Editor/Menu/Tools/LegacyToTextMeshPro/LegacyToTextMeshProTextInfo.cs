@@ -57,7 +57,11 @@ namespace Utage
             tmp.richText = RichText;
             
             tmp.alignment = TextAnchorToTextAlignmentOptions(Alignment);
+#if UNITY_6000_0_OR_NEWER
+            tmp.textWrappingMode = (TextWrappingModes)(HorizontalWrapModeToWordWrapping(HorizontalWrapMode) ? 1 : 0);
+#else
             tmp.enableWordWrapping = HorizontalWrapModeToWordWrapping(HorizontalWrapMode);
+#endif
             tmp.overflowMode = VerticalWrapModeToOverflowMode(VerticalWrapMode);
             
             tmp.enableAutoSizing = BestFit;

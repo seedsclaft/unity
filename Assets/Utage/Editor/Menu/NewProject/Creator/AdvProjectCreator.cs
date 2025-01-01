@@ -24,6 +24,16 @@ namespace Utage
 		public string TemplateFolderName { get; private set; }
 
 		public AdvProjectTemplateSettings TemplateSettings { get; private set; }
+
+		//プロジェクト作成後の追加処理のためのインターフェースリスト
+		static List<IAdvProjectPostCreationHandler> PostCreationHandlerList { get; } = new();
+
+		//プロジェクト作成後の処理の追加
+		public static void AddPostCreationHandler(IAdvProjectPostCreationHandler handler)
+		{
+			if (PostCreationHandlerList.Contains(handler)) return;
+			PostCreationHandlerList.Add(handler);
+		}
 		
 		//新規プロジェクト作成可能か
 		public abstract bool EnableCreate();
@@ -37,10 +47,11 @@ namespace Utage
 		}
 
 		//新たなプロジェクトを作成
-		public virtual void Create(string projectName)
+		public void Create(string projectName)
 		{
 			SetProjectName(projectName);
 			OnCreate();
+			PostCreationHandlerList.ForEach(x=>x.OnPostCreateProject(this));
 		}
 
 		protected abstract void OnCreate();

@@ -18,6 +18,7 @@ namespace Utage
 
         protected abstract class AdvProjectCreatorNewSceneDefault<T>
             : AdvProjectCreator
+                , IAdvProjectCreatorAddScene
                 , IAdvProjectCreatorGameScreenSize
                 , IAdvProjectCreatorSecurity
                 , IAdvProjectCreatorLayerNames

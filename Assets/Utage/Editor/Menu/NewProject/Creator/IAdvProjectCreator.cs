@@ -9,6 +9,16 @@ namespace Utage
     {
     }
 
+    //プロジェクト作成時に既存シーンに追加する場合の
+    public interface IAdvProjectCreatorAddScene : IAdvProjectCreator
+    {
+    }
+
+    //プロジェクト作成時にアセットのみ作成する場合のインターフェース
+    public interface IAdvProjectCreatorAssetOnly : IAdvProjectCreator
+    {
+    }
+
     //画面サイズの設定
     public interface IAdvProjectCreatorGameScreenSize : IAdvProjectCreator
     {

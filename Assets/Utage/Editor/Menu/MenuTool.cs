@@ -1,4 +1,6 @@
 ﻿// UTAGE: Unity Text Adventure Game Engine (c) Ryohei Tokimura
+
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -176,9 +178,22 @@ namespace Utage
 			if (!string.IsNullOrEmpty(path))
 			{
 				AssetDatabase.ExportPackage("Assets", path,
-					ExportPackageOptions.Recurse | ExportPackageOptions.Interactive | ExportPackageOptions.IncludeLibraryAssets);
+				ExportPackageOptions.Recurse | ExportPackageOptions.Interactive | ExportPackageOptions.IncludeLibraryAssets);
 			}
 		}
+
+
+		//プロジェクトをzip圧縮する
+		[MenuItem(MenuToolRoot + "Tools/Zip Project", priority = PriorityTools + 1)]
+		public static void OpenZipProject()
+		{
+			string path = EditorUtility.SaveFilePanel("Zip Project...", "../", Application.productName, "zip");
+			if (!string.IsNullOrEmpty(path))
+			{
+				new ProjectZipper().ZipProject(path);
+			}
+		}
+
 
 		/// フォントを変更
 		[MenuItem(MenuToolRoot + "Tools/FontChanger(Legacy)", priority = PriorityTools + 2)]
@@ -206,6 +221,17 @@ namespace Utage
 		static void OpenAdvScenarioCharacterValidatorWindow()
 		{
 			EditorWindow.GetWindow(typeof(AdvScenarioCharacterValidatorWindow), false, "Scenario Character Validator");
+		}
+
+		//************************Package************************//
+
+		public const int PriorityPackage = 800;
+
+		/// 拡張パッケージのインポートやアップデート
+		[MenuItem(MenuToolRoot + "Extension Package Manager", priority = PriorityPackage + 0)]
+		static void OpenExtensionPackageImporter()
+		{
+			EditorWindow.GetWindow(typeof(ExtensionPackageManagerWindow), false, "Extension Package Manager");
 		}
 
 		//************************About************************//

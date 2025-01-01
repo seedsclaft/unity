@@ -1,30 +1,47 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Utage.ExcelParser
 {
-    //エクセル形式のシナリオリーダーの設定
-    [CreateAssetMenu(menuName = "Utage/ScenarioFileReader/Excel", fileName = "ExcelFileReaderSettings")]
-    public class AdvScenarioFileReaderSettingsExcel : ScenarioFileReaderSettings, IScenarioFileReaderSettingsExcel
-    {
-        /// エクセルの数式解析するか
-        [SerializeField] bool parseFormula = false;
-        public bool ParseFormula
-        {
-            get => parseFormula;
-            set => parseFormula = value;
-        }
+	//エクセル形式のシナリオリーダーの設定
+	[CreateAssetMenu(menuName = "Utage/ScenarioFileReader/Excel", fileName = "ExcelFileReaderSettings")]
+	public class AdvScenarioFileReaderSettingsExcel : ScenarioFileReaderSettings, IScenarioFileReaderSettingsExcel
+	{
+		/// エクセルの数式解析するか
+		[SerializeField] bool parseFormula;
 
-        /// エクセルの数字解析（桁区切り対策など）
-        [SerializeField] bool parseNumeric = false;
-        public bool ParseNumeric
-        {
-            get => parseNumeric;
-            set => parseNumeric = value;
-        }
+		public bool ParseFormula
+		{
+			get => parseFormula;
+			set => parseFormula = value;
+		}
 
-        public override IAdvScenarioFileReader CreateReader()
-        {
-            return new AdvScenarioFileReaderExcel(this);
-        }
-    }
+		/// エクセルの数字解析（桁区切り対策など）
+		[SerializeField] bool parseNumeric;
+
+		public bool ParseNumeric
+		{
+			get => parseNumeric;
+			set => parseNumeric = value;
+		}
+
+		/// エクセルのヘッダ解析
+		[SerializeField] bool parseHeader = true;
+		public bool ParseHeader
+		{
+			get => parseHeader;
+			set => parseHeader = value;
+		}
+
+		// 無視するファイルの接頭辞
+		[SerializeField] List<string> ignorePrefixes = new() { @"~$" };
+
+		public List<string> IgnorePrefixes
+		{
+			get => ignorePrefixes;
+			set => ignorePrefixes = value;
+		}
+
+		public override IAdvScenarioFileReader CreateReader() => new AdvScenarioFileReaderExcel(this);
+	}
 }

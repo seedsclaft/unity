@@ -3,7 +3,6 @@
 
 namespace Utage.ExcelParser
 {
-
 	//エクセル形式のシナリオリーダー
 	public class AdvScenarioFileReaderExcel : IAdvScenarioFileReader
 	{
@@ -13,10 +12,22 @@ namespace Utage.ExcelParser
 		{
 			Settings = settings;
 		}
+
 		public bool IsTargetFile(string path)
 		{
 			if (string.IsNullOrEmpty(path)) return false;
-			return ExcelParser.IsExcelFile(path);
+			if (!ExcelParser.IsExcelFile(path)) return false;
+
+			var fileName = FilePathUtil.GetFileName(path);
+			foreach (var prefix in Settings.IgnorePrefixes)
+			{
+				if (fileName.StartsWith(prefix, System.StringComparison.OrdinalIgnoreCase))
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		public bool TryReadFile(string path, out StringGridDictionary stringGridDictionary)
@@ -26,7 +37,9 @@ namespace Utage.ExcelParser
 				stringGridDictionary = null;
 				return false;
 			}
-			stringGridDictionary = ExcelParser.Read(path, '#', Settings.ParseFormula, Settings.ParseNumeric);
+
+			stringGridDictionary = ExcelParser.Read(path, '#', 
+				Settings.ParseFormula, Settings.ParseNumeric, Settings.ParseHeader);
 			stringGridDictionary.RemoveSheets(@"^#");
 			return true;
 		}

@@ -12,6 +12,7 @@ namespace Utage
         [Serializable]
         protected abstract class AdvProjectCreatorAssetOnlyDefault<T>
             : AdvProjectCreator
+                , IAdvProjectCreatorAssetOnly
                 , IAdvProjectCreatorFont
             where T : AdvProjectTemplateSettingsAssetOnlyDefault
         {
