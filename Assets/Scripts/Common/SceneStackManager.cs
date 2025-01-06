@@ -26,6 +26,15 @@ namespace Ryneus
                 _sceneInfo.Add(sceneInfo);
             }
         }
+        
+        private List<PopupInfo> _popupInfo = new ();
+        public object LastTemplate => _popupInfo.Count > 0 ? _popupInfo[_popupInfo.Count-1].template : null;
+        
+        public void PushPopupInfo(PopupInfo popupInfo)
+        {
+            _popupInfo.Clear();
+            _popupInfo.Add(popupInfo);
+        }
     }
 
     public class SceneInfo
@@ -34,8 +43,8 @@ namespace Ryneus
         public Scene ToScene;
         public SceneChangeType SceneChangeType;
         public object SceneParam;
-
     }
+
     public enum SceneChangeType
     {
         None = 0,

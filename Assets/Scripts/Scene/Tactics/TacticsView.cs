@@ -333,7 +333,7 @@ namespace Ryneus
 
         public void SetNuminous(int numinous)
         {
-            numinousText?.SetText(numinous.ToString());
+            //numinousText?.SetText(numinous.ToString());
         }
 
         public void SetPastMode(bool pastMode)

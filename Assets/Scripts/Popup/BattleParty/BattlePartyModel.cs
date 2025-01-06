@@ -6,6 +6,7 @@ namespace Ryneus
     public class BattlePartyModel : BaseModel
     {
 
+
         private ActorInfo _currentActor = null;
         public ActorInfo CurrentActor => _currentActor;
         public void SetCurrentActorInfo(ActorInfo actorInfo) => _currentActor = actorInfo; 
@@ -18,16 +19,6 @@ namespace Ryneus
         public List<SystemData.CommandData> BattlePartyCommand()
         {
             var list = new List<SystemData.CommandData>();
-            if (GameSystem.ConfigData.InputType == true)
-            {
-                var edit = new SystemData.CommandData
-                {
-                    Id = 0,
-                    Name = DataSystem.GetText(30000),
-                    Key = "Edit"
-                };
-                list.Add(edit);
-            }
             var enemyInfo = new SystemData.CommandData
             {
                 Id = 1,
@@ -35,6 +26,13 @@ namespace Ryneus
                 Key = "EnemyInfo"
             };
             list.Add(enemyInfo);
+            var edit = new SystemData.CommandData
+            {
+                Id = 0,
+                Name = DataSystem.GetText(30000),
+                Key = "Edit"
+            };
+            list.Add(edit);
             /*
             var replay = new SystemData.CommandData
             {
@@ -95,7 +93,7 @@ namespace Ryneus
 
         public List<BattlerInfo> EnemyInfos()
         {
-            return null;
+            return (List<BattlerInfo>)GameSystem.SceneStackManager.LastTemplate;
         }
 
         public void SetInBattle()

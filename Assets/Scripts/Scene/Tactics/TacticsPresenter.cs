@@ -68,7 +68,7 @@ namespace Ryneus
             //_view.SetSymbols(ListData.MakeListData(_model.TacticsSymbols()));
             _view.SetUIButton();
             _view.SetBackGround(_model.CurrentStage.Master.BackGround);
-            _view.SetNuminous(_model.Currency);
+            //_view.SetNuminous(_model.Currency);
             CommandRefresh();
             PlayTacticsBgm();
             _view.ChangeUIActive(true);
@@ -181,9 +181,6 @@ namespace Ryneus
             //Debug.Log(viewEvent.commandType);
             switch (viewEvent.ViewCommandType.CommandType)
             {
-                case CommandType.BattleStart:
-                    CommandBattleStart();
-                    break;
                 case CommandType.CallSymbol:
                     CommandCallSymbol();
                     break;
@@ -266,20 +263,26 @@ namespace Ryneus
             CheckTutorialState(viewEvent.ViewCommandType.CommandType);
         }
 
+        private void CommandCheckBattleStart()
+        {
+            _busy = true;
+            var currentSymbol = _view.SelectSymbolInfo;
+            var popupInfo = new PopupInfo
+            {
+                PopupType = PopupType.BattleParty,
+                EndEvent = () =>
+                {
+                    _busy = false;
+                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
+                    CommandCancelSelectSymbol();
+                },
+                template = currentSymbol.BattlerInfos()
+            };
+            _view.CommandCallPopup(popupInfo);
+        }
+
         private void CommandBattleStart()
         {
-            var currentSymbol = _view.SelectSymbolInfo;
-            if (currentSymbol != null)
-            {
-                _view.CommandChangeViewToTransition(null);
-                SoundManager.Instance.PlayStaticSe(SEType.BattleStart);
-                var battleSceneInfo = new BattleSceneInfo
-                {
-                    ActorInfos = _model.PartyMembers(),
-                    EnemyInfos = currentSymbol.TroopInfo.BattlerInfos
-                };
-                _view.CommandGotoSceneChange(Scene.Battle,battleSceneInfo);
-            }
         }
 
         private void CommandCallSymbol()
@@ -302,7 +305,7 @@ namespace Ryneus
                 switch (symbolInfo.Master.SymbolType)
                 {
                     case SymbolType.Battle:
-                        CommandBattleStart();
+                        CommandCheckBattleStart();
                         return;
                     case SymbolType.Alcana:
                         // 獲得スキルが1つなら
@@ -419,7 +422,7 @@ namespace Ryneus
 
             CommandStatusInfo(_model.PastActorInfos(),false,true,true,false,actorId,() => 
             {
-                _view.SetNuminous(_model.Currency);
+                //_view.SetNuminous(_model.Currency);
                 CommandRefresh();
             });
             SoundManager.Instance.PlayStaticSe(SEType.Decide);
@@ -496,7 +499,6 @@ namespace Ryneus
             CommandRefresh();
             _view.ShowRecordList();
             _view.ShowSymbolRecord();
-            _backCommand = CommandType.CallSymbolList;
         }
 
         private void CancelSelectSymbol()
@@ -912,7 +914,7 @@ namespace Ryneus
                 });
                 _view.ActivateCommandList();
                 _view.SetHelpText(DataSystem.GetText(20020));
-                _view.SetNuminous(_model.Currency);
+                //_view.SetNuminous(_model.Currency);
                 CommandRefresh();
             },(a) => 
             {

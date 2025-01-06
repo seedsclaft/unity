@@ -239,7 +239,7 @@ namespace Ryneus
 
         public void PlayStaticSe(SEType sEType, float volume = 1.0f)
         {
-            Debug.Log(sEType);
+            //Debug.Log(sEType);
             if (SeMute) return;
             var seIndex = DataSystem.Data.SE.FindIndex(a => a.Id == (int)sEType);
             if (seIndex > -1)

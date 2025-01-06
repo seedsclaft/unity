@@ -10,7 +10,6 @@ namespace Ryneus
             None = 0,
             CallSymbolList,
             CallStatus,
-            BattleStart,
             CallSymbol,
             OnClickSymbol,
             OnCancelSymbol,

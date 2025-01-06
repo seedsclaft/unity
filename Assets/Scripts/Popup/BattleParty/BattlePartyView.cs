@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,49 +21,73 @@ namespace Ryneus
         [SerializeField] private OnOffButton battleStartButton;
         [SerializeField] private OnOffButton battleReplayButton;
         [SerializeField] private OnOffButton enemyInfoButton;
-        private new System.Action<BattlePartyViewEvent> _commandData = null;
         public SkillInfo SelectMagic => battleSelectCharacter.ActionData;
         public AttributeType AttributeType => battleSelectCharacter.AttributeType;
         private bool _isEditMode = false;
         
+        private new Action<ViewEvent> _commandData = null;
+        public new void SetEvent(Action<ViewEvent> commandData)
+        {
+            _commandData = commandData;
+        }
+        public void CallEvent(CommandType battleCommandType,object sendData = null)
+        {
+            var commandType = new ViewCommandType(ViewCommandSceneType.BattleParty,battleCommandType);
+            var eventData = new ViewEvent(commandType)
+            {
+                template = sendData
+            };
+            _commandData(eventData);
+        }
+
         public override void Initialize() 
         {
             base.Initialize();
-            partyMemberList.Initialize();
-            tacticsMemberList.Initialize();
-            enemyMemberList.Initialize();
+            //partyMemberList.Initialize();
+            //enemyMemberList.Initialize();
+            InitializeTacticsMember();
+            InitializeCommandList();
             battleSelectCharacter.Initialize();
             commandHelpButton.onClick.AddListener(() => 
             {
-                var eventData = new BattlePartyViewEvent(CommandType.CommandHelp);
-                _commandData(eventData);
+                CallEvent(CommandType.CommandHelp);
             });
             SetBaseAnimation(trainAnimation);
             InitializeSelectCharacter();
-            tacticsMemberList.SetInputHandler(InputKeyType.Decide,() => OnClickDecideActor());
-            tacticsMemberList.SetInputHandler(InputKeyType.Cancel,() => 
-            {    
-                var eventData = new BattlePartyViewEvent(CommandType.CommandEndEdit);
-                _commandData(eventData);
-            });
-            tacticsMemberList.SetInputHandler(InputKeyType.SideLeft1,() => 
-            {
-                var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
-                CallChangeLineIndex(actorInfo);
-            });
-            if (GameSystem.ConfigData.InputType) 
-            {
-                tacticsMemberList.Deactivate();
-            }
-            SetInputHandler(tacticsMemberList.gameObject);
             SetInputHandler(battleSelectCharacter.MagicList);
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
             });
-            commandList.Initialize();
-            SetInputHandler(commandList.gameObject);
             new BattlePartyPresenter(this);
+        }
+
+        private void InitializeTacticsMember()
+        {
+            tacticsMemberList.Initialize();
+            tacticsMemberList.SetInputHandler(InputKeyType.Decide,OnClickDecideActor);
+            tacticsMemberList.SetInputHandler(InputKeyType.Cancel,() => CallEvent(CommandType.CommandEndEdit));
+            tacticsMemberList.SetSelectedHandler(() =>
+            {
+                var listData = tacticsMemberList.ListData;
+                if (listData != null)
+                {
+                    var data = (ActorInfo)listData.Data;
+                    CallEvent(CommandType.SelectTacticsMember,data);
+                }
+            });
+            SetInputHandler(tacticsMemberList.gameObject);
+            AddViewActives(tacticsMemberList);
+        }
+
+        private void InitializeCommandList()
+        {
+            commandList.Initialize();
+            commandList.SetInputHandler(InputKeyType.Decide,CallCommandList);
+            commandList.SetInputHandler(InputKeyType.Cancel,() => BackEvent?.Invoke());
+            SetInputHandler(commandList.gameObject);
+            AddViewActives(commandList);
+            SetActivate(commandList);
         }
 
         public void OpenAnimation()
@@ -71,27 +95,9 @@ namespace Ryneus
             trainAnimation.OpenAnimation(UiRoot.transform,null);
         }
         
-        public void SetEvent(System.Action<BattlePartyViewEvent> commandData)
-        {
-            _commandData = commandData;
-        }
-
         private void CallSideMenu()
         {
-            var eventData = new BattlePartyViewEvent(CommandType.SelectSideMenu);
-            _commandData(eventData);
-        }
-
-        private void CallBattleStart()
-        {
-            var eventData = new BattlePartyViewEvent(CommandType.BattleStart);
-            _commandData(eventData);
-        }
-
-        private void OnClickBack()
-        {
-            var eventData = new BattlePartyViewEvent(CommandType.Back);
-            _commandData(eventData);
+            CallEvent(CommandType.SelectSideMenu);
         }
 
         private void OnClickDecideActor()
@@ -100,11 +106,7 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (ActorInfo)listData.Data;
-                var eventData = new BattlePartyViewEvent(CommandType.DecideTacticsMember)
-                {
-                    template = data
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.DecideTacticsMember,data);
             }
         }
 
@@ -114,9 +116,6 @@ namespace Ryneus
             {
                 commandList.UpdateSelectIndex(commandDates.Count-1);
             });
-            commandList.SetInputHandler(InputKeyType.Decide,() => CallCommandList());
-            commandList.SetInputHandler(InputKeyType.Cancel,() => OnClickBack());
-            
         }
 
         private void CallCommandList()
@@ -124,46 +123,27 @@ namespace Ryneus
             var listData = commandList.ListItemData<SystemData.CommandData>();
             if (listData != null)
             {
-                var eventData = new BattlePartyViewEvent(CommandType.CallCommandList)
-                {
-                    template = listData
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.CallCommandList,listData);
             }
         }
 
         public void SetEditMode(bool isEditMode)
         {
             _isEditMode = isEditMode;
-            if (_isEditMode && tacticsMemberList.Index < 0)
-            {
+            if (_isEditMode)
+            {            
+                SetActivate(tacticsMemberList);
                 tacticsMemberList.UpdateSelectIndex(0);
-            }
-            if (_isEditMode == false && tacticsMemberList.Index >= 0)
+            } else
             {
                 tacticsMemberList.UpdateSelectIndex(-1);
+                SetActivate(commandList);
             }
         }
 
         public void SetTacticsMembers(List<ListData> tacticsMembers)
         {
-            tacticsMemberList.SetData(tacticsMembers,false,() => 
-            {
-                SetTacticsMemberHandler();
-            });
-            tacticsMemberList.SetSelectedHandler(() =>
-            {
-                var listData = tacticsMemberList.ListData;
-                if (listData != null)
-                {
-                    var data = (ActorInfo)listData.Data;
-                    var eventData = new BattlePartyViewEvent(CommandType.SelectTacticsMember)
-                    {
-                        template = data
-                    };
-                    _commandData(eventData);
-                }
-            });
+            tacticsMemberList.SetData(tacticsMembers,false);
         }
 
         public void RefreshTacticsMembers(List<ListData> tacticsMembers)
@@ -173,26 +153,12 @@ namespace Ryneus
 
         public void SetBattleMembers(List<ListData> battlerInfos)
         {
-            partyMemberList.SetData(battlerInfos,false,() => 
-            {
-                for (int i = 0; i < partyMemberList.ItemPrefabList.Count;i++)
-                {
-                    var battlePartyMember = partyMemberList.ItemPrefabList[i].GetComponent<BattlePartyMemberItem>();
-                    battlePartyMember.SetLineIndexHandler((a) => 
-                    {
-                        CallChangeLineIndex(a);
-                    });
-                }
-            });
+            partyMemberList.SetData(battlerInfos,false);
         }
 
         private void CallChangeLineIndex(ActorInfo actorInfo)
         {
-            var eventData = new BattlePartyViewEvent(CommandType.ChangeLineIndex)
-            {
-                template = actorInfo
-            };
-            _commandData(eventData);
+            CallEvent(CommandType.ChangeLineIndex,actorInfo);
         }
 
         public void SetEnemyMembers(List<ListData> enemyInfos)
@@ -221,31 +187,13 @@ namespace Ryneus
             if (listData != null)
             {
                 var data = (AttributeType)listData.Data;
-                var eventData = new BattlePartyViewEvent(CommandType.SelectAttribute)
-                {
-                    template = data
-                };
-                _commandData(eventData);
+                CallEvent(CommandType.SelectAttribute,data);
             }
         }
 
         private void InitializeSelectCharacter()
         {
             battleSelectCharacter.HideActionList();
-        }
-
-        private void SetTacticsMemberHandler()
-        {
-            for (int i = 0; i < tacticsMemberList.ItemPrefabList.Count;i++)
-            {
-                var battlePartyTacticsMember = tacticsMemberList.ItemPrefabList[i].GetComponent<BattlePartyTacticsMember>();
-                
-                battlePartyTacticsMember.SetLineIndexHandler(() => 
-                {
-                    var actorInfo = tacticsMemberList.ListItemData<ActorInfo>();
-                    CallChangeLineIndex(actorInfo);
-                });
-            }
         }
 
         public void ShowCharacterDetail(ActorInfo actorInfo,List<ActorInfo> party,List<ListData> skillInfos,bool tabSelect = false)
@@ -290,13 +238,11 @@ namespace Ryneus
             });
             battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.SideLeft1,() => 
             {
-                var eventData = new BattlePartyViewEvent(CommandType.LeftAttribute);
-                _commandData(eventData);
+                CallEvent(CommandType.LeftAttribute);
             });
             battleSelectCharacter.MagicList.SetInputHandler(InputKeyType.SideRight1,() => 
             {
-                var eventData = new BattlePartyViewEvent(CommandType.RightAttribute);
-                _commandData(eventData);
+                CallEvent(CommandType.RightAttribute);
             });
         }
         
@@ -343,7 +289,7 @@ namespace Ryneus
             {
                 SetHelpInputInfo("BATTLE_PARTY");
             }
-
+/*
             if (GameSystem.ConfigData.InputType)
             {
                 if (_isEditMode)
@@ -364,6 +310,7 @@ namespace Ryneus
                     tacticsMemberList.Deactivate();
                 }
             }
+            */
         }
     }
 }
@@ -373,7 +320,6 @@ namespace BattleParty
     public enum CommandType
     {
         None = 0,
-        Back,
         CallCommandList,
         CommandEndEdit,
         SelectSideMenu,
@@ -387,16 +333,5 @@ namespace BattleParty
         BattleReplay,
         CommandHelp,
         ChangeLineIndex,
-    }
-}
-
-public class BattlePartyViewEvent
-{
-    public CommandType commandType;
-    public object template;
-
-    public BattlePartyViewEvent(CommandType type)
-    {
-        commandType = type;
     }
 }

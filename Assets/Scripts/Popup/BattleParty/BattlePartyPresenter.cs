@@ -5,6 +5,7 @@ using BattleParty;
 
 namespace Ryneus
 {
+    using BattleParty;
     public class BattlePartyPresenter :BasePresenter
     {
         BattlePartyModel _model = null;
@@ -25,13 +26,12 @@ namespace Ryneus
         {
             _view.SetEvent((type) => UpdateCommand(type));
             CommandRefresh();
-            var enemyInfos = _model.EnemyInfos();
-            _view.SetEnemyMembers(MakeListData(enemyInfos));
-            _view.SetAttributeList(MakeListData(_model.AttributeTabList()));
-            _view.SetStatusButtonEvent(() => CommandStatusInfo());
+            //_view.SetEnemyMembers(MakeListData(_model.EnemyInfos()));
+            //_view.SetAttributeList(MakeListData(_model.AttributeTabList()));
+            //_view.SetStatusButtonEvent(() => CommandStatusInfo());
             _view.SetTacticsMembers(MakeListData(_model.BattlePartyMembers()));
             _view.SetCommandList(MakeListData(_model.BattlePartyCommand()));
-            _view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
+            //_view.SetBattleReplayEnable(_model.IsEnableBattleReplay());
             _view.OpenAnimation();
             _busy = false;
             CheckTutorialState();
@@ -39,6 +39,8 @@ namespace Ryneus
 
         private void CheckTutorialState(CommandType commandType = CommandType.None)
         {
+            return;
+            /*
             if (commandType == CommandType.SelectTacticsMember)
             {
                 return;
@@ -85,16 +87,17 @@ namespace Ryneus
                 }
             };
             _view.CommandCheckTutorialState(tutorialViewInfo);
+            */
         }
 
-        private void UpdateCommand(BattlePartyViewEvent viewEvent)
+        private void UpdateCommand(ViewEvent viewEvent)
         {
             if (_busy || _view.AnimationBusy)
             {
                 return;
             }
-            LogOutput.Log(viewEvent.commandType);
-            switch (viewEvent.commandType)
+            LogOutput.Log(viewEvent.ViewCommandType.CommandType);
+            switch (viewEvent.ViewCommandType.CommandType)
             {
                 case CommandType.CallCommandList:
                     CommandCallCommandList((SystemData.CommandData)viewEvent.template);
@@ -136,7 +139,7 @@ namespace Ryneus
                     CommandChangeLineIndex((ActorInfo)viewEvent.template);
                     break;
             }
-            CheckTutorialState(viewEvent.commandType);
+            CheckTutorialState((CommandType)viewEvent.ViewCommandType.CommandType);
         }
 
         private void UpdateStatusCommand(ViewEvent statusViewEvent)
@@ -372,7 +375,7 @@ namespace Ryneus
             var battleSceneInfo = new BattleSceneInfo
             {
                 ActorInfos = _model.BattleMembers(),
-                EnemyInfos = null//_model.CurrentTroopInfo().BattlerInfos
+                EnemyInfos = _model.EnemyInfos()
             };
             _view.CommandSceneChange(Scene.Battle,battleSceneInfo);
         }
@@ -477,7 +480,7 @@ namespace Ryneus
         private void CommandRefresh()
         {
             ShowCharacterDetail();
-            _view.SetBattleMembers(MakeListData(_model.BattleMembers()));
+            //_view.SetBattleMembers(MakeListData(_model.BattleMembers()));
             _view.SetNuminous(_model.Currency);
             _view.CommandRefresh();
             //CheckTutorialState();

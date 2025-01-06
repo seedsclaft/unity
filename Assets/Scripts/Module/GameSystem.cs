@@ -47,7 +47,7 @@ namespace Ryneus
         public static string Version;
         public static DebugBattleData DebugBattleData;
 
-        private static SceneStackManager _sceneStackManager = new SceneStackManager();
+        private static SceneStackManager _sceneStackManager = new ();
         public static SceneStackManager SceneStackManager => _sceneStackManager;
 
 
@@ -303,6 +303,7 @@ namespace Ryneus
 
         private void CommandPopupView(PopupInfo popupInfo)
         {
+            _sceneStackManager.PushPopupInfo(popupInfo);
             var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
             var baseView = prefab.GetComponent<BaseView>();
             baseView.SetEvent((type) => UpdateCommand(type));
