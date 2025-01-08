@@ -82,66 +82,8 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 1031
       TroopId: 1031
-      EnemyId: 4
-      Lv: 3
-      BossFlag: 0
-      Line: 0
-      StageLv: 0
-    StageTurn: 0
-  - TroopId: 1032
-    TroopEnemies:
-    - Id: 1032
-      TroopId: 1032
-      EnemyId: 14
-      Lv: 5
-      BossFlag: 1
-      Line: 0
-      StageLv: 0
-    - Id: 1032
-      TroopId: 1032
-      EnemyId: 14
-      Lv: 5
-      BossFlag: 0
-      Line: 0
-      StageLv: 0
-    - Id: 1032
-      TroopId: 1032
-      EnemyId: 14
-      Lv: 5
-      BossFlag: 0
-      Line: 0
-      StageLv: 0
-    StageTurn: 0
-  - TroopId: 1041
-    TroopEnemies:
-    - Id: 1041
-      TroopId: 1041
-      EnemyId: 3
-      Lv: 3
-      BossFlag: 1
-      Line: 0
-      StageLv: 0
-    - Id: 1041
-      TroopId: 1041
-      EnemyId: 3
-      Lv: 3
-      BossFlag: 0
-      Line: 0
-      StageLv: 0
-    StageTurn: 0
-  - TroopId: 1042
-    TroopEnemies:
-    - Id: 1042
-      TroopId: 1042
-      EnemyId: 7
-      Lv: 3
-      BossFlag: 1
-      Line: 0
-      StageLv: 0
-    - Id: 1042
-      TroopId: 1042
-      EnemyId: 7
-      Lv: 3
+      EnemyId: 1
+      Lv: 2
       BossFlag: 0
       Line: 0
       StageLv: 0
@@ -150,32 +92,35 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 1051
       TroopId: 1051
-      EnemyId: 14
-      Lv: 3
-      BossFlag: 1
-      Line: 0
-      StageLv: 0
-    - Id: 1051
-      TroopId: 1051
-      EnemyId: 14
+      EnemyId: 1
       Lv: 3
       BossFlag: 0
       Line: 0
       StageLv: 0
     StageTurn: 0
-  - TroopId: 1052
+  - TroopId: 1061
     TroopEnemies:
-    - Id: 1052
-      TroopId: 1052
-      EnemyId: 2
-      Lv: 3
+    - Id: 1061
+      TroopId: 1061
+      EnemyId: 1
+      Lv: 4
       BossFlag: 1
       Line: 0
       StageLv: 0
-    - Id: 1052
-      TroopId: 1052
-      EnemyId: 2
-      Lv: 3
+    StageTurn: 0
+  - TroopId: 1062
+    TroopEnemies:
+    - Id: 1062
+      TroopId: 1062
+      EnemyId: 1
+      Lv: 4
+      BossFlag: 1
+      Line: 0
+      StageLv: 0
+    - Id: 1062
+      TroopId: 1062
+      EnemyId: 1
+      Lv: 4
       BossFlag: 0
       Line: 0
       StageLv: 0
@@ -187,20 +132,6 @@ MonoBehaviour:
       EnemyId: 101
       Lv: 10
       BossFlag: 1
-      Line: 0
-      StageLv: 0
-    - Id: 1101
-      TroopId: 1101
-      EnemyId: 3
-      Lv: 7
-      BossFlag: 0
-      Line: 0
-      StageLv: 0
-    - Id: 1101
-      TroopId: 1101
-      EnemyId: 7
-      Lv: 7
-      BossFlag: 0
       Line: 0
       StageLv: 0
     StageTurn: 0

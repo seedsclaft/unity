@@ -212,6 +212,12 @@ namespace Ryneus
                             case 231: // ピクチャの表示
                                 csvCol.Add("Bg");
                                 csvCol.Add(l.parameters[1]);
+                                csvCol.Add("");
+                                csvCol.Add("Picture" + l.parameters[0]);
+                                break;
+                            case 235: // ピクチャの消去
+                                csvCol.Add("LayerOff");
+                                csvCol.Add("Picture" + l.parameters[0]);
                                 break;
                             case 241: // BGM再生 (ファイル指定・音量不可)
                                 if (l.soundDate.name != "")

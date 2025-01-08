@@ -8,7 +8,8 @@ using NPOI.SS.UserModel;
 namespace Ryneus
 {
     public class StageSymbolImporter : AssetPostprocessor 
-	{	
+	{
+		/*
 		static readonly string ExcelName = "StageSymbol.xlsx";
 		static readonly string BaseName = "Stages.xlsx";
 
@@ -92,5 +93,6 @@ namespace Ryneus
 
 			EditorUtility.SetDirty(Data);
 		}
+		*/
 	}
 }

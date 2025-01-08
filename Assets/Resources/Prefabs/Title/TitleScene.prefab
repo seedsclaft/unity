@@ -102,7 +102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d9b797a973b4da438a0aca457e852a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6386f0c3353f1dd43a9f66fe46661f05, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -855,11 +855,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 0
   reverse: 0
   warpMode: 1
-  scrollRect: {fileID: 4300600339871165207}
-  itemPrefabMode: 1
   itemPrefab: {fileID: 7183881970838763884, guid: efa9b6f305902ba42beb6c8ac44cc40f,
     type: 3}
   _helpWindow: {fileID: 0}

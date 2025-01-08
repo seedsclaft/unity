@@ -58,7 +58,7 @@ namespace Ryneus
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
 					ISheet EventSheet = Book.GetSheetAt(1);
-					//ISheet SymbolSheet = Book.GetSheetAt(2);
+					ISheet SymbolSheet = Book.GetSheetAt(2);
 					ISheet TutorialSheet = Book.GetSheetAt(4);
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
@@ -111,7 +111,6 @@ namespace Ryneus
 							}
 						}
 						StageData.StageSymbols = new ();
-						/*
 						KeyRow = SymbolSheet.GetRow(0);
 						AssetPostImporter.SetKeyNames(KeyRow.Cells);
 						for (int j = 1; j <= SymbolSheet.LastRowNum; j++)
@@ -135,7 +134,6 @@ namespace Ryneus
 								StageData.StageSymbols.Add(SymbolData);
 							}
 						}
-						*/
 
 						Data.Data.Add(StageData);
 					}

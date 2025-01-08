@@ -1238,11 +1238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf409b824ca9622468dd57c00bf805ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 0
   reverse: 0
   warpMode: 0
-  scrollRect: {fileID: 1070853775615199575}
-  itemPrefabMode: 0
   itemPrefab: {fileID: 6145794166525957040, guid: ca4965df58f92f54a810c5e6f49b6098,
     type: 3}
   _helpWindow: {fileID: 0}
@@ -1380,7 +1377,7 @@ GameObject:
   - component: {fileID: 2071798791324828014}
   - component: {fileID: 3788924453171592359}
   m_Layer: 5
-  m_Name: Evaluate
+  m_Name: Selected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1993,21 +1990,20 @@ MonoBehaviour:
   enemyImage: {fileID: 953634831236750767}
   symbolSprites:
   - {fileID: 0}
-  - {fileID: 21300000, guid: c49523e870457a54ea5adf9d46e5a29a, type: 3}
-  - {fileID: 21300000, guid: c49523e870457a54ea5adf9d46e5a29a, type: 3}
-  - {fileID: 21300000, guid: 0c21753f9fdd1b747a83d25a864a0136, type: 3}
-  - {fileID: 21300000, guid: 7cdeed1c02ff6044aaa332d9236e233e, type: 3}
-  - {fileID: 21300000, guid: 5de57bc2ec9a30d4f998aa4c7b30cfe4, type: 3}
-  - {fileID: 21300000, guid: 1c2957cfbaab17d4a95b2c3d9e94ff3e, type: 3}
-  - {fileID: 21300000, guid: 7cdeed1c02ff6044aaa332d9236e233e, type: 3}
-  - {fileID: 21300000, guid: 7cdeed1c02ff6044aaa332d9236e233e, type: 3}
-  - {fileID: 21300000, guid: f79f11dd6f580eb41b1526c984d88cf0, type: 3}
-  - {fileID: 21300000, guid: f79f11dd6f580eb41b1526c984d88cf0, type: 3}
+  - {fileID: 21300000, guid: 8faa9b85b50c8024186158f0e660c1b1, type: 3}
+  - {fileID: 21300000, guid: 8faa9b85b50c8024186158f0e660c1b1, type: 3}
+  - {fileID: 21300000, guid: 8841b20b44163384286632d7c5686063, type: 3}
+  - {fileID: 21300000, guid: ebe2d9580b62a6146a07f2903a21e401, type: 3}
+  - {fileID: 21300000, guid: c1e8a67f28220254fb12dea191a50ae0, type: 3}
+  - {fileID: 21300000, guid: 5fceb93137214cb42ab1b686e14d0a75, type: 3}
+  - {fileID: 21300000, guid: bc27428750bb8394bb1aff65f5a9f48e, type: 3}
+  - {fileID: 21300000, guid: 84689cfdaca5a1b48bef024360ab7a91, type: 3}
+  - {fileID: 21300000, guid: 0af7373749ea1724c9edd76a089aabb9, type: 3}
+  - {fileID: 21300000, guid: 495ba121694224146939d785f45d48e9, type: 3}
   evaluateRoot: {fileID: 1321871947288428694}
   evaluate: {fileID: 3288762194821435160}
   selected: {fileID: 7258576063280862980}
   lastSelected: {fileID: 0}
-  selectCursor: {fileID: 0}
   getItemList: {fileID: 2051000966984268405}
 --- !u!225 &7521636968366711945
 CanvasGroup:
