@@ -117,6 +117,28 @@ namespace Ryneus
         private List<SkillTriggerInfo> _skillTriggerInfos = new ();
         public List<SkillTriggerInfo> SkillTriggerInfos => _skillTriggerInfos;
 
+        private List<int> _passiveSkillIds = new ();
+        public List<int> PassiveSkillIds => _passiveSkillIds;
+        public bool CheckPassiveSkillId(int skillId)
+        {
+            return _passiveActiveSkillIds.Contains(skillId);
+        }
+        public void AddPassiveSkillId(int skillId)
+        {
+            if (_passiveSkillIds.Contains(skillId))
+            {
+                return;
+            }
+            _passiveSkillIds.Add(skillId);
+        }
+        public void RemovePassiveSkillId(int skillId)
+        {
+            if (_passiveSkillIds.Contains(skillId))
+            {
+                _passiveSkillIds.Remove(skillId);
+            }
+        }
+
         public BattlerInfo(ActorInfo actorInfo,int index)
         {
             _skillTriggerInfos = actorInfo.SkillTriggerInfos;
@@ -328,6 +350,7 @@ namespace Ryneus
             _damagedValue = 0;
             _turnCount = 0;
             ResetAp(true);
+            _passiveSkillIds = new ();
         }
 
         private void AddKindPassive()

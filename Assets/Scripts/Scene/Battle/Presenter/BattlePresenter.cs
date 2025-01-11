@@ -324,7 +324,7 @@ namespace Ryneus
             _view.ClearDamagePopup();
             if (animationType == AnimationType.All)
             {
-                _view.StartAnimationAll(animation);
+                _view.StartAnimationAll(animation,animationData.Position,animationData.Scale,animationData.Speed);
             } else
             {
                 foreach (var targetIndex in targetIndexList)

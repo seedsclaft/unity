@@ -305,6 +305,7 @@ namespace Ryneus
                 switch (symbolInfo.Master.SymbolType)
                 {
                     case SymbolType.Battle:
+                    case SymbolType.Boss:
                         CommandCheckBattleStart();
                         return;
                     case SymbolType.Alcana:
@@ -334,6 +335,9 @@ namespace Ryneus
                     case SymbolType.Resource:
                         CommandAfterGetItem(symbolInfo);
                         return;
+                    case SymbolType.Event:
+                        CommandEvent(symbolInfo);
+                        return;
                 }
             }
         }
@@ -342,6 +346,19 @@ namespace Ryneus
         {
             _model.EndSymbolInfo(symbolInfo);
             CommandNextSeek();
+        }
+
+        private void CommandEvent(SymbolInfo symbolInfo)
+        {
+            var advInfo = new AdvCallInfo();
+            advInfo.SetLabel(_model.GetAdvFile(symbolInfo.Master.Param1));
+            _view.gameObject.SetActive(false);
+            advInfo.SetCallEvent(() => 
+            {                
+                _view.gameObject.SetActive(true);
+                CommandAfterGetItem(symbolInfo);
+            });
+            _view.CommandCallAdv(advInfo);
         }
 
         private void CommandOnCancelSymbol()

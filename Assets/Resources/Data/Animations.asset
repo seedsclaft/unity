@@ -19,469 +19,812 @@ MonoBehaviour:
     Position: 0
     Scale: 1
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 11
     AnimationPath: tktk01/Magic2
     MakerEffect: 0
     Position: 0
     Scale: 0.5
     Speed: 2
-    DamageTiming: 42
-  - Id: 21
-    AnimationPath: NA_Effekseer/NA_healing_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 0.5
-    Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 31
     AnimationPath: NA_Effekseer/NA_shooting_002
     MakerEffect: 0
     Position: 0
     Scale: 1
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 51
     AnimationPath: NA_Effekseer/NA_aura_001
     MakerEffect: 0
     Position: 0
     Scale: 0.5
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 61
     AnimationPath: NA_Effekseer/NA_aura_002
     MakerEffect: 0
     Position: 0
     Scale: 0.5
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 62
     AnimationPath: tktk01/Fire2
     MakerEffect: 0
     Position: 0
     Scale: 1
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 63
     AnimationPath: NA_Effekseer/NA_Fire_001
     MakerEffect: 0
     Position: 0
     Scale: 1
     Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 101
     AnimationPath: FireOne1
     MakerEffect: 0
     Position: 0
     Scale: 0.35
-    Speed: 1
-    DamageTiming: 42
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 102
-    AnimationPath: NA_Effekseer/NA_Fire_001
+    AnimationPath: FireOne2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 103
-    AnimationPath: NA_Effekseer/NA_aura_003_c1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 104
-    AnimationPath: NA_Effekseer/NA_sword_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 111
-    AnimationPath: NA_Effekseer/NA_magic_006_c1
+    AnimationPath: FireAll1
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 112
-    AnimationPath: NA_Effekseer/NA_magic_004_c1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 113
-    AnimationPath: NA_Effekseer/NA_magic_006_c1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 114
-    AnimationPath: NA_Effekseer/NA_magic_004_c1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 121
     AnimationPath: FireAll2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 113
+    AnimationPath: FireAll3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 201
-    AnimationPath: NA_Effekseer/NA_shooting_002
+    AnimationPath: ThunderOne1
     MakerEffect: 0
     Position: 0
     Scale: 0.35
     Speed: 1.4
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 202
-    AnimationPath: NA_Effekseer/NA_net_001
+    AnimationPath: ThunderOne2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 203
-    AnimationPath: NA_Effekseer/NA_status_005
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 204
-    AnimationPath: NA_Effekseer/NA_magic_003
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 205
-    AnimationPath: NA_Effekseer/NA_exchange_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 211
-    AnimationPath: tktk01/Blow10
+    AnimationPath: ThunderAll1
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 212
-    AnimationPath: NA_Effekseer/NA_net_002
+    AnimationPath: ThunderAll2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 213
-    AnimationPath: EffekseerVol_3/NA_v3_3d_element shot_electric
+    AnimationPath: ThunderAll3
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 214
-    AnimationPath: NA_Effekseer/NA_aura_003
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 221
-    AnimationPath: NA_Effekseer/NA_magic_006_c5
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 222
-    AnimationPath: NA_Effekseer_Vol_2/NA_v2_2.5d_jump move_normal
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 301
     AnimationPath: IceOne1
     MakerEffect: 0
     Position: 0
     Scale: 0.25
     Speed: 1.5
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 302
-    AnimationPath: tktk02/Light1
+    AnimationPath: IceOne2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 303
-    AnimationPath: tktk02/Gun2
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 304
-    AnimationPath: NA_Effekseer/NA_wave_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 305
-    AnimationPath: NA_Effekseer/NA_magic_006
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 311
-    AnimationPath: NA_Effekseer/NA_barrier_001
+    AnimationPath: IceAll1
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 312
-    AnimationPath: NA_Effekseer/NA_magic_008_c3
+    AnimationPath: IceAll2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 313
-    AnimationPath: EffekseerVol_3/NA_v3_3d_fairy light_1
+    AnimationPath: IceAll3
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 314
-    AnimationPath: EffekseerVol_3/NA_v3_2.5d_fog_2
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 321
-    AnimationPath: NA_Effekseer/NA_magic_006_c2
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 322
-    AnimationPath: EffekseerVol_3/NA_v3_3d_residue_water
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 401
-    AnimationPath: NA_Effekseer/NA_magic_006
+    AnimationPath: LightOne1
     MakerEffect: 0
     Position: 0
     Scale: 0.35
     Speed: 1.5
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 402
-    AnimationPath: tktk01/Sword7
+    AnimationPath: LightOne2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 403
-    AnimationPath: NA_Effekseer/NA_healing_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 404
-    AnimationPath: tktk01/Light2
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 405
-    AnimationPath: tktk02/Light3
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 411
-    AnimationPath: tktk01/Cure2
+    AnimationPath: LightAll1
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 412
-    AnimationPath: NA_Effekseer/NA_aura_005
+    AnimationPath: LightAll2
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 413
-    AnimationPath: EffekseerVol_3/NA_v3_2.5d_crash_1
+    AnimationPath: LightAll3
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 414
-    AnimationPath: EffekseerVol_3/NA_v3_2.5d_shining_5
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 421
-    AnimationPath: tktk01/Cure1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 422
-    AnimationPath: NA_Effekseer/NA_magic_006_c7
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 501
-    AnimationPath: tktk02/Dark1
+    AnimationPath: DarknessOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.25
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 502
+    AnimationPath: DarknessOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 511
+    AnimationPath: DarknessAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 512
+    AnimationPath: DarknessAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 513
+    AnimationPath: DarknessAll3
+    MakerEffect: 1
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 601
+    AnimationPath: NeutralOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 602
+    AnimationPath: NeutralOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 611
+    AnimationPath: NeutralAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 612
+    AnimationPath: NeutralAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 613
+    AnimationPath: NeutralAll3
+    MakerEffect: 1
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 701
+    AnimationPath: HealOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 702
+    AnimationPath: HealOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 711
+    AnimationPath: HealAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 712
+    AnimationPath: HealAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 721
+    AnimationPath: CureOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 722
+    AnimationPath: CureOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 731
+    AnimationPath: CureAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 732
+    AnimationPath: CureAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 741
+    AnimationPath: Revive1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 742
+    AnimationPath: Revive2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 801
+    AnimationPath: Powerup1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 802
+    AnimationPath: Powerup2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 803
+    AnimationPath: Powerup3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 811
+    AnimationPath: Powerdown1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 812
+    AnimationPath: Powerdown2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 813
+    AnimationPath: Powerdown3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 901
+    AnimationPath: Bind
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 902
+    AnimationPath: Absorb
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 903
+    AnimationPath: Poison
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 904
+    AnimationPath: Blind
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 905
+    AnimationPath: Silence
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 906
+    AnimationPath: Sleep
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 907
+    AnimationPath: Confusion
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 908
+    AnimationPath: Paralyze
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 909
+    AnimationPath: Death
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1001
+    AnimationPath: HitPhysical
     MakerEffect: 0
     Position: 0
     Scale: 0.35
     Speed: 1.2
-    DamageTiming: 42
-  - Id: 502
-    AnimationPath: NA_Effekseer/NA_wave_003
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 503
-    AnimationPath: tktk01/Dark3
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 504
-    AnimationPath: NA_Effekseer/NA_magic_002
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 505
-    AnimationPath: NA_Effekseer/NA_curse_001
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 511
-    AnimationPath: NA_Effekseer/NA_smoke_003_c7
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 512
-    AnimationPath: NA_Effekseer/NA_magic_009
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 513
-    AnimationPath: MakerEffect/Death
-    MakerEffect: 1
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 514
-    AnimationPath: MakerEffect/Darkness1
-    MakerEffect: 1
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 521
-    AnimationPath: NA_Effekseer/NA_magic_006_c8
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 522
-    AnimationPath: NA_Effekseer/NA_smoke_004
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 601
-    AnimationPath: NA_Effekseer/NA_magic_009
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
-  - Id: 1001
-    AnimationPath: NA_Effekseer/NA_cut-in_002_1
-    MakerEffect: 0
-    Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    DamageTiming: 60
   - Id: 1002
-    AnimationPath: NA_Effekseer/NA_cut-in_002_2
+    AnimationPath: HitEffect
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 1003
-    AnimationPath: NA_Effekseer/NA_cut-in_002_3
+    AnimationPath: HitFire
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 1004
-    AnimationPath: NA_Effekseer/NA_cut-in_002_4
+    AnimationPath: HitIce
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 1005
-    AnimationPath: NA_Effekseer/NA_cut-in_002_5
+    AnimationPath: HitThunder
     MakerEffect: 0
     Position: 0
-    Scale: 1
-    Speed: 1
-    DamageTiming: 42
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1011
+    AnimationPath: SlashPhysical
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1012
+    AnimationPath: SlashEffect
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1013
+    AnimationPath: SlashFire
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1014
+    AnimationPath: SlashIce
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1015
+    AnimationPath: SlashThunder
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1021
+    AnimationPath: PiercePhysical
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1022
+    AnimationPath: PierceEffect
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1023
+    AnimationPath: PierceFire
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1024
+    AnimationPath: PierceIce
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1025
+    AnimationPath: PierceThunder
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1031
+    AnimationPath: ClawPhysical
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1032
+    AnimationPath: ClawEffect
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1033
+    AnimationPath: ClawFire
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1034
+    AnimationPath: ClawIce
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1035
+    AnimationPath: ClawThunder
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1041
+    AnimationPath: HitSpecial1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1042
+    AnimationPath: HitSpecial2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1051
+    AnimationPath: SlashSpecial1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1052
+    AnimationPath: SlashSpecial2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1061
+    AnimationPath: PierceSpecial1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1062
+    AnimationPath: PierceSpecial2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1071
+    AnimationPath: ClawSpecial
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1081
+    AnimationPath: ArrowSpecial
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1091
+    AnimationPath: GeneralSpecial1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1092
+    AnimationPath: GeneralSpecial2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.35
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1101
+    AnimationPath: Breath
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1102
+    AnimationPath: Pollen
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1103
+    AnimationPath: SonicWave
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1104
+    AnimationPath: Fog
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1105
+    AnimationPath: Song
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1106
+    AnimationPath: Shout
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1107
+    AnimationPath: Sweep
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1108
+    AnimationPath: Bodyslam
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1109
+    AnimationPath: Flash
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1201
+    AnimationPath: WaterOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1202
+    AnimationPath: WaterOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1211
+    AnimationPath: WaterAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1212
+    AnimationPath: WaterAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1213
+    AnimationPath: WaterAll3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1301
+    AnimationPath: EarthOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1302
+    AnimationPath: EarthOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1311
+    AnimationPath: EarthAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1312
+    AnimationPath: EarthAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1313
+    AnimationPath: EarthAll3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1401
+    AnimationPath: WindOne1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1402
+    AnimationPath: WindOne2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1411
+    AnimationPath: WindAll1
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1412
+    AnimationPath: WindAll2
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
+  - Id: 1413
+    AnimationPath: WindAll3
+    MakerEffect: 0
+    Position: 0
+    Scale: 0.5
+    Speed: 1.2
+    DamageTiming: 60
   - Id: 2001
     AnimationPath: NA_Effekseer_Vol_2/NA_v2_3d_Magic Circle_normal
     MakerEffect: 0

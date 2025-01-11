@@ -222,7 +222,7 @@ MonoBehaviour:
   - Id: 1010
     Name: "\u30D5\u30A1\u30A4\u30A2\u30DC\u30FC\u30EB"
     IconIndex: 1
-    AnimationId: 101
+    AnimationId: 1023
     AnimationType: 1
     CountTurn: 0
     Rank: 1
@@ -247,8 +247,8 @@ MonoBehaviour:
   - Id: 1020
     Name: "\u30D0\u30FC\u30F3\u30B9\u30C8\u30FC\u30E0"
     IconIndex: 1
-    AnimationId: 101
-    AnimationType: 2
+    AnimationId: 111
+    AnimationType: 3
     CountTurn: 3
     Rank: 2
     Attribute: 1
@@ -272,7 +272,7 @@ MonoBehaviour:
   - Id: 1030
     Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -297,7 +297,7 @@ MonoBehaviour:
   - Id: 1040
     Name: "\u30BD\u30FC\u30C9\u30A2\u30C0\u30D7\u30C8"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -398,7 +398,7 @@ MonoBehaviour:
   - Id: 1080
     Name: "\u30EC\u30A4\u30B8\u30F3\u30B0\u30D0\u30A6\u30F3\u30B5\u30FC"
     IconIndex: 1
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -454,7 +454,7 @@ MonoBehaviour:
   - Id: 2020
     Name: "\u30A4\u30D9\u30A4\u30C9\u30B3\u30FC\u30C9"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 2
@@ -510,7 +510,7 @@ MonoBehaviour:
   - Id: 2040
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3"
     IconIndex: 1
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -609,7 +609,7 @@ MonoBehaviour:
   - Id: 2061
     Name: "\u30A2\u30FC\u30C6\u30CB\u30FC\u30B9\u30C8\u30E9\u30A4\u30AF"
     IconIndex: 1
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 2
@@ -634,7 +634,7 @@ MonoBehaviour:
   - Id: 2070
     Name: "\u30B3\u30F3\u30BB\u30F3\u30C8\u30EC\u30A4\u30C8"
     IconIndex: 3
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 1
     Rank: 2
@@ -752,7 +752,7 @@ MonoBehaviour:
   - Id: 3030
     Name: "\u30E9\u30A4\u30F3\u30D7\u30ED\u30C6\u30AF\u30C8"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 4
     Rank: 2
@@ -777,7 +777,7 @@ MonoBehaviour:
   - Id: 3040
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB"
     IconIndex: 3
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -858,7 +858,7 @@ MonoBehaviour:
   - Id: 3070
     Name: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -883,7 +883,7 @@ MonoBehaviour:
   - Id: 3080
     Name: "\u30D5\u30ED\u30B9\u30C8\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 5
     Rank: 2
@@ -908,7 +908,7 @@ MonoBehaviour:
   - Id: 3110
     Name: "\u30D5\u30EA\u30FC\u30BA\u30E9\u30F3\u30B5\u30FC"
     IconIndex: 1
-    AnimationId: 301
+    AnimationId: 1014
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -933,7 +933,7 @@ MonoBehaviour:
   - Id: 3120
     Name: "\u30A6\u30A9\u30FC\u30BF\u30FC\u30D2\u30FC\u30EB"
     IconIndex: 1
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   - Id: 4030
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   - Id: 4050
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   - Id: 4060
     Name: "\u30DB\u30FC\u30EA\u30FC\u30B0\u30EC\u30A4\u30B9"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 7
     Rank: 2
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   - Id: 4070
     Name: "\u30AD\u30E5\u30A2\u30A8\u30FC\u30EB"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 4
     Rank: 2
@@ -1176,7 +1176,7 @@ MonoBehaviour:
   - Id: 4080
     Name: "\u30E9\u30A4\u30F3\u30D0\u30EA\u30A2"
     IconIndex: 2
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 4
     Rank: 2
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   - Id: 5060
     Name: "\u30C0\u30FC\u30AF\u30CD\u30B9"
     IconIndex: 3
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 3
     Rank: 2
@@ -1363,7 +1363,7 @@ MonoBehaviour:
   - Id: 5070
     Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9"
     IconIndex: 5
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 2
     Rank: 2
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   - Id: 10010
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   - Id: 10020
     Name: "\u30A8\u30A2\u30EA\u30A2\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1481,7 +1481,7 @@ MonoBehaviour:
   - Id: 10030
     Name: "\u60AA\u9B54"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1512,7 +1512,7 @@ MonoBehaviour:
   - Id: 10040
     Name: "\u30AF\u30EA\u30FC\u30C1\u30E3\u30FC"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   - Id: 10050
     Name: "\u91CE\u751F\u306E\u8A18\u61B6"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1574,7 +1574,7 @@ MonoBehaviour:
   - Id: 10060
     Name: "\u5909\u7570\u751F\u7269"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   - Id: 11010
     Name: "\u30A6\u30EB\u30D5\u30BD\u30A6\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   - Id: 11020
     Name: "\u30D7\u30EA\u30C7\u30A3\u30AB\u30E1\u30F3\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   - Id: 11030
     Name: "\u30A2\u30B5\u30EB\u30C8\u30B7\u30D5\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1704,7 +1704,7 @@ MonoBehaviour:
   - Id: 11040
     Name: "\u30A2\u30AF\u30C6\u30A3\u30D6\u30AE\u30D5\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 4
     Rank: 10
@@ -1735,7 +1735,7 @@ MonoBehaviour:
   - Id: 11050
     Name: "\u30A4\u30B0\u30CA\u30A4\u30C6\u30C3\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1772,7 +1772,7 @@ MonoBehaviour:
   - Id: 11060
     Name: "\u30E9\u30A4\u30B8\u30F3\u30B0\u30D5\u30A1\u30A4\u30A2"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -1803,7 +1803,7 @@ MonoBehaviour:
   - Id: 11070
     Name: "\u30EB\u30FC\u30B8\u30E5\u30D0\u30C3\u30AF"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -1834,7 +1834,7 @@ MonoBehaviour:
   - Id: 11080
     Name: "\u30D1\u30EF\u30FC\u30A8\u30FC\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -1865,7 +1865,7 @@ MonoBehaviour:
   - Id: 11090
     Name: "\u30B9\u30EC\u30A4\u30D7\u30CB\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -1896,7 +1896,7 @@ MonoBehaviour:
   - Id: 12010
     Name: "\u30A8\u30AF\u30B9\u30C6\u30F3\u30B7\u30E7\u30F3"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1927,7 +1927,7 @@ MonoBehaviour:
   - Id: 12020
     Name: "\u30D8\u30D6\u30F3\u30EA\u30FC\u30E9\u30C3\u30AF"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1958,7 +1958,7 @@ MonoBehaviour:
   - Id: 12030
     Name: "\u30B9\u30A6\u30A3\u30D5\u30C8\u30AB\u30EC\u30F3\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -1989,7 +1989,7 @@ MonoBehaviour:
   - Id: 12040
     Name: "\u30A4\u30F4\u30A7\u30A4\u30C9\u30AA\u30FC\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2020,7 +2020,7 @@ MonoBehaviour:
   - Id: 12050
     Name: "\u30AF\u30A4\u30C3\u30AF\u30E0\u30FC\u30D6"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2082,7 +2082,7 @@ MonoBehaviour:
   - Id: 12070
     Name: "\u30BD\u30FC\u30B5\u30EA\u30FC\u30B3\u30CD\u30AF\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -2119,7 +2119,7 @@ MonoBehaviour:
   - Id: 12071
     Name: "\u30BD\u30FC\u30B5\u30EA\u30FC\u30B3\u30CD\u30AF\u30C8"
     IconIndex: 6
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -2175,7 +2175,7 @@ MonoBehaviour:
   - Id: 12090
     Name: "\u30A2\u30A6\u30C8\u30AA\u30D6\u30AA\u30FC\u30C0\u30FC"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -2206,7 +2206,7 @@ MonoBehaviour:
   - Id: 13010
     Name: "\u30A2\u30FC\u30DE\u30FC\u30B3\u30FC\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2237,7 +2237,7 @@ MonoBehaviour:
   - Id: 13020
     Name: "\u30AF\u30A4\u30C3\u30AF\u30D0\u30EA\u30A2"
     IconIndex: 6
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 3
     Rank: 10
@@ -2268,7 +2268,7 @@ MonoBehaviour:
   - Id: 13030
     Name: "\u30AF\u30A4\u30C3\u30AF\u30AD\u30E5\u30A2"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 2
     Rank: 10
@@ -2299,7 +2299,7 @@ MonoBehaviour:
   - Id: 13040
     Name: "\u30BB\u30EB\u30D5\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 10
@@ -2330,7 +2330,7 @@ MonoBehaviour:
   - Id: 13050
     Name: "\u30D1\u30C3\u30B7\u30D6\u30B8\u30E3\u30DF\u30F3\u30B0"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 5
     Rank: 10
@@ -2367,7 +2367,7 @@ MonoBehaviour:
   - Id: 13060
     Name: "\u30B5\u30D7\u30E9\u30A4\u30AB\u30D0\u30FC"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 2
     Rank: 20
@@ -2398,7 +2398,7 @@ MonoBehaviour:
   - Id: 13070
     Name: "\u30A2\u30B7\u30C3\u30C9\u30E9\u30C3\u30B7\u30E5"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -2429,7 +2429,7 @@ MonoBehaviour:
   - Id: 13080
     Name: "\u30E9\u30A4\u30D5\u30B9\u30C6\u30A3\u30FC\u30EB"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -2460,7 +2460,7 @@ MonoBehaviour:
   - Id: 13090
     Name: "\u30A2\u30A4\u30B9\u30BB\u30A4\u30D0\u30FC"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -2491,7 +2491,7 @@ MonoBehaviour:
   - Id: 14010
     Name: "\u30C7\u30A3\u30D0\u30A4\u30F3\u30B7\u30FC\u30EB\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2522,7 +2522,7 @@ MonoBehaviour:
   - Id: 14020
     Name: "\u30E9\u30A4\u30D5\u30C7\u30A3\u30D0\u30A4\u30C9"
     IconIndex: 6
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 3
     Rank: 10
@@ -2565,7 +2565,7 @@ MonoBehaviour:
   - Id: 14030
     Name: "\u30A8\u30A4\u30DF\u30F3\u30B0\u30B9\u30B3\u30FC\u30D7"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2596,7 +2596,7 @@ MonoBehaviour:
   - Id: 14040
     Name: "\u30EA\u30B8\u30A7\u30CD\u30EC\u30FC\u30B7\u30E7\u30F3"
     IconIndex: 6
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2627,7 +2627,7 @@ MonoBehaviour:
   - Id: 14050
     Name: "\u30DB\u30FC\u30D7\u30D5\u30EB\u30A2\u30A4\u30EA\u30B9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2658,7 +2658,7 @@ MonoBehaviour:
   - Id: 14060
     Name: "\u30D1\u30C3\u30B7\u30D6\u30B5\u30D7\u30E9\u30A4"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -2701,7 +2701,7 @@ MonoBehaviour:
   - Id: 14070
     Name: "\u30DB\u30FC\u30DF\u30F3\u30B0\u30AF\u30EB\u30BB\u30A4\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -2732,7 +2732,7 @@ MonoBehaviour:
   - Id: 14080
     Name: "\u30AF\u30A4\u30C3\u30AF\u30D2\u30FC\u30EB"
     IconIndex: 6
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 2
     Rank: 20
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   - Id: 14090
     Name: "\u30EA\u30EC\u30A4\u30BA"
     IconIndex: 6
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 5
     Rank: 20
@@ -2800,7 +2800,7 @@ MonoBehaviour:
   - Id: 15010
     Name: "\u30A4\u30FC\u30B0\u30EB\u30A2\u30A4"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2831,7 +2831,7 @@ MonoBehaviour:
   - Id: 15020
     Name: "\u30CD\u30F4\u30A1\u30FC\u30A8\u30F3\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2862,7 +2862,7 @@ MonoBehaviour:
   - Id: 15030
     Name: "\u30B0\u30EC\u30A4\u30D6\u30A2\u30AF\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2893,7 +2893,7 @@ MonoBehaviour:
   - Id: 15040
     Name: "\u30B9\u30AB\u30EB\u30B0\u30E9\u30C3\u30B8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2924,7 +2924,7 @@ MonoBehaviour:
   - Id: 15050
     Name: "\u30CD\u30AC\u30C6\u30A3\u30D6\u30C9\u30EC\u30A4\u30F3"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 10
@@ -2955,7 +2955,7 @@ MonoBehaviour:
   - Id: 15060
     Name: "\u30A2\u30F3\u30C7\u30C3\u30C9\u30DA\u30A4\u30F3"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 20
@@ -2986,7 +2986,7 @@ MonoBehaviour:
   - Id: 15070
     Name: "\u30B8\u30E3\u30C3\u30AF\u30DD\u30C3\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 3
     Rank: 20
@@ -3023,7 +3023,7 @@ MonoBehaviour:
   - Id: 15080
     Name: "\u30D2\u30FC\u30EB\u30CF\u30F3\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 2
     Rank: 20
@@ -3054,7 +3054,7 @@ MonoBehaviour:
   - Id: 15090
     Name: "\u30AF\u30A4\u30C3\u30AF\u30AB\u30FC\u30B9"
     IconIndex: 6
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 2
     Rank: 20
@@ -3104,7 +3104,7 @@ MonoBehaviour:
   - Id: 100110
     Name: "\u30BD\u30FC\u30A4\u30F3\u30B0\u30A2\u30FC\u30E0\u30C9"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3179,7 +3179,7 @@ MonoBehaviour:
   - Id: 100210
     Name: "\u30A2\u30D6\u30BD\u30EA\u30E5\u30FC\u30C8\u30D1\u30EA\u30A3"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3254,7 +3254,7 @@ MonoBehaviour:
   - Id: 100310
     Name: "\u30BB\u30A4\u30AF\u30EA\u30C3\u30C9\u30D0\u30EA\u30A2"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3409,7 +3409,7 @@ MonoBehaviour:
   - Id: 100510
     Name: "\u30AB\u30FC\u30B9\u30C9\u30D6\u30EC\u30A4\u30AF"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3483,7 +3483,7 @@ MonoBehaviour:
   - Id: 100610
     Name: "\u30B5\u30F3\u30D5\u30EC\u30A4\u30E0"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3650,7 +3650,7 @@ MonoBehaviour:
   - Id: 100810
     Name: "\u30C6\u30F3\u30D1\u30E9\u30F3\u30B9"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3774,7 +3774,7 @@ MonoBehaviour:
   - Id: 100911
     Name: "\u30D0\u30FC\u30CB\u30F3\u30B0\u30AB\u30A6\u30F3\u30BF\u30FC"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3831,7 +3831,7 @@ MonoBehaviour:
   - Id: 100921
     Name: "\u30D7\u30ED\u30DF\u30CD\u30F3\u30B9"
     IconIndex: 11
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -3863,7 +3863,7 @@ MonoBehaviour:
   - Id: 101010
     Name: "\u30A8\u30A6\u30ED\u30B9"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4016,10 +4016,116 @@ MonoBehaviour:
       Rate: 100
     TriggerDates: []
     ScopeTriggers: []
+  - Id: 200110
+    Name: "\u30A2\u30FC\u30B9\u30AF\u30A8\u30A4\u30AF"
+    IconIndex: 10
+    AnimationId: 1311
+    AnimationType: 3
+    CountTurn: 0
+    Rank: 1000
+    Attribute: 6
+    Scope: 3
+    SkillType: 3
+    TargetType: 1
+    Help: "(\u6761\u4EF6)\u30C1\u30E3\u30FC\u30B8\u72B6\u614B\u4E2D\u306B\u653B\u6483\u3092\u53D7\u3051\u308B\n\\s\u306BATKx/f[f,0,1]%\u30C0\u30E1\u30FC\u30B8
+      \u899A\u9192\u72B6\u614B\u306B\u79FB\u884C"
+    Range: 2
+    RepeatTime: 1
+    AliveType: 1
+    TimingOnlyCount: 0
+    FeatureDates:
+    - SkillId: 200110
+      FeatureType: 1010
+      Param1: 250
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    - SkillId: 200110
+      FeatureType: 7010
+      Param1: 11
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates:
+    - SkillId: 200110
+      TriggerType: 7010
+      TriggerTiming: 2
+      Param1: 0
+      Param2: 0
+      Param3: 1
+    - SkillId: 200110
+      TriggerType: 19030
+      TriggerTiming: 2
+      Param1: 3010
+      Param2: 0
+      Param3: 0
+    ScopeTriggers: []
+  - Id: 200120
+    Name: "\u30D1\u30EF\u30FC\u30EC\u30A4\u30BA"
+    IconIndex: 11
+    AnimationId: 801
+    AnimationType: 1
+    CountTurn: 0
+    Rank: 1000
+    Attribute: 1
+    Scope: 1
+    SkillType: 4
+    TargetType: 4
+    Help: "(\u6761\u4EF6)\u899A\u9192\u72B6\u614B\n\\s\u306EATK\u3092/f[f,0,3]\u30A2\u30C3\u30D7\uFF08\u6C38\u7D9A\uFF09"
+    Range: 1
+    RepeatTime: 1
+    AliveType: 1
+    TimingOnlyCount: 0
+    FeatureDates:
+    - SkillId: 200120
+      FeatureType: 3010
+      Param1: 1040
+      Param2: 999
+      Param3: 10
+      Rate: 100
+    - SkillId: 200120
+      FeatureType: 7010
+      Param1: 21
+      Param2: 0
+      Param3: 0
+      Rate: 100
+    TriggerDates: []
+    ScopeTriggers: []
+  - Id: 200130
+    Name: "\u30C1\u30E3\u30FC\u30B8"
+    IconIndex: 6
+    AnimationId: 801
+    AnimationType: 1
+    CountTurn: 0
+    Rank: 0
+    Attribute: 0
+    Scope: 4
+    SkillType: 2
+    TargetType: 4
+    Help: "(\u6761\u4EF6)Hp\u304C25%\u672A\u6E80\n\\s\u306B\u30C1\u30E3\u30FC\u30B8\u3092\u4ED8\u4E0E\n/s"
+    Range: 1
+    RepeatTime: 1
+    AliveType: 1
+    TimingOnlyCount: 0
+    FeatureDates:
+    - SkillId: 200130
+      FeatureType: 3010
+      Param1: 3010
+      Param2: 999
+      Param3: 0
+      Rate: 100
+    TriggerDates:
+    - SkillId: 200130
+      TriggerType: 1010
+      TriggerTiming: 2
+      Param1: 25
+      Param2: 0
+      Param3: 0
+    ScopeTriggers: []
   - Id: 200210
     Name: "\u30DE\u30A4\u30C8\u30EC\u30A4\u30F3\u30D5\u30A9\u30FC\u30B9"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4095,7 +4201,7 @@ MonoBehaviour:
   - Id: 200230
     Name: "\u60AA\u9B54(\u30D9\u30EA\u30C8)"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -4126,7 +4232,7 @@ MonoBehaviour:
   - Id: 200310
     Name: "\u30D7\u30EB\u30AC\u30B7\u30AA\u30F3"
     IconIndex: 10
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4169,7 +4275,7 @@ MonoBehaviour:
   - Id: 200320
     Name: "\u30D7\u30EA\u30A8\u30B9\u30C6\u30B9"
     IconIndex: 11
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4200,7 +4306,7 @@ MonoBehaviour:
   - Id: 200330
     Name: "\u60AA\u9B54(\u30D1\u30A4\u30E2\u30F3)"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -4281,7 +4387,7 @@ MonoBehaviour:
   - Id: 200411
     Name: "\u30B3\u30A6\u30BD\u30AF\u30C6\u30F3\u30B7\u30E7\u30A6"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4313,7 +4419,7 @@ MonoBehaviour:
   - Id: 200420
     Name: "\u30A2\u30F3\u30C1\u30D0\u30D5"
     IconIndex: 11
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4344,7 +4450,7 @@ MonoBehaviour:
   - Id: 200430
     Name: "\u60AA\u9B54(\u30A2\u30F3\u30C9\u30E9\u30B9)"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -4375,7 +4481,7 @@ MonoBehaviour:
   - Id: 200510
     Name: "\u30AB\u30A6\u30F3\u30C8\u30C0\u30A6\u30F3"
     IconIndex: 10
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 1000
@@ -4455,7 +4561,7 @@ MonoBehaviour:
   - Id: 200530
     Name: "\u60AA\u9B54(\u30D3\u30D5\u30ED\u30F3\u30B9)"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 99
     Rank: 0
@@ -4566,7 +4672,7 @@ MonoBehaviour:
   - Id: 201030
     Name: "\u30A2\u30F3\u30EA\u30DE\u30E6"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 0
@@ -4597,7 +4703,7 @@ MonoBehaviour:
   - Id: 300010
     Name: "\u30E9\u30A4\u30D5\u30D6\u30FC\u30B9\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4628,7 +4734,7 @@ MonoBehaviour:
   - Id: 300020
     Name: "\u30B9\u30D4\u30EA\u30C3\u30C8\u30C1\u30E3\u30FC\u30B8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4659,7 +4765,7 @@ MonoBehaviour:
   - Id: 300030
     Name: "\u30D5\u30A9\u30FC\u30B9\u30E9\u30A4\u30BA"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4690,7 +4796,7 @@ MonoBehaviour:
   - Id: 300040
     Name: "\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30AA\u30FC\u30E9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4721,7 +4827,7 @@ MonoBehaviour:
   - Id: 300050
     Name: "\u30E9\u30D4\u30C3\u30C9\u30E0\u30FC\u30D6"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4752,7 +4858,7 @@ MonoBehaviour:
   - Id: 300130
     Name: "\u30A2\u30BF\u30C3\u30AF\u30D6\u30EC\u30A4\u30AF"
     IconIndex: 6
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4783,7 +4889,7 @@ MonoBehaviour:
   - Id: 300140
     Name: "\u30B7\u30FC\u30EB\u30C9\u30D0\u30CB\u30C3\u30B7\u30E5"
     IconIndex: 6
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4814,7 +4920,7 @@ MonoBehaviour:
   - Id: 300210
     Name: "\u30A8\u30FC\u30C6\u30EB\u30EA\u30C1\u30E3\u30FC\u30B8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4857,7 +4963,7 @@ MonoBehaviour:
   - Id: 300220
     Name: "\u30EA\u30AB\u30D0\u30EA\u30FC\u30A8\u30F3\u30CF\u30F3\u30B9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4888,7 +4994,7 @@ MonoBehaviour:
   - Id: 300230
     Name: "\u30F4\u30A7\u30F3\u30B8\u30A7\u30F3\u30B9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 200
@@ -4919,7 +5025,7 @@ MonoBehaviour:
   - Id: 301010
     Name: "\u30C7\u30A3\u30B1\u30A4\u30C9\u30EA\u30BB\u30C3\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -4962,7 +5068,7 @@ MonoBehaviour:
   - Id: 301020
     Name: "\u30A6\u30A9\u30FC\u30EA\u30A2\u30FC\u30D6\u30E9\u30C3\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -4999,7 +5105,7 @@ MonoBehaviour:
   - Id: 301030
     Name: "\u30C8\u30E9\u30A4\u30A2\u30F3\u30B0\u30EB\u30AC\u30FC\u30C9"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5042,7 +5148,7 @@ MonoBehaviour:
   - Id: 301040
     Name: "\u30BB\u30FC\u30D5\u30C6\u30A3\u30D0\u30EA\u30A2"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5091,7 +5197,7 @@ MonoBehaviour:
   - Id: 301050
     Name: "\u30D2\u30ED\u30A4\u30F3\u30BA\u30CF\u30A4"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5122,7 +5228,7 @@ MonoBehaviour:
   - Id: 301060
     Name: "\u30BB\u30AB\u30F3\u30C9\u30B9\u30C6\u30FC\u30B8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5177,7 +5283,7 @@ MonoBehaviour:
   - Id: 301070
     Name: "\u30CF\u30A4\u30D2\u30C3\u30C8\u30DD\u30A4\u30F3\u30C8"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5245,7 +5351,7 @@ MonoBehaviour:
   - Id: 301090
     Name: "\u30A4\u30CB\u30B7\u30E3\u30EB\u30D6\u30ED\u30C3\u30AB\u30FC"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5276,7 +5382,7 @@ MonoBehaviour:
   - Id: 301100
     Name: "\u30D5\u30A1\u30FC\u30B9\u30C8\u30C6\u30A4\u30AF"
     IconIndex: 6
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 210
@@ -5357,7 +5463,7 @@ MonoBehaviour:
   - Id: 401030
     Name: "\u30D2\u30FC\u30C8\u30B9\u30BF\u30F3\u30D7+"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5382,7 +5488,7 @@ MonoBehaviour:
   - Id: 401040
     Name: "\u30BD\u30FC\u30C9\u30A2\u30C0\u30D7\u30C8+"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5482,7 +5588,7 @@ MonoBehaviour:
   - Id: 401080
     Name: "\u30EC\u30A4\u30B8\u30F3\u30B0\u30D0\u30A6\u30F3\u30B5\u30FC+"
     IconIndex: 1
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5532,7 +5638,7 @@ MonoBehaviour:
   - Id: 402020
     Name: "\u30A4\u30D9\u30A4\u30C9\u30B3\u30FC\u30C9+"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5582,7 +5688,7 @@ MonoBehaviour:
   - Id: 402040
     Name: "\u30C8\u30E9\u30B9\u30C8\u30C1\u30A7\u30A4\u30F3+"
     IconIndex: 1
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5657,7 +5763,7 @@ MonoBehaviour:
   - Id: 402070
     Name: "\u30B3\u30F3\u30BB\u30F3\u30C8\u30EC\u30A4\u30C8+"
     IconIndex: 3
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5757,7 +5863,7 @@ MonoBehaviour:
   - Id: 403030
     Name: "\u30E9\u30A4\u30F3\u30D7\u30ED\u30C6\u30AF\u30C8+"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5782,7 +5888,7 @@ MonoBehaviour:
   - Id: 403040
     Name: "\u30A8\u30B9\u30B3\u30FC\u30C8\u30BD\u30FC\u30EB+"
     IconIndex: 3
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5857,7 +5963,7 @@ MonoBehaviour:
   - Id: 403070
     Name: "\u30A2\u30AF\u30A2\u30DF\u30E9\u30FC\u30B8\u30E5+"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5882,7 +5988,7 @@ MonoBehaviour:
   - Id: 403080
     Name: "\u30D5\u30ED\u30B9\u30C8\u30B7\u30FC\u30EB\u30C9+"
     IconIndex: 4
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -5957,7 +6063,7 @@ MonoBehaviour:
   - Id: 404030
     Name: "\u30D2\u30FC\u30EA\u30F3\u30B0+"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6007,7 +6113,7 @@ MonoBehaviour:
   - Id: 404050
     Name: "\u3079\u30CD\u30C7\u30A3\u30AF\u30B7\u30E7\u30F3+"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6032,7 +6138,7 @@ MonoBehaviour:
   - Id: 404060
     Name: "\u30DB\u30FC\u30EA\u30FC\u30B0\u30EC\u30A4\u30B9+"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6057,7 +6163,7 @@ MonoBehaviour:
   - Id: 404070
     Name: "\u30AD\u30E5\u30A2\u30A8\u30FC\u30EB+"
     IconIndex: 2
-    AnimationId: 21
+    AnimationId: 701
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6082,7 +6188,7 @@ MonoBehaviour:
   - Id: 404080
     Name: "\u30E9\u30A4\u30F3\u30D0\u30EA\u30A2+"
     IconIndex: 2
-    AnimationId: 51
+    AnimationId: 801
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6232,7 +6338,7 @@ MonoBehaviour:
   - Id: 405060
     Name: "\u30C0\u30FC\u30AF\u30CD\u30B9+"
     IconIndex: 3
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 120
@@ -6257,7 +6363,7 @@ MonoBehaviour:
   - Id: 405070
     Name: "\u30B7\u30A7\u30A4\u30C7\u30A3\u30FC\u30AF\u30E9\u30A6\u30C9+"
     IconIndex: 5
-    AnimationId: 61
+    AnimationId: 811
     AnimationType: 1
     CountTurn: 0
     Rank: 120

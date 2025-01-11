@@ -82,7 +82,7 @@ MonoBehaviour:
     TroopEnemies:
     - Id: 1031
       TroopId: 1031
-      EnemyId: 1
+      EnemyId: 3
       Lv: 2
       BossFlag: 0
       Line: 0
@@ -104,7 +104,14 @@ MonoBehaviour:
       TroopId: 1061
       EnemyId: 1
       Lv: 4
-      BossFlag: 1
+      BossFlag: 0
+      Line: 0
+      StageLv: 0
+    - Id: 1061
+      TroopId: 1061
+      EnemyId: 3
+      Lv: 4
+      BossFlag: 0
       Line: 0
       StageLv: 0
     StageTurn: 0
@@ -114,14 +121,14 @@ MonoBehaviour:
       TroopId: 1062
       EnemyId: 1
       Lv: 4
-      BossFlag: 1
+      BossFlag: 0
       Line: 0
       StageLv: 0
     - Id: 1062
       TroopId: 1062
-      EnemyId: 1
+      EnemyId: 3
       Lv: 4
-      BossFlag: 0
+      BossFlag: 1
       Line: 0
       StageLv: 0
     StageTurn: 0

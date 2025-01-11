@@ -70,7 +70,6 @@ namespace Ryneus
             return 0; 
         }
 
-        private Dictionary<int,List<int>> _passiveSkillInfos = new ();
 
         public UniTask<List<AudioClip>> GetBattleBgm()
         {
@@ -112,10 +111,6 @@ namespace Ryneus
             _battlers.Add(alcana);
             */
 
-            foreach (var battlerInfo in _battlers)
-            {
-                //_passiveSkillInfos[battlerInfo.Index] = new ();
-            }
             _party = new UnitInfo();
             _party.SetBattlers(BattlerActors());
             _troop = new UnitInfo();
@@ -310,7 +305,7 @@ namespace Ryneus
             }
             if (skillInfo.Master.SkillType == SkillType.Unique)
             {
-                return false;
+                //return false;
             }
             if (battlerInfo.IsState(StateType.Silence) && skillInfo.Master.CountTurn != 0)
             {
@@ -1300,7 +1295,7 @@ namespace Ryneus
                 skillInfo = actionInfo.SkillInfo
             };
             _skillLogs.Add(skillLog);
-            PopActionInfo();
+            PopActionInfo(actionInfo);
             _currentBattler = null;
         }
 
@@ -1317,15 +1312,17 @@ namespace Ryneus
                 {
                     if (plusActionInfo.Master.SkillType == SkillType.Passive)
                     {
-                        /*
-                        if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(plusActionInfo.Master.Id))
+                        if (!GetBattlerInfo(actionInfo.SubjectIndex).CheckPassiveSkillId(plusActionInfo.Master.Id))
                         {
-                            _passiveSkillInfos[actionInfo.SubjectIndex].Add(plusActionInfo.Master.Id);
+                            GetBattlerInfo(actionInfo.SubjectIndex).AddPassiveSkillId(plusActionInfo.Master.Id);
                         }
-                        */
                     }
-                    AddActionInfo(plusActionInfo,false);
-                    AddTurnActionInfos(plusActionInfo,false);
+                    var selectIndexList = MakeAutoSelectIndex(plusActionInfo,-1);
+                    if (selectIndexList.Count == 0)
+                    {
+                        continue;
+                    }
+                    AddReceiveActionInfo(plusActionInfo,ActionInfoTargetIndexes(plusActionInfo,selectIndexList[0],-1,actionInfo),false);
                 }
 
                 var plusTriggerSkillInfos = actionInfo.CheckPlusSkillTrigger();
@@ -1336,12 +1333,10 @@ namespace Ryneus
                     {
                         if (skillInfo.Master.SkillType == SkillType.Passive)
                         {
-                            /*
-                            if (!_passiveSkillInfos[actionInfo.SubjectIndex].Contains(skillInfo.Master.Id))
+                            if (!GetBattlerInfo(actionInfo.SubjectIndex).CheckPassiveSkillId(skillInfo.Master.Id))
                             {
-                                _passiveSkillInfos[actionInfo.SubjectIndex].Add(skillInfo.Master.Id);
+                                GetBattlerInfo(actionInfo.SubjectIndex).AddPassiveSkillId(skillInfo.Master.Id);
                             }
-                            */
                         }
                         var plusTriggerActionInfo = new ActionInfo(skillInfo,_actionIndex,actionInfo.SubjectIndex,-1,null);
                         plusTriggerActionInfo.SetTriggerSkill(true);
@@ -1523,9 +1518,7 @@ namespace Ryneus
                             {
                                 continue;
                             }
-                            SetActionInfoParameter(makeActionInfo);
-                            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0],counterSubjectIndex,actionInfo,actionResultInfos));
-                            AddActionInfo(makeActionInfo,IsInterrupt);
+                            AddReceiveActionInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndexList[0],counterSubjectIndex,actionInfo,actionResultInfos),IsInterrupt);
                         }
                         
                         madeActionInfos.Add(makeActionInfo);
@@ -1563,17 +1556,15 @@ namespace Ryneus
                     var inTurnUseCountUnder = triggerDates.Find(a => a.TriggerType == TriggerType.InTurnUseCountUnder);
                     if (inTurnUseCountUnder != null)
                     {
-                        if (inTurnUseCountUnder.Param1 <= UsedSameTurnActionInfo(passiveInfo))
+                        if (inTurnUseCountUnder.Param1 < UsedSameTurnActionInfo(passiveInfo))
                         {
                             continue;
                         }
                     }
-                    /*
-                    if (_passiveSkillInfos[battlerInfo.Index].Contains(passiveInfo.Id))
+                    if (battlerInfo.CheckPassiveSkillId(passiveInfo.Id))
                     {
                         continue;
                     }
-                    */
                     if (passiveInfo.CountTurn.Value > 0)
                     {
                         continue;
@@ -1633,13 +1624,13 @@ namespace Ryneus
                                 var stateData = DataSystem.FindState(addPassive.Param1);
                                 if (stateData.OverLap == 0)
                                 {
-                                    //_passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                    battlerInfo.AddPassiveSkillId(passiveInfo.Id);
                                 } else
                                 {
                                     var overLapCount = battlerInfo.GetStateInfoAll(stateData.StateType).Count;
                                     if (stateData.OverLap-1 <= overLapCount)
                                     {
-                                        //_passiveSkillInfos[battlerInfo.Index].Add(passiveInfo.Id);
+                                        battlerInfo.AddPassiveSkillId(passiveInfo.Id);
                                     }
                                 }
                             }
@@ -1675,10 +1666,12 @@ namespace Ryneus
                     return null;
                 }
                 selectIndex = selectIndexList[0];
+            }                        
+            if (makeActionInfo.Master.SkillType == SkillType.Unique && battlerInfo.IsAwaken == false)
+            {
+                battlerInfo.SetAwaken();
             }
-            SetActionInfoParameter(makeActionInfo);
-            MakeActionResultInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndex,counterSubjectIndex,actionInfo,actionResultInfos));
-            AddActionInfo(makeActionInfo,IsInterrupt);
+            AddReceiveActionInfo(makeActionInfo,ActionInfoTargetIndexes(makeActionInfo,selectIndex,counterSubjectIndex,actionInfo,actionResultInfos),IsInterrupt);
             passiveInfo.GainUseCount();
             passiveInfo.InitCountTurn();
             return makeActionInfo;
@@ -1687,11 +1680,10 @@ namespace Ryneus
         public List<ActionResultInfo> CheckRemovePassiveInfos()
         {
             var actionResultInfos = new List<ActionResultInfo>();
-            /*
             foreach (var battlerInfo in _battlers)
             {
-                var passiveSkillIds = _passiveSkillInfos[battlerInfo.Index];
-                for (int i = 0;i < passiveSkillIds.Count;i++)
+                var passiveSkillIds = battlerInfo.PassiveSkillIds;
+                for (int i = 0;i < passiveSkillIds?.Count;i++)
                 {
                     var passiveSkillData = DataSystem.FindSkill(passiveSkillIds[i]);
                     bool IsRemove = false;
@@ -1760,7 +1752,6 @@ namespace Ryneus
                     }
                 }
             }
-            */
             return actionResultInfos;
         }
 

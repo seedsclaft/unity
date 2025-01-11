@@ -205,6 +205,10 @@ namespace Ryneus
 						{
 							Data.BattleBonusValue = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
 						}
+						if (KeyName == "WeakPointRate")
+						{
+							Data.WeakPointRate = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseDefineColumn.Param);
+						}
 					}
 				}
 			}

@@ -904,9 +904,37 @@ MonoBehaviour:
       Level: 1
       Weight: 50
       TriggerDates: []
+    - SkillId: 1020
+      Level: 1
+      Weight: 100
+      TriggerDates: []
+    - SkillId: 200110
+      Level: 1
+      Weight: 150
+      TriggerDates: []
+    - SkillId: 200120
+      Level: 1
+      Weight: 200
+      TriggerDates: []
+    - SkillId: 200130
+      Level: 1
+      Weight: 0
+      TriggerDates: []
     SkillTriggerDates:
     - SkillId: 1010
-      Trigger1: 5061
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 1020
+      Trigger1: 9031
+      Trigger2: 0
+    - SkillId: 200110
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200120
+      Trigger1: 0
+      Trigger2: 0
+    - SkillId: 200130
+      Trigger1: 0
       Trigger2: 0
   - Id: 102
     Name: "\u30DF\u30CE\u30BF\u30A6\u30ED\u30B9"

@@ -405,6 +405,7 @@ namespace Ryneus
         IsOpponentBattler = 18020, // 自身の味方
         AttackedActionIsScope = 19010, // 自身がParam1=Sconeの攻撃を受けるとき
         AttackedActionIsKind = 19020, // 自身がParam1=Kindから攻撃を受けるとき
+        AttackedActionIsState = 19030, // 自身が〇状態の時に攻撃を受ける
         ActionResultDeath = 20030, // 攻撃を受けると戦闘不能になる
         DeadWithoutSelf = 20040, // 自身以外が戦闘不能
         SelfDead = 20050, // 自身が戦闘不能

@@ -73,7 +73,7 @@ namespace Ryneus
 							Profile = textData.Find(a => a.Id == AssetPostImporter.ImportNumeric(BaseRow, "NameId")).Feature,
 
                             ClassId = AssetPostImporter.ImportNumeric(BaseRow, "ClassId"),
-                            UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, "UnitType"),
+                            //UnitType = (UnitType)AssetPostImporter.ImportNumeric(BaseRow, "UnitType"),
                             ImagePath = AssetPostImporter.ImportString(BaseRow, "ImagePath"),
                             InitLv = AssetPostImporter.ImportNumeric(BaseRow, "InitLv"),
                             MaxLv = AssetPostImporter.ImportNumeric(BaseRow, "MaxLv")

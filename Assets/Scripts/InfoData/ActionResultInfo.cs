@@ -543,7 +543,7 @@ namespace Ryneus
             var skillData = DataSystem.FindSkill(_skillId);
             if (target.Kinds.Contains((KindType)skillData.Attribute))
             {
-                hpDamage *= 1.5f;
+                hpDamage *= DataSystem.System.WeakPointRate * 0.01f;
                 _weakPoint = true;
             }
 

@@ -11,7 +11,10 @@ namespace Ryneus
 
         private ActionInfo _selectActionInfo = null;
         public ActionInfo SelectActionInfo => _selectActionInfo;
-        public void SetSelectActionInfo(ActionInfo actionInfo) => _selectActionInfo = actionInfo;
+        public void SetSelectActionInfo(ActionInfo actionInfo)
+        {
+            _selectActionInfo = actionInfo;
+        }
 
         // ターンの最初の行動開始者
         private BattlerInfo _firstActionBattler = null;
@@ -64,6 +67,10 @@ namespace Ryneus
         /// <param name="actionInfo"></param>
         public void SetActionInfoParameter(ActionInfo actionInfo)
         {
+            if (actionInfo.IsSettingParameter)
+            {
+                return;
+            }
             var subject = GetBattlerInfo(actionInfo.SubjectIndex);
             //int MpCost = CalcMpCost(subject,actionInfo.Master.CountTurn);
             //actionInfo.SetMpCost(MpCost);

@@ -147,8 +147,8 @@ namespace Ryneus
             nameText?.SetText(actorData.Name);
             subNameText?.SetText(actorData.SubName);
             profileText?.SetText(actorData.Profile);
-            UpdateUnitType(actorData.UnitType);
-            UpdateUnitTypeBack(actorData.UnitType);
+            //UpdateUnitType(actorData.UnitType);
+            //UpdateUnitTypeBack(actorData.UnitType);
         }
 
         private void UpdateMainThumb(string imagePath,int x,int y,float scale)

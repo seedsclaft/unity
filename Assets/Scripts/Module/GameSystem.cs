@@ -209,12 +209,7 @@ namespace Ryneus
                     break;
                 case Base.CommandType.CallAdvScene:
                     SetIsBusyMainAndStatus();
-                    var advCallInfo = viewEvent.template as AdvCallInfo;
-                    if (!gameObject.activeSelf)
-                    {
-                        gameObject.SetActive(true);
-                    }
-                    //_currentScene.SetActiveUi(false);
+                    var advCallInfo = (AdvCallInfo)viewEvent.template;
                     StartCoroutine(JumpScenarioAsync(advCallInfo.Label,advCallInfo.CallEvent));
                     break;
                 case Base.CommandType.DecidePlayerName:

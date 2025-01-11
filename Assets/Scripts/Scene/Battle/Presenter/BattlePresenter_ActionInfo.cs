@@ -157,7 +157,7 @@ namespace Ryneus
             }
             if (actionInfo.FirstAttack())
             {
-                StartAnimation(actionInfo);
+                //StartAnimation(actionInfo);
             }
             
             if (actionInfo.Master.IsDisplayBattleSkill())
@@ -176,7 +176,7 @@ namespace Ryneus
 
         private async void StartAnimationSlipDamage(List<ActionResultInfo> slipDamageResults)
         {
-            var actionInfo = _model.CurrentActionInfo;
+            var actionInfo = _model.ActiveActionInfo;
             await ExecActionResultInfos(slipDamageResults);
             if (_skipBattle == false)
             {

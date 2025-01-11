@@ -166,6 +166,7 @@ MonoBehaviour:
   ResourceCount: 3
   AlcanaSelectCount: 4
   BattleBonusValue: 4
+  WeakPointRate: 150
   SystemTextData:
   - Id: 0
     Text: '""'
@@ -1260,19 +1261,19 @@ MonoBehaviour:
     Help: '""'
     Feature: 
   - Id: 19611
-    Text: "\u9B54\u7269\u6BB2\u6EC5"
+    Text: "\u30D0\u30C8\u30EB"
     Help: '""'
     Feature: "\u30B7\u30F3\u30DC\u30EB\u30BF\u30A4\u30C8\u30EB"
   - Id: 19612
-    Text: "\u4F7F\u5F92\u6BB2\u6EC5"
+    Text: "\u30DC\u30B9\u30D0\u30C8\u30EB"
     Help: '""'
     Feature: 
   - Id: 19613
-    Text: "\u56DE\u5FA9"
+    Text: "\u30A4\u30D9\u30F3\u30C8"
     Help: '""'
     Feature: 
   - Id: 19614
-    Text: "\u9B54\u6CD5\u9078\u629E"
+    Text: "\u9B54\u6CD5\u5165\u624B"
     Help: '""'
     Feature: 
   - Id: 19615
@@ -1369,6 +1370,10 @@ MonoBehaviour:
     Feature: 
   - Id: 20200
     Text: "\\d\u304C\u52A0\u5165\u3057\u307E\u3057\u305F\uFF01"
+    Help: '""'
+    Feature: 
+  - Id: 20201
+    Text: "\u52A0\u5165"
     Help: '""'
     Feature: 
   - Id: 20210

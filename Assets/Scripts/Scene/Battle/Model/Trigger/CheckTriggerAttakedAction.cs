@@ -16,6 +16,9 @@ namespace Ryneus
                 case TriggerType.AttackedActionIsKind:
                     isTrigger = CheckAttackedActionIsKind(triggerData,battlerInfo,checkTriggerInfo).Count > 0;
                     break;
+                case TriggerType.AttackedActionIsState:
+                    isTrigger = CheckAttackedActionIsState(triggerData,battlerInfo,checkTriggerInfo).Count > 0;
+                    break;
             }
             return isTrigger;
         }
@@ -39,6 +42,9 @@ namespace Ryneus
                     break;
                 case TriggerType.AttackedActionIsKind:
                     targetIndexList.AddRange(CheckAttackedActionIsKind(triggerData,battlerInfo,checkTriggerInfo));
+                    break;
+                case TriggerType.AttackedActionIsState:
+                    targetIndexList.AddRange(CheckAttackedActionIsState(triggerData,battlerInfo,checkTriggerInfo));
                     break;
             }
         }
@@ -104,6 +110,42 @@ namespace Ryneus
                 if (targetActionResultInfos.Count > 0 && subject.Kinds.Contains((KindType)triggerData.Param1))
                 {
                     list.Add(battlerInfo.Index);
+                }
+            }
+            return list;
+        }
+
+        private List<int> CheckAttackedActionIsState(SkillData.TriggerData triggerData,BattlerInfo battlerInfo,CheckTriggerInfo checkTriggerInfo)
+        {
+            var list = new List<int>();
+            var actionInfo = checkTriggerInfo.ActionInfo;
+            var actionResultInfos = checkTriggerInfo.ActionResultInfos;
+            if (!battlerInfo.IsAlive())
+            {
+                return list;
+            }
+            if (actionInfo == null)
+            {
+                return list;
+            }
+            if (actionResultInfos == null)
+            {
+                return list;
+            }
+            if (!actionInfo.Master.IsHpDamageFeature())
+            {
+                return list;
+            }
+            var subject = checkTriggerInfo.GetBattlerInfo(actionInfo.SubjectIndex);
+            if (subject != null && battlerInfo.IsActor != subject.IsActor && battlerInfo.Index != actionInfo.SubjectIndex)
+            {
+                var targetActionResultInfos = actionResultInfos.FindAll(a => a.TargetIndex == battlerInfo.Index);
+                foreach (var targetActionResultInfo in targetActionResultInfos)
+                {
+                    if (checkTriggerInfo.GetBattlerInfo(targetActionResultInfo.TargetIndex).IsState((StateType)triggerData.Param1))
+                    {
+                        list.Add(battlerInfo.Index);
+                    }
                 }
             }
             return list;

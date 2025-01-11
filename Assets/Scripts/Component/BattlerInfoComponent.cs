@@ -339,7 +339,8 @@ namespace Ryneus
         
         public void StartAnimation(EffekseerEffectAsset effectAsset,int animationPosition,float animationScale = 1.0f,float animationSpeed = 1.0f)
         {
-            if (effectAsset == null){    
+            if (effectAsset == null)
+            { 
                 effekseerEmitter.Stop();
                 return;
             } 

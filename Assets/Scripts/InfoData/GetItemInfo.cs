@@ -65,7 +65,7 @@ namespace Ryneus
                 case GetItemType.LearnSkill:
                     return DataSystem.FindSkill(Param2).Name;
                 case GetItemType.AddActor:
-                    return DataSystem.FindActor(Param1).Name;
+                    return DataSystem.FindActor(Param1).Name + DataSystem.GetText(20201);
                 case GetItemType.SelectAddActor:
                     return DataSystem.GetText(20240);
                 case GetItemType.BattleScoreBonus:

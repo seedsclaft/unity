@@ -19,6 +19,7 @@ namespace Ryneus
 		public int ResourceCount;
 		public int AlcanaSelectCount;
 		public int BattleBonusValue;
+		public int WeakPointRate;
 		public List<TextData> SystemTextData;
 
 

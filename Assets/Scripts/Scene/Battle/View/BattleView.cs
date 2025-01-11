@@ -8,6 +8,8 @@ using Cysharp.Threading.Tasks;
 namespace Ryneus
 {
     using Battle;
+    using Unity.VisualScripting;
+
     public partial class BattleView : BaseView ,IInputHandlerEvent
     {
         [SerializeField] private BattleBattlerList battleActorList = null;
@@ -21,8 +23,7 @@ namespace Ryneus
         [SerializeField] private GameObject animPrefab = null;
         [SerializeField] private SkillInfoComponent skillInfoComponent = null;
         [SerializeField] private GameObject currentSkillBg = null;
-
-        [SerializeField] private GameObject centerAnimPosition = null;
+        [SerializeField] private MakerEffekseerEmitter effekseerEmitter;
         [SerializeField] private OnOffButton battleAutoButton = null;
         [SerializeField] private OnOffButton battleSpeedButton = null;
         [SerializeField] private OnOffButton battleSkipButton = null;
@@ -499,15 +500,24 @@ namespace Ryneus
             _battlerComps[targetIndex].StartAnimation(effekseerEffectAsset,animationPosition,animationScale,animationSpeed);
         }
 
-        public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset)
+        public void StartAnimationAll(EffekseerEffectAsset effekseerEffectAsset,int animationPosition,float animationScale = 1.0f,float animationSpeed = 1.0f)
         {
             magicList.gameObject.SetActive(false);
             if (GameSystem.ConfigData.BattleAnimationSkip == true) 
             {
                 return;
             }
-            // transformの位置でエフェクトを再生する
-            EffekseerSystem.PlayEffect(effekseerEffectAsset, centerAnimPosition.transform.position);
+            animationSpeed *= GameSystem.ConfigData.BattleSpeed;
+        
+            effekseerEmitter.transform.localScale = new Vector3(animationScale,animationScale,animationScale);
+            if (effekseerEffectAsset == null)
+            { 
+                effekseerEmitter.Stop();
+                return;
+            } 
+            effekseerEmitter.Stop();
+            effekseerEmitter.speed = animationSpeed;
+            effekseerEmitter.Play(effekseerEffectAsset);
         }
 
         public void StartAnimationDemigod(BattlerInfo battlerInfo,SkillData skillData,float speedRate)

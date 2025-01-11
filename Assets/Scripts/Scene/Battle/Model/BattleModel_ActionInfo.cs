@@ -7,41 +7,57 @@ namespace Ryneus
 {
     public partial class BattleModel : BaseModel
     {
-        private List<ActionInfo> _actionInfos = new ();
-
-        // 現在最優先の行動
-        private ActionInfo _currentActionInfo = null;
-        public ActionInfo CurrentActionInfo => _currentActionInfo;
         // 現在の行動
         private ActionInfo _activeActionInfo = null;
         public ActionInfo ActiveActionInfo => _activeActionInfo;
-        public void SetActiveActionInfo(ActionInfo actionInfo) => _activeActionInfo = actionInfo;
+        public void SetActiveActionInfo(ActionInfo actionInfo)
+        {
+            _activeActionInfo = actionInfo;
+        }
 
         // 優先敵対象
         private BattlerInfo _targetBattler = null;
         public BattlerInfo TargetBattler => _targetBattler;
         public void SetTargetBattler(BattlerInfo battlerInfo) => _targetBattler = battlerInfo;
 
+        private List<ActionInfo> _receiveActionInfos = new ();
+        // 誘発した行動
+        private ActionInfo _receiveActionInfo = null;
+        public ActionInfo ReceiveActionInfo => _receiveActionInfo;
+        /// <summary>
+        /// 誘発したアクションを登録する
+        /// </summary>
+        /// <param name="actionInfo"></param>
+        /// <param name="indexList"></param>
+        /// <param name="IsInterrupt"></param>
+        public void AddReceiveActionInfo(ActionInfo actionInfo,List<int> indexList,bool IsInterrupt)
+        {
+            SetActionInfoParameter(actionInfo);
+            MakeActionResultInfo(actionInfo,indexList);
+            AddActionInfo(actionInfo,IsInterrupt);
+            AddTurnActionInfos(actionInfo,IsInterrupt);
+        }
+
         public void AddActionInfo(ActionInfo actionInfo,bool IsInterrupt)
         {
             if (IsInterrupt)
             {
                 //LogOutput.Log(actionInfo.Master.Id + "を割り込み");
-                _actionInfos.Insert(0,actionInfo);
+                _receiveActionInfos.Insert(0,actionInfo);
             } else
             {
                 //LogOutput.Log(actionInfo.Master.Id + "を後に追加");
-                _actionInfos.Add(actionInfo);
+                _receiveActionInfos.Add(actionInfo);
             }
-            _currentActionInfo = _actionInfos[0];
+            _receiveActionInfo = _receiveActionInfos[0];
         }
 
         public List<ActionInfo> BeforeActionInfo(ActionInfo targetActionInfo)
         {
             var list = new List<ActionInfo>();
-            var findIndex = _actionInfos.FindIndex(a => a == targetActionInfo);
+            var findIndex = _receiveActionInfos.FindIndex(a => a == targetActionInfo);
             var idx = 0;
-            foreach (var actionInfo in _actionInfos)
+            foreach (var actionInfo in _receiveActionInfos)
             {
                 if (idx < findIndex)
                 {
@@ -54,21 +70,25 @@ namespace Ryneus
 
         public void RemoveActionInfo(ActionInfo targetActionInfo)
         {
-            var findIndex = _actionInfos.FindIndex(a => a == targetActionInfo);
+            var findIndex = _receiveActionInfos.FindIndex(a => a == targetActionInfo);
             if (findIndex > -1)
             {
-                _actionInfos.RemoveAt(findIndex);
+                _receiveActionInfos.RemoveAt(findIndex);
             }
-            if (_actionInfos.Count > 0)
+            if (_receiveActionInfos.Count > 0)
             {
-                _currentActionInfo = _actionInfos[0];
+                _receiveActionInfo = _receiveActionInfos[0];
             }
         }
 
-        private void PopActionInfo()
+        private void PopActionInfo(ActionInfo actionInfo)
         {
-            //_actionInfos.RemoveAt(0);
-            _currentActionInfo = _actionInfos.Count > 0 ? _actionInfos[0] : null;
+            var findIndex = _receiveActionInfos.FindIndex(a => a == actionInfo);
+            if (findIndex > -1)
+            {
+                _receiveActionInfos.RemoveAt(findIndex);
+            }
+            _receiveActionInfo = _receiveActionInfos.Count > 0 ? _receiveActionInfos[0] : null;
         }
 
         /// <summary>
@@ -76,7 +96,7 @@ namespace Ryneus
         /// </summary>
         public void ClearActionInfo()
         {
-            _actionInfos.Clear();
+            _receiveActionInfos.Clear();
         }
 
         // 行動を生成

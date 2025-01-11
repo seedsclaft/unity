@@ -136,7 +136,7 @@ namespace Ryneus
             var actionInfo = _model.SelectActionInfo;
             var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,_model.TargetBattler.Index);
             _model.SetActiveActionInfo(actionInfo);
-            MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
+            MakeResultInfoStartAction(actionInfo,targetIndexes);
 
             _view.EndActionSelect();
         }
@@ -180,7 +180,7 @@ namespace Ryneus
                 var actionInfo = _model.SelectActionInfo;
                 var targetIndexes = _model.MakeAutoSelectIndex(actionInfo,battlerInfo.Index);
                 _model.SetActiveActionInfo(actionInfo);
-                MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
+                MakeResultInfoStartAction(actionInfo,targetIndexes);
 
                 _view.EndActionSelect();
             }
@@ -234,14 +234,14 @@ namespace Ryneus
         {
             // 対象を自動決定
             var (actionInfo,targetIndexes) = _model.GetActionInfoTargetIndexes(battlerInfo,skillId,oneTargetIndex);
-            MakeActionResultInfoTargetIndexes(actionInfo,targetIndexes);
+            MakeResultInfoStartAction(actionInfo,targetIndexes);
         }
 
         /// <summary>
         /// 行動結果を生成する
         /// </summary>
         /// <param name="indexList"></param>
-        public async void MakeActionResultInfoTargetIndexes(ActionInfo actionInfo,List<int> indexList)
+        public async void MakeResultInfoStartAction(ActionInfo actionInfo,List<int> indexList)
         {
             _view.SetHelpText("");
             _view.ChangeBackCommandActive(false);
@@ -320,7 +320,7 @@ namespace Ryneus
         /// </summary>
         private void CheckPrimaryInterruptActionInfoTriggerTimings()
         {
-            var actionInfo = _model.CurrentActionInfo;
+            var actionInfo = _model.ReceiveActionInfo;
             _model.CheckTriggerActiveInfos(TriggerTiming.PrimaryInterrupt,actionInfo,actionInfo.ActionResults,true);
             _model.CheckTriggerPassiveInfos(new List<TriggerTiming>(){TriggerTiming.PrimaryInterrupt},actionInfo,actionInfo.ActionResults);
         }
@@ -409,9 +409,9 @@ namespace Ryneus
             _model.ResetTargetIndexList(actionInfo);
             await MakeActionResultInfo(actionInfo,actionInfo.CandidateTargetIndexList);
             // 再取得
-            if (actionInfo == _model.CurrentActionInfo)
+            if (actionInfo == _model.ActiveActionInfo)
             {
-                actionInfo = _model.CurrentActionInfo;
+                actionInfo = _model.ActiveActionInfo;
                 //LogOutput.Log(actionInfo.Master.Id + "再行動");
                 RepeatAnimationSkill(actionInfo);
             } else
@@ -576,13 +576,12 @@ namespace Ryneus
             //_view.UpdateGridLayer();
             _view.RefreshStatus();
 
-            // 次の行動があれば続ける
-            var currentActionInfo = _model.CurrentActionInfo;
-            if (currentActionInfo != null)
+            // 誘発行動があれば続ける
+            var receiveActionInfo = _model.ReceiveActionInfo;
+            if (receiveActionInfo != null)
             {
                 _battleEnded = false;
-                var targetIndexes = _model.MakeAutoSelectIndex(currentActionInfo);
-                MakeActionResultInfoTargetIndexes(currentActionInfo,targetIndexes);
+                MakeResultInfoStartAction(receiveActionInfo,receiveActionInfo.CandidateTargetIndexList);
                 return;
             }
 
