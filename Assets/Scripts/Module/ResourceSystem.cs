@@ -70,7 +70,8 @@ namespace Ryneus
                 result2 = await LoadAssetResources<AudioClip>(data[1]);
                 //result2 = Resources.Load<AudioClip>(data[1]);
             }
-            return new List<AudioClip>(){
+            return new List<AudioClip>()
+            {
                 result1,result2
             };
         }

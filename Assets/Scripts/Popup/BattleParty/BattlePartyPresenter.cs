@@ -356,12 +356,12 @@ namespace Ryneus
             _view.CommandChangeViewToTransition(null);
             _view.ChangeUIActive(false);
             // ボス戦なら
-            //if (_model.CurrentSelectRecord().SymbolType == SymbolType.Boss)
-            //{
-            //    PlayBossBgm();
-            //} else
+            if (_model.SceneParam.IsBoss)
             {
-                var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                PlayBossBgm();
+            } else
+            {
+                var bgmData = _model.TacticsBgmData();
                 if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
                 {
                     SoundManager.Instance.ChangeCrossFade();
@@ -487,23 +487,4 @@ namespace Ryneus
         }
     }
 
-    public class BattlePartyInfo
-    {
-        private Action<int> _callEvent;
-        public Action<int> CallEvent => _callEvent;
-        public BattlePartyInfo(Action<int> callEvent,Action backEvent)
-        {
-            _callEvent = callEvent;
-            _backEvent = backEvent;
-        }
-        private Action _backEvent;
-        public Action BackEvent => _backEvent;
-        
-        private List<ActorInfo> _actorInfos;
-        public List<ActorInfo> ActorInfos => _actorInfos;
-        public void SetActorInfos(List<ActorInfo> actorInfos)
-        {
-            _actorInfos = actorInfos;
-        }
-    }
 }

@@ -267,6 +267,12 @@ namespace Ryneus
         {
             _busy = true;
             var currentSymbol = _view.SelectSymbolInfo;
+            var sceneParam = new BattlePartySceneInfo
+            {
+                EnemyInfos = currentSymbol.BattlerInfos(),
+                ActorInfos = _model.StageMembers(),
+                IsBoss = currentSymbol.Master.SymbolType == SymbolType.Boss
+            };
             var popupInfo = new PopupInfo
             {
                 PopupType = PopupType.BattleParty,
@@ -276,7 +282,7 @@ namespace Ryneus
                     SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                     CommandCancelSelectSymbol();
                 },
-                template = currentSymbol.BattlerInfos()
+                template = sceneParam
             };
             _view.CommandCallPopup(popupInfo);
         }

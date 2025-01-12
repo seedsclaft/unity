@@ -137,7 +137,7 @@ namespace Ryneus
             playingTrack.FadeVolume(0,1);
             UpdateBgmVolume();
             playTrack.Play();
-            playTrack.FadeVolume(1 * _bgmVolume,1);
+            playTrack.FadeVolume(volume * _bgmVolume,1);
             _crossFadeMode = false;
             _crossFadeTrackNo = 0;
         }

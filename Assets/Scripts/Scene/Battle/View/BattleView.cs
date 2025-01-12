@@ -655,7 +655,7 @@ namespace Ryneus
                 return;
             }
             SoundManager.Instance.PlayStaticSe(SEType.Skill);
-            StartAnimation(subjectIndex, effekseerEffect, 0, 1f, 1.0f);
+            StartAnimation(subjectIndex, effekseerEffect,0, 1.5f, 0.75f);
             _battlerComps[subjectIndex].SetActiveBeforeSkillThumb(true);
         }
 

@@ -290,7 +290,7 @@ namespace Ryneus
                     //    PlayBossBgm();
                     //} else
                     {
-                        var bgmData = DataSystem.Data.GetBGM(_model.TacticsBgmKey());
+                        var bgmData = _model.TacticsBgmData();
                         if (bgmData.CrossFade != "" && SoundManager.Instance.CrossFadeMode)
                         {
                             SoundManager.Instance.ChangeCrossFade();

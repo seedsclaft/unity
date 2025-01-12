@@ -59,16 +59,16 @@ namespace Ryneus
 
         public async void PlayTacticsBgm()
         {
-            var bgmKey = _model.TacticsBgmKey();
-            var bgm = await _model.GetBgmData(bgmKey);
-            SoundManager.Instance.PlayBgm(bgm,1.0f);
+            var bgmData = _model.TacticsBgmData();
+            var bgm = await _model.GetBgmData(bgmData.Key);
+            SoundManager.Instance.PlayBgm(bgm,bgmData.Volume);
         }
 
         public async void PlayBossBgm()
         {
             var bgmData = DataSystem.Data.GetBGM(_model.CurrentStage.Master.BossBGMId);
             var bgm = await _model.GetBgmData(bgmData.Key);
-            SoundManager.Instance.PlayBgm(bgm,1.0f);
+            SoundManager.Instance.PlayBgm(bgm,bgmData.Volume);
         }
         
         public void CommandSave(bool isReturnScene)

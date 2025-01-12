@@ -9,14 +9,6 @@ namespace Ryneus
 {
 	public class BgmImporter : AssetPostprocessor 
 	{
-		enum BaseColumn
-		{
-			Id = 0,
-			Key,
-			FileName,
-			Loop,
-			CrossFade,
-		}
 		//static readonly string ExcelPath = "Assets/Resources/Data";
 		static readonly string ExcelName = "BGM.xlsx";
 
@@ -77,18 +69,23 @@ namespace Ryneus
 
 					// エクセルシートからセル単位で読み込み
 					ISheet BaseSheet = Book.GetSheetAt(0);
+					var KeyRow = BaseSheet.GetRow(0);
+					AssetPostImporter.SetKeyNames(KeyRow.Cells);
 
 					for (int i = 1; i <= BaseSheet.LastRowNum; i++)
 					{
 						IRow BaseRow = BaseSheet.GetRow(i);
 
-						var BGM = new BGMData();
-						BGM.Id = AssetPostImporter.ImportNumeric(BaseRow,(int)BaseColumn.Id);
-						BGM.Key = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.Key);
-						BGM.FileName = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.FileName);
-						BGM.Loop = BaseRow.GetCell((int)BaseColumn.Loop).BooleanCellValue;
-						BGM.CrossFade = AssetPostImporter.ImportString(BaseRow,(int)BaseColumn.CrossFade);
-						Data.BGM.Add(BGM);
+                        var BGM = new BGMData
+                        {
+                            Id = AssetPostImporter.ImportNumeric(BaseRow, "Id"),
+                            Key = AssetPostImporter.ImportString(BaseRow, "Key"),
+                            FileName = AssetPostImporter.ImportString(BaseRow, "FileName"),
+                            Volume = AssetPostImporter.ImportFloat(BaseRow, "Volume"),
+                            Loop = AssetPostImporter.ImportBool(BaseRow, "Loop"),
+                            CrossFade = AssetPostImporter.ImportString(BaseRow, "CrossFade")
+                        };
+                        Data.BGM.Add(BGM);
 					}
 
 				}

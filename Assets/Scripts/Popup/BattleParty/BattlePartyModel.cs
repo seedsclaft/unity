@@ -5,6 +5,7 @@ namespace Ryneus
 {
     public class BattlePartyModel : BaseModel
     {
+        public BattlePartySceneInfo SceneParam;
 
 
         private ActorInfo _currentActor = null;
@@ -13,7 +14,8 @@ namespace Ryneus
         
         public BattlePartyModel()
         {
-            _currentActor = StageMembers()[0];
+            SceneParam = (BattlePartySceneInfo)GameSystem.SceneStackManager.LastTemplate;
+            _currentActor = SceneParam.ActorInfos[0];
         }
 
         public List<SystemData.CommandData> BattlePartyCommand()
@@ -93,7 +95,7 @@ namespace Ryneus
 
         public List<BattlerInfo> EnemyInfos()
         {
-            return (List<BattlerInfo>)GameSystem.SceneStackManager.LastTemplate;
+            return SceneParam.EnemyInfos;
         }
 
         public void SetInBattle()
@@ -175,5 +177,16 @@ namespace Ryneus
             };
             return MakeListData(list,enable);
         }
+    }
+    
+    public class BattlePartySceneInfo
+    {
+        public BattlePartySceneInfo()
+        {
+        }
+        
+        public bool IsBoss = false;
+        public List<ActorInfo> ActorInfos;
+        public List<BattlerInfo> EnemyInfos;
     }
 }

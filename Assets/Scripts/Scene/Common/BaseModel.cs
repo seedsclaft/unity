@@ -154,14 +154,14 @@ namespace Ryneus
         }
         
 
-        public string TacticsBgmKey()
+        public BGMData TacticsBgmData()
         {
             if (CurrentStage != null)
             {
                 var bgmData = DataSystem.Data.GetBGM(CurrentStage.Master.BGMId);
-                return bgmData.Key;
+                return bgmData;
             }
-            return "TACTICS1";
+            return null;
         }
 
         public string PlayerName()

@@ -16,161 +16,227 @@ MonoBehaviour:
   - Id: 1
     Key: TITLE
     FileName: libra_rebirth_arrange
+    Volume: 0.8
     Loop: 0
     CrossFade: 
-  - Id: 2
-    Key: MAINMENU
-    FileName: PerituneMaterial_Limpid_Water_loop
+  - Id: 100
+    Key: MAINMENU1
+    FileName: luminosite
+    Volume: 0.8
     Loop: 0
     CrossFade: 
-  - Id: 3
+  - Id: 110
+    Key: MAINMENU2
+    FileName: kono_sekai_no_hate_e
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 120
+    Key: MAINMENU3
+    FileName: sugiikuaki
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1010
     Key: TACTICS1
     FileName: all_out_attack
+    Volume: 0.5
     Loop: 0
     CrossFade: 
-  - Id: 4
+  - Id: 1020
     Key: TACTICS2
-    FileName: Battle5
+    FileName: enemy_in_sight!
+    Volume: 0.8
     Loop: 0
     CrossFade: 
-  - Id: 5
+  - Id: 1030
     Key: TACTICS3
-    FileName: PerituneMaterial_Grief_inst_loop
+    FileName: Halfway Hard-boiled Boys(2015edit)
+    Volume: 0.8
     Loop: 0
     CrossFade: 
-  - Id: 6
+  - Id: 1040
     Key: TACTICS4
-    FileName: PerituneMaterial_Grief_loop
+    FileName: resurrection
+    Volume: 0.8
     Loop: 0
     CrossFade: 
-  - Id: 11
+  - Id: 1050
+    Key: TACTICS5
+    FileName: foresight_22
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1060
+    Key: TACTICS6
+    FileName: n_or_bs
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1070
+    Key: TACTICS7
+    FileName: ladiyjye
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1080
+    Key: TACTICS8
+    FileName: cumulonimbus
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1090
+    Key: TACTICS9
+    FileName: yozakura
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1100
+    Key: TACTICS10
+    FileName: sakura_seiten
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1110
+    Key: TACTICS11
+    FileName: kazanebi
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1120
+    Key: TACTICS12
+    FileName: wind_run_through
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1130
+    Key: TACTICS13
+    FileName: n_or_kp
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1140
+    Key: TACTICS14
+    FileName: moonless_night
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 1150
+    Key: TACTICS15
+    FileName: salvation
+    Volume: 0.8
+    Loop: 0
+    CrossFade: 
+  - Id: 2010
     Key: BOSS1
-    FileName: PerituneMaterial_Cyber_Noir_loop
+    FileName: amatias
+    Volume: 0.6
     Loop: 0
     CrossFade: 
-  - Id: 12
-    Key: OPENING
-    FileName: PerituneMaterial_Grief_inst_loop
-    Loop: 0
-    CrossFade: 
-  - Id: 13
-    Key: EVENT1
-    FileName: PerituneMaterial_Dawning_Tale
-    Loop: 1
-    CrossFade: 
-  - Id: 14
-    Key: EVENT2
-    FileName: PerituneMaterial_Limpid_Water_melodyoff_loop
-    Loop: 1
-    CrossFade: 
-  - Id: 15
-    Key: ENDING
-    FileName: PerituneMaterial_Dawning_Tale
-    Loop: 0
-    CrossFade: 
-  - Id: 16
-    Key: LAST_BOSS
-    FileName: UniqueGear_Kaibyaku_No_Ragnarok
+  - Id: 2020
+    Key: BOSS2
+    FileName: debris_cloud_0
+    Volume: 0.8
     Loop: 0
     CrossFade: 
   SE:
   - Id: 1
     Key: DECIDE
-    FileName: cursor33
+    FileName: decide7
     Volume: 1
     Pitch: 1
   - Id: 2
     Key: CANCEL
-    FileName: cursor27
+    FileName: decide7
     Volume: 1
     Pitch: 1
   - Id: 3
     Key: CURSOR
-    FileName: cursor11
+    FileName: cursor_move8
     Volume: 1
     Pitch: 1
   - Id: 4
     Key: DAMAGE
-    FileName: Damage4
-    Volume: 0.8
+    FileName: damage
+    Volume: 0.7
     Pitch: 1
   - Id: 5
     Key: DEFEAT
-    FileName: Collapse1
+    FileName: defeat
     Volume: 0.8
     Pitch: 1
   - Id: 6
     Key: DEMIGOD
-    FileName: cursor32
+    FileName: swordspecial
     Volume: 0.8
     Pitch: 1
   - Id: 7
     Key: DENY
-    FileName: Shot2
+    FileName: beap3
     Volume: 1
     Pitch: 1
   - Id: 8
     Key: LEVELUP
-    FileName: cursor32
+    FileName: decide43
     Volume: 1
     Pitch: 1
   - Id: 9
     Key: CRITICAL
-    FileName: cursor32
-    Volume: 0.8
+    FileName: Sword2
+    Volume: 0.9
     Pitch: 1
   - Id: 10
     Key: SKILL
-    FileName: cursor32
-    Volume: 0.6
+    FileName: Skill1
+    Volume: 1
     Pitch: 1
   - Id: 11
     Key: AWAKEN
-    FileName: cursor32
-    Volume: 0.8
+    FileName: demigod
+    Volume: 1
     Pitch: 1
   - Id: 12
     Key: COUNTUP
-    FileName: cursor32
+    FileName: messagedisplay1
     Volume: 1
     Pitch: 1
   - Id: 13
     Key: MISS
-    FileName: cursor32
-    Volume: 0.6
+    FileName: Miss
+    Volume: 0.9
     Pitch: 1
   - Id: 14
     Key: HEAL
-    FileName: cursor32
-    Volume: 0.8
+    FileName: Up1
+    Volume: 1
     Pitch: 1
   - Id: 15
     Key: BUFF
-    FileName: cursor32
-    Volume: 0.8
+    FileName: Sword1
+    Volume: 1
     Pitch: 1
   - Id: 16
     Key: DEBUFF
-    FileName: cursor32
-    Volume: 0.8
+    FileName: power36
+    Volume: 1
     Pitch: 1
   - Id: 17
     Key: BATTLESTART
-    FileName: Battle3
-    Volume: 0.8
+    FileName: swordspecial
+    Volume: 0.9
     Pitch: 0.7
   - Id: 18
     Key: LEARNSKILL
-    FileName: cursor32
-    Volume: 0.8
+    FileName: Flash2
+    Volume: 1
     Pitch: 1
   - Id: 19
     Key: CURSOR_MOVE
-    FileName: cursor11
-    Volume: 0.8
+    FileName: cursor
+    Volume: 1
     Pitch: 1
   - Id: 20
     Key: PLAYSTART
-    FileName: cursor33
-    Volume: 0.8
+    FileName: gamestart
+    Volume: 1
     Pitch: 1

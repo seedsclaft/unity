@@ -23,8 +23,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: '-'
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1010
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols:
     - StageId: 0
@@ -694,8 +694,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage1
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1010
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols:
     - StageId: 10
@@ -789,8 +789,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage2
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1020
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 30
@@ -803,8 +803,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage3
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1030
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 40
@@ -817,8 +817,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage4
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1040
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 50
@@ -831,8 +831,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage5
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1050
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 60
@@ -845,8 +845,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage6
-    BGMId: 5
-    BossBGMId: 16
+    BGMId: 1060
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 70
@@ -859,8 +859,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage7
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1070
+    BossBGMId: 2010
     StageEvents: []
     StageSymbols: []
   - Id: 80
@@ -873,8 +873,8 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage8
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1080
+    BossBGMId: 2020
     StageEvents: []
     StageSymbols: []
   - Id: 90
@@ -887,8 +887,92 @@ MonoBehaviour:
     InitMembers: 03000000
     RandomTroopCount: 15
     BackGround: stage9
-    BGMId: 3
-    BossBGMId: 11
+    BGMId: 1090
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 100
+    StageNo: 10
+    Name: "\u91CD\u306A\u308B\u5922\u3068\u6708\u660E\u304B\u308A"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u6545\u90F7\u306B\u623B\u3063\u305F\u30EA\u30B8\u30A7\u9054\u306F\\n\u6E2F\u3067\u884C\u308F\u308C\u308B\u796D\u308A\u3092\u624B\u4F1D\u3046\u3053\u3068\u306B\u2026\u2026"
+    StageLv: 18
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage10
+    BGMId: 1100
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 110
+    StageNo: 11
+    Name: "\u904E\u3061\u8272\u306E\u8A18\u61B6"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u4E09\u5E74\u306E\u6708\u65E5\u306F\u3001\u81EA\u5206\u306B\u306F\u9577\u3059\u304E\u3066\u2026\u2026\\n\u6545\u90F7\u3092\u53D6\u308A\u623B\u3059\u305F\u3081\u3001\u30EA\u30B8\u30A7\u9054\u306F\u9928\u306B\u8D74\u304F\u3002"
+    StageLv: 20
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage11
+    BGMId: 1110
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 120
+    StageNo: 12
+    Name: "\u706F\u7C60\u3092\u307F\u305A\u306B\u6D41\u3057\u3066"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u5168\u3066\u3001\u7B54\u3048\u3092\u624B\u306B\u3059\u308B\u305F\u3081\u306B\u3002\\n\u518D\u5EA6\u3001\u9B54\u6CD5\u5B66\u6821\u3078\u4FB5\u5165\u3092\u8A66\u307F\u308B\u3002"
+    StageLv: 22
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage12
+    BGMId: 1120
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 130
+    StageNo: 13
+    Name: "\u306A\u307B\u3042\u307E\u308A\u3042\u308B\u4ECA"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u6AFB\u306E\u6A39\u306E\u4E0B\u306B\u57CB\u307E\u3063\u3066\u3044\u305F\u3082\u306E\u306F\u2026\u2026\\n\u7814\u7A76\u5BA4\u306B\u6B8B\u308B\u9B54\u8005\u3092\u9000\u3051\u3001\u5965\u3078\u3068\u7A81\u304D\u9032\u3080\u3002"
+    StageLv: 24
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage13
+    BGMId: 1130
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 140
+    StageNo: 14
+    Name: "\u3072\u3073\u304B\u3051\u8272\u306E\u30AD\u30BB\u30AD"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u4FE1\u983C\u3067\u304D\u308B\u4EF2\u9593\u304C\u5074\u306B\u3044\u308B\u304B\u3089\u3002\\n\u9B54\u6CD5\u4F7F\u3044\u9054\u306F\u5143\u51F6\u3067\u3042\u308B\u9ED2\u6C34\u6676\u3092\u63A2\u3057\u6C42\u3081\u308B\u3002"
+    StageLv: 26
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage14
+    BGMId: 1140
+    BossBGMId: 2020
+    StageEvents: []
+    StageSymbols: []
+  - Id: 150
+    StageNo: 15
+    Name: "\u65C5\u8DEF\u306E\u679C\u3066"
+    AchieveText: 
+    Selectable: 1
+    Help: "\u9B54\u6CD5\u304C\u3042\u308C\u3070\u4F55\u3067\u3082\u51FA\u6765\u308B\u3068\u601D\u3063\u3066\u3044\u305F\u3093\u3060\u3002\\n\u4EF2\u9593\u3068\u9038\u308C\u305F\u30BD\u30E9\u3068\u30DF\u30B7\u30A7\u30EB\u304C\u898B\u305F\u3082\u306E\u306F\u2026\u2026"
+    StageLv: 28
+    InitMembers: 03000000
+    RandomTroopCount: 15
+    BackGround: stage15
+    BGMId: 1150
+    BossBGMId: 1150
     StageEvents: []
     StageSymbols: []
   SymbolGroupData:

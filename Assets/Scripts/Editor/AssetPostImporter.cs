@@ -113,6 +113,16 @@ namespace Ryneus
 			return "";
 		}
 
+		public static bool ImportBool(IRow BaseRow,string key)
+		{
+			var cell = BaseRow.GetCell(GetKeyNameIndex(key));
+			if (cell != null)
+			{
+				return cell.BooleanCellValue;
+			}
+			return false;
+		}
+
 		// エクセルワークブックを作成
 		public static void CreateBook(string path, Stream stream, out IWorkbook Workbook)
 		{
