@@ -39,7 +39,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -362,7 +362,7 @@ MonoBehaviour:
       - Bg
       - event4
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -464,7 +464,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -1467,7 +1467,7 @@ MonoBehaviour:
       - Bg
       - Slime
       - 
-      - 
+      - Picture2
       - 
       - 
       - 
@@ -1668,6 +1668,23 @@ MonoBehaviour:
     - rowIndex: 97
       debugIndex: 98
       strings:
+      - LayerOff
+      - Picture2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 98
+      debugIndex: 99
+      strings:
       - Wait
       - 
       - 
@@ -1682,8 +1699,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 98
-      debugIndex: 99
+    - rowIndex: 99
+      debugIndex: 100
       strings:
       - FadeIn
       - black
@@ -1699,8 +1716,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 99
-      debugIndex: 100
+    - rowIndex: 100
+      debugIndex: 101
       strings:
       - 
       - Actor03_02
@@ -1716,8 +1733,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 100
-      debugIndex: 101
+    - rowIndex: 101
+      debugIndex: 102
       strings:
       - 
       - Actor03_03
@@ -1733,8 +1750,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 101
-      debugIndex: 102
+    - rowIndex: 102
+      debugIndex: 103
       strings:
       - 
       - Actor05_03
@@ -1750,8 +1767,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 102
-      debugIndex: 103
+    - rowIndex: 103
+      debugIndex: 104
       strings:
       - 
       - Actor03_03
@@ -1767,8 +1784,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 103
-      debugIndex: 104
+    - rowIndex: 104
+      debugIndex: 105
       strings:
       - 
       - Actor03_00
@@ -1784,8 +1801,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 104
-      debugIndex: 105
+    - rowIndex: 105
+      debugIndex: 106
       strings:
       - 
       - Actor05_03
@@ -1801,8 +1818,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 105
-      debugIndex: 106
+    - rowIndex: 106
+      debugIndex: 107
       strings:
       - PlaySe
       - Monster3
@@ -1811,23 +1828,6 @@ MonoBehaviour:
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 106
-      debugIndex: 107
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -1855,6 +1855,23 @@ MonoBehaviour:
     - rowIndex: 108
       debugIndex: 109
       strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 109
+      debugIndex: 110
+      strings:
       - 
       - Actor03_00
       - 
@@ -1869,8 +1886,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 109
-      debugIndex: 110
+    - rowIndex: 110
+      debugIndex: 111
       strings:
       - 
       - Actor03_02
@@ -1886,8 +1903,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 110
-      debugIndex: 111
+    - rowIndex: 111
+      debugIndex: 112
       strings:
       - FadeOut
       - black
@@ -1903,8 +1920,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 111
-      debugIndex: 112
+    - rowIndex: 112
+      debugIndex: 113
       strings:
       - PlaySe
       - Skill1
@@ -1920,8 +1937,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 112
-      debugIndex: 113
+    - rowIndex: 113
+      debugIndex: 114
       strings:
       - Wait
       - 
@@ -1937,8 +1954,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 113
-      debugIndex: 114
+    - rowIndex: 114
+      debugIndex: 115
       strings:
       - 
       - Actor03_03
@@ -1954,8 +1971,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 114
-      debugIndex: 115
+    - rowIndex: 115
+      debugIndex: 116
       strings:
       - FadeOut
       - black
@@ -1971,8 +1988,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 115
-      debugIndex: 116
+    - rowIndex: 116
+      debugIndex: 117
       strings:
       - StopBgm2
       - 
@@ -1988,8 +2005,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 116
-      debugIndex: 117
+    - rowIndex: 117
+      debugIndex: 118
       strings:
       - Wait
       - 
@@ -2005,8 +2022,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 117
-      debugIndex: 118
+    - rowIndex: 118
+      debugIndex: 119
       strings:
       - EndScenario
       - 
@@ -2024,7 +2041,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/102_output.csv
     type: 0
-    textLength: 2341
+    textLength: 2389
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: 74ddda7aeaeccf14d8919e8b1afe4e8a,
       type: 3}
@@ -2062,7 +2079,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -2385,7 +2402,7 @@ MonoBehaviour:
       - Bg
       - event4
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -2487,7 +2504,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -3490,7 +3507,7 @@ MonoBehaviour:
       - Bg
       - Slime
       - 
-      - 
+      - Picture2
       - 
       - 
       - 
@@ -3691,6 +3708,23 @@ MonoBehaviour:
     - rowIndex: 98
       debugIndex: 98
       strings:
+      - LayerOff
+      - Picture2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 99
+      debugIndex: 99
+      strings:
       - Wait
       - 
       - 
@@ -3705,8 +3739,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 99
-      debugIndex: 99
+    - rowIndex: 100
+      debugIndex: 100
       strings:
       - FadeIn
       - black
@@ -3722,8 +3756,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 100
-      debugIndex: 100
+    - rowIndex: 101
+      debugIndex: 101
       strings:
       - 
       - Actor03_02
@@ -3739,8 +3773,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 101
-      debugIndex: 101
+    - rowIndex: 102
+      debugIndex: 102
       strings:
       - 
       - Actor03_03
@@ -3756,8 +3790,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 102
-      debugIndex: 102
+    - rowIndex: 103
+      debugIndex: 103
       strings:
       - 
       - Actor05_03
@@ -3773,8 +3807,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 103
-      debugIndex: 103
+    - rowIndex: 104
+      debugIndex: 104
       strings:
       - 
       - Actor03_03
@@ -3790,8 +3824,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 104
-      debugIndex: 104
+    - rowIndex: 105
+      debugIndex: 105
       strings:
       - 
       - Actor03_00
@@ -3807,8 +3841,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 105
-      debugIndex: 105
+    - rowIndex: 106
+      debugIndex: 106
       strings:
       - 
       - Actor05_03
@@ -3824,8 +3858,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 106
-      debugIndex: 106
+    - rowIndex: 107
+      debugIndex: 107
       strings:
       - PlaySe
       - Monster3
@@ -3834,23 +3868,6 @@ MonoBehaviour:
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 107
-      debugIndex: 107
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -3878,6 +3895,23 @@ MonoBehaviour:
     - rowIndex: 109
       debugIndex: 109
       strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 110
+      debugIndex: 110
+      strings:
       - 
       - Actor03_00
       - 
@@ -3892,8 +3926,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 110
-      debugIndex: 110
+    - rowIndex: 111
+      debugIndex: 111
       strings:
       - 
       - Actor03_02
@@ -3909,8 +3943,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 111
-      debugIndex: 111
+    - rowIndex: 112
+      debugIndex: 112
       strings:
       - FadeOut
       - black
@@ -3926,8 +3960,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 112
-      debugIndex: 112
+    - rowIndex: 113
+      debugIndex: 113
       strings:
       - PlaySe
       - Skill1
@@ -3943,8 +3977,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 113
-      debugIndex: 113
+    - rowIndex: 114
+      debugIndex: 114
       strings:
       - Wait
       - 
@@ -3960,8 +3994,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 114
-      debugIndex: 114
+    - rowIndex: 115
+      debugIndex: 115
       strings:
       - 
       - Actor03_03
@@ -3977,8 +4011,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 115
-      debugIndex: 115
+    - rowIndex: 116
+      debugIndex: 116
       strings:
       - FadeOut
       - black
@@ -3994,8 +4028,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 116
-      debugIndex: 116
+    - rowIndex: 117
+      debugIndex: 117
       strings:
       - StopBgm2
       - 
@@ -4011,8 +4045,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 117
-      debugIndex: 117
+    - rowIndex: 118
+      debugIndex: 118
       strings:
       - Wait
       - 
@@ -4028,8 +4062,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 118
-      debugIndex: 118
+    - rowIndex: 119
+      debugIndex: 119
       strings:
       - EndScenario
       - 
@@ -4047,7 +4081,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/102_output.csv
     type: 0
-    textLength: 2341
+    textLength: 2389
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: 74ddda7aeaeccf14d8919e8b1afe4e8a,
       type: 3}

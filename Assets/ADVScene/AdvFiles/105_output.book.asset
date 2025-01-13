@@ -39,7 +39,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -889,7 +889,7 @@ MonoBehaviour:
       - Bg
       - Behemoth
       - 
-      - 
+      - Picture2
       - 
       - 
       - 
@@ -1158,8 +1158,8 @@ MonoBehaviour:
     - rowIndex: 67
       debugIndex: 68
       strings:
-      - FadeOut
-      - black
+      - LayerOff
+      - Picture2
       - 
       - 
       - 
@@ -1175,6 +1175,23 @@ MonoBehaviour:
     - rowIndex: 68
       debugIndex: 69
       strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 69
+      debugIndex: 70
+      strings:
       - StopBgm2
       - 
       - 
@@ -1189,8 +1206,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 69
-      debugIndex: 70
+    - rowIndex: 70
+      debugIndex: 71
       strings:
       - Wait
       - 
@@ -1206,8 +1223,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 70
-      debugIndex: 71
+    - rowIndex: 71
+      debugIndex: 72
       strings:
       - EndScenario
       - 
@@ -1225,7 +1242,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/105_output.csv
     type: 0
-    textLength: 1656
+    textLength: 1688
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: d2a028c45b8da4747b3d6e591200aa17,
       type: 3}
@@ -1263,7 +1280,7 @@ MonoBehaviour:
       - Bg
       - stage1
       - 
-      - 
+      - Picture1
       - 
       - 
       - 
@@ -2113,7 +2130,7 @@ MonoBehaviour:
       - Bg
       - Behemoth
       - 
-      - 
+      - Picture2
       - 
       - 
       - 
@@ -2382,8 +2399,8 @@ MonoBehaviour:
     - rowIndex: 68
       debugIndex: 68
       strings:
-      - FadeOut
-      - black
+      - LayerOff
+      - Picture2
       - 
       - 
       - 
@@ -2399,6 +2416,23 @@ MonoBehaviour:
     - rowIndex: 69
       debugIndex: 69
       strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 70
+      debugIndex: 70
+      strings:
       - StopBgm2
       - 
       - 
@@ -2413,8 +2447,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 70
-      debugIndex: 70
+    - rowIndex: 71
+      debugIndex: 71
       strings:
       - Wait
       - 
@@ -2430,8 +2464,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 71
-      debugIndex: 71
+    - rowIndex: 72
+      debugIndex: 72
       strings:
       - EndScenario
       - 
@@ -2449,7 +2483,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/105_output.csv
     type: 0
-    textLength: 1656
+    textLength: 1688
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: d2a028c45b8da4747b3d6e591200aa17,
       type: 3}

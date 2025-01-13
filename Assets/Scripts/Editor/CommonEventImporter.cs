@@ -181,8 +181,17 @@ namespace Ryneus
                                     mainText = l.parameters[0];
                                 }
                                 // キャラ名を置き換え
-                                Regex reg1 = new Regex("/\x1bN\\[(\\d+)\\]/gi");
-                                mainText = reg1.Replace(mainText,"なまえ");
+                                mainText = mainText.Replace("\\N[1]","エリシャ");
+                                mainText = mainText.Replace("\\N[2]","ソラ");
+                                mainText = mainText.Replace("\\N[3]","リジェ");
+                                mainText = mainText.Replace("\\N[4]","ミシェル");
+                                mainText = mainText.Replace("\\N[5]","シイナ");
+                                mainText = mainText.Replace("\\N[6]","ルネ");
+                                mainText = mainText.Replace("\\N[7]","マリー");
+                                mainText = mainText.Replace("\\N[11]","出航所の係");
+                                mainText = mainText.Replace("\\N[12]","子供");
+                                mainText = mainText.Replace("\\N[13]","子供エリシャ");
+                                mainText = mainText.Replace("\\N[14]","母親（？）");
                                 csvCol.Add(mainText);
                                 break;
                             case 108: // 注釈
