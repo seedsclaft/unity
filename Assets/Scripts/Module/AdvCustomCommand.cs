@@ -48,14 +48,14 @@ namespace Utage
     // カスタムコマンド
     public class AdvCommandPlayBgm : AdvCommand
     {
-        private string bgmKey = "";
+        private string fileName = "";
         private int? volume = 80;
         private int? pitch = 100;
         //private bool? loop = true;
         public AdvCommandPlayBgm(StringGridRow row)
             :base(row)
         {
-            bgmKey = ParseCell<string>(AdvColumnName.Arg1);
+            fileName = ParseCell<string>(AdvColumnName.Arg1);
             volume = ParseCell<int?>(AdvColumnName.Arg2);
             pitch = ParseCell<int?>(AdvColumnName.Arg3);
             //loop = ParseCell<bool>(AdvColumnName.Arg2);
@@ -64,10 +64,10 @@ namespace Utage
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
-            var bgmData = DataSystem.Data.BGM.Find(a => a.Key == bgmKey);
+            var bgmData = DataSystem.Data.BGM.Find(a => a.FileName == fileName);
             if (bgmData != null)
             {
-                var bgm = await ResourceSystem.LoadBGMAsset(bgmKey);
+                var bgm = await ResourceSystem.LoadBGMAsset(bgmData.Key);
                 Ryneus.SoundManager.Instance.PlayBgm(bgm,bgmData.Volume,bgmData.Loop);
             }
         }

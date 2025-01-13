@@ -232,6 +232,10 @@ namespace Ryneus
             {
                 _introAudioSource.FadeVolume(targetVolume,duration);
             }
+            if (_loopAudioSource.isPlaying())
+            {
+                _loopAudioSource.FadeVolume(targetVolume,duration);
+            }
         }
     }
 }

@@ -432,7 +432,7 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
 
-        IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
+        IEnumerator JumpScenarioAsync(string label, Action onComplete)
         {
             _busy = true;
             advHelpWindow.SetInputInfo("ADV_READING");
@@ -451,7 +451,7 @@ namespace Ryneus
             
             //_currentScene.SetActiveUi(true);
             _busy = false;
-            if(onComplete != null) onComplete();
+            onComplete?.Invoke();
         }
 
         public void CommandSceneChange(SceneInfo sceneInfo)

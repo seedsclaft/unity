@@ -1,6 +1,6 @@
 Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType
 
-Bg,event2,,,,,,,,,,
+Bg,event2,,Picture1,,,,,,,,
 FadeOut,#00000068,,,,,,,,,,
 FadeIn,black,,,,,,,,,,
 PlayBgm,行雲流水,100,100,,,,,,,,
@@ -21,7 +21,7 @@ Wait,,,,,,1,,,,,
 ,Actor05_00,,Character2,,,,,先生なら、仮設の寝室にいます,,,
 ,Actor01_01,,Character0,,,,,そうか、ありがとう,,,
 FadeOut,black,,,,,,,,,,
-Bg,event3,,,,,,,,,,
+Bg,event3,,Picture1,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeIn,black,,,,,,,,,,
 Wait,,,,,,1,,,,,

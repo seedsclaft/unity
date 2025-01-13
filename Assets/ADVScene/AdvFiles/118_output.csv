@@ -1,6 +1,6 @@
 Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType
 
-Bg,stage4,,,,,,,,,,
+Bg,stage4,,Picture1,,,,,,,,
 FadeOut,#00000068,,,,,,,,,,
 FadeIn,black,,,,,,,,,,
 PlayBgm,ガラバルガ,100,100,,,,,,,,
@@ -10,7 +10,7 @@ Wait,,,,,,1,,,,,
 ,Actor06_04,,Character2,,,,,お腹すいた、戻りたい,,,
 ,Actor01_00,,Character0,,,,,一度、陣に戻ろう\n時期に辺りも暗くなる,,,
 FadeOut,black,,,,,,,,,,
-Bg,event2,,,,,,,,,,
+Bg,event2,,Picture1,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeIn,black,,,,,,,,,,
 ,Actor05_00,,Character2,,,,,校内は、今頃どうなっているんでしょう……,,,

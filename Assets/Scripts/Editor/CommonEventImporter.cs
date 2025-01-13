@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Text;
 using NPOI.SS.UserModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Ryneus
 {
@@ -13,6 +14,7 @@ namespace Ryneus
 	{
         static readonly string ImportPath = "Assets/Data";
 		static readonly string FileName = "CommonEvents.json";
+        static readonly string ExportPath = "Assets/ADVScene/AdvFiles/";
 
         // Fileがあったら呼ばれる
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
@@ -168,15 +170,20 @@ namespace Ryneus
                                 csvCol.Add("");
                                 // 文章
                                 var nextCode = d.list[codeIdx+1];
+                                var mainText = "";
                                 if (nextCode.code == 401)
                                 {
                                     // 2行データ
-                                    csvCol.Add(l.parameters[0] +"\\n" + nextCode.parameters[0]);
+                                    mainText = l.parameters[0] +"\\n" + nextCode.parameters[0];
                                     doubleText = true;
                                 } else
                                 {
-                                    csvCol.Add(l.parameters[0]);
+                                    mainText = l.parameters[0];
                                 }
+                                // キャラ名を置き換え
+                                Regex reg1 = new Regex("/\x1bN\\[(\\d+)\\]/gi");
+                                mainText = reg1.Replace(mainText,"なまえ");
+                                csvCol.Add(mainText);
                                 break;
                             case 108: // 注釈
                                 break;
@@ -299,7 +306,7 @@ namespace Ryneus
                         csvStrings.Add("EndScenario,,,,,,,,,,,");
                     }
                     
-                    using(StreamWriter sw = new StreamWriter(d.id + "_output.csv", false))
+                    using(StreamWriter sw = new StreamWriter(ExportPath + d.id + "_output.csv", false))
                     {
                         foreach (var csvString in csvStrings)
                         {

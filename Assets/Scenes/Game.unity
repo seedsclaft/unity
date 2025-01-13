@@ -2167,9 +2167,8 @@ MonoBehaviour:
   SeVolume: 1
   BGMMute: 0
   SeMute: 0
-  _bgmTracks:
-  - {fileID: 1671500904}
-  - {fileID: 1093038079}
+  _bgmMain: {fileID: 1671500904}
+  _bgmSub: {fileID: 1093038079}
   _bgsTrack: {fileID: 485966433}
 --- !u!4 &255791123
 Transform:
@@ -11601,8 +11600,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1671500899}
-  - {fileID: 485966437}
   - {fileID: 1093038075}
+  - {fileID: 485966437}
   m_Father: {fileID: 255791123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1078720416

@@ -1,6 +1,6 @@
 Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType
 
-Bg,event5,,,,,,,,,,
+Bg,event5,,Picture1,,,,,,,,
 FadeOut,#00000068,,,,,,,,,,
 FadeIn,black,,,,,,,,,,
 PlayBgm,kazetami,100,100,,,,,,,,
@@ -12,7 +12,7 @@ Wait,,,,,,1,,,,,
 PlaySe,step01,80,100,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeOut,black,,,,,,,,,,
-Bg,event6,,,,,,,,,,
+Bg,event6,,Picture1,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeIn,black,,,,,,,,,,
 ,Actor01_00,,Character2,,,,,とりあえず落ち着ける場所に来られたな,,,

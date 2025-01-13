@@ -359,8 +359,12 @@ namespace Ryneus
             var advInfo = new AdvCallInfo();
             advInfo.SetLabel(_model.GetAdvFile(symbolInfo.Master.Param1));
             _view.gameObject.SetActive(false);
+            // TimeStampを取得してBgmをフェードアウト
+            var timeStamp = SoundManager.Instance.CurrentTimeStamp();
+            SoundManager.Instance.FadeOutBgm();
             advInfo.SetCallEvent(() => 
             {                
+                PlayTacticsBgm(timeStamp);
                 _view.gameObject.SetActive(true);
                 CommandAfterGetItem(symbolInfo);
             });

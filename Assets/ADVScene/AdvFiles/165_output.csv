@@ -1,6 +1,6 @@
 Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType
 
-Bg,stage8,,,,,,,,,,
+Bg,stage8,,Picture1,,,,,,,,
 FadeOut,#00000068,,,,,,,,,,
 PlayBgm,kazetami,100,100,,,,,,,,
 StopBgs,,,,,,,,,,,
@@ -52,7 +52,7 @@ Wait,,,,,,1,,,,,
 ,Actor06_00,,Character0,,,,,わかった、案内する,,,
 StopBgm2,,,,,,2,,,,,
 FadeOut,black,,,,,,,,,,
-Bg,backtitle,,,,,,,,,,
+Bg,backtitle,,Picture1,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeIn,black,,,,,,,,,,
 PlayBgm,yumemidori,100,100,,,,,,,,

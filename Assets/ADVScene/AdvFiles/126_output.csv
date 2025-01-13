@@ -1,6 +1,6 @@
 Command,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,WaitType,Text,PageCtrl,Voice,WindowType
 
-Bg,event3,,,,,,,,,,
+Bg,event3,,Picture1,,,,,,,,
 FadeOut,#00000068,,,,,,,,,,
 FadeIn,black,,,,,,,,,,
 PlayBgm,ふろーずん風車,100,100,,,,,,,,
@@ -10,7 +10,7 @@ Wait,,,,,,1,,,,,
 ,Actor02_04,,Character2,,,,,頭が痛い……,,,
 ,Actor02_04,,Character2,,,,,エーテルドリンク……\n部屋に残してたやつまだ残ってたかな,,,
 FadeOut,black,,,,,,,,,,
-Bg,stage3,,,,,,,,,,
+Bg,stage3,,Picture1,,,,,,,,
 PlaySe,Close2,80,100,,,,,,,,
 Wait,,,,,,1,,,,,
 FadeIn,black,,,,,,,,,,

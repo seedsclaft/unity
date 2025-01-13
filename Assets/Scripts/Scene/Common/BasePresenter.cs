@@ -57,11 +57,11 @@ namespace Ryneus
             return isAbort;
         }
 
-        public async void PlayTacticsBgm()
+        public async void PlayTacticsBgm(float timeStamp = 0)
         {
             var bgmData = _model.TacticsBgmData();
             var bgm = await _model.GetBgmData(bgmData.Key);
-            SoundManager.Instance.PlayBgm(bgm,bgmData.Volume);
+            SoundManager.Instance.PlayBgm(bgm,bgmData.Volume,bgmData.Loop,timeStamp);
         }
 
         public async void PlayBossBgm()
