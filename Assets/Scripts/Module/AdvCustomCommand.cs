@@ -41,6 +41,9 @@ namespace Utage
                 case "SetSelect1Actor":
                     command = new AdvCommandSetSelect1Actor(row);
                     break;
+                case "Balloon":
+                    command = new AdvCommandBalloon(row);
+                    break;
             }
         }
     }
@@ -156,6 +159,23 @@ namespace Utage
             {
                 engine.Param.SetParameterString("Select1",actorData.Name);
             }
+        }
+    }
+
+    public class AdvCommandBalloon : AdvCommand
+    {
+        private int position = 0;
+        private int type = 0;
+        public AdvCommandBalloon(StringGridRow row)
+            :base(row)
+        {
+            position = ParseCell<int>(AdvColumnName.Arg1);
+            type = ParseCell<int>(AdvColumnName.Arg2);
+        }
+        
+        //コマンド実行
+        public override void DoCommand(AdvEngine engine)
+        {
         }
     }
 }
