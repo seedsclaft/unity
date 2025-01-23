@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using Ryneus;
+using UnityEngine;
+using DG.Tweening;
 
 namespace Utage
 {
@@ -88,7 +91,7 @@ namespace Utage
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
-            var bgs = await Ryneus.ResourceSystem.LoadBGSAsset(bgsKey);
+            var bgs = await ResourceSystem.LoadBGSAsset(bgsKey);
             Ryneus.SoundManager.Instance.PlayBgs(bgs,1.0f,true);
         }
     }
@@ -109,7 +112,7 @@ namespace Utage
         //コマンド実行
         public override async void DoCommand(AdvEngine engine)
         {
-            var se = await Ryneus.ResourceSystem.LoadSeAsset(fileName);
+            var se = await ResourceSystem.LoadSeAsset(fileName);
             Ryneus.SoundManager.Instance.PlaySe(se,(int)volume * 0.01f,(int)pitch * 0.01f);
         }
     }
@@ -150,11 +153,11 @@ namespace Utage
     
         public override void DoCommand(AdvEngine engine)
         {
-            if (Ryneus.GameSystem.GameInfo == null) return;
+            if (GameSystem.GameInfo == null) return;
             //if (Ryneus.GameSystem.CurrentStageData.CurrentStage == null) return;
-            if (Ryneus.GameSystem.GameInfo.PartyInfo.ActorInfos.Count == 0) return;
-            int actorId = Ryneus.GameSystem.GameInfo.PartyInfo.ActorInfos[0].ActorId;
-            var actorData = Ryneus.DataSystem.FindActor(actorId);
+            if (GameSystem.GameInfo.PartyInfo.ActorInfos.Count == 0) return;
+            int actorId = GameSystem.GameInfo.PartyInfo.ActorInfos[0].ActorId;
+            var actorData = DataSystem.FindActor(actorId);
             if (actorData != null)
             {
                 engine.Param.SetParameterString("Select1",actorData.Name);
@@ -164,18 +167,34 @@ namespace Utage
 
     public class AdvCommandBalloon : AdvCommand
     {
-        private int position = 0;
+        private string layerName = "";
         private int type = 0;
         public AdvCommandBalloon(StringGridRow row)
             :base(row)
         {
-            position = ParseCell<int>(AdvColumnName.Arg1);
+            layerName = ParseCell<string>(AdvColumnName.Arg1);
             type = ParseCell<int>(AdvColumnName.Arg2);
         }
         
         //コマンド実行
         public override void DoCommand(AdvEngine engine)
         {
+            AdvGraphicLayer layer = engine.GraphicManager.FindLayer(layerName);
+            if (layer == null)
+            {
+                return;
+            }
+            var balloon = CreateBalloon(layer);
+            balloon.Play((AnimationBalloonType)type);
+        }
+
+        private AnimationBalloon CreateBalloon(AdvGraphicLayer layer)
+        {
+            var prefabObject = ResourceSystem.LoadResource<GameObject>(ResourceSystem.PrefabPath + "Common/Balloon");
+            var prefab = GameObject.Instantiate(prefabObject);
+            prefab.transform.SetParent(layer.gameObject.transform,false);
+            prefab.transform.SetAsLastSibling();
+            return prefab.GetComponent<AnimationBalloon>();
         }
     }
 }

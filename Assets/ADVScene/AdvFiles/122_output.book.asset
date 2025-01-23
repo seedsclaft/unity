@@ -257,15 +257,15 @@ MonoBehaviour:
     - rowIndex: 14
       debugIndex: 15
       strings:
-      - 
-      - Actor04_00
-      - 
+      - Balloon
       - Character2
+      - 2
       - 
       - 
       - 
       - 
-      - "\u2026\u2026\uFF1F"
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30BD\u30E9\u3055\u3093\u3001\u602A\u6211\u3092\u3057\u3066\u307E\u305B\u3093\u304B\uFF1F"
+      - "\u2026\u2026\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -290,6 +290,23 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 16
       debugIndex: 17
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30BD\u30E9\u3055\u3093\u3001\u602A\u6211\u3092\u3057\u3066\u307E\u305B\u3093\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 17
+      debugIndex: 18
       strings:
       - Wait
       - 
@@ -305,8 +322,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 17
-      debugIndex: 18
+    - rowIndex: 18
+      debugIndex: 19
       strings:
       - PlaySe
       - Monster4
@@ -322,8 +339,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 18
-      debugIndex: 19
+    - rowIndex: 19
+      debugIndex: 20
       strings:
       - Wait
       - 
@@ -339,8 +356,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 19
-      debugIndex: 20
+    - rowIndex: 20
+      debugIndex: 21
       strings:
       - 
       - Actor04_04
@@ -356,8 +373,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 20
-      debugIndex: 21
+    - rowIndex: 21
+      debugIndex: 22
       strings:
       - 
       - Actor02_03
@@ -373,8 +390,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 21
-      debugIndex: 22
+    - rowIndex: 22
+      debugIndex: 23
       strings:
       - 
       - Actor04_02
@@ -390,8 +407,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 22
-      debugIndex: 23
+    - rowIndex: 23
+      debugIndex: 24
       strings:
       - PlaySe
       - Damage5
@@ -407,8 +424,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 23
-      debugIndex: 24
+    - rowIndex: 24
+      debugIndex: 25
       strings:
       - Wait
       - 
@@ -424,8 +441,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 24
-      debugIndex: 25
+    - rowIndex: 25
+      debugIndex: 26
+      strings:
+      - Balloon
+      - Character2
+      - 1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 26
+      debugIndex: 27
       strings:
       - 
       - Actor04_04
@@ -436,40 +470,6 @@ MonoBehaviour:
       - 
       - 
       - "\u30BD\u30E9\u3055\u3093\uFF01\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 25
-      debugIndex: 26
-      strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u308F\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 26
-      debugIndex: 27
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
       - 
       - 
       isEmpty: 0
@@ -486,7 +486,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30DE\u30BA\u3063\u305F\u306A\u2026\u2026"
+      - "\u3046\u308F\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -494,57 +494,6 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 28
       debugIndex: 29
-      strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u4E00\u767A\u3001\u3044\u3044\u306E\u3082\u3089\u3063\u3061\u3083\u3063\u305F\u3058\u3083\u306A\u3044\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 29
-      debugIndex: 30
-      strings:
-      - 
-      - Actor02_01
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u5F31\u305D\u3046\u306A\u5974\u3092\u72D9\u3046\u306A\u3093\u3066\\n\u3053\u306E\u731F\u72AC\u98A8\u60C5\u304C\u3044\u3044\u8DA3\u5473\u3057\u3066\u308B\u3058\u3083\u306A\u3044\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 31
-      strings:
-      - 
-      - Actor04_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u30BD\u30E9\u3055\u3093\u3001\u8840\u304C\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 32
       strings:
       - Wait
       - 
@@ -560,8 +509,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 32
-      debugIndex: 33
+    - rowIndex: 29
+      debugIndex: 30
       strings:
       - 
       - Actor02_04
@@ -571,7 +520,58 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3046\u308B\u3055\u3044\u306A\uFF01\\n\u3042\u3093\u305F\u3001\u4F59\u6240\u898B\u3059\u308B\u306A\u3063\u3066\u8A00\u3063\u305F\u3058\u3083\u306A\u3044\uFF01"
+      - "\u30DE\u30BA\u3063\u305F\u306A\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 30
+      debugIndex: 31
+      strings:
+      - 
+      - Actor02_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4E00\u767A\u3001\u3044\u3044\u306E\u3082\u3089\u3063\u3061\u3083\u3063\u305F\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 32
+      strings:
+      - Balloon
+      - Character0
+      - 5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 33
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u5F31\u305D\u3046\u306A\u5974\u3092\u72D9\u3046\u306A\u3093\u3066\\n\u3053\u306E\u731F\u72AC\u98A8\u60C5\u304C\u3044\u3044\u8DA3\u5473\u3057\u3066\u308B\u3058\u3083\u306A\u3044\uFF01"
       - 
       - 
       isEmpty: 0
@@ -588,7 +588,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3054\u3001\u3054\u3081\u3093\u306A\u2026\u2026"
+      - "\u30BD\u30E9\u3055\u3093\u3001\u8840\u304C\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -596,23 +596,6 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 34
       debugIndex: 35
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u8B1D\u3089\u306A\u304F\u3066\u3044\u3044\u304B\u3089"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 35
-      debugIndex: 36
       strings:
       - Wait
       - 
@@ -628,18 +611,35 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 35
+      debugIndex: 36
+      strings:
+      - Balloon
+      - Character0
+      - 7
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 36
       debugIndex: 37
       strings:
       - 
-      - Actor02_01
+      - Actor02_04
       - 
       - Character0
       - 
       - 
       - 
       - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u3067\u3082\\n\u3042\u305F\u3057\u306B\u624B\u3092\u51FA\u3057\u305F\u306E\u304C\u904B\u306E\u5C3D\u304D\u3060\u306D"
+      - "\u3046\u308B\u3055\u3044\u306A\uFF01\\n\u3042\u3093\u305F\u3001\u4F59\u6240\u898B\u3059\u308B\u306A\u3063\u3066\u8A00\u3063\u305F\u3058\u3083\u306A\u3044\uFF01"
       - 
       - 
       isEmpty: 0
@@ -649,14 +649,14 @@ MonoBehaviour:
       debugIndex: 38
       strings:
       - 
-      - Actor02_01
+      - Actor04_02
       - 
-      - Character0
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u7D76\u5BFE\u3001\u5012\u3057\u3066\u3084\u308B\uFF01"
+      - 
+      - 
+      - "\u3054\u3001\u3054\u3081\u3093\u306A\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -665,15 +665,15 @@ MonoBehaviour:
     - rowIndex: 38
       debugIndex: 39
       strings:
-      - PlaySe
-      - Skill2
-      - 80
-      - 100
+      - 
+      - Actor02_02
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
+      - "\u8B1D\u3089\u306A\u304F\u3066\u3044\u3044\u304B\u3089"
       - 
       - 
       isEmpty: 0
@@ -699,15 +699,15 @@ MonoBehaviour:
     - rowIndex: 40
       debugIndex: 41
       strings:
-      - PlaySe
-      - Thunder9
-      - 80
-      - 100
+      - 
+      - Actor02_01
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u3067\u3082\\n\u3042\u305F\u3057\u306B\u624B\u3092\u51FA\u3057\u305F\u306E\u304C\u904B\u306E\u5C3D\u304D\u3060\u306D"
       - 
       - 
       isEmpty: 0
@@ -716,15 +716,15 @@ MonoBehaviour:
     - rowIndex: 41
       debugIndex: 42
       strings:
-      - Wait
+      - 
+      - Actor02_01
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
-      - 1
-      - 
-      - 
+      - "\u7D76\u5BFE\u3001\u5012\u3057\u3066\u3084\u308B\uFF01"
       - 
       - 
       isEmpty: 0
@@ -733,10 +733,10 @@ MonoBehaviour:
     - rowIndex: 42
       debugIndex: 43
       strings:
-      - FadeOut
-      - black
-      - 
-      - 
+      - PlaySe
+      - Skill2
+      - 80
+      - 100
       - 
       - 
       - 
@@ -767,6 +767,74 @@ MonoBehaviour:
     - rowIndex: 44
       debugIndex: 45
       strings:
+      - PlaySe
+      - Thunder9
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 45
+      debugIndex: 46
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 47
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 48
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 49
+      strings:
       - FadeIn
       - black
       - 
@@ -781,8 +849,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 45
-      debugIndex: 46
+    - rowIndex: 49
+      debugIndex: 50
       strings:
       - 
       - Actor02_01
@@ -793,74 +861,6 @@ MonoBehaviour:
       - 
       - 
       - "\u60F3\u50CF\u3057\u305F\u3053\u3068\u306A\u3044\u3067\u3057\u3087\\n\u96F7\u306E\u9396\u3067\u7E1B\u3089\u308C\u308B\u6C17\u6301\u3061\u3063\u3066"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 46
-      debugIndex: 47
-      strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u4E00\u77AC\u3067\u3001\u9B54\u8005\u304C\u9396\u3067\u96C1\u5B57\u304C\u3089\u3081\u306B\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 47
-      debugIndex: 48
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u6355\u307E\u3048\u305F\\n\u9396\u304B\u3089\u306F\u9003\u308C\u3089\u308C\u306A\u3044\u3088"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 48
-      debugIndex: 49
-      strings:
-      - 
-      - Actor02_03
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u307B\u3089\u3001\u307C\u3055\u3063\u3068\u3057\u3066\u306A\u3044\u3067\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 49
-      debugIndex: 50
-      strings:
-      - 
-      - Actor02_03
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u4ECA\u306E\u3046\u3061\u306B\u9B54\u6CD5\u3092\u6253\u3061\u8FBC\u3093\u3067\uFF01"
       - 
       - 
       isEmpty: 0
@@ -877,7 +877,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u306F\u3001\u306F\u3044\uFF01"
+      - "\u4E00\u77AC\u3067\u3001\u9B54\u8005\u304C\u9396\u3067\u96C1\u5B57\u304C\u3089\u3081\u306B\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -885,6 +885,91 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 51
       debugIndex: 52
+      strings:
+      - Balloon
+      - Character0
+      - 3
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 52
+      debugIndex: 53
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u6355\u307E\u3048\u305F\\n\u9396\u304B\u3089\u306F\u9003\u308C\u3089\u308C\u306A\u3044\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 53
+      debugIndex: 54
+      strings:
+      - 
+      - Actor02_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u307B\u3089\u3001\u307C\u3055\u3063\u3068\u3057\u3066\u306A\u3044\u3067\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 54
+      debugIndex: 55
+      strings:
+      - 
+      - Actor02_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4ECA\u306E\u3046\u3061\u306B\u9B54\u6CD5\u3092\u6253\u3061\u8FBC\u3093\u3067\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 55
+      debugIndex: 56
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3001\u306F\u3044\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 56
+      debugIndex: 57
       strings:
       - FadeOut
       - black
@@ -900,8 +985,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 52
-      debugIndex: 53
+    - rowIndex: 57
+      debugIndex: 58
       strings:
       - PlaySe
       - Skill2
@@ -910,91 +995,6 @@ MonoBehaviour:
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 53
-      debugIndex: 54
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 55
-      strings:
-      - PlaySe
-      - Explosion2
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 56
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 56
-      debugIndex: 57
-      strings:
-      - PlaySe
-      - Darkness3
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 57
-      debugIndex: 58
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -1022,10 +1022,10 @@ MonoBehaviour:
     - rowIndex: 59
       debugIndex: 60
       strings:
-      - FadeIn
-      - black
-      - 
-      - 
+      - PlaySe
+      - Explosion2
+      - 80
+      - 100
       - 
       - 
       - 
@@ -1039,13 +1039,13 @@ MonoBehaviour:
     - rowIndex: 60
       debugIndex: 61
       strings:
-      - PlaySe
-      - Monster3
-      - 80
-      - 100
+      - Wait
       - 
       - 
       - 
+      - 
+      - 
+      - 1
       - 
       - 
       - 
@@ -1056,13 +1056,13 @@ MonoBehaviour:
     - rowIndex: 61
       debugIndex: 62
       strings:
-      - Wait
+      - PlaySe
+      - Darkness3
+      - 80
+      - 100
       - 
       - 
       - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -1090,23 +1090,6 @@ MonoBehaviour:
     - rowIndex: 63
       debugIndex: 64
       strings:
-      - PlaySe
-      - Earth5
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 64
-      debugIndex: 65
-      strings:
       - Wait
       - 
       - 
@@ -1121,18 +1104,35 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 64
+      debugIndex: 65
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 65
       debugIndex: 66
       strings:
-      - 
-      - Actor02_01
-      - 
-      - Character0
-      - 
-      - 
+      - PlaySe
+      - Monster3
+      - 80
+      - 100
       - 
       - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u3084\u308C\u3070\u51FA\u6765\u308B\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1158,15 +1158,15 @@ MonoBehaviour:
     - rowIndex: 67
       debugIndex: 68
       strings:
-      - 
-      - Actor03_03
-      - 
-      - Character2
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u30BD\u30E9\u3001\u7121\u7406\u3057\u3059\u304E\u3060\u3088\uFF01"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1175,15 +1175,15 @@ MonoBehaviour:
     - rowIndex: 68
       debugIndex: 69
       strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
+      - PlaySe
+      - Earth5
+      - 80
+      - 100
       - 
       - 
-      - "\u75DB\u30C3\u2026\u2026\\n\u307E\u3068\u3082\u306B\u653B\u6483\u53D7\u3051\u3061\u3083\u3063\u305F\u3088"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1210,6 +1210,91 @@ MonoBehaviour:
       debugIndex: 71
       strings:
       - 
+      - Actor02_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u3084\u308C\u3070\u51FA\u6765\u308B\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 71
+      debugIndex: 72
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 72
+      debugIndex: 73
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30BD\u30E9\u3001\u7121\u7406\u3057\u3059\u304E\u3060\u3088\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 73
+      debugIndex: 74
+      strings:
+      - 
+      - Actor02_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u75DB\u30C3\u2026\u2026\\n\u307E\u3068\u3082\u306B\u653B\u6483\u53D7\u3051\u3061\u3083\u3063\u305F\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 74
+      debugIndex: 75
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 75
+      debugIndex: 76
+      strings:
+      - 
       - Actor02_04
       - 
       - Character0
@@ -1223,8 +1308,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 71
-      debugIndex: 72
+    - rowIndex: 76
+      debugIndex: 77
       strings:
       - 
       - Actor04_04
@@ -1240,8 +1325,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 72
-      debugIndex: 73
+    - rowIndex: 77
+      debugIndex: 78
+      strings:
+      - Balloon
+      - Character0
+      - 5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 78
+      debugIndex: 79
       strings:
       - 
       - Actor02_02
@@ -1257,8 +1359,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 73
-      debugIndex: 74
+    - rowIndex: 79
+      debugIndex: 80
       strings:
       - 
       - Actor04_04
@@ -1274,8 +1376,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 74
-      debugIndex: 75
+    - rowIndex: 80
+      debugIndex: 81
       strings:
       - 
       - Actor02_02
@@ -1291,8 +1393,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 75
-      debugIndex: 76
+    - rowIndex: 81
+      debugIndex: 82
       strings:
       - 
       - Actor02_02
@@ -1308,8 +1410,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 76
-      debugIndex: 77
+    - rowIndex: 82
+      debugIndex: 83
       strings:
       - 
       - Actor01_00
@@ -1325,8 +1427,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 77
-      debugIndex: 78
+    - rowIndex: 83
+      debugIndex: 84
+      strings:
+      - Balloon
+      - Character0
+      - 7
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 84
+      debugIndex: 85
       strings:
       - 
       - Actor02_04
@@ -1342,8 +1461,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 78
-      debugIndex: 79
+    - rowIndex: 85
+      debugIndex: 86
       strings:
       - 
       - Actor03_03
@@ -1359,8 +1478,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 79
-      debugIndex: 80
+    - rowIndex: 86
+      debugIndex: 87
       strings:
       - 
       - Actor02_04
@@ -1376,8 +1495,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 80
-      debugIndex: 81
+    - rowIndex: 87
+      debugIndex: 88
       strings:
       - 
       - Actor04_04
@@ -1393,8 +1512,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 81
-      debugIndex: 82
+    - rowIndex: 88
+      debugIndex: 89
       strings:
       - 
       - Actor03_03
@@ -1410,8 +1529,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 82
-      debugIndex: 83
+    - rowIndex: 89
+      debugIndex: 90
       strings:
       - 
       - Actor04_03
@@ -1427,8 +1546,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 83
-      debugIndex: 84
+    - rowIndex: 90
+      debugIndex: 91
       strings:
       - Wait
       - 
@@ -1444,8 +1563,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 84
-      debugIndex: 85
+    - rowIndex: 91
+      debugIndex: 92
       strings:
       - 
       - Actor04_00
@@ -1461,8 +1580,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 85
-      debugIndex: 86
+    - rowIndex: 92
+      debugIndex: 93
       strings:
       - 
       - Actor02_04
@@ -1478,131 +1597,12 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 86
-      debugIndex: 87
-      strings:
-      - 
-      - Actor04_04
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3044\u3044\u3048\u3001\u4ED8\u3044\u3066\u3044\u304D\u307E\u3059\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 87
-      debugIndex: 88
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u306A\u3089\u52DD\u624B\u306B\u3057\u306A\u3088"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 88
-      debugIndex: 89
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 89
-      debugIndex: 90
-      strings:
-      - FadeOut
-      - black
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 90
-      debugIndex: 91
-      strings:
-      - PlaySe
-      - step01
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 91
-      debugIndex: 92
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 92
-      debugIndex: 93
-      strings:
-      - PlayBgm
-      - yumemidori
-      - 100
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 93
       debugIndex: 94
       strings:
-      - FadeIn
-      - black
-      - 
+      - Balloon
+      - Character2
+      - 1
       - 
       - 
       - 
@@ -1618,6 +1618,142 @@ MonoBehaviour:
       debugIndex: 95
       strings:
       - 
+      - Actor04_04
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3044\u3044\u3048\u3001\u4ED8\u3044\u3066\u3044\u304D\u307E\u3059\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 95
+      debugIndex: 96
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u306A\u3089\u52DD\u624B\u306B\u3057\u306A\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 96
+      debugIndex: 97
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 97
+      debugIndex: 98
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 98
+      debugIndex: 99
+      strings:
+      - PlaySe
+      - step01
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 99
+      debugIndex: 100
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 100
+      debugIndex: 101
+      strings:
+      - PlayBgm
+      - yumemidori
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 101
+      debugIndex: 102
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 102
+      debugIndex: 103
+      strings:
+      - 
       - Actor05_02
       - 
       - Character2
@@ -1631,8 +1767,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 95
-      debugIndex: 96
+    - rowIndex: 103
+      debugIndex: 104
       strings:
       - 
       - Actor01_00
@@ -1648,8 +1784,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 96
-      debugIndex: 97
+    - rowIndex: 104
+      debugIndex: 105
       strings:
       - 
       - Actor01_00
@@ -1665,8 +1801,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 97
-      debugIndex: 98
+    - rowIndex: 105
+      debugIndex: 106
       strings:
       - 
       - Actor06_04
@@ -1682,8 +1818,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 98
-      debugIndex: 99
+    - rowIndex: 106
+      debugIndex: 107
       strings:
       - 
       - Actor05_02
@@ -1694,142 +1830,6 @@ MonoBehaviour:
       - 
       - 
       - "\u308F\u305F\u3057\u3082\u3067\u3059\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 99
-      debugIndex: 100
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3067\u3082\u3001\u3082\u3046\u9B54\u8005\u306F\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093\u3057"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 100
-      debugIndex: 101
-      strings:
-      - 
-      - Actor05_01
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u6226\u3044\u306F\u7D42\u308F\u3063\u305F\u3093\u3067\u3059\u306D\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 101
-      debugIndex: 102
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 102
-      debugIndex: 103
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 103
-      debugIndex: 104
-      strings:
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u4F55\u304B\u805E\u3044\u3066\u307F\u3088\u3046\u304B\u306A\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 104
-      debugIndex: 105
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 105
-      debugIndex: 106
-      strings:
-      - 
-      - Actor05_03
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u30A8\u30EA\u30B7\u30E3\u3055\u3093\u306F\u3001\u3053\u308C\u304B\u3089\u3069\u3046\u3059\u308B\u3093\u3067\u3059\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 106
-      debugIndex: 107
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3053\u306E\u5834\u3092\u8ECD\u306B\u5F15\u304D\u7D99\u3044\u3060\u3089\\n\u56FD\u5883\u306B\u623B\u308B\u3053\u3068\u306B\u306A\u308B\u3060\u308D\u3046"
       - 
       - 
       isEmpty: 0
@@ -1846,7 +1846,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u6765\u305F\u3070\u304B\u308A\u306A\u306E\u306B\u3001\u3082\u3046\u5E30\u3063\u3061\u3083\u3046\u3093\u3067\u3059\u306D"
+      - "\u3067\u3082\u3001\u3082\u3046\u9B54\u8005\u306F\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093\u3057"
       - 
       - 
       isEmpty: 0
@@ -1855,15 +1855,15 @@ MonoBehaviour:
     - rowIndex: 108
       debugIndex: 109
       strings:
-      - 
-      - Actor01_00
-      - 
-      - Character0
-      - 
+      - Balloon
+      - Character2
+      - 1
       - 
       - 
       - 
-      - "\u3060\u304C\u3057\u3070\u3089\u304F\u306F\\n\u3053\u3053\u306B\u7559\u307E\u308D\u3046\u3068\u601D\u3046"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1873,14 +1873,14 @@ MonoBehaviour:
       debugIndex: 110
       strings:
       - 
-      - Actor01_01
+      - Actor05_01
       - 
-      - Character0
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u6642\u9593\u304C\u3042\u308C\u3070\\n\u30C9\u30E9\u30B4\u30F3\u306B\u3082\u4E57\u305B\u3066\u3042\u3052\u3089\u308C\u308B\u305E"
+      - 
+      - 
+      - "\u6226\u3044\u306F\u7D42\u308F\u3063\u305F\u3093\u3067\u3059\u306D\uFF01"
       - 
       - 
       isEmpty: 0
@@ -1889,15 +1889,15 @@ MonoBehaviour:
     - rowIndex: 110
       debugIndex: 111
       strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u3068\u3001\u3068\u3076\u3093\u3067\u3059\u3088\u306D\u3001\u30C9\u30E9\u30B4\u30F3\u3063\u3066\u2026\u2026"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1906,15 +1906,15 @@ MonoBehaviour:
     - rowIndex: 111
       debugIndex: 112
       strings:
-      - 
-      - Actor01_01
-      - 
-      - Character0
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u306F\u306F\u306F\u2026\u2026\\n\u53EF\u611B\u3044\u5974\u3060\u304B\u3089\u990C\u3084\u308A\u3060\u3051\u3067\u3082\u3057\u3066\u304F\u308C\u308B\u3068\u5B09\u3057\u3044"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -1924,14 +1924,14 @@ MonoBehaviour:
       debugIndex: 113
       strings:
       - 
-      - Actor05_00
-      - 
-      - Character2
       - 
       - 
       - 
       - 
-      - "\u305D\u308C\u3050\u3089\u3044\u306A\u3089\u2026\u2026\\n\u898B\u3066\u307F\u305F\u3044\u3001\u6C17\u3082\u3057\u307E\u3059"
+      - 
+      - 
+      - 
+      - "\u4F55\u304B\u805E\u3044\u3066\u307F\u3088\u3046\u304B\u306A\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -1957,6 +1957,193 @@ MonoBehaviour:
     - rowIndex: 114
       debugIndex: 115
       strings:
+      - Balloon
+      - Character2
+      - 2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 115
+      debugIndex: 116
+      strings:
+      - 
+      - Actor05_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30A8\u30EA\u30B7\u30E3\u3055\u3093\u306F\u3001\u3053\u308C\u304B\u3089\u3069\u3046\u3059\u308B\u3093\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 116
+      debugIndex: 117
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u5834\u3092\u8ECD\u306B\u5F15\u304D\u7D99\u3044\u3060\u3089\\n\u56FD\u5883\u306B\u623B\u308B\u3053\u3068\u306B\u306A\u308B\u3060\u308D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 117
+      debugIndex: 118
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6765\u305F\u3070\u304B\u308A\u306A\u306E\u306B\u3001\u3082\u3046\u5E30\u3063\u3061\u3083\u3046\u3093\u3067\u3059\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 118
+      debugIndex: 119
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u304C\u3057\u3070\u3089\u304F\u306F\\n\u3053\u3053\u306B\u7559\u307E\u308D\u3046\u3068\u601D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 119
+      debugIndex: 120
+      strings:
+      - 
+      - Actor01_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u6642\u9593\u304C\u3042\u308C\u3070\\n\u30C9\u30E9\u30B4\u30F3\u306B\u3082\u4E57\u305B\u3066\u3042\u3052\u3089\u308C\u308B\u305E"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 120
+      debugIndex: 121
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 121
+      debugIndex: 122
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3068\u3001\u3068\u3076\u3093\u3067\u3059\u3088\u306D\u3001\u30C9\u30E9\u30B4\u30F3\u3063\u3066\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 122
+      debugIndex: 123
+      strings:
+      - 
+      - Actor01_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u306F\u306F\u2026\u2026\\n\u53EF\u611B\u3044\u5974\u3060\u304B\u3089\u990C\u3084\u308A\u3060\u3051\u3067\u3082\u3057\u3066\u304F\u308C\u308B\u3068\u5B09\u3057\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 123
+      debugIndex: 124
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3050\u3089\u3044\u306A\u3089\u2026\u2026\\n\u898B\u3066\u307F\u305F\u3044\u3001\u6C17\u3082\u3057\u307E\u3059"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 124
+      debugIndex: 125
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 125
+      debugIndex: 126
+      strings:
       - 
       - Actor05_03
       - 
@@ -1971,8 +2158,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 115
-      debugIndex: 116
+    - rowIndex: 126
+      debugIndex: 127
       strings:
       - 
       - Actor06_00
@@ -1988,8 +2175,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 116
-      debugIndex: 117
+    - rowIndex: 127
+      debugIndex: 128
       strings:
       - 
       - Actor06_00
@@ -2005,8 +2192,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 117
-      debugIndex: 118
+    - rowIndex: 128
+      debugIndex: 129
       strings:
       - 
       - Actor06_01
@@ -2022,8 +2209,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 118
-      debugIndex: 119
+    - rowIndex: 129
+      debugIndex: 130
       strings:
       - 
       - Actor05_00
@@ -2039,8 +2226,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 119
-      debugIndex: 120
+    - rowIndex: 130
+      debugIndex: 131
       strings:
       - Wait
       - 
@@ -2056,8 +2243,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 120
-      debugIndex: 121
+    - rowIndex: 131
+      debugIndex: 132
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 132
+      debugIndex: 133
       strings:
       - 
       - Actor05_02
@@ -2073,8 +2277,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 121
-      debugIndex: 122
+    - rowIndex: 133
+      debugIndex: 134
       strings:
       - 
       - Actor01_04
@@ -2090,8 +2294,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 122
-      debugIndex: 123
+    - rowIndex: 134
+      debugIndex: 135
       strings:
       - 
       - Actor05_03
@@ -2107,8 +2311,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 123
-      debugIndex: 124
+    - rowIndex: 135
+      debugIndex: 136
       strings:
       - 
       - Actor01_04
@@ -2124,8 +2328,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 124
-      debugIndex: 125
+    - rowIndex: 136
+      debugIndex: 137
       strings:
       - 
       - Actor01_00
@@ -2141,8 +2345,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 125
-      debugIndex: 126
+    - rowIndex: 137
+      debugIndex: 138
       strings:
       - 
       - Actor05_02
@@ -2158,8 +2362,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 126
-      debugIndex: 127
+    - rowIndex: 138
+      debugIndex: 139
       strings:
       - 
       - Actor01_00
@@ -2175,8 +2379,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 127
-      debugIndex: 128
+    - rowIndex: 139
+      debugIndex: 140
       strings:
       - 
       - Actor01_00
@@ -2192,8 +2396,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 128
-      debugIndex: 129
+    - rowIndex: 140
+      debugIndex: 141
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 141
+      debugIndex: 142
       strings:
       - 
       - Actor05_02
@@ -2209,8 +2430,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 129
-      debugIndex: 130
+    - rowIndex: 142
+      debugIndex: 143
       strings:
       - Wait
       - 
@@ -2221,227 +2442,6 @@ MonoBehaviour:
       - 1
       - 
       - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 130
-      debugIndex: 131
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30B7\u30A4\u30CA\u306F\u9B54\u8005\u3092\u898B\u305F\u3053\u3068\u306A\u304B\u3063\u305F\u306E\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 131
-      debugIndex: 132
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u306F\u3001\u306F\u3044\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 132
-      debugIndex: 133
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30EB\u30CD\u3055\u3093\u306F\u9B54\u8005\u306E\u3053\u3068\u3092\u77E5\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 133
-      debugIndex: 134
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u81EA\u5206\u304C\u9B54\u8005\u3068\u5BFE\u5CD9\u3059\u308B\u306E\u306F\u521D\u3081\u3066\u3067\u306F\u306A\u3044\u305E"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 134
-      debugIndex: 135
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3053\u306E\u56FD\u304B\u3089\u6771\u306E\u56FD\u5883\u3092\u8D8A\u3048\u305F\u3068\u3053\u308D\\n\u305D\u3053\u306B\u306F\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 135
-      debugIndex: 136
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character1
-      - 
-      - 
-      - 
-      - 
-      - "\u2026\u2026\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 136
-      debugIndex: 137
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character1
-      - 
-      - 
-      - 
-      - 
-      - "\u30EB\u30CD\u2026\u2026\u3001\u30AD\u30DF\u306F\u56FD\u5883\u306E\u5916\u306B\u51FA\u305F\u3053\u3068\u304C\u3042\u308B\u306E\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 137
-      debugIndex: 138
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u81EA\u5206\u306F\u3001\u305D\u3053\u3067\u80B2\u3063\u305F\\n\u77E5\u3063\u3066\u3044\u308B\u306E\u5F53\u305F\u308A\u307E\u3048\u3060"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 138
-      debugIndex: 139
-      strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3048\u30C3\uFF01\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 139
-      debugIndex: 140
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u6771\u306E\u56FD\u5883\u306E\u5148\u306F\u4EBA\u304C\u4F4F\u3081\u306A\u3044\u5834\u6240\u3060\u3063\u3066\u805E\u3044\u3066\u3044\u307E\u3059"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 140
-      debugIndex: 141
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u4FD7\u306B\u8A00\u3046\u3001\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3060\u3063\u3066"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 141
-      debugIndex: 142
-      strings:
-      - 
-      - Actor06_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3001\u521D\u3081\u3066\u805E\u304F\u8A00\u8449\u3060\u304C"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 142
-      debugIndex: 143
-      strings:
-      - 
-      - Actor05_03
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3069\u3046\u3057\u3066\u4ECA\u307E\u3067\u9ED9\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -2458,7 +2458,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u805E\u304B\u308C\u306A\u304B\u3063\u305F\\n\u3060\u304B\u3089\u3001\u8A71\u3057\u3066\u3044\u306A\u304B\u3063\u305F"
+      - "\u30B7\u30A4\u30CA\u306F\u9B54\u8005\u3092\u898B\u305F\u3053\u3068\u306A\u304B\u3063\u305F\u306E\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -2468,14 +2468,14 @@ MonoBehaviour:
       debugIndex: 145
       strings:
       - 
-      - Actor01_04
+      - Actor05_00
       - 
-      - Character1
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u30EB\u30CD\u3001\u305D\u306E\u3053\u3068\u306F\\n\u4ED6\u306E\u4EBA\u306B\u8A71\u3055\u306A\u3044\u307B\u3046\u304C\u3044\u3044"
+      - 
+      - 
+      - "\u306F\u3001\u306F\u3044\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -2492,7 +2492,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026\u2026\uFF1F"
+      - "\u30EB\u30CD\u3055\u3093\u306F\u9B54\u8005\u306E\u3053\u3068\u3092\u77E5\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -2502,14 +2502,14 @@ MonoBehaviour:
       debugIndex: 147
       strings:
       - 
-      - Actor01_00
+      - Actor06_00
       - 
-      - Character1
-      - 
-      - 
+      - Character0
       - 
       - 
-      - "\u3044\u3084\u3001\u7D76\u5BFE\u306B\u8A71\u3059\u306A"
+      - 
+      - 
+      - "\u81EA\u5206\u304C\u9B54\u8005\u3068\u5BFE\u5CD9\u3059\u308B\u306E\u306F\u521D\u3081\u3066\u3067\u306F\u306A\u3044\u305E"
       - 
       - 
       isEmpty: 0
@@ -2519,14 +2519,14 @@ MonoBehaviour:
       debugIndex: 148
       strings:
       - 
-      - Actor01_00
+      - Actor06_00
       - 
-      - Character1
-      - 
-      - 
+      - Character0
       - 
       - 
-      - "\u9B54\u8005\u306B\u5BFE\u3057\u3066\u3001\u307F\u3093\u306A\u904E\u654F\u306B\u306A\u3063\u3066\u3044\u308B"
+      - 
+      - 
+      - "\u3053\u306E\u56FD\u304B\u3089\u6771\u306E\u56FD\u5883\u3092\u8D8A\u3048\u305F\u3068\u3053\u308D\\n\u305D\u3053\u306B\u306F\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -2543,7 +2543,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u7279\u306B\u3053\u308C\u304B\u3089\u8ECD\u304C\u5E30\u3063\u3066\u304D\u305F\u3089\\n\u3044\u308D\u3044\u308D\u805E\u304B\u308C\u308B\u3053\u3068\u3082\u3042\u308B\u3060\u308D\u3046"
+      - "\u2026\u2026\uFF01"
       - 
       - 
       isEmpty: 0
@@ -2560,7 +2560,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4E0B\u624B\u306A\u767A\u8A00\u3092\u3059\u308C\u3070\\n\u3042\u3089\u306C\u7591\u3044\u3092\u6301\u305F\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3093\u3060"
+      - "\u30EB\u30CD\u2026\u2026\u3001\u30AD\u30DF\u306F\u56FD\u5883\u306E\u5916\u306B\u51FA\u305F\u3053\u3068\u304C\u3042\u308B\u306E\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -2577,7 +2577,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026\u2026"
+      - "\u81EA\u5206\u306F\u3001\u305D\u3053\u3067\u80B2\u3063\u305F\\n\u77E5\u3063\u3066\u3044\u308B\u306E\u5F53\u305F\u308A\u307E\u3048\u3060"
       - 
       - 
       isEmpty: 0
@@ -2585,6 +2585,261 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 151
       debugIndex: 152
+      strings:
+      - Balloon
+      - Character2
+      - 1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 152
+      debugIndex: 153
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u30C3\uFF01\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 153
+      debugIndex: 154
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6771\u306E\u56FD\u5883\u306E\u5148\u306F\u4EBA\u304C\u4F4F\u3081\u306A\u3044\u5834\u6240\u3060\u3063\u3066\u805E\u3044\u3066\u3044\u307E\u3059"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 154
+      debugIndex: 155
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u4FD7\u306B\u8A00\u3046\u3001\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3060\u3063\u3066"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 155
+      debugIndex: 156
+      strings:
+      - 
+      - Actor06_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3001\u521D\u3081\u3066\u805E\u304F\u8A00\u8449\u3060\u304C"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 156
+      debugIndex: 157
+      strings:
+      - 
+      - Actor05_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3069\u3046\u3057\u3066\u4ECA\u307E\u3067\u9ED9\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 157
+      debugIndex: 158
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u805E\u304B\u308C\u306A\u304B\u3063\u305F\\n\u3060\u304B\u3089\u3001\u8A71\u3057\u3066\u3044\u306A\u304B\u3063\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 158
+      debugIndex: 159
+      strings:
+      - 
+      - Actor01_04
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u30EB\u30CD\u3001\u305D\u306E\u3053\u3068\u306F\\n\u4ED6\u306E\u4EBA\u306B\u8A71\u3055\u306A\u3044\u307B\u3046\u304C\u3044\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 159
+      debugIndex: 160
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 160
+      debugIndex: 161
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u3044\u3084\u3001\u7D76\u5BFE\u306B\u8A71\u3059\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 161
+      debugIndex: 162
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u9B54\u8005\u306B\u5BFE\u3057\u3066\u3001\u307F\u3093\u306A\u904E\u654F\u306B\u306A\u3063\u3066\u3044\u308B"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 162
+      debugIndex: 163
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u7279\u306B\u3053\u308C\u304B\u3089\u8ECD\u304C\u5E30\u3063\u3066\u304D\u305F\u3089\\n\u3044\u308D\u3044\u308D\u805E\u304B\u308C\u308B\u3053\u3068\u3082\u3042\u308B\u3060\u308D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 163
+      debugIndex: 164
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0B\u624B\u306A\u767A\u8A00\u3092\u3059\u308C\u3070\\n\u3042\u3089\u306C\u7591\u3044\u3092\u6301\u305F\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 164
+      debugIndex: 165
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 165
+      debugIndex: 166
+      strings:
+      - Balloon
+      - Character0
+      - 9
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 166
+      debugIndex: 167
       strings:
       - 
       - Actor06_01
@@ -2600,8 +2855,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 152
-      debugIndex: 153
+    - rowIndex: 167
+      debugIndex: 168
       strings:
       - 
       - Actor01_00
@@ -2617,8 +2872,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 153
-      debugIndex: 154
+    - rowIndex: 168
+      debugIndex: 169
       strings:
       - 
       - Actor05_02
@@ -2634,8 +2889,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 154
-      debugIndex: 155
+    - rowIndex: 169
+      debugIndex: 170
       strings:
       - Wait
       - 
@@ -2651,8 +2906,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 155
-      debugIndex: 156
+    - rowIndex: 170
+      debugIndex: 171
       strings:
       - FadeOut
       - black
@@ -2668,8 +2923,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 156
-      debugIndex: 157
+    - rowIndex: 171
+      debugIndex: 172
       strings:
       - StopBgm2
       - 
@@ -2685,8 +2940,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 157
-      debugIndex: 158
+    - rowIndex: 172
+      debugIndex: 173
       strings:
       - Wait
       - 
@@ -2702,8 +2957,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 158
-      debugIndex: 159
+    - rowIndex: 173
+      debugIndex: 174
       strings:
       - EndScenario
       - 
@@ -2721,7 +2976,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/122_output.csv
     type: 0
-    textLength: 4156
+    textLength: 4426
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: 57e256d060f68154a82b7d748ce08caf,
       type: 3}
@@ -2977,15 +3232,15 @@ MonoBehaviour:
     - rowIndex: 15
       debugIndex: 15
       strings:
-      - 
-      - Actor04_00
-      - 
+      - Balloon
       - Character2
+      - 2
       - 
       - 
       - 
       - 
-      - "\u2026\u2026\uFF1F"
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -3002,7 +3257,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30BD\u30E9\u3055\u3093\u3001\u602A\u6211\u3092\u3057\u3066\u307E\u305B\u3093\u304B\uFF1F"
+      - "\u2026\u2026\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -3010,6 +3265,23 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 17
       debugIndex: 17
+      strings:
+      - 
+      - Actor04_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30BD\u30E9\u3055\u3093\u3001\u602A\u6211\u3092\u3057\u3066\u307E\u305B\u3093\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 18
+      debugIndex: 18
       strings:
       - Wait
       - 
@@ -3025,8 +3297,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 18
-      debugIndex: 18
+    - rowIndex: 19
+      debugIndex: 19
       strings:
       - PlaySe
       - Monster4
@@ -3042,8 +3314,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 19
-      debugIndex: 19
+    - rowIndex: 20
+      debugIndex: 20
       strings:
       - Wait
       - 
@@ -3059,8 +3331,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 20
-      debugIndex: 20
+    - rowIndex: 21
+      debugIndex: 21
       strings:
       - 
       - Actor04_04
@@ -3076,8 +3348,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 21
-      debugIndex: 21
+    - rowIndex: 22
+      debugIndex: 22
       strings:
       - 
       - Actor02_03
@@ -3093,8 +3365,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 22
-      debugIndex: 22
+    - rowIndex: 23
+      debugIndex: 23
       strings:
       - 
       - Actor04_02
@@ -3110,8 +3382,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 23
-      debugIndex: 23
+    - rowIndex: 24
+      debugIndex: 24
       strings:
       - PlaySe
       - Damage5
@@ -3127,8 +3399,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 24
-      debugIndex: 24
+    - rowIndex: 25
+      debugIndex: 25
       strings:
       - Wait
       - 
@@ -3144,8 +3416,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 25
-      debugIndex: 25
+    - rowIndex: 26
+      debugIndex: 26
+      strings:
+      - Balloon
+      - Character2
+      - 1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 27
+      debugIndex: 27
       strings:
       - 
       - Actor04_04
@@ -3156,40 +3445,6 @@ MonoBehaviour:
       - 
       - 
       - "\u30BD\u30E9\u3055\u3093\uFF01\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 26
-      debugIndex: 26
-      strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3046\u308F\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 27
-      debugIndex: 27
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
       - 
       - 
       isEmpty: 0
@@ -3206,7 +3461,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u30DE\u30BA\u3063\u305F\u306A\u2026\u2026"
+      - "\u3046\u308F\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -3214,57 +3469,6 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 29
       debugIndex: 29
-      strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u4E00\u767A\u3001\u3044\u3044\u306E\u3082\u3089\u3063\u3061\u3083\u3063\u305F\u3058\u3083\u306A\u3044\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 30
-      debugIndex: 30
-      strings:
-      - 
-      - Actor02_01
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u5F31\u305D\u3046\u306A\u5974\u3092\u72D9\u3046\u306A\u3093\u3066\\n\u3053\u306E\u731F\u72AC\u98A8\u60C5\u304C\u3044\u3044\u8DA3\u5473\u3057\u3066\u308B\u3058\u3083\u306A\u3044\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 31
-      debugIndex: 31
-      strings:
-      - 
-      - Actor04_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u30BD\u30E9\u3055\u3093\u3001\u8840\u304C\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 32
-      debugIndex: 32
       strings:
       - Wait
       - 
@@ -3280,8 +3484,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 33
-      debugIndex: 33
+    - rowIndex: 30
+      debugIndex: 30
       strings:
       - 
       - Actor02_04
@@ -3291,7 +3495,58 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3046\u308B\u3055\u3044\u306A\uFF01\\n\u3042\u3093\u305F\u3001\u4F59\u6240\u898B\u3059\u308B\u306A\u3063\u3066\u8A00\u3063\u305F\u3058\u3083\u306A\u3044\uFF01"
+      - "\u30DE\u30BA\u3063\u305F\u306A\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 31
+      debugIndex: 31
+      strings:
+      - 
+      - Actor02_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4E00\u767A\u3001\u3044\u3044\u306E\u3082\u3089\u3063\u3061\u3083\u3063\u305F\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 32
+      debugIndex: 32
+      strings:
+      - Balloon
+      - Character0
+      - 5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 33
+      debugIndex: 33
+      strings:
+      - 
+      - Actor02_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u5F31\u305D\u3046\u306A\u5974\u3092\u72D9\u3046\u306A\u3093\u3066\\n\u3053\u306E\u731F\u72AC\u98A8\u60C5\u304C\u3044\u3044\u8DA3\u5473\u3057\u3066\u308B\u3058\u3083\u306A\u3044\uFF01"
       - 
       - 
       isEmpty: 0
@@ -3308,7 +3563,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u3054\u3001\u3054\u3081\u3093\u306A\u2026\u2026"
+      - "\u30BD\u30E9\u3055\u3093\u3001\u8840\u304C\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -3316,23 +3571,6 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 35
       debugIndex: 35
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u8B1D\u3089\u306A\u304F\u3066\u3044\u3044\u304B\u3089"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 36
-      debugIndex: 36
       strings:
       - Wait
       - 
@@ -3348,18 +3586,35 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 36
+      debugIndex: 36
+      strings:
+      - Balloon
+      - Character0
+      - 7
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 37
       debugIndex: 37
       strings:
       - 
-      - Actor02_01
+      - Actor02_04
       - 
       - Character0
       - 
       - 
       - 
       - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u3067\u3082\\n\u3042\u305F\u3057\u306B\u624B\u3092\u51FA\u3057\u305F\u306E\u304C\u904B\u306E\u5C3D\u304D\u3060\u306D"
+      - "\u3046\u308B\u3055\u3044\u306A\uFF01\\n\u3042\u3093\u305F\u3001\u4F59\u6240\u898B\u3059\u308B\u306A\u3063\u3066\u8A00\u3063\u305F\u3058\u3083\u306A\u3044\uFF01"
       - 
       - 
       isEmpty: 0
@@ -3369,14 +3624,14 @@ MonoBehaviour:
       debugIndex: 38
       strings:
       - 
-      - Actor02_01
+      - Actor04_02
       - 
-      - Character0
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u7D76\u5BFE\u3001\u5012\u3057\u3066\u3084\u308B\uFF01"
+      - 
+      - 
+      - "\u3054\u3001\u3054\u3081\u3093\u306A\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -3385,15 +3640,15 @@ MonoBehaviour:
     - rowIndex: 39
       debugIndex: 39
       strings:
-      - PlaySe
-      - Skill2
-      - 80
-      - 100
+      - 
+      - Actor02_02
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
+      - "\u8B1D\u3089\u306A\u304F\u3066\u3044\u3044\u304B\u3089"
       - 
       - 
       isEmpty: 0
@@ -3419,15 +3674,15 @@ MonoBehaviour:
     - rowIndex: 41
       debugIndex: 41
       strings:
-      - PlaySe
-      - Thunder9
-      - 80
-      - 100
+      - 
+      - Actor02_01
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u3067\u3082\\n\u3042\u305F\u3057\u306B\u624B\u3092\u51FA\u3057\u305F\u306E\u304C\u904B\u306E\u5C3D\u304D\u3060\u306D"
       - 
       - 
       isEmpty: 0
@@ -3436,15 +3691,15 @@ MonoBehaviour:
     - rowIndex: 42
       debugIndex: 42
       strings:
-      - Wait
+      - 
+      - Actor02_01
+      - 
+      - Character0
       - 
       - 
       - 
       - 
-      - 
-      - 1
-      - 
-      - 
+      - "\u7D76\u5BFE\u3001\u5012\u3057\u3066\u3084\u308B\uFF01"
       - 
       - 
       isEmpty: 0
@@ -3453,10 +3708,10 @@ MonoBehaviour:
     - rowIndex: 43
       debugIndex: 43
       strings:
-      - FadeOut
-      - black
-      - 
-      - 
+      - PlaySe
+      - Skill2
+      - 80
+      - 100
       - 
       - 
       - 
@@ -3487,6 +3742,74 @@ MonoBehaviour:
     - rowIndex: 45
       debugIndex: 45
       strings:
+      - PlaySe
+      - Thunder9
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 46
+      debugIndex: 46
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 47
+      debugIndex: 47
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 48
+      debugIndex: 48
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 49
+      debugIndex: 49
+      strings:
       - FadeIn
       - black
       - 
@@ -3501,8 +3824,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 46
-      debugIndex: 46
+    - rowIndex: 50
+      debugIndex: 50
       strings:
       - 
       - Actor02_01
@@ -3513,74 +3836,6 @@ MonoBehaviour:
       - 
       - 
       - "\u60F3\u50CF\u3057\u305F\u3053\u3068\u306A\u3044\u3067\u3057\u3087\\n\u96F7\u306E\u9396\u3067\u7E1B\u3089\u308C\u308B\u6C17\u6301\u3061\u3063\u3066"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 47
-      debugIndex: 47
-      strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u4E00\u77AC\u3067\u3001\u9B54\u8005\u304C\u9396\u3067\u96C1\u5B57\u304C\u3089\u3081\u306B\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 48
-      debugIndex: 48
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u6355\u307E\u3048\u305F\\n\u9396\u304B\u3089\u306F\u9003\u308C\u3089\u308C\u306A\u3044\u3088"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 49
-      debugIndex: 49
-      strings:
-      - 
-      - Actor02_03
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u307B\u3089\u3001\u307C\u3055\u3063\u3068\u3057\u3066\u306A\u3044\u3067\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 50
-      debugIndex: 50
-      strings:
-      - 
-      - Actor02_03
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u4ECA\u306E\u3046\u3061\u306B\u9B54\u6CD5\u3092\u6253\u3061\u8FBC\u3093\u3067\uFF01"
       - 
       - 
       isEmpty: 0
@@ -3597,7 +3852,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u306F\u3001\u306F\u3044\uFF01"
+      - "\u4E00\u77AC\u3067\u3001\u9B54\u8005\u304C\u9396\u3067\u96C1\u5B57\u304C\u3089\u3081\u306B\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -3605,6 +3860,91 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 52
       debugIndex: 52
+      strings:
+      - Balloon
+      - Character0
+      - 3
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 53
+      debugIndex: 53
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u6355\u307E\u3048\u305F\\n\u9396\u304B\u3089\u306F\u9003\u308C\u3089\u308C\u306A\u3044\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 54
+      debugIndex: 54
+      strings:
+      - 
+      - Actor02_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u307B\u3089\u3001\u307C\u3055\u3063\u3068\u3057\u3066\u306A\u3044\u3067\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 55
+      debugIndex: 55
+      strings:
+      - 
+      - Actor02_03
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u4ECA\u306E\u3046\u3061\u306B\u9B54\u6CD5\u3092\u6253\u3061\u8FBC\u3093\u3067\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 56
+      debugIndex: 56
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u3001\u306F\u3044\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 57
+      debugIndex: 57
       strings:
       - FadeOut
       - black
@@ -3620,8 +3960,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 53
-      debugIndex: 53
+    - rowIndex: 58
+      debugIndex: 58
       strings:
       - PlaySe
       - Skill2
@@ -3630,91 +3970,6 @@ MonoBehaviour:
       - 
       - 
       - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 54
-      debugIndex: 54
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 55
-      debugIndex: 55
-      strings:
-      - PlaySe
-      - Explosion2
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 56
-      debugIndex: 56
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 57
-      debugIndex: 57
-      strings:
-      - PlaySe
-      - Darkness3
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 58
-      debugIndex: 58
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -3742,10 +3997,10 @@ MonoBehaviour:
     - rowIndex: 60
       debugIndex: 60
       strings:
-      - FadeIn
-      - black
-      - 
-      - 
+      - PlaySe
+      - Explosion2
+      - 80
+      - 100
       - 
       - 
       - 
@@ -3759,13 +4014,13 @@ MonoBehaviour:
     - rowIndex: 61
       debugIndex: 61
       strings:
-      - PlaySe
-      - Monster3
-      - 80
-      - 100
+      - Wait
       - 
       - 
       - 
+      - 
+      - 
+      - 1
       - 
       - 
       - 
@@ -3776,13 +4031,13 @@ MonoBehaviour:
     - rowIndex: 62
       debugIndex: 62
       strings:
-      - Wait
+      - PlaySe
+      - Darkness3
+      - 80
+      - 100
       - 
       - 
       - 
-      - 
-      - 
-      - 1
       - 
       - 
       - 
@@ -3810,23 +4065,6 @@ MonoBehaviour:
     - rowIndex: 64
       debugIndex: 64
       strings:
-      - PlaySe
-      - Earth5
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 65
-      debugIndex: 65
-      strings:
       - Wait
       - 
       - 
@@ -3841,18 +4079,35 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
+    - rowIndex: 65
+      debugIndex: 65
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
     - rowIndex: 66
       debugIndex: 66
       strings:
-      - 
-      - Actor02_01
-      - 
-      - Character0
-      - 
-      - 
+      - PlaySe
+      - Monster3
+      - 80
+      - 100
       - 
       - 
-      - "\u30D5\u30D5\u2026\u2026\u3001\u3084\u308C\u3070\u51FA\u6765\u308B\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -3878,15 +4133,15 @@ MonoBehaviour:
     - rowIndex: 68
       debugIndex: 68
       strings:
-      - 
-      - Actor03_03
-      - 
-      - Character2
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u30BD\u30E9\u3001\u7121\u7406\u3057\u3059\u304E\u3060\u3088\uFF01"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -3895,15 +4150,15 @@ MonoBehaviour:
     - rowIndex: 69
       debugIndex: 69
       strings:
-      - 
-      - Actor02_04
-      - 
-      - Character0
-      - 
-      - 
+      - PlaySe
+      - Earth5
+      - 80
+      - 100
       - 
       - 
-      - "\u75DB\u30C3\u2026\u2026\\n\u307E\u3068\u3082\u306B\u653B\u6483\u53D7\u3051\u3061\u3083\u3063\u305F\u3088"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -3930,6 +4185,91 @@ MonoBehaviour:
       debugIndex: 71
       strings:
       - 
+      - Actor02_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30D5\u30D5\u2026\u2026\u3001\u3084\u308C\u3070\u51FA\u6765\u308B\u3058\u3083\u306A\u3044\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 72
+      debugIndex: 72
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 73
+      debugIndex: 73
+      strings:
+      - 
+      - Actor03_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30BD\u30E9\u3001\u7121\u7406\u3057\u3059\u304E\u3060\u3088\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 74
+      debugIndex: 74
+      strings:
+      - 
+      - Actor02_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u75DB\u30C3\u2026\u2026\\n\u307E\u3068\u3082\u306B\u653B\u6483\u53D7\u3051\u3061\u3083\u3063\u305F\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 75
+      debugIndex: 75
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 76
+      debugIndex: 76
+      strings:
+      - 
       - Actor02_04
       - 
       - Character0
@@ -3943,8 +4283,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 72
-      debugIndex: 72
+    - rowIndex: 77
+      debugIndex: 77
       strings:
       - 
       - Actor04_04
@@ -3960,8 +4300,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 73
-      debugIndex: 73
+    - rowIndex: 78
+      debugIndex: 78
+      strings:
+      - Balloon
+      - Character0
+      - 5
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 79
+      debugIndex: 79
       strings:
       - 
       - Actor02_02
@@ -3977,8 +4334,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 74
-      debugIndex: 74
+    - rowIndex: 80
+      debugIndex: 80
       strings:
       - 
       - Actor04_04
@@ -3994,8 +4351,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 75
-      debugIndex: 75
+    - rowIndex: 81
+      debugIndex: 81
       strings:
       - 
       - Actor02_02
@@ -4011,8 +4368,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 76
-      debugIndex: 76
+    - rowIndex: 82
+      debugIndex: 82
       strings:
       - 
       - Actor02_02
@@ -4028,8 +4385,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 77
-      debugIndex: 77
+    - rowIndex: 83
+      debugIndex: 83
       strings:
       - 
       - Actor01_00
@@ -4045,8 +4402,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 78
-      debugIndex: 78
+    - rowIndex: 84
+      debugIndex: 84
+      strings:
+      - Balloon
+      - Character0
+      - 7
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 85
+      debugIndex: 85
       strings:
       - 
       - Actor02_04
@@ -4062,8 +4436,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 79
-      debugIndex: 79
+    - rowIndex: 86
+      debugIndex: 86
       strings:
       - 
       - Actor03_03
@@ -4079,8 +4453,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 80
-      debugIndex: 80
+    - rowIndex: 87
+      debugIndex: 87
       strings:
       - 
       - Actor02_04
@@ -4096,8 +4470,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 81
-      debugIndex: 81
+    - rowIndex: 88
+      debugIndex: 88
       strings:
       - 
       - Actor04_04
@@ -4113,8 +4487,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 82
-      debugIndex: 82
+    - rowIndex: 89
+      debugIndex: 89
       strings:
       - 
       - Actor03_03
@@ -4130,8 +4504,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 83
-      debugIndex: 83
+    - rowIndex: 90
+      debugIndex: 90
       strings:
       - 
       - Actor04_03
@@ -4147,8 +4521,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 84
-      debugIndex: 84
+    - rowIndex: 91
+      debugIndex: 91
       strings:
       - Wait
       - 
@@ -4164,8 +4538,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 85
-      debugIndex: 85
+    - rowIndex: 92
+      debugIndex: 92
       strings:
       - 
       - Actor04_00
@@ -4181,8 +4555,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 86
-      debugIndex: 86
+    - rowIndex: 93
+      debugIndex: 93
       strings:
       - 
       - Actor02_04
@@ -4198,131 +4572,12 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 87
-      debugIndex: 87
-      strings:
-      - 
-      - Actor04_04
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3044\u3044\u3048\u3001\u4ED8\u3044\u3066\u3044\u304D\u307E\u3059\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 88
-      debugIndex: 88
-      strings:
-      - 
-      - Actor02_02
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u306A\u3089\u52DD\u624B\u306B\u3057\u306A\u3088"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 89
-      debugIndex: 89
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 90
-      debugIndex: 90
-      strings:
-      - FadeOut
-      - black
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 91
-      debugIndex: 91
-      strings:
-      - PlaySe
-      - step01
-      - 80
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 92
-      debugIndex: 92
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 93
-      debugIndex: 93
-      strings:
-      - PlayBgm
-      - yumemidori
-      - 100
-      - 100
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
     - rowIndex: 94
       debugIndex: 94
       strings:
-      - FadeIn
-      - black
-      - 
+      - Balloon
+      - Character2
+      - 1
       - 
       - 
       - 
@@ -4338,6 +4593,142 @@ MonoBehaviour:
       debugIndex: 95
       strings:
       - 
+      - Actor04_04
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3044\u3044\u3048\u3001\u4ED8\u3044\u3066\u3044\u304D\u307E\u3059\uFF01"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 96
+      debugIndex: 96
+      strings:
+      - 
+      - Actor02_02
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u306A\u3089\u52DD\u624B\u306B\u3057\u306A\u3088"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 97
+      debugIndex: 97
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 98
+      debugIndex: 98
+      strings:
+      - FadeOut
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 99
+      debugIndex: 99
+      strings:
+      - PlaySe
+      - step01
+      - 80
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 100
+      debugIndex: 100
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 101
+      debugIndex: 101
+      strings:
+      - PlayBgm
+      - yumemidori
+      - 100
+      - 100
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 102
+      debugIndex: 102
+      strings:
+      - FadeIn
+      - black
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 103
+      debugIndex: 103
+      strings:
+      - 
       - Actor05_02
       - 
       - Character2
@@ -4351,8 +4742,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 96
-      debugIndex: 96
+    - rowIndex: 104
+      debugIndex: 104
       strings:
       - 
       - Actor01_00
@@ -4368,8 +4759,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 97
-      debugIndex: 97
+    - rowIndex: 105
+      debugIndex: 105
       strings:
       - 
       - Actor01_00
@@ -4385,8 +4776,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 98
-      debugIndex: 98
+    - rowIndex: 106
+      debugIndex: 106
       strings:
       - 
       - Actor06_04
@@ -4402,8 +4793,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 99
-      debugIndex: 99
+    - rowIndex: 107
+      debugIndex: 107
       strings:
       - 
       - Actor05_02
@@ -4414,142 +4805,6 @@ MonoBehaviour:
       - 
       - 
       - "\u308F\u305F\u3057\u3082\u3067\u3059\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 100
-      debugIndex: 100
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3067\u3082\u3001\u3082\u3046\u9B54\u8005\u306F\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093\u3057"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 101
-      debugIndex: 101
-      strings:
-      - 
-      - Actor05_01
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u6226\u3044\u306F\u7D42\u308F\u3063\u305F\u3093\u3067\u3059\u306D\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 102
-      debugIndex: 102
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 103
-      debugIndex: 103
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 104
-      debugIndex: 104
-      strings:
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      - "\u4F55\u304B\u805E\u3044\u3066\u307F\u3088\u3046\u304B\u306A\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 105
-      debugIndex: 105
-      strings:
-      - Wait
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 1
-      - 
-      - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 106
-      debugIndex: 106
-      strings:
-      - 
-      - Actor05_03
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u30A8\u30EA\u30B7\u30E3\u3055\u3093\u306F\u3001\u3053\u308C\u304B\u3089\u3069\u3046\u3059\u308B\u3093\u3067\u3059\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 107
-      debugIndex: 107
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3053\u306E\u5834\u3092\u8ECD\u306B\u5F15\u304D\u7D99\u3044\u3060\u3089\\n\u56FD\u5883\u306B\u623B\u308B\u3053\u3068\u306B\u306A\u308B\u3060\u308D\u3046"
       - 
       - 
       isEmpty: 0
@@ -4566,7 +4821,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u6765\u305F\u3070\u304B\u308A\u306A\u306E\u306B\u3001\u3082\u3046\u5E30\u3063\u3061\u3083\u3046\u3093\u3067\u3059\u306D"
+      - "\u3067\u3082\u3001\u3082\u3046\u9B54\u8005\u306F\u6B8B\u3063\u3066\u3044\u307E\u305B\u3093\u3057"
       - 
       - 
       isEmpty: 0
@@ -4575,15 +4830,15 @@ MonoBehaviour:
     - rowIndex: 109
       debugIndex: 109
       strings:
-      - 
-      - Actor01_00
-      - 
-      - Character0
-      - 
+      - Balloon
+      - Character2
+      - 1
       - 
       - 
       - 
-      - "\u3060\u304C\u3057\u3070\u3089\u304F\u306F\\n\u3053\u3053\u306B\u7559\u307E\u308D\u3046\u3068\u601D\u3046"
+      - 
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -4593,14 +4848,14 @@ MonoBehaviour:
       debugIndex: 110
       strings:
       - 
-      - Actor01_01
+      - Actor05_01
       - 
-      - Character0
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u6642\u9593\u304C\u3042\u308C\u3070\\n\u30C9\u30E9\u30B4\u30F3\u306B\u3082\u4E57\u305B\u3066\u3042\u3052\u3089\u308C\u308B\u305E"
+      - 
+      - 
+      - "\u6226\u3044\u306F\u7D42\u308F\u3063\u305F\u3093\u3067\u3059\u306D\uFF01"
       - 
       - 
       isEmpty: 0
@@ -4609,15 +4864,15 @@ MonoBehaviour:
     - rowIndex: 111
       debugIndex: 111
       strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u3068\u3001\u3068\u3076\u3093\u3067\u3059\u3088\u306D\u3001\u30C9\u30E9\u30B4\u30F3\u3063\u3066\u2026\u2026"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -4626,15 +4881,15 @@ MonoBehaviour:
     - rowIndex: 112
       debugIndex: 112
       strings:
-      - 
-      - Actor01_01
-      - 
-      - Character0
+      - Wait
       - 
       - 
       - 
       - 
-      - "\u306F\u306F\u306F\u2026\u2026\\n\u53EF\u611B\u3044\u5974\u3060\u304B\u3089\u990C\u3084\u308A\u3060\u3051\u3067\u3082\u3057\u3066\u304F\u308C\u308B\u3068\u5B09\u3057\u3044"
+      - 
+      - 1
+      - 
+      - 
       - 
       - 
       isEmpty: 0
@@ -4644,14 +4899,14 @@ MonoBehaviour:
       debugIndex: 113
       strings:
       - 
-      - Actor05_00
-      - 
-      - Character2
       - 
       - 
       - 
       - 
-      - "\u305D\u308C\u3050\u3089\u3044\u306A\u3089\u2026\u2026\\n\u898B\u3066\u307F\u305F\u3044\u3001\u6C17\u3082\u3057\u307E\u3059"
+      - 
+      - 
+      - 
+      - "\u4F55\u304B\u805E\u3044\u3066\u307F\u3088\u3046\u304B\u306A\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -4677,6 +4932,193 @@ MonoBehaviour:
     - rowIndex: 115
       debugIndex: 115
       strings:
+      - Balloon
+      - Character2
+      - 2
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 116
+      debugIndex: 116
+      strings:
+      - 
+      - Actor05_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u30A8\u30EA\u30B7\u30E3\u3055\u3093\u306F\u3001\u3053\u308C\u304B\u3089\u3069\u3046\u3059\u308B\u3093\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 117
+      debugIndex: 117
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3053\u306E\u5834\u3092\u8ECD\u306B\u5F15\u304D\u7D99\u3044\u3060\u3089\\n\u56FD\u5883\u306B\u623B\u308B\u3053\u3068\u306B\u306A\u308B\u3060\u308D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 118
+      debugIndex: 118
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6765\u305F\u3070\u304B\u308A\u306A\u306E\u306B\u3001\u3082\u3046\u5E30\u3063\u3061\u3083\u3046\u3093\u3067\u3059\u306D"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 119
+      debugIndex: 119
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u3060\u304C\u3057\u3070\u3089\u304F\u306F\\n\u3053\u3053\u306B\u7559\u307E\u308D\u3046\u3068\u601D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 120
+      debugIndex: 120
+      strings:
+      - 
+      - Actor01_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u6642\u9593\u304C\u3042\u308C\u3070\\n\u30C9\u30E9\u30B4\u30F3\u306B\u3082\u4E57\u305B\u3066\u3042\u3052\u3089\u308C\u308B\u305E"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 121
+      debugIndex: 121
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 122
+      debugIndex: 122
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3068\u3001\u3068\u3076\u3093\u3067\u3059\u3088\u306D\u3001\u30C9\u30E9\u30B4\u30F3\u3063\u3066\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 123
+      debugIndex: 123
+      strings:
+      - 
+      - Actor01_01
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u306F\u306F\u306F\u2026\u2026\\n\u53EF\u611B\u3044\u5974\u3060\u304B\u3089\u990C\u3084\u308A\u3060\u3051\u3067\u3082\u3057\u3066\u304F\u308C\u308B\u3068\u5B09\u3057\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 124
+      debugIndex: 124
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u305D\u308C\u3050\u3089\u3044\u306A\u3089\u2026\u2026\\n\u898B\u3066\u307F\u305F\u3044\u3001\u6C17\u3082\u3057\u307E\u3059"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 125
+      debugIndex: 125
+      strings:
+      - Wait
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 1
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 126
+      debugIndex: 126
+      strings:
       - 
       - Actor05_03
       - 
@@ -4691,8 +5133,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 116
-      debugIndex: 116
+    - rowIndex: 127
+      debugIndex: 127
       strings:
       - 
       - Actor06_00
@@ -4708,8 +5150,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 117
-      debugIndex: 117
+    - rowIndex: 128
+      debugIndex: 128
       strings:
       - 
       - Actor06_00
@@ -4725,8 +5167,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 118
-      debugIndex: 118
+    - rowIndex: 129
+      debugIndex: 129
       strings:
       - 
       - Actor06_01
@@ -4742,8 +5184,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 119
-      debugIndex: 119
+    - rowIndex: 130
+      debugIndex: 130
       strings:
       - 
       - Actor05_00
@@ -4759,8 +5201,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 120
-      debugIndex: 120
+    - rowIndex: 131
+      debugIndex: 131
       strings:
       - Wait
       - 
@@ -4776,8 +5218,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 121
-      debugIndex: 121
+    - rowIndex: 132
+      debugIndex: 132
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 133
+      debugIndex: 133
       strings:
       - 
       - Actor05_02
@@ -4793,8 +5252,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 122
-      debugIndex: 122
+    - rowIndex: 134
+      debugIndex: 134
       strings:
       - 
       - Actor01_04
@@ -4810,8 +5269,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 123
-      debugIndex: 123
+    - rowIndex: 135
+      debugIndex: 135
       strings:
       - 
       - Actor05_03
@@ -4827,8 +5286,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 124
-      debugIndex: 124
+    - rowIndex: 136
+      debugIndex: 136
       strings:
       - 
       - Actor01_04
@@ -4844,8 +5303,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 125
-      debugIndex: 125
+    - rowIndex: 137
+      debugIndex: 137
       strings:
       - 
       - Actor01_00
@@ -4861,8 +5320,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 126
-      debugIndex: 126
+    - rowIndex: 138
+      debugIndex: 138
       strings:
       - 
       - Actor05_02
@@ -4878,8 +5337,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 127
-      debugIndex: 127
+    - rowIndex: 139
+      debugIndex: 139
       strings:
       - 
       - Actor01_00
@@ -4895,8 +5354,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 128
-      debugIndex: 128
+    - rowIndex: 140
+      debugIndex: 140
       strings:
       - 
       - Actor01_00
@@ -4912,8 +5371,25 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 129
-      debugIndex: 129
+    - rowIndex: 141
+      debugIndex: 141
+      strings:
+      - Balloon
+      - Character2
+      - 8
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 142
+      debugIndex: 142
       strings:
       - 
       - Actor05_02
@@ -4929,8 +5405,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 130
-      debugIndex: 130
+    - rowIndex: 143
+      debugIndex: 143
       strings:
       - Wait
       - 
@@ -4941,227 +5417,6 @@ MonoBehaviour:
       - 1
       - 
       - 
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 131
-      debugIndex: 131
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30B7\u30A4\u30CA\u306F\u9B54\u8005\u3092\u898B\u305F\u3053\u3068\u306A\u304B\u3063\u305F\u306E\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 132
-      debugIndex: 132
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u306F\u3001\u306F\u3044\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 133
-      debugIndex: 133
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30EB\u30CD\u3055\u3093\u306F\u9B54\u8005\u306E\u3053\u3068\u3092\u77E5\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 134
-      debugIndex: 134
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u81EA\u5206\u304C\u9B54\u8005\u3068\u5BFE\u5CD9\u3059\u308B\u306E\u306F\u521D\u3081\u3066\u3067\u306F\u306A\u3044\u305E"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 135
-      debugIndex: 135
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u3053\u306E\u56FD\u304B\u3089\u6771\u306E\u56FD\u5883\u3092\u8D8A\u3048\u305F\u3068\u3053\u308D\\n\u305D\u3053\u306B\u306F\u2026\u2026"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 136
-      debugIndex: 136
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character1
-      - 
-      - 
-      - 
-      - 
-      - "\u2026\u2026\uFF01"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 137
-      debugIndex: 137
-      strings:
-      - 
-      - Actor01_00
-      - 
-      - Character1
-      - 
-      - 
-      - 
-      - 
-      - "\u30EB\u30CD\u2026\u2026\u3001\u30AD\u30DF\u306F\u56FD\u5883\u306E\u5916\u306B\u51FA\u305F\u3053\u3068\u304C\u3042\u308B\u306E\u304B\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 138
-      debugIndex: 138
-      strings:
-      - 
-      - Actor06_00
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u81EA\u5206\u306F\u3001\u305D\u3053\u3067\u80B2\u3063\u305F\\n\u77E5\u3063\u3066\u3044\u308B\u306E\u5F53\u305F\u308A\u307E\u3048\u3060"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 139
-      debugIndex: 139
-      strings:
-      - 
-      - Actor05_02
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3048\u30C3\uFF01\uFF1F"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 140
-      debugIndex: 140
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u6771\u306E\u56FD\u5883\u306E\u5148\u306F\u4EBA\u304C\u4F4F\u3081\u306A\u3044\u5834\u6240\u3060\u3063\u3066\u805E\u3044\u3066\u3044\u307E\u3059"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 141
-      debugIndex: 141
-      strings:
-      - 
-      - Actor05_00
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u4FD7\u306B\u8A00\u3046\u3001\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3060\u3063\u3066"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 142
-      debugIndex: 142
-      strings:
-      - 
-      - Actor06_04
-      - 
-      - Character0
-      - 
-      - 
-      - 
-      - 
-      - "\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3001\u521D\u3081\u3066\u805E\u304F\u8A00\u8449\u3060\u304C"
-      - 
-      - 
-      isEmpty: 0
-      isCommentOut: 0
-      debugInfo: 
-    - rowIndex: 143
-      debugIndex: 143
-      strings:
-      - 
-      - Actor05_03
-      - 
-      - Character2
-      - 
-      - 
-      - 
-      - 
-      - "\u3069\u3046\u3057\u3066\u4ECA\u307E\u3067\u9ED9\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -5178,7 +5433,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u805E\u304B\u308C\u306A\u304B\u3063\u305F\\n\u3060\u304B\u3089\u3001\u8A71\u3057\u3066\u3044\u306A\u304B\u3063\u305F"
+      - "\u30B7\u30A4\u30CA\u306F\u9B54\u8005\u3092\u898B\u305F\u3053\u3068\u306A\u304B\u3063\u305F\u306E\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -5188,14 +5443,14 @@ MonoBehaviour:
       debugIndex: 145
       strings:
       - 
-      - Actor01_04
+      - Actor05_00
       - 
-      - Character1
-      - 
-      - 
+      - Character2
       - 
       - 
-      - "\u30EB\u30CD\u3001\u305D\u306E\u3053\u3068\u306F\\n\u4ED6\u306E\u4EBA\u306B\u8A71\u3055\u306A\u3044\u307B\u3046\u304C\u3044\u3044"
+      - 
+      - 
+      - "\u306F\u3001\u306F\u3044\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -5212,7 +5467,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026\u2026\uFF1F"
+      - "\u30EB\u30CD\u3055\u3093\u306F\u9B54\u8005\u306E\u3053\u3068\u3092\u77E5\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -5222,14 +5477,14 @@ MonoBehaviour:
       debugIndex: 147
       strings:
       - 
-      - Actor01_00
+      - Actor06_00
       - 
-      - Character1
-      - 
-      - 
+      - Character0
       - 
       - 
-      - "\u3044\u3084\u3001\u7D76\u5BFE\u306B\u8A71\u3059\u306A"
+      - 
+      - 
+      - "\u81EA\u5206\u304C\u9B54\u8005\u3068\u5BFE\u5CD9\u3059\u308B\u306E\u306F\u521D\u3081\u3066\u3067\u306F\u306A\u3044\u305E"
       - 
       - 
       isEmpty: 0
@@ -5239,14 +5494,14 @@ MonoBehaviour:
       debugIndex: 148
       strings:
       - 
-      - Actor01_00
+      - Actor06_00
       - 
-      - Character1
-      - 
-      - 
+      - Character0
       - 
       - 
-      - "\u9B54\u8005\u306B\u5BFE\u3057\u3066\u3001\u307F\u3093\u306A\u904E\u654F\u306B\u306A\u3063\u3066\u3044\u308B"
+      - 
+      - 
+      - "\u3053\u306E\u56FD\u304B\u3089\u6771\u306E\u56FD\u5883\u3092\u8D8A\u3048\u305F\u3068\u3053\u308D\\n\u305D\u3053\u306B\u306F\u2026\u2026"
       - 
       - 
       isEmpty: 0
@@ -5263,7 +5518,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u7279\u306B\u3053\u308C\u304B\u3089\u8ECD\u304C\u5E30\u3063\u3066\u304D\u305F\u3089\\n\u3044\u308D\u3044\u308D\u805E\u304B\u308C\u308B\u3053\u3068\u3082\u3042\u308B\u3060\u308D\u3046"
+      - "\u2026\u2026\uFF01"
       - 
       - 
       isEmpty: 0
@@ -5280,7 +5535,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u4E0B\u624B\u306A\u767A\u8A00\u3092\u3059\u308C\u3070\\n\u3042\u3089\u306C\u7591\u3044\u3092\u6301\u305F\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3093\u3060"
+      - "\u30EB\u30CD\u2026\u2026\u3001\u30AD\u30DF\u306F\u56FD\u5883\u306E\u5916\u306B\u51FA\u305F\u3053\u3068\u304C\u3042\u308B\u306E\u304B\uFF1F"
       - 
       - 
       isEmpty: 0
@@ -5297,7 +5552,7 @@ MonoBehaviour:
       - 
       - 
       - 
-      - "\u2026\u2026"
+      - "\u81EA\u5206\u306F\u3001\u305D\u3053\u3067\u80B2\u3063\u305F\\n\u77E5\u3063\u3066\u3044\u308B\u306E\u5F53\u305F\u308A\u307E\u3048\u3060"
       - 
       - 
       isEmpty: 0
@@ -5305,6 +5560,261 @@ MonoBehaviour:
       debugInfo: 
     - rowIndex: 152
       debugIndex: 152
+      strings:
+      - Balloon
+      - Character2
+      - 1
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 153
+      debugIndex: 153
+      strings:
+      - 
+      - Actor05_02
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3048\u30C3\uFF01\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 154
+      debugIndex: 154
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u6771\u306E\u56FD\u5883\u306E\u5148\u306F\u4EBA\u304C\u4F4F\u3081\u306A\u3044\u5834\u6240\u3060\u3063\u3066\u805E\u3044\u3066\u3044\u307E\u3059"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 155
+      debugIndex: 155
+      strings:
+      - 
+      - Actor05_00
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u4FD7\u306B\u8A00\u3046\u3001\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3060\u3063\u3066"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 156
+      debugIndex: 156
+      strings:
+      - 
+      - Actor06_04
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u30ED\u30B9\u30C8\u30EF\u30FC\u30EB\u30C9\u3001\u521D\u3081\u3066\u805E\u304F\u8A00\u8449\u3060\u304C"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 157
+      debugIndex: 157
+      strings:
+      - 
+      - Actor05_03
+      - 
+      - Character2
+      - 
+      - 
+      - 
+      - 
+      - "\u3069\u3046\u3057\u3066\u4ECA\u307E\u3067\u9ED9\u3063\u3066\u3044\u305F\u3093\u3067\u3059\u304B\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 158
+      debugIndex: 158
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u805E\u304B\u308C\u306A\u304B\u3063\u305F\\n\u3060\u304B\u3089\u3001\u8A71\u3057\u3066\u3044\u306A\u304B\u3063\u305F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 159
+      debugIndex: 159
+      strings:
+      - 
+      - Actor01_04
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u30EB\u30CD\u3001\u305D\u306E\u3053\u3068\u306F\\n\u4ED6\u306E\u4EBA\u306B\u8A71\u3055\u306A\u3044\u307B\u3046\u304C\u3044\u3044"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 160
+      debugIndex: 160
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026\uFF1F"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 161
+      debugIndex: 161
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u3044\u3084\u3001\u7D76\u5BFE\u306B\u8A71\u3059\u306A"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 162
+      debugIndex: 162
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u9B54\u8005\u306B\u5BFE\u3057\u3066\u3001\u307F\u3093\u306A\u904E\u654F\u306B\u306A\u3063\u3066\u3044\u308B"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 163
+      debugIndex: 163
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u7279\u306B\u3053\u308C\u304B\u3089\u8ECD\u304C\u5E30\u3063\u3066\u304D\u305F\u3089\\n\u3044\u308D\u3044\u308D\u805E\u304B\u308C\u308B\u3053\u3068\u3082\u3042\u308B\u3060\u308D\u3046"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 164
+      debugIndex: 164
+      strings:
+      - 
+      - Actor01_00
+      - 
+      - Character1
+      - 
+      - 
+      - 
+      - 
+      - "\u4E0B\u624B\u306A\u767A\u8A00\u3092\u3059\u308C\u3070\\n\u3042\u3089\u306C\u7591\u3044\u3092\u6301\u305F\u308C\u308B\u304B\u3082\u3057\u308C\u306A\u3044\u3093\u3060"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 165
+      debugIndex: 165
+      strings:
+      - 
+      - Actor06_00
+      - 
+      - Character0
+      - 
+      - 
+      - 
+      - 
+      - "\u2026\u2026"
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 166
+      debugIndex: 166
+      strings:
+      - Balloon
+      - Character0
+      - 9
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      isEmpty: 0
+      isCommentOut: 0
+      debugInfo: 
+    - rowIndex: 167
+      debugIndex: 167
       strings:
       - 
       - Actor06_01
@@ -5320,8 +5830,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 153
-      debugIndex: 153
+    - rowIndex: 168
+      debugIndex: 168
       strings:
       - 
       - Actor01_00
@@ -5337,8 +5847,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 154
-      debugIndex: 154
+    - rowIndex: 169
+      debugIndex: 169
       strings:
       - 
       - Actor05_02
@@ -5354,8 +5864,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 155
-      debugIndex: 155
+    - rowIndex: 170
+      debugIndex: 170
       strings:
       - Wait
       - 
@@ -5371,8 +5881,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 156
-      debugIndex: 156
+    - rowIndex: 171
+      debugIndex: 171
       strings:
       - FadeOut
       - black
@@ -5388,8 +5898,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 157
-      debugIndex: 157
+    - rowIndex: 172
+      debugIndex: 172
       strings:
       - StopBgm2
       - 
@@ -5405,8 +5915,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 158
-      debugIndex: 158
+    - rowIndex: 173
+      debugIndex: 173
       strings:
       - Wait
       - 
@@ -5422,8 +5932,8 @@ MonoBehaviour:
       isEmpty: 0
       isCommentOut: 0
       debugInfo: 
-    - rowIndex: 159
-      debugIndex: 159
+    - rowIndex: 174
+      debugIndex: 174
       strings:
       - EndScenario
       - 
@@ -5441,7 +5951,7 @@ MonoBehaviour:
       debugInfo: 
     name: Assets/ADVScene/AdvFiles/122_output.csv
     type: 0
-    textLength: 4156
+    textLength: 4426
     headerRow: 0
     sourceAssetInEditor: {fileID: 4900000, guid: 57e256d060f68154a82b7d748ce08caf,
       type: 3}

@@ -198,7 +198,15 @@ namespace Ryneus
                                 break;
                             case 213: // 吹き出し表示
                                 csvCol.Add("Balloon");
-                                csvCol.Add(l.parameters[0]);
+                                switch (l.parameters[0])
+                                {
+                                    case "1":
+                                    csvCol.Add("Character2");
+                                    break;
+                                    case "2":
+                                    csvCol.Add("Character0");
+                                    break;
+                                }
                                 csvCol.Add(l.parameters[1]);
                             break;
                             case 221: // フェードアウト

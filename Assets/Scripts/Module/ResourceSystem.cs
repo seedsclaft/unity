@@ -30,7 +30,8 @@ namespace Ryneus
             }
         }
 
-        public static async UniTask<T> LoadAsset<T>(string address){
+        public static async UniTask<T> LoadAsset<T>(string address)
+        {
             var handle = await Addressables.LoadAssetAsync<T>(address).Task;
             _lastLoadAssets.Add(handle as Object);
             return handle;
@@ -75,6 +76,7 @@ namespace Ryneus
                 result1,result2
             };
         }
+
         public async static UniTask<AudioClip>LoadBGSAsset(string fileName)
         {    
             var data = _bgsPath + fileName;
@@ -89,18 +91,20 @@ namespace Ryneus
             return result;
         }
 
-
-        public static async UniTask<AudioClip> LoadAssetResources<T>(string address){
+        public static async UniTask<AudioClip> LoadAssetResources<T>(string address)
+        {
             var handle = Resources.LoadAsync<AudioClip>(address);
             await handle;
             return handle.asset as AudioClip;
         }
 
         static string ActorTexturePath => "Texture/Character/Actors/";
+        public static string SystemTexturePath => "Texture/System/";
+        public static string PrefabPath => "Prefabs/";
 
         private static AudioClip LoadResourceAudioClip(string path)
         {
-            return Resources.Load<AudioClip>(path);
+            return LoadResource<AudioClip>(path);
         } 
 
         public static AudioClip LoadSeAudio(string path)
@@ -108,14 +112,19 @@ namespace Ryneus
             return LoadResourceAudioClip("Audios/SE/" + path);
         } 
 
+        public static T LoadResource<T>(string path) where T : Object
+        {
+            return Resources.Load<T>(path);
+        } 
+
         private static Sprite LoadResourceSprite(string path)
         {
-            return Resources.Load<Sprite>(path);
+            return LoadResource<Sprite>(path);
         } 
 
         private static GameObject LoadResourcePrefab(string path)
         {
-            return Resources.Load<GameObject>(path);
+            return LoadResource<GameObject>(path);
         } 
         
         public static Sprite LoadActorMainSprite(string path)
@@ -175,12 +184,12 @@ namespace Ryneus
 
         public static EffekseerEffectAsset LoadResourceEffect(string path)
         {
-            return Resources.Load<EffekseerEffectAsset>("Animations/" + path);
+            return LoadResource<EffekseerEffectAsset>("Animations/" + path);
         } 
 
         private static SpriteAtlas LoadResourceSpriteAtlas(string path)
         {
-            return Resources.Load<SpriteAtlas>(path);
+            return LoadResource<SpriteAtlas>(path);
         } 
 
         public static SpriteAtlas LoadSpellIcons()
