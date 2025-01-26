@@ -117,6 +117,11 @@ namespace Ryneus
             return Resources.Load<T>(path);
         } 
 
+        public static T[] LoadResources<T>(string path) where T : Object
+        {
+            return Resources.LoadAll<T>(path);
+        } 
+
         private static Sprite LoadResourceSprite(string path)
         {
             return LoadResource<Sprite>(path);
@@ -211,16 +216,6 @@ namespace Ryneus
         {
             return LoadResourceSpriteAtlas("Texture/Icons");
         } 
-
-        public static SpriteAtlas LoadAttributeIcons()
-        {
-            return LoadResourceSpriteAtlas("Texture/AttributeIcons");
-        }
-
-        public static SpriteAtlas LoadSystems()
-        {
-            return LoadResourceSpriteAtlas("Texture/Systems");
-        }
 
         public static Sprite LoadGuideSprite(string path)
         {

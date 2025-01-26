@@ -169,6 +169,8 @@ namespace Utage
     {
         private string layerName = "";
         private int type = 0;
+        private List<AnimationBalloon> _animationBalloons = new ();
+        private bool _isInitialized = false;
         public AdvCommandBalloon(StringGridRow row)
             :base(row)
         {
@@ -180,21 +182,50 @@ namespace Utage
         public override void DoCommand(AdvEngine engine)
         {
             AdvGraphicLayer layer = engine.GraphicManager.FindLayer(layerName);
+            AdvGraphicLayer balloonLayer = engine.GraphicManager.FindLayer("Balloon");
             if (layer == null)
             {
                 return;
             }
-            var balloon = CreateBalloon(layer);
-            balloon.Play((AnimationBalloonType)type);
+            var pixelsToUnits = engine.GraphicManager.PixelsToUnits;
+            var balloon = CreateBalloon(layer,balloonLayer,pixelsToUnits);
+            balloon.Play(layer,(AnimationBalloonType)type);
+            _animationBalloons.Add(balloon);
+            if (_isInitialized == false)
+            {
+			    engine.MessageWindowManager.OnTextChange.AddListener(OnBeginCommand);
+                _isInitialized = true;
+            }
         }
 
-        private AnimationBalloon CreateBalloon(AdvGraphicLayer layer)
+        private AnimationBalloon CreateBalloon(AdvGraphicLayer layer,AdvGraphicLayer balloonLayer,float pixelsToUnits)
         {
             var prefabObject = ResourceSystem.LoadResource<GameObject>(ResourceSystem.PrefabPath + "Common/Balloon");
             var prefab = GameObject.Instantiate(prefabObject);
-            prefab.transform.SetParent(layer.gameObject.transform,false);
+            prefab.transform.SetParent(balloonLayer.gameObject.transform,false);
             prefab.transform.SetAsLastSibling();
+            prefab.transform.GetComponent<Transform>().localPosition = layer.transform.localPosition * pixelsToUnits;
             return prefab.GetComponent<AnimationBalloon>();
         }
+
+		private void OnBeginCommand(AdvMessageWindowManager messageWindowManager)
+		{
+            var deleteList = new List<AnimationBalloon>();
+            foreach (var animationBalloons in _animationBalloons)
+            {
+                var deleteFlag = animationBalloons.StopAnimation();
+                if (deleteFlag)
+                {
+                    deleteList.Add(animationBalloons);
+                }
+            }
+            for(int i = _animationBalloons.Count-1;i >= 0;i--)
+            {
+                if (deleteList.Contains(_animationBalloons[i]))
+                {
+                    _animationBalloons.Remove(_animationBalloons[i]);
+                }
+            }
+		}
     }
 }
