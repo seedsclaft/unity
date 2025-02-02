@@ -279,7 +279,7 @@ namespace Ryneus
 
         public void UpdateStartActivate()
         {
-            if (GameSystem.ConfigData.InputType)
+            //if (GameSystem.ConfigData.InputType)
             {
                 //battleEnemyLayer.Activate();
                 //battleEnemyLayer.UpdateSelectIndex(0);

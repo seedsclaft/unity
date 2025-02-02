@@ -15,7 +15,7 @@ namespace Ryneus
 		public bool CommandEndCheck;
 		public bool BattleWait;
 		public bool BattleAnimationSkip;
-		public bool InputType;
+		public InputType InputType;
 		public bool BattleAuto;
 		public float BattleSpeed = 1f;
 		public bool TutorialCheck;
@@ -35,7 +35,7 @@ namespace Ryneus
 			CommandEndCheck = true;
 			BattleWait = true;
 			BattleAnimationSkip = false;
-			InputType = false;
+			InputType = InputType.All;
 			BattleAuto = false;
 			BattleSpeed = 1f;
 			TutorialCheck = true;
@@ -48,5 +48,12 @@ namespace Ryneus
 			SeVolume = seVolume;
 			SeMute = seMute;
 		}
+	}
+
+	public enum InputType
+	{
+		All = 0,
+		MouseOnly = 1,
+		KeyboardOnly = 2,
 	}
 }

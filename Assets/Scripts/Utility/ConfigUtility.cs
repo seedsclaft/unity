@@ -6,7 +6,6 @@ namespace Ryneus
 {
     public class ConfigUtility
     {
-
         public static void ApplyConfigData()
         {
             var saveConfigInfo = GameSystem.ConfigData;
@@ -25,6 +24,7 @@ namespace Ryneus
                 ChangeTutorialCheck(saveConfigInfo.TutorialCheck);
             }
         }
+
         public static void ChangeBGMValue(float bgmVolume)
         {
             SoundManager.Instance.SetBgmVolume(bgmVolume);
@@ -91,7 +91,7 @@ namespace Ryneus
             GameSystem.ConfigData.BattleAnimationSkip = battleAnimation;
         }
 
-        public static void ChangeInputType(bool inputType)
+        public static void ChangeInputType(InputType inputType)
         {
             GameSystem.ConfigData.InputType = inputType;
         }

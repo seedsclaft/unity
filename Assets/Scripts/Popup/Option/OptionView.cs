@@ -93,7 +93,7 @@ namespace Ryneus
             {    
                 SoundManager.Instance.PlayStaticSe(SEType.Cancel);
                 GameSystem.ConfigData.InputType = GameSystem.TempData.TempInputType;
-                if (GameSystem.ConfigData.InputType == false)
+                if (GameSystem.ConfigData.InputType == InputType.MouseOnly)
                 {
                     SetHelpInputInfo("");
                 }

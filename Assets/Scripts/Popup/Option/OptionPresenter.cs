@@ -117,7 +117,24 @@ namespace Ryneus
                     ConfigUtility.ChangeBattleAnimation(inputKeyType == InputKeyType.Right);
                     break;
                 case "INPUT_TYPE":
-                    _model.ChangeTempInputType(inputKeyType == InputKeyType.Right);
+                    var inputTypeIndex = (int)GameSystem.TempData.TempInputType;
+                    if (inputKeyType == InputKeyType.Right)
+                    {
+                        inputTypeIndex++;
+                        if (inputTypeIndex > 2)
+                        {
+                            inputTypeIndex = 0;
+                        }
+                    }
+                    if (inputKeyType == InputKeyType.Left)
+                    {
+                        inputTypeIndex--;
+                        if (inputTypeIndex <= -1)
+                        {
+                            inputTypeIndex = 2;
+                        }
+                    }
+                    _model.ChangeTempInputType((InputType)inputTypeIndex);
                     break;
                 case "BATTLE_AUTO":
                     ConfigUtility.ChangeBattleAuto(inputKeyType == InputKeyType.Right);
@@ -203,7 +220,7 @@ namespace Ryneus
                         ConfigUtility.ChangeBattleAnimation(toggleIndex == 1);
                         break;
                     case "INPUT_TYPE":
-                        _model.ChangeTempInputType(toggleIndex == 1);
+                        _model.ChangeTempInputType((InputType)toggleIndex);
                         break;
                     case "BATTLE_AUTO":
                         ConfigUtility.ChangeBattleAuto(toggleIndex == 1);

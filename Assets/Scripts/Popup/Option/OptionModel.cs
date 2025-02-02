@@ -68,7 +68,7 @@ namespace Ryneus
             return (int)optionCategory;
         }
 
-        public void ChangeTempInputType(bool inputType)
+        public void ChangeTempInputType(InputType inputType)
         {
             TempInfo.SetInputType(inputType);
         }

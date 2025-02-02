@@ -29,11 +29,13 @@ namespace Ryneus
 
         public async void SetInputInfo(string key)
         {
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
             return;
-    #endif
-            if (GameSystem.ConfigData.InputType == false) {
-                foreach(var prefab in _inputPrefabs){
+#endif
+            if (GameSystem.ConfigData.InputType == InputType.MouseOnly) 
+            {
+                foreach(var prefab in _inputPrefabs)
+                {
                     prefab.SetActive(false);
                 }
                 return;
@@ -71,7 +73,8 @@ namespace Ryneus
                 await UniTask.Yield(_cancellationTokenSource.Token);
                 _cancellationTokenSource = null;
                 _lastKey = key;
-                foreach(var prefab in _inputPrefabs){
+                foreach(var prefab in _inputPrefabs)
+                {
                     if (prefab != null)
                     {
                         prefab.SetActive(false);
@@ -89,7 +92,8 @@ namespace Ryneus
                     .Append(inputCanvasGroup.DOFade(1f,0.4f));
                 //inputCanvasGroup.alpha = 1;
             }
-            catch (OperationCanceledException e){  
+            catch (OperationCanceledException e)
+            {
                 Debug.Log(e);  
             }
         }

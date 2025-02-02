@@ -116,8 +116,7 @@ namespace Ryneus
                 case "INPUT_TYPE":
                     for (int i = 0;i < optionToggles.Count;i++)
                     {
-                        var notify = i == (GameSystem.TempData.TempInputType == true ? 1 : 0);
-                        optionToggles[i].SetIsOnWithoutNotify(notify);
+                        optionToggles[i].SetIsOnWithoutNotify(i == (int)GameSystem.TempData.TempInputType);
                     }
                     return;
                 case "BATTLE_AUTO":

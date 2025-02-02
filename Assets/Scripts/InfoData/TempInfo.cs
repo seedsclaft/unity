@@ -11,8 +11,8 @@ namespace Ryneus
         public List<ActorInfo> TempActorInfos => _tempActorInfos;
         private Dictionary<int,List<RankingInfo>> _tempRankingData = new ();
         public Dictionary<int,List<RankingInfo>> TempRankingData => _tempRankingData;
-        private bool _tempInputType = false;
-        public bool TempInputType => _tempInputType;
+        private InputType _tempInputType = InputType.All;
+        public InputType TempInputType => _tempInputType;
         public void CashBattleActors(List<ActorInfo> actorInfos)
         {
             ClearBattleActors();
@@ -39,7 +39,7 @@ namespace Ryneus
             _tempRankingData.Clear();
         }
         
-        public void SetInputType(bool inputType)
+        public void SetInputType(InputType inputType)
         {
             _tempInputType = inputType;
         }    

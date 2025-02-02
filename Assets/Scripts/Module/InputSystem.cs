@@ -29,9 +29,9 @@ namespace Ryneus
 
         public InputKeyType Update()
         {
-            if (GameSystem.ConfigData.InputType == false)
+            if (GameSystem.ConfigData.InputType == InputType.MouseOnly)
             {
-                //return InputKeyType.None;
+                return InputKeyType.None;
             }
             UpdateGamePadData();
             var gamePadKey = UpdateGamePad();
