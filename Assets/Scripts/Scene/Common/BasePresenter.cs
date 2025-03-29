@@ -121,79 +121,6 @@ namespace Ryneus
             _view.CommandCallConfirm(confirmInfo);
         }
 
-        /// <summary>
-        /// ステータス詳細を表示
-        /// </summary>
-        /// <param name="actorInfos"></param>
-        public void CommandStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,Action closeEvent = null,bool isRanking = false)
-        {
-            var statusViewInfo = new StatusViewInfo(() => 
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
-                closeEvent?.Invoke();
-            });
-            statusViewInfo.SetActorInfos(actorInfos,inBattle);
-            if (startIndex > -1)
-            {
-                statusViewInfo.SetStartIndex(startIndex);
-            }
-            statusViewInfo.SetDisplayDecideButton(addActor);
-            statusViewInfo.SetDisplayCharacterList(true);
-            statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
-            statusViewInfo.SetDisplayBackButton(backButton);
-            statusViewInfo.SetIsRanking(isRanking);
-            _view.CommandCallStatus(statusViewInfo);
-            _view.ChangeUIActive(false);
-        }
-
-        /// <summary>
-        /// 敵詳細を表示
-        /// </summary>
-        /// <param name="battlerInfos"></param>
-        public void CommandEnemyInfo(List<BattlerInfo> battlerInfos,bool inBattle,System.Action closeEvent = null)
-        {
-            var enemyViewInfo = new StatusViewInfo(() => 
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
-                closeEvent?.Invoke();
-            });
-            enemyViewInfo.SetEnemyInfos(battlerInfos,inBattle);
-            _view.CommandCallEnemyInfo(enemyViewInfo);
-            _view.ChangeUIActive(false);
-        }
-
-        
-        /// <summary>
-        /// ステータス詳細を表示
-        /// </summary>
-        /// <param name="actorInfos"></param>
-        public void CommandTacticsStatusInfo(List<ActorInfo> actorInfos,bool inBattle,bool backButton = true,bool levelUpObj = true,bool addActor = false,int startIndex = -1,System.Action closeEvent = null,System.Action<int> charaLayerEvent = null)
-        {
-            var statusViewInfo = new StatusViewInfo(() => 
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                _view.CommandGameSystem(Base.CommandType.CloseStatus);
-                _view.ChangeUIActive(true);
-                closeEvent?.Invoke();
-            });
-            statusViewInfo.SetActorInfos(actorInfos,inBattle);
-            if (startIndex > -1)
-            {
-                statusViewInfo.SetStartIndex(startIndex);
-            }
-            statusViewInfo.SetDisplayDecideButton(addActor);
-            statusViewInfo.SetDisplayCharacterList(!addActor);
-            statusViewInfo.SetDisplayLevelResetButton(levelUpObj);
-            statusViewInfo.SetDisplayBackButton(backButton);
-            statusViewInfo.SetCharaLayerEvent(charaLayerEvent);
-            _view.CommandCallTacticsStatus(statusViewInfo);
-            //_view.ChangeUIActive(false);
-        }
-
         public void CommandCallSideMenu(List<ListData> sideMenuCommands,System.Action closeEvent = null)
         {
             var sideMenuViewInfo = new SideMenuViewInfo
@@ -225,47 +152,6 @@ namespace Ryneus
 
         public void CommandActorLevelUp(ActorInfo actorInfo,System.Action endEvent = null)
         {
-            if (_model.EnableActorLevelUp(actorInfo))
-            {
-                SoundManager.Instance.PlayStaticSe(SEType.LevelUp);
-                // 新規魔法取得があるか
-                var skills = actorInfo.LearningSkills(1);
-                
-                var from = actorInfo.Evaluate();
-                _model.ActorLevelUp(actorInfo);
-                var to = actorInfo.Evaluate();
-                
-                if (skills.Count > 0)
-                {
-                    //_busy = true;
-                    _view.SetBusy(true);
-                    var learnSkillInfo = new LearnSkillInfo(from,to,skills[0]);
-                    SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-
-                    var popupInfo = new PopupInfo
-                    {
-                        PopupType = PopupType.LearnSkill,
-                        EndEvent = () =>
-                        {
-                            endEvent?.Invoke();
-                            SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                        },
-                        template = learnSkillInfo
-                    };
-                    _view.CommandCallPopup(popupInfo);
-                } else
-                {
-                    CommandCautionInfo("",from,to);
-                    endEvent?.Invoke();
-                    SoundManager.Instance.PlayStaticSe(SEType.CountUp);
-                }
-            } else
-            {
-                var textId = _model.ActorLevelLinked(actorInfo) ? 19420 : 19410;
-                CommandCautionInfo(DataSystem.GetText(textId));
-                endEvent?.Invoke();
-                SoundManager.Instance.PlayStaticSe(SEType.Deny);
-            }
         }        
         
         public void CommandLevelUp(ActorInfo actorInfo,System.Action endEvent = null)
@@ -285,27 +171,6 @@ namespace Ryneus
 
         private void UpdatePopupLearnSkill(ConfirmCommandType confirmCommandType, ActorInfo actorInfo,SkillInfo skillInfo,System.Action endEvent = null)
         {
-            if (confirmCommandType == ConfirmCommandType.Yes)
-            {
-                var from = actorInfo.Evaluate();
-                _model.ActorLearnMagic(actorInfo,skillInfo.Id);
-                var to = actorInfo.Evaluate();
-
-                var learnSkillInfo = new LearnSkillInfo(from,to,skillInfo);
-                SoundManager.Instance.PlayStaticSe(SEType.LearnSkill);
-
-                var popupInfo = new PopupInfo
-                {
-                    PopupType = PopupType.LearnSkill,
-                    EndEvent = () =>
-                    {
-                        endEvent?.Invoke();
-                        SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                    },
-                    template = learnSkillInfo
-                };
-                _view.CommandCallPopup(popupInfo);
-            }
         }
     }
 }

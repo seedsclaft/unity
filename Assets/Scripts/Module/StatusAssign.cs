@@ -13,13 +13,12 @@ namespace Ryneus
         [SerializeField] private GameObject sideMenuPrefab = null;
         [SerializeField] private GameObject tacticsStatusPrefab = null;
         private BaseView _statusView;
-        public GameObject CreatePopup(StatusType popupType,HelpWindow helpWindow)
+        public GameObject CreatePopup(StatusType popupType)
         {
             var prefab = Instantiate(GetStatusObject(popupType));
             prefab.transform.SetParent(statusRoot.transform, false);
             statusRoot.SetActive(true);
             _statusView = prefab.GetComponent<BaseView>();
-            _statusView?.SetHelpWindow(helpWindow);
             return prefab;
         }
 

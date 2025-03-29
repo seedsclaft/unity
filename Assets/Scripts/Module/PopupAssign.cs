@@ -31,13 +31,12 @@ namespace Ryneus
         public List<BaseView> StackPopupView => _stackPopupView;
         public BaseView LastPopupView => _stackPopupView.Count > 0 ? _stackPopupView[_stackPopupView.Count-1] : null;
         
-        public GameObject CreatePopup(PopupType popupType,HelpWindow helpWindow)
+        public GameObject CreatePopup(PopupType popupType)
         {
             var prefab = Instantiate(GetPopupObject(popupType));
             prefab.transform.SetParent(confirmRoot.transform, false);
             confirmRoot.SetActive(true);
             var view = prefab.GetComponent<BaseView>();
-            view?.SetHelpWindow(helpWindow);
             _stackPopupView.Add(view);
             return prefab;
         }

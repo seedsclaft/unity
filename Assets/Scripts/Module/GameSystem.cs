@@ -27,9 +27,6 @@ namespace Ryneus
         [SerializeField] private AdvEngine advEngine = null;
         [SerializeField] private AdvController advController = null;
 
-        [SerializeField] private DebugBattleData debugBattleData = null;
-        [SerializeField] private HelpWindow helpWindow = null;
-        [SerializeField] private HelpWindow advHelpWindow = null;
         [SerializeField] private EventSystem eventSystem = null;
         
         private BaseView _currentScene = null;
@@ -46,7 +43,6 @@ namespace Ryneus
         public bool Busy => _busy;
 
         public static string Version;
-        public static DebugBattleData DebugBattleData;
 
         private static SceneStackManager _sceneStackManager = new SceneStackManager();
         public static SceneStackManager SceneStackManager => _sceneStackManager;
@@ -59,7 +55,6 @@ namespace Ryneus
     #endif
             Application.targetFrameRate = 60;
             advController.Initialize();
-            advController.SetHelpWindow(advHelpWindow);
             transitionRoot.SetActive(false);
             loadingView.Initialize();
             loadingView.gameObject.SetActive(false);
@@ -72,7 +67,6 @@ namespace Ryneus
             _model = new BaseModel();
             Version = version;
     #if UNITY_EDITOR
-            DebugBattleData = debugBattleData;
     #endif
     #if UNITY_ANDROID
             AdMobController.Instance.Initialize(() => {CommandSceneChange(Scene.Boot);});
@@ -81,25 +75,6 @@ namespace Ryneus
     #endif
         }
 
-        private BaseView CreateStatus(StatusType statusType,StatusViewInfo statusViewInfo)
-        {
-            var prefab = statusAssign.CreatePopup(statusType,helpWindow);
-            if (statusType == StatusType.Status)
-            {
-                prefab.GetComponent<StatusView>().SetEvent((type) => UpdateCommand(type));
-                prefab.GetComponent<StatusView>().Initialize(statusViewInfo.ActorInfos);
-            } else
-            if (statusType == StatusType.EnemyDetail)
-            {
-                prefab.GetComponent<EnemyInfoView>().SetEvent((type) => UpdateCommand(type));
-                prefab.GetComponent<EnemyInfoView>().Initialize(statusViewInfo.EnemyInfos,statusViewInfo.IsBattle);
-            } else
-            {
-                prefab.GetComponent<TacticsStatusView>().SetEvent((type) => UpdateCommand(type));
-                prefab.GetComponent<TacticsStatusView>().Initialize(statusViewInfo.ActorInfos);
-            }
-            return prefab.GetComponent<BaseView>();
-        }
 
         private void UpdateCommand(ViewEvent viewEvent)
         {
@@ -111,17 +86,6 @@ namespace Ryneus
             {
                 case Base.CommandType.SceneChange:
                     var sceneInfo = (SceneInfo)viewEvent.template; 
-                    if (testMode && sceneInfo.ToScene == Scene.Battle)
-                    {
-                        if (debugBattleData.AdvName != "")
-                        {
-                            StartCoroutine(JumpScenarioAsync(debugBattleData.AdvName,null));
-                        } else
-                        {
-                            debugBattleData.MakeBattleActor();
-                            CommandSceneChange(sceneInfo);
-                        }
-                    } else
                     {
                         CommandSceneChange(sceneInfo);
                     }
@@ -166,10 +130,8 @@ namespace Ryneus
                     CommandSideMenu((SideMenuViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallRankingView:
-                    CommandRankingView((RankingViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallCharacterListView:
-                    CommandCharacterListView((CharacterListInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallHelpView:
                     CommandHelpView((List<ListData>)viewEvent.template);
@@ -177,36 +139,19 @@ namespace Ryneus
                 case Base.CommandType.CallSlotSaveView:
                     break;
                 case Base.CommandType.CallSkillTriggerView:
-                    CommandSkillTriggerView((SkillTriggerViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallSkillLogView:
-                    CommandCallSkillLogView((SkillLogViewInfo)viewEvent.template);
                     break;
                 case Base.CommandType.CallStatusView:
-                    var statusViewInfo = (StatusViewInfo)viewEvent.template;
-                    var statusView = CreateStatus(StatusType.Status,statusViewInfo) as StatusView;
-                    statusView.SetEvent((type) => UpdateCommand(type));
-                    statusView.SetViewInfo(statusViewInfo);
-                    _currentScene.SetBusy(true);
                     break;
                 case Base.CommandType.CloseStatus:
                     statusAssign.CloseStatus();
                     _currentScene.SetBusy(false);
                     break;
                 case Base.CommandType.CallEnemyInfoView:
-                    var enemyStatusInfo = (StatusViewInfo)viewEvent.template;
-                    var enemyInfoView = CreateStatus(StatusType.EnemyDetail,enemyStatusInfo) as EnemyInfoView;
-                    enemyInfoView.SetEvent((type) => UpdateCommand(type));
-                    enemyInfoView.SetBackEvent(enemyStatusInfo.BackEvent);
-                    _currentScene.SetBusy(true);
                     break;
                 case Base.CommandType.CallTacticsStatusView:
-                    var tacticsStatusInfo = (StatusViewInfo)viewEvent.template;
-                    var tacticsStatusInfoView = CreateStatus(StatusType.TacticsStatus,tacticsStatusInfo) as TacticsStatusView;
-                    tacticsStatusInfoView.SetEvent((type) => UpdateCommand(type));
-                    tacticsStatusInfoView.SetViewInfo(tacticsStatusInfo);
-                    tacticsStatusInfoView.SetBackEvent(tacticsStatusInfo.BackEvent);
-                    _currentScene.SetBusy(true);
+
                     break;
                 case Base.CommandType.CallAdvScene:
                     SetIsBusyMainAndStatus();
@@ -274,7 +219,7 @@ namespace Ryneus
 
         private void CommandConfirmView(ConfirmInfo confirmInfo)
         {
-            var prefab = confirmAssign.CreateConfirm(confirmInfo.ConfirmType,helpWindow);
+            var prefab = confirmAssign.CreateConfirm(confirmInfo.ConfirmType);
             var confirmView = prefab.GetComponent<ConfirmView>();
             confirmView.Initialize();
             confirmView.SetViewInfo(confirmInfo);
@@ -288,7 +233,7 @@ namespace Ryneus
 
         private void CommandCautionView(CautionInfo confirmInfo)
         {
-            var prefab = confirmAssign.CreateConfirm(ConfirmType.Caution,helpWindow);
+            var prefab = confirmAssign.CreateConfirm(ConfirmType.Caution);
             var confirmView = prefab.GetComponent<CautionView>();
             confirmView.Initialize();
             if (confirmInfo.Title != null)
@@ -304,7 +249,7 @@ namespace Ryneus
 
         private async void CommandPopupView(PopupInfo popupInfo)
         {
-            var prefab = popupAssign.CreatePopup(popupInfo.PopupType,helpWindow);
+            var prefab = popupAssign.CreatePopup(popupInfo.PopupType);
             var baseView = prefab.GetComponent<BaseView>();
             baseView.SetEvent((type) => UpdateCommand(type));
             baseView.Initialize();
@@ -313,22 +258,12 @@ namespace Ryneus
                 UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
                 popupInfo.EndEvent?.Invoke();
             });
-            if (popupInfo.PopupType == PopupType.LearnSkill)
-            {
-                var learnSkill = prefab.GetComponent<LearnSkillView>();
-                learnSkill.SetLearnSkillInfo((LearnSkillInfo)popupInfo.template);
-            } else
-            if (popupInfo.PopupType == PopupType.Guide)
-            {
-                var guide = prefab.GetComponent<GuideView>();
-                guide.SetGuide((string)popupInfo.template);
-            }
             SetIsBusyMainAndStatus();
         }
         
         private void CommandOptionView(System.Action endEvent)
         {
-            var prefab = popupAssign.CreatePopup(PopupType.Option,helpWindow);
+            var prefab = popupAssign.CreatePopup(PopupType.Option);
             var optionView = prefab.GetComponent<OptionView>();
             optionView.Initialize();
             optionView.SetBackEvent(() => 
@@ -347,39 +282,11 @@ namespace Ryneus
             SetIsBusyMainAndStatus();
         }
 
-        private void CommandSkillTriggerView(SkillTriggerViewInfo skillTriggerViewInfo)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.SkillTrigger,helpWindow);
-            var skillTriggerView = prefab.GetComponent<SkillTriggerView>();
-            skillTriggerView.SetSkillTriggerViewInfo(skillTriggerViewInfo);
-            skillTriggerView.SetEvent((type) => UpdateCommand(type));
-            skillTriggerView.Initialize();
-            skillTriggerView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (skillTriggerViewInfo.EndEvent != null) skillTriggerViewInfo.EndEvent();
-            });
-            SetIsBusyMainAndStatus();
-        }
 
-        private void CommandCallSkillLogView(SkillLogViewInfo skillLogViewInfo)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.SkillLog,helpWindow);
-            var skillLogView = prefab.GetComponent<SkillLogView>();
-            skillLogView.Initialize();
-            skillLogView.SetSkillLogViewInfo(skillLogViewInfo.SkillLogListInfos);
-            skillLogView.SetEvent((type) => UpdateCommand(type));
-            skillLogView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                if (skillLogViewInfo.EndEvent != null) skillLogViewInfo.EndEvent();
-            });
-            SetIsBusyMainAndStatus();
-        }
 
         private void CommandSideMenu(SideMenuViewInfo sideMenuViewInfo)
         {
-            var prefab = popupAssign.CreatePopup(PopupType.SideMenu,helpWindow);
+            var prefab = popupAssign.CreatePopup(PopupType.SideMenu);
             var sideMenuView = prefab.GetComponent<SideMenuView>();
             sideMenuView.Initialize();
             sideMenuView.SetEvent((type) => UpdateCommand(type));
@@ -392,41 +299,11 @@ namespace Ryneus
             sideMenuView.SetSideMenuViewInfo(sideMenuViewInfo);
         }
         
-        private void CommandRankingView(RankingViewInfo rankingViewInfo)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.Ranking,helpWindow);
-            var rankingView = prefab.GetComponent<RankingView>();
-            rankingView.Initialize();
-            rankingView.SetEvent((type) => UpdateCommand(type));
-            rankingView.SetRankingViewInfo(rankingViewInfo);
-            rankingView.SetBackEvent(() => 
-            {
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-                rankingViewInfo.EndEvent?.Invoke();
-            });
-            SetIsBusyMainAndStatus();
-        }
 
-        private void CommandCharacterListView(CharacterListInfo characterListInfo)
-        {
-            var prefab = popupAssign.CreatePopup(PopupType.CharacterList,helpWindow);
-            var characterListView = prefab.GetComponent<CharacterListView>();
-            characterListView.Initialize(characterListInfo.ActorInfos);
-            characterListView.SetViewInfo(characterListInfo);
-            characterListView.SetBackEvent(() => 
-            {
-                if (characterListInfo.BackEvent != null)
-                {
-                    characterListInfo.BackEvent();
-                }
-                UpdateCommand(new ViewEvent(Base.CommandType.ClosePopup));
-            });
-            SetIsBusyMainAndStatus();
-        }
 
         private void CommandHelpView(List<ListData> helpTextList)
         {
-            var prefab = popupAssign.CreatePopup(PopupType.Help,helpWindow);
+            var prefab = popupAssign.CreatePopup(PopupType.Help);
             var helpView = prefab.GetComponent<HelpView>();
             helpView.Initialize();
             helpView.SetHelp(helpTextList);
@@ -440,7 +317,6 @@ namespace Ryneus
         IEnumerator JumpScenarioAsync(string label, System.Action onComplete)
         {
             _busy = true;
-            advHelpWindow.SetInputInfo("ADV_READING");
             while (advEngine.IsWaitBootLoading) yield return null;
             while (advEngine.IsLoading) yield return null;
             advEngine.JumpScenario(label);
@@ -452,7 +328,6 @@ namespace Ryneus
             }
             SetIsNotBusyMainAndStatus();
             advController.EndAdv();
-            advHelpWindow.SetInputInfo("");
             
             //_currentScene.SetActiveUi(true);
             _busy = false;
@@ -476,10 +351,9 @@ namespace Ryneus
             {
                 sceneInfo.FromScene = _sceneStackManager.Current;
             }
-            var prefab = sceneAssign.CreateScene(sceneInfo.ToScene,helpWindow);
+            var prefab = sceneAssign.CreateScene(sceneInfo.ToScene);
             _currentScene = prefab.GetComponent<BaseView>();
             _currentScene.SetTestMode(testMode);
-            _currentScene.SetBattleTestMode(debugBattleData.TestBattle);
             _currentScene.SetEvent((type) => UpdateCommand(type));
             _sceneStackManager.PushSceneInfo(sceneInfo);
             _currentScene.Initialize();

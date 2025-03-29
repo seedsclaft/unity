@@ -47,16 +47,12 @@ namespace Ryneus
             }
         }
 
-        private HelpWindow _helpWindow = null;
-        public HelpWindow HelpWindow => _helpWindow;
         public void SetHelpInputInfo(string key)
         {
-            _helpWindow?.SetInputInfo(key);
         }
 
         public void SetHelpText(string text)
         {
-            _helpWindow?.SetHelpText(text);
         }
 
         public void SetBackGround(string fileName)
@@ -81,10 +77,6 @@ namespace Ryneus
             _inputSystem = new InputSystem();
         }
 
-        public void SetHelpWindow(HelpWindow helpWindow)
-        {
-            _helpWindow = helpWindow;
-        }
 
         public void SetInputHandler(IInputHandlerEvent handler)
         {
@@ -128,8 +120,6 @@ namespace Ryneus
 
         public void CommandOpenSideMenu()
         {
-            _helpWindow.SetInputInfo("SIDEMENU");
-            _helpWindow.SetHelpText(DataSystem.GetHelp(19700));
         }
 
         public void SetEvent(System.Action<ViewEvent> commandData)
@@ -240,23 +230,6 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallRanking(RankingViewInfo rankingViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallRankingView)
-            {
-                template = rankingViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandCallCharacterList(CharacterListInfo characterListInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallCharacterListView)
-            {
-                template = characterListInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
 
         public void CommandHelpList(List<ListData> helpTextList)
         {
@@ -267,50 +240,7 @@ namespace Ryneus
             CallSceneChangeCommand(eventData);
         }
 
-        public void CommandCallStatus(StatusViewInfo statusViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallStatusView)
-            {
-                template = statusViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
 
-        public void CommandCallEnemyInfo(StatusViewInfo statusViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallEnemyInfoView)
-            {
-                template = statusViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandCallTacticsStatus(StatusViewInfo statusViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallTacticsStatusView)
-            {
-                template = statusViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandCallSkillTrigger(SkillTriggerViewInfo skillTriggerViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallSkillTriggerView)
-            {
-                template = skillTriggerViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
-
-        public void CommandCallSkillLog(SkillLogViewInfo skillLogViewInfo)
-        {
-            var eventData = new ViewEvent(Base.CommandType.CallSkillLogView)
-            {
-                template = skillLogViewInfo
-            };
-            CallSceneChangeCommand(eventData);
-        }
 
         public void CommandCallAdv(AdvCallInfo advCallInfo)
         {

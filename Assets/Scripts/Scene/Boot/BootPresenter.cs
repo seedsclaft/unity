@@ -36,21 +36,9 @@ namespace Ryneus
             {
                 InputSystem.IsGamePad = true;
             }
-            if (SaveSystem.ExistsConfigFile())
-            {
-                SaveSystem.LoadConfigStart();
-            } else
-            {
-                _model.InitConfigInfo();
-            }
-            if (_view.TestMode)
-            {
-                _model.InitSaveInfo();
-                _view.CommandGotoSceneChange(Scene.Battle);
-            } else
-            {
-                _view.SetEvent((type) => UpdateCommand(type));
-            }
+            _model.InitConfigInfo();
+            _model.InitSaveInfo();
+            _view.SetEvent((type) => UpdateCommand(type));
             _busy = false;
             //SaveSystem.SaveStart();
         }
@@ -69,7 +57,7 @@ namespace Ryneus
 
         private void CommandLogoClick()
         {
-            _view.CommandGotoSceneChange(Scene.Title);
+            _view.CommandGotoSceneChange(Scene.Map);
         }
     }
 }

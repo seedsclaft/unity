@@ -56,7 +56,6 @@ namespace Ryneus
 
         private Action _selectedHandler = null;
 
-        public HelpWindow _helpWindow = null;
 
         private Action _cancelEvent = null;
 
@@ -445,10 +444,6 @@ namespace Ryneus
             _inputBusyFrame = 1;
         }
         
-        public void SetHelpWindow(HelpWindow helpWindow)
-        {
-            _helpWindow = helpWindow;
-        }
 
         public void InputHandler(InputKeyType keyType,bool pressed)
         {

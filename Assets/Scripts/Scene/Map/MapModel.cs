@@ -7,7 +7,7 @@ namespace Ryneus
     {
         public GameObject LeaderActorPrefab()
         {
-            return ResourceSystem.LoadActor3DModel(PartyInfo.ActorInfos[0].Master.ImagePath);
+            return ResourceSystem.LoadActor3DModel("0001");
         }
 
         public bool IsCurrentSeekSymbolInfo(SymbolInfo symbolInfo)

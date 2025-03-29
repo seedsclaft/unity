@@ -41,6 +41,7 @@ public class FadeUI : UnityEngine.UI.Graphic, IFade
 
 	private void UpdateMaskCutout (float range)
 	{
+		/*
 //#if !UNITY_EDITOR
 		mat.SetFloat ("_Range", range);
 		rt.Release();
@@ -54,6 +55,7 @@ public class FadeUI : UnityEngine.UI.Graphic, IFade
 		mask.enabled = false;
 		mask.enabled = true;
 //#endif
+*/
 	}
 
 #if UNITY_EDITOR

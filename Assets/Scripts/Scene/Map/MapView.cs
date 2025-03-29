@@ -7,7 +7,6 @@ namespace Ryneus
 {
     public class MapView : BaseView ,IInputHandlerEvent
     {
-        [SerializeField] private SymbolList symbolInfoList;
         private new Action<ViewEvent> _commandData = null;
         public new void SetEvent(Action<ViewEvent> commandData) => _commandData = commandData;
         public void CallEvent(CommandType mapCommandType,object sendData = null)
@@ -24,7 +23,6 @@ namespace Ryneus
         }
 
         private VirtualModelController _virtualModelController = null;
-        public SymbolInfo SelectSymbolInfo => symbolInfoList.SelectSymbolInfo();
 
         private bool _viewBusy = false;
         public void SetViewBusy(bool isBusy)
@@ -35,57 +33,17 @@ namespace Ryneus
         public override void Initialize() 
         {
             base.Initialize();
+            /*
             SideMenuButton.OnClickAddListener(() => 
             {
                 CallSideMenu();
             });
             InitializeSymbolInfoList();
-            
+            */
             new MapPresenter(this);
         }
 
-        private void InitializeSymbolInfoList()
-        {
-            symbolInfoList.Initialize();
-            SetInputHandler(symbolInfoList.gameObject);
-            symbolInfoList.SetInputHandler(InputKeyType.Decide,OnClickSymbol);
-            symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelSymbol);
-            //symbolInfoList.SetSelectedHandler(OnSelectListSymbolList);
-            //symbolInfoList.SetInputHandler(InputKeyType.Cancel,OnCancelActor);
-            AddViewActives(symbolInfoList);
-            symbolInfoList.gameObject.SetActive(false);
-        }
 
-        public void SetSymbolList(List<ListData> symbolList,int seekIndex,int seek)
-        {
-            symbolInfoList.SetSeekIndex(seekIndex);
-            symbolInfoList.SetData(symbolList,true,() => 
-            {
-                var selectIndex = symbolInfoList.DataCount - seek;
-                if (selectIndex < 0)
-                {
-                    selectIndex = 0;
-                }
-                symbolInfoList.UpdateSelectIndex(selectIndex);
-                symbolInfoList.UpdateScrollRect(selectIndex + 2);
-            });
-        }
-
-        private void OnClickSymbol()
-        {
-            if (symbolInfoList.ScrollRect.enabled == false) return;
-            var data = symbolInfoList.SelectSymbolInfo();
-            if (data != null)
-            {
-                CallEvent(CommandType.OnClickSymbol,data);
-            }
-        }
-
-        private void OnCancelSymbol()
-        {
-            symbolInfoList.gameObject.SetActive(false);
-            CallEvent(CommandType.OnCancelSymbol);
-        }
 
         public void CreateMapLeaderActor(GameObject gameObject)
         {
@@ -93,15 +51,6 @@ namespace Ryneus
             _virtualModelController = prefab.GetComponent<VirtualModelController>();
             _virtualModelController.Initialize(true);
             CommandCreateMapObject(prefab);
-        }
-
-        public void UpdatePartyInfo(PartyInfo partyInfo)
-        {
-            symbolInfoList.UpdatePartyInfo(partyInfo);
-        }
-
-        private void CallSideMenu()
-        {
         }
 
         public void InputHandler(InputKeyType keyType, bool pressed)
@@ -201,11 +150,8 @@ namespace Ryneus
                     _virtualModelController?.Stop();
                     return;
                 case InputKeyType.Cancel:
-                    CallEvent(CommandType.CallStatus);
                     return;
                 case InputKeyType.Option1:
-                    CallEvent(CommandType.CallSymbol);
-                    symbolInfoList.gameObject.SetActive(true);
                     return;
             }
         }
@@ -248,10 +194,5 @@ namespace Map
     public enum CommandType
     {
         None = 0,
-        BattleStart,
-        CallStatus,
-        CallSymbol,
-        OnClickSymbol,
-        OnCancelSymbol,
     }
 }

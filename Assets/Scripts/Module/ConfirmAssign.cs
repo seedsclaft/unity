@@ -10,7 +10,7 @@ namespace Ryneus
         [SerializeField] private GameObject confirmPrefab = null;
         [SerializeField] private GameObject cautionPrefab = null;
         [SerializeField] private GameObject skillDetailPrefab = null;
-        public GameObject CreateConfirm(ConfirmType popupType,HelpWindow helpWindow)
+        public GameObject CreateConfirm(ConfirmType popupType)
         {
             if (confirmRoot.transform.childCount > 0)
             {
@@ -20,7 +20,6 @@ namespace Ryneus
             prefab.transform.SetParent(confirmRoot.transform, false);
             confirmRoot.gameObject.SetActive(true);
             var view = prefab.GetComponent<BaseView>();
-            view?.SetHelpWindow(helpWindow);
             return prefab;
         }
 

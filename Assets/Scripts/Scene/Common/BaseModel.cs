@@ -247,20 +247,6 @@ namespace Ryneus
 
         public async UniTask LoadBattleResources(List<BattlerInfo> battlers)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            var filePaths = BattleUtility.AnimationResourcePaths(battlers);
-            int count = filePaths.Count;
-            foreach (var filePath in filePaths)
-            {
-                await Resources.LoadAsync<Sprite>( filePath );
-                count -= 1;
-            }
-            try {
-                await UniTask.WaitUntil( () => count == 0 ,PlayerLoopTiming.Update,_cancellationTokenSource.Token);
-            } catch (OperationCanceledException e)
-            {
-                Debug.Log(e);
-            }
         }
 
         public void SetResumeStage(bool resumeStage)
@@ -477,7 +463,7 @@ namespace Ryneus
 
         public int ActorLevelUpCost(ActorInfo actorInfo)
         {
-            return TacticsUtility.TrainCost(actorInfo);
+            return 0;
         }
         
         public bool EnableActorLevelUp(ActorInfo actorInfo)
@@ -492,9 +478,6 @@ namespace Ryneus
 
         public void ActorLearnMagic(ActorInfo actorInfo,int skillId)
         {
-            var skillInfo = new SkillInfo(skillId);
-            var learningCost = TacticsUtility.LearningMagicCost(actorInfo,skillInfo.Attribute,StageMembers(),skillInfo.Master.Rank);
-            actorInfo.AddSkillTriggerSkill(skillId);
         }
 
         public void AddPlayerInfoActorSkillId(int actorId)

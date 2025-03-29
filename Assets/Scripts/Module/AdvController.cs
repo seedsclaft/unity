@@ -76,24 +76,6 @@ namespace Ryneus
 
         private new void Update() {
             base.Update();
-            if (advUguiManager.Engine.SelectionManager.IsWaitInput == true && (HelpWindow.LastKey != "ADV_SELECTING" || HelpWindow.LastKey != "ADV_SELECTING_ONE"))
-            {
-                _lastKey = HelpWindow.LastKey;
-                if (advUguiManager.Engine.SelectionManager.TotalCount == 1)
-                {
-                    HelpWindow.SetInputInfo("ADV_SELECTING_ONE");
-
-                } else
-                {
-                    HelpWindow.SetInputInfo("ADV_SELECTING");
-
-                }
-            }
-            if (advUguiManager.Engine.SelectionManager.IsWaitInput == false && HelpWindow.LastKey != "ADV_READING")
-            {
-                _lastKey = HelpWindow.LastKey;
-                HelpWindow.SetInputInfo("ADV_READING");
-            }
         }
 
         private void OnClickAuto()

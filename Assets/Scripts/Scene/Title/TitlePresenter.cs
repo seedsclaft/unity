@@ -31,20 +31,6 @@ namespace Ryneus
             var bgm = await _model.GetBgmData("TITLE");
             SoundManager.Instance.PlayBgm(bgm,1.0f,true);
             _busy = false;
-            var existPlayerData = SaveSystem.ExistsLoadPlayerFile();
-            if (existPlayerData)
-            {
-                var loadSuccess = SaveSystem.LoadPlayerInfo();
-                if (loadSuccess == false)
-                {
-                    var confirmInfo = new ConfirmInfo(DataSystem.GetText(13330),(a) => UpdatePopup(a));
-                    //SaveSystem.DeletePlayerData();
-                    confirmInfo.SetIsNoChoice(true);
-                    _view.CommandCallConfirm(confirmInfo);
-                    return;
-                }
-                _view.SetPlayerData(_model.PlayerName(),_model.PlayerId());
-            }
             _view.SetTitleCommand(_model.TitleCommand());
         }
 
@@ -70,26 +56,6 @@ namespace Ryneus
 
         private void CommandRanking()
         {
-            _busy = true;
-            var popupInfo = new PopupInfo
-            {
-                PopupType = PopupType.Ranking,
-                EndEvent = () =>
-                {
-                    _busy = false;
-                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                }
-            };
-            var rankingViewInfo = new RankingViewInfo
-            {
-                StageId = 1,
-                EndEvent = () =>
-                {
-                    _busy = false;
-                    SoundManager.Instance.PlayStaticSe(SEType.Cancel);
-                }
-            };
-            _view.CommandCallRanking(rankingViewInfo);
         }
 
         private void CommandSelectTitle()
